@@ -1,0 +1,38 @@
+node_modules/
+apps/*/dist/
+.jarvis/
+.env
+.env.*
+!.env.example
+*.log
+.secrets/
+artifacts/runtime-qa/
+artifacts/backups/
+*.tsbuildinfo
+.runtime-venv/
+
+# Local private state and machine-specific deployment data
+.jarvis-dev/
+.maintenance/
+.deployment/
+serverinfo/
+artifacts/
+config/servers.cloud.json
+config/servers.managed.json
+服务器硬件与连接清单.md
+
+# Build outputs and caches
+apps/*/.dist*/
+__pycache__/
+*.pyc
+.cache/
+coverage/
+
+# Credentials and runtime databases
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db

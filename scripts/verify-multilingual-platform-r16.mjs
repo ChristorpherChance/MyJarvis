@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {withPlatform} from './managed-server-client.mjs';
+const revision='20261010-voice-web-r16';
+const samples=[{language:'en',text:'Hello. I would like to learn English with you.'},{language:'fr',text:'Bonjour. Je voudrais pratiquer le français avec vous.'},{language:'de',text:'Guten Tag. Ich möchte mit Ihnen Deutsch lernen.'}];
+const report=await withPlatform(async({api})=>{
+ const platform=await api('/api/health');assert.equal(platform.build,revision);const session=await api('/api/runtime/voice/sessions',{roomId:'study'});const results=[];
+ async function complete(job){const until=Date.now()+45000;while(['queued','running'].includes(job.status)){if(Date.now()>until)throw Error('VOICE_JOB_TIMEOUT');await new Promise(r=>setTimeout(r,200));job=await api('/api/runtime/voice/jobs/'+job.id);}assert.equal(job.status,'complete',JSON.stringify(job.result));return job;}
+ for(const sample of samples){const started=Date.now();const tts=await complete(await api('/api/runtime/voice/sessions/'+session.id+'/speech',{text:sample.text,cloudConsent:true,playback:{language:sample.language}}));assert.equal(tts.result.language,sample.language);assert.equal(tts.result.model,'piper-resident');const wav=await api(tts.result.audioUrl,undefined,'GET',{binary:true});assert.equal(wav.subarray(0,4).toString(),'RIFF');const asr=await complete(await api('/api/runtime/voice/sessions/'+session.id+'/audio',wav,'POST',{contentType:'audio/wav',headers:{'X-Jarvis-Language':sample.language}}));assert.equal(asr.result.language,sample.language);assert.equal(asr.result.model,'whisper-small-resident');assert.ok(asr.result.text.trim());const normalize=t=>t.toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');assert.equal(normalize(asr.result.text),normalize(sample.text));results.push({language:sample.language,ttsModel:tts.result.model,voiceId:tts.result.voiceId,asrModel:asr.result.model,matchedWords:true,elapsedMs:Date.now()-started,audioBytes:wav.length});}
+ return {status:'passed',at:new Date().toISOString(),build:revision,samples:results,source:'Synthetic native-language speech through deployed authenticated API; no physical microphone or speaker',personalVoicePreferencesChanged:false};
+},{syntheticVoice:true});
+await mkdir('artifacts/voice-response-r16',{recursive:true});await writeFile('artifacts/voice-response-r16/multilingual-platform.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));

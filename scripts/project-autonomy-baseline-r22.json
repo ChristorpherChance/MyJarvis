@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "kind": "project-autonomy-test-baseline",
+  "workspace": "/home/superopen/All-Projects/msf-jarvis-autonomy-r22",
+  "requiredTestFiles": [
+    "apps/server/src/modules/ai/delegations.integration.test.ts",
+    "apps/server/src/modules/ai/models.integration.test.ts",
+    "apps/server/src/modules/ai/sessions.integration.test.ts",
+    "apps/server/src/modules/ai/stream-pipeline.test.ts",
+    "apps/server/src/modules/ai/template-draft.test.ts",
+    "apps/server/src/modules/ai/tools-prompts-usage.integration.test.ts",
+    "apps/server/src/modules/api/http-map-coverage.test.ts",
+    "apps/server/src/modules/api/idempotency.e2e.test.ts",
+    "apps/server/src/modules/design/design.integration.test.ts",
+    "apps/server/src/modules/design/prototype-pages.integration.test.ts",
+    "apps/server/src/modules/design/prototype-pages.test.ts",
+    "apps/server/src/modules/dev/dev-routes.e2e.test.ts",
+    "apps/server/src/modules/dev/dev.integration.test.ts",
+    "apps/server/src/modules/evidence/audit.service.test.ts",
+    "apps/server/src/modules/evidence/command-bus.integration.test.ts",
+    "apps/server/src/modules/evidence/command-bus.test.ts",
+    "apps/server/src/modules/executor/sandbox.integration.test.ts",
+    "apps/server/src/modules/integration/integration.test.ts",
+    "apps/server/src/modules/material/batch.integration.test.ts",
+    "apps/server/src/modules/material/files.integration.test.ts",
+    "apps/server/src/modules/material/materials.e2e.test.ts",
+    "apps/server/src/modules/material/parse-engine.integration.test.ts",
+    "apps/server/src/modules/material/parse.integration.test.ts",
+    "apps/server/src/modules/material/uploads.integration.test.ts",
+    "apps/server/src/modules/material/zip-check.test.ts",
+    "apps/server/src/modules/material/zip-extract.integration.test.ts",
+    "apps/server/src/modules/platform/auth.test.ts",
+    "apps/server/src/modules/platform/cross-session-digest.test.ts",
+    "apps/server/src/modules/platform/doc-conventions.test.ts",
+    "apps/server/src/modules/platform/doc-export.test.ts",
+    "apps/server/src/modules/platform/doc-prompts.test.ts",
+    "apps/server/src/modules/platform/doc-sections.test.ts",
+    "apps/server/src/modules/platform/doc-templates.test.ts",
+    "apps/server/src/modules/platform/external-tools.test.ts",
+    "apps/server/src/modules/platform/platform.integration.test.ts",
+    "apps/server/src/modules/platform/rtm-health.test.ts",
+    "apps/server/src/modules/platform/storage.service.test.ts",
+    "apps/server/src/modules/platform/ui-score.test.ts",
+    "apps/server/src/modules/policy/policy.integration.test.ts",
+    "apps/server/src/modules/req/propose-edits.integration.test.ts",
+    "apps/server/src/modules/req/req.integration.test.ts",
+    "apps/server/src/modules/test/test.integration.test.ts",
+    "packages/shared/src/doc-numbering.test.ts",
+    "packages/shared/src/error-codes.test.ts",
+    "packages/shared/src/fingerprint.test.ts"
+  ],
+  "requiredPrototypeSuites": [
+    "syntax",
+    "logic",
+    "task-data",
+    "design-catalog",
+    "customer-prototype",
+    "customer-authority-boundary",
+    "customer-state-kernel",
+    "customer-route-matrix",
+    "customer-privacy-projection",
+    "prototype-commands",
+    "prototype-effects-integration",
+    "design-baseline",
+    "design-boundary",
+    "prototype-content",
+    "ui-scoring",
+    "selftest",
+    "selftest-boundary",
+    "build-artifact",
+    "merge-basis",
+    "contract-hardening",
+    "main-integration-boundary",
+    "attention-auto",
+    "autopilot-boundary",
+    "review-cases",
+    "boundary",
+    "failure-matrix",
+    "workflow",
+    "regression",
+    "visual",
+    "design-visual"
+  ],
+  "minimumCoverage": {
+    "lines": 90,
+    "branches": 80
+  },
+  "observedTestFiles": [
+    {
+      "path": "apps/server/src/modules/ai/delegations.integration.test.ts",
+      "sha256": "8252fdd082987eb005b80b16bd0c8407728e982ed3b047e2e02912f6a617af75"
+    },
+    {
+      "path": "apps/server/src/modules/ai/models.integration.test.ts",
+      "sha256": "21936ab98606eed63337a091ddd867befae5686dcdc4859a11cc8f622c2d5bb9"
+    },
+    {
+      "path": "apps/server/src/modules/ai/sessions.integration.test.ts",
+      "sha256": "89abd64d08cb493e4ed92eac5341ad010f2211e049ebefe54c8065844f1d1ff9"
+    },
+    {
+      "path": "apps/server/src/modules/ai/stream-pipeline.test.ts",
+      "sha256": "097e52d7b63e5774eba01bd92ed429183c0a7c136f24be83d5dce6e09b84d4b6"
+    },
+    {
+      "path": "apps/server/src/modules/ai/template-draft.test.ts",
+      "sha256": "5ebcbbfda129132ec0fde274d8d775b6867306db4baf67d13123586f604ffcd6"
+    },
+    {
+      "path": "apps/server/src/modules/ai/tools-prompts-usage.integration.test.ts",
+      "sha256": "4aa69fbc7420ee5b46bab4b2125586c0070ebf0c131d5f34c681c3d8f262cd7c"
+    },
+    {
+      "path": "apps/server/src/modules/api/http-map-coverage.test.ts",
+      "sha256": "f68f07b703d4eab017c839216230060665dbb00cc69c80e7c72e5f114054bcfa"
+    },
+    {
+      "path": "apps/server/src/modules/api/idempotency.e2e.test.ts",
+      "sha256": "36385b6a4ac2eeb73dd6cfe568060ecd18fc892eed86f459ad7dab57a1e26fdd"
+    },
+    {
+      "path": "apps/server/src/modules/design/design.integration.test.ts",
+      "sha256": "afd800560e6fa69c01789695d216b34556acfe0fbe2372d4bcc6e3e42a93a9f4"
+    },
+    {
+      "path": "apps/server/src/modules/design/prototype-pages.integration.test.ts",
+      "sha256": "127b2813b54a9961060f2f2b1c03bb2fab0afd8e7c67ffc09963c968885e1473"
+    },
+    {
+      "path": "apps/server/src/modules/design/prototype-pages.test.ts",
+      "sha256": "92a0fa181ccd1cc48bfa99d4bed7c0b2a3daef5778924a19eb7f6c133ad36e73"
+    },
+    {
+      "path": "apps/server/src/modules/dev/dev-routes.e2e.test.ts",
+      "sha256": "9c784822dc0125891ddb4c336c99b3dc7eafe56753c57fc83867c17ce66b3045"
+    },
+    {
+      "path": "apps/server/src/modules/dev/dev.integration.test.ts",
+      "sha256": "4ef1e780fdcb7d08b4f2c9b05af4b68b2987ef9193515e4d26d03232d8f616a3"
+    },
+    {
+      "path": "apps/server/src/modules/evidence/audit.service.test.ts",
+      "sha256": "609028f05b59e649f41217b9ea39c09dff6f12449e11d916b64ab3ea98b852dd"
+    },
+    {
+      "path": "apps/server/src/modules/evidence/command-bus.integration.test.ts",
+      "sha256": "ecab8630c99800cc8519331ab5af4c6d296618dee6b8ab16579fadb57c21be17"
+    },
+    {
+      "path": "apps/server/src/modules/evidence/command-bus.test.ts",
+      "sha256": "1fcc2b2fd6a908b803efbf077c537afdc677b2163782b05b0c7764201b3679aa"
+    },
+    {
+      "path": "apps/server/src/modules/executor/sandbox.integration.test.ts",
+      "sha256": "fc7358727eeac9bbe3ba8fbc1b8da336141896cab20d2103b85b82ec58c5ca57"
+    },
+    {
+      "path": "apps/server/src/modules/integration/integration.test.ts",
+      "sha256": "51437f52d540d9ec8cf56ad6c9b00f1a228695eea9c364e6685a908ba893b127"
+    },
+    {
+      "path": "apps/server/src/modules/material/batch.integration.test.ts",
+      "sha256": "3aa8c565ac5a8fc8adca6422ff233e0de36f0d70211b6e591adea108551b0a78"
+    },
+    {
+      "path": "apps/server/src/modules/material/files.integration.test.ts",
+      "sha256": "0ee080d977ce178883e755e31d03a008f161dc8be8e7873a58df8015b26c675d"
+    },
+    {
+      "path": "apps/server/src/modules/material/materials.e2e.test.ts",
+      "sha256": "efb97f2e10972a5c8ad3d3f7e0f503264228b1fef2e693d27a312a762188bab0"
+    },
+    {
+      "path": "apps/server/src/modules/material/parse-engine.integration.test.ts",
+      "sha256": "2e186a75d529062f3d545fb9a8f81c2f4793ae66a288750dea1da3b356c0bb69"
+    },
+    {
+      "path": "apps/server/src/modules/material/parse.integration.test.ts",
+      "sha256": "40a3176fa6e421c14f4d49a249ab98e03b4493e8528502ed4685bb17f00b73b5"
+    },
+    {
+      "path": "apps/server/src/modules/material/uploads.integration.test.ts",
+      "sha256": "5e37483e592f3f1de42d949d251ffcb428c841f7a441d42694d4468e642a5c19"
+    },
+    {
+      "path": "apps/server/src/modules/material/zip-check.test.ts",
+      "sha256": "f2f8e99c1714741b8a545c63e41ca4e8346e8d7058529f5fecd3959fc01aa55d"
+    },
+    {
+      "path": "apps/server/src/modules/material/zip-extract.integration.test.ts",
+      "sha256": "50ac2a72cda2e944e3fa7e275aab849d87382cd2037f3c75265005e376ce8086"
+    },
+    {
+      "path": "apps/server/src/modules/platform/auth.test.ts",
+      "sha256": "8c06bdc91c91c8c55c484d7c3885b950a9d78c0baacc20ebb7c6da6e6257f4fa"
+    },
+    {
+      "path": "apps/server/src/modules/platform/cross-session-digest.test.ts",
+      "sha256": "131b068f446b87648245f2860facb1266b6f8f8b314bb4a3341c9e02dd2e2580"
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-conventions.test.ts",
+      "sha256": "f48792439088c060911d08e31a8bf450546851fc182cf940d51eff38da6bf72f"
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-export.test.ts",
+      "sha256": "8b7e574b0db9f915fb45ae4d999698f80fbce378673c1e4f069db02899a0cb58"
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-prompts.test.ts",
+      "sha256": "de8d9802173f18d7938d19d5218778aee706ad9c7c8ae928400c337d75a47693"
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-sections.test.ts",
+      "sha256": "3bece95c95533e1e7ddf4431876c06bce42609f8855b6b5a2eabc70babe0e30b"
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-templates.test.ts",
+      "sha256": "39c3ee57d0e3431e01ad6fc29b7f79f015264dc51767121689248fe9a508b8bc"
+    },
+    {
+      "path": "apps/server/src/modules/platform/external-tools.test.ts",
+      "sha256": "b3cb90b6cb3eaf840e741a5b8ea1266cf29dfab93e7f27c0ba5cc6036c3f1330"
+    },
+    {
+      "path": "apps/server/src/modules/platform/platform.integration.test.ts",
+      "sha256": "6c07dbb3692c8f97422e52bb657fdea01fa212fbee078fdfaeefc7c77eb80b89"
+    },
+    {
+      "path": "apps/server/src/modules/platform/rtm-health.test.ts",
+      "sha256": "407f774932a90e4a71668e761881c06bdb343882a2732e3a7b9f76df64c56f82"
+    },
+    {
+      "path": "apps/server/src/modules/platform/storage.service.test.ts",
+      "sha256": "cd6fe59624735467ee71cb8d56169fc1dc6b54994ff604f59bcddd44988a10e8"
+    },
+    {
+      "path": "apps/server/src/modules/platform/ui-score.test.ts",
+      "sha256": "62f2beb673e36fe39c4996066d203f7d178d40b651de1b401a4447ccab1dad4e"
+    },
+    {
+      "path": "apps/server/src/modules/policy/policy.integration.test.ts",
+      "sha256": "eb455bfb2be47182dae4d4a32d2a036a3fe22be98f6d463078fbe34198b3fbf2"
+    },
+    {
+      "path": "apps/server/src/modules/req/propose-edits.integration.test.ts",
+      "sha256": "0bd95d665cc1bc6a9c9c5f24ca136cdd7ba532b74ddddfd4f84d75e6c8c85ef6"
+    },
+    {
+      "path": "apps/server/src/modules/req/req.integration.test.ts",
+      "sha256": "14d19eee4ce1ba93311a8a19fa6534fe1626a3d8d13cf7d7e410577fedebc0ca"
+    },
+    {
+      "path": "apps/server/src/modules/test/test.integration.test.ts",
+      "sha256": "64f42c63dfa85182a945728639a750fa6a6205353571c729ab80fac5da234f43"
+    },
+    {
+      "path": "packages/shared/src/doc-numbering.test.ts",
+      "sha256": "d1e0f96ea3ae20d136f2de546c8ad4d23bafda5cef609b43f0f768d4d360b52b"
+    },
+    {
+      "path": "packages/shared/src/error-codes.test.ts",
+      "sha256": "a820e7b6c285d4126d8f65cec150e3d871ce9ffe21ab0935d5ccd76ca654d12b"
+    },
+    {
+      "path": "packages/shared/src/fingerprint.test.ts",
+      "sha256": "d01e42e35952e40b5aaef96b170c3e00954bbd3851f02051b3f3176eff969ffe"
+    }
+  ],
+  "observedCoverageConfigs": [
+    {
+      "path": "packages/shared/vitest.config.ts",
+      "sha256": "e21acaa9566952179068c0cf233e7c571c1d89d4f8479b3211a935b3d353ca84"
+    },
+    {
+      "path": "apps/server/vitest.config.ts",
+      "sha256": "bce022154e23d79d4ceaf56b6454c6e1b66108f26bd5a9c19a0ad75a4de6b432"
+    }
+  ],
+  "sourceEvidence": "artifacts/software-factory/autonomy-r22/adapter-public-source.json",
+  "rule": "Existing applicable test files/suites cannot be removed from the trusted denominator. New tests are also mandatory. Assertion semantics, altered tests and coverage scope require independent review; this floor does not replace that review."
+}

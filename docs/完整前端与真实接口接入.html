@@ -1,0 +1,58 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>完整前端与真实接口接入 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header a{margin-left:auto}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><h1>贾维斯 · 完整前端与真实接口接入</h1>
+<p>当前扩展版本：19个业务域、118条命令入口。最新能力、边界及验证见 <a href="后台扩展与书房验证.html">后台扩展与书房验证</a>。下面保留首批接入记录，旧数量不作为当前完成率。</p>
+<p>2026-10-05。本轮先对照 V15 核对完整页面，再把既有真实能力接回完整界面。默认入口恢复为完整平台，不再需要在完整演示和五域工作台之间切换才能查看已接功能。</p>
+<h2>使用入口</h2>
+<div class="table-wrap"><table>
+<tr><td>入口</td><td>数据与用途</td></tr>
+<tr><td><code>http://127.0.0.1:3140/</code> 或 <code>?mode=platform</code></td><td>完整真实平台；原管理员账户、实际业务记录、Pi 对话</td></tr>
+<tr><td><code>?mode=demo</code></td><td>完整交互演示；20 页面、7 类大屏、十套主题；模拟数据独立存储</td></tr>
+<tr><td><code>?mode=api</code></td><td>原五域真实工作台，继续保留用于对照与联调</td></tr>
+<tr><td><code>?mode=live</code></td><td>原 S0 控制台，保留旧台账和原 Pi 会话入口</td></tr>
+</table></div>
+<p>真实平台不会读取演示种子，也不会把演示按钮操作写入实际数据库。原 S0 和新 V1 台账暂时分别保留，Pi 查询工具可以读取两批真实记录；系统设置的数据页显示旧台账数量与入口，不静默迁移或删除历史资料。</p>
+<h2>前端核对与修复</h2>
+<p>完整性按页面、页签、具体操作、跨页上下文和数据回显核对，不把“20 个页面能打开”当作所有能力已完成。详细差距、处理和证据见 <a href="frontend-completeness-audit.html">前端核对报告</a>。</p>
+<ol>
+<li>总览恢复四环指标、六域关系/设备矩阵切换、任务泳道与真实时钟；七类大屏分别表达各自重点。</li>
+<li>提醒和关联记录定位到具体对象。项目中新建任务、记录经验保留当前项目，重新进入同一记录可再次打开详情。</li>
+<li>收件恢复独立重复筛选、保留独立决定及采集设备/字段/明确授权；原话与处理理由保留。</li>
+<li>学习计划显示已保存的练习轮次、答句、纠错和分钟，继续保留课程与故事进度。旧记录缺失的信息明确缺项，不补造评分或答案。</li>
+<li>公共家庭屏不显示其他成员的个人学习进度、记忆与唤醒词。</li>
+<li>设置保留完整主题、模型、终端、留存、通知、审计与数据入口。未接入策略不会伪保存。</li>
+<li>十套主题保留完整造型、阶段特效与左侧约 75% 的对话视觉；沉浸状态只显示对话和必要控制。</li>
+<li>未上报 CPU、功耗、计费、远程运行及学习记录明确显示未知或未接入，不再用固定样例投射到真实界面。</li>
+</ol>
+<h2>当前真实能力</h2>
+<div class="table-wrap"><table>
+<tr><td>页面或板块</td><td>已完成的真实接口与行为</td><td>尚未完成的后台能力</td></tr>
+<tr><td>总览中心、大屏中心</td><td>从实际台账聚合、定位对象、更新状态；七屏与十主题保留</td><td>未接入模块保持未知，不能据此声称已部署或执行</td></tr>
+<tr><td>语音对话、模型设置</td><td>Pi SDK 模型目录/认证配置、会话、历史、流式回复、工具调用事件、停止；可选浏览器识别/朗读</td><td>房间常驻语音、独立成员声纹、唤醒词、服务器 ASR/TTS</td></tr>
+<tr><td>统一收件</td><td>原话录入、批注、去重合并/保留独立、研究/经验归档、采集授权记录</td><td>实际被动采集器、记忆/书籍分流</td></tr>
+<tr><td>灵感研究</td><td>人工讨论、问题与标准、证据、方案、决定、研究转项目</td><td>后台研究作业及候选移除命令</td></tr>
+<tr><td>项目管理</td><td>项目、副本、里程碑完成证据、任务规划、归档</td><td>自动读取仓库、完整基础资料编辑</td></tr>
+<tr><td>开发监督</td><td>登记任务、固定技能引用、本人外部报告、暂停/取消台账、独立验收、固定交付包</td><td>Claude Code/Codex 执行器、真实租约、自动推进/重试/监督与预算计量</td></tr>
+<tr><td>经验技能</td><td>原话/经验保存、验证、来源合并、技能发布、技能正文版本、固定版本引用、停用</td><td>普通经验正文编辑、实际终端自动采集、私人资料移除与自动推荐</td></tr>
+<tr><td>设备管理</td><td>实际本机采样、已登记设备、关联项目与任务；其他节点状态未知</td><td>完整资产登记编辑、远程 Agent、休眠/唤醒/控制</td></tr>
+<tr><td>运行服务</td><td>真实交付包、人工验收证据与产物声明；明确尚未部署</td><td>服务登记、运行探测、实际部署/恢复</td></tr>
+<tr><td>运维费用、待办审批</td><td>真实台账预算及实际操作审计</td><td>计费、资源调度、备份记录/恢复作业、业务审批与执行回执</td></tr>
+<tr><td>知识接入、原文校对、知识神殿、学习计划</td><td>完整前端、页签、演示闭环和契约已保留</td><td>真实连接器、扫描文件存储、OCR/逐页校对、原文版本、故事/课程持久化</td></tr>
+<tr><td>家庭安排、记忆神殿、专属管家</td><td>完整前端与演示隔离流程已保留</td><td>家庭认证、个人记忆、生活安排、个性化语音与真实学习记录</td></tr>
+</table></div>
+<p>目前完整界面已接回已有能力；不能认定所有页面的后台都已实现。缺能力的入口保持可见，按实际情况禁用或返回明确未接入错误，不调用模拟 reducer 伪造完成。</p>
+<h2>Pi 的使用原则</h2>
+<p>继续使用已安装 Pi SDK 的模型运行时、AgentSession、SessionManager、认证、资源加载、流式事件和 abort，不另造一套模型客户端。智能判断通过 Pi 运行；业务对象、版本、授权和交付状态由业务接口校验。</p>
+<p>Pi 当前可调用 7 个只读工具：项目、设备、任务、经验、收件、研究、交付版本。收件/研究/项目/经验页可把讨论草稿送到 Pi 对话，由本人确认发送。模型回答不会自动成为已验证证据、批准决定、已启动执行或实际部署回执。接入范围见 <a href="pi-sdk-integration.html">Pi SDK 接入说明</a>。</p>
+<p>后续研究、知识解读、疑点整理、课程建议、意图识别和记忆候选优先复用 Pi；ASR/TTS、文件存储、OCR 输入输出、设备采样、远程执行和费用账单仍需专门服务。它们的真实结果交给 Pi 理解，而不是用模型文字替代执行结果。</p>
+<h2>接口与数据保护</h2>
+<p>V1 沿用原管理员 Cookie 会话。请求不允许冒用成员或对象所有者；家庭范围当前是管理员管理的资料范围，尚不代表家人可独立登录。</p>
+<p>命令使用 <code>{ commandId, expectedVersion, scope, payload }</code>。打开表单时固定对象修订与范围，冲突不自动覆盖新记录。响应中断后的相同提交复用 commandId，不重复建对象；表单等待提交、保留失败输入，成功后刷新实际记录。保存已成功但刷新失败时明确提示刷新，不要求再次提交。</p>
+<p>退出和会话失效清除界面私有记录。旧认证周期的请求不得覆盖新会话。主题与本机通知偏好单独保存在浏览器，不存 API 密钥、业务正文或 Pi 草稿。</p>
+<p>V1 当前 149 个操作中，54 个标记已实现、95 个待实现；36 个命令处理入口已接。54 是接口处理统计，包含明确拒绝未就绪执行器的入口，不能理解为 54 项完整运行能力。每个操作的具体能力以 OpenAPI 状态和运行能力为准，接口存在不代表执行器就绪。<a href="api-contract-status.html">逐接口状态</a> · <a href="openapi-v1-planned.json">OpenAPI 契约</a>。</p>
+<h2>验证与后续实施</h2>
+<p>本轮后台 43 项测试通过；契约 437 个 Schema、2,056 个本地引用有效。完整真实界面 13 项检查覆盖认证、20 页面、7 屏、10 主题、手机布局、真实对象跳转、演示隔离与退出清理。五域浏览器闭环 19 项、命令映射 10 项、Pi 隔离验收 9 项通过；后续专项 10 项检查覆盖同一记录再次进入、关闭详情后刷新、旧认证请求失败及真实家庭页状态。前端独立核对通过 44 项盘点、4 项跨页流程、17 种布局及 4 项公共总览隐私检查。最终结果见 <code>artifacts/platform-shell-qa</code>、<code>artifacts/platform-operations-qa</code>、<code>artifacts/pi-chat-qa</code> 和 <code>artifacts/frontend-completeness-audit/current</code>。</p>
+<p>测试未向实际业务库灌入样例，未请求真实模型或远程机器。Pi 未配置和传输异常使用隔离夹具测试；它不能代替真实供应商模型和房间硬件联调。</p>
+<p>后续始终按完整前端接入，分别完成真实模块：设备/服务与执行回执、家庭身份/记忆、知识原文/校对/课程、房间语音、研究与开发监督、部署恢复与计费。每一模块都要同时核对列表、详情、写入、异步作业、错误回显、跨页联动和权限；不能只完成列表接口或另建缩水页面。</p>
+<h2>本机更新记录</h2>
+<p>2026-10-05 21:34（北京时间）完成更新前备份及服务重启。原管理员账户保留；健康接口返回 <code>ok</code>，完整平台入口返回 HTTP 200，服务继续只监听 <code>127.0.0.1:3140</code>。启动核验记录为 <code>artifacts/platform-shell-qa/deployment.json</code>。</p>
+<p>备份目录为 <code>artifacts/backups/complete-platform-20261005-213426</code>，包含实际数据库与 Pi 专用资料；备份维持受限访问，不公开密钥或会话正文。浏览器沿用原账号登录即可进入完整真实平台。</p>
+<p>这次更新交付完整界面及现有真实能力接入，不表示剩余 95 个契约操作、远程机器、房间语音或开发执行器已经完成。</p></main></html>

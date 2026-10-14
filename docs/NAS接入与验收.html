@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="112持续监管威联通NAS，统一展示四个内置卷、三个扩展卷、磁盘健康与UPS。">
+  <meta name="jarvis-source-sha256" content="d69c4979ee7c212a5a1b9166c26fd750cff06e797e58e3e8c3e9f27506458e4c">
+  <title>贾维斯 · 威联通 NAS 接入</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">NAS 接入 R9</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="NAS%E6%8E%A5%E5%85%A5%E4%B8%8E%E9%AA%8C%E6%94%B6.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 6 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">使用入口</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">已确认的配置</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">数据卷与物理盘</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">三个扩展盘</a>
+<a class="toc-link level-3" href="#section-3-2" data-parent="3">磁盘健康、快照与备份</a>
+<a class="toc-link level-3" href="#section-3-3" data-parent="3">UPS 与断电保护</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">持续监管与权限</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">管理入口检测与后续接入</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">接入脚本与证据</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-08<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">设备监管 / 存储容量 / 持续采集</p>
+        <h1 id="document-title">贾维斯 · 威联通 NAS 接入</h1>
+        <p class="subtitle">112持续监管威联通NAS，统一展示四个内置卷、三个扩展卷、磁盘健康与UPS。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-08</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>120</strong><span>威联通 NAS</span></div><div class="stat"><strong>4 个</strong><span>独立数据卷</span></div><div class="stat"><strong>15 秒</strong><span>持续资源采样</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><h2 id="section-1" tabindex="-1">使用入口</h2>
+<p><a href="https://cc-jarvis.ikvein.com/?mode=platform&rev=nas-protection-r9#theme=stark&view=machines">贾维斯设备中心</a> → <strong>120 · 威联通 NAS</strong> → 设备详情 → 硬件资源，可查看CPU、内存、内置/扩展卷容量、磁盘健康、快照备份及UPS。</p>
+<p>设备卡片的“运行项目”进入此NAS的项目列表，打开 <strong>QTS 管理入口</strong>，可以访问NAS管理页、查看入口检测结果及管理加密保存的登录凭据。NAS管理网址是<a href="https://192.168.10.120:5001">局域网HTTPS入口</a>，使用NAS现有自签证书；从外网查看资源使用贾维斯的域名入口。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-2" tabindex="-1">已确认的配置</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>实际信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>地址 / 主机名</td>
+<td>192.168.10.120 / NAS9527</td>
+</tr>
+<tr>
+<td>型号</td>
+<td>TS-453Dmini；设备内部型号TS-X53D</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>用户确认QTS 5.2.6.3195；设备读取Version=5.2.6、Build Number=20250715</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel Celeron J4125，4线程，2.00GHz</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>8GB配置，系统可见约7.607GiB</td>
+</tr>
+<tr>
+<td>数据卷</td>
+<td>4个，逻辑容量合计约14.89TiB</td>
+</tr>
+<tr>
+<td>管理入口 / 文件服务</td>
+<td>HTTPS 5001，HTTP 8080；SMB 445已可连接</td>
+</tr>
+</tbody></table></div>
+<p>内存使用率使用系统可用内存计算。容量以GiB/TiB展示，卷合计是文件系统逻辑容量，物理磁盘容量另行列出。QTS根目录使用RAM分区，其使用率不适合作为NAS资料盘指标，因此NAS卡片展示“数据卷使用”。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-3" tabindex="-1">数据卷与物理盘</h2>
+<p>以下是接入时的快照；最新余量和使用率以平台采样为准。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>数据卷</th>
+<th>总量 GiB</th>
+<th>可用 GiB</th>
+<th>已用约</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CACHEDEV1_DATA</td>
+<td>628.003</td>
+<td>588.455</td>
+<td>6.2%</td>
+</tr>
+<tr>
+<td>CACHEDEV2_DATA</td>
+<td>7308.910</td>
+<td>2509.675</td>
+<td>65.7%</td>
+</tr>
+<tr>
+<td>CACHEDEV3_DATA</td>
+<td>3663.615</td>
+<td>1465.952</td>
+<td>60.0%</td>
+</tr>
+<tr>
+<td>CACHEDEV4_DATA</td>
+<td>3649.243</td>
+<td>3629.666</td>
+<td>0.5%</td>
+</tr>
+</tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>盘位</th>
+<th>介质</th>
+<th>接入时读取的型号</th>
+<th>系统容量 GiB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>SSD</td>
+<td>WDC WDS100T1R0A-68A4W0</td>
+<td>931.513</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HDD</td>
+<td>Seagate ST4000NE001-2MA101</td>
+<td>3726.023</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HDD</td>
+<td>Seagate ST4000VN008-2DR166</td>
+<td>3726.023</td>
+</tr>
+<tr>
+<td>4</td>
+<td>HDD</td>
+<td>Seagate ST8000NE001-2M7101</td>
+<td>7452.036</td>
+</tr>
+</tbody></table></div>
+<p>盘位及型号由每次采集的QTS工具和系统磁盘元数据读取。QTS当前存储布局显示Single；系统卷为flexible，其余为Static。盘位与卷编号分别来自QTS，不能按数字相同推定为同一磁盘。</p>
+<h3 id="section-3-1" tabindex="-1">三个扩展盘</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>挂载卷</th>
+<th>总量 GiB</th>
+<th>可用 GiB</th>
+<th>已用约</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/share/external/DEV3304_1</td>
+<td>14841.783</td>
+<td>12843.158</td>
+<td>13.5%</td>
+</tr>
+<tr>
+<td>/share/external/DEV3306_1</td>
+<td>931.512</td>
+<td>6.884</td>
+<td>99.3%</td>
+</tr>
+<tr>
+<td>/share/external/DEV3307_1</td>
+<td>14841.694</td>
+<td>6093.004</td>
+<td>58.9%</td>
+</tr>
+</tbody></table></div>
+<p>扩展盘由QTS的机箱/端口与真实设备绑定核对；当前是两块约16TB、一块约1TB。型号使用系统SCSI供应商/产品描述，不把被截断的描述推测成完整型号。内置卷和扩展卷分别统计，1TB扩展盘已用约99.3%，仅约6.9GiB可用；容量达到85%提醒、95%严重提醒。</p>
+<h3 id="section-3-2" tabindex="-1">磁盘健康、快照与备份</h3>
+<p>四块内置盘读取QTS原生SMART属性及温度，接入时约40–50℃，未发现属性阈值/待处理扇区告警。属性无告警不代表整盘自检已经通过。SMART缓存最多每5分钟使用原生工具刷新，不启动自检；超过30分钟显示过期。盘温60℃提醒、65℃严重提醒。三个外置盘的USB桥接当前未提供SMART和温度，保持“桥接未提供”，不生成正常读数。<a href="https://docs.qnap.com/operating-system/qts/5.2.x/en-us/disk-health-63ACC54A.html">QTS磁盘健康说明</a></p>
+<p>快照监测读取QTS配置：当前数量0，数据卷1的01:00计划已配置。HBS监测以只读方式读取现有任务库：当前没有已配置任务；未知状态不映射成成功。此轮未新建快照或备份任务。</p>
+<h3 id="section-3-3" tabindex="-1">UPS 与断电保护</h3>
+<p>已接入APC / American Power Conversion Back-UPS BK650M2-CH（USB HID），数据来自NAS现有NUT服务。接入时市电供电、电量100%、负载约13–16%、预计续航2605秒（约43分钟）、输入电压约224–226V；续航随真实负载变化。</p>
+<p>NAS现有保护已启用，停电等待8分钟后关机；网络UPS服务未开启。此轮读取并保留原配置，不通过断电、拔线或关机来测试。监测电池供电与低电量并显示提醒。这只说明NAS的UPS状态，其他服务器未被自动纳入这套断电保护。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-4" tabindex="-1">持续监管与权限</h2>
+<p>112的常驻监测服务每15秒发起固定SSH采集；NAS在本机使用独立Ed25519密钥签名，112核对绑定设备、签名和时间，再通过既有Agent接口入库。CPU、内存、内置卷汇总容量进入已有资源趋势；扩展卷、SMART、快照/HBS与UPS为每分钟采集的当前读数。保护缓存超过3分钟显示过期，不用过期读数产生当前告警。超过60秒的心跳显示未连接或过期，详情保留带时间的历史数据。</p>
+<p>NAS使用持久化的<code>/etc/config/jarvis-nas</code>保存只读采集器、签名密钥和节点配置。系统采集使用QTS工具与OpenSSL；扩展保护读取复用已安装HBS的Python运行时，无新增Python安装或容器。新增一分钟一次的固定root元数据采集任务，写入root拥有的缓存；受限SSH只读取缓存并签名。原cron条目保留并备份，不扩展SSH密钥的操作权限。HBS运行时不可用时基础CPU/内存/内置容量退回原Shell采集，保护读数过期后明确显示未知。监测由112发起，联想关机后仍继续运行。</p>
+<p>首次配置使用提供的管理员账号及sudo。QTS只允许已授权的管理员通过SSH登录，因此持续监测沿用该账号，并为112添加受限公钥：仅允许112来源、只执行固定采集脚本，关闭交互终端及转发。Agent只授权<code>telemetry</code>，未配置NAS的远程启停执行器。<a href="https://docs.qnap.com/operating-system/qts/5.2.x/en-us/enabling-ssh-on-the-nas-61C229CD.html">QTS的SSH权限说明</a></p>
+<p>SSH主机密钥固定为<code>SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas</code>。这是首次连接观察后固定的信任记录，登录后已核对NAS9527；未声称通过独立设备控制台核对。后续主机密钥变化会拒绝连接。</p>
+<p>NAS管理账号密码通过既有项目凭据库加密保存，普通设备记录与监测采样不包含密码。临时<code>.secrets/nas-connection.json</code>在接入成功并确认凭据可解密后删除。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-5" tabindex="-1">管理入口检测与后续接入</h2>
+<p>QTS管理项目每60秒读取无认证的登录页，确认HTTP响应；它只证明入口可达。CPU、内存和容量由NAS签名采样提供，登录凭据保存在独立凭据库中。</p>
+<p>已接入SMART属性/温度、扩展卷、HBS任务、快照配置和UPS。知识资料的实际导入以及新建备份任务需要指定来源目录与目标范围；当前不扫描家庭文件内容。入口检测不能当成磁盘健康或备份成功。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-6" tabindex="-1">接入脚本与证据</h2>
+<p>接入工具：<a href="../scripts/onboard-qnap-nas.mjs">onboard-qnap-nas.mjs</a>。先<code>prepare</code>配置受限采集与配对，再发布支持NAS数据卷的后台/前端，最后<code>activate</code>接入112的常驻采集与管理项目。Linux服务器的后续增量接入会保留已有NAS监测节点。</p>
+<p>连接证据、签名样本与最终验收分别保存在<a href="../artifacts/nas-onboarding/preflight.json">预检</a>、<a href="../artifacts/nas-onboarding/onboarding.json">接入登记</a>、<a href="../artifacts/nas-onboarding/signed-snapshot.json">签名样本</a>和<a href="../artifacts/nas-onboarding/verification.json">验收报告</a>。真实生产验收已通过：签名校验、后续心跳、四卷汇总、监测历史、加密凭据和管理入口均已核验；现有语音服务仍就绪。界面验收覆盖设备卡片、七个卷、七个盘位、四个详情标签、项目入口、十套主题和手机布局，见<a href="../artifacts/nas-onboarding/ui/report.json">界面验收</a>。保护监测新增容量/UPS告警、过期处理、磁盘绑定及敏感字段过滤验证；相关后台测试31项通过，采集器2项测试通过。</p>
+<p>NAS功能在R9完成验收；112与101随后发布同一<code>20261008-voice-flow-r11</code>平台代码；112承担当前业务和NAS采集，101保持冷备。NAS资产与最新业务库持续复制到101、以及主机故障后的NAS采集接管，仍属于主备复制工作的后续范围。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="NAS%E6%8E%A5%E5%85%A5%E4%B8%8E%E9%AA%8C%E6%94%B6.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

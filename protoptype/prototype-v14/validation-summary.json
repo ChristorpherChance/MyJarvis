@@ -1,0 +1,22 @@
+{
+  "artifact": "贾维斯V14.0 · 十套主题与全平台交互原型.html",
+  "status": "passed",
+  "retained": {"themes": 10, "routes": 20, "boards": 7, "embeddedPreviews": 30},
+  "desktopViewports": ["1366x768", "1440x900"],
+  "mobileViewport": "375x812",
+  "reports": [
+    {"scope": "dialogue, drafts, fullscreen, interrupts, privacy, routes, theme lifecycle", "checks": 65, "path": "artifacts/prototype-v14-qa/functional-report.json"},
+    {"scope": "navigation, directory, role access, drawer, compact rail", "checks": 103, "path": "artifacts/prototype-v14-navigation-qa/navigation-report.json"},
+    {"scope": "18 page titles, body content, forms and scope", "checks": 63, "path": "artifacts/prototype-v14-content-qa/report.json"},
+    {"scope": "20 breadcrumbs, save action, family order, three mobile pages", "checks": 13, "path": "artifacts/prototype-v14-content-qa/refine-report.json"},
+    {"scope": "dashboard data, actions, role access", "checks": 46, "path": "artifacts/prototype-v14-dashboard-qa/report.json"},
+    {"scope": "dashboard typography, first viewport, failure priority and exact object", "checks": 45, "path": "artifacts/prototype-v14-dashboard-qa/final-report.json"},
+    {"scope": "ten theme family decoration, desktop/mobile, focus and cropping", "checks": 55, "path": "artifacts/prototype-v14-dashboard-qa/family-decoration-report.json"},
+    {"scope": "52 desktop visual surfaces and 20 mobile route widths", "path": "artifacts/prototype-v14-qa/audit/visual-surface-report.json"},
+    {"scope": "20 final theme previews and viewport geometry", "path": "artifacts/prototype-v14-qa/preview-capture-report.json"},
+    {"scope": "standalone package, fresh embedded previews, theme gallery and all routes", "checks": 3, "path": "artifacts/prototype-v14-qa/package-report.json"}
+  ],
+  "scriptErrors": 0,
+  "externalRequests": 0,
+  "notes": "Later checks cover the typography, breadcrumb, button placement, priority and family decoration refinements. Historical record and family caption wording do not change business behavior. Existing V13 conversation layout and guards remain in use."
+}

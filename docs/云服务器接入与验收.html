@@ -1,0 +1,72 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>云服务器接入与验收 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="https://192.168.10.112:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 实测机器与用途</a><a href="#section-2">2. 连接与权限</a><a href="#section-3">3. 监测如何运行</a><a href="#section-4">4. 已登记核心服务</a><a href="#section-5">5. 部署与核验</a><a href="#section-6">6. 后续扩展</a><a href="#section-7">7. 可复用文件</a><a href="#section-8">8. 后续统一监管版本</a></nav><h1>贾维斯 · 云服务器接入与验收</h1>
+<p>更新：2026-10-07。应用版本：20261007-cloud-monitoring。</p>
+<p><b>广州、日本两台云服务器已成功连接并接入112上的贾维斯。设备中心展示真实资源，运行服务展示8项核心服务的签名状态。每15秒采样，监测不依赖联想在线。</b></p>
+<p><a href="https://192.168.10.112:3140/?mode=platform#theme=stark&amp;view=machines">打开设备中心</a> · <a href="https://192.168.10.112:3140/?mode=platform#theme=stark&amp;view=services">打开运行服务</a></p>
+<h2 id="section-1">1. 实测机器与用途</h2>
+<div class="table-wrap"><table>
+<tr><td>节点</td><td>地址</td><td>实际配置</td><td>保留用途</td><td>贾维斯接入</td></tr>
+<tr><td>广州 GZ</td><td>8.163.127.192</td><td>Ubuntu 22.04.5；2核；1.571GiB内存；39.01GiB系统盘</td><td>网站、Nginx、frps内网穿透</td><td>资源监测、2项核心服务状态</td></tr>
+<tr><td>日本 JP</td><td>8.209.253.19</td><td>Ubuntu 24.04.4；2核；3.417GiB内存；78.37GiB系统盘</td><td>CPA模型接口、WireGuard、网络代理、CCR</td><td>资源监测、6项核心服务状态</td></tr>
+</table></div>
+<p>现有网站、隧道和模型服务继续使用原配置。两台云节点不承担家庭主备中心，也没有复制聊天、家庭记忆、书籍、OAuth凭据或模型密钥。日本CPA尚未配置成贾维斯的Pi模型供应商，本次接入的是服务器与服务监测。</p>
+<h2 id="section-2">2. 连接与权限</h2>
+<div class="table-wrap"><table>
+<tr><td>用途</td><td>使用账号</td><td>权限与密钥位置</td></tr>
+<tr><td>联想管理广州</td><td>jmp-superopen</td><td>现有sudo管理权限；新增本电脑独立密钥</td></tr>
+<tr><td>联想管理日本</td><td>root</td><td>已验证独立SSH密钥登录</td></tr>
+<tr><td>贾维斯读取两台云节点</td><td>jarvis-monitor</td><td>无sudo；SSH密钥只能运行固定采样器；禁用转发、交互终端等能力</td></tr>
+<tr><td>112定期采集</td><td>jarvis-cloud-relay</td><td>独立低权限服务；两把私有SSH密钥仅保存在112</td></tr>
+</table></div>
+<p>本电脑私钥位于C:/Users/Admin/.ssh/jarvis-cloud；项目中的连接包只包含公钥、主机指纹、授权脚本和本地连接配置。其他电脑应通过通用授权工具生成自己的密钥。</p>
+<pre><code>ssh -F artifacts/server-access/cloud-lenovo/ssh-config jarvis-gz
+ssh -F artifacts/server-access/cloud-lenovo/ssh-config jarvis-jp</code></pre>
+<p>广州主机沿用本机已有信任记录；日本首次连接采用首次使用信任，并核对档案主机名，随后固定主机密钥。日本指纹并未声称经过云控制台独立核对。后续连接会拒绝密钥变化。</p>
+<div class="table-wrap"><table>
+<tr><td>节点</td><td>固定的Ed25519主机指纹</td></tr>
+<tr><td>GZ</td><td>SHA256:tZOGpZJGiAM7MMMMgNRYqsPh8KvgTCVjpJt/X042FYg</td></tr>
+<tr><td>JP</td><td>SHA256:7TAOrxrXao9DdDHHU5Zghj12P/S8K3YTbTqzDA9h6p0</td></tr>
+</table></div>
+<h2 id="section-3">3. 监测如何运行</h2>
+<p>112发起固定SSH连接 → 云节点读取本机资源和允许的systemd单元 → 云节点用自己的Ed25519私钥签名 → 112核对来源、设备、路径和时间 → 中央既有Agent接口再次核验 → 保存资源趋势和服务状态。</p>
+<p>没有新增公网端口，也不要求云服务器访问家庭内网。签名私钥保留在对应云节点，112持有公钥，不能替云节点伪造读数。</p>
+<p>采样包括CPU、内存、磁盘使用率与余量、负载、运行时间。GPU和功耗没有真实来源时保持未知。资源读数每15秒更新；服务状态变化立即写入，不变时约30秒刷新，超过60秒显示观察过期。</p>
+<p>云端采样器使用已有Python与OpenSSL，不安装完整贾维斯或Node运行环境。112的转发服务使用独立Node可执行文件，避免把监测账号加入业务账号组。</p>
+<h2 id="section-4">4. 已登记核心服务</h2>
+<div class="table-wrap"><table>
+<tr><td>节点</td><td>已接入单元</td></tr>
+<tr><td>GZ</td><td>nginx.service、frps.service</td></tr>
+<tr><td>JP</td><td>nginx.service、cliproxyapi.service、wg-quick@wg0.service、tinyproxy.service、danted.service、ccr.service</td></tr>
+</table></div>
+<p>进程运行、单元生效、进程停止与进程失败分别展示。WireGuard的active/exited表示单元已生效，不当作常驻进程。进程状态不能证明网站或模型调用可用，应用健康仍以独立探测为准；本次未调用付费模型，也未猜测服务版本。</p>
+<p>上报只能观察同一设备上登记为systemd且单元名称完全一致的服务。跨设备、过期、重复、错误单元和撤销后的请求都会拒绝。云节点只授权telemetry与service-status，没有开发、发布、重启、休眠或原始日志采集能力。</p>
+<h2 id="section-5">5. 部署与核验</h2>
+<p>112和101已切换到相同的20261007-cloud-monitoring代码；112业务正常，101仍为冷备，业务停止。旧版本及切换前配置、数据保存在各机/var/lib/jarvis-control/pre-cloud-monitoring，原发布目录也保留。</p>
+<p>云端采样器：/opt/jarvis-cloud-agent/collector.py；固定配置：/etc/jarvis-cloud-agent/node.json；云签名私钥：/var/lib/jarvis-cloud-agent/signing.key。</p>
+<p>112常驻单元：jarvis-cloud-relay.service；配置：/etc/jarvis-cloud-relay/config.json；最近采集状态：/var/lib/jarvis-cloud-relay/status.json。服务已设置开机启动和失败重启。项目中的脚本没有嵌入管理员密码、会话或私钥。</p>
+<div class="table-wrap"><table>
+<tr><td>验收</td><td>结果</td></tr>
+<tr><td>两台SSH登录、主机名与固定指纹</td><td>通过</td></tr>
+<tr><td>从112实际连接两台云节点</td><td>通过</td></tr>
+<tr><td>完整后台测试，以jarvis非root账号运行</td><td>251项：247通过、4跳过、0失败</td></tr>
+<tr><td>转发来源、签名、固定路径与过期校验</td><td>1项通过</td></tr>
+<tr><td>112/101实际ASR、TTS、中文OCR与角色验证</td><td>两台均通过</td></tr>
+<tr><td>实际入口启动、角色撤销和备机启动保护</td><td>两台各1项通过</td></tr>
+<tr><td>云监测账号无sudo、SSH强制固定命令</td><td>两台均通过</td></tr>
+<tr><td>前后端类型检查与正式构建</td><td>通过</td></tr>
+<tr><td>接口契约核对</td><td>328项处理器，767个定义，2773个引用</td></tr>
+<tr><td>生产界面验收</td><td>6项通过：两台设备、真实资源、单元状态、后续心跳、手机布局；保留TLS校验</td></tr>
+</table></div>
+<p>后台跳过项为Windows SAPI、需要root所有权的控制文件夹具、两项需要独立OCR环境的测试；不是失败或已经执行。部署机器的角色、ASR/TTS/OCR由单独的Linux实测脚本核验，结果另存。</p>
+<p><a href="../artifacts/cloud-nodes/report.json">完整验收报告</a> · <a href="../artifacts/cloud-nodes/onboarding.json">接入登记</a> · <a href="../artifacts/cloud-nodes/backend-tests.json">后台测试</a> · <a href="../artifacts/cloud-nodes/ui/report.json">界面验收</a> · <a href="../artifacts/cloud-nodes/activation.json">发布记录</a></p>
+<h2 id="section-6">6. 后续扩展</h2>
+<ol>
+<li>逐个关联云服务器上其他项目，配置应用级健康检查和明确授权的日志来源。</li>
+<li>若要让Pi使用日本模型接口，需要单独配置可达链路、供应商认证、模型和预算，再验证实际调用。现有CPA保持独立运行。</li>
+<li>云服务发布、重启等操作按固定程序和逐次审批接入，监测账号不会自动提权。</li>
+<li>101故障接替时，应为它生成独立监测SSH密钥并完成授权、同步节点登记与签名公钥。当前持续数据同步、自动接替仍未实现，不能把冷备宣称为热备。</li>
+</ol>
+<h2 id="section-7">7. 可复用文件</h2>
+<p>连接清单：config/servers.cloud.json。通用SSH工具：scripts/server-access.mjs。云节点采样与转发：scripts/cloud-node-collector.py、scripts/cloud-node-relay.mjs。接入与部署：scripts/onboard-cloud-nodes.mjs、scripts/deploy-cloud-monitoring.mjs。界面验收：scripts/qa-cloud-nodes.cjs。最终复核：scripts/verify-cloud-nodes.mjs。</p>
+<p>接入工具可复查并复用已有机器、单元和配对，不以人工心跳代替真实在线。当前部署脚本针对这两台云节点和112/101，新服务器请先通过通用授权工具核对机器信息，再扩展固定清单与单元绑定。</p>
+<h2 id="section-8">8. 后续统一监管版本</h2>
+<p>2026-10-07已升级为20261007-managed-stable，现有云节点身份保持不变，并追加101、112、116及遗漏的业务服务。当前统一监管5台服务器、28个单元。本文前面的测试与发布报告保留为首次云节点接入的历史证据；当前状态见<a href="全部服务器监管接入与验收.html">全部服务器监管接入与验收</a>及<a href="全部服务器监管接入与验收.html">HTML版</a>。</p></main></html>

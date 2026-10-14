@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path='docs/openapi-v1-planned.json',d=JSON.parse(fs.readFileSync(path,'utf8')),s=d.components.schemas;
+const obj=(properties,required=Object.keys(properties))=>({type:'object',additionalProperties:false,properties,required}),str={type:'string'},num={type:'number',minimum:0},integer={type:'integer',minimum:0},date={type:'string',format:'date-time'},ref=name=>({$ref:'#/components/schemas/'+name}),nullable=v=>({anyOf:[v,{type:'null'}]});
+s.CpuPowerSample=obj({source:{const:'intel-rapl'},watts:{type:'number',minimum:0,maximum:1000},observedAt:date,windowSeconds:{type:'number',minimum:1,maximum:60}});
+s.ExecutionHeartbeatInput.properties.cpuPower=ref('CpuPowerSample');
+if(s.InfrastructureRecord.properties.telemetry?.properties)s.InfrastructureRecord.properties.telemetry.properties.cpuPower=ref('CpuPowerSample');
+if(s.MonitorPoint.properties.values?.properties)s.MonitorPoint.properties.values.properties.cpuPackageWatts=nullable(ref('MonitorMetric'));
+s.PowerProfile=obj({machineId:{type:'string',format:'uuid'},cpuModel:{type:'string',minLength:1,maxLength:100},tdpWatts:{type:'number',minimum:5,maximum:500},dimmCount:{type:'integer',minimum:1,maximum:32},ssdCount:{type:'integer',minimum:0,maximum:32},hddCount:{type:'integer',minimum:0,maximum:32},evidence:{type:'string',minLength:1,maxLength:1000}});
+s.PowerConfig=obj({version:integer,profiles:{type:'array',maxItems:100,items:ref('PowerProfile')}});
+s.PowerConfigInput=obj({expectedVersion:integer,profiles:{type:'array',maxItems:100,items:ref('PowerProfile')}});
+s.PowerProjection=obj({minimumKWh:num,maximumKWh:num,assumption:str});
+const range={type:'array',minItems:2,maxItems:2,items:num};
+s.PowerEstimate=obj({minimumWatts:num,maximumWatts:num,indicativeWatts:num,method:{enum:['rapl-plus-components','cpu-load-plus-components']},confidence:{const:'low'},observedAt:date,assumptions:obj({boardAndFansWatts:range,dimmWatts:range,ssdWatts:range,hddWatts:range,psuEfficiency:range}),projection30Days:ref('PowerProjection')});
+s.PowerNode=obj({machineId:str,name:str,scope:{const:'whole-computer-estimate'},includes:str,profile:nullable(ref('PowerProfile')),status:{enum:['excluded','unconfigured','unknown','estimated']},reason:str,estimate:nullable(ref('PowerEstimate')),cpuPackage:nullable(obj({watts:num,observedAt:date,windowSeconds:num,source:{const:'intel-rapl'},scope:{const:'cpu-package-only'}}))});
+s.PowerSummary=obj({at:date,nodes:{type:'array',items:ref('PowerNode')},total:nullable(obj({minimumWatts:num,maximumWatts:num,projection30Days:obj({minimumKWh:num,maximumKWh:num})})),estimatedNodes:integer,localNodes:integer,excludedNodes:integer,note:str});
+s.GatewayDiscoverInput=obj({apiKey:{type:'string',minLength:1,maxLength:8192,writeOnly:true}},[]);
+s.GatewayCatalog=obj({provider:{const:'superopen'},baseUrl:{const:'https://gw.superopen.top'},api:{const:'anthropic-messages'},models:{type:'array',minItems:1,maxItems:1000,items:obj({id:str,name:str})},discoveredAt:date,pricing:{const:'unavailable'}});
+function operation(id,summary,result,input){return {operationId:id,summary,tags:['功耗与模型'],security:[{SessionCookie:[]}],'x-implementation-status':'implemented',...(input?{requestBody:{required:true,content:{'application/json':{schema:ref(input)}}}}:{}),responses:{200:{description:'实际配置或明确标记的估算',content:{'application/json':{schema:ref(result)}}},400:{description:'输入无效或网关未就绪'},401:{description:'请先登录'},409:{description:'配置版本冲突'}}};}
+d.paths['/api/runtime/power']={get:operation('getLocalPowerEstimate','本地物理服务器整机估算与CPU芯片功率；云服务器排除','PowerSummary')};
+d.paths['/api/runtime/power/profiles']={get:operation('getLocalPowerProfiles','经核实的本地硬件估算清单','PowerConfig'),put:operation('setLocalPowerProfiles','按版本保存本地服务器硬件估算清单','PowerConfig','PowerConfigInput')};
+d.paths['/api/settings/pi/gateway/discover']={post:operation('discoverSuperopenModels','私有认证读取SuperOpen真实模型列表；不会发起对话','GatewayCatalog','GatewayDiscoverInput')};
+s.PiConnectionCheck=obj({ok:{type:'boolean'},status:{enum:['complete','failed','cancelled']},provider:str,model:str,reply:{type:'string',maxLength:500},checkedAt:date});
+d.paths['/api/settings/pi/test']={post:operation('testPiConnection','通过Pi SDK发送一条最小测试消息，保存实际用量','PiConnectionCheck')};
+require('./telemetry-contract.cjs')(d);fs.writeFileSync(path,JSON.stringify(d,null,2)+'\n');console.log('Power + Pi gateway contract updated');

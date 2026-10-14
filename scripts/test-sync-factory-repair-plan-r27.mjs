@@ -1,0 +1,41 @@
+/** R27 metadata tests: actual controller/schema, preservation and durable replay; local only. */
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,rm,readFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {randomUUID} from 'node:crypto';
+import {tsImport} from 'tsx/esm/api';
+import Fastify from 'fastify';
+import {r27MetadataScope as M,r27Basis,r27NextAction,r27DecisionPayload,r27PlanPayload,applyR27Intent,parseR27MetadataArguments,r27MetadataFailure} from './sync-factory-repair-plan-r27.mjs';
+import {repairScope as S,sha} from './run-factory-main-repair-r26.mjs';
+import {acceptanceScope as A} from './run-factory-repair-acceptance-r26.mjs';
+const at='2026-10-12T03:00:00.000Z',command='11111111-1111-4111-8111-111111111111';
+function plan(){return {planId:M.planId,projectId:S.projectId,ownerId:S.ownerId,scope:'personal',mode:'acceptance',revision:7,title:'现有成果验收',goal:'原74目标和原criteria保持',currentStepId:'repair',nextAction:'此前修复动作',automaticDispatch:false,independentAcceptance:false,steps:[{id:'first',title:'首轮',goal:'原目标1',criteria:['原标准1'],taskIds:['98ee355a-6912-46c1-b551-df4ba7ac6030'],runIds:['e5ca06dfe49f0e3692b90b0fa9f0120ebc58e849'],nextAction:null},{id:'second',title:'复验',goal:'原目标2',criteria:['原标准2'],taskIds:['bf43cd17-453d-428f-81c3-2a0020726a31'],runIds:['f4b26c4c95047ff24f2f5eff7a21ec7d14c579a2'],nextAction:null},{id:'repair',title:'修复',goal:'旧失败全部保留',criteria:['45文件/30原型/90-80覆盖原标准'],taskIds:[A.nativeTaskId,'456b2038-a782-4da2-b2d8-d3b291aba8ed'],runIds:[A.nativeRunId,'a11ac3a06c0f14e9f85bc897c8a766d41e165f24'],nextAction:'此前修复动作',latestResult:{status:'failed'}}]};}
+test('public readable diagnosis and actual failed-report references match fixed SHA',async()=>{for(const ref of r27Basis)assert.equal(sha(await readFile(ref.reference,'utf8')),ref.sha256);});
+test('scope decision defers only strict negative 401 and keeps normal login, writes, frontend and coverage',()=>{
+ const p=r27DecisionPayload(command,at);assert.equal(p.status,'selected');assert.equal(p.origin,'ai');assert.equal(p.chosenId,'repair-together');assert.equal(p.expectedVersion,0);assert.equal(p.changeOf,null);assert.deepEqual(p.basisRefs,r27Basis);assert.equal(p.actions[0].state,'planned');assert.match(JSON.stringify(p),/正常简单登录/);assert.match(JSON.stringify(p),/90%行及80%分支/);assert.match(JSON.stringify(p),/不宣称本轮修复或产品验收完成/);assert.match(JSON.stringify(p),/费用与Token只记录，无消费上限/);assert.equal(p.rollbackPlan.requiresNewExecutionPlan,true);assert.equal(p.context.runId,'a11ac3a06c0f14e9f85bc897c8a766d41e165f24');assert.ok(!('automaticDispatch' in p));assert.ok(!('independentAcceptance' in p));
+});
+test('scope plan preserves all previous criteria and bindings without invented task/run',()=>{
+ const v=plan(),copy=structuredClone(v),p=r27PlanPayload(v,command);assert.deepEqual(v,copy);assert.equal(p.expectedVersion,7);assert.equal(p.nextAction,r27NextAction);assert.equal(p.currentStepId,'repair');for(let i=0;i<v.steps.length;i++){assert.deepEqual(p.steps[i].criteria,v.steps[i].criteria);assert.deepEqual(p.steps[i].taskIds,v.steps[i].taskIds);assert.deepEqual(p.steps[i].runIds,v.steps[i].runIds);assert.equal(p.steps[i].goal,v.steps[i].goal);}assert.ok(!JSON.stringify(p).includes('latestResult'));
+ const missing=plan();missing.steps[0].runIds=[];assert.throws(()=>r27PlanPayload(missing,command));const changed=plan();changed.automaticDispatch=true;assert.throws(()=>r27PlanPayload(changed,command));
+});
+test('actual binding payload adds one provided task/run and leaves every original binding and standard',()=>{
+ const taskId=randomUUID(),runId='a'.repeat(40),v=plan(),p=r27PlanPayload(v,command,{taskId,runId});assert.deepEqual(p.steps[2].taskIds,[...v.steps[2].taskIds,taskId]);assert.deepEqual(p.steps[2].runIds,[...v.steps[2].runIds,runId]);assert.deepEqual(p.steps[2].criteria,v.steps[2].criteria);assert.match(p.nextAction,/实际派发/);assert.match(p.nextAction,/不代表安全目标通过/);
+});
+test('scope durable ambiguous response reuses exact CAS command and does not mark a proposed action performed',async()=>{
+ const p=r27DecisionPayload(command,at),q={intents:{decision:p},receipts:{}},v={id:randomUUID(),revision:1,hash:'1'.repeat(64)},requests=[],seen=new Map();let committed=0,first=true,checks=0;
+ const options={q,key:'decision',path:'decision',readPath:r=>'decision/'+r.id,verify:async()=>{checks++;},save:async()=>{},api:async(path,payload)=>{if(!payload)return {data:v};requests.push(structuredClone(payload));if(!seen.has(payload.commandId)){committed++;seen.set(payload.commandId,v);}if(first){first=false;throw Error('lost response');}return {data:seen.get(payload.commandId)};},checkResponse:actual=>assert.deepEqual(actual,v),checkView:actual=>assert.deepEqual(actual,v)};
+ await assert.rejects(applyR27Intent(options),/lost response/);assert.equal(q.receipts.decision,undefined);await applyR27Intent(options);await applyR27Intent(options);assert.equal(committed,1);assert.equal(requests.length,2);assert.deepEqual(requests[0],requests[1]);assert.equal(checks,3);assert.equal(q.intents.decision.actions[0].state,'planned');
+});
+test('changed source/profile gate blocks mutation; response mismatch preserves original intent',async()=>{
+ const q={intents:{plan:{commandId:command,expectedVersion:7}},receipts:{}},calls=[];
+ await assert.rejects(applyR27Intent({q,key:'plan',path:'plan',readPath:'plan',verify:async()=>{throw Error('R27_METADATA_OLD_PROFILE_OR_GLOBAL_CHANGED');},save:async()=>{},api:async()=>{calls.push('write');return{};},checkResponse:()=>{},checkView:()=>{}}));assert.equal(calls.length,0);assert.equal(q.intents.plan.expectedVersion,7);
+});
+test('real decision controller admits selected scope; identical command replay yields only one decision',async()=>{
+ const {ProjectDecisionRuntime,projectDecisionRecordSchema}=await tsImport('../apps/api/src/runtime/project-decision-runtime.ts',import.meta.url),{registerProjectDecisionRoutes}=await tsImport('../apps/api/src/runtime/project-decision-routes.ts',import.meta.url);
+ const directory=await mkdtemp(join(tmpdir(),'jarvis-r27-scope-contract-')),repository={read(domain,id,actor){return domain==='projects'&&id===S.projectId&&actor===S.ownerId?{id:S.projectId,ownerId:S.ownerId,scope:'personal',status:'active'}:undefined;},list(){return[];}},runtime=new ProjectDecisionRuntime(repository,{directory,actorId:S.ownerId}),app=Fastify();registerProjectDecisionRoutes(app,runtime,{principal(){return{actorId:S.ownerId,administrator:true,profileId:'me'};}});
+ try{const payload=r27DecisionPayload(command,at);assert.deepEqual(projectDecisionRecordSchema.parse(payload),payload);const url='/api/v1/projects/'+S.projectId+'/decisions',first=await app.inject({method:'POST',url,payload});assert.equal(first.statusCode,200,first.body);const value=first.json().data;assert.equal(value.revision,1);assert.equal(value.status,'selected');assert.equal(value.independentAcceptance,false);assert.equal(value.recommendation.chosenId,'repair-together');assert.equal(value.actions[0].state,'planned');const repeat=await app.inject({method:'POST',url,payload});assert.equal(repeat.statusCode,200);assert.deepEqual(repeat.json().data,value);const list=await app.inject({method:'GET',url});assert.equal(list.json().data.total,1);const get=await app.inject({method:'GET',url:url+'/'+value.id});assert.equal(get.json().data.revisions.length,1);const wrong=await app.inject({method:'POST',url,payload:{...payload,decisionRationale:'different envelope'}});assert.equal(wrong.statusCode,409);
+ }finally{await app.close();runtime.close();await rm(directory,{recursive:true,force:true});}
+});
+test('fixed scope CLI defaults inspect and safe errors never export private raw bodies',()=>{assert.deepEqual(parseR27MetadataArguments([]),{execute:false});assert.deepEqual(parseR27MetadataArguments(['sync']),{execute:true});for(const a of [['start'],['sync','--execute'],['--run-id=imaginary']])assert.throws(()=>parseR27MetadataArguments(a));const f=r27MetadataFailure(Error('PRIVATE_COOKIE_BODY'),{receipts:{decision:{}}});assert.equal(f.automaticNewIntent,false);assert.equal(f.errorCode,'R27_METADATA_OPERATION_FAILED');assert.ok(!JSON.stringify(f).includes('COOKIE'));});

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="按代码身份保留历史失败、新版复验和未执行项，逐步核对完整交付标准。">
+  <meta name="jarvis-source-sha256" content="fbdcad073d260c774af335668026b1172e0fed4342f36258ac98430ce298c3e0">
+  <title>软件工厂现有成果首轮验收报告</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R24 · 首轮与新提交复验</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%8E%B0%E6%9C%89%E6%88%90%E6%9E%9C%E9%A6%96%E8%BD%AE%E9%AA%8C%E6%94%B6%E6%8A%A5%E5%91%8A.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 13 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">20:18 最新复验与下一步</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">19:40 首轮实际结果（历史）</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">19:40 缺口与处理顺序（历史）</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">19:40 当时计划（历史）</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">19:40 过程与消费（历史）</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">R26 当前主线完整测试已启动</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">R26 当前主线首轮完整检查 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">R26-3 汇报上线与 R26-4 报告复验</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">R26-4 完整失败基线与定点修复</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">部分修复结束与独立复验安排 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">固定候选完整复验已启动 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">部分候选完整复验终态与实际恢复 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">本轮归档与后续交接完成 · 2026-10-12</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-11<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">现有成果 / 严格验收 / 缺口分类</p>
+        <h1 id="document-title">软件工厂现有成果首轮验收报告</h1>
+        <p class="subtitle">按代码身份保留历史失败、新版复验和未执行项，逐步核对完整交付标准。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-11</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>74项目标</strong><span>完整标准不删减</span></div><div class="stat"><strong>15/15</strong><span>新主线基础用例通过</span></div><div class="stat"><strong>0/74</strong><span>独立完整目标验收</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>最新后续记录：2026-10-12部分修复候选a11ac3a0完整复验签名失败，49检查36通过13失败；332测试326通过6失败，30原型20通过10失败。候选源码一致性和隔离健康通过，登录拒绝与前端准备未达标。15个临时资源及进程/socket/ACK已独立核对清理，原模板实际恢复。详见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%83%A8%E5%88%86%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E5%A4%8D%E9%AA%8C%E6%8A%A5%E5%91%8A.html">部分修复完整复验报告</a>；下面首轮及历史证据继续保留。</p>
+<p>用户已明确软件工厂基本开发完成。本轮先检查已有成果，确认缺口后再做小范围修复。完整路线见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%8E%B0%E6%9C%89%E6%88%90%E6%9E%9C%E9%AA%8C%E6%94%B6%E4%B8%8E%E4%BF%AE%E5%A4%8D%E8%AE%A1%E5%88%92.html">现有成果验收与修复计划</a>，按A00–A19保留全部74目标、阶段产物关联、Agent迭代及自动交付目标。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">20:18 最新复验与下一步</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>范围</th>
+<th>已确认结果</th>
+<th>还需完成</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最新已检查main提交89e6af3…</td>
+<td>离线安装、构建、类型检查通过；指定3个shared测试文件15/15通过</td>
+<td>完整打包、部署运行、全量单元/集成测试与页面交互检查</td>
+</tr>
+<tr>
+<td>验收工具超时修复</td>
+<td>实际Linux5项通过，单collector已安装，独立现场核对旧备份及新字节一致</td>
+<td>下一次正式完整批次中的集成效果；异常脱离进程组仍由外层精确容器清理</td>
+</tr>
+<tr>
+<td>全部交付目标</td>
+<td>74目标及原历史保持，完整独立验收仍0/74</td>
+<td>阶段语义关联、UI一致、从零客户贯通、Agent迭代、版本交付与同版24/72小时</td>
+</tr>
+</tbody></table></div>
+<p>本次新main为593个公开文件，完整指纹151300cf55e8e46445e5e3b85293c047f981b14f620350a217a61d9a987056ea。新run cbd1f5971f17a8c9990c05afc25a009536568322有签名成功回执，源码观察、独立快照及后续读回一致，原执行模板已恢复。检查本身没有修改业务源码；新提交的作者和确切开发时间没有据此推断。旧46abd636…版本的两处TS2345在本次新版本构建中不再出现，旧失败报告原样保留。</p>
+<p>候选d620178e…的326/332结果属于另一独立源码身份，6项失败要在新主线定向复验，不能直接视作当前主线失败。最新15项基础用例也不能替代server全量测试或完整交付标准。</p>
+<p>超时修复保留首次Linux夹具失败及第二次原聚合false。后者实际程序5项通过，但Docker不存在文本被过严匹配；两次独立现场查询确认精确容器已经不存在。随后仅安装collector，旧版本保留，coordinator、服务、模板和容器能力未变。重要选择和回退依据已保存到平台决策06e5865f-5b12-47a1-85a2-0599e0dd403c。</p>
+<p>接下来固定这个新主线版本，先验证完整交付包及隔离运行，再执行正式全量清单、页面与子页面及新版本缺陷复验。之后逐阶段核对客户原始需求与产物关联、完成从零交付案例，最后才做同版长期无人值守测试。费用继续只记录不限额；新main用量回执null保留未知，全局持续监督未开启。</p>
+<p>最新证据见<a href="../artifacts/software-factory/acceptance-r24/main-baseline-independent-review-source-update-second-r24.json">main独立复验</a>、<a href="../artifacts/software-factory/acceptance-r24/main-baseline-restoration-readback-source-update-second-r24.json">模板恢复对账</a>、<a href="../artifacts/software-factory/acceptance-r24/main-limited-baseline-closure-source-update-second-r24.json">基础检查闭环</a>、<a href="../artifacts/software-factory/acceptance-r24/timeout-collector-installed-independent-readback-r24.json">超时安装现场读回</a>。以下保留19:40首轮快照，当时的待办不代表最新状态。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">19:40 首轮实际结果（历史）</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>实际结果</th>
+<th>范围与限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最新main主项目</td>
+<td>离线安装通过，构建失败；template-refresh.service.ts第47/67行的start/stop未被命令类型承接</td>
+<td>新run 5a6621b745daefaaf1ec56004ce26a28245b677b；typecheck及3个shared测试文件未执行，不计为通过</td>
+</tr>
+<tr>
+<td>R22候选副本</td>
+<td>安装、构建、类型、lint、依赖边界和文档代码检查通过；单元332项中326通过、6失败</td>
+<td>独立源版本，不替代最新main或74目标全验收</td>
+</tr>
+<tr>
+<td>候选完整批次</td>
+<td>保留25项部分检查；selftest超过120秒技术界限，19:29:30精确停止</td>
+<td>cancelled及签名晚到证据保留，validation143，不能改为成功</td>
+</tr>
+<tr>
+<td>临时资源</td>
+<td>本批次容器、网络、沙箱broker和socket已清理，节点递送账本全确认，无原生子进程</td>
+<td>原main及候选源码未因本次检查或停止而修改</td>
+</tr>
+</tbody></table></div>
+<p>main HEAD为266104923b7f49b259dc8a7b827d599c5220ad16，源码指纹46abd636fc80cefc52ce70f9b8f54ecaf5a2e849c0062443e44c1363f8ea32ad，590个公开文件。该源在本轮观察、独立快照及后续读回一致。首次18:04结果绑定旧指纹ea58c752…，随后有文件变化；最新错误由本次新运行重新证实，没有把旧失败直接套在新源上。临时固定执行模板已恢复。</p>
+<p>候选HEAD为90a89ea5535b7a6ef068054e7a1344cf906a40c0，源码指纹d620178e50d9e17068cad4e41f206516f1a50bab07a62f0932dcba8b39a16234，实际run 67182e98ed3a2801d9506fbd97da2be938833d4a。候选和main分别管理，禁止混用报告。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">19:40 缺口与处理顺序（历史）</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>缺口</th>
+<th>已知依据</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>main模板刷新构建错误</td>
+<td>两处真实TS2345，新旧两源各有独立失败证据</td>
+<td>在独立修复副本补齐命令类型及注册/校验/权限/执行链，构建与受影响回归通过后再推进完整包</td>
+</tr>
+<tr>
+<td>5项沙箱集成失败</td>
+<td>固定测试镜像身份与允许清单不一致，安全拒绝触发</td>
+<td>核对可信镜像身份与测试夹具，保持拒绝非法镜像；再执行真实超时、并发、隔离等行为测试</td>
+</tr>
+<tr>
+<td>1项存储直链失败</td>
+<td>路径编码断言不符，非MinIO完全不可达的证据</td>
+<td>明确正确URL编码与直链访问期望，独立复验兼容性</td>
+</tr>
+<tr>
+<td>测试文件覆盖不完整</td>
+<td>98个未执行文件：96个历史打包副本、2个监督脚本测试</td>
+<td>确定正式适用范围，历史副本不重复计数，实际执行监督脚本；不能删除真实必测以变绿</td>
+</tr>
+<tr>
+<td>原型syntax旧入口缺失</td>
+<td>ENOENT，缺V1.1初始版/msf-prototype.html；另有git历史前提</td>
+<td>对照当前原型、页面和子页面重建真实检查入口；未观察到SyntaxError，不认定语法坏</td>
+</tr>
+<tr>
+<td>原型design-boundary失败</td>
+<td>独立自检21项中20通过、1失败；ERR_FILE_NOT_FOUND，入口读取缺失的V1.8/msf-prototype.html</td>
+<td>确定当前有效原型及历史检查前提后复验；不能认定当前交互逻辑坏，也不宣称其他全部原型套件通过</td>
+</tr>
+<tr>
+<td>单项超时未终止</td>
+<td>selftest现场已跑721秒，root collector跨UID kill没有所需能力</td>
+<td>修复可信进程组监督，不增加通用capability；实际Linux证明、独立审查、旧版本备份后再安装</td>
+</tr>
+</tbody></table></div>
+<p>F-R24-001、F-R24-002保留历史绑定；F-R24-003集中关联新候选验收缺口、真实报告和精确复验要求。它们是观察记录，尚未派发产品源码修改。先解决验收工具和环境，再依次做已证实的产品修复，不开启整包重开发。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">19:40 当时计划（历史）</h2>
+<ol>
+<li>固定最新版main及既有改动，完成构建与基础检查，形成可安装的完整包；独立环境验证实际运行身份和依赖。</li>
+<li>正式全量测试清单、失败记录、覆盖率、原型页面与子页面、UI与实际代码一致性逐项验证。</li>
+<li>逐阶段核对客户原始需求→PRD→概要/详细设计→原型→代码→测试→发布/产品文档的覆盖与语义关联；每个阶段Agent/子Agent能力及迭代有证据。</li>
+<li>使用从零客户案例贯通真实模型、流程和产物，统一安排缺陷修复及复验；发布、变更、回退、交付使用分别核验。</li>
+<li>最后固定同一合格版本，才做24/72小时自动运行、停止恢复、异常决策及成本记录验收。当前尚未通过这些目标。</li>
+</ol>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">19:40 过程与消费（历史）</h2>
+<p>费用只记录、不设限制；该候选固定run完整回执为0美元/0Token，仅对应这一无模型运行。main窄检查用量回执未知，保留未知；不能由部分0消费推断全项目0消费。原监督profile20及74目标、旧尝试/失败、决策版本均保留，全局持续监督未开启。</p>
+<p>新候选登记后已出现实际固定执行；explicit start收到409，本命令没有创建回执。核对实际任务、源和运行绑定后只读取已有执行，没有重复派发；启动来源进一步核对不影响保留真实执行结果。</p>
+<p>通过<a href="https://cc-jarvis.ikvein.com/?mode=platform&rev=acceptance-r24#theme=stark&view=projects%2F70ec346f-6520-46ed-abed-22cac770a3e4%3Ftab%3Dautonomy&board=all">平台验收入口</a>查看最新主验与候选；关联任务查看执行过程，项目资料、决策记录和用量统计保存摘要。完整本轮报告见<a href="../artifacts/software-factory/acceptance-r24/main-baseline-independent-review-source-update-r24.json">main独立读回</a>、<a href="../artifacts/software-factory/acceptance-r24/candidate-second-final-independent-review.json">候选独立读回</a>、<a href="../artifacts/software-factory/acceptance-r24/candidate-gaps-live.json">验收缺口记录</a>、<a href="../artifacts/software-factory/acceptance-r24/candidate-second-design-boundary-independent-review-r2.json">设计边界失败定位</a>及<a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.html">建设日志</a>。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">R26 当前主线完整测试已启动</h2>
+<p>2026-10-11 23:37（北京时间），贾维斯已下发并由101签名节点认领任务 <code>98ee355a-6912-46c1-b551-df4ba7ac6030</code>，运行 <code>e5ca06dfe49f0e3692b90b0fa9f0120ebc58e849</code>。本轮固定当前main指纹151300cf，执行完整现有适用测试、30组原型、交付包及隔离运行检查。结果仍待真实回执，不与旧R22候选混用，完整目标仍待独立验收。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">R26 当前主线首轮完整检查 · 2026-10-12</h2>
+<p>本轮 task98ee355a / run e5ca06df 已由101签名返回 failed。阶段落盘结果：42项检查31通过、11失败；其中332项单元与集成测试326通过、6失败，30组原型20通过、10失败。构建、类型、规范、测试清单、覆盖门和打包检查通过。验收程序在后续环节异常退出，未生成完整终态报告，隔离安装启动与接口核验尚未取得有效结果。上述是阶段观察，不能当完整放行，也不能使用旧doc/evidence成功产物补齐。固定无模型本批实际已知用量及费用为0，历史未知部分不变。</p>
+<p>本版本 source151300cf 与 main89e6af3 已绑定；后续先修复报告闭环与核对资源清理，再按证实失败在新独立副本中修复复验。详细安排见<a href="%E9%80%9A%E7%94%A8%E9%A1%B9%E7%9B%AE%E7%9B%91%E7%AE%A1%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C.html">通用监管与本轮执行</a>。完整74目标仍待独立验收。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">R26-3 汇报上线与 R26-4 报告复验</h2>
+<p>2026-10-12：项目级计划已区分持续开发和测试验收，软件工厂使用测试验收模式。R26-3已在112正式上线、101保持平台冷备；第一屏为计划、进度、结果、下一步，电脑和手机实页已核对。本轮不是恢复旧R22阻塞任务，原74目标及历史费用、失败证据继续保留。</p>
+<p>首轮签名执行e5ca06df失败：332项单元及集成测试中326通过、6失败；30组原型检查中20通过、10失败；打包检查通过。验收程序最终诊断误将47项清单当成Vitest对象，导致完整终态报告缺失。此外，原型测试在工作副本生成候选HTML，触发源码一致性失败，因此安装、启动与接口运行检查未执行。上述部分结果不能算完整交付验收。</p>
+<p>独立核对确认该运行的容器、网络、socket和相关进程全部回收，原main指纹151300cf、593文件及HEAD89e6af3不变；原Claude模板随后已恢复。</p>
+<p>R26-4新入口仅修报告生成的诊断扫描，原六个固定工具、45项必需测试文件、30组原型、90/80覆盖门槛与源码一致性失败规则均保留，28项本地验证通过。贾维斯已实际下发复验任务bf43cd17、运行f4b26c4c；计划40066986修订为4，保留首轮任务并追加复验。选择记录baf7a2b6说明先修验收报告、再依可信失败报告安排定点修复。复验运行中，尚未作产品验收。</p>
+<p>通用计划目前负责版本化安排及真实结果汇总，automaticDispatch=false；不能把新计划或单轮测试宣称为所有阶段的24小时自动修复闭环。固定测试未调用模型，模型费用及Token为0；历史未知费用继续单列。</p>
+<p>证据：<a href="../artifacts/software-factory/acceptance-r26/main-terminal-protocol-diagnosis-r26-20261012.json">异常诊断</a>、<a href="../artifacts/software-factory/acceptance-r26/main-independent-cleanup-1791734821072-ce1c275f-4dc1-49f1-b45e-9318b0f59247.json">资源清理</a>、<a href="../artifacts/software-factory/acceptance-r26/wrapper-r26-4-local-verification-20261012.json">新版入口验证</a>、<a href="../artifacts/software-factory/acceptance-r26/main-baseline-r26-4-start-current-main-full-1791735198525.json">实际复验</a>。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">R26-4 完整失败基线与定点修复</h2>
+<p>2026-10-12：运行f4b26c4c已取得完整签名失败报告。47项检查32通过、12失败、3未执行；332项测试326通过、6失败；30组原型20通过、10失败，各类分母分别保留。构建、覆盖与打包通过；副本测试生成候选HTML触发源码一致性失败，隔离健康、前端及写入读回未执行，安装运行未验收。主线593文件、151300cf指纹和HEAD89e6af3不变，独立核对确认临时资源与相关进程清理完成，原执行模板恢复成功。</p>
+<p>已实际下发独立副本修复任务580888fe、运行5c803404，101已认领running，模型gpt-6.1-sol[1m]。范围是隔离镜像契约、MinIO签名断言、测试生成物污染、缺失历史资产和超时定位；不伪造历史资产或降低验收门槛。通用计划40066986 revision5进入修复复验，保留两轮测试。决策7bd2f617纠正未选备选的目标合规标记，原bc871412历史仍可追溯；派发与验收分别登记。</p>
+<p>当前只确认模型修复运行，独立validator尚未配置；结束后必须核对实际改动、恢复模板并固定新指纹全量复验，不能把模型结束当作验收。复验准备工具的真实协议修正后16项本地验证通过，尚未在服务器安装新候选入口。原74目标仍0/74，费用和Token只记录、未知部分单列；通用计划automaticDispatch=false，全天自动修复闭环仍待实现与验证。</p>
+<p>证据：<a href="../artifacts/software-factory/acceptance-r26/main-failures-readonly-diagnosis-r26-4-20261012.json">完整失败诊断</a>、<a href="../artifacts/software-factory/acceptance-r26/main-independent-cleanup-r26-4-1791736600910-6d87946a-5f81-47f5-be0d-0dafe8b39a5b.json">资源核对</a>、<a href="../artifacts/software-factory/acceptance-r26/main-repair-start-1791736667559-95279673-c86c-479c-b133-845626331f89.json">实际修复派发</a>。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">部分修复结束与独立复验安排 · 2026-10-12</h2>
+<p>原生修复运行5c803404已返回签名round-limit、exit0；它完成一轮并表示仍需后续工作，当前不作修复全部完成或产品验收。原执行模板恢复，ACK及队列空闲，原main的593个公开文件、内容指纹和元数据不变。独立候选为605个文件：新增12份修复记录，只修改原prototype-commands测试文件，没有删除原文件。原测试正文32,034字节独立比对一致；改动把测试生成页面放到临时目录并在finally清理。镜像契约、MinIO断言、历史资产缺失及原型超时仍待解决。</p>
+<p>决策b774f724选择先按相同完整标准独立测试这个部分候选，再按真实结果继续修复。显式部分候选测试资格只允许本次精确签名任务的round-limit、exit0结果；它不改写终态，不授予交付通过。候选以独立helper实际指纹66a56a19固定，原六工具、45必需文件、30组原型与90/80覆盖门槛保留。新的固定测试入口尚未实际安装或派发。</p>
+<p>该原生轮次累计1,021,308 Token，按目录估计费用2.513858美元；缓存读取954,752已包含于输入，不重复相加。这是执行器记录及估计，不是供应商账单。实际项目累计1,252,610 Token、估计2.555528美元，13次调用缺少可用价格，保留未知，不抹零。费用只记录，无消费上限。</p>
+<p>独立复验准备与安装器25项本地回归通过、静态复核无阻断。实际只读检查发现两份原历史测试包约133MB，超过64MiB文件读取门槛，当前正在修正流式哈希检查；未因此安装或下发测试，也不隐藏旧包。新通用计划的automaticDispatch=false，74目标仍未独立验收；接续修复必须向模型提供真正可读取的公开诊断、依赖和环境契约。</p>
+<p>证据：<a href="../artifacts/software-factory/acceptance-r26/native-repair-candidate-audit-1791737452480-24f08f01-fa08-46e0-9b13-27231cf64e91.json">实际修复候选审计</a>、<a href="../artifacts/software-factory/acceptance-r26/native-repair-assertion-preservation-independent-20261012.json">原测试正文独立比对</a>、<a href="../artifacts/software-factory/acceptance-r26/partial-verification-choice-1791737587600.json">部分复验选择</a>、<a href="../artifacts/software-factory/acceptance-r26/native-repair-usage-totals-1791737644033.json">实际用量统计</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-verifier-file-stat-diagnosis-r26-20261012.json">历史包文件状态诊断</a>。</p>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">固定候选完整复验已启动 · 2026-10-12</h2>
+<p>新的固定复验入口已实际安装，安装前后三次来源与旧报告核对通过，保留原六工具及45必需文件、30原型、90/80覆盖门槛。安装过程中此前的连接收尾竞态及files字段覆盖冲突均已修正，并分别追加本地回归与真实失败诊断，不改写失败历史。28项准备/安装器本地回归通过。</p>
+<p>贾维斯已实际下发任务456b2038-a782-4da2-b2d8-d3b291aba8ed、运行a11ac3a06c0f14e9f85bc897c8a766d41e165f24，101确认running；快速API与SQL独立回读冻结模板一致。开始请求在最后观察时出现连接异常，但实际派发已成立，因此没有重复下发。随后只读check已取得真实running，原main及独立候选的内容、元数据、旧报告与其余模板保持，不能把此前观察失败误认为任务未启动。</p>
+<p>完整复验正在执行，尚无签名终态或完整结果，不预填测试通过、清理成功、模板恢复或实际费用为零。固定程序不调用模型，终态后再确认实际用量。原生部分修复的round-limit历史保留，74目标仍未独立验收。</p>
+<p>已在本聊天登记每10分钟跟进本轮任务。运行不变且无可处理事项时保持安静；终态后独立核对报告、实际15资源/进程/socket与ACK，清理实证通过才恢复原模板，然后记录与汇报并结束本轮跟进。这是本轮跟进安排，不代表新的通用全天自动研发控制器已实现；通用项目计划仍automaticDispatch=false。</p>
+<p>证据：<a href="../artifacts/software-factory/acceptance-r26/repair-fixed-verifier-installation-1bf188ba-dc01-4a5e-80df-23a2c62a89ef.json">实际安装</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-fixed-dispatch-reconciliation-1791739002994.json">派发独立回读</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-fixed-validation-check-1791739135149-8eb454b3-1cc6-4515-b3e8-caea51380a40.json">运行与来源核对</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-this-round-followup-registration-20261012.json">本轮跟进登记</a>。</p>
+<p>计划40066986现为revision6，保留两轮测试与原生修复，追加本轮456b2038/a11ac3a0绑定；决策b774f724 revision2记为方案已实施，独立验收仍为false。软件工厂备注revision28、建设项目备注revision22保留旧条目、里程碑与状态。真实电脑及手机首屏已核对当前执行中、计划、进度、结果、下一步和本次任务导航。建设记录已追加至78条，终态结果尚待后续追加。</p>
+</section>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">部分候选完整复验终态与实际恢复 · 2026-10-12</h2>
+<p>运行a11ac3a0已取得签名failed，独立报告49项检查36通过13失败、332测试326通过6失败、30原型20通过10失败。候选生成物污染已修复，原main和605文件候选内容/元数据不变，隔离健康检查通过；登录拒绝校验及前端准备实际失败，需继续定位，不能算页面和写入读回验收成功。</p>
+<p>本attempt e81a1a71的15个精确资源、两类Docker标签范围、真实进程身份、socket和运行目录、创建意图、ACK与队列均独立确认清理完成，之后实际恢复中央及101原模板。固定程序本轮签名与平台账本确认0 Token/0美元，项目未知价格13次调用继续单列。没有重复下发，没有改旧R22监督或降低原验收门槛，没有派发下一轮修复、发布产品或验收全部74目标。详见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%83%A8%E5%88%86%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E5%A4%8D%E9%AA%8C%E6%8A%A5%E5%91%8A.html">完整复验报告</a>。</p>
+</section>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">本轮归档与后续交接完成 · 2026-10-12</h2>
+<p>完整复验a11ac3a0的签名失败、15资源独立清理及原模板恢复已收尾，原74目标仍0/74。实际版本保护同步：计划修订7、决策b774f724修订3追加实施证据；结果资料29/23后又追加公开诊断和经验候选索引，软件工厂资料现修订30、建设项目资料24，全部旧备注、状态、里程碑和费用保持。实际电脑/手机汇报显示本轮49检查36通过13失败、332测试326通过6失败和继续修复，无活动执行冒充新任务。</p>
+<p>下轮可读包逐项记录5沙箱镜像身份不一致、1MinIO签名断言、syntax历史资产缺失、design-boundary版本保留断言、workflow S4交接摘要及7个真实120秒超时。后两类断言不能归为历史资产缺失；登录响应状态未留证，前端浏览器止于认证前置，根因仍需定位，不能直接宣称认证漏洞或UI渲染错误。包包含实际离线镜像、源码指纹与环境约束，尚未派发下一轮或安装新的验证器。</p>
+<p>收尾同步首次在计划已经提交后因POST原始版本和GET汇报投影差异拒绝，只读确认原意图后修正契约，用原commandId/CAS版本恢复，实际只产生计划修订7；失败历史保留，真实控制器/SQLite重放回归等11项本地工具检查通过。没有重跑产品测试、重启业务或重新部署来补记录。经验候选已随资料索引保存，未发布Skill。</p>
+<p>签名固定测试和账本都确认本run为0 Token/0美元，项目总计1,252,610 Token/估计2.555528美元/13次缺价格继续保留。正式自动化接口及实际状态回读确认01:51北京时间停止本轮跟进，状态PAUSED，原提示和范围保持；通用全天研发控制器仍未实现或验收。详见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%83%A8%E5%88%86%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E5%A4%8D%E9%AA%8C%E6%8A%A5%E5%91%8A.html">完整复验报告</a>及<a href="../artifacts/software-factory/acceptance-r26/repair-next-context-r26-1791740880883-cb4fd88c-fedf-46c1-9591-bfb2b9dc6c2d.md">下一轮诊断</a>。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%8E%B0%E6%9C%89%E6%88%90%E6%9E%9C%E9%A6%96%E8%BD%AE%E9%AA%8C%E6%94%B6%E6%8A%A5%E5%91%8A.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+const fs=require('node:fs');
+const file='docs/openapi-v1-planned.json',d=JSON.parse(fs.readFileSync(file,'utf8')),s=d.components.schemas;
+const ref=name=>({$ref:'#/components/schemas/'+name}),obj=(properties,required=Object.keys(properties))=>({type:'object',additionalProperties:false,properties,required});
+const text={type:'string'},date={type:'string',format:'date-time'},integer={type:'integer',minimum:0},no={const:false},yes={const:true},nil=value=>({anyOf:[value,{type:'null'}]}),list=items=>({type:'array',items});
+s.ClusterSnapshot=obj({batchId:text,snapshotAt:date,verifiedAt:date,build:text,verified:yes,businessIntegrity:{const:'ok'},executionIntegrity:{const:'ok'},filesChecked:{type:'integer',minimum:1},manifestSha256:{type:'string',pattern:'^[a-f0-9]{64}$'},voiceKeyPreserved:yes});
+s.ClusterObservation=obj({version:{const:1},clusterId:text,nodeId:text,role:{enum:['primary','standby','development']},epoch:{type:'integer',minimum:1},build:text,observedAt:date,businessHealthy:{type:'boolean'},businessBuild:nil(text),snapshot:nil(ref('ClusterSnapshot')),dependenciesReady:{type:'boolean'}});
+s.ClusterReadiness=obj({nodeId:text,recoveryMaterialsReady:{type:'boolean'},snapshotLagSec:nil({type:'integer'}),automaticTakeover:no,canTakeover:no,reasons:list(text),activationBlocker:{const:'OLD_PRIMARY_MUST_BE_STOPPED_AND_FENCED'},note:text});
+s.ClusterUnobservedReadiness=obj({nodeId:text,recoveryMaterialsReady:no,canTakeover:no,reasons:{type:'array',items:{const:'NO_FRESH_VERIFIED_OBSERVATION'},minItems:1,maxItems:1}});
+s.ClusterPeer=obj({nodeId:text,url:{type:'string',format:'uri'},checkedAt:nil(date),status:{enum:['unknown','reachable','unreachable']},observation:nil(ref('ClusterObservation')),readiness:nil(ref('ClusterReadiness')),error:nil(text)});
+s.ClusterState={anyOf:[obj({configured:no,local:obj({nodeId:{const:'local'},role:{const:'development'},build:text}),nodes:{type:'array',maxItems:0},replication:obj({mode:{const:'not-configured'}}),automaticFailover:no}),obj({configured:yes,clusterId:text,local:obj({nodeId:text,role:{enum:['primary','standby','development']},epoch:{type:'integer',minimum:1},build:text}),nodes:list(ref('ClusterPeer')),replication:obj({mode:{const:'controlled-cold-snapshot'},continuous:no,maxSnapshotLagSec:integer}),automaticFailover:no})]};
+s.ClusterNodes=obj({items:list(ref('ClusterPeer'))});s.ClusterSnapshotResult=obj({snapshot:nil(ref('ClusterSnapshot')),continuousReplication:no});s.ClusterEmpty=obj({});s.ClusterReadinessResult={anyOf:[ref('ClusterReadiness'),ref('ClusterUnobservedReadiness')]};
+for(const [method,path,id,title,response,body]of [
+ ['get','/api/runtime/cluster','getClusterState','查询中心角色、同版本恢复材料及明确的接替阻断','ClusterState'],
+ ['get','/api/runtime/cluster/nodes','getClusterNodes','只读查询已登记节点；无新鲜观测显示未知','ClusterNodes'],
+ ['post','/api/runtime/cluster/check','checkClusterNodes','固定节点TLS与身份检查，不启动业务或切换角色','ClusterState','ClusterEmpty'],
+ ['get','/api/runtime/cluster/snapshot','getClusterSnapshot','查询同批次核验的完整冷恢复点，非连续复制','ClusterSnapshotResult'],
+ ['get','/api/runtime/cluster/nodes/{id}/readiness','getClusterReadiness','查询恢复材料，不授予接替权','ClusterReadinessResult']
+]){const op={operationId:id,summary:title,tags:['中心主备'],security:[{SessionCookie:[]}],'x-implementation-status':'implemented',responses:{200:{description:'实际记录；未知和过期状态不视为可接替',content:{'application/json':{schema:ref(response)}}},400:{description:'格式无效'},401:{description:'未登录'},403:{description:'仅管理者本人'},404:{description:'未登记'},429:{description:'检查限流'}}};if(path.includes('{id}'))op.parameters=[{in:'path',name:'id',required:true,schema:{type:'string',pattern:'^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$'}}];if(body)op.requestBody={required:false,content:{'application/json':{schema:ref(body)}}};d.paths[path]??={};d.paths[path][method]=op;}
+d.info.version='1.5.0-linux-cluster';fs.writeFileSync(file,JSON.stringify(d,null,2)+'\n');console.log('Cluster contract: five authenticated read-only operations');

@@ -1,0 +1,9 @@
+import {useEffect,useState} from 'react';
+import {usePrivateRuntime} from './usePrivateRuntime';
+export default function ObservationSettings(){
+ const [version,setVersion]=useState(0),[text,setText]=useState(''),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false);
+ const api=usePrivateRuntime(()=>{setText('');setVersion(0);});
+ async function load(){const result=await api('/api/v1/execution/observations');setVersion(result.data.version);setText(JSON.stringify({logSources:result.data.logSources,hardwareSources:result.data.hardwareSources},null,2));}
+ useEffect(()=>{void load().catch(e=>{if(e.name!=='AbortError')setNotice(e.message);});},[]);
+ return <details className="observation-settings"><summary>日志与硬件来源</summary><fieldset disabled={busy}><legend>授权采集 · 版本 {version}</legend><p>日志需要中央授权、签名节点及节点本地文件白名单。GPU和功耗只接收配置来源的读数。</p><details><summary>查看配置格式</summary><pre>{JSON.stringify({logSources:[{id:'app-log',serviceId:'已登记服务ID',machineId:'对应设备ID',path:'D:/JarvisProjects/应用/logs/app.log',enabled:false,consent:false,retentionDays:7}],hardwareSources:[{id:'gpu-meter',machineId:'对应设备ID',field:'gpuPercent',adapterId:'实际采集器名称',enabled:false}]},null,2)}</pre><small>节点日志能力填写service-logs；硬件能力填写telemetry。节点另配置serviceLogs或hardwareReadings及本地允许目录，默认均不采集。</small></details><label>采集来源<textarea aria-label="采集来源" className="runtime-json" rows={10} value={text} onChange={e=>setText(e.target.value)}/></label><button disabled={!text} onClick={async()=>{setBusy(true);try{const input=JSON.parse(text),result=await api('/api/v1/execution/observations','PUT',{...input,expectedVersion:version});setVersion(result.data.version);setNotice('采集配置已保存；真实读数由已授权节点上报。');}catch(e){if((e as Error).name!=='AbortError')setNotice((e as Error).message);}finally{setBusy(false);}}}>保存采集来源</button><button onClick={()=>void load().catch(e=>setNotice(e.message))}>重新加载</button>{notice&&<p role="status" className="runtime-note">{notice}</p>}</fieldset></details>;
+}

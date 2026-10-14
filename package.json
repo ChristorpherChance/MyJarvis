@@ -1,0 +1,36 @@
+{
+  "name": "jarvis-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n API,WEB \"npm run dev -w @jarvis/api\" \"npm run dev -w @jarvis/web\"",
+    "build": "npm run build -w @jarvis/web && npm run build -w @jarvis/api",
+    "build:stage": "npm run build:stage -w @jarvis/web && npm run build -w @jarvis/api -- --outDir .dist-next",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test -w @jarvis/api",
+    "test:demo": "node scripts/run-demo-tests.cjs",
+    "test:parity": "node scripts/qa-frontend-parity.cjs",
+    "start": "npm run start -w @jarvis/api",
+    "service:status": "node scripts/platform-service.mjs status",
+    "service:restart": "node scripts/platform-service.mjs restart",
+    "server:access": "node scripts/server-access.mjs",
+    "server:permissions": "node scripts/server-permissions.mjs",
+    "test:server-permissions": "node --test scripts/test-server-permissions.mjs",
+    "test:server-access": "node --test scripts/test-server-access.mjs",
+    "test:service": "node --test scripts/test-platform-service.mjs scripts/test-upgrade-local-platform.mjs",
+    "server:onboard": "node scripts/onboard-managed-servers.mjs",
+    "server:verify": "node scripts/verify-managed-servers.mjs",
+    "test:server-monitoring": "node --test scripts/test-managed-server-plan.mjs scripts/test-cloud-node-relay.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.4",
+    "typescript": "~5.9.3"
+  }
+}

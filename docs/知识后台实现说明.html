@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>知识后台实现说明 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header a{margin-left:auto}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><h1>知识后台实现说明</h1>
+<h2>当前闭环</h2>
+<p>知识来源、真实扫描原件、逐页校对、故事索引和学习记录已建立持久化接口。所有新资料从真实文件或原始收件开始，不用内置样卷冒充识别结果。</p>
+<ol>
+<li>登记来源和使用授权。来源可停用、撤权；外部地址只保存配置，尚未配置连接器时不会访问网络或扫描磁盘。</li>
+<li>申请上传票据，上传 PDF、PNG、JPG 或 WEBP。单文件不超过 32 MB，服务器校验实际文件标识、大小和 SHA256，原件不会被后续转录覆盖。</li>
+<li>确认原件页数与页序，逐页登记忠实原文。规范化文字单独保存，不能覆盖原字。</li>
+<li>登记识别疑问，提供原图定位、候选与人工依据。看不清时升级并补交真实扫描证据，不会一键消除疑点。</li>
+<li>逐字回查每一页，审核记录绑定正文指纹。正文再修改时，该页的审核自动失效。</li>
+<li>全部页面有正文、已知疑点全部裁决、当前版本逐页复核后，由管理者独立确认发布。该门槛表示流程与人工证据齐全，不保证绝对零错误。</li>
+<li>故事草稿引用明确书籍版本、页码和原文片段。引用不匹配时拒绝保存；解读经人工复核后才开放收藏、听完记录与练习。</li>
+<li>课程只引用对学习档案开放、版本有效的正式故事。原文勘误创建修订草稿，历史原文和校对证据保留，故事与课程进入待更新。</li>
+</ol>
+<h2>原始收件与资料候选</h2>
+<p>原始收件可以转为资料候选，保留原始文字、来源终端和范围。候选不是扫描成功的书籍。可以补交真实原件，也可以转成停用、未授权的知识源候选，再由管理者确认配置和授权。转换不会扩大访问范围或删除原始文字。</p>
+<h2>Pi 与自动处理</h2>
+<p>已发布的校对原文可作为 Pi 解读任务的输入。AI 输出先是待审阅草稿，不能代替原文或自动发布为正式故事。平台将原文和解读分开保存，管理者回查引用后再开放学习。</p>
+<p>自动版面分析、OCR 和外部连接器仍需真实运行环境与服务配置。接口会明确拒绝未配置的处理，前端展示人工闭环；不会把人工转录画成已完成 OCR。真实模式没有“全卷一键人工过审”。</p>
+<h2>学习记录</h2>
+<p>语言练习保存实际问题、实际答句和自行确认的分钟。未进行真实 AI 评估时，成绩为空、纠错为空，不生成固定分数或模板评价。故事听完与答对问题分别记录，复习建议绑定当时版本。</p>
+<p>目前家庭成员档案由管理员维护，档案选择不代表成员本人已经登录认证。家庭成员课程只能引用家庭共享内容，私人原文不能通过课程自动共享。</p>
+<h2>接口与验证</h2>
+<p>四个领域为 <code>sources</code>、<code>books</code>、<code>stories</code>、<code>learning</code>。知识来源、书籍和故事使用 <code>/api/v1/knowledge/</code> 前缀；学习使用 <code>/api/v1/learning</code>。扫描原件通过独立认证的 <code>/api/v1/book-uploads/{id}/file</code> 上传与读取。</p>
+<p>命令有版本检查与幂等编号；失败不关闭表单、不改变原始记录。网络结果不确定时，重试使用同一个提交编号，冲突不会悄悄覆盖较新的版本。退出登录会清理知识提交缓存。</p>
+<p>独立测试覆盖临时 SQLite 与文件入库、未配置拒绝、缺页阻断、正文审核指纹、人工疑点裁决、修订传播、权限、幂等、真实学习答句和前端契约映射。测试不访问本机实际平台、正式数据库或真实模型。</p></main></html>

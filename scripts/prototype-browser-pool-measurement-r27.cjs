@@ -1,0 +1,6 @@
+/** Diagnostic only: three independent cases use separate browser schedulers. */
+module.exports=function browserPool(primary,launch,limit=3){
+ const slots=[{browser:Promise.resolve(primary),newPage:primary.newPage.bind(primary),busy:false}],closePrimary=primary.close.bind(primary);let closing=false;
+ primary.newPage=async function(...args){if(closing)throw Error('BROWSER_POOL_CLOSED');let slot=slots.find(s=>!s.busy);if(!slot){if(slots.length>=limit)throw Error('BROWSER_POOL_CAPACITY_EXCEEDED');slot={browser:launch(),newPage:null,busy:false};slots.push(slot);}slot.busy=true;try{const browser=await slot.browser;if(!slot.newPage)slot.newPage=browser.newPage.bind(browser);const page=await slot.newPage(...args),close=page.close.bind(page);page.close=async function(...closeArgs){try{return await close(...closeArgs);}finally{slot.busy=false;}};return page;}catch(error){slot.busy=false;throw error;}};
+ primary.close=async function(...args){closing=true;const children=await Promise.allSettled(slots.slice(1).map(async s=>(await s.browser).close()));const result=await closePrimary(...args);if(children.some(x=>x.status==='rejected'))throw Error('BROWSER_POOL_CHILD_CLOSE_FAILED');return result;};return primary;
+};

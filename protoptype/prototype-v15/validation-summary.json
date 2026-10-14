@@ -1,0 +1,18 @@
+{
+  "version": "V15.0",
+  "date": "2026-10-04",
+  "artifact": "贾维斯V15.0 · 十套主题与全平台交互原型.html",
+  "standalone": true,
+  "syntax": "valid",
+  "checks": [
+    {"area": "overview and command board interaction", "passed": 33, "report": "artifacts/prototype-v15-qa/visual-review/report.json"},
+    {"area": "six domain graphics", "passed": 30, "report": "artifacts/prototype-v15-qa/domain/domain-report.json"},
+    {"area": "desktop overview and board surfaces", "passed": 18, "report": "artifacts/prototype-v15-qa/audit/report.json"},
+    {"area": "all routes and voice split", "passed": 49, "report": "artifacts/prototype-v15-qa/crosspage-report.json"},
+    {"area": "fresh ten-theme overview and command previews", "captured": 20, "report": "artifacts/prototype-v15-qa/preview-capture-report.json"},
+    {"area": "final standalone package", "passed": 4, "embeddedPreviews": 30, "freshPreviews": 20, "scriptErrors": 0, "externalRequests": 0, "report": "artifacts/prototype-v15-qa/package-report.json"}
+  ],
+  "preserved": {"themes": 10, "routes": 20, "boards": 7, "voiceSplit": "75:25"},
+  "simulation": "Graphics derive from existing simulated state and update with the original actions. No fabricated history series or target ratios.",
+  "visualReview": ["desktop overview", "device matrix", "all domain boards in dark and light themes", "mobile overview", "ten-theme overview and command-board contact sheet"]
+}

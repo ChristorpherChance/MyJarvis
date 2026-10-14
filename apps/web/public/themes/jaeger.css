@@ -1,0 +1,359 @@
+/* Jaeger Cockpit. Shared component contracts, distinct industrial armor and dual-drive visuals. */
+html[data-j7-theme="jaeger"]{--je-green:#88baec;--je-bright:#cce2f7;--je-line:#203040;--je-dim:#8497a9;--je-black:#020605;--je-panel:#080c0f;color-scheme:dark;background:#020605;--j7-accent:#88baec;--j6-accent:#88baec;--j6-text:#d8e4f1;--j6-muted:#8b9cae;--j6-surface:#090d10;--j6-line:#243648;--j6-border:#243648}
+html[data-j7-theme="jaeger"] body{--bg:#020605;--paper:#090d10;--ink:#dae4ee;--muted:#8c9dae;--line:#253544;--blue:#94c1ee;--blue-soft:#0f1a25;--green:#a0c8f0;--green-soft:#131e28;--amber:#f6cf83;--amber-soft:#2a2110;--red:#ff8c89;--red-soft:#321714;--purple:#bbd0e5;--purple-soft:#162029;--shadow:0 7px 28px #0006;--shadow-sm:0 3px 14px #0005;background:#020605;color:#dae4ee;font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;letter-spacing:.015em}
+html[data-j7-theme="jaeger"] .main{background:linear-gradient(90deg,#080e1317 1px,transparent 1px),linear-gradient(#080e1317 1px,transparent 1px),#020605;background-size:44px 44px;color:var(--ink)}
+html[data-j7-theme="jaeger"] .sidebar{background:#050709;border-color:#263442;box-shadow:5px 0 25px #0005}
+html[data-j7-theme="jaeger"] .brand{border-color:#243342}
+html[data-j7-theme="jaeger"] .brand-mark{background:#0d1721;border:1px solid #6593c0;color:#9ac4ef;box-shadow:inset 0 0 18px #71ade81b;border-radius:3px}
+html[data-j7-theme="jaeger"] .brand small,html[data-j7-theme="jaeger"] .brand sup{color:#6d8eae}
+html[data-j7-theme="jaeger"] .nav-item svg{color:inherit}
+html[data-j7-theme="jaeger"] .sidebar-footer,html[data-j7-theme="jaeger"] .j5-side-voice{border-color:#233343;background:#080c0f;color:#bacfe4;border-radius:4px}
+html[data-j7-theme="jaeger"] .sidebar-footer p,html[data-j7-theme="jaeger"] .j5-side-voice small{color:#889caf}
+html[data-j7-theme="jaeger"] .app-header{background:#05080be8;border-color:#2a3948;backdrop-filter:blur(20px);color:#b6c7d8}
+html[data-j7-theme="jaeger"] .header-search,html[data-j7-theme="jaeger"] .header-search kbd{background:#0b1014;border-color:#2e3e4e;color:#95a7b9;border-radius:3px}
+html[data-j7-theme="jaeger"] .breadcrumb strong,html[data-j7-theme="jaeger"] .profile-btn{color:#ccdbe9}
+html[data-j7-theme="jaeger"] .demo-tag{background:#0f171f;color:#94b8dc;border-color:#2f4152;border-radius:3px}
+html[data-j7-theme="jaeger"] .icon-button{color:#a7bdd2;border-radius:4px}
+html[data-j7-theme="jaeger"] .icon-button:hover{color:#c4ddf5;background:#141d26}
+html[data-j7-theme="jaeger"] .avatar{background:#18242f;color:#b9d7f4;border:1px solid #34475a;box-shadow:none;border-radius:5px}
+html[data-j7-theme="jaeger"] h1,html[data-j7-theme="jaeger"] h2,html[data-j7-theme="jaeger"] h3{color:#d7e4f1;font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;font-weight:580;letter-spacing:.02em}
+html[data-j7-theme="jaeger"] .page-title{font-size:27px;font-weight:560}
+html[data-j7-theme="jaeger"] .subtitle,html[data-j7-theme="jaeger"] .muted,html[data-j7-theme="jaeger"] .help,html[data-j7-theme="jaeger"] .label,html[data-j7-theme="jaeger"] .tiny,html[data-j7-theme="jaeger"] .list-sub{color:#92a3b5}
+html[data-j7-theme="jaeger"] .card{background:linear-gradient(145deg,#0b1015,#070b0f);border:1px solid #273747;border-radius:5px;box-shadow:0 6px 26px #0003}
+html[data-j7-theme="jaeger"] .card-header,html[data-j7-theme="jaeger"] .card-footer,html[data-j7-theme="jaeger"] .list-row,html[data-j7-theme="jaeger"] .divider{border-color:#283847}
+html[data-j7-theme="jaeger"] .card-header h2{font-size:16px}
+html[data-j7-theme="jaeger"] .list-row:hover,html[data-j7-theme="jaeger"] .data-table tbody tr:hover{background:#121a21}
+html[data-j7-theme="jaeger"] .list-title,html[data-j7-theme="jaeger"] .task-title-button,html[data-j7-theme="jaeger"] .project-mini h3{color:#c8d9ea}
+html[data-j7-theme="jaeger"] .task-title-button:hover{color:#b2d3f3;text-shadow:0 0 9px #a0c8f045}
+html[data-j7-theme="jaeger"] .metric .number,html[data-j7-theme="jaeger"] .metric strong{font-family:"Consolas",monospace;color:#b8d5f3;font-weight:500;letter-spacing:-.035em}
+html[data-j7-theme="jaeger"] .metric-icon,html[data-j7-theme="jaeger"] .agent-mark,html[data-j7-theme="jaeger"] .feature-icon{background:#13202c;color:#9bc5ef;border:1px solid #2f455b;border-radius:4px}
+html[data-j7-theme="jaeger"] .btn{border-color:#3a4e61;background:#0d141c;color:#c8d7e6;border-radius:4px;box-shadow:none;font-family:inherit;font-size:12px}
+html[data-j7-theme="jaeger"] .btn:hover{background:#182735;border-color:#6e90b2;color:#d8e8f9;box-shadow:0 0 18px #7bb3ea0c}
+html[data-j7-theme="jaeger"] .btn.primary{background:#8fbdea;color:#07121c;border:1px solid #a7ccf1;border-radius:3px;box-shadow:0 0 18px #88baec18;font-weight:700}
+html[data-j7-theme="jaeger"] .btn.primary:hover{background:#b9d7f4;color:#060e16;box-shadow:0 0 25px #88baec32}
+html[data-j7-theme="jaeger"] .btn.danger{background:#321b18;color:#ffa5a0;border-color:#79443e}
+html[data-j7-theme="jaeger"] .btn.ghost{background:transparent;color:#a3bed8;border-color:transparent}
+html[data-j7-theme="jaeger"] .badge{background:#151e26;color:#b3c3d3;border:1px solid #344453;border-radius:3px;font-size:10px}
+html[data-j7-theme="jaeger"] .badge.green{background:#162635;color:#add0f2;border-color:#2e4a65}
+html[data-j7-theme="jaeger"] .badge.blue,html[data-j7-theme="jaeger"] .badge.purple{background:#131e29;color:#a1c1e0;border-color:#354759}
+html[data-j7-theme="jaeger"] .badge.amber{background:#2a2213;color:#f8d99a;border-color:#69502d}
+html[data-j7-theme="jaeger"] .badge.red{background:#321b19;color:#ffaca5;border-color:#75463f}
+html[data-j7-theme="jaeger"] .input,html[data-j7-theme="jaeger"] .textarea,html[data-j7-theme="jaeger"] input,html[data-j7-theme="jaeger"] textarea,html[data-j7-theme="jaeger"] select{background:#060a0d;color:#c9d9e9;border-color:#334454;border-radius:3px;font-family:inherit;accent-color:#9cc6ef}
+html[data-j7-theme="jaeger"] input::placeholder,html[data-j7-theme="jaeger"] textarea::placeholder{color:#75899c;opacity:1}
+html[data-j7-theme="jaeger"] .input:focus,html[data-j7-theme="jaeger"] .textarea:focus,html[data-j7-theme="jaeger"] input:focus,html[data-j7-theme="jaeger"] textarea:focus,html[data-j7-theme="jaeger"] select:focus{outline:2px solid #71a0ce2f;border-color:#80aad4}
+html[data-j7-theme="jaeger"] button:focus-visible,html[data-j7-theme="jaeger"] a:focus-visible{outline:2px solid #94c1ee;outline-offset:3px}
+html[data-j7-theme="jaeger"] .segmented,html[data-j7-theme="jaeger"] .tabs,html[data-j7-theme="jaeger"] .kv5-tabs{background:#080c11;border-color:#273543;border-radius:3px}
+html[data-j7-theme="jaeger"] .segmented button,html[data-j7-theme="jaeger"] .tabs button,html[data-j7-theme="jaeger"] .kv5-tabs button{font-family:inherit;color:#94a5b7;border-radius:2px}
+html[data-j7-theme="jaeger"] .segmented button.active,html[data-j7-theme="jaeger"] .tabs button.active,html[data-j7-theme="jaeger"] .kv5-tabs button.active{background:#18232e;color:#b8d6f4;box-shadow:none;border-color:#4e6780}
+html[data-j7-theme="jaeger"] .tabs button.active:after{background:#87b9eb;height:2px}
+html[data-j7-theme="jaeger"] .chip{background:#111a24;color:#b1c5d9;border-color:#38495a;border-radius:3px}
+html[data-j7-theme="jaeger"] .progress{background:#18232e;border-radius:2px}
+html[data-j7-theme="jaeger"] .progress>span,html[data-j7-theme="jaeger"] .progress>i{background:linear-gradient(90deg,#406080,#9ec7ef);border-radius:2px}
+html[data-j7-theme="jaeger"] .data-table th{background:#121a21;color:#a5b9cc;border-color:#283949}
+html[data-j7-theme="jaeger"] .data-table td{border-color:#283949;color:#bbcbda}
+html[data-j7-theme="jaeger"] .detail-grid .kv,html[data-j7-theme="jaeger"] .radio-card,html[data-j7-theme="jaeger"] .artifact,html[data-j7-theme="jaeger"] .plan-item{background:#0a1015;border-color:#2d3d4e;border-radius:3px;color:#bdccda}
+html[data-j7-theme="jaeger"] .kv>span,html[data-j7-theme="jaeger"] .artifact small{color:#8ea2b5}
+html[data-j7-theme="jaeger"] .radio-card.selected,html[data-j7-theme="jaeger"] .radio-card:hover{background:#192530;border-color:#6182a2;color:#dbe8f4}
+html[data-j7-theme="jaeger"] .notice{background:#0f1922;border-color:#34485c;color:#a8bed3;border-radius:4px;line-height:1.85}
+html[data-j7-theme="jaeger"] .notice.amber{background:#2a2215;border-color:#655033;color:#edd1a3}
+html[data-j7-theme="jaeger"] .notice.red{background:#2b1917;border-color:#714039;color:#efb2a9}
+html[data-j7-theme="jaeger"] .code-block,html[data-j7-theme="jaeger"] .op5-code,html[data-j7-theme="jaeger"] .rd5-raw,html[data-j7-theme="jaeger"] .rd5-discussions article,html[data-j7-theme="jaeger"] .rd5-option{background:#06090c;color:#b1c6da;border:1px solid #2e4051;border-radius:3px}
+html[data-j7-theme="jaeger"] .overlay{background:#000b;backdrop-filter:blur(6px)}
+html[data-j7-theme="jaeger"] .modal,html[data-j7-theme="jaeger"] .drawer{background:#080c10;color:#d3dfeb;border:1px solid #3d5063;border-radius:5px;box-shadow:0 0 0 1px #8cbcec08,0 25px 90px #000c}
+html[data-j7-theme="jaeger"] .modal-head,html[data-j7-theme="jaeger"] .modal-foot,html[data-j7-theme="jaeger"] .drawer-head,html[data-j7-theme="jaeger"] .drawer-foot{background:#0b1016;border-color:#354656}
+html[data-j7-theme="jaeger"] .modal-head h2,html[data-j7-theme="jaeger"] .drawer-head h2{font-size:19px;font-weight:500;color:#c4ddf5}
+html[data-j7-theme="jaeger"] .toast{background:#0f1922;border:1px solid #4b6279;color:#ddecfa;border-radius:4px}
+html[data-j7-theme="jaeger"] .toast.error{background:#2a1716;border-color:#824d45;color:#ffc3ba}
+html[data-j7-theme="jaeger"] .command-item{color:#bed1e3}
+html[data-j7-theme="jaeger"] .command-item:hover{background:#1a2632}
+html[data-j7-theme="jaeger"] .switch-knob{background:#242f3a;border-color:#485867}
+html[data-j7-theme="jaeger"] .switch-knob.on{background:#76a2ce;border-color:#8fbce8}
+
+/* Domain views, both published knowledge and the administrative workbench. */
+html[data-j7-theme="jaeger"] .rd5-hero,html[data-j7-theme="jaeger"] .rd5-inbox-banner,html[data-j7-theme="jaeger"] .lesson-banner,html[data-j7-theme="jaeger"] .vm5-memory-banner{background:linear-gradient(110deg,#13202c,#0a0f14);border:1px solid #3e566e;border-radius:5px;color:#d7e2ec;box-shadow:inset 3px 0 #75a7d9}
+html[data-j7-theme="jaeger"] .rd5-hero p,html[data-j7-theme="jaeger"] .rd5-inbox-banner p,html[data-j7-theme="jaeger"] .vm5-memory-banner p{color:#a3b4c5}
+html[data-j7-theme="jaeger"] .rd5-eyebrow,html[data-j7-theme="jaeger"] .rd5-hero-side>span,html[data-j7-theme="jaeger"] .rd5-metric>strong,html[data-j7-theme="jaeger"] .vm5-memory-count strong{color:#9ec7ef}
+html[data-j7-theme="jaeger"] .rd5-title.btn,html[data-j7-theme="jaeger"] .rd5-source,html[data-j7-theme="jaeger"] .rd5-metric>span{color:#adc1d5}
+html[data-j7-theme="jaeger"] .rd5-metric,html[data-j7-theme="jaeger"] .rd5-step{background:#0e151c;border-color:#2f4256;border-radius:3px}
+html[data-j7-theme="jaeger"] .rd5-stage-step.done,html[data-j7-theme="jaeger"] .rd5-stage-step.active{background:#1a2835;color:#aecfef;border-color:#506b87}
+html[data-j7-theme="jaeger"] .kv5-callout,html[data-j7-theme="jaeger"] .kv5-source-result,html[data-j7-theme="jaeger"] .kv5-cite,html[data-j7-theme="jaeger"] .kv5-stack .card,html[data-j7-theme="jaeger"] .kv5-review-panel,html[data-j7-theme="jaeger"] .kv5-compare>div{background:#0b1218;border-color:#2e3f50;color:#c2d1df;border-radius:4px}
+html[data-j7-theme="jaeger"] .kv5-source-result h3,html[data-j7-theme="jaeger"] .kv5-review-panel h3,html[data-j7-theme="jaeger"] .kv5-quality,html[data-j7-theme="jaeger"] .kv5-reading{color:#d3dfea}
+html[data-j7-theme="jaeger"] .kv5-compare strong,html[data-j7-theme="jaeger"] .kv5-compare b{color:#c3dbf3}
+html[data-j7-theme="jaeger"] .kv5-book-rail-item{background:#080e13;color:#a7b7c6;border-color:#273747}
+html[data-j7-theme="jaeger"] .kv5-book-rail-item.active,html[data-j7-theme="jaeger"] .kv5-doubt-btn.active{background:#192632;border-color:#617f9c;color:#c2dbf3}
+html[data-j7-theme="jaeger"] .kv5-tag,html[data-j7-theme="jaeger"] .kv5-stat-icon,html[data-j7-theme="jaeger"] .kv5-stage-icon,html[data-j7-theme="jaeger"] .kv5-tree-node{background:#1b2835;color:#a7c8e9;border-color:#37495b;border-radius:3px}
+html[data-j7-theme="jaeger"] .kv5-paper{color:#1e2831;background:#bfcfdf;border:1px solid #708497;box-shadow:0 15px 35px #0007}
+html[data-j7-theme="jaeger"] .kv5-paper .kv5-focus{color:#1a2733;background:#a2c0dd;outline-color:#365069}
+html[data-j7-theme="jaeger"] .op5-icon,html[data-j7-theme="jaeger"] .op5-stages span{background:#141e28;color:#94b8db;border-color:#34475a;border-radius:3px}
+html[data-j7-theme="jaeger"] .op5-stages span.done,html[data-j7-theme="jaeger"] .op5-stages span.current{background:#1a2938;color:#bad7f4;border-color:#537392}
+html[data-j7-theme="jaeger"] .op5-evidence>div,html[data-j7-theme="jaeger"] .op5-service-meta .kv{color:#bbccdc;background:#0b1218;border-color:#2d3c4a}
+html[data-j7-theme="jaeger"] .vm5-persona-avatar,html[data-j7-theme="jaeger"] .vm5-memory-symbol{background:#182634;color:#bfdaf5;border-color:#4e6882;border-radius:4px;box-shadow:none}
+html[data-j7-theme="jaeger"] .family-profile{color:#c9d8e7}
+html[data-j7-theme="jaeger"] .family-profile:hover{border-color:#789dc1;box-shadow:0 0 24px #8abbec0e}
+
+/* Seven screen boards share the same legible naval-blue instrument language. */
+html[data-j7-theme="jaeger"] .screen-mode{--bg:#020605;--paper:#080c11;--ink:#d7e3f0;--muted:#8ea2b6;--line:#2e4256;--blue:#9cc6ef;--blue-soft:#15222e;background:#020605}
+html[data-j7-theme="jaeger"] .screen-mode .main{background:radial-gradient(ellipse at 48% 0,#16253355,transparent 55%),#020605;color:#d5e1ed}
+html[data-j7-theme="jaeger"] .j5-board-panel,html[data-j7-theme="jaeger"] .rd5-board-grid>section,html[data-j7-theme="jaeger"] .rd5-board-metrics article,html[data-j7-theme="jaeger"] .kv5-board-card,html[data-j7-theme="jaeger"] .kv5-board-metric,html[data-j7-theme="jaeger"] .vm5-board-dialogue,html[data-j7-theme="jaeger"] .vm5-board-panels>article{background:#090f15;border:1px solid #344759;border-radius:5px;box-shadow:none;color:#c7d6e5}
+html[data-j7-theme="jaeger"] .j5-board-head h1,html[data-j7-theme="jaeger"] .j5-board-panel h2,html[data-j7-theme="jaeger"] .rd5-board-grid h3,html[data-j7-theme="jaeger"] .rd5-board-row strong,html[data-j7-theme="jaeger"] .kv5-board-card h2,html[data-j7-theme="jaeger"] .vm5-board-panels h2{color:#cddff0}
+html[data-j7-theme="jaeger"] .rd5-board-metrics strong,html[data-j7-theme="jaeger"] .kv5-board-metric strong,html[data-j7-theme="jaeger"] .vm5-board-stat strong,html[data-j7-theme="jaeger"] .vm5-board-weather strong{color:#a0c8f0}
+html[data-j7-theme="jaeger"] .rd5-board-note,html[data-j7-theme="jaeger"] .rd5-board-row small,html[data-j7-theme="jaeger"] .rd5-board-proof p,html[data-j7-theme="jaeger"] .kv5-board-card p,html[data-j7-theme="jaeger"] .vm5-board-panels p,html[data-j7-theme="jaeger"] .vm5-board-todo{color:#93a6ba}
+html[data-j7-theme="jaeger"] .j5-board-tab.active,html[data-j7-theme="jaeger"] .j5-board-tabs button.active{background:#243648;color:#b8d6f4;border-color:#688aab}
+
+/* Solid armour plates, mechanical bevels and orange industrial signals. */
+html[data-j7-theme="jaeger"]{--j7-accent:#66b7ff;--j7-secondary:#ff9c56;--j7-surface:#101d2c;--j7-text:#e7edf3;--j7-muted:#a5b6c4;--j7-line:#48627a;--j7-nav-text:#dce5ec;--j7-nav-dim:#a2b4c4;--j7-nav-line:#40566b}
+html[data-j7-theme="jaeger"] body{--bg:#0a1421;--paper:#172638;--ink:#e7edf3;--muted:#a5b6c4;--line:#41566b;--blue:#6cb7fa;--blue-soft:#18354c;--purple:#b8c7df;--green:#8ad8b4;--green-soft:#1a3b31;--amber:#ffc089;--amber-soft:#473423;--red:#f3a09e;--red-soft:#442830;--j7-accent:#66b7ff;--j7-secondary:#ff9c56;--j7-surface:#101d2c;--j7-text:#e7edf3;--j7-muted:#a5b6c4;--j7-line:#48627a;color:#e7edf3;background:radial-gradient(ellipse at 60% 0,#263a50 0,transparent 50%),#0a1421;font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif}
+html[data-j7-theme="jaeger"] #sidebar{background:linear-gradient(115deg,#203244,#101d2a 68%);border-right-color:#40566a}
+html[data-j7-theme="jaeger"] #sidebar .nav-item{color:#cad8e4}
+html[data-j7-theme="jaeger"] #sidebar .nav-item:hover{color:#fff;background:#2b4056}
+html[data-j7-theme="jaeger"] #sidebar .nav-item.active{color:#f4f8fb;background:linear-gradient(105deg,#29455f,#1c344b);border-color:#6888a2;box-shadow:inset 3px 0 #ffa45d,inset 0 1px #8aabbe33}
+html[data-j7-theme="jaeger"] #sidebar .nav-item svg,html[data-j7-theme="jaeger"] #sidebar .nav-item span{color:inherit}
+html[data-j7-theme="jaeger"] .brand-symbol{background:linear-gradient(140deg,#526d83,#182d42);color:#e7f4ff;border:1px solid #8099ac;border-radius:3px}
+html[data-j7-theme="jaeger"] .brand strong{color:#f0f5f8}
+html[data-j7-theme="jaeger"] .j7-sidebar-voice{background:linear-gradient(135deg,#284c69,#182e43);color:#e8f4fc;border-color:#6e90aa;box-shadow:inset 0 1px #badfff33}
+html[data-j7-theme="jaeger"] #header,html[data-j7-theme="jaeger"] .header{background:linear-gradient(90deg,#172638,#24384d);border-bottom:2px solid #526879;color:#e7edf3}
+html[data-j7-theme="jaeger"] .main{background:radial-gradient(ellipse at 65% 0,#20374c55,transparent 60%),#0a1725;color:#e7edf3}
+html[data-j7-theme="jaeger"] h1,html[data-j7-theme="jaeger"] h2,html[data-j7-theme="jaeger"] h3{font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;color:#edf3f7;font-weight:750;letter-spacing:.015em}
+html[data-j7-theme="jaeger"] .card,html[data-j7-theme="jaeger"] .metric,html[data-j7-theme="jaeger"] .j5-surface{background:linear-gradient(130deg,#1b2d40,#142335);border:1.5px solid #4b6175;border-radius:4px;box-shadow:inset 0 1px #b4d0e522,0 4px 0 #07111bd9;color:#e2eaf0}
+html[data-j7-theme="jaeger"] .card-head{background:#22364a;border-color:#52697d}
+html[data-j7-theme="jaeger"] .metric{border-top:4px solid #668299}
+html[data-j7-theme="jaeger"] .metric-value,html[data-j7-theme="jaeger"] .metric strong{color:#edf6ff;font-family:"Bahnschrift","Segoe UI",sans-serif}
+html[data-j7-theme="jaeger"] .metric-icon{background:#243f57;color:#89cbff;border:1px solid #627f94;border-radius:3px}
+html[data-j7-theme="jaeger"] .btn{background:linear-gradient(#29445e,#1a3248);border:1px solid #66849b;border-radius:3px;color:#e9f1f8;box-shadow:inset 0 1px #bcdff42b,0 2px 0 #08121d;font-weight:650}
+html[data-j7-theme="jaeger"] .btn:hover{background:linear-gradient(#355974,#28445f);border-color:#a5c7df;color:#fff}
+html[data-j7-theme="jaeger"] .btn.primary{background:linear-gradient(#ffc17d,#f59b51);border-color:#ffcea0;border-bottom-color:#6b4125;color:#172436;font-weight:780;box-shadow:inset 0 1px #fff7,0 3px 0 #070f19}
+html[data-j7-theme="jaeger"] .btn.primary:hover{background:linear-gradient(#ffd299,#ffad67);color:#152334}
+html[data-j7-theme="jaeger"] .badge.green{background:#1c3e33;color:#a9ecd0;border-color:#518e78}
+html[data-j7-theme="jaeger"] .badge.amber{background:#483524;color:#ffd29d;border-color:#987246}
+html[data-j7-theme="jaeger"] .badge.red{background:#492e34;color:#ffc1bc;border-color:#985a62}
+html[data-j7-theme="jaeger"] input,html[data-j7-theme="jaeger"] select,html[data-j7-theme="jaeger"] textarea{color:#eef4f9;background:#0d1d2d;border-color:#617b91;border-radius:3px;box-shadow:inset 0 1px 3px #040b1370}
+html[data-j7-theme="jaeger"] input::placeholder,html[data-j7-theme="jaeger"] textarea::placeholder{color:#96acbd;opacity:1}
+html[data-j7-theme="jaeger"] .notice{background:#1b334a;border-color:#60839e;color:#d8e8f3}
+html[data-j7-theme="jaeger"] .notice.amber{background:#3f3024;border-color:#967248;color:#ffdcb5}
+html[data-j7-theme="jaeger"] .progress{background:#0c1d2b;border:1px solid #4e687d}
+html[data-j7-theme="jaeger"] .progress>i{background:linear-gradient(90deg,#3486c7,#a7d9fb)}
+html[data-j7-theme="jaeger"] th{background:#233a50;color:#c6d8e8;border-color:#4d6579}
+html[data-j7-theme="jaeger"] td{color:#dfe7ee;border-color:#354c60}
+html[data-j7-theme="jaeger"] .modal,html[data-j7-theme="jaeger"] .modal-card{background:linear-gradient(140deg,#22384d,#132333);border:2px solid #7e96aa;border-top:4px solid #ffa05c;border-radius:4px;color:#e5eef5;box-shadow:0 24px 90px #020911bd}
+html[data-j7-theme="jaeger"] .modal-head,html[data-j7-theme="jaeger"] .modal-foot{background:#23384c;color:#e8f1f7;border-color:#5c7488}
+html[data-j7-theme="jaeger"] .modal-title{color:#f0f5f8}
+html[data-j7-theme="jaeger"] .toast{background:#223a50;color:#e9f3fa;border:1px solid #7293ab;border-left:4px solid #ffa561;border-radius:3px}
+html[data-j7-theme="jaeger"] .kv5-source,html[data-j7-theme="jaeger"] .kv5-book,html[data-j7-theme="jaeger"] .kv5-story,html[data-j7-theme="jaeger"] .kv5-gap,html[data-j7-theme="jaeger"] .kv5-course,html[data-j7-theme="jaeger"] .kv5-asset,html[data-j7-theme="jaeger"] .kv5-stat,html[data-j7-theme="jaeger"] .rd5-card,html[data-j7-theme="jaeger"] .rd5-metric,html[data-j7-theme="jaeger"] .op5-service{background:linear-gradient(120deg,#22374b,#142537);color:#e3ecf3;border:1px solid #536c80;border-radius:4px;box-shadow:inset 0 1px #a9c7dc22,0 3px 0 #08131e}
+html[data-j7-theme="jaeger"] .kv5-source p,html[data-j7-theme="jaeger"] .kv5-book p,html[data-j7-theme="jaeger"] .kv5-story p,html[data-j7-theme="jaeger"] .kv5-gap p,html[data-j7-theme="jaeger"] .kv5-course p,html[data-j7-theme="jaeger"] .rd5-card p,html[data-j7-theme="jaeger"] .op5-service p{color:#b8cad8}
+html[data-j7-theme="jaeger"] .kv5-cover{background:linear-gradient(110deg,#25465e,#12283a);color:#f4f7fa;border-color:#819bad;box-shadow:inset 4px 0 #fa9d59,inset 5px 0 #07121c}
+html[data-j7-theme="jaeger"] .kv5-quote,html[data-j7-theme="jaeger"] .rd5-quote{background:#253b4f;color:#e2edf4;border-left:4px solid #ffa261}
+html[data-j7-theme="jaeger"] .kv5-paper,html[data-j7-theme="jaeger"] .kv5-facsimile{background:#e9e2d3;color:#293543;border-color:#968e7c;box-shadow:inset 0 0 32px #72604526}
+html[data-j7-theme="jaeger"] .kv5-paper *,html[data-j7-theme="jaeger"] .kv5-facsimile *{color:#293543}
+html[data-j7-theme="jaeger"] .kv5-transcription{background:#15293b;color:#e5eef4;border-color:#667f91}
+html[data-j7-theme="jaeger"] .kv5-issue{background:#3a3026;border-color:#9b7955;color:#ffe2bb}
+html[data-j7-theme="jaeger"] .kv5-tabs button.active{background:#34556f;color:#f3f8fc;border-color:#8aabbe}
+html[data-j7-theme="jaeger"] .kv5-graph{background:radial-gradient(ellipse,#233e55,#0c1c2b);border-color:#506c80}
+html[data-j7-theme="jaeger"] .kv5-graph text{fill:#e5edf4}
+html[data-j7-theme="jaeger"] .kv5-graph circle{fill:#294f6b;stroke:#8bb8d5}
+html[data-j7-theme="jaeger"] .rd5-hero,html[data-j7-theme="jaeger"] .rd5-inbox-banner,html[data-j7-theme="jaeger"] .vm5-memory-banner{background:linear-gradient(120deg,#29445a,#182d41);color:#e7f1f8;border:1px solid #6b8497;border-left:5px solid #ffa05b;border-radius:3px}
+html[data-j7-theme="jaeger"] .rd5-hero p,html[data-j7-theme="jaeger"] .rd5-inbox-banner p,html[data-j7-theme="jaeger"] .vm5-memory-banner p{color:#c3d5e1}
+html[data-j7-theme="jaeger"] .op5-stage,html[data-j7-theme="jaeger"] .op5-node-icon{background:#213f57;color:#c6e8ff;border-color:#7395ac}
+html[data-j7-theme="jaeger"] .op5-stage.done{background:#254756;color:#bfe9e7}
+html[data-j7-theme="jaeger"] .vm5-persona-avatar,html[data-j7-theme="jaeger"] .vm5-memory-symbol{background:linear-gradient(135deg,#486d88,#192e43);border:1px solid #8eabbf;border-radius:3px;color:#e6f2fa}
+
+/* A physical three-station cockpit. Input IDs and task actions are untouched. */
+html[data-j7-theme="jaeger"] .vm5-terminal{--vm5-ink:#e7edf3;--vm5-muted:#a5b7c6;--vm5-blue:#75bcf4;color:#e7edf3;background:#101e2d;border:2px solid #62798c;border-radius:4px;box-shadow:inset 0 1px #b4d3e326,0 7px 0 #050e18;margin:-8px -8px -12px}
+html[data-j7-theme="jaeger"] .vm5-grid-glow{background-image:linear-gradient(#93b7d207 1px,transparent 1px),linear-gradient(90deg,#93b7d207 1px,transparent 1px);background-size:36px 36px;opacity:.7}
+html[data-j7-theme="jaeger"] .vm5-top{background:linear-gradient(95deg,#273b4c,#182c40);border-bottom:3px solid #6f8494;padding:23px 26px;color:#e8f2f8}
+html[data-j7-theme="jaeger"] .vm5-top h1{color:#f0f5f8;font:750 28px/1.2 "Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;letter-spacing:.03em}
+html[data-j7-theme="jaeger"] .vm5-eyebrow{color:#ffb17c;font:650 9px/1.6 Consolas,monospace;letter-spacing:.14em}
+html[data-j7-theme="jaeger"] .vm5-ghost{color:#d8e8f4;background:#243f55;border-color:#7891a4;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-workspace,html[data-j7-theme="jaeger"] .vm5-immersive .vm5-workspace{display:grid;grid-template-columns:195px minmax(340px,1fr) minmax(310px,32%);gap:20px;min-height:650px;padding:20px}
+html[data-j7-theme="jaeger"] .vm5-side{background:linear-gradient(135deg,#24394b,#152a3e);border:1.5px solid #587083;border-top:4px solid #8aa0af;border-radius:3px;padding:23px 16px;box-shadow:inset 0 1px #d0e9f318}
+html[data-j7-theme="jaeger"] .vm5-side h2,html[data-j7-theme="jaeger"] .vm5-side h3,html[data-j7-theme="jaeger"] .vm5-profile-name{color:#eef4f9}
+html[data-j7-theme="jaeger"] .vm5-profile-avatar{background:linear-gradient(145deg,#526d80,#1e3b52);color:#e7f6ff;border:2px solid #86a1b4;border-radius:3px;box-shadow:0 3px 0 #07121c}
+html[data-j7-theme="jaeger"] .vm5-profile-hint,html[data-j7-theme="jaeger"] .vm5-side small{color:#b6c8d5}
+html[data-j7-theme="jaeger"] .vm5-mode{color:#c4d6e3;background:#1a3044;border:1px solid #4e6b83;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-mode.active{color:#eff7fc;background:#32516c;border-color:#8faabc;box-shadow:inset 3px 0 #ffa463}
+html[data-j7-theme="jaeger"] .vm5-status-card{background:#142c40;border:1px solid #5c7a91;border-top:3px solid #f9a766;border-radius:3px;color:#dcebf5}
+html[data-j7-theme="jaeger"] .vm5-status-card p,html[data-j7-theme="jaeger"] .vm5-status-card small{color:#b3cadb}
+html[data-j7-theme="jaeger"] .vm5-stage{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;background:radial-gradient(ellipse at 50% 38%,#294056,#112237 65%),#142639;border:1.5px solid #667d8d;border-top:4px solid #9bacb5;border-radius:3px;padding:22px 24px;box-shadow:inset 0 0 30px #06122155,0 4px 0 #07131f}
+html[data-j7-theme="jaeger"] .vm5-stage:before{content:"";position:absolute;inset:8px;pointer-events:none;background:radial-gradient(circle at 3px 3px,#c5d0d5 0 2px,#172939 2px 3px,transparent 4px),radial-gradient(circle at calc(100% - 3px) 3px,#c5d0d5 0 2px,#172939 2px 3px,transparent 4px),radial-gradient(circle at 3px calc(100% - 3px),#a2b7c4 0 2px,#172939 2px 3px,transparent 4px),radial-gradient(circle at calc(100% - 3px) calc(100% - 3px),#a2b7c4 0 2px,#172939 2px 3px,transparent 4px)}
+html[data-j7-theme="jaeger"] .vm5-stage-meta{order:1;color:#b4ccdc;font:600 10px/1.5 Consolas,monospace;letter-spacing:.06em;width:100%}
+html[data-j7-theme="jaeger"] .vm5-mobile-modes{order:2}
+html[data-j7-theme="jaeger"] .vm5-orb-wrap{order:3;width:100%;padding:0;min-width:0}
+html[data-j7-theme="jaeger"] .vm5-terminal .vm5-stage .vm5-energy.j7-core-holder{width:360px;height:290px;max-width:100%;margin:5px auto 4px;filter:none;display:block;animation:none;background:none;border:0;box-shadow:none;overflow:visible}
+html[data-j7-theme="jaeger"] .vm5-orb-label{font:750 27px/1.3 "Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;color:#e8f3fa;letter-spacing:.04em;margin:7px 0 5px}
+html[data-j7-theme="jaeger"] .vm5-orb-label p{color:#b0c8d9;font-size:12px}
+html[data-j7-theme="jaeger"] .vm5-wave{height:22px;margin:6px auto 12px}
+html[data-j7-theme="jaeger"] .vm5-wave i{background:#83c6f4;box-shadow:none}
+html[data-j7-theme="jaeger"] .vm5-wave i:nth-child(3n){background:#ffb075}
+html[data-j7-theme="jaeger"] .vm5-caption{order:4;width:100%;min-height:75px;padding:12px 15px;margin:2px 0 17px;background:#192e41;border:1.5px solid #5f7b90;border-left:4px solid #72b9f5;border-radius:3px;color:#e1edf4;box-shadow:inset 0 1px #bedff322}
+html[data-j7-theme="jaeger"] .vm5-caption p{color:#e1edf4;font-size:14px;line-height:1.7}
+html[data-j7-theme="jaeger"] .vm5-caption small{color:#9fbccc}
+html[data-j7-theme="jaeger"] .vm5-central-controls{order:5;width:100%;gap:12px;margin-bottom:20px}
+html[data-j7-theme="jaeger"] .vm5-primary{height:48px;background:linear-gradient(#ffc786,#f69b51);border:1px solid #ffd2a8;border-bottom-color:#754722;color:#152536;border-radius:3px;font-size:15px;font-weight:800;box-shadow:inset 0 1px #fff8,0 3px 0 #07131e;letter-spacing:.03em}
+html[data-j7-theme="jaeger"] .vm5-primary:hover{background:linear-gradient(#ffd49e,#ffae68);color:#102134}
+html[data-j7-theme="jaeger"] .vm5-secondary{height:48px;background:linear-gradient(#35526a,#203b53);color:#eaf4fa;border:1px solid #84a2b7;border-radius:3px;box-shadow:inset 0 1px #d5ecff33,0 3px 0 #08131d;font-weight:750}
+html[data-j7-theme="jaeger"] .vm5-compose{order:7;width:100%;background:#0f2336;border:1px solid #678399;border-radius:3px;box-shadow:inset 0 2px 5px #06101b88}
+html[data-j7-theme="jaeger"] .vm5-compose textarea{color:#e1eff7;background:transparent;border:0;font-size:13px}
+html[data-j7-theme="jaeger"] .vm5-compose button{background:#2c506c;color:#eaf6fd;border:1px solid #7796aa;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-demo-bar{order:8;color:#b8cdda}
+html[data-j7-theme="jaeger"] .vm5-demo-bar button{color:#c8dcea;background:#1b364d;border-color:#5d7b92;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-disclosure{order:9;color:#9cb6c8}
+html[data-j7-theme="jaeger"] .vm5-dialogue{background:linear-gradient(140deg,#24394d,#172c3f);color:#e7edf3;border:1.5px solid #687f90;border-top:4px solid #faa565;border-radius:3px;padding:22px 20px;box-shadow:inset 0 1px #cce8fa22,0 4px 0 #07131f;min-width:0}
+html[data-j7-theme="jaeger"] .vm5-dialogue-head h2{color:#f0f4f7;font:750 21px/1.4 "Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif}
+html[data-j7-theme="jaeger"] .vm5-dialogue-head small{color:#ffa969}
+html[data-j7-theme="jaeger"] .vm5-dialogue-head button{background:#2a445a;color:#d8e7f2;border-color:#6d899e;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-message{background:#142b3f;border:1px solid #476a85;border-left:3px solid #71b4eb;border-radius:3px;color:#e0edf6;font-size:13px;box-shadow:inset 0 1px #b0d7f01a}
+html[data-j7-theme="jaeger"] .vm5-message.vm5-user{background:#343337;border-color:#786b5e;border-left-color:#f9a864;color:#f0e8df}
+html[data-j7-theme="jaeger"] .vm5-message p,html[data-j7-theme="jaeger"] .vm5-message strong{color:inherit}
+html[data-j7-theme="jaeger"] .vm5-message small{color:#adc5d6}
+html[data-j7-theme="jaeger"] .vm5-reply-actions button{background:#2d4a61;color:#e7f3fb;border-color:#7b9bb0;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-bottom{background:#1e3448;color:#a8c3d5;border-top:1px solid #637d90;font-size:10px}
+html[data-j7-theme="jaeger"] .j7-mind-panel{background:linear-gradient(130deg,#30495f,#1b3249);border:1.5px solid #67869e;border-left:4px solid #ffa667;border-radius:3px;color:#e1edf5;box-shadow:inset 0 1px #d3eaff25}
+html[data-j7-theme="jaeger"] .j7-mind-head small{color:#ffb680}
+html[data-j7-theme="jaeger"] .j7-intent-line strong{color:#f2f7fa;font-size:17px}
+html[data-j7-theme="jaeger"] .j7-intent-line span{color:#bdd1df}
+html[data-j7-theme="jaeger"] .j7-intent-tags span{background:#203b52;color:#cae0ee;border:1px solid #5d7d95;border-radius:2px}
+html[data-j7-theme="jaeger"] .j7-process-track>div{opacity:1;color:#b8ccda}
+html[data-j7-theme="jaeger"] .j7-process-track b{background:#1a3043;border:1px solid #698397;border-radius:2px;color:#b5d0e2}
+html[data-j7-theme="jaeger"] .j7-process-track .done b{background:#316180;color:#edf9ff}
+html[data-j7-theme="jaeger"] .j7-process-track .active b{background:#ffad6c;color:#192b3b;border-color:#ffcf9d}
+html[data-j7-theme="jaeger"] .j7-next-action{background:#152b3e;border-left:3px solid #ffa261;color:#e6eff6}
+html[data-j7-theme="jaeger"] .j7-next-action span{color:#bed1dd}
+html[data-j7-theme="jaeger"] .j7-film-switch{background:#182e42;border:1.5px solid #7390a5;border-radius:3px;box-shadow:inset 0 1px #cceaff20}
+html[data-j7-theme="jaeger"] .j7-film-switch button{color:#b8cfdf;background:transparent;border-radius:2px;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+html[data-j7-theme="jaeger"] .j7-film-switch button.active{color:#f3f7fa;background:linear-gradient(#3e5d74,#2a485f);box-shadow:inset 0 -3px #ffab6a}
+html[data-j7-theme="jaeger"] .j7-film-tools button{color:#d1e6f2;background:#28445a;border-color:#7393a9;border-radius:3px}
+
+html[data-j7-theme="jaeger"] .vm5-chip{color:#c4d6e3;background:#1a3044;border:1px solid #4e6b83;border-radius:3px}
+html[data-j7-theme="jaeger"] .vm5-chip.vm5-selected{color:#eff7fc;background:#32516c;border-color:#8faabc;box-shadow:inset 3px 0 #ffa463}
+html[data-j7-theme="jaeger"] .vm5-orb-label>span{color:#e8f3fa;font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;font-weight:750}
+html[data-j7-theme="jaeger"] .vm5-orb-label p{color:#b0c8d9;font-size:12px;margin-top:4px;font-weight:400;letter-spacing:0}
+html[data-j7-theme="jaeger"] .vm5-terminal{--vm-bg:#101e2d;--vm-ink:#e7edf3;--vm-muted:#a5b7c6;--vm-line:#5f7a90;--vm-blue:#75bcf4}
+html[data-j7-theme="jaeger"] .vm5-answer-actions .vm5-secondary{font-size:11px;height:auto;min-height:36px;padding:8px 10px}
+/* The dual steel rotors share a visible neural bridge. */
+html[data-j7-theme="jaeger"] .j7-je-core{display:flex;flex-direction:column;width:100%;height:100%;min-height:0;filter:drop-shadow(0 12px 10px #030b1580)}
+html[data-j7-theme="jaeger"] .j7-je-top{display:flex;justify-content:space-between;gap:8px;width:100%;color:#a8c9df;font:650 8px/1.4 Consolas,monospace;letter-spacing:.06em;white-space:nowrap}
+html[data-j7-theme="jaeger"] .j7-je-top b{color:#ffa65e;font-size:7px;font-weight:700}
+html[data-j7-theme="jaeger"] .j7-je-svg{display:block;width:100%;height:100%;min-height:0;flex:1;overflow:visible}
+html[data-j7-theme="jaeger"] .j7-je-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;font:650 10px/1.5 "Segoe UI","Microsoft YaHei",sans-serif;color:#d8eaf5}
+html[data-j7-theme="jaeger"] .j7-je-bottom small{color:#94b2c7;font-size:9px}
+html[data-j7-theme="jaeger"] .j7-je-rotor{transform-box:fill-box;transform-origin:center;animation:j8-je-rotate 18s linear infinite}
+html[data-j7-theme="jaeger"] .j7-je-right .j7-je-rotor{animation-direction:reverse}
+html[data-j7-theme="jaeger"] .j7-je-energy-ring{transform-box:fill-box;transform-origin:center;animation:j8-je-rotate 24s linear infinite reverse}
+html[data-j7-theme="jaeger"] .j7-je-right .j7-je-energy-ring{animation-direction:normal}
+html[data-j7-theme="jaeger"] .j7-je-flow-l,html[data-j7-theme="jaeger"] .j7-je-flow-r,html[data-j7-theme="jaeger"] .j7-je-sync{animation:j8-je-flow 4s linear infinite}
+html[data-j7-theme="jaeger"] .j7-je-radar-sweep{transform-origin:210px 268px;animation:j8-je-rotate 8s linear infinite}
+html[data-j7-theme="jaeger"] .j7-je-signal{fill:#77c5fa;transform-box:fill-box;transform-origin:center top;opacity:.55}
+html[data-j7-theme="jaeger"] .j7-je-signal-r{fill:#ffac6d}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="listening"] .j7-je-rotor,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="listening"] .j7-je-energy-ring{animation-duration:5s}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="listening"] .j7-je-flow-l,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="listening"] .j7-je-flow-r{animation-duration:1.7s}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="listening"] .j7-je-signal,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="speaking"] .j7-je-signal{animation:j8-je-signal .7s calc(var(--je-delay,0)*1s) ease-in-out infinite alternate;opacity:.9}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="thinking"] .j7-je-rotor{animation-duration:2.5s}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="thinking"] .j7-je-flow-l,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="thinking"] .j7-je-flow-r{animation-duration:1s}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="thinking"] .j7-je-bridge-light{animation:j8-je-light 1.1s ease-in-out infinite alternate}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="speaking"] .j7-je-rotor{animation-duration:6s}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="speaking"] .j7-je-power{animation:j8-je-light 1.2s ease-in-out infinite alternate}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="answered"] .j7-je-bridge-light{stroke:#b3eef5}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="awaiting"] .j7-je-bridge-light{stroke:#ffbe77;animation:j8-je-light 2s ease-in-out infinite alternate}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-svg{opacity:.6;filter:saturate(.35)}
+html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-rotor,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-flow-l,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-flow-r,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-sync,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-energy-ring,html[data-j7-theme="jaeger"] .j7-je-core[data-phase="interrupted"] .j7-je-radar-sweep{animation-play-state:paused}
+html[data-j7-theme="jaeger"] .j7-je-core[data-motion="off"] *,html[data-j7-theme="jaeger"] .j7-je-core[data-motion="off"] *:before,html[data-j7-theme="jaeger"] .j7-je-core[data-motion="off"] *:after{animation-play-state:paused!important}
+@keyframes j8-je-rotate{to{transform:rotate(360deg)}}
+@keyframes j8-je-flow{to{stroke-dashoffset:-152}}
+@keyframes j8-je-signal{from{transform:scaleY(.35)}to{transform:scaleY(1.5)}}
+@keyframes j8-je-light{from{opacity:.55}to{opacity:1;filter:drop-shadow(0 0 5px #9de5ff)}}
+
+/* The same armour language continues through the home, domain routes and wallboards. */
+html[data-j7-theme="jaeger"] .j7-home-intro{position:relative;background:linear-gradient(120deg,#293f53,#11253a);border:2px solid #647c8e;border-radius:4px;color:#e4eef5;box-shadow:inset 0 1px #d8eaff33,0 5px 0 #06121e}
+html[data-j7-theme="jaeger"] .j7-home-intro:before{content:"";position:absolute;top:0;bottom:0;left:0;width:6px;background:repeating-linear-gradient(135deg,#fa9f5c 0 8px,#1d3143 8px 16px);border-radius:2px}
+html[data-j7-theme="jaeger"] .j7-home-intro h1{color:#f0f5f9;font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;font-weight:750;font-size:clamp(38px,4.3vw,62px)}
+html[data-j7-theme="jaeger"] .j7-home-intro h1 em{color:#ffb271;font-style:normal}
+html[data-j7-theme="jaeger"] .j7-home-intro p{color:#c0d4e2}
+html[data-j7-theme="jaeger"] .j7-home-kicker{color:#ffb574}
+html[data-j7-theme="jaeger"] .j7-home-visual{width:360px;height:290px;max-width:100%;background:none;border:0;border-radius:0;box-shadow:none;overflow:visible;filter:none}
+html[data-j7-theme="jaeger"] .j7-metric-strip{background:#23394d;border:1px solid #6b8598;border-radius:3px;box-shadow:inset 0 1px #d9ecff20}
+html[data-j7-theme="jaeger"] .j7-metric-strip>div{border-color:#5b7589}
+html[data-j7-theme="jaeger"] .j7-metric-strip strong{color:#edf7ff;font-family:"Bahnschrift","Segoe UI",sans-serif;font-size:31px}
+html[data-j7-theme="jaeger"] .j7-metric-strip span{color:#b8cfdf}
+html[data-j7-theme="jaeger"] .j7-home-worlds{background:linear-gradient(130deg,#253c50,#182d40);border:1.5px solid #678196;border-radius:4px;box-shadow:0 4px 0 #07131d}
+html[data-j7-theme="jaeger"] .j7-home-worlds h2{color:#edf6fc}
+html[data-j7-theme="jaeger"] .j7-home-worlds button{background:linear-gradient(#2b4860,#1f3a51);color:#dcebf5;border-color:#7393aa;border-radius:3px}
+html[data-j7-theme="jaeger"] .j6-u-priority{background:linear-gradient(135deg,#213a50,#142a3e);border-color:#5b7a91;border-radius:3px;color:#e7f0f6}
+html[data-j7-theme="jaeger"] .j6-u-priority strong{color:#eef6fb}
+html[data-j7-theme="jaeger"] .j6-u-priority p,html[data-j7-theme="jaeger"] .j6-u-priority small{color:#b0cbdc}
+html[data-j7-theme="jaeger"] .j6-directory{background:#152c40;color:#e0edf6;border:2px solid #6b879b;border-radius:4px;box-shadow:0 6px 30px #01091080}
+html[data-j7-theme="jaeger"] .j6-directory h2,html[data-j7-theme="jaeger"] .j7-compare-heading{color:#e9f3fb}
+html[data-j7-theme="jaeger"] .j7-dock{background:#1f374c;border:1px solid #6d8aa0;color:#d9ebf7;box-shadow:0 8px 30px #020c16a3}
+html[data-j7-theme="jaeger"] .j7-dock button{background:#2a4a63;color:#e5f1fa;border-color:#6e91ab}
+html[data-j7-theme="jaeger"] .screen-mode{--bg:#0b1826;--paper:#1a2d40;--ink:#e5f0f7;--muted:#acc3d4;--line:#56768f;--blue:#80c4f3;--blue-soft:#223e55;background:#0b1826;color:#e5f0f7}
+html[data-j7-theme="jaeger"] .screen-mode .main{background:radial-gradient(ellipse at 50% 0,#27445d77,transparent 65%),#0b1826;color:#e5f0f7}
+html[data-j7-theme="jaeger"] .j5-board-panel,html[data-j7-theme="jaeger"] .rd5-board-grid>section,html[data-j7-theme="jaeger"] .rd5-board-metrics article,html[data-j7-theme="jaeger"] .kv5-board-card,html[data-j7-theme="jaeger"] .kv5-board-metric,html[data-j7-theme="jaeger"] .vm5-board-dialogue,html[data-j7-theme="jaeger"] .vm5-board-panels>article{background:linear-gradient(135deg,#243d53,#132b40);border:1.5px solid #5a7b94;border-top:3px solid #6e8ca2;border-radius:4px;box-shadow:inset 0 1px #b5dcf123,0 4px 0 #06121e;color:#daeaf4}
+html[data-j7-theme="jaeger"] .j5-board-head{border-bottom:3px solid #936845;color:#e3eff8}
+html[data-j7-theme="jaeger"] .j5-board-head h1{font-family:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;color:#f0f6fa;font-size:29px}
+html[data-j7-theme="jaeger"] .j5-board-head p,html[data-j7-theme="jaeger"] .j5-board-head small{color:#b5ccdc}
+html[data-j7-theme="jaeger"] .j5-board-logo{color:#e3f2fc;background:linear-gradient(135deg,#536f83,#213c52);border:1px solid #8fabbe;border-radius:3px}
+html[data-j7-theme="jaeger"] .j5-board-tab,html[data-j7-theme="jaeger"] .j5-board-tabs button{background:#243d52;color:#c1d6e5;border:1px solid #5c7c93;border-radius:3px}
+html[data-j7-theme="jaeger"] .j5-board-tab.active,html[data-j7-theme="jaeger"] .j5-board-tabs button.active{background:#503d2d;color:#ffcd9b;border-color:#b4875b;box-shadow:inset 0 -2px #ffb67b}
+html[data-j7-theme="jaeger"] .j5-board-metric{background:linear-gradient(125deg,#27435b,#163047);border:1px solid #6e8ba0;border-top:3px solid #90a6b4;border-radius:3px;box-shadow:inset 0 1px #d9f0fc23,0 3px 0 #071420}
+html[data-j7-theme="jaeger"] .j5-board-metric label,html[data-j7-theme="jaeger"] .j5-board-metric small{color:#b9cbd8}
+html[data-j7-theme="jaeger"] .j5-board-metric strong{color:#ffbd85}
+html[data-j7-theme="jaeger"] .screen-mode .muted,html[data-j7-theme="jaeger"] .screen-mode .tiny{color:#a9c5d8}
+html[data-j7-theme="jaeger"] .screen-mode .btn{background:linear-gradient(#335571,#223f58);color:#e4f1fb;border-color:#7a9bb3}
+html[data-j7-theme="jaeger"] .screen-mode .btn.primary{background:linear-gradient(#ffca90,#f6a15c);color:#1b3043;border-color:#ffcea2}
+html[data-j7-theme="jaeger"] .rd5-board-row strong,html[data-j7-theme="jaeger"] .kv5-board-card h2,html[data-j7-theme="jaeger"] .vm5-board-panels h2,html[data-j7-theme="jaeger"] .j5-board-panel h2{color:#e7f1f8}
+html[data-j7-theme="jaeger"] .rd5-board-note,html[data-j7-theme="jaeger"] .rd5-board-row small,html[data-j7-theme="jaeger"] .rd5-board-proof p,html[data-j7-theme="jaeger"] .kv5-board-card p,html[data-j7-theme="jaeger"] .vm5-board-panels p,html[data-j7-theme="jaeger"] .vm5-board-todo{color:#b0cadc}
+html[data-j7-theme="jaeger"] .rd5-board-metrics strong,html[data-j7-theme="jaeger"] .kv5-board-metric strong,html[data-j7-theme="jaeger"] .vm5-board-stat strong,html[data-j7-theme="jaeger"] .vm5-board-weather strong{color:#ffbd86}
+html[data-j7-theme="jaeger"] .j5-topology rect{fill:#1b3a52;stroke:#7ba7c4}
+html[data-j7-theme="jaeger"] .j5-topology text{fill:#def0fb}
+html[data-j7-theme="jaeger"] .j5-topology path{stroke:#e8a877}
+html[data-j7-theme="jaeger"] .j5-topology .packet{fill:#ffc28b}
+html[data-j7-theme="jaeger"] .j5-resource-wheel text{fill:#e2f1fa}
+html[data-j7-theme="jaeger"] .j5-terminal .main{padding:0;margin:0;background:#0b1928}
+html[data-j7-theme="jaeger"] .j5-terminal .vm5-terminal{margin:0;border:0;border-radius:0;min-height:100vh}
+
+@media(max-width:1200px){
+ html[data-j7-theme="jaeger"] .vm5-workspace,html[data-j7-theme="jaeger"] .vm5-immersive .vm5-workspace{grid-template-columns:minmax(320px,1fr) minmax(280px,.95fr)}
+ html[data-j7-theme="jaeger"] .vm5-side{display:none}
+ html[data-j7-theme="jaeger"] .vm5-mobile-modes{background:#172d42;border:1px solid #6a859a;border-radius:3px;color:#bdd2e1}
+ html[data-j7-theme="jaeger"] .vm5-mobile-modes button{color:#bdd2e1}
+ html[data-j7-theme="jaeger"] .vm5-mobile-modes button.active{background:#573e2b;color:#ffce9d;border-color:#c1946c}
+}
+@media(max-width:760px){
+ html[data-j7-theme="jaeger"] .main{padding-bottom:108px}
+ html[data-j7-theme="jaeger"] .vm5-terminal.vm5-immersive{padding:0 12px}
+ html[data-j7-theme="jaeger"] .vm5-terminal .vm5-top,html[data-j7-theme="jaeger"] .vm5-terminal.vm5-immersive .vm5-top{padding:10px 13px}
+ html[data-j7-theme="jaeger"] .vm5-top h1{font-size:22px}
+ html[data-j7-theme="jaeger"] .vm5-ghost{min-height:44px}
+ html[data-j7-theme="jaeger"] .j7-film-bar{padding-bottom:8px;gap:5px}
+ html[data-j7-theme="jaeger"] .j7-film-switch{gap:4px}
+ html[data-j7-theme="jaeger"] .j7-film-switch button{font-size:10px;padding:5px 7px;min-height:30px}
+ html[data-j7-theme="jaeger"] .vm5-workspace,html[data-j7-theme="jaeger"] .vm5-immersive .vm5-workspace{display:flex;flex-direction:column;min-height:0;padding:0;gap:18px}
+ html[data-j7-theme="jaeger"] .vm5-stage{padding:10px 13px 18px;border-width:1px;border-top-width:3px}
+ html[data-j7-theme="jaeger"] .vm5-stage-meta{font-size:9px;margin-bottom:0}
+ html[data-j7-theme="jaeger"] .vm5-mobile-modes{margin:6px 0 2px;gap:4px;padding:4px}
+ html[data-j7-theme="jaeger"] .vm5-mobile-modes button{font-size:10px;min-height:27px;padding:3px 7px}
+ html[data-j7-theme="jaeger"] .vm5-orb-wrap{padding:0}
+ html[data-j7-theme="jaeger"] .vm5-terminal .vm5-stage .vm5-energy.j7-core-holder{width:248px;height:157px;max-width:100%;margin:0 auto}
+ html[data-j7-theme="jaeger"] .j7-je-top{font-size:6px;letter-spacing:0;gap:4px}
+ html[data-j7-theme="jaeger"] .j7-je-top b{font-size:6px}
+ html[data-j7-theme="jaeger"] .j7-je-bottom strong{font-size:8px}
+ html[data-j7-theme="jaeger"] .j7-je-bottom small{font-size:7px}
+ html[data-j7-theme="jaeger"] .vm5-orb-label{font-size:20px;margin:3px 0 3px}
+ html[data-j7-theme="jaeger"] .vm5-orb-label p{font-size:10px}
+ html[data-j7-theme="jaeger"] .vm5-wave{height:18px;margin:0 auto 4px}
+ html[data-j7-theme="jaeger"] .vm5-caption{min-height:60px;padding:9px 10px;margin:2px 0 11px;border-left-width:3px}
+ html[data-j7-theme="jaeger"] .vm5-caption p{font-size:12px;line-height:1.65;max-height:3.3em;overflow:auto}
+ html[data-j7-theme="jaeger"] .vm5-caption small{font-size:9px}
+ html[data-j7-theme="jaeger"] .vm5-central-controls{gap:9px;margin-bottom:12px}
+ html[data-j7-theme="jaeger"] .vm5-primary,html[data-j7-theme="jaeger"] .vm5-secondary{height:44px;min-height:44px;flex:1;font-size:13px}
+ html[data-j7-theme="jaeger"] .vm5-compose textarea{font-size:12px}
+ html[data-j7-theme="jaeger"] .vm5-compose button{width:36px;height:36px}
+ html[data-j7-theme="jaeger"] .vm5-dialogue{width:100%;padding:20px 16px;border-top-width:3px}
+ html[data-j7-theme="jaeger"] .vm5-message{font-size:12px}
+ html[data-j7-theme="jaeger"] .vm5-message-list{max-height:400px}
+ html[data-j7-theme="jaeger"] .vm5-bottom{font-size:9px}
+ html[data-j7-theme="jaeger"] .j7-home-intro h1{font-size:38px}
+ html[data-j7-theme="jaeger"] .j7-metric-strip strong{font-size:26px}
+ html[data-j7-theme="jaeger"] .j5-board-metric strong{font-size:29px}
+ html[data-j7-theme="jaeger"] .j5-board-head h1{font-size:25px}
+ html[data-j7-theme="jaeger"] .j5-terminal .main{padding:0}
+}
+@media(prefers-reduced-motion:reduce){html[data-j7-theme="jaeger"] .j7-je-core *{animation:none!important;transition:none!important}}

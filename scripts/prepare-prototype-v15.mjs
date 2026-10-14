@@ -1,0 +1,10 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve} from 'node:path';
+const root=process.cwd();await mkdir(resolve(root,'prototype-v15'),{recursive:true});
+let coordinator=await readFile(resolve(root,'prototype-v14/cinematic.js'),'utf8');
+coordinator=coordinator.replace("key='jarvis-v14-cinematic-preferences'","key='jarvis-v15-cinematic-preferences'").replace('localStorage.getItem(key)||',"localStorage.getItem(key)||localStorage.getItem('jarvis-v14-cinematic-preferences')||").replace("sup.textContent='V14'","sup.textContent='V15'");
+await writeFile(resolve(root,'prototype-v15/cinematic.js'),coordinator,'utf8');
+let builder=await readFile(resolve(root,'scripts/build-prototype-v14.mjs'),'utf8');
+builder=builder.replace("'prototype-v14/cinematic.js'","'prototype-v15/cinematic.js'").replace("'prototype-v14/polish.css'];","'prototype-v14/polish.css','prototype-v15/graphics.css','prototype-v15/domain-graphics.css'];").replace("'prototype-v14/dashboard.js'];","'prototype-v14/dashboard.js','prototype-v15/graphics.js','prototype-v15/domain-graphics.js'];").replace("['v14','v13','v12','v11']","['v15','v14','v13','v12','v11']").replaceAll('V14','V15').replace('jarvis-v14-inline.js','jarvis-v15-inline.js').replace("mkdir(resolve(root,'prototype-v14')","mkdir(resolve(root,'prototype-v15')").replace("resolve(root,'prototype-v14/build-manifest.json')","resolve(root,'prototype-v15/build-manifest.json')");
+await writeFile(resolve(root,'scripts/build-prototype-v15.mjs'),builder,'utf8');
+console.log('V15 coordinator and builder prepared');

@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {Store} from '../src/store.js';
+import {V1Repository} from '../src/v1/repository.js';
+import {IdentityRuntime,RuntimeAccessError} from '../src/runtime/identity.js';
+import {VoiceRuntime} from '../src/runtime/voice.js';
+import {VoiceIntentRuntime} from '../src/runtime/voice-intents.js';
+import type {PiService} from '../src/pi.js';
+const deferred=()=>{let release!:()=>void;const promise=new Promise<void>(resolve=>{release=resolve;});return {promise,release};};
+async function fixture(){const dir=await mkdtemp(join(tmpdir(),'jarvis-intent-race-')),store=new Store(dir);store.setPassword('isolated-intent-race-password');const token=store.createLogin(),identity=new IdentityRuntime(store,{memberExists:id=>id==='me',memberProfile:id=>id==='me'?{id:'me',name:'fixture',preferences:{cloudPrivacy:'ask'}}:undefined}),repository=new V1Repository(store.databasePath),gate=deferred(),result=deferred();let gateCalls=0,piCalls=0;
+ const pi={health:()=>({configured:true}),modelIsLocal:async()=>{gateCalls++;await gate.promise;return true;},run:async()=>{piCalls++;await result.promise;return {status:'complete',text:JSON.stringify({mode:'proposal',alternatives:[{action:'inbox.capture',title:'记录',content:'独立竞态测试',dueAt:null}]})};},abort:async()=>{},removeConversationSession:async()=>{}} as unknown as PiService;
+ const voice=new VoiceRuntime(dir,identity,{store,defaultLocalTts:false}),runtime=new VoiceIntentRuntime(identity,voice,repository,pi),principal=identity.principal({cookies:{jarvis_session:token}} as any),session=voice.createSession(principal,'local','study');
+ return {store,token,voice,runtime,principal,session,gate,result,stats:()=>({gateCalls,piCalls}),async close(){gate.release();result.release();await runtime.close();await voice.close();repository.close();identity.close();store.close();await rm(dir,{recursive:true,force:true});}};}
+const wait=async(condition:()=>boolean)=>{for(let i=0;i<100&&!condition();i++)await new Promise(resolve=>setTimeout(resolve,5));assert(condition());};
+test('同session在异步模型本地判定后重检锁，只启动一个意图Pi任务',async()=>{const f=await fixture();try{const attempts=[f.runtime.analyze(f.principal,f.session.id,{text:'请记录第一段'}),f.runtime.analyze(f.principal,f.session.id,{text:'请记录第二段'})];const settled=Promise.allSettled(attempts);await wait(()=>f.stats().gateCalls===2);f.gate.release();await wait(()=>f.stats().piCalls>=1);await new Promise(resolve=>setTimeout(resolve,20));f.result.release();const results=await settled;assert.equal(f.stats().piCalls,1);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);const rejected=results.find(r=>r.status==='rejected') as PromiseRejectedResult;assert(rejected.reason instanceof RuntimeAccessError);assert.equal(rejected.reason.code,'VOICE_BUSY');}finally{await f.close();}});
+test('模型本地判定迟到时已退出身份，分类不能启动或创建选项',async()=>{const f=await fixture();try{const pending=f.runtime.analyze(f.principal,f.session.id,{text:'请记录撤销后的内容'});const settled=Promise.allSettled([pending]);await wait(()=>f.stats().gateCalls===1);f.store.deleteLogin(f.token);f.gate.release();f.result.release();const [result]=await settled;assert.equal(result.status,'rejected');assert.equal(f.stats().piCalls,0);}finally{await f.close();}});
+test('模型本地判定迟到时服务已关闭，不再启动分类',async()=>{const f=await fixture();try{const pending=f.runtime.analyze(f.principal,f.session.id,{text:'请记录关闭后的内容'});const settled=Promise.allSettled([pending]);await wait(()=>f.stats().gateCalls===1);await f.runtime.close();f.gate.release();f.result.release();const [result]=await settled;assert.equal(result.status,'rejected');assert.equal(f.stats().piCalls,0);}finally{await f.close();}});

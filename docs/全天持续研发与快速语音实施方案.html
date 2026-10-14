@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="让任务能持续推进、遇到问题可恢复，完成后有真实证据；语音按首句速度和回答质量分别优化。">
+  <meta name="jarvis-source-sha256" content="0ca6dcd9d9c3d4421ecc228ea2fd46cf940d7863cdb385f6817875dc29b31d89">
+  <title>全天持续研发与快速语音实施方案</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R19 · 实施路线</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E5%85%A8%E5%A4%A9%E6%8C%81%E7%BB%AD%E7%A0%94%E5%8F%91%E4%B8%8E%E5%BF%AB%E9%80%9F%E8%AF%AD%E9%9F%B3%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 8 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 全天运行怎样组织</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 一条任务的完整循环</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 如何决定下一步，避免空转</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. 异常处理与恢复规则</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. 101 的模型分工</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 回答既准确又快速</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 分阶段达到全天无人值守</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. 本轮实施结果与入口</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-10<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">全天监督 / 模型分工 / 即时语音</p>
+        <h1 id="document-title">全天持续研发与快速语音实施方案</h1>
+        <p class="subtitle">让任务能持续推进、遇到问题可恢复，完成后有真实证据；语音按首句速度和回答质量分别优化。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-10</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>持续闭环</strong><span>开发 → 测试 → 修复 → 复验</span></div><div class="stat"><strong>分级模型</strong><span>快速执行 · 强模型判断</span></div><div class="stat"><strong>首句优先</strong><span>先给可确认的回答，再展开</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>贾维斯的目标是全天保持监管，在已确定的范围内自动开发、测试和修复；遇到额度等待时保留工作，恢复后继续。关键是持久的任务状态、客观验收、可靠恢复和正确的下一步安排。只让某个模型反复运行，无法保证最终交付。</p>
+<p>本文把推荐方案与本轮实际实现分开。首项目仍以软件工厂现有 PRD 为范围，生产自动发布不在其中；全局持续监督是否开启，以正式平台配置为准。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 全天运行怎样组织</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>部署与职责</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>调度与监督</td>
+<td>112 保存任务、依赖、预算、运行与恢复链；定期挑选就绪任务</td>
+<td>持久状态及明确任务，浏览器关闭不影响监督</td>
+</tr>
+<tr>
+<td>开发执行</td>
+<td>101 在任务独立副本内运行 Claude；后续可增加 Codex 节点</td>
+<td>执行器真实路线、目录、权限和运行身份</td>
+</tr>
+<tr>
+<td>独立测试</td>
+<td>对明确候选构建运行固定测试及反例，保留失败</td>
+<td>真实文件、源码/构建指纹、实际进程和报告</td>
+</tr>
+<tr>
+<td>诊断与修复</td>
+<td>按失败分类生成有限修复任务，修完再跑受影响测试</td>
+<td>真实错误及实质差异，同一错误无变化不反复重跑</td>
+</tr>
+<tr>
+<td>验收与归档</td>
+<td>汇总条款—产物—测试证据；形成交付候选和未完成项</td>
+<td>模拟、未执行、未知或过期结果不得算通过</td>
+</tr>
+</tbody></table></div>
+<p>112 是监督中心；101 开发节点重启后先补传旧记录并核对旧运行，再领新任务。NAS 可作为证据与备份目标，需先落实实际保留和恢复策略，不能把“NAS 已接入”当作备份已完成。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 一条任务的完整循环</h2>
+<p><strong>目标与验收 → 就绪检查 → 独立副本执行 → 固定测试 → 失败分类 → 有限修复 → 新候选复验 → 汇总交付依据。</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>自动做什么</th>
+<th>什么时候退出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>就绪检查</td>
+<td>核对源码、依赖、模型、授权、价格/计费方式、剩余预算及资源</td>
+<td>依赖未满足、来源冲突或预算不可判断时等待</td>
+</tr>
+<tr>
+<td>开发</td>
+<td>续接明确任务的会话及检查点；留下真实改动</td>
+<td>达到目标、超时、无有效进展、费用/轮次到限</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>运行固定工具，绑定当前输入与构建</td>
+<td>所有必需检查有真实结果；缺报告保持未完成</td>
+</tr>
+<tr>
+<td>修复</td>
+<td>根据失败形成明确修复包，保留旧失败</td>
+<td>同类失败达到恢复上限，或需要更改目标/权限</td>
+</tr>
+<tr>
+<td>复验</td>
+<td>根据改动跑必要回归，阶段完成再跑完整范围</td>
+<td>新候选有合格证据；原失败不能删除后当通过</td>
+</tr>
+<tr>
+<td>下一任务</td>
+<td>按当前依赖和验收出口选择已授权的后续工作</td>
+<td>范围完成、预算到限或没有可执行任务</td>
+</tr>
+</tbody></table></div>
+<p>常规开发、测试和修复可以自动推进。任务定义或范围需要实质改变、提高预算、追加权限、产生不可逆副作用时，应给管理者具体选项。软件工厂 PRD 已约定的人工定稿/交付点保留对应策略；不能借无人值守绕过产品门禁。新的自动验收策略需要清楚区分“内部工作单元验证通过”和“产品正式交付”。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 如何决定下一步，避免空转</h2>
+<p>监督器先用可核对的状态与规则决定是否重试、等待、测试或停止；强模型用于需要推理的诊断、计划和评审。调用模型前先做确定性的规则检查，减少无必要的费用和等待。</p>
+<p>每个项目需要一份执行约定：目标与明确分期、验收条款、任务依赖、允许写入的副本、模型路线、预算、工作时段、恢复上限和停止条件。预算必须在平台形成实际配置，本文不擅自填写全天费用额度。</p>
+<p>进度以已验证条款为分母；Token、运行时长、日志条数或模型自述只说明活动，不说明完成率。没有新产物或同一失败反复出现时，监督器应记录停滞及原因，改变输入或修复后才继续。</p>
+<p>完成一个任务后自动安排后续就绪任务，需要额外的项目级编排机制。当前单任务 CLI 多轮续做和 <code>dependsOn</code> 不能直接证明已有任意依赖图、自动拆任务、自动验收或全天交付能力。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 异常处理与恢复规则</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>异常</th>
+<th>推荐动作</th>
+<th>恢复条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>短暂断网、可识别 5xx</td>
+<td>有限退避，保留待发送记录</td>
+<td>连接恢复，先确认原操作是否已提交</td>
+</tr>
+<tr>
+<td>模型额度或限流</td>
+<td>按实际回执等待；有合格后备时评估切换</td>
+<td>额度恢复或后备已认证、计价且任务兼容</td>
+</tr>
+<tr>
+<td>登录失效、权限不足</td>
+<td>保留工作，显示明确待处理项</td>
+<td>认证或权限问题已解决并验证</td>
+</tr>
+<tr>
+<td>原生会话中断、上下文满</td>
+<td>核对检查点和源码，组装续做包</td>
+<td>明确 session 或新会话输入、费用增量及剩余预算</td>
+</tr>
+<tr>
+<td>节点重启、旧运行失联</td>
+<td>先收尾、补传、对账，不直接重跑</td>
+<td>旧进程终结或隔离，副作用和产物状态清楚</td>
+</tr>
+<tr>
+<td>日志或回执响应丢失</td>
+<td>稳定递送编号重送，服务器返回原确认</td>
+<td>同身份同正文去重；不同正文拒绝</td>
+</tr>
+<tr>
+<td>验证失败</td>
+<td>实际错误交给修复执行器，强模型处理疑难原因</td>
+<td>新候选与实质修改，受影响检查通过</td>
+</tr>
+<tr>
+<td>未知费用、结果或副作用</td>
+<td>记录未知并暂停自动扩展</td>
+<td>完成对账，不能把未知写成零或失败后直接重做</td>
+</tr>
+<tr>
+<td>磁盘满、OOM、资源紧张</td>
+<td>停止新派发，保留最后有效状态</td>
+<td>资源恢复且状态核对完成</td>
+</tr>
+<tr>
+<td>人工暂停、取消</td>
+<td>保留决定；暂停等待继续，取消结束当前安排</td>
+<td>不通过节点重启或补传自动复活任务</td>
+</tr>
+</tbody></table></div>
+<p>恢复统一经过：<strong>停止原因 → 原进程状态 → 回执/费用/产物对账 → 当前目标和预算 → 新运行续做 → 独立验证</strong>。服务自动重启只恢复服务在线，不能等同于原任务安全续做。</p>
+<p>模型切换不等于换一个名称。需核对认证、真实回执、工具能力、价格、目录与会话兼容性。跨提供方往往需要新的会话和经核对的任务续做包；原生 session 不能假定通用。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. 101 的模型分工</h2>
+<p>本轮用户指定最高能力路线为 <strong><code>gpt-6.1-sol[1m]</code></strong>。这里按网关与原生 CLI 的实际标识配置，不根据名称声称官方能力排名或上下文窗口已经实测。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>工作</th>
+<th>推荐路线</th>
+<th>选择原则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>项目整体计划、复杂架构、疑难诊断、重要评审</td>
+<td><code>gpt-6.1-sol[1m]</code></td>
+<td>明确强模型，实际回执必须可核对</td>
+</tr>
+<tr>
+<td>常规实现、修改、小范围修复</td>
+<td>首批使用已核实的强模型执行器；随后按真实质量与耗时评估标准路线</td>
+<td>不为了分级提前引入未验证的后备</td>
+</tr>
+<tr>
+<td>汇总、格式整理、简单分类</td>
+<td>有效的快速模型或本地规则</td>
+<td>不能负责最终质量门禁</td>
+</tr>
+<tr>
+<td>编译、测试、扫描、状态查询</td>
+<td>固定工具与本地规则</td>
+<td>不额外让模型“模拟执行”</td>
+</tr>
+</tbody></table></div>
+<p>有三层独立路线：112 贾维斯 Pi、101 外层 Claude/cc-switch、软件工厂内部 Pi。101 模板指定 <code>--model</code> 约束外层调用；不会自动改变另外两层。工厂内部登记路线不等于进程实际生效，必须查询有效运行提供方。</p>
+<p>本轮前的实际快照：101 外层默认 <code>gpt-6-sol[1M]</code>，强档别名也指向旧 sol；专用模板没有显式模型。现在已完成下列调整，并保留之前的报告。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>本轮核实的实际安排</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>101 贾维斯开发执行器</td>
+<td>Claude 固定参数 <code>--model gpt-6.1-sol[1m]</code>；最高路线经 <code>gw.superopen.top</code></td>
+<td>中央与节点模板一致；真实原生回执精确匹配</td>
+</tr>
+<tr>
+<td>101 原生 Claude / cc-switch</td>
+<td>默认、Opus、Fable 均为 <code>gpt-6.1-sol[1m]</code>；Sonnet 为 <code>gpt-6-luna[1M]</code>，Haiku 为 <code>gpt-6-luna</code></td>
+<td>只改当前 Claude 配置的模型字段；认证及其他 provider 保留</td>
+</tr>
+<tr>
+<td>101 软件工厂内部 Pi</td>
+<td>规划、生成、评审、聊天登记 <code>gpt-6.1-sol</code>；解析、翻译登记 <code>gpt-6-luna</code></td>
+<td>登记值，实际内部 provider 未证实；没有声称已接通或改成 <code>[1m]</code></td>
+</tr>
+<tr>
+<td>112 家庭对话</td>
+<td>快速：cc-gateway 的 <code>Kimi-Coding/kimi-for-coding-highspeed</code>；高级：superopen 的 <code>CPA / gpt-6.1-sol</code></td>
+<td>沿用当前路由，不由开发执行器参数覆盖</td>
+</tr>
+</tbody></table></div>
+<p>最高路线真实探针使用一个受限、无工具、单轮任务，2,322 Token，独立验证退出码 0；目录估算 0.01217 USD，不是供应商账单。此探针证明指定模型接通及签名计量，不能证明软件工厂产品通过或一百万上下文容量已经实测。cc-switch 代理与自动切换仍关闭，后备执行器为空；后备必须单独验证，不能根据已填密钥直接宣称可切换。详见 <a href="../artifacts/model-routing-101-r19/verification.json">模型路线核验</a>。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 回答既准确又快速</h2>
+<p>把语音总等待拆成：<strong>结束说话判定 → 识别/语言判断 → 路由/上下文 → 模型首字 → 首句可播音 → TTS → 下载/播放开始</strong>。必须分别记录真实时间，过渡语不能冒充正式答案已经变快。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>环节</th>
+<th>推荐做法</th>
+<th>准确性边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自动输入语言</td>
+<td>ASR 自动识别，保持中文及英法德输入能力；固定输出语言另管</td>
+<td>不能拿父母的中文输出偏好强制中文输入</td>
+</tr>
+<tr>
+<td>普通聊天</td>
+<td>快速路线、精简当前有关上下文，完整短句先播</td>
+<td>不截断原意，不读思考或结构化草稿</td>
+</tr>
+<tr>
+<td>复杂问题</td>
+<td>强模型给核对后的简短结论，再展开</td>
+<td>没有证据时只给中性等待提示，不能先猜事实</td>
+</tr>
+<tr>
+<td>新闻与实时信息</td>
+<td>有真实查询结果后回答，保留来源</td>
+<td>旧缓存或模型记忆不能当今日事实</td>
+</tr>
+<tr>
+<td>TTS</td>
+<td>首句优先、后句预制与播放并行，持续核对播放回执</td>
+<td>不打乱句序、不遗漏尾句；打断后取消后续声音</td>
+</tr>
+<tr>
+<td>等待提示</td>
+<td>短、自然、遵守成员输出语言；最终答案到达时及时让位</td>
+<td>不制造“已查询”“已执行”等虚假进度</td>
+</tr>
+<tr>
+<td>声线</td>
+<td>保留用户选择，展示该引擎实测耗时</td>
+<td>不能把喜欢的慢声线悄悄替换成另一人声</td>
+</tr>
+</tbody></table></div>
+<p>本轮基线发现：中文合成夹具自动识别约 2.68 秒，英文约 4.92 秒；模型首字约 1.23–1.53 秒。英文普通科普未进入原先较窄的提前播音范围，仍等待整轮完成。客户端轮询及后句预制也存在串行等待。基线使用真实模型与服务器引擎，但没有完整运行手机播放链，不能当作手机端总耗时。<a href="../artifacts/voice-latency-r19/before-attempt4.json">基线记录</a>。</p>
+<p>保持同一 Whisper 权重、int8、beam=5、自动输入语种及其他解码参数，将 112 识别线程从 2 调为 4，英、法两段合成夹具分别从 5.00→3.14 秒、4.87→3.04 秒，识别文字、语言与概率相同。正式 worker 已调为 4 线程，保留原参数和成员偏好；这两段夹具不能代替所有语言、真人口音及噪声下的准确率验收。<a href="../artifacts/voice-latency-r19/asr-threads-attempt4.json">线程对照</a> · <a href="../artifacts/voice-latency-r19/threads-deployment.json">正式配置验证</a>。</p>
+<p>语音候选还扩大了中英法德稳定学科常识的首句播音范围，保留实时查询、私有数据、执行动作与医疗等门禁；短首句优先，后句预制与当前播放重叠，等待期间更及时读取准备结果。保持自动输入语言、家庭固定输出语言、选择声线、打断、计量和不读思考内容。模型服务自身波动、上下文长度和真人收音仍需分别解决，不能把一句过渡语当作答案变快。</p>
+<p>历史短句 TTS 报告中 Matcha 约 0.1 秒，Kokoro 约 2.8–4.4 秒，属于当时合成夹具；今天默认中文引擎是 Matcha，英语实际走 Piper。用户实际体验需按声线、网络、输入语言、上下文和播放环节一起核对。</p>
+<p>浏览器可按网络数据块持续读取并消费，无需等响应全文；这支持首句串流的实现方式，但不能由浏览器 API 本身推断实际手机首声耗时。<a href="https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams">MDN 流式响应说明</a>。ASR 的速度和准确度受模型、硬件与解码配置影响，参数改变需同夹具复核，不直接用项目基准代替本机体验。<a href="https://github.com/SYSTRAN/faster-whisper">faster-whisper 项目说明</a>。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 分阶段达到全天无人值守</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>建设内容</th>
+<th>出口证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A：可靠递送</td>
+<td>原子落盘、日志/最终回执待发送、中央持久确认、停止原因</td>
+<td>断网、响应丢失、重启、重复正文与伪造正文反例</td>
+</tr>
+<tr>
+<td>B：原生恢复</td>
+<td>每轮检查点、session/代码/费用对账、可靠后备与资源收尾</td>
+<td>实际 Claude 中断、额度等待、后备切换、旧进程确认</td>
+</tr>
+<tr>
+<td>C：质量闭环</td>
+<td>真实性门禁、固定独立测试、失败→修复→新候选回归</td>
+<td>模拟/零用例/陈旧证据拒绝；真实合格正例通过</td>
+</tr>
+<tr>
+<td>D：项目编排</td>
+<td>按验收条款拆工作、就绪调度、停滞检测、预算与依赖</td>
+<td>一个完整小项目自动走完开发、测试和修复</td>
+</tr>
+<tr>
+<td>E：持续运行</td>
+<td>定期健康检查、备份、故障演练、资源保留、运维提示</td>
+<td>先短时演练，再连续 24/72 小时观察，保留实际故障及恢复</td>
+</tr>
+</tbody></table></div>
+<p>首个软件工厂项目建议先稳定固定源码副本和 A/B/C；项目本身的范围、真假执行和交付门禁未清楚前，不扩大成无限开发。当前完整测试报告仍是 NO-GO，新源码尚未验收。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 本轮实施结果与入口</h2>
+<p><strong>正式版本：<code>20261010-autonomous-voice-r19-1</code>。</strong> 112 主平台与 101 冷备已发布同版，101 已配对开发节点升级了可靠递送包，身份、凭据与强模型模板语义保持一致。全局持续监督仍关闭，软件工厂仍为 NO-GO；本轮没有派发新的源码开发任务或更改产品验收。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>本轮范围</th>
+<th>已完成的结果</th>
+<th>验证边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最强模型</td>
+<td>101 外层执行器、默认及 Opus/Fable 使用 <code>gpt-6.1-sol[1m]</code></td>
+<td>实际单轮无工具回执与独立验证通过；工厂内部有效 provider 仍未知</td>
+</tr>
+<tr>
+<td>可靠递送</td>
+<td>私有本地日志/结果队列、稳定递送编号、中央持久确认、跨库重复提交对账、停止码与逐轮检查点已上线</td>
+<td>本地故障注入、隔离节点包及发布核验通过；没有做线上真实断网或原生会话崩溃续做演练</td>
+</tr>
+<tr>
+<td>人工控制与预算</td>
+<td>取消后的旧回执不能复活任务；未知费用仍保留未知，阻止后续扩大执行</td>
+<td>已提交回执可以确认，不能因确认响应丢失而再次计费或重做业务</td>
+</tr>
+<tr>
+<td>回归与发布</td>
+<td>全平台 491 项：490 通过、0 失败、1 Linux 专属跳过；另有隔离节点包 1/1、真实 Linux 模块 4 项检查及 25 项初始化 GET 通过</td>
+<td>分别保留范围，不合并成产品验收数量；两个旧测试预期不一致的失败与修正均保留</td>
+</tr>
+<tr>
+<td>语音</td>
+<td>识别 worker 线程 2→4；多语稳定知识提前播完整首句、后句预制与播放重叠已发布</td>
+<td>同夹具前后测见下表；手机真人收音、网络及实际播放仍需现场验证</td>
+</tr>
+</tbody></table></div>
+<p>101 新队列目录权限 0700、数据库 0600，发布时未确认递送与未结运行均为 0。节点重启会保存中断原因及检查点，补传已落盘记录；<strong>目前不会自动重跑中断的原生 CLI</strong>。本轮阶段 A 已实现并取得局部验证，阶段 B 的检查点基础已实现；B 的原生恢复和后备实测，以及 C/D/E 的完整交付闭环仍待完成。</p>
+<p>默认队列限制针对待递送正文：32 MiB、20,000 项；日志批次 96 KiB、签名结果最多 2 MiB。它不是全部 SQLite/WAL 历史文件的磁盘配额。中央日志仍按每次运行滚动保留 5,000 条；长期证据归档、集中队列状态和阻塞解除流程尚待落实。</p>
+<p>首次发布后同样本对照如下。两种输入都按该测试成员的固定偏好输出英语，使用同一 Piper 声线；音频准备耗时从提交已识别文字开始计算，不包含识别、结束说话判定或手机实际播放。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>发布前</th>
+<th>发布后首测</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文输入识别</td>
+<td>2.681 秒</td>
+<td>3.626 秒</td>
+<td>本次变慢，不能声称中文识别提速</td>
+</tr>
+<tr>
+<td>英文输入识别</td>
+<td>4.920 秒</td>
+<td>4.829 秒</td>
+<td>本次基本未改善</td>
+</tr>
+<tr>
+<td>中文输入→英文首答音频准备</td>
+<td>1.844 秒</td>
+<td>2.203 秒</td>
+<td>本次慢约 19%；模型首字也变慢</td>
+</tr>
+<tr>
+<td>英文输入→英文首答音频准备</td>
+<td>2.876 秒</td>
+<td>1.751 秒</td>
+<td>本次快约 39%；1.280 秒已有批准的完整首句</td>
+</tr>
+</tbody></table></div>
+<p>两段各只有一次真实请求，不能计算普遍速度或识别准确率。发布后只读检查发现正式 voice cgroup 仍限于 250% CPU 时间，即 2.5 核额度；离线 4 线程对照未受这项额度限制，不能直接推断正式服务收益。<a href="../artifacts/voice-latency-r19/after-comparison.json">真实服务对照</a> · <a href="../artifacts/voice-latency-r19/service-capacity-after.json">资源检查</a>。</p>
+<p>本轮随后已把主 unit 的 CPU 时间上限单行改为 400%，真实 <code>cpu.max</code> 为 <code>400000 100000</code>，worker 仍为 4 线程、引擎就绪。其他 unit 字节、附加配置及成员偏好保留，私有备份仅在服务器保存。这是共享 CPU 时间上限，不是独占或硬预留四核。独审通过后在两次空闲快照之间重启该语音 worker；工具没有关闭新请求准入，竞态中新语音仍可能被中断，不能声称零中断维护。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>纯识别复核</th>
+<th>250% 额度首测的引擎时间</th>
+<th>400% 额度后的引擎时间</th>
+<th>同句文字检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文合成夹具</td>
+<td>3.326 秒</td>
+<td>3.120 秒，快约 6.2%</td>
+<td>归一化 15 字有 1 字偏差，未完全通过</td>
+</tr>
+<tr>
+<td>英文合成夹具</td>
+<td>4.552 秒</td>
+<td>4.457 秒，快约 2.1%</td>
+<td>归一化 33 字一致</td>
+</tr>
+</tbody></table></div>
+<p>复核新增本地 TTS/ASR 各两次，<strong>0 次网关大模型调用</strong>。资源部署及实际服务范围核验通过，中文词面精确一致性未通过；不得把报告的服务 <code>passed</code> 当作识别全准。原始基线中文已被先前失败探针预热，后两次是服务重启后的首轮，含冷热缓存差异；CPU 节流差值也包含合成夹具生成，不能作为 ASR 单因果证明。额度调整的生产收益小，识别仍是主要瓶颈。<a href="../artifacts/voice-latency-r19/quota-adjustment.json">资源调整</a> · <a href="../artifacts/voice-latency-r19/quota-adjustment-independent-review.json">独立静审</a> · <a href="../artifacts/voice-latency-r19/asr-after-quota.json">纯 ASR 实测</a>。</p>
+<p>只读核对实际 worker 后，中文自动输入会先由 Whisper 判断语言，再由 SenseVoice 转写；Whisper 的结果迭代器未被中文分支遍历，所以没有“完整转写两遍”，但存在两种模型的成本。英法德复用同次 Whisper 结果。中文专用实例首次才建立缓存，整段识别持锁串行，目前只记总体引擎时间，尚不能精确拆出语言判断、实例加载和转写各自耗时。</p>
+<p>下一步先做不保存原文的分项计时与中文实例启动预热，再验证真实手机的录音、句末判定和流式识别，减少串行等待；同时评估独立高算力语音节点，保持原识别权重和自动语种的同句对照。中文误字需要结合本人真实发音、噪声、回声及热词核对，不把成员固定输出语言变成输入限制。吞字、漏话和首句等待须分别验收；不能仅靠增加线程或换一段过渡语宣布全部解决。<a href="../artifacts/voice-latency-r19/final-voice-verification-r19.json">最终语音范围与代码依据</a>。</p>
+<p>前后模型测量成功 4 次，另有一次结果读取失败的调用通过有限时间窗口的唯一总账记录归属；五次共记录 14,323 Token，其中失败一次为 1,424 Token，原 conversation 精确关联未保留。价格表为空，金额未知，未补造为零；合成对话及临时维护登录均已清理。</p>
+<p>后续优先顺序：<strong>原生中断对账与续做 → 验证后备及额度切换 → 软件工厂真实性门禁与当前版本验收 → 项目就绪调度与停滞检测 → 完整小项目闭环 → 24/72 小时观察</strong>。每步都有实际产物和退出条件，不能把服务在线或模型持续输出算作交付完成。</p>
+<p>证据：<a href="../artifacts/unattended-r19/local-release-verification.json">本地回归与冻结指纹</a> · <a href="../artifacts/unattended-r19/independent-review.json">独立实现审查</a> · <a href="../artifacts/unattended-r19/release-verification.json">发布核验</a> · <a href="../artifacts/unattended-r19/node-upgrade.json">101 节点升级</a> · <a href="../artifacts/unattended-r19/linux-journal-verification.json">Linux 专属补证</a> · <a href="../artifacts/unattended-r19/independent-release-closure.json">独立发布收口</a>。</p>
+<p>相关资料：<a href="101%E7%9B%91%E7%9D%A3%E7%8E%AF%E5%A2%83%E6%A3%80%E6%9F%A5%E4%B8%8E%E9%A6%96%E6%AC%A1%E5%AE%8C%E6%95%B4%E6%B5%8B%E8%AF%95.html">首次监督实测报告</a> · <a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%A6%96%E9%A1%B9%E7%9B%AE%E4%BA%A4%E4%BB%98%E8%AE%A1%E5%88%92.html">首项目交付计划</a> · <a href="%E5%BF%AB%E6%85%A2%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1%E4%B8%8E%E7%AD%89%E5%BE%85%E5%9B%9E%E5%A4%8D.html">快慢模型路由</a> · <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.html">建设日志</a>。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E5%85%A8%E5%A4%A9%E6%8C%81%E7%BB%AD%E7%A0%94%E5%8F%91%E4%B8%8E%E5%BF%AB%E9%80%9F%E8%AF%AD%E9%9F%B3%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

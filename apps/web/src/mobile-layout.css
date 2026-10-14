@@ -1,0 +1,123 @@
+/* Phone layouts use the whole viewport; the full navigation remains available in a drawer. */
+.mobile-menu-trigger,.mobile-quick-nav,.mobile-nav-tools,.mobile-capability{display:none}
+.cluster-mobile-toggle,.cluster-mobile-summary{display:none!important}
+@media(max-width:700px){
+ html{scroll-padding-bottom:90px}
+ html.mobile-platform-nav-open,html.mobile-platform-nav-open body{overflow:hidden}
+ .demo-app{font-size:14px}
+ .demo-app .demo-workspace,.demo-app.nav-collapsed .demo-workspace,.demo-app.mobile-nav-open .demo-workspace{margin-left:0;min-width:0;padding-bottom:calc(74px + env(safe-area-inset-bottom,0px))}
+ .demo-app .demo-sidebar{display:none}
+ .demo-app.mobile-nav-open .demo-sidebar{display:flex;width:min(84vw,290px);max-height:100dvh;padding:calc(16px + env(safe-area-inset-top,0px)) 14px calc(14px + env(safe-area-inset-bottom,0px));z-index:61;box-shadow:12px 0 50px #0006}
+ .demo-app.mobile-nav-open .demo-brand{padding:0 8px 14px;justify-content:flex-start}
+ .demo-app.mobile-nav-open .demo-brand>div,.demo-app.mobile-nav-open .demo-brand>i,.demo-app.mobile-nav-open .demo-nav-item b,.demo-app.mobile-nav-open .nav-group-head,.demo-app.mobile-nav-open .nav-group-head small{display:block}
+ .demo-app.mobile-nav-open .demo-brand>i{display:grid}
+ .demo-app.mobile-nav-open .demo-brand button{margin-left:auto;min-width:44px;min-height:44px}
+ .demo-app.mobile-nav-open .demo-nav-item{justify-content:flex-start;min-height:44px;padding:10px 14px;font-size:14px}
+ .demo-app.mobile-nav-open .nav-group-head{display:flex;min-height:44px;padding:10px 14px;font-size:12px}
+ .demo-app .mobile-nav-backdrop{z-index:60;backdrop-filter:blur(4px)}
+ .demo-app .mobile-nav-tools{display:flex;flex-wrap:wrap;gap:4px;border-top:1px solid var(--line);margin-top:8px;padding-top:6px}
+ .mobile-nav-tools button{min-height:44px;flex:1;white-space:nowrap;font-size:12px;color:var(--muted)}
+ .demo-app .demo-topbar{height:auto;min-height:60px;padding:env(safe-area-inset-top,0px) 12px 0;gap:6px;position:sticky;top:0;z-index:30;background:var(--panel);box-sizing:border-box}
+ .demo-app .demo-topbar>div{gap:4px;min-width:0}
+ .demo-app .demo-topbar>div:first-child{flex:1}
+ .demo-app .mobile-menu-trigger{display:block;flex:0 0 40px;min-height:44px;font-size:24px;color:var(--accent)}
+ .demo-app .demo-topbar .crumb{display:block;font-size:12px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .demo-app .demo-mark{display:none}
+ .demo-app .top-controls{gap:2px!important;flex:0 0 auto}
+ .demo-app .top-controls button{min-width:40px;min-height:44px;font-size:21px;padding:4px}
+ .demo-app .top-controls .theme-trigger,.demo-app .top-controls button[aria-label="刷新真实数据"],.demo-app .top-controls button[aria-label="退出登录"],.demo-app .top-controls .live-link{display:none}
+ .demo-app .top-controls select{width:82px;min-height:40px;font-size:12px;padding:6px 4px}
+ .demo-app .platform-real-strip,.demo-app .demo-mode-strip{padding:8px 14px;gap:7px;font-size:11px;line-height:1.5}
+ .demo-app .platform-real-strip strong{font-size:11px;font-weight:500}
+ .demo-app .platform-real-strip a{font-size:11px}
+ .demo-app .platform-real-strip span{margin-left:auto}
+ .demo-app .platform-real-strip a{margin-left:0}
+ .demo-app .demo-content{padding:16px 14px 24px;min-width:0}
+ .demo-app .platform-capability{display:none}
+ .demo-app .mobile-capability{display:block;margin-bottom:12px;color:var(--muted);font-size:12px}
+ .mobile-capability summary{cursor:pointer;min-height:30px;display:flex;align-items:center;gap:6px}
+ .mobile-capability summary:before{content:'ⓘ';color:var(--accent)}
+ .mobile-capability summary:after{content:'⌄';margin-left:auto}
+ .mobile-capability[open] summary:after{content:'⌃'}
+ .mobile-capability p{padding:10px 12px;border:1px solid var(--line);border-radius:8px;line-height:1.7;margin:0 0 10px}
+ .demo-app .mobile-quick-nav{position:fixed;z-index:45;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:6px max(10px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));border-top:1px solid var(--line);background:var(--panel);box-shadow:0 -8px 28px #0002}
+ .mobile-quick-nav button{display:grid;place-items:center;gap:3px;min-height:50px;padding:4px;border-radius:10px;color:var(--muted)}
+ .mobile-quick-nav button span{font-size:22px;line-height:1}
+ .mobile-quick-nav button b{font-size:11px;font-weight:500}
+ .mobile-quick-nav button[aria-current="page"],.mobile-quick-nav button[aria-expanded="true"]{color:var(--accent);background:var(--accent-soft,color-mix(in srgb,var(--accent) 10%,transparent))}
+ .demo-app .d-btn,.demo-app .op-tabs button,.demo-app .fa-tabs button,.demo-app .demo-tabs button{min-height:44px;font-size:13px;padding:9px 12px}
+ .demo-app .demo-page-title,.demo-app .op-heading{gap:12px;flex-wrap:wrap;margin-bottom:14px}
+ .demo-app .demo-page-title h1,.demo-app .op-heading h2{font-size:23px}
+ .demo-app .demo-page-title p,.demo-app .op-heading p{font-size:13px;line-height:1.6}
+ .demo-app .op-heading>.op-actions{width:100%}
+ .demo-app .op-heading>.op-actions .d-btn{flex:1}
+ .demo-app .d-panel-head{min-height:48px;padding:10px 14px;flex-wrap:wrap}
+ .demo-app .d-panel-head h3{font-size:14px}
+ .demo-app .d-panel-head button:not(.d-btn){min-height:36px;font-size:12px}
+ .demo-app .d-panel-body{padding:14px}
+ .demo-app .op-page{gap:14px}
+ .demo-app .op-grid,.demo-app .op-grid.two,.demo-app .op-columns{grid-template-columns:minmax(0,1fr)}
+ .demo-app .op-card{padding:16px}
+ .demo-app .op-card h3{font-size:18px;overflow-wrap:anywhere}
+ .demo-app .op-card p,.demo-app .op-card small{overflow-wrap:anywhere}
+ .demo-app .op-metrics{gap:8px}
+ .demo-app .op-metric{padding:12px 10px;align-items:flex-start}
+ .demo-app .op-metric>div>span,.demo-app .op-metric small{font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+ .demo-app .op-toolbar{gap:10px}
+ .demo-app .op-toolbar input{width:100%;max-width:none}
+ .demo-app .op-actions,.demo-app .op-detail-actions{gap:8px}
+ .demo-app .op-detail-actions .d-btn{flex:1;min-width:110px}
+ .demo-app .op-table-wrap{max-width:100%;overflow:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+ .demo-app .op-table{min-width:540px;font-size:12px}
+ .demo-app .op-table td,.demo-app .op-table th{padding:12px 10px}
+ .demo-app .server-address{font-size:13px;flex-wrap:wrap}
+ .demo-app .server-address span{text-align:left}
+ .demo-app .server-hardware span,.demo-app .server-hardware small{white-space:normal;line-height:1.6;overflow-wrap:anywhere}
+ .demo-app .server-card .op-actions .button{min-height:44px;font-size:12px}
+ .demo-app .application-resource-summary strong{font-size:15px}
+ .demo-app .infra-pagination{gap:8px}
+ .demo-app .infra-pagination select{min-height:44px}
+ .demo-app .cluster-mobile-toggle{display:inline-flex!important}
+ .demo-app .cluster-panel .cluster-details{display:none}
+ .demo-app .cluster-panel.expanded .cluster-details{display:block}
+ .demo-app .cluster-mobile-summary{display:flex!important;justify-content:space-between;gap:10px;margin:0;font-size:13px;color:var(--accent);flex-wrap:wrap}
+ .cluster-mobile-summary span{color:var(--muted);font-size:12px}
+ .demo-app .cluster-panel:not(.expanded) .d-panel-body{padding:12px 14px}
+ .demo-app .cluster-panel .op-kv{display:block;margin:8px 0}
+ .demo-app .cluster-panel .op-kv>div{padding:8px 0;display:flex;justify-content:space-between;gap:12px;background:none;border:0;border-bottom:1px solid var(--line)}
+ .demo-app .cluster-panel .op-kv dt{font-size:12px;white-space:nowrap}
+ .demo-app .cluster-panel .op-kv dd{font-size:12px;text-align:right}
+ .demo-app .pd-heading{align-items:flex-start;gap:12px;flex-wrap:wrap}
+ .demo-app .pd-heading h1{font-size:25px}
+ .demo-app .pd-metrics{gap:8px}
+ .demo-app .pd-metric{min-height:94px;padding:12px;gap:8px}
+ .demo-app .pd-metric svg{width:32px;flex-basis:32px}
+ .demo-app .pd-metric small{font-size:11px;line-height:1.4}
+ .demo-app .pd-metric strong{font-size:26px}
+ .demo-app .pd-metric strong span{font-size:10px;margin-top:3px}
+ .demo-app .pd-map-node b{font-size:12px}
+ .demo-app .pd-map-node small{font-size:10px}
+ .demo-app .pd-map-caption{font-size:10px}
+ .demo-app .pd-device-matrix{gap:8px}
+ .demo-app .pd-device-matrix>button.pd-device{padding:10px;min-height:66px}
+ .demo-app .pd-device small{font-size:10px;line-height:1.4}
+ .demo-app .pd-mini-tabs{gap:4px;flex-wrap:wrap}
+ .demo-app .pd-mini-tabs button{min-height:36px;font-size:11px;padding:7px 9px}
+ .demo-app .pd-board-tabs{flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding-bottom:8px;gap:6px;scrollbar-width:thin}
+ .demo-app .pd-board-tabs button{min-height:44px;padding:9px 12px;font-size:12px;flex:0 0 auto;white-space:nowrap}
+ .demo-app .pd-task-lanes header{font-size:12px}
+ .demo-app .pd-task-lanes button>b{font-size:12px}
+ .demo-app .pd-task-lanes small,.demo-app .pd-task-lanes em{font-size:10px}
+ .demo-app .settings-grid,.demo-app .fa-form-grid,.demo-app .application-fields{grid-template-columns:minmax(0,1fr)}
+ .demo-app input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),.demo-app textarea,.demo-app .d-dialog select{font-size:16px;max-width:100%;min-width:0}
+ .demo-app .d-dialog-shade{padding:env(safe-area-inset-top,0px) 0 0;align-items:flex-end;z-index:160}
+ .demo-app .d-dialog,.demo-app .d-dialog.wide{width:100%;max-width:100%;max-height:calc(100dvh - env(safe-area-inset-top,0px));border-radius:18px 18px 0 0}
+ .demo-app .d-dialog>header{padding:14px 16px;min-height:60px;gap:12px;flex-shrink:0}
+ .demo-app .d-dialog>header h2{font-size:17px;line-height:1.5;overflow-wrap:anywhere}
+ .demo-app .d-dialog>header .icon-button{min-width:44px;min-height:44px;font-size:24px}
+ .demo-app .d-dialog-body{padding:16px;overscroll-behavior:contain;overflow-wrap:anywhere}
+ .demo-app .d-dialog>footer{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));flex-wrap:wrap;gap:8px}
+ .demo-app .d-dialog>footer .d-btn{flex:1}
+ .demo-app .demo-notice{bottom:calc(82px + env(safe-area-inset-bottom,0px));font-size:13px;max-width:calc(100vw - 28px);width:max-content;min-width:0;line-height:1.5}
+ .demo-app .demo-notice button{min-width:32px;min-height:36px;flex:0 0 auto}
+}

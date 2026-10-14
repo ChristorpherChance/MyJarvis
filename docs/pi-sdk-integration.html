@@ -1,0 +1,57 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>pi-sdk-integration · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header a{margin-left:auto}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><h1>贾维斯 · Pi SDK 接入范围</h1>
+<p>更新：2026-10-05。依据项目当前源码、已安装 Pi SDK 文档与离线检查整理；没有调用真实模型，也没有修改实际凭证。</p>
+<h2>当前接入</h2>
+<p>后台直接使用 <code>@earendil-works/pi-coding-agent</code>、<code>@earendil-works/pi-ai</code> <b>1.0.2</b>。<code>PiService</code> 在服务进程内创建会话，前端调用既有后台接口，复用同一套模型、认证和会话资料。</p>
+<div class="table-wrap"><table>
+<tr><td>能力</td><td>实际实现</td></tr>
+<tr><td>文本对话</td><td><code>createAgentSession</code> → <code>session.prompt</code> → <code>waitForIdle</code>；使用真实模型响应</td></tr>
+<tr><td>模型与认证</td><td><code>ModelRuntime</code> 读取原生服务和模型目录；支持的密钥登录由 Pi <code>login(..., 'api_key', ...)</code> 保存</td></tr>
+<tr><td>会话恢复</td><td><code>SessionManager.create/open</code> 管理原生 JSONL 上下文；业务库保存会话索引与聊天文字</td></tr>
+<tr><td>增量回答</td><td><code>session.subscribe</code> 转成 SSE 的 <code>delta/status/tool/error/done</code>；完整平台直接消费原接口</td></tr>
+<tr><td>打断与失败</td><td><code>session.abort</code>、同会话并发锁、180 秒超时、断流取消、失败与未保存状态分别处理</td></tr>
+<tr><td>受控 Skill</td><td><code>DefaultResourceLoader</code> 只加载项目指定的 <code>jarvis-companion</code>，通过原生 <code>/skill:</code> 展开</td></tr>
+<tr><td>页面关联</td><td>项目、任务、研究、经验等页面可把材料送入讨论草稿，必须由用户发送</td></tr>
+</table></div>
+<p>模型配置入口在完整平台的“系统设置 → 模型接口”，对话页也可直接打开。<code>configured</code> 表示模型存在且认证可用，不代表已经测试模型网络连通。保存配置不会请求模型；缺少认证时明确提示待配置，不返回模拟回答。当前配置界面主要支持原生目录中可用的密钥服务，自定义 GPU 地址与完整 OAuth 流程尚未实现。</p>
+<h2>十一个只读查询工具</h2>
+<div class="table-wrap"><table>
+<tr><td>工具</td><td>查询来源与边界</td></tr>
+<tr><td><code>jarvis_projects</code></td><td>原 S0 台账与 V1 真实项目；登记路径不表示已读取仓库</td></tr>
+<tr><td><code>jarvis_devices</code></td><td>本机采样与已登记设备；其他机器未接入 Agent 时状态未知</td></tr>
+<tr><td><code>jarvis_tasks</code></td><td>原 S0 台账与 V1 任务；人工报告不表示已派发执行或独立核验</td></tr>
+<tr><td><code>jarvis_experiences</code></td><td>原 S0 与 V1 经验、技能；不读取家庭私人聊天</td></tr>
+<tr><td><code>jarvis_inbox</code></td><td>当前管理员的 V1 收件原话、批注及归档状态</td></tr>
+<tr><td><code>jarvis_research</code></td><td>当前管理员的 V1 研究、人工证据、方案及决定</td></tr>
+<tr><td><code>jarvis_releases</code></td><td>固定交付版本及人工验收记录；交付存在不表示已经部署</td></tr>
+<tr><td><code>jarvis_knowledge</code></td><td>来源有效授权的已发布原文与当前有效版本的故事</td></tr>
+<tr><td><code>jarvis_memory</code></td><td>本人private范围中已明确确认的active记忆</td></tr>
+<tr><td><code>jarvis_family</code></td><td>家庭共享且未移除的共同待办；不含健康备忘</td></tr>
+<tr><td><code>jarvis_services</code></td><td>实际服务台账和人工观察；不当作实时探测</td></tr>
+</table></div>
+<p>工具由 <code>defineTool</code> 注册，从固定后台查询函数读取真实记录。单次最多 50 条，默认 20 条；当前没有任意 SQL、文件路径或网络地址查询。结果保留总数，并限制长度、过滤常见密钥字段；它们不是无限知识检索接口。</p>
+<p>Pi 没有启用默认 <code>bash/powershell/read/write/edit/grep/find/ls</code> 工具，也不自动发现用户全局扩展、项目上下文或额外提示词。查询权限不能由资料内的指令扩大。业务修改仍由 V1 契约、权限、版本检查与事务控制；模型回答不能批准验收、发布或执行。</p>
+<h2>身份、存储与前端边界</h2>
+<p>- 当前真实会话只属于已认证管理员。家庭档案、声音和唤醒词不能代替成员认证。</p>
+<p>- Pi 使用项目专用 <code>&lt;dataDir&gt;/pi/agent</code> 认证与模型资料；会话按 <code>&lt;dataDir&gt;/pi/sessions/&lt;actor&gt;/&lt;conversation&gt;</code> 隔离，路径由后台绑定。</p>
+<p>- 服务资料目录使用账户权限保护；不读取或改写用户全局 Pi 配置，密钥不回显到浏览器。</p>
+<p>- 完整真实平台默认入口 <code>/</code> 或 <code>?mode=platform</code>；<code>?mode=demo</code> 使用独立演示状态；<code>?mode=live</code> 保留原 S0 控制台。</p>
+<p>- 主题切换只重建主题视觉，不重建 Pi 会话；沉浸与收拢保留同一段对话。重新进入页面会从后台恢复已保存文字和 Pi 上下文。</p>
+<p>- 浏览器语音识别需本人开启，可能由浏览器联网处理；识别文字先进入草稿。朗读使用浏览器声音，不等于房间语音平台或定制音色已经部署。</p>
+<h2>尚未落地</h2>
+<p>家庭档案、本人长期记忆与实际练习记录已接入；家人独立认证、聊天自动过期与跨Pi存储删除仍待接通。练习保留实际问答和人工时长，不伪造模型评分或纠错。</p>
+<p>真实扫描件上传、逐页人工校对、疑点裁决、原文版本、故事引用和课程已经接入；自动OCR与外部知识连接器仍待接通。Pi一般知识和分析草稿不作为已校对原文。</p>
+<p>单轮后台Pi研究已经接入。Claude Code/Codex全天监督、开发执行器、连续自动研究、远程Agent、实际服务部署、自动健康探测和自动计费仍待落地。任务可以真实登记、提交外部人工报告、独立验收并固定交付版本；“启动/恢复/重试”不能因此声称已经自动运行。</p>
+<h2>推荐接入顺序</h2>
+<ol>
+<li><b>先扩充可核验的查询与草稿。</b> 给七个工具增加按记录 ID、范围和分页查询，保留来源与版本；让 Pi 输出结构化候选说明，由用户确认后调用既有 V1 命令，继续使用幂等与 revision 检查。</li>
+<li><b>接开发执行器。</b> Pi后台单轮Worker已建立。连续开发还需本机执行器、真实日志、预算计费与验收回执，再接其他机器；聊天会话不承担常驻开发。</li>
+<li><b>补家庭身份与个人资料。</b> 明确每位成员的认证、授权、留存和遗忘规则，再接记忆与学习进度；Pi 按已认证成员加载受权限过滤的上下文，不能凭声音或档案选择读取私人资料。</li>
+<li><b>接知识解析与课程。</b> OCR 服务产出识别候选，人工审核和校对发布形成确定的原文版本；Pi 负责解释、关联与讲述，引用固定出处，并保持原文与解读分层。</li>
+<li><b>接房间语音与运行平台。</b> ASR/TTS、唤醒、回声消除和房间设备由专用接口负责，识别结果交给 Pi 做文本对话和意图分析；实际控制、部署、恢复与计费仍通过受控业务工具。</li>
+</ol>
+<p>各阶段继续复用 Pi 的会话、模型目录、工具、Skill、事件、压缩、重试与打断能力；设备驱动、持久作业调度和业务验收由贾维斯平台实现。</p>
+<h2>依据与验证</h2>
+<p>实现：<a href="../apps/api/src/pi.ts">Pi 服务</a>、<a href="../apps/api/src/app.ts">原 S0 会话接口</a>、<a href="../apps/web/src/features/family/PiChat.tsx">真实对话组件</a>、<a href="../apps/web/src/features/family/PiModelSettings.tsx">模型设置</a>、<a href="../apps/web/src/demo/live-projection.ts">真实数据投影</a>。SDK 依据为安装包的 <code>docs/sdk.md</code>、<code>docs/sessions.md</code>、<code>docs/skills.md</code> 与对应源码。</p>
+<p>隔离浏览器检查 9 项通过，覆盖配置、增量回答、创建期间取消、停止确认、断流文字保留、保存失败、身份边界、十主题与手机布局。家庭与学习领域检查 14 项通过；测试使用传输夹具或独立演示状态，没有实际模型消费。证据：<a href="../artifacts/pi-chat-qa/results.json">Pi 对话检查结果</a>。</p>
+<h2>本轮扩展</h2>
+<p>Pi后台单轮作业、管理员意图选项和确认流程已经接入；后台作业使用独立会话并关闭工具、自动重试与自动压缩。取消调用Pi原生abort，重启中断作业不自动重跑。来源撤权会阻止新的知识解读并请求停止运行中的解读；已发送内容和Pi历史无法随撤权撤回。详情见 <a href="后台扩展与书房验证.html">后台扩展与书房验证</a>。</p></main></html>

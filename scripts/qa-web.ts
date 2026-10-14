@@ -1,0 +1,83 @@
+import { createRequire } from 'node:module';
+import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { resolve, join } from 'node:path';
+import assert from 'node:assert/strict';
+import { createApp } from '../apps/api/src/app.js';
+
+const require=createRequire(import.meta.url);
+const {chromium}=require(process.env.JARVIS_PLAYWRIGHT_PATH || 'C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const directory=await mkdtemp(join(tmpdir(),'jarvis-browser-'));
+const output=resolve('artifacts/runtime-qa');await mkdir(output,{recursive:true});
+const {app}=await createApp({dataDir:directory,webDir:resolve('apps/web/dist')});
+await app.listen({host:'127.0.0.1',port:0});
+const address=app.server.address();
+if(!address || typeof address==='string')throw new Error('Missing test address');
+const browser=await chromium.launch({executablePath:process.env.JARVIS_BROWSER_PATH || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
+const page=await browser.newPage({viewport:{width:1536,height:960}});
+const errors:string[]=[];page.on('pageerror',(error:Error)=>errors.push(error.message));
+const checks:string[]=[];
+const check=(name:string)=>{checks.push(name);console.log(`PASS ${name}`);};
+try{
+  await page.goto(`http://127.0.0.1:${address.port}/?mode=live`);
+  await page.getByRole('heading',{name:'建立你的控制中心'}).waitFor();
+  await page.screenshot({path:join(output,'onboarding.png')});
+  await page.getByLabel('管理密码',{exact:true}).fill('Temporary-browser-check-password');
+  await page.getByLabel('确认密码',{exact:true}).fill('Temporary-browser-check-password');
+  await page.getByRole('button',{name:'创建控制中心'}).click();
+  await page.getByRole('heading',{name:'总览中心',exact:true}).waitFor();check('first account and real overview');
+  await page.screenshot({path:join(output,'overview.png')});
+  const open=(name:string)=>page.locator('.sidebar').getByRole('button',{name,exact:true}).click();
+  await open('项目中心');await page.getByRole('button',{name:'登记项目',exact:true}).click();
+  await page.getByLabel('项目名称').fill('浏览器验收项目');await page.getByLabel('项目目标').fill('验证真实登记和交互流程');
+  await page.getByLabel('运行设备').selectOption('local');await page.getByLabel('项目状态').selectOption('active');
+  await page.getByRole('dialog').getByRole('button',{name:'保存',exact:true}).click();
+  await page.getByRole('heading',{name:'浏览器验收项目',exact:true}).waitFor();check('project creation');
+  await open('任务中心');await page.getByRole('button',{name:'创建任务',exact:true}).click();
+  await page.getByLabel('任务标题').fill('完成浏览器验收');await page.getByLabel('关联项目').selectOption({label:'浏览器验收项目'});
+  await page.getByLabel('任务说明').fill('验收条件：记录真实状态与交付说明');
+  await page.getByRole('dialog').getByRole('button',{name:'保存',exact:true}).click();
+  await page.getByLabel('完成浏览器验收的状态').selectOption('done');
+  await page.getByLabel('完成说明').fill('已验证浏览器新增项目、任务与经验流程');
+  await page.getByRole('dialog').getByRole('button',{name:'保存',exact:true}).click();
+  await page.getByLabel('完成浏览器验收的状态').waitFor();assert.equal(await page.getByLabel('完成浏览器验收的状态').inputValue(),'done');check('manual delivery evidence');
+  await open('经验中心');await page.getByRole('button',{name:'记录经验',exact:true}).click();
+  await page.getByLabel('经验标题').fill('部分更新保留旧字段');await page.getByLabel('经验内容').fill('只更新提交字段，避免默认值清空已保存的数据');
+  await page.getByLabel('标签',{exact:true}).fill('开发，数据');
+  await page.getByRole('dialog').getByRole('button',{name:'保存',exact:true}).click();
+  await page.getByRole('button',{name:'确认经验',exact:true}).click();await page.getByText('已确认',{exact:true}).waitFor();check('experience intake and review');
+  await open('家庭成员');await page.getByRole('button',{name:'添加成员',exact:true}).click();
+  await page.getByLabel('姓名或称呼').fill('家庭测试档案');await page.getByLabel('家庭角色').selectOption('child');
+  await page.getByRole('dialog').getByRole('button',{name:'保存',exact:true}).click();
+  await page.getByRole('heading',{name:'家庭测试档案',exact:true}).waitFor();check('family profile without impersonation');
+  await open('系统设置');await page.getByText('模型服务',{exact:true}).waitFor().catch(()=>{});
+  await page.screenshot({path:join(output,'settings.png')});
+  await open('贾维斯');await page.screenshot({path:join(output,'chat.png')});
+  // Browser transport fixture only. Pi receives no remote model request.
+  const modelSettings=await page.request.get(`http://127.0.0.1:${address.port}/api/settings/pi`).then((r:any)=>r.json());
+  const configuration=await page.request.put(`http://127.0.0.1:${address.port}/api/settings/pi`,{data:{provider:modelSettings.provider,model:modelSettings.model,apiKey:'jarvis-invalid-browser-fixture-key'}});
+  assert.equal(configuration.status(),200);
+  await page.getByLabel('刷新数据').click();
+  await page.route('**/api/chat/conversations/*/stream',(route:any)=>route.fulfill({status:200,contentType:'text/event-stream',body:'event: delta\ndata: {"text":"验收片段：保存失败时保留。"}\n\nevent: error\ndata: {"message":"测试保存失败"}\n\nevent: done\ndata: {"status":"failed","persisted":false}\n\n'}));
+  await page.getByLabel('对话内容').fill('前端保存失败检查');await page.getByLabel('发送',{exact:true}).click();
+  await page.locator('[data-testid="unsaved-answer"]').getByText('验收片段：保存失败时保留。',{exact:true}).waitFor();
+  await page.getByLabel('刷新数据').click();
+  assert.ok(await page.locator('[data-testid="unsaved-answer"]').count());
+  await page.screenshot({path:join(output,'chat-unsaved.png')});check('unsaved response remains visible after failed transport');
+  await page.unroute('**/api/chat/conversations/*/stream');
+  const immersive=page.getByRole('button',{name:/沉浸/});
+  if(await immersive.count()){await immersive.first().click();await page.screenshot({path:join(output,'chat-immersive.png')});await page.keyboard.press('Escape');}
+  check('chat and immersive layout');
+  for(const theme of ['stark','matrix','hero','jaeger','interstellar','mars','yijing','pantheon','shanshui','baijia']){
+    const dropdown=page.getByLabel('切换主题');if(await dropdown.count())await dropdown.selectOption(theme);
+    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);assert.equal(overflow,false,`overflow ${theme}`);
+  }check('ten theme layouts');
+  await page.getByLabel('切换主题').selectOption('stark');await open('总览中心');
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);await page.screenshot({path:join(output,'mobile.png'),fullPage:true});check('mobile layout');
+  await page.setViewportSize({width:1536,height:960});await open('总览中心');await page.reload();
+  await page.getByRole('heading',{name:'总览中心',exact:true}).waitFor();check('refresh retains authentication and records');
+  assert.deepEqual(errors,[]);
+  await writeFile(join(output,'result.json'),JSON.stringify({checks,errors,usesTemporaryData:true,modelRequests:0},null,2));
+}finally{await browser.close();await app.close();await rm(directory,{recursive:true,force:true});}
+

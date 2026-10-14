@@ -1,0 +1,14 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+await mkdir('prototype-v13',{recursive:true});
+let build=await readFile('scripts/build-prototype-v12.mjs','utf8');
+build=build.replaceAll('prototype-v12/immersive.css','prototype-v13/split.css').replaceAll('prototype-v12/immersive.js','prototype-v13/split.js').replaceAll('prototype-v12/cinematic.js','prototype-v13/cinematic.js');
+build=build.replace("for(const name of names){previews[name]={};for(const view of ['chat','overview','screen']){try{previews[name][view]='data:image/jpeg;base64,'+(await readFile(resolve(root,'artifacts/prototype-v12-qa/previews/'+name+'-'+view+'.jpg'))).toString('base64')}catch{try{previews[name][view]='data:image/jpeg;base64,'+(await readFile(resolve(root,'artifacts/prototype-v11-qa/previews/'+name+'-'+view+'.jpg'))).toString('base64')}catch{}}}}", "for(const name of names){previews[name]={};for(const view of ['chat','overview','screen']){for(const version of ['v13','v12','v11']){try{previews[name][view]='data:image/jpeg;base64,'+(await readFile(resolve(root,'artifacts/prototype-'+version+'-qa/previews/'+name+'-'+view+'.jpg'))).toString('base64');break}catch{}}}}");
+build=build.replaceAll('贾维斯 V12','贾维斯 V13').replaceAll('探索贾维斯 V12','探索贾维斯 V13').replaceAll('Jarvis-V12-','Jarvis-V13-').replaceAll('jarvis-v12-inline.js','jarvis-v13-inline.js').replaceAll('贾维斯V12.0 · 十套主题与全平台交互原型.html','贾维斯V13.0 · 十套主题与全平台交互原型.html').replace("mkdir(resolve(root,'prototype-v12')", "mkdir(resolve(root,'prototype-v13')").replace("resolve(root,'prototype-v12/build-manifest.json')", "resolve(root,'prototype-v13/build-manifest.json')");
+await writeFile('scripts/build-prototype-v13.mjs',build);
+let cinematic=await readFile('prototype-v12/cinematic.js','utf8');
+cinematic=cinematic.replaceAll('jarvis-v12-cinematic-preferences','jarvis-v13-cinematic-preferences').replace("localStorage.getItem('jarvis-v11-cinematic-preferences')", "localStorage.getItem('jarvis-v12-cinematic-preferences')||localStorage.getItem('jarvis-v11-cinematic-preferences')");
+await writeFile('prototype-v13/cinematic.js',cinematic);
+let capture=await readFile('scripts/capture-prototype-v12-previews.cjs','utf8');
+capture=capture.replaceAll('prototype-v12-qa','prototype-v13-qa').replaceAll('贾维斯V12.0 · 十套主题与全平台交互原型.html','贾维斯V13.0 · 十套主题与全平台交互原型.html').replace('if(true){','if(process.argv.includes(\'--mobile\')){').replace("await p.screenshot({path:path.join(out,'previews',t+'-'+v+'.jpg'),type:'jpeg',quality:78})", "await p.screenshot({path:path.join(out,'previews',t+'-'+v+'.jpg'),type:'jpeg',quality:78,timeout:60000})");
+await writeFile('scripts/capture-prototype-v13-previews.cjs',capture);
+console.log('V13 builder, coordinator and preview workflow prepared.');

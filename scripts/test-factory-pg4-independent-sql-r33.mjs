@@ -1,0 +1,20 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {validatePG4SQLRequestR33,runPG4IndependentSQLR33,PG4SQLMigrationSourcesR33,PG4SQLBusinessTablesR33,PG4SQLRowFingerprintR33} from './factory-pg4-independent-sql-r33.mjs';
+const sha=v=>createHash('sha256').update(typeof v==='string'?v:JSON.stringify(v)).digest('hex');
+const rr={path:'/tools/meta/source.json',sha256:'a'.repeat(64)};
+const request=()=>({schemaVersion:1,kind:'r33-pg4-independent-sql-request',protocol:'PG4_QA_STARTUP_R33_V1',attempt:'b'.repeat(32),phase:'bootstrap',sourceContractSHA256:'c'.repeat(64),driverSHA256:'d'.repeat(64),sqlSourceSHA256:'e'.repeat(64),runtimeWitness:{root:'/qa-runtime',clientPath:'/tools/factory-independent-pg-cjs-consumer-r29.mjs',clientSHA256:'45d888de21d3221a66d43d7d601de358338892f26d3d14c9b1ddb5dd32850c99',manifestPath:'/tools/r29-qa-runtime-manifest.json',manifestSHA256:'d916c96e199ab7230a6397cd1f4f6fdbceacf30588a16b6943dc8da2996b6eb1',sourceAdmissionRef:rr,sourceFamilyReviewRef:rr,entryReviewRef:rr},migrationWitness:{sourceIndexSHA256:'b79e5d154fd21abfa422428a622ef2ba8cd3b6953bdc071079fd65c117da136e',listSHA256:sha(PG4SQLMigrationSourcesR33),files:PG4SQLMigrationSourcesR33.map(v=>({bytes:v.bytes,sha256:v.sha256,path:v.path}))},databaseIdentity:{database:'jarvis_truth_pg4_r33',user:'qa',host:'postgres',port:5432,urlPath:'/tools/pg4-db-url.txt',urlSHA256:'f'.repeat(64),bootstrapSnapshotRef:null},selectedFixtureSHA256:'c5645f7567232c7fc797f46f06bc8adc1f2517c18be305daaad01ac9248c3e1a'});
+test('missing qualification refuses without IO; source-list order is semantic; row integers remain exact',async()=>{
+ let calls=0;const deps={held:async()=>{calls++;throw Error('UNEXPECTED_IO')},readStatus:async()=>{calls++;throw Error('UNEXPECTED_PROFILE')},loadClient:async()=>{calls++;throw Error('UNEXPECTED_CLIENT')},now:()=>{calls++;return 0},monotonic:()=>{calls++;return 0}};
+ await assert.rejects(runPG4IndependentSQLR33(null,deps),{code:'R33_PG4_SQL_REQUEST_REQUIRED'});
+ const missing=request();missing.runtimeWitness.sourceAdmissionRef=null;
+ await assert.rejects(runPG4IndependentSQLR33(missing,deps),{code:'R33_PG4_SQL_SOURCE_REFS_REQUIRED'});assert.equal(calls,0);
+ assert.equal(validatePG4SQLRequestR33(request()).phase,'bootstrap');
+ const post=request();post.phase='after-hooks';post.databaseIdentity.bootstrapSnapshotRef={path:'/tools/sql-baseline.json',sha256:'1'.repeat(64)};assert.equal(validatePG4SQLRequestR33(post).phase,'after-hooks');
+ const bad=request();bad.databaseIdentity.user='other';assert.throws(()=>validatePG4SQLRequestR33(bad),{code:'R33_PG4_SQL_DATABASE_IDENTITY_REQUIRED'});
+ const rows=value=>PG4SQLBusinessTablesR33.map((table,i)=>{const rowsJSONText=i===0?'[{"integer":'+value+'}]':'[]';return {table,count:i===0?1:0,rowsJSONText,sha256:sha(rowsJSONText)}});
+ assert.equal(JSON.parse(rows('9007199254740993')[0].rowsJSONText)[0].integer,JSON.parse(rows('9007199254740992')[0].rowsJSONText)[0].integer);
+ assert.notEqual(PG4SQLRowFingerprintR33(rows('9007199254740993')),PG4SQLRowFingerprintR33(rows('9007199254740992')));
+ const drift=rows('9007199254740993');drift[0].rowsJSONText='[]';assert.throws(()=>PG4SQLRowFingerprintR33(drift),{code:'R33_PG4_SQL_SNAPSHOT_CHANGED'});
+});

@@ -1,0 +1,86 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>多节点主备与故障接替方案 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 节点分工</a><a href="#section-2">2. 同时只有一个调度中心</a><a href="#section-3">3. 101如何做到随时接替</a><a href="#section-4">4. 同步完整状态</a><a href="#section-5">5. 固定服务入口</a><a href="#section-6">6. 接替与回切规则</a><a href="#section-7">7. 具体实施顺序</a><a href="#section-8">8. 管理页面需要表达什么</a></nav><h1>贾维斯 · 多节点主备与故障接替方案</h1>
+<p>更新：2026-10-07。根据你的最新安排，112作为首选部署主节点，101作为随时接替的备用节点，正在准备的i3作为第三后备。联想64GB继续开发和书房验证。</p>
+<p><b>这是部署目标和实施规则；目前三台服务器已通过SSH连接与硬件读取检查，平台仍运行在联想。主备同步、统一服务入口和故障切换尚未部署。</b></p>
+<h2 id="section-1">1. 节点分工</h2>
+<div class="table-wrap"><table>
+<tr><td>节点</td><td>角色</td><td>正常时</td><td>主节点故障时</td></tr>
+<tr><td>112 · 192.168.10.112 · i7-7700 / 48GB</td><td>首选中心</td><td>完整平台、数据库、Pi会话、知识、记忆、语音协调、提醒与任务调度</td><td>停止或隔离后交出主节点资格</td></tr>
+<tr><td>101 · 192.168.10.101 · i5-7400 / 32GB</td><td>首选接替中心</td><td>相同正式版本、独立接替数据、同步与健康检查；完整业务后台保持停止</td><td>使用最近通过校验的数据接管完整中心</td></tr>
+<tr><td>i3 · 地址和配置待提供</td><td>第三后备</td><td>加入后保留完整恢复材料；按实测能力运行</td><td>112和101都不可用时接替，优先核心服务</td></tr>
+<tr><td>联想64GB</td><td>开发与管理</td><td>开发、隔离测试、书房验证、发布操作</td><td>可管理切换，不作为日常家庭中心</td></tr>
+<tr><td>116 · 192.168.10.116 · i5-6400 / 16GB</td><td>暂留辅助</td><td>暂不加入中心接替链；可用于隔离验证、采集或房间入口</td><td>具体职责后续确定</td></tr>
+</table></div>
+<p>101的第一职责改为接替中心。预发布与恢复演练使用联想或116的独立环境，避免实验代码或数据损坏101的接替准备。</p>
+<p>中心接替顺序：112 → 101 → i3。一旦101接管，它就是当前主节点；112恢复后先作为备用，人工选择窗口再切回，避免反复切换。</p>
+<p>房间浏览器、语音终端和开发执行节点仍可分布在多台机器；它们共享当前中心的数据与权限，不各自建立另一套家庭记忆。</p>
+<h2 id="section-2">2. 同时只有一个调度中心</h2>
+<p>同一时间只有一台中心接受业务写入、调用Pi、派发开发任务和协调提醒。备用节点保持运行环境与数据准备，但不启动当前完整后台。</p>
+<p>原因来自现有代码：业务库和执行库使用本机SQLite WAL，启动后会启用后台处理。把完整后台同时在两台机器运行，不能自动形成一致的主备；各自持有的数据、租约和队列会产生不同状态。SQLite WAL要求使用同一数据库的进程处于同一主机，不支持跨机器共享网络文件系统上的活动数据库。<a href="https://sqlite.org/wal.html">SQLite WAL官方说明</a></p>
+<p>每台保存自己的本地数据目录。101的独立恢复库用于验证，不作为第二个在线写库；不使用NFS、SMB共享活动SQLite文件。</p>
+<h2 id="section-3">3. 101如何做到随时接替</h2>
+<p>“已安装备用服务”和“具备接替资格”分别显示。101只有同时满足以下条件，才能标记为可接替：</p>
+<div class="table-wrap"><table>
+<tr><td>条件</td><td>检查内容</td></tr>
+<tr><td>正式版本一致</td><td>API、前端、锁定依赖、Pi SDK和数据库结构版本一致</td></tr>
+<tr><td>接替数据完整</td><td>业务库、执行库、Pi会话、知识原件、运行器配置和语音密钥属于同一已校验恢复批次</td></tr>
+<tr><td>数据够新</td><td>显示最后成功批次的时间和同步延迟；失败时保留旧批次并明确降级</td></tr>
+<tr><td>本机依赖可用</td><td>Linux版Python环境、OCR/ASR/TTS、固定程序、目录与必要模型可实际运行</td></tr>
+<tr><td>恢复已验证</td><td>两个数据库完整性、文件哈希、语音密钥和引用原件通过检查；隔离演练不连接真实执行节点</td></tr>
+<tr><td>入口已准备</td><td>统一域名、HTTPS、Host允许名单、房间和节点访问地址已测试</td></tr>
+<tr><td>旧主已隔离</td><td>已确认112停止业务或被有效隔离；仅有HTTP超时不算证明</td></tr>
+</table></div>
+<p>设计目标是在101已就绪、旧主已确认隔离后，数分钟内恢复中心。实际时间须通过演练测量，不能现在承诺零停机。</p>
+<p>接替页面必须显示可恢复到的最后数据时间。同步频率、最长允许滞后、失败提示和降级方式，需要在复制机制实现与实测后固定；不把“随时接替”默认解释成允许丢失几分钟家庭记忆。</p>
+<h2 id="section-4">4. 同步完整状态</h2>
+<div class="table-wrap"><table>
+<tr><td>状态</td><td>接替要求</td></tr>
+<tr><td>业务数据库jarvis.db</td><td>家庭档案、权限、对话、记忆、知识索引、提醒、费用等一致快照</td></tr>
+<tr><td>execution/execution.sqlite</td><td>节点授权、运行队列、租约、部署记录、日志和趋势一致快照</td></tr>
+<tr><td>Pi目录</td><td>模型认证、已保存会话、资源和Skill；不回退到另一套全局Pi凭据</td></tr>
+<tr><td>知识原件与运行器材料</td><td>原件与数据库引用对应，完成文件先落入同批次，正文不能指向缺失原件</td></tr>
+<tr><td>runtime私有材料</td><td>包括原语音主密钥及配置；不能生成新密钥冒充恢复</td></tr>
+<tr><td>发布与Linux节点配置</td><td>相同正式发布与路径约定；本机管理身份、SSH主机密钥、网卡和实际IP保持各自独立</td></tr>
+<tr><td>临时录音与正在播放状态</td><td>按留存策略处理；切换后不假装还在持续录音或朗读</td></tr>
+</table></div>
+<p>待实施的复制流程：生成一致恢复批次 → 传到101暂存目录 → 核对两库、文件、密钥和清单 → 原子标记该批次就绪。半传输批次不覆盖101最后成功的一份，至少保留前一代用于回退。</p>
+<p>数据库采用SQLite支持的一致快照方法。官方列出了Backup API、VACUUM INTO及sqlite3_rsync等适用于活动数据库的方式；普通文件复制不能替代它们。<a href="https://sqlite.org/backup.html">SQLite备份说明</a>、<a href="https://sqlite.org/howtocorrupt.html">活动事务备份风险</a></p>
+<p>具体在线同步实现还需要覆盖跨两个数据库和可变Pi文件的一致性。单独把两库各复制一次，不等于同一业务恢复点。必要时协调短暂写入屏障，并验证知识原件、Pi会话和队列边界；不能只复制一个.db或定时强关整个平台。</p>
+<p>现有scripts/backup.mjs要求后端停止，已用于本机升级前完整备份；它尚不是持续主备复制器。现有隔离恢复演练也不能冒充故障接替演练。正式双节点部署前，持续同步与接替保护属于必做内容。</p>
+<p>复制和备份同时保留：101的接替材料用于恢复服务，独立历史备份用于找回误删、损坏或错误版本的数据。112的磁盘历史Reported_Uncorrect为6361，与目前清单基线相同；后续仍按原巡检要求对比，数据不只保存在112。</p>
+<p>本机PID、守护控制令牌、临时锁和未完成的进程状态不直接照搬。每台中心使用自己的服务管理身份和进程状态；业务身份与原语音密钥按恢复批次保存，节点自身的私钥与机器绑定保持独立。</p>
+<h2 id="section-5">5. 固定服务入口</h2>
+<p>所有房间、管理浏览器和执行节点使用一个家庭域名和HTTPS入口，正常指向112，接替后指向101，避免每个房间分别改IP或重新配对。</p>
+<p>域名及浮动服务地址在部署时选定并核对；112、101继续保留各自管理IP。原IP目前是DHCP，应先做路由器地址保留。不能现在随意占用一个未确认空闲的IP。</p>
+<p>统一入口本身也需要能够接替，不把唯一代理固定在112或另一台单独机器上。推荐中心主备共同承载受控服务地址，切换后网络入口跟随当前中心。地址移动只负责流量方向，不能作为旧主已经停止写入的证明。</p>
+<p>HTTPS证书、合法Host和访问源使用统一服务名。现有浏览器登录或房间凭据如果仍有效且已同步，可以继续使用；未同步或已失效的凭据需要重新验证，不自动认定说话人的身份。</p>
+<p>断线中的回答、录音和播放会中断，客户端显示恢复状态并重连。不能承诺一次正在进行的语音对话完全无感迁移。</p>
+<h2 id="section-6">6. 接替与回切规则</h2>
+<p>第一版按“检测异常 → 告警 → 管理者确认受控接替”实现，不以两台机器互相探测作为自动抢主依据。</p>
+<ol>
+<li>区分API进程故障、磁盘或主机故障、网络隔离；单个进程优先由本机守护恢复。</li>
+<li>接替前确认112已停止或隔离。无法确认时显示“旧主状态不明”，不启动第二个完整调度中心。</li>
+<li>校验101的正式版本、最后完整恢复批次和数据时间；展示数据缺口。</li>
+<li>新中心先进入恢复状态，暂停旧队列自动派发；核对真实节点上的在途开发进程、外部操作、提醒投递和未回报费用。</li>
+<li>核验后启动101、切换统一入口，确认成员身份、Pi、知识、语音和队列状态，再按需恢复监督。</li>
+<li>112重新上线时不自动成为主节点、不反向覆盖101新数据。先接收新主完整批次，再等待窗口回切。</li>
+</ol>
+<p>已对外发出的开发命令、部署动作和语音播放，不能仅凭旧快照状态判断未执行。故障恢复不承诺跨节点恰好一次；不自动重跑状态不明的收费任务或外部操作，不把中断显示为完成。</p>
+<p>计划切换时可以先停止新请求、处理在途工作、完成最后批次，再转移入口。突发故障只能从已完成的批次恢复，必须如实报告可能未同步的内容。</p>
+<p>i3完成接入后，可增加第三方健康见证和备份存放；若要全自动接替，还须实现旧主隔离、主资格与数据同步判定并完成网络分区演练。第三台加入不自动保证安全切换。i3承担第三后备时，再按实测资源优先恢复对话、成员、记忆和提醒，暂缓重OCR、研究及高并发开发。</p>
+<p>若采用三节点多数派管理主资格，112和101同时不可达时，单独存活的i3并没有多数派，不能自动抢主；这种情况走确认旧节点隔离后的人工灾难接管。有效隔离需阻止旧主继续执行副作用，仅切换域名或移走服务IP不够。</p>
+<h2 id="section-7">7. 具体实施顺序</h2>
+<div class="table-wrap"><table>
+<tr><td>阶段</td><td>工作</td><td>完成证据</td></tr>
+<tr><td>已完成</td><td>112、101、116的SSH授权、指纹和实际系统/SMART读取</td><td>连接验收报告；尚未部署中心</td></tr>
+<tr><td>下一步</td><td>构建Linux正式发布、运行账户、依赖、路径与ASR/TTS，先部署112</td><td>真实启动、身份/Pi/语音和重启恢复验证</td></tr>
+<tr><td>接替准备</td><td>部署101相同版本、持续一致同步、待机模式、恢复保护、统一入口</td><td>101最新就绪批次、身份和恢复检查</td></tr>
+<tr><td>故障演练</td><td>进程退出、112停机、断网、复制中断、101重启、数据滞后、回切</td><td>测得恢复时间、数据边界与无重复派发证据</td></tr>
+<tr><td>i3加入</td><td>补充实际IP、硬件、系统、专用授权和恢复配置</td><td>第三后备验收；自动接替另做隔离与仲裁验收</td></tr>
+</table></div>
+<p>Linux运行环境分别建立，不跨机器复制Python虚拟环境。112与101的路径约定尽量相同，真实执行器仍按各机器的固定路径和授权绑定。</p>
+<p>联想当前的Windows SAPI声音不能直接作为Ubuntu TTS；两台中心需要实际Linux可用引擎或固定高算力语音接口，并分别完成识别、合成与房间播放测试。</p>
+<p>部署前核对Node内置SQLite的实际版本。此次本机读取为Node v24.15.0、SQLite 3.51.3；服务器还没有在SSH执行环境检测到Node/npm。SQLite官方已在3.51.3及指定回补版本修复WAL-reset问题，正式部署应核对修复状态及既有回归，而不是只凭Node大版本判断。<a href="https://sqlite.org/wal.html">SQLite WAL修复说明</a></p>
+<h2 id="section-8">8. 管理页面需要表达什么</h2>
+<p>在现有运维和大屏中呈现：当前主节点、112/101/i3角色、版本、待机就绪状态、最后数据批次、同步延迟、数据库/密钥检查、旧主隔离证明、故障原因和切换历史。i3未接入显示“待准备”，不显示在线。</p>
+<p>操作入口包括接替检查、计划切换、故障接替、恢复同步和回切。点击切换前显示受影响的房间、在途任务、最新可恢复时间和必要确认，不能只有“在线/离线”绿灯。</p>
+<p>这些是后续需要接入的真实功能，不是现有UI已经具备的主备能力。原来“32GB预发布”和“48GB唯一正式主机”的文档保留为历史记录，当前中心分工以本方案为准。</p></main></html>

@@ -1,0 +1,1897 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="由贾维斯监督101软件工厂，真实完成全部阶段、Agent迭代及原始需求到文档和软件实际使用的自动交付。">
+  <meta name="jarvis-source-sha256" content="f1c6d07b984b67b5c9d936380a84eeab53352c6789e13b9f270c2968ae6740ed">
+  <title>软件工厂无人值守交付总纲</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">执行总纲 R22.1 · 费用只记录</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E4%BA%A4%E4%BB%98%E6%80%BB%E7%BA%B2.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 14 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 完成的含义及授权边界</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 已有基础、差距及身份边界</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 费用全记录与技术运行边界</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. 编号化必需目标与验收</a>
+<a class="toc-link level-3" href="#section-4-1" data-parent="4">FA-01 · 最新工厂打包部署基线</a>
+<a class="toc-link level-3" href="#section-4-2" data-parent="4">FA-02 · 完整输入需求设计与上下文</a>
+<a class="toc-link level-3" href="#section-4-3" data-parent="4">FA-03 · Pi与能力版本真实生效</a>
+<a class="toc-link level-3" href="#section-4-4" data-parent="4">FA-04 · 真实父子任务归账与恢复</a>
+<a class="toc-link level-3" href="#section-4-5" data-parent="4">FA-05 · 真实生产独立验收与修复</a>
+<a class="toc-link level-3" href="#section-4-6" data-parent="4">FA-06 · Agent独立优化与版本提升</a>
+<a class="toc-link level-3" href="#section-4-7" data-parent="4">FA-07 · 贾维斯持久自动监督工作流</a>
+<a class="toc-link level-3" href="#section-4-8" data-parent="4">FA-08 · 完整成套交付与实际使用</a>
+<a class="toc-link level-3" href="#section-4-9" data-parent="4">FA-09 · 完整全自动及稳定复用证明</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. FA-01—09 的依赖与推进</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 自动质量门及阶段产出</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 连续监督的正常循环与例外</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. 完整交付包及客户实际使用</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">9. 真实性、从零验证与完成率</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">10. Agent 持续改进与技能复用</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">11. 全过程记录与可复核证据</a>
+<a class="toc-link level-3" href="#section-11-1" data-parent="11">11.1 自主择优与决策台账</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">12. 后续项目复用模板</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">13. 目标集、旧需求覆盖及版本规则</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">14. 本轮实施与监督状态</a>
+<a class="toc-link level-3" href="#section-14-1" data-parent="14">14.1 首任务中止、对账与恢复边界</a>
+<a class="toc-link level-3" href="#section-14-2" data-parent="14">14.2 尚待完成的真实验证与能力</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-11<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">唯一执行依据 / 项目级监督 / 全过程复用</p>
+        <h1 id="document-title">软件工厂无人值守交付总纲</h1>
+        <p class="subtitle">由贾维斯监督101软件工厂，真实完成全部阶段、Agent迭代及原始需求到文档和软件实际使用的自动交付。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-11</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>74项目标</strong><span>稳定编号 · 真实证据</span></div><div class="stat"><strong>9个工作包</strong><span>依赖推进 · 独立验收</span></div><div class="stat"><strong>3类归账</strong><span>工厂 · 产品 · 能力</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p><strong>最终目标：让贾维斯持续监督 101 上的软件工厂完善自身，并由软件工厂从客户原始需求开始，自动形成完整合格的产品文档、各页高保真原型、真实代码及软件，经过独立测试、问题修复、发布和目标环境实际使用；各阶段 Agent 与子 Agent 持续评估改进。</strong></p>
+<p>本轮用户已经授权：整合全部目标，改造贾维斯，启动项目级无人值守监督并持续推进到完成，全过程记录，形成可复用的方法。本文件是本轮统一执行及验收依据，机器目标集为 <a href="../artifacts/software-factory/autonomy-r22/objectives.json">objectives.json</a>。旧文档作为设计出处和历史证据保留；有旧“永远人工”“本期仅预留发布”的表述时，以本纲新增的自动质量策略和实际交付使用目标为准，原有真实性、权限、事务和质量要求继续有效。</p>
+<p><strong>当前状态：目标实施中；第14节最新已记录观察为监督阻塞、0/74独立验收。</strong> 专项监督曾启动，首任务因技术中止而结束；心跳保护、受限新任务恢复及决策改选修复已完成本地验证，R22-7发布与实际恢复尚未执行。本版截至发布前，不预填后续发布、恢复启动或产品通过；其后以实时平台、新运行回执及建设记录为准。历史全局监督关闭不是本轮新授权的限制；专项监督不得同时复活旧任务或启动无关项目。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 完成的含义及授权边界</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>最终必须证明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>软件工厂自身</td>
+<td>最新受控代码能完整打包、独立安装、运行、升级和恢复；全部本期功能及质量规则真实有效</td>
+</tr>
+<tr>
+<td>客户软件产品</td>
+<td>原始资料到需求、设计、全部页面/状态及整体交互、实际代码、独立测试修复、完整文档/软件包、目标角色实际使用，全部同版且语义承接</td>
+</tr>
+<tr>
+<td>Agent 与子 Agent</td>
+<td>有实际生效定义和真实运行关系；独立评估、候选比较、提升、观察、回滚及经验证经验复用形成闭环</td>
+</tr>
+<tr>
+<td>贾维斯监管</td>
+<td>维护目标/依赖/费用归账，安排就绪任务，检查真实证据，有限恢复与返工，继续推进下一步；可查看、调整、暂停和停止</td>
+</tr>
+</tbody></table></div>
+<p>正常完整输入、目标环境和技术执行边界已配置后，从提交原始需求到使用核验，<strong>无需逐关人工点击</strong>。客户不必先写专业 PRD、架构或技术验收清单。重大业务歧义、缺少外部权限或必要环境等真实例外才提出具体问题；不能伪造客户答复、签字或环境。</p>
+<p>授权涵盖本项目的必要开发、隔离测试、问题修复和按既有策略部署运行监管。依然要落实明确副本、实际执行器、完整费用/Token归账及技术单次Token/上下文/轮次/重试/时限边界。管理者主动暂停或取消必须生效。未知客户凭据、无关服务器操作、多租户 SaaS、完整 OIDC/LDAP/RBAC 及原生 App 不因本纲自动扩入；当前最简鉴权、项目隔离和沙箱安全等必需部分不能因此推迟。</p>
+<p>目标总完成只有一种判据：全部本期必需条款有当前有效、真实、合格、独立的证据，无阻断缺陷，并已在约定目标环境实际使用。任务结束、模型声明、报告定稿、可下载 ZIP 和健康检查均不是这一结论。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 已有基础、差距及身份边界</h2>
+<p>正式贾维斯在 112；101 为贾维斯冷备，同时运行独立软件工厂开发节点。联想使用独立开发目录。软件工厂源码项目与其内部生产的客户项目分别验收、归账。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>已有有范围基础</th>
+<th>本轮要补齐或重新证明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pi 模型流式调用、工具接力、阶段提示、模板和四格式文档导出</td>
+<td>完整 SDK 实际适配、真实定义/技能/模板注入及请求/回执身份一致</td>
+</tr>
+<tr>
+<td>外层 Claude 强路线和签名用量、可靠队列/检查点基础</td>
+<td>当前有效路由与后备、原生物理续做、真实子任务费用归账/取消/汇合</td>
+</tr>
+<tr>
+<td>文档版本、原型独立页/汇总、开发测试台账、自动模式字段</td>
+<td>完整上下文与真实 DOM/业务验证；清除正式路径模拟完成、空分母和未验证放行</td>
+</tr>
+<tr>
+<td>贾维斯只读工厂接入、现有 CLI 任务调度和已发布技能冻结</td>
+<td>本轮项目级连续监督、持久多依赖及阶段业务命令/质量回执</td>
+</tr>
+<tr>
+<td>历史隔离完整测试、反例及 NO-GO 记录</td>
+<td>最新受控候选、全量当前条款/用例、完整实际包、客户目标使用与全自动证明</td>
+</tr>
+</tbody></table></div>
+<p>R21 审阅绑定的是当时 <code>main / 266104923b7f49b259dc8a7b827d599c5220ad16</code>；仅所审公开文件首尾哈希稳定，没有证明运行进程加载同版。R20 <code>e375…</code> 的部署快照、R19 模型和旧 <code>4bf…/fecbf…</code> 测试都保留历史范围。实施前重新核对最新内容与实际环境，不能把旧测试署为当前通过，历史 NO-GO 不自动改绿。</p>
+<p>本纲承接全部 <strong>17 项 Agent、10 项自动流程、12 项交付完整性发现</strong>；编号对应关系保存在目标集。三份远端报告范围重叠，不相加为全仓阅读/验收数量。当前模拟路径、资料截断/OCR、占位原型、提示词只记版本、七关外人工和逻辑备份等差距均在下面编号目标中有出口。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 费用全记录与技术运行边界</h2>
+<p>用户本轮已明确：<strong>费用只记录，不设金额限额，也不设项目累计Token消费额度</strong>。原累计10/30USD、每任务1USD等建议已被此决定替换，不能继续作为阻止正常开发的条件。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>归账域</th>
+<th>包含</th>
+<th>保持独立</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>factory-system</code></td>
+<td>软件工厂本身源码、打包部署、固定验证与贾维斯监管改造</td>
+<td>不混算为客户产品费用</td>
+</tr>
+<tr>
+<td><code>customer-product</code></td>
+<td>每个客户产品资料、文档原型、代码测试、交付安装使用</td>
+<td>独立输入、仓库、环境和账目</td>
+</tr>
+<tr>
+<td><code>agent-improvement</code></td>
+<td>Agent/子Agent候选、评估集、对照实验、提升及回滚</td>
+<td>实验独立归账，不污染稳定项目</td>
+</tr>
+</tbody></table></div>
+<p>每次调用按项目/阶段/任务/尝试/Agent/子Agent/工具/provider/model记录实际Token、耗时和费用；父级引用子账，不重复加总。生成、失败、评阅及重试也记录。配置价目估算、实际供应商账单和未知费用分列，未知不能当零。</p>
+<p>未知价格或金额只标为未知，<strong>不单独阻止正常开发、评审、返工或推进</strong>；价格补全后按实际证据对账。三类用途分别统计并保留来源，归账不是金额审批或消费封顶。</p>
+<p>技术运行保护继续生效：单次模型输出/上下文限制、并发和写入范围、任务时限、轮次/重试、无进展识别、暂停/取消及晚到零写。provider自身额度、限流、不可用及必要权限/环境缺失依实际原因恢复或安全阻塞；不得把技术限制误写成总费用/累计Token消费上限。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 编号化必需目标与验收</h2>
+<p>以下 74 项均为必需目标。每项实现任务至少附：目标版本、依赖、输入/候选身份、执行副本、实际工具、三类费用归账、停止条件与独立验证方式。编号稳定；范围调整追加新版本和采用理由，不重用编号，不删失败来提高比例。表内所有验收均是所需真实结果，<strong>尚未取得证据的项目保持未验证</strong>。</p>
+<h3 id="section-4-1" tabindex="-1">FA-01 · 最新工厂打包部署基线</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-001</td>
+<td>固定最新候选及并发写者</td>
+<td>重新核对101当前提交、纳入的工作区改动/新增文件、锁文件和工具版本，保存内容清单及哈希。<br>正式源码任务使用独立副本；并发写者和合并策略明确；同一HEAD而内容变更不能沿用旧验收。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-002</td>
+<td>构建完整前后端软件工厂包</td>
+<td>从固定候选执行真实类型/编译/必需工程检查，保存退出码、实际输出与依赖锁。<br>包包含前端、后端、共享代码、静态资源、迁移和配置示例；各字节哈希与同一候选一致。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-003</td>
+<td>从空环境独立安装软件工厂</td>
+<td>采用独立服务名、端口、数据库、缓存、对象存储及目录，不清空或复用现有业务数据。<br>按安装说明从包完成依赖、初始化、迁移和启动；真实失败及修复复验保存。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-004</td>
+<td>核对工厂实际运行版本与入口</td>
+<td>形成源码→构建清单→安装包→加载进程→前端/接口/数据的同版身份链；健康接口不替代功能验收。<br>实际入口、鉴权、关键业务和资源监控通过；旧18920/8080/5173观察不得混作新候选部署。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-005</td>
+<td>验证工厂升级回滚与恢复</td>
+<td>空库安装与旧版数据升级分别验证；代码、数据、文件、配置及必要模板依赖按兼容性恢复。<br>实际执行备份恢复和发布失败回滚，读回业务状态；重启完成不等于恢复成功。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-006</td>
+<td>落实工厂身份安全与数据边界</td>
+<td>每个写操作有真实操作者或系统运行身份；公网入口落实当前简易登录与项目/文件授权，密钥受控加密引用。<br>上传、XSS/注入/CSRF、沙箱宿主隔离和出向白名单按本期规则实测；临时模型凭据不写盘且用后销毁。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-007</td>
+<td>验证工厂界面及兼容布局</td>
+<td>工厂自己的页面、子页、状态按冻结LLD-6/原型完整对照，不以客户产品原型验收工厂界面。<br>Chrome/Edge适用版本、1280/1440/1920及助手开合实际无错位；客户移动工件另验。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-008</td>
+<td>登记完整工厂需求与验收分母</td>
+<td>逐项核对当前PRD所有REQ/BR及HLD/七册LLD、差异登记、RTM；每个本期必需条款有目标、设计、实现和测试去向。<br>原103个REQ及15个BR仅作R21冻结审阅索引；最新新增/变更子条款重新登记；明确分期/取消/N/A理由，不借空范围或deferred隐藏缺口。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-2" tabindex="-1">FA-02 · 完整输入需求设计与上下文</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-009</td>
+<td>保留原始资料并安全入库</td>
+<td>项目资料隔离，原件来源/时间/版本可定位；原件树只增不改，与解析稿目录对应。<br>支持约定doc/pdf/xlsx/md/txt/zip；ZIP格式、CRC/文件名、穿越/加密/ZIP64/多卷/重叠和30MB/100项/10MB单件/25MB展开限制逐项验证，整包失败零写；原包保留。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-010</td>
+<td>完整解析扫描长文表格附件</td>
+<td>逐文件/页/章节/表格/图片/附件登记处理状态，长文分段检索与覆盖对账，不截前24k后宣称完整。<br>扫描OCR疑点保留原图定位并反复校对；损坏/加密/不支持/截断/矛盾显式返回，必需输入未证实完整不正式通过。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-011</td>
+<td>走通资料整理编辑与批量加工</td>
+<td>文件/内容解析状态、重试、预览/编辑/源码、离开守卫、解析行删除依赖守卫和不删原件实际工作。<br>目录勾选半选/全选及会话恢复、翻译/脱敏/索引/批量解析定稿逐项回执；批次开始快照及逐行基线复核，变化行不计成功且无半截写入。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-012</td>
+<td>从客户原始需求提炼项目配置</td>
+<td>客户提交原始资料即可；工厂自动形成范围、角色场景、优先级、可测试条款、交付目录与缺项，不要求客户先写专业PRD。<br>复用技术/费用归账/质量/环境预设；语言、时区、单位、数字格式、术语、公司品牌模板和目标终端共同配置；关键业务歧义具体澄清且不伪造答复。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-013</td>
+<td>生成完整正确的CRD PRD与RTM</td>
+<td>覆盖原文目标、范围、业务条件/否定/边界、用户旅程、数据、权限、异常、外部依赖和非功能验收。<br>每个必需原始条款100%有语义承接；推导需求单列依据；仅当前项目有效定稿参考可用，生成期间变化拒绝提交。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-014</td>
+<td>保留编辑补丁及不可变历史</td>
+<td>草稿/提交/定稿分离、历史版本字节不可变、撤销重做和目录定位正确；会话内编辑、增删节和AI补丁可查看差异。<br>补丁接受/拒绝和定稿按辅助或成熟自动策略留身份；单写者与服务端乐观锁拒绝冲突，丢失历史不补造。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-015</td>
+<td>建立双向语义与版本追溯</td>
+<td>原文→CRD/PRD→HLD/LLD→页面状态→任务代码→用例缺陷→发布双向可查，含精准位置、哈希、承接理由及独立依据。<br>识别无承接/无来源/错版本/链接有而含义错；本期必需条款100%承接和真实验证，历史L0a≥95%等口径保留，不以空分母或跨页均值放行。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-016</td>
+<td>形成可实施的HLD及七册LLD</td>
+<td>概要与模块/算法流程/类数据结构/数据库/API/UI/非功能详细设计覆盖全部适用需求，章节和编号可核对。<br>字段、接口错误、权限、状态机、事务幂等并发、迁移、后台任务和恢复一致；不适用有依据，不能用空标题或只核HLD替代。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-017</td>
+<td>登记所有页面子页状态与视口</td>
+<td>独立设计目录包含主页面/详情/编辑/弹窗抽屉、流程角色字段控件和所有适用状态/视口，精确追到设计正文。<br>正常/加载/空/错误/成功/校验失败/未授权/禁用/陈旧等适用性明确，必需缺页缺状态或来源冲突阻断共同定稿。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-018</td>
+<td>共享视觉业务及客户语言契约</td>
+<td>布局、组件、颜色字体间距、文案、字段、角色权限、接口与跨页数据状态有同一版本契约。<br>需求原型代码测试和全部交付文档共同消费语言/格式/模板配置，客户英语法语等工件不被硬编码中文覆盖。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-019</td>
+<td>核对生成上下文的完整来源</td>
+<td>每页或任务取得相关PRD/HLD/LLD真实正文及精确出处，不只标题锚点或开头节选；压缩摘要保留来源覆盖。<br>跨项目上下文隔离，资料作为数据不能改变权限/执行边界/规则；上下文缺口和依赖变化明确拒收。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-3" tabindex="-1">FA-03 · Pi与能力版本真实生效</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-020</td>
+<td>尽可能复用Pi真实SDK能力</td>
+<td>复用pi-ai模型/流式/Usage、pi-agent-core运行时工具及pi-coding-agent会话/模型注册/认证/提示词技能能力，真实适配当前SDK。<br>平台继续强制事务、权限、证据、策略和技术执行边界；不以常规streamSimple或伪RPC声明完整Agent能力已接通。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-021</td>
+<td>让Agent定义及模板真正生效</td>
+<td>Agent职责/提示词叠加/技能/工具/模型路由/模板及文件启动前解析为不可变内容快照和哈希。<br>执行器实际加载并回传采用身份；缺失/不符不能算该版本运行；在途固定，配置发布回滚影响后续任务。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-022</td>
+<td>验证强模型路由和后备</td>
+<td>关键架构/复杂分析/质量评阅使用用户指定gpt-6.1-sol[1m]目标路线；登记provider、实际请求/返回模型、显示和账目一致。<br>简单任务可用已验证快速路线，provider额度/限流后备仅用可连接且任务兼容目标；别名不证明内部版本或1m容量，本轮验证范围如实记录。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-023</td>
+<td>管理持久会话分支与引用</td>
+<td>多会话创建/切换/保留、会话上下文和Pi树形fork/branch可定位实际会话身份。<br>会话保留/登出凭据、引用当前定稿门禁、断流重连与消息去重实际正确，帧重放不冒充物理CLI续做。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-024</td>
+<td>接通助手工具流式与控制</td>
+<td>各页面助手可开合/F1、感知上下文、导航、读状态、调用允许真实动作及给下一步；工具注册、输入输出和审计可见。<br>实际流式、思考档位及暂停/继续/停止生效，不留半截状态；文本完成或工具提案不冒充业务提交回执。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-025</td>
+<td>记录完整Token费用和归账</td>
+<td>每次生成/评阅/失败/重试/工具/子Agent/优化调用记录项目、阶段、任务、尝试、provider/model、Usage和耗时；同调用不重复汇总。<br>费用按配置价目来源估算、实际供应商账单和未知分列；三类用途独立归账，不设置金额或累计Token消费额度。未知价格仅标未知并继续正常开发；缺执行器/必要环境才如实阻塞。技术单次输出/上下文、轮次、重试、时限与暂停取消仍有边界。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-026</td>
+<td>固定实际模板套件与导出配置</td>
+<td>客户/项目套件优先规则、条目实际正文/默认代码、套件及导出器版本有快照；更新删除绑定和默认回退不静默改变在途。<br>模板CRUD、项目绑定、文档生成/编辑/导出共同消费相同有效配置，有变更影响记录。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-4" tabindex="-1">FA-04 · 真实父子任务归账与恢复</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-027</td>
+<td>实现真实执行器输入输出契约</td>
+<td>Pi原生及实际配置Claude/Codex适配器取得工作副本、输入/角色/工具/路由/费用归账，执行真实编码或验证任务。<br>输出产物和实际exit/停止原因可核对；登记target或默认exit0不等于执行或质量通过，未安装目标不自动作后备。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-028</td>
+<td>建立真实父子Agent运行与汇合</td>
+<td>项目总控→阶段负责人→按需专业子Agent有父子ID/依赖/任务输入/输出身份，深度并发总轮次受限。<br>阶段汇合检查所有必需子产物和跨文档一致性；子完成不代表阶段通过，父子失败有明确传播和补做范围。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-029</td>
+<td>隔离写范围并受控合并</td>
+<td>任务规定kind/owner/scope/writeScopes/deps/acceptance，单工件写者冲突可检出，代码任务独立副本执行。<br>实际合并前完成独立评审及规定依据；冲突/部分失败不覆盖他人成果，合并后形成新候选和影响回归。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-030</td>
+<td>落实父子共享资源边界</td>
+<td>父子按同调用身份汇总Token/费用，子Agent不重复计费；实验与客户/工厂账目分离。轮次、并发、单次技术Token/上下文、时限等资源控制沿父子继承，不设置项目金额或累计Token消费上限。<br>运行时核对真实用量并记录已知/估算/未知金额；未知价格不阻止正常执行。技术性停止、取消、重试和停滞策略必须真实生效。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-031</td>
+<td>传播暂停取消及晚到零写</td>
+<td>项目/父/子暂停停止及接管只影响其拥有操作，人工和系统身份区分；真正停止相关进程和后续派发。<br>operationId/token/action/owner及父身份/指纹重验；取消后晚到回执零写、不自动复活，不把cancel no-op标完成。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-032</td>
+<td>恢复物理会话与执行副作用</td>
+<td>进程/节点/服务中断后先对账原进程、检查点、用量、产物、已发生工具效果，再安全原生恢复或创建有理由的新尝试。<br>检查点JSON、自动重启或队列补传不冒充CLI物理续跑；重复请求不重复修改发布或记账，恢复可重入。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-033</td>
+<td>强制业务命令事务与审计</td>
+<td>写入经封闭命令校验、原子提交、效果幂等；审计失败业务/界面/定时器零写。<br>效果ledger状态与异步操作身份持久化，事务失败回滚；权限或人工/自动政策由平台执行，不交提示词自守。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-5" tabindex="-1">FA-05 · 真实生产独立验收与修复</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-034</td>
+<td>承接设计形成完整开发计划</td>
+<td>设计项↔任务双向覆盖，依赖、写范围、验收/验证与费用归账明确，缺承接项可见。<br>有效共同设计基线和必需RTM条件满足后按质量策略批准冻结计划；变更分析产生新计划版本。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-035</td>
+<td>完成真实编码单测CI评审合并</td>
+<td>开始→编码→真实单测→CI→独立代码审查→实际合并，各环节当前代码差异、exit和报告齐全才算完成。<br>看板排队/进行中/待评审/完成及阻塞原因由证据驱动；代码树变更可查，不能直接写100%或固定覆盖率。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-036</td>
+<td>构建独立真实实现工件</td>
+<td>集成构建来自已合并实际源码，包含真实接口/数据库和独立实现UI，不能复制原型HTML冒充。<br>源码提交、包文件和候选hash可复核；有构建前置及依赖版本，失败不生成通过工件。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-037</td>
+<td>产出独立高保真页与完整交互</td>
+<td>每个必需页面/子页面/适用状态和视口有可独立打开的实际高保真文件，另有完整可交互整体。<br>真实DOM和点击/数据/权限/异常恢复及正反追溯验收；缺页占位/仅标记/未核实不能通过；模拟原型数据只说明原型范围。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-038</td>
+<td>逐页对照实现与批准原型</td>
+<td>同测试数据/状态/视口核对信息结构、视觉关键项、字段控件、行为权限和数据；两侧不能同一对象。<br>关键项100%、单页一般≥95%、严重偏差0；必需能力缺失不被均值掩盖；skip/not-run/未知不算通过，动态忽略范围明确。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-039</td>
+<td>执行四门开发自测并交接</td>
+<td>仅当前真实构建可运行功能、联调冒烟、UI符合度、开发审核四门；证据自动生成不可变自测报告。<br>失败有实质返工才复测，报告有效且合格才按适用质量策略原子转测试、旋转令牌、消费授权；不留永久人工出口。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-040</td>
+<td>从零独立验证全部必需用例</td>
+<td>工厂自身完整单元/集成/API/浏览器/权限/数据测试和客户产品独立验收分别在隔离环境实跑。<br>分母来自当前所有必需条款及适用用例，不只现有目录；pass/fail/blocked/not-run/not-applicable明确，必测未跑/零用例不通过，N/A不等于通过。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-041</td>
+<td>拒绝虚假陈旧及空分母放行</td>
+<td>合成正反例覆盖模拟/标记丢失、零用例、必测未跑、旧报告/上游变更、伪CI、重复回执、晚到回调、审计失败。<br>检查实际持久决定/状态而非仅接口报错；只有同候选真实证据可通过，不重写历史反例或把旧结果签成新源码。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-042</td>
+<td>统一缺陷修复与独立复验</td>
+<td>每缺陷有条款/版本、复现、预期实际、严重度、证据、责任任务、修复提交、原用例及影响回归。<br>new→confirmed→fixing→pending_regression→closed及reopened事件正确；开发只待回归，独立测试按适用策略关闭；保留失败/环境/误报/波动/重复/变更区别，不改断言迎合错误。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-043</td>
+<td>形成不可变报告及交付决定</td>
+<td>提测批次含构建/设计/验收/环境快照，幂等接收；新构建新批次，报告定稿与放行分开，可定稿不通过。<br>正式发布无未关闭P0/P1和未实现/未验证必需条款；中低遗留仅非阻断且逐项影响、决定和处理版本明确，不能降级或删除失败清绿。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-044</td>
+<td>实测性能规模及可维护性</td>
+<td>按原PRD/LLD承诺检查常规交互P95&lt;1s、平台首Token开销&lt;500ms及&gt;10s等待提示/停止；模型首Token档位目标用已配置模型校准。<br>20并发用户、项目100+任务/1000+资料、大目录分页虚拟滚动、包/模块单测行分支目标按实际批准范围实测，未测不称达标。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-045</td>
+<td>核对数据依赖安全与可靠性</td>
+<td>字段单位唯一性关联、权限/事务并发、迁移、导入导出、附件/数据库一致和外部接口真实契约实际正确。<br>密钥/沙箱/上传安全、崩溃一致/每日备份、关键告警日志以及可配置证据保留验证；外部模拟不能签发真实能力通过。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-046</td>
+<td>走通全部功能页面和管理面</td>
+<td>资料双工作面、CRD/PRD/RTM、HLD/七LLD/原型、开发代码看板/自测、测试四页签、项目/设置/任务/通知/Agent/模型等本期功能无缺漏。<br>所有阶段Task跨域汇总数可对账，页面跳回所属会话，事件追加；F1上下文助手/真实状态正常，界面台账不能虚报产品完成。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-6" tabindex="-1">FA-06 · Agent独立优化与版本提升</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-047</td>
+<td>按真实失败建立能力改进队列</td>
+<td>项目修复与Agent优化分别记录，分类输入/上下文/设计/提示词/工具/环境/模型/编排/验证器原因。<br>每候选有症状、输入、实际结果、版本、影响与可复现依据或未定原因；不一律换模型或再生成。</td>
+<td>能力改进</td>
+</tr>
+<tr>
+<td>MSF-OBJ-048</td>
+<td>创建隔离且可执行的能力候选</td>
+<td>候选可改职责/提示词/技能/工具/上下文/路由/子任务安排，记录改善假设和相对稳定版差异。<br>候选实际有效内容快照、适用范围和实验费用独立归账，不能更改验收、删失败用例或扩权限；费用和累计Token不设额度，技术试验/时限/重试边界保留。</td>
+<td>能力改进</td>
+</tr>
+<tr>
+<td>MSF-OBJ-049</td>
+<td>维护独立评估集与基准</td>
+<td>调试集、固定回归、保留未见验收集、真实项目观察有独立版本和答案依据，覆盖成功/失败/边界。<br>生成方不能同时改题改答案并宣布更好；客户私料仅授权范围使用，公开仅脱敏元数据。</td>
+<td>能力改进</td>
+</tr>
+<tr>
+<td>MSF-OBJ-050</td>
+<td>比较能力质量效率及跨阶段退化</td>
+<td>固定输入/代码/标准/工具/已知环境比较稳定与候选，记录模型资源差异；正确完整/首轮/追溯/真实/协作/恢复/客户使用优先。<br>质量门先通过再比耗时与真实费用；关键退化不能被平均隐藏，小样本不外推全能力，基准变化不直接沿旧分数。</td>
+<td>能力改进</td>
+</tr>
+<tr>
+<td>MSF-OBJ-051</td>
+<td>自动提升观察并回滚能力版本</td>
+<td>预配置门槛满足才提升候选，匹配适用范围小范围使用观察；退化自动回稳定并保留失败。<br>新任务采用新定义，在途固定不偷偷切版；提示词/技能/工具/路由回滚均有身份、证据和影响范围。</td>
+<td>能力改进</td>
+</tr>
+<tr>
+<td>MSF-OBJ-052</td>
+<td>发布经验证的经验技能</td>
+<td>有效经验有问题、原因、处理、适用条件/禁用边界、来源证据和版本；先候选独立复验再发布Skill。<br>复用Pi技能和Jarvis已有已发布技能冻结，任务实际采用内容可追溯；一次猜测/单项目修好不当通用能力。</td>
+<td>能力改进</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-7" tabindex="-1">FA-07 · 贾维斯持久自动监督工作流</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-053</td>
+<td>让贾维斯项目级持续监督</td>
+<td>按本轮授权接通项目目标、就绪任务、101真实执行、独立核验、有限修复和下一步派发，直到全部出口完成或具体例外阻塞。<br>项目专项授权/开关/目标版本和真实启动回执可查；不靠全局轮询记录或重复“继续”空转，不启动未授权其他项目。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-054</td>
+<td>持久调度多依赖及阶段工作流</td>
+<td>依赖图、阶段/父子任务、输入/候选/证据/决定及队列租约持久化；就绪且资源有效自动创建后续工作。<br>服务重启/并发派发/晚到回执不丢进度或错放行；单dependsOn/串行台账不冒充完整多产物工作流。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-055</td>
+<td>实现七关真实自动质量策略</td>
+<td>需求、设计原型、计划、转测试、测试计划、验收报告、交付七关实际求值条件/独立语义/真实工具证据，记录策略版本/责任/决定。<br>本轮授权成熟正常路径无逐关人工点击；辅助模式可用，失败明确条款和证据，不绕检查或冒用人工身份。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-056</td>
+<td>改造非七关固定人工动作</td>
+<td>资料/内容/各设计册定稿、文档补丁、计划建议、缺陷关单、版本交接等按真实策略自动执行并留系统身份。<br>AT-MANUAL等用例由真实浏览器/业务执行器验证可自动部分；必须人判断的具体项显式例外，不称该项目正常全自动已经通过。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-057</td>
+<td>自动定位返工并阻止空转</td>
+<td>检验失败生成具体修复任务并在授权范围内实质修改、原用例/影响回归，更新受影响证据。<br>同输入无新产物/无实质变化识别停滞并限定重试，诊断工具/路线/范围原因；不能无限让模型继续或仅提示人工。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-058</td>
+<td>保留管理者暂停取消及改目标</td>
+<td>可查看、暂停、停止/接管、调整已授权目标，活动执行与后续派发按有效身份控制。<br>主动取消不当异常自动修好；新目标形成新版本与影响分析，保留旧决定并只重新验证相关路径。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-059</td>
+<td>处理额度网络环境和发布例外</td>
+<td>按已验证路线/余额/重置与有界重试处理限流网络；原进程/用量/副作用对账后续做，后备切换有新尝试身份。<br>父子失败、接口不可用、输入冲突、权限/必要环境缺失及发布迁移失败分别诊断恢复/回滚/阻塞；未知价格记录为未知，不单独阻断正常开发。不盲重启整机、伪造外部成功或扩大权限。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-060</td>
+<td>传播所有工件变更及证据失效</td>
+<td>共同候选覆盖原文/CRD/PRD/HLD/每册适用LLD/目录/所有页子页状态/整体原型/计划源码/测试配置报告/发布包，身份与承接关系固定。<br>改任一内容定位受影响依赖并使旧证据过期；无依赖支路可保留，治理就绪状态与内容指纹分离，不能沿旧三工件基线。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-061</td>
+<td>可视化真实目标进度阻塞和资源</td>
+<td>项目总览/产物下载/双向追溯/任务父子/测试缺陷/版本部署/Agent优化/自动门/用量/变更可下钻实际依据。<br>进度按当前必需条款分母及独立有效证据，执行结束/待验/可发布/已部署/可使用分别展示；关键通知事件可回溯，Token/耗时/自报不能算产品完成率。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-8" tabindex="-1">FA-08 · 完整成套交付与实际使用</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-062</td>
+<td>自动生成完整同版产品文档</td>
+<td>按客户项目适用目录生成原件/澄清/CRD/PRD/RTM、HLD/LLD、全部原型、开发/API/数据说明、测试缺陷验收、发行已知问题及第三方依赖授权。<br>安装配置/初始化/迁移升级回滚、用户手册/管理员运维备份恢复、支持接管说明齐全；示例在同构建软件实际照做，不只有模板标题。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-063</td>
+<td>打包实际文档页面源码软件和证据</td>
+<td>完整包包含应交文件实际字节：文档、独立页及整体原型、源码/锁文件/可运行包、迁移配置示例和可交付证据。<br>统一manifest记录项目/客户/候选/各文件版本大小hash、Agent/模板/配置/依赖；只交授权资料，不混其他项目、私聊/凭据/内部原始日志。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-064</td>
+<td>验证约定导出格式内容可读性</td>
+<td>md/html/docx/pdf等项目约定格式保存实际字节版本，文本/表格/图示/链接/字体/目标语言/分页可打开且内容齐全。<br>导出器与模板版本固定，逐格式内容对照不能以接口存在或标题存在替代；原型和附件链接实际可用。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-065</td>
+<td>从最终客户入口下载校验解包</td>
+<td>独立环境实际下载成套文件，验证权限/到期续取及适用大文件/断线场景；文件数/内容/hash与manifest一致。<br>解包无错误项目或私密资料，报告/决定引用JSON与逻辑备份不是可安装软件包，临时URL列表不算完整交付。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-066</td>
+<td>在约定目标安装部署实际使用</td>
+<td>从同一已验包在真实已配置目标完成干净安装、初始化、必要迁移/升级、账号权限和入口验证。<br>约定角色完成全部关键业务、写入读回、重启持久化、附件/导入导出与失败恢复；健康检查或ZIP下载不是使用通过，目标缺失不永远替代最终出口。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-067</td>
+<td>移交用户运维培训及维护支持</td>
+<td>用户/管理员按说明完成典型任务和常见故障处理，监控日志/服务数据位置、支持反馈、版本兼容/限制和责任明确。<br>客户实际商业签收若约定则记录真实表达，不冒充；技术使用核验与客户签字区分，凭据受控交接不公开写包。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-068</td>
+<td>验证客户软件恢复与后续变更</td>
+<td>客户运行软件及工厂自身备份分别实测；一致快照含实际对象字节、原型/模板绑定等适用关系及可恢复依赖。<br>客户变更/线上缺陷绑定运行版本，影响分析、候选/修复/回归/新发布和兼容回滚链完整；逻辑JSON键清单不等于离线恢复。</td>
+<td>客户产品</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-9" tabindex="-1">FA-09 · 完整全自动及稳定复用证明</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标编号</th>
+<th>必需目标</th>
+<th>客观验收出口</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-069</td>
+<td>分别验收工厂和客户生产能力</td>
+<td>工厂自身本期全部必需条款与客户产品独立验收矩阵各自合格，不互相替代。<br>从新原始资料起运行代表性多页/详情编辑/附件导出/状态转换项目，含实际失败→修复→新构建批次→独立回归，全套证据当前有效。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-070</td>
+<td>证明完整正常路径无人值守</td>
+<td>从原始需求开始，自动提炼配置→需求设计/全部原型→真代码测试/修复→完整文档软件→目标安装使用→归档，无逐关人工点击。<br>全部质量门及非七关动作有真实系统决定，必需条款100%真实通过，无未实现/未验/阻断缺陷；费用归账/技术执行边界/环境/输入前提明确且未偷换。</td>
+<td>客户产品</td>
+</tr>
+<tr>
+<td>MSF-OBJ-071</td>
+<td>完成异常和需求变更演练</td>
+<td>独立环境覆盖provider额度/限流/断网/进程节点中断/父子部分失败/输入改变/重复晚到回传/权限环境缺失/迁移失败及主动取消。<br>逐场景实际恢复或明确安全阻塞，账单产物副作用一致、无重复发布；需求变更新迭代只影响相关旧证据并复验。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-072</td>
+<td>持续观察适用范围稳定交付</td>
+<td>多次独立原始输入、不同场景和代表性环境分别有合格证据，完成24/72小时有边界运行观察和版本维护。<br>质量、用量、错误/停滞/资源/恢复有真实记录，无证据不填绿；不为全天观察无必要反复收费模型，也不外推所有业务已支持。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-073</td>
+<td>复用下一项目的监督模板</td>
+<td>目标ID/范围、验收、依赖、输入候选、执行器/模型、三类费用归账、自动策略、交付使用目标和记录模板可复制配置。<br>复用目标/工具/已验证技能但隔离客户材料、仓库/环境、凭据/账单/经验适用性；先做新项目就绪和代表性验收，不复制旧绿色状态。</td>
+<td>工厂/监管</td>
+</tr>
+<tr>
+<td>MSF-OBJ-074</td>
+<td>保存全过程建设与项目证据</td>
+<td>从目标/配置到每次派发、尝试、产物、异常、修改、独立验收、发布使用及能力优化追加不可变记录，保存当时身份/指纹。<br>construction-records生成同源MD/HTML；版本保护同步项目资料与经验候选，失败/更正保留，不存凭据私聊录音；台账/通信通过与真实实施验收区分。</td>
+<td>工厂/监管</td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. FA-01—09 的依赖与推进</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>工作包</th>
+<th>内容</th>
+<th>最终验收前置</th>
+<th>目标范围</th>
+<th>工作包出口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FA-01</td>
+<td>最新工厂打包部署基线</td>
+<td>无</td>
+<td>MSF-OBJ-001—MSF-OBJ-008</td>
+<td>固定最新完整候选；真实构建/干净安装、实际版本入口、工厂安全界面和恢复证据齐全。</td>
+</tr>
+<tr>
+<td>FA-02</td>
+<td>完整输入需求设计与上下文</td>
+<td>FA-01</td>
+<td>MSF-OBJ-009—MSF-OBJ-019</td>
+<td>原件与处理覆盖对账；原始需求自动配置、PRD/RTM/HLD/各适用LLD及所有页面状态上下文完整一致。</td>
+</tr>
+<tr>
+<td>FA-03</td>
+<td>Pi与能力版本真实生效</td>
+<td>FA-01、FA-02</td>
+<td>MSF-OBJ-020—MSF-OBJ-026</td>
+<td>Pi适配、有效Agent/模板/技能及路由内容实际加载；会话工具/流式控制、完整用量归账与技术执行边界生效。</td>
+</tr>
+<tr>
+<td>FA-04</td>
+<td>真实父子任务归账与恢复</td>
+<td>FA-03</td>
+<td>MSF-OBJ-027—MSF-OBJ-033</td>
+<td>真实执行器、父子任务、隔离写入合并、父子费用归账/技术资源控制、真正取消及物理恢复/事务审计验证。</td>
+</tr>
+<tr>
+<td>FA-05</td>
+<td>真实生产独立验收与修复</td>
+<td>FA-02、FA-03、FA-04</td>
+<td>MSF-OBJ-034—MSF-OBJ-046</td>
+<td>真实代码构建/原型/独立测试和修复复验；全部本期功能、性能、安全及真实性正反例达标。</td>
+</tr>
+<tr>
+<td>FA-06</td>
+<td>Agent独立优化与版本提升</td>
+<td>FA-03、FA-04、FA-05</td>
+<td>MSF-OBJ-047—MSF-OBJ-052</td>
+<td>独立版本候选/基准/未见评估和真实观察；自动提升、退化回滚及经验证经验技能有依据。</td>
+</tr>
+<tr>
+<td>FA-07</td>
+<td>贾维斯持久自动监督工作流</td>
+<td>FA-03、FA-04、FA-05</td>
+<td>MSF-OBJ-053—MSF-OBJ-061</td>
+<td>项目级连续监督、持久多依赖调度、七关及非七关自动策略/返工/例外、全工件失效与可视管理。</td>
+</tr>
+<tr>
+<td>FA-08</td>
+<td>完整成套交付与实际使用</td>
+<td>FA-05、FA-07</td>
+<td>MSF-OBJ-062—MSF-OBJ-068</td>
+<td>全文档/页面/源码软件/证据实际字节包、格式下载校验、目标环境安装业务使用和运维恢复接管。</td>
+</tr>
+<tr>
+<td>FA-09</td>
+<td>完整全自动及稳定复用证明</td>
+<td>FA-01、FA-02、FA-03、FA-04、FA-05、FA-06、FA-07、FA-08</td>
+<td>MSF-OBJ-069—MSF-OBJ-074</td>
+<td>工厂与客户双层验收；正常原始需求全自动到实际使用，异常变更/24与72小时观察及新项目复用记录。</td>
+</tr>
+</tbody></table></div>
+<p>工作包依赖约束正式完成判定；就绪子目标的准备和实现可以并行。不能因为大包尚未通过而阻止已就绪的独立准备，也不能把并行完成当作下游依赖已通过。细粒度目标 <code>dependsOn[]</code> 在机器目标集中给出，所有引用有效且无环。</p>
+<p>贾维斯专项监督在自身运行契约、执行器与边界就绪后即可启动，管理全部未完成目标；不必等 FA-07 所有产品能力完成才启动监督。起初可驱动有限真实源码任务和独立验收，逐步接通工厂内完整流程。<strong>监督已启动和客户产品已全自动交付分别记录。</strong></p>
+<p>第一批执行优先：固定当前候选与独立完整包/运行基线；建立完整条款分母；修真实性门禁，再补真实生产。Agent 定义/路由与父子执行可按就绪合同同步实施，后续汇入 FA-05。不在保护现有数据之前贸然启动原 Compose 固定端口。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 自动质量门及阶段产出</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>自动质量门</th>
+<th>必需当前依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求定稿</td>
+<td>来源/输入完整、业务歧义已处理、必需条款和 CRD/PRD/RTM 语义一致</td>
+</tr>
+<tr>
+<td>设计及全部原型定稿</td>
+<td>HLD/适用 LLD、全部独立页面/子页/状态和整体业务一致，真实行为验证无必需缺口</td>
+</tr>
+<tr>
+<td>开发计划批准</td>
+<td>设计承接完整，依赖、执行空间、模型/工具、费用归账及验证就绪</td>
+</tr>
+<tr>
+<td>开发转测试</td>
+<td>当前真实构建、四门自测、代码审查/合并及不可变报告有效，原子交接</td>
+</tr>
+<tr>
+<td>测试计划批准</td>
+<td>所有必需条款/适用页面状态有独立用例、环境和分母，真实执行器就绪</td>
+</tr>
+<tr>
+<td>验收报告定稿</td>
+<td>真实执行结果、统一缺陷修复及独立复验同候选；可以定稿不通过，不等于发布</td>
+</tr>
+<tr>
+<td>交付决定</td>
+<td>全文档/软件包同版、下载/安装/升级恢复及目标角色使用核验达标，发布策略满足</td>
+</tr>
+</tbody></table></div>
+<p>规则、责任、策略版本、引用证据和每次通过/拒绝决定可查询。独立 AI 可辅助语义评阅；文件字节、代码构建、运行及数据行为必须由真实工具取得。七关以外的资料/设计册定稿、补丁、计划建议、缺陷关单、版本交接及 AT-MANUAL 也要改造成真实可自动动作；不能冒用人、直接写库通过或仅切换 mode。</p>
+<p>非 UI 条款由相应后台/数据/运维设计与测试承接，不能强行配空页面。未跑/跳过/未知/N/A与通过分开；N/A须具体理由，必需未执行不能从分母删除。P0/P1、虚假证据和必需能力未实现/未验不得豁免。非阻断中低遗留有逐项影响、采用决定及后续版本，不靠降级来绕标准。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 连续监督的正常循环与例外</h2>
+<p>每轮按<strong>读取实际目标/候选 → 找就绪工作 → 派有界真实任务 → 收签名/真实产物及用量 → 独立核验 → 更新条款证据 → 有问题有限修复复验 → 自动安排下一步</strong>运行。任务成功退出先进入待验；项目只有全部出口合格才完成。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>自动应对及停止边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>额度/限流/短时网络</td>
+<td>按已验证余额、重置和路线有限等待/重试/切换，保持检查点和新尝试身份；未知成本不免费</td>
+</tr>
+<tr>
+<td>无新产物/重复相同失败</td>
+<td>定位工具、模型、环境、上下文或设计原因；实质修改后复验；到边界明确阻塞，不能无限“继续”</td>
+</tr>
+<tr>
+<td>进程/节点/服务中断</td>
+<td>对账原执行、回执、用量和工具效果，安全物理续做；队列補传、重启和检查点不冒充全部恢复</td>
+</tr>
+<tr>
+<td>父子部分失败</td>
+<td>保留已合格产物，阻止缺项阶段通过，只补失败范围；暂停/取消和技术资源控制传播</td>
+</tr>
+<tr>
+<td>上游变化/并发冲突</td>
+<td>新输入/候选版本，定位受影响依赖并使旧证据失效；旧历史保留</td>
+</tr>
+<tr>
+<td>外部接口/权限/目标缺失</td>
+<td>按契约诊断、有限恢复或具体阻塞；不伪造成功、越权或假造客户环境</td>
+</tr>
+<tr>
+<td>发布/迁移失败</td>
+<td>停止扩大影响，按已配置恢复方案回滚并核对数据/文件/配置；未知副作用不盲重做</td>
+</tr>
+<tr>
+<td>管理者主动暂停/取消</td>
+<td>停活动执行及后续派发；晚到回调零写，不当异常自动复活</td>
+</tr>
+<tr>
+<td>真正不能裁决的业务冲突</td>
+<td>保存具体问题、已尝试/建议和影响，等待答复；已有规则可确定的正常项继续</td>
+</tr>
+</tbody></table></div>
+<p>项目级专项监督只派本工作流绑定的新任务；不复活历史已取消任务，不把全局开关关闭解释成不能专项执行，也不误开无关项目。阶段正常过关不再逐项问人；范围、权限和技术运行边界变化依据已有授权及有效配置处理。故障注入和试验在独立环境，不能为补证据破坏业务环境。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 完整交付包及客户实际使用</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目录/对象</th>
+<th>必需内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求与设计</td>
+<td>原始来源与澄清、CRD/PRD/RTM、HLD、适用各册 LLD、采用决定</td>
+</tr>
+<tr>
+<td>全部 UI</td>
+<td>每页/子页/状态可独立查看的高保真文件；完整可交互原型；共享规范及页面目录</td>
+</tr>
+<tr>
+<td>软件与工程</td>
+<td>实际源码、锁文件、可运行包/镜像、静态资源、迁移、无密钥配置示例</td>
+</tr>
+<tr>
+<td>独立质量</td>
+<td>必需测试、缺陷/修复/回归、报告及真实版本证据，必要可交付字节</td>
+</tr>
+<tr>
+<td>产品说明</td>
+<td>用户/API/数据字典、安装配置/初始化、升级迁移/回滚、管理员运维/备份恢复</td>
+</tr>
+<tr>
+<td>发行与接管</td>
+<td>版本/已知问题、第三方依赖及授权、监控和反馈/支持说明、用户/管理员操作引导</td>
+</tr>
+<tr>
+<td>统一清单</td>
+<td>项目/客户/候选、各文件路径/类型/大小/hash、实际 Agent/模板/配置和依赖关系</td>
+</tr>
+</tbody></table></div>
+<p>独立环境从最终客户入口实际下载，校验全部字节并解包，检查项目范围、内容完整及无私密混入。按同包说明干净安装、升级/迁移，在约定实际目标以用户角色走完关键业务，写入读回、重启持久化、附件/导入导出及失败恢复正常。文档和软件使用同构建版本。</p>
+<p>各约定 md/html/docx/pdf 格式核对文本、表格、图示、链接、字体、语言及分页；存在导出接口不等于这些已经通过。客户包、报告/决定引用 JSON、证据包、逻辑备份与可恢复备份分别管理。恢复需一致快照及实际对象/全部适用关系和依赖，只有对象键不能证明离线恢复。</p>
+<p>没有客户目标时可先完成可复现包及独立安装，但最终实际使用目标仍未通过，不能永远以此替代。客户商业签收如有约定保留真实表达；机器技术验收不假称客户签字，亦不额外强制所有项目等待商业签字。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9. 真实性、从零验证与完成率</h2>
+<p>测试同时包括：软件工厂最新完整候选从清洁环境安装；客户新资料从起点经历所有阶段直到实际使用。旧服务冒烟或测试目录全跑完不替代全部当前条款验收。需求/设计/原型允许明确模拟演示数据；真实后端、模型、开发、测试和交付不许由模拟结果签收。</p>
+<p>必须验证真实正例和拒收反例，包括错项目/错版本、模拟标记丢失、零用例/必测未跑、伪 CI、陈旧/重复/晚到回执、审计失败、取消复活及重复副作用。检查持久业务状态/决定，不只 HTTP 错误。至少代表性多页面项目应经历一次实际失败、实质修复、新构建/批次和独立复验。</p>
+<p>条款分母来自当前完整冻结范围。本期必需条款 100%有承接与真实合格结果；历史RTM/UI比例和证据按原版本保留。关键项100%、单页一般项≥95%、严重偏差0不能掩盖必需页面或业务缺失。活动量、Token和执行器自报不是完成率。</p>
+<p>先取得单阶段真实正反证据，再验证能力候选/回滚、代表性贯通、正常无逐关点击、异常/变更及多输入/环境的24/72小时稳定观察。次数、性能/费用/时间阈值按基线和配置实测，不预填绿色，不无必要反复重跑收费模型。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10. Agent 持续改进与技能复用</h2>
+<p>项目总控、阶段负责人及按需专业子 Agent 各有不可变定义；运行实例绑定实际输入/版本/模型、工具、父子任务、输出及用量。子 Agent 数量取决于专业/并发/独立复核收益，不无限递归。</p>
+<p>改进闭环为：真实错误/低效 → 分类归因 → 有假设的隔离候选 → 独立版本评估集与未见集 → 同条件稳定版对照及跨阶段回归 → 匹配范围观察 → 达阈值自动提升 → 退化回滚 → 经验证经验技能。项目修好与能力优化各有结果，修改提示词不证明总体更好。</p>
+<p>定义版本要真的注入执行器并在回执中核对正文/技能/路由/模板哈希；只存注册 ID 不合格。在途固定，提升/回滚影响后续任务。产出方不能自行降质量门、删失败、改答案或扩权限。质量与真实优先，保持同等质量后再比较速度/费用；小样本只声明本范围。</p>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">11. 全过程记录与可复核证据</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>记录</th>
+<th>必需信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目标/配置</td>
+<td>稳定目标编号、来源和版本、范围/依赖、策略及三类费用归账、执行器和环境</td>
+</tr>
+<tr>
+<td>每轮执行</td>
+<td>任务/父子/尝试/operation 身份、实际输入和执行快照、工作副本、模型/工具、用量、停止/恢复原因</td>
+</tr>
+<tr>
+<td>成果与验证</td>
+<td>原件到工件/代码/构建/测试/缺陷的双向引用、当时字节/hash、独立验证器和范围</td>
+</tr>
+<tr>
+<td>发布与使用</td>
+<td>已验候选、真实包/下载、安装运行身份、业务使用、迁移恢复及接管</td>
+</tr>
+<tr>
+<td>能力改进</td>
+<td>归因假设、稳定候选/评估集版本、比较/观察、提升回滚、技能候选及发布依据</td>
+</tr>
+<tr>
+<td>失败与更正</td>
+<td>症状、原因/未知、处理、复验、关联旧记录；历史追加保留</td>
+</tr>
+</tbody></table></div>
+<p>建设记录使用 <code>scripts/construction-records.mjs</code> 追加并生成同源 MD/HTML；不手改事件账本或生成日志。项目资料通过已有版本保护接口同步，保留旧证据。私有原始执行日志与公开建设元数据分开，凭据、Cookie、私密环境、聊天原文和录音不进入公开记录。</p>
+<p>记录状态区分实施、验证、上线、产品/现场验收；通信接管通过、目标台账或模型输出不证明产品完成。无进展轮询不重复补日志；没有新改动不为日志重跑模型、测试或部署。</p>
+<h3 id="section-11-1" tabindex="-1">11.1 自主择优与决策台账</h3>
+<p>用户新增规则：AI遇到实际问题或可选方案时，在已授权项目范围内自主选择当前最合适的方案，并保存当时情境和回退依据。普通实现选项不再停下来等待人工选择。优先满足硬需求、真实质量证据、权限与安全边界，再比较可逆影响、兼容性、长期维护及实际速度/费用；费用只记录，不作为消费限额。</p>
+<p>每个有意义的决定形成独立、可引用的记录，至少包含：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>记录要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份与时间</td>
+<td>决定编号、项目/工作包/任务/尝试、发生时间和决策者</td>
+</tr>
+<tr>
+<td>问题与情境</td>
+<td>实际症状或需要选择的事项、当时可确认的事实与未知项</td>
+</tr>
+<tr>
+<td>目标与约束</td>
+<td>关联目标、当前质量/权限/兼容/运行环境和依赖条件</td>
+</tr>
+<tr>
+<td>备选与利弊</td>
+<td>当时真实可行的方案及主要利弊；没有实际选项不虚构，有方案不可用说明依据</td>
+</tr>
+<tr>
+<td>选择与依据</td>
+<td>所选方案和简短、可复核的理由；保存结论依据，不输出完整思考过程</td>
+</tr>
+<tr>
+<td>版本与证据</td>
+<td>输入、源码、设计/Agent/模型/配置版本及当时证据指纹</td>
+</tr>
+<tr>
+<td>影响对象</td>
+<td>受影响项目、机器、服务、工件、用户角色、数据及后续依赖</td>
+</tr>
+<tr>
+<td>回退</td>
+<td>实际可执行的回退步骤、前提和触发条件；不能回退的影响明确说明</td>
+</tr>
+<tr>
+<td>实施与验收</td>
+<td>实际执行回执、产物和独立验收结果；未做保持未做，不以决定代替执行</td>
+</tr>
+</tbody></table></div>
+<p>状态分别记录 <code>selected</code>（已选定）、<code>implemented</code>（已有真实实施证据）、<code>accepted</code>（独立验收通过）。选定方案不能增加产品完成率；实施后仍可能未通过。情境、版本或证据变化时，追加新决定并引用被替代的旧编号，保留原理由、影响与回退记录。失败、撤回和反例同样保留，不覆盖历史。</p>
+<p>源码工作任务将公开、脱敏的决定追加到工作副本 <code>docs/jarvis-decisions.md</code>；平台决策台账与建设记录分别承接真实记录及其版本。普通实现选择自动处理；业务需求真正冲突、缺少无法推导的客户输入、越出授权或存在未解决副作用时，记录具体例外和恢复条件，不能靠自选方案取消验收要求。私密资料、凭据和完整思考过程不进入文档或公开台账。</p>
+<p>此规则适用于后续项目的监督复用，是本轮新增运行规范；74个已冻结目标及其验收条款保持不变。运行规则的实现、上线及验证在第14节单独记录。</p>
+</section>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">12. 后续项目复用模板</h2>
+<p>复用的是目标/契约/调度/工具/已验证技能，不是旧项目的客户资料、凭据、账单或通过状态。新项目自动建立以下配置，重要业务歧义才具体澄清：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>模板项</th>
+<th>每个项目要绑定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基础</td>
+<td>项目/客户身份、原始需求与资料清单、范围/推导/分期及可测试条款</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>产品适用完整文档、全部页面/状态/视口、软件形态与实际使用目标</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>来源/输入、设计、Agent/技能/模板、源码/包、环境、测试及发布依赖</td>
+</tr>
+<tr>
+<td>执行</td>
+<td>就绪任务图、阶段/子Agent、独立写副本与受控合并、工具执行契约</td>
+</tr>
+<tr>
+<td>费用</td>
+<td>工厂自身/本客户产品/能力实验独立费用归账；未知价格记录而不停工；技术单次Token/轮次/重试/时限</td>
+</tr>
+<tr>
+<td>质量</td>
+<td>独立验证器/未见验收、七关及非七关自动规则、反例和不适用依据</td>
+</tr>
+<tr>
+<td>恢复</td>
+<td>额度/网络/进程/节点/父子失败、幂等副作用、暂停取消及变更策略</td>
+</tr>
+<tr>
+<td>交付</td>
+<td>真字节清单、实际下载/格式、安装升级恢复、账号/权限与业务使用</td>
+</tr>
+<tr>
+<td>记录</td>
+<td>目标到调用/产物/验证/发布/经验的不可变证据及公开脱敏元数据</td>
+</tr>
+</tbody></table></div>
+<p>同一项目目标变更追加新版本并计算影响；无依赖部分可保留验证，有影响部分重新验收。复制项目先做就绪检查及代表性真实验收，不复制完成率/绿色结果。不可沿用其他客户私料来证明新项目达标。</p>
+</section>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">13. 目标集、旧需求覆盖及版本规则</h2>
+<p><a href="../artifacts/software-factory/autonomy-r22/objectives.json">机器目标集</a> 提供 <code>schemaVersion:1</code>、<code>projectKey</code>、<code>version</code>、<code>workPackages[]</code>、<code>objectives[]</code>。每目标含稳定 <code>id/title/acceptance[]/dependsOn[]/workPackage/scope</code>；scope 与三类归账同名。目标集只表示义务及依赖，<strong>没有模拟通过或预填产品状态</strong>。</p>
+<p>目标/政策改变产生新版本及内容指纹，已有任务继续引用其冻结版；新增目标不复用旧编号。已发布的目标集是平台任务拆分及验收的结构化输入，最终意思以本纲正文和该版目标内容共同确定；JSON或文档单独改动须同源更新，不悄悄削减验收。</p>
+<p>下面逐项保留 R21 当时公开 PRD 的全部103个REQ及15个BR索引；每项完整规则及当前详细设计子条款仍须执行前核对，映射不是产品已实现证明。旧人工永久出口按本纲成熟自动策略替换；REQ-208 空分母/95%旧口径不作为本期“无遗漏”完成依据；REQ-712实际交付适配纳入新增目标；REQ-707/803的当前最简安全必需，完整OIDC/RBAC等扩展没有自动扩大。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>原编号</th>
+<th>原需求/规则</th>
+<th>本纲承接目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REQ-101</td>
+<td>项目资料库</td>
+<td>MSF-OBJ-009</td>
+</tr>
+<tr>
+<td>REQ-102</td>
+<td>文件上传</td>
+<td>MSF-OBJ-009</td>
+</tr>
+<tr>
+<td>REQ-103</td>
+<td>ZIP 安全上传</td>
+<td>MSF-OBJ-009</td>
+</tr>
+<tr>
+<td>REQ-104</td>
+<td>ZIP 行内解压</td>
+<td>MSF-OBJ-009</td>
+</tr>
+<tr>
+<td>REQ-105</td>
+<td>原件/解析稿双目录</td>
+<td>MSF-OBJ-009</td>
+</tr>
+<tr>
+<td>REQ-106</td>
+<td>目录树交互</td>
+<td>MSF-OBJ-011</td>
+</tr>
+<tr>
+<td>REQ-107</td>
+<td>文件解析状态机</td>
+<td>MSF-OBJ-011</td>
+</tr>
+<tr>
+<td>REQ-108</td>
+<td>文件定稿</td>
+<td>MSF-OBJ-011、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-109</td>
+<td>内容解析与定稿</td>
+<td>MSF-OBJ-011、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-110</td>
+<td>批量解析</td>
+<td>MSF-OBJ-011</td>
+</tr>
+<tr>
+<td>REQ-111</td>
+<td>批量加工</td>
+<td>MSF-OBJ-011</td>
+</tr>
+<tr>
+<td>REQ-112</td>
+<td>批量定稿</td>
+<td>MSF-OBJ-011、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-113</td>
+<td>内容稿编辑</td>
+<td>MSF-OBJ-011</td>
+</tr>
+<tr>
+<td>REQ-114</td>
+<td>需求参考输入门禁</td>
+<td>MSF-OBJ-013、MSF-OBJ-019</td>
+</tr>
+<tr>
+<td>REQ-115</td>
+<td>参考基线校验</td>
+<td>MSF-OBJ-013、MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>REQ-201</td>
+<td>CRD/PRD/RTM 三工作面</td>
+<td>MSF-OBJ-013</td>
+</tr>
+<tr>
+<td>REQ-202</td>
+<td>文档 AI 生成</td>
+<td>MSF-OBJ-013、MSF-OBJ-024</td>
+</tr>
+<tr>
+<td>REQ-203</td>
+<td>文档版本体系</td>
+<td>MSF-OBJ-014</td>
+</tr>
+<tr>
+<td>REQ-204</td>
+<td>编辑撤销/重做</td>
+<td>MSF-OBJ-014</td>
+</tr>
+<tr>
+<td>REQ-205</td>
+<td>待确认补丁</td>
+<td>MSF-OBJ-014、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-206</td>
+<td>目录同步</td>
+<td>MSF-OBJ-014</td>
+</tr>
+<tr>
+<td>REQ-207</td>
+<td>RTM 追踪矩阵</td>
+<td>MSF-OBJ-015</td>
+</tr>
+<tr>
+<td>REQ-208</td>
+<td>需求健康度门禁</td>
+<td>MSF-OBJ-015、MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-209</td>
+<td>定稿不可原地改</td>
+<td>MSF-OBJ-014</td>
+</tr>
+<tr>
+<td>REQ-210</td>
+<td>并发编辑冲突</td>
+<td>MSF-OBJ-014、MSF-OBJ-029</td>
+</tr>
+<tr>
+<td>REQ-301</td>
+<td>概要设计 + 七册详细设计</td>
+<td>MSF-OBJ-016</td>
+</tr>
+<tr>
+<td>REQ-302</td>
+<td>设计文档 AI 生成</td>
+<td>MSF-OBJ-016、MSF-OBJ-026</td>
+</tr>
+<tr>
+<td>REQ-303</td>
+<td>设计评审</td>
+<td>MSF-OBJ-016、MSF-OBJ-040</td>
+</tr>
+<tr>
+<td>REQ-304</td>
+<td>原型识别</td>
+<td>MSF-OBJ-017</td>
+</tr>
+<tr>
+<td>REQ-305</td>
+<td>原型生成</td>
+<td>MSF-OBJ-037</td>
+</tr>
+<tr>
+<td>REQ-306</td>
+<td>原型检查</td>
+<td>MSF-OBJ-037、MSF-OBJ-041</td>
+</tr>
+<tr>
+<td>REQ-307</td>
+<td>原型预览</td>
+<td>MSF-OBJ-037</td>
+</tr>
+<tr>
+<td>REQ-308</td>
+<td>共同定稿</td>
+<td>MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-309</td>
+<td>设计基线</td>
+<td>MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>REQ-310</td>
+<td>设计→开发承接</td>
+<td>MSF-OBJ-034</td>
+</tr>
+<tr>
+<td>REQ-311</td>
+<td>自动修复边界</td>
+<td>MSF-OBJ-057、MSF-OBJ-059</td>
+</tr>
+<tr>
+<td>REQ-312</td>
+<td>来源审计</td>
+<td>MSF-OBJ-015、MSF-OBJ-037</td>
+</tr>
+<tr>
+<td>REQ-401</td>
+<td>任务识别</td>
+<td>MSF-OBJ-034</td>
+</tr>
+<tr>
+<td>REQ-402</td>
+<td>任务规格</td>
+<td>MSF-OBJ-029、MSF-OBJ-034</td>
+</tr>
+<tr>
+<td>REQ-403</td>
+<td>计划覆盖检查</td>
+<td>MSF-OBJ-034</td>
+</tr>
+<tr>
+<td>REQ-404</td>
+<td>计划批准</td>
+<td>MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-405</td>
+<td>执行看板</td>
+<td>MSF-OBJ-035、MSF-OBJ-061</td>
+</tr>
+<tr>
+<td>REQ-406</td>
+<td>代码仓视图</td>
+<td>MSF-OBJ-035</td>
+</tr>
+<tr>
+<td>REQ-407</td>
+<td>单任务开发循环</td>
+<td>MSF-OBJ-020、MSF-OBJ-035</td>
+</tr>
+<tr>
+<td>REQ-408</td>
+<td>命令事务</td>
+<td>MSF-OBJ-033</td>
+</tr>
+<tr>
+<td>REQ-409</td>
+<td>autopilot 自动主线</td>
+<td>MSF-OBJ-053、MSF-OBJ-054</td>
+</tr>
+<tr>
+<td>REQ-410</td>
+<td>暂停/停止/接管</td>
+<td>MSF-OBJ-031、MSF-OBJ-058</td>
+</tr>
+<tr>
+<td>REQ-411</td>
+<td>合并依据</td>
+<td>MSF-OBJ-029、MSF-OBJ-035</td>
+</tr>
+<tr>
+<td>REQ-412</td>
+<td>集成构建</td>
+<td>MSF-OBJ-036</td>
+</tr>
+<tr>
+<td>REQ-413</td>
+<td>开发自测</td>
+<td>MSF-OBJ-039</td>
+</tr>
+<tr>
+<td>REQ-414</td>
+<td>UI 符合度评分</td>
+<td>MSF-OBJ-038</td>
+</tr>
+<tr>
+<td>REQ-415</td>
+<td>自测对照</td>
+<td>MSF-OBJ-038</td>
+</tr>
+<tr>
+<td>REQ-416</td>
+<td>失败与复测</td>
+<td>MSF-OBJ-042、MSF-OBJ-057</td>
+</tr>
+<tr>
+<td>REQ-417</td>
+<td>自测报告</td>
+<td>MSF-OBJ-039、MSF-OBJ-043</td>
+</tr>
+<tr>
+<td>REQ-418</td>
+<td>转测试</td>
+<td>MSF-OBJ-039、MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-419</td>
+<td>变更管理</td>
+<td>MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>REQ-420</td>
+<td>输入失效传播</td>
+<td>MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>REQ-501</td>
+<td>批次接收</td>
+<td>MSF-OBJ-043</td>
+</tr>
+<tr>
+<td>REQ-502</td>
+<td>批次不可变快照</td>
+<td>MSF-OBJ-043、MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>REQ-503</td>
+<td>测试计划</td>
+<td>MSF-OBJ-040、MSF-OBJ-055、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-504</td>
+<td>用例执行</td>
+<td>MSF-OBJ-040、MSF-OBJ-041</td>
+</tr>
+<tr>
+<td>REQ-505</td>
+<td>执行证据</td>
+<td>MSF-OBJ-040、MSF-OBJ-041</td>
+</tr>
+<tr>
+<td>REQ-506</td>
+<td>缺陷闭环</td>
+<td>MSF-OBJ-042、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-507</td>
+<td>跨阶段返工</td>
+<td>MSF-OBJ-042</td>
+</tr>
+<tr>
+<td>REQ-508</td>
+<td>验收报告</td>
+<td>MSF-OBJ-043、MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-509</td>
+<td>条件放行</td>
+<td>MSF-OBJ-043</td>
+</tr>
+<tr>
+<td>REQ-510</td>
+<td>交付决定</td>
+<td>MSF-OBJ-043、MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-511</td>
+<td>验收工作台</td>
+<td>MSF-OBJ-046</td>
+</tr>
+<tr>
+<td>REQ-601</td>
+<td>全局 AI 助手</td>
+<td>MSF-OBJ-024</td>
+</tr>
+<tr>
+<td>REQ-602</td>
+<td>会话管理</td>
+<td>MSF-OBJ-023</td>
+</tr>
+<tr>
+<td>REQ-603</td>
+<td>流式输出与控制</td>
+<td>MSF-OBJ-024、MSF-OBJ-031</td>
+</tr>
+<tr>
+<td>REQ-604</td>
+<td>思考强度</td>
+<td>MSF-OBJ-024</td>
+</tr>
+<tr>
+<td>REQ-605</td>
+<td>工具注册表</td>
+<td>MSF-OBJ-024、MSF-OBJ-033</td>
+</tr>
+<tr>
+<td>REQ-606</td>
+<td>导航能力</td>
+<td>MSF-OBJ-024</td>
+</tr>
+<tr>
+<td>REQ-607</td>
+<td>下一步建议</td>
+<td>MSF-OBJ-024、MSF-OBJ-053</td>
+</tr>
+<tr>
+<td>REQ-608</td>
+<td>上下文引用</td>
+<td>MSF-OBJ-019、MSF-OBJ-023</td>
+</tr>
+<tr>
+<td>REQ-609</td>
+<td>多 Agent 管理</td>
+<td>MSF-OBJ-021、MSF-OBJ-028、MSF-OBJ-052</td>
+</tr>
+<tr>
+<td>REQ-610</td>
+<td>委派执行</td>
+<td>MSF-OBJ-027</td>
+</tr>
+<tr>
+<td>REQ-611</td>
+<td>模型管理</td>
+<td>MSF-OBJ-022</td>
+</tr>
+<tr>
+<td>REQ-612</td>
+<td>成本统计</td>
+<td>MSF-OBJ-025</td>
+</tr>
+<tr>
+<td>REQ-613</td>
+<td>AI 行为边界</td>
+<td>MSF-OBJ-055、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-614</td>
+<td>编排层抽象</td>
+<td>MSF-OBJ-020、MSF-OBJ-033</td>
+</tr>
+<tr>
+<td>REQ-615</td>
+<td>AI 后台基于 Pi SDK</td>
+<td>MSF-OBJ-020、MSF-OBJ-021、MSF-OBJ-023、MSF-OBJ-027</td>
+</tr>
+<tr>
+<td>REQ-701</td>
+<td>项目管理</td>
+<td>MSF-OBJ-046、MSF-OBJ-061</td>
+</tr>
+<tr>
+<td>REQ-702</td>
+<td>阶段导航与准入</td>
+<td>MSF-OBJ-046、MSF-OBJ-055</td>
+</tr>
+<tr>
+<td>REQ-703</td>
+<td>通知与事件</td>
+<td>MSF-OBJ-061</td>
+</tr>
+<tr>
+<td>REQ-704</td>
+<td>任务中心</td>
+<td>MSF-OBJ-046、MSF-OBJ-061</td>
+</tr>
+<tr>
+<td>REQ-705</td>
+<td>设置</td>
+<td>MSF-OBJ-021、MSF-OBJ-022、MSF-OBJ-024、MSF-OBJ-026、MSF-OBJ-046</td>
+</tr>
+<tr>
+<td>REQ-706</td>
+<td>审计日志</td>
+<td>MSF-OBJ-033、MSF-OBJ-074</td>
+</tr>
+<tr>
+<td>REQ-707</td>
+<td>账号与权限（后续扩展）</td>
+<td>MSF-OBJ-006</td>
+</tr>
+<tr>
+<td>REQ-708</td>
+<td>备份与导出</td>
+<td>MSF-OBJ-005、MSF-OBJ-063、MSF-OBJ-068</td>
+</tr>
+<tr>
+<td>REQ-709</td>
+<td>客户工件多语言</td>
+<td>MSF-OBJ-018</td>
+</tr>
+<tr>
+<td>REQ-710</td>
+<td>自托管部署</td>
+<td>MSF-OBJ-003、MSF-OBJ-006</td>
+</tr>
+<tr>
+<td>REQ-711</td>
+<td>放行策略引擎</td>
+<td>MSF-OBJ-055、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>REQ-712</td>
+<td>生产发布扩展点</td>
+<td>MSF-OBJ-063、MSF-OBJ-066</td>
+</tr>
+<tr>
+<td>BR-01</td>
+<td>内容指纹身份</td>
+<td>MSF-OBJ-001、MSF-OBJ-015、MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>BR-02</td>
+<td>双层指纹</td>
+<td>MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>BR-03</td>
+<td>不可变证据</td>
+<td>MSF-OBJ-014、MSF-OBJ-043、MSF-OBJ-074</td>
+</tr>
+<tr>
+<td>BR-04</td>
+<td>封闭命令与原子事务</td>
+<td>MSF-OBJ-033</td>
+</tr>
+<tr>
+<td>BR-05</td>
+<td>草稿与历史分离</td>
+<td>MSF-OBJ-014</td>
+</tr>
+<tr>
+<td>BR-06</td>
+<td>人工确认点（可自动化就绪）</td>
+<td>MSF-OBJ-055、MSF-OBJ-056</td>
+</tr>
+<tr>
+<td>BR-07</td>
+<td>门禁与失效传播</td>
+<td>MSF-OBJ-060</td>
+</tr>
+<tr>
+<td>BR-08</td>
+<td>异步操作身份</td>
+<td>MSF-OBJ-031、MSF-OBJ-033</td>
+</tr>
+<tr>
+<td>BR-09</td>
+<td>通过语义</td>
+<td>MSF-OBJ-038、MSF-OBJ-040、MSF-OBJ-041</td>
+</tr>
+<tr>
+<td>BR-10</td>
+<td>失败纪律</td>
+<td>MSF-OBJ-042、MSF-OBJ-057</td>
+</tr>
+<tr>
+<td>BR-11</td>
+<td>证据真实性</td>
+<td>MSF-OBJ-036、MSF-OBJ-040、MSF-OBJ-041</td>
+</tr>
+<tr>
+<td>BR-12</td>
+<td>单一写者</td>
+<td>MSF-OBJ-011、MSF-OBJ-014、MSF-OBJ-029</td>
+</tr>
+<tr>
+<td>BR-13</td>
+<td>自动执行归属</td>
+<td>MSF-OBJ-031、MSF-OBJ-053</td>
+</tr>
+<tr>
+<td>BR-14</td>
+<td>崩溃恢复</td>
+<td>MSF-OBJ-032、MSF-OBJ-033、MSF-OBJ-054</td>
+</tr>
+<tr>
+<td>BR-15</td>
+<td>示例数据隔离</td>
+<td>MSF-OBJ-041、MSF-OBJ-069</td>
+</tr>
+<tr>
+<td>REQ-801</td>
+<td>性能</td>
+<td>MSF-OBJ-044</td>
+</tr>
+<tr>
+<td>REQ-802</td>
+<td>并发与规模</td>
+<td>MSF-OBJ-044</td>
+</tr>
+<tr>
+<td>REQ-803</td>
+<td>安全</td>
+<td>MSF-OBJ-006、MSF-OBJ-045</td>
+</tr>
+<tr>
+<td>REQ-804</td>
+<td>可靠性</td>
+<td>MSF-OBJ-005、MSF-OBJ-032、MSF-OBJ-045</td>
+</tr>
+<tr>
+<td>REQ-805</td>
+<td>可观测性</td>
+<td>MSF-OBJ-061</td>
+</tr>
+<tr>
+<td>REQ-806</td>
+<td>兼容性</td>
+<td>MSF-OBJ-007、MSF-OBJ-038</td>
+</tr>
+<tr>
+<td>REQ-807</td>
+<td>可维护性</td>
+<td>MSF-OBJ-035、MSF-OBJ-044</td>
+</tr>
+<tr>
+<td>REQ-808</td>
+<td>数据保留</td>
+<td>MSF-OBJ-045、MSF-OBJ-074</td>
+</tr>
+</tbody></table></div>
+<p>本纲整合出处及当时SHA：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>出处</th>
+<th>SHA-256</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="../docs/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82Agent%E8%BF%AD%E4%BB%A3%E4%B8%8E%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88.md">软件工厂Agent迭代与全自动交付方案.md</a></td>
+<td>9c6b3008e628402375d1a34f5e80b408fb05c6b03853551cf13bece4d188e8ff</td>
+</tr>
+<tr>
+<td><a href="../docs/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9B%AE%E6%A0%87%E4%B8%8E%E9%AA%8C%E6%94%B6%E6%A0%87%E5%87%86.md">软件工厂端到端目标与验收标准.md</a></td>
+<td>d2fe89a1c91a70ba93ae2a2cf95a4e67a44dd7fa2e03fb8d701d07269ccec54b</td>
+</tr>
+<tr>
+<td><a href="../docs/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%A6%96%E9%A1%B9%E7%9B%AE%E4%BA%A4%E4%BB%98%E8%AE%A1%E5%88%92.md">软件工厂首项目交付计划.md</a></td>
+<td>4fcce9ffb0afcb55b0f5a65e8ca191befe8532d0ebbc4013d455fc6d19f7d66a</td>
+</tr>
+<tr>
+<td><a href="../artifacts/software-factory/goals-r21/agent-capability-audit.json">agent-capability-audit.json</a></td>
+<td>aa3d0101e3f3644fa7d37c6ded1029a7520bb60044daf33401f939d481775637</td>
+</tr>
+<tr>
+<td><a href="../artifacts/software-factory/goals-r21/autonomy-gap-audit.json">autonomy-gap-audit.json</a></td>
+<td>15ac5d4ee6365c53da3b7ae516f02bbd110ae6d10b5668311a8faa994da144b5</td>
+</tr>
+<tr>
+<td><a href="../artifacts/software-factory/goals-r21/delivery-completeness-audit.json">delivery-completeness-audit.json</a></td>
+<td>cba24f22db32ba56963b053576dd3729268dc36fb94fc913fe24b264ff4b3e02</td>
+</tr>
+<tr>
+<td><a href="../artifacts/software-factory/goals-r21/jarvis-bridge-audit.json">jarvis-bridge-audit.json</a></td>
+<td>8179e0007ba3f8c29536af60b43c0a4531912a70bad9643c132bcdc92d8136be</td>
+</tr>
+</tbody></table></div>
+<p>原PRD来源：101 <code>doc/product-design/PRD.md</code>，SHA <code>d27cf88cc769e2fecbd7417a7d5ab62379aeb0406342b0392317fafabd6b2dc7</code>；公开只读捕获保存在 <a href="../artifacts/software-factory/goals-r21/delivery-source-readout.json">delivery-source-readout.json</a>。旧材料不因本纲整合而覆盖，后续最新源代码及运行状态由真实记录更新。</p>
+</section>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">14. 本轮实施与监督状态</h2>
+<p>以下是2026年10月11日本轮证据读回时的状态。实施、部署、监督启动、阶段通过和客户使用分别记录；本节更新不改变已冻结的74个目标和验收条款。</p>
+<p>下表保留明确观察时点：正式平台已于北京时间13:54:48激活R22-6，总纲引用于13:56:30只读核对；项目13:53:25读回为阻塞。R22-7修复的末次API重编记录于14:13:47，本版尚未记录其发布或真实恢复。13:43及13:46“任务运行中”和13:50的R22-5决策台账读回是历史快照，不能推断当前任务仍在运行。后续状态、恢复任务、用量和验收以实时平台及建设记录为准。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>事项</th>
+<th>目前记录与证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户授权</td>
+<td>已明确授权实施、项目级无人值守监督、全过程记录及后续项目复用；正常流程按项目授权与质量策略自动推进</td>
+</tr>
+<tr>
+<td>总纲与目标集</td>
+<td>74个稳定目标、9个依赖工作包已冻结；R22.1目标集规范指纹为 <code>23d7db28c5b8d3c8516d2607564a03475609cf590b1523e1cd7e6596eac34b42</code>，尚未取得全部产品通过证据</td>
+</tr>
+<tr>
+<td>费用与用量</td>
+<td>R22-2费用只记录策略已生效，18个原生开发/审阅模板已移除USD费用限制；不设金额和累计Token消费上限，未知费用如实记录，技术时限及安全控制保留。<a href="../artifacts/software-factory/autonomy-r22/record-only-executors.json">执行器读回</a></td>
+</tr>
+<tr>
+<td>平台部署</td>
+<td>R22-6已激活于112正式平台及101冷备；112业务健康，101为冷备版本激活，不能据此声称已完成自动接替演练。R22-5及更早版本记录保留。<a href="../artifacts/software-factory/autonomy-r22/public-guide-evidence/platform-r22-6-activation.json">R22-6部署</a>、<a href="../artifacts/software-factory/autonomy-r22/public-guide-evidence/platform-r22-5-activation.json">R22-5记录</a>、<a href="../artifacts/software-factory/autonomy-r22/public-guide-evidence/platform-r22-4-activation.json">R22-4记录</a>、<a href="../artifacts/software-factory/autonomy-r22/public-guide-evidence/platform-r22-3-activation.json">R22-3记录</a></td>
+</tr>
+<tr>
+<td>已发布总纲完整性</td>
+<td>R22-6实际主MD/HTML指纹与当时冻结版一致，32处直接引用均存在。该检查证明文档部署完整，不证明产品或任务通过；本文后续修订的发布另按新指纹核对。<a href="../artifacts/software-factory/autonomy-r22/guide-live-r22-6.json">R22-6文档读回</a></td>
+</tr>
+<tr>
+<td>101开发节点</td>
+<td>R22-4开发节点已升级，配对身份、私有配置和原强模型模板保留；升级时队列为空、待对账运行与回执均为0。升级不代表软件工厂源码已通过产品验收。<a href="../artifacts/software-factory/autonomy-r22/20261011-project-autonomy-r22-4-node-upgrade.json">节点升级</a></td>
+</tr>
+<tr>
+<td>固定阶段验收</td>
+<td>R7协调器已实际安装；FA02—09固定合约3个文件及9份阶段策略已安装，并核对当前目标指纹和检查项。安装完成不能代替阶段行为验证。<a href="../artifacts/software-factory/autonomy-r22/validator-r7-installation.json">R7安装</a>、<a href="../artifacts/software-factory/autonomy-r22/phase-installation.json">阶段合约安装</a></td>
+</tr>
+<tr>
+<td>固定验证任务配置</td>
+<td>9个固定验证模板首次配置因节点保存时格式变化导致原始字节校验不一致；保留失败和中央回滚记录。随后按语义、原始字节及逐模板指纹完成对账，中央与节点一致，原18个模板保留。<a href="../artifacts/software-factory/autonomy-r22/fixed-validator-normalization-diagnosis.json">首次诊断</a>、<a href="../artifacts/software-factory/autonomy-r22/fixed-validator-executors-reconciliation.json">对账结果</a></td>
+</tr>
+<tr>
+<td>本轮验证范围</td>
+<td>相关贾维斯本地API/运行时测试54项通过；101实际Linux安全原语2项通过。只证明这些明确范围，不证明软件工厂功能、客户产品、模型调用链或完整交付通过。<a href="../artifacts/software-factory/autonomy-r22/public-guide-evidence/prerequisite-runtime-verification-summary.json">本地测试摘要</a>、<a href="../artifacts/software-factory/autonomy-r22/linux-primitives-verification.json">Linux原语</a></td>
+</tr>
+<tr>
+<td>R22-4修复及验证</td>
+<td>项目所有的精确工作副本授权规则已补中央/节点一致检查；69项本地运行时测试通过，包含受控固定进程、签名/租约、路径和路由契约。该验证报告自身无远端模型调用，不是随后实际源码任务或软件工厂产品验收。<a href="../artifacts/software-factory/autonomy-r22/runtime-verification-r22-4.json">验证报告</a></td>
+</tr>
+<tr>
+<td>执行就绪读回</td>
+<td>当前27个执行模板、11个root固定文件、9份阶段策略已逐项核对，固定阶段检查就绪；完整产品观察生产器尚未就绪。这一状态已用于首任务启动检查。<a href="../artifacts/software-factory/autonomy-r22/execution-readiness-r22-4.json">R22-4就绪</a></td>
+</tr>
+<tr>
+<td>专项监督历史启动</td>
+<td>13:43已实际启动：项目配置版本2、当时running，绑定74个目标、101独立工作副本及费用只记录策略；金额、累计Token及单任务USD消费上限均为空。全局监督仍关闭，只推进本项目。当前阻塞另列，不能沿用启动状态。<a href="../artifacts/software-factory/autonomy-r22/bootstrap-start.json">启动回执</a></td>
+</tr>
+<tr>
+<td>首个真实开发任务</td>
+<td>FA-01第1次曾实际派发运行，101实际Claude进程及 <code>gpt-6.1-sol[1m]</code> 请求配置已观察；随后任务已中止。请求名不能代替实际返回模型及1M上下文能力验收，先前运行快照保留。<a href="../artifacts/software-factory/autonomy-r22/observation-first-dispatch.json">首派发观察</a></td>
+</tr>
+<tr>
+<td>当前运行阻塞与费用</td>
+<td>13:50:46出现 <code>HEARTBEAT_FAILED</code>，签名回执为cancelled/exit143；中央没有主动停止请求。13:53项目版本7为blocked，原因为 <code>EXECUTION_NEEDS_RECONCILIATION</code>，活动运行为空、0/74验收。用量及费用不完整（unknownCostCount为1），报告中的0不能认作真实零消耗。<a href="../artifacts/software-factory/autonomy-r22/cancellation-diagnosis-r22-5.json">中止诊断</a>、<a href="../artifacts/software-factory/autonomy-r22/observation-post-decision-release.json">阻塞读回</a></td>
+</tr>
+<tr>
+<td>自主决策与台账</td>
+<td>R22-5已发布结构化台账运行时/生命周期、7个接口、项目详情“决策记录”页签及直达链接；模块13项、全应用路由及契约14项、末次契约收紧1项本地验证通过，API/网页构建通过。正式接口已实际写入3条决定，每条保留从selected到implemented的两个版本，并完成列表及历史读回；网页源码和构建已验，登录后浏览器交互验收尚未记录。<a href="../artifacts/software-factory/autonomy-r22/public-guide-evidence/decision-implementation-verification.json">模块验证</a>、<a href="../artifacts/software-factory/autonomy-r22/decision-integration-verification.json">本地集成验证</a>、<a href="../artifacts/software-factory/autonomy-r22/decision-live-records.json">真实台账读回</a></td>
+</tr>
+<tr>
+<td>决策记录的证据边界</td>
+<td>工作副本决定文档、AI自报实施和源码引用先按来源资料保存；新台账有版本/幂等/关联历史和有限规则推荐，引用证据尚不能自动证明真实执行或产品验收。CLI问题/选项自动抓取、复杂Pi裁决、决定→执行→独立验证自动关联及自动服务器回退仍待实现和实测</td>
+</tr>
+<tr>
+<td>心跳保护与恢复修复</td>
+<td>本地心跳/租约及目录规则27项通过（17项心跳、10项目录/中央）；受限新任务恢复与监督20项通过，均按各自范围记录，不相加为产品测试。恢复仅允许核实的worker阶段 <code>HEARTBEAT_FAILED</code>，拒绝中央/用户停止、撤权及未知原因；101检查点有会话标识，安全原生续跑未验。末次本地集成及API重编已通过，R22-7发布后仍须另验真实恢复。<a href="../artifacts/software-factory/autonomy-r22/heartbeat-lease-verification-r22-7.json">心跳验证</a>、<a href="../artifacts/software-factory/autonomy-r22/heartbeat-lease-source-freeze-r22-7.json">心跳冻结指纹</a>、<a href="../artifacts/software-factory/autonomy-r22/worker-recovery-verification-r22-7.json">恢复验证</a></td>
+</tr>
+<tr>
+<td>R22-7本地集成及末次修复</td>
+<td>14:11报告记录监督/恢复/路由契约检查、网页及API完整构建、无凭据节点包构建成功；候选契约394个已实现操作、907个结构核对通过。随后修复未实施决定从A改选B时继承A动作的问题：新方案清空当前动作，旧方案及其失败保留在历史，同方案重选保留动作；14项专项验证及API类型检查通过，14:13:47修复后的API重新编译成功，末次源指纹已交叉核对。各范围及前后指纹分别记录；这些报告没有生产恢复、登录后浏览器或产品验收。<a href="../artifacts/software-factory/autonomy-r22/runtime-verification-r22-7.json">集成快照</a>、<a href="../artifacts/software-factory/autonomy-r22/decision-reselection-verification-r22-7.json">改选动作隔离</a>、<a href="../artifacts/software-factory/autonomy-r22/api-recompile-after-decision-fix-r22-7.json">修复后API重编</a></td>
+</tr>
+<tr>
+<td>产品最终验收</td>
+<td>尚未取得74个必需目标的同版独立证据及客户实际使用验收；历史NO-GO保留，不能用当前工具安装或任务启动覆盖</td>
+</tr>
+</tbody></table></div>
+<p>首次派发观察时间为2026年10月11日13:43:28（北京时间）。任务ID为 <code>30d37bfa-6bf5-4ca7-8167-89a5df5be091</code>，运行ID为 <code>111ade66794ad6a5dc7de7318aceb4838449934b</code>；当时2条运行日志、74个目标独立验收通过数为0，FA02—09仍待依赖。任务运行、产生修改、固定验证、独立评阅和工作包通过将分别追加实际证据，不能以本次启动直接签收目标。</p>
+<p>13:46:30后续观察仍为FA-01第1次开发运行中，已取得200条日志元数据且强模型进程仍在，独立验收通过数仍为0/74、用量仍待任务终结回执；日志条数不能推算完成率。<a href="../artifacts/software-factory/autonomy-r22/observation-work-progress-a.json">运行观察</a>。首启动已写入建设记录 <code>R22-PROJECT-AUTONOMY-FIRST-LAUNCH-20261011</code>，保留原任务、费用未知与未验收范围。<a href="../artifacts/software-factory/autonomy-r22/construction-first-launch.json">记录输入</a></p>
+<p>13:50:52的3条真实决定分别记录配置格式对账、准确工作副本根目录授权、用户费用只记录策略；两条实施选择来源为AI，费用策略来源为用户。此次台账写入/读回没有发起服务器操作或模型调用，也没有接受任何产品目标。源码资料、台账implemented状态和独立产品验收之间仍保留证据边界，不能把保存决定解释为全自动决策执行已完成。</p>
+<h3 id="section-14-1" tabindex="-1">14.1 首任务中止、对账与恢复边界</h3>
+<p>中止发生于13:50:46，签名结果于13:50:51到达中央；实际停止代码为 <code>HEARTBEAT_FAILED</code>，没有中央stop请求。与发布时点重叠不单独证明因果。13:55诊断读回确认101日志及结果已确认，待对账运行、未确认回执和待送日志均为0；项目仍因执行中止保持阻塞，不能把通信已对账当成产品完成或任务已恢复。</p>
+<p>诊断中，101节点检查点的 <code>sessionIdPresent=true</code>，中央终结结果的 <code>sessionIdPresent=false</code>。这表示节点曾保存会话标识而中央结果没有回传该标识，不能推断没有原生会话；也没有证据证明该会话可安全恢复。当前拟用新任务及新尝试继续已有目标，不使用 <code>--resume</code>，不声称已完成原生会话续跑。</p>
+<p>心跳修复的边界是：仅在中央已授予且仍有效的租约内，对明确的短暂连接故障最多6次退避；以真实到期时间和本地单调时钟控制剩余权限。失败的请求不能延长租约，不能因重试继续持有已失效权限。明确的授权拒绝、暂停、取消、租约到期或重试耗尽须停止。心跳/租约的范围内本地测试已通过；修复发布和现场恢复尚待各自证据，不能用模拟租约或本地受控进程代替生产结果。</p>
+<p>原任务、日志指纹、工作副本产物及不完整用量继续保存；恢复不能删除失败或把旧任务费用归零。本轮新任务恢复仅适用于worker因已核实 <code>HEARTBEAT_FAILED</code> 中止、且项目为执行对账阻塞：须匹配可信签名终结回执及root维护的短期对账凭据，确认旧进程已结束、无活动写者及未送结果，再核对当前目标、独立工作副本、执行模板和版本。恢复决定及新尝试引用旧任务、旧运行和对账证据，保留重试上限；未知副作用先对账。用户主动暂停/取消、授权拒绝或撤销、目标/权限改变，以及不能解释的中止不得借该接口自动复活。其他停止原因、独立评审及固定验证的恢复未由本轮接口自动支持。恢复专项在本机通过，生产root文件所有权检查尚未现场执行；实际恢复结果另存任务/运行证据，接口通过不代表已调用，也不代表CLI原生session已经续做。</p>
+<p>平台资料同步已记录当时blocked及0/74目标验收，经验只作为候选、未发布Skill；未改变项目目标/代码仓库副本或全局监督。<a href="../artifacts/software-factory/autonomy-r22/construction-platform-sync-r22.json">同步记录</a></p>
+<h3 id="section-14-2" tabindex="-1">14.2 尚待完成的真实验证与能力</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>待办</th>
+<th>完成条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内部工厂模型与原生执行</td>
+<td>工厂自己的Pi调用、模型身份/上下文/用量、父子Agent实际执行及恢复均有独立原始证据；外层贾维斯CLI成功不代替内部工厂证据</td>
+</tr>
+<tr>
+<td>14类完整观察生产器</td>
+<td>固定阶段检查已能报告实际缺功能及缺收据，但14类完整生产器目前尚未实现，完整收据为0；实施计划及本地请求索引不等于真实执行、收据或通过。R2更正了UI观察与自测报告目标的归属，旧R1保留。<a href="../artifacts/software-factory/autonomy-r22/producer-implementation-plan-r2.json">当前实施计划R2</a>、<a href="../artifacts/software-factory/autonomy-r22/producer-implementation-plan.json">历史R1</a></td>
+</tr>
+<tr>
+<td>资源等待后自动续做</td>
+<td>真实缺收据应登记为有责任主体的待办，准备同版资源、实际观察、固定复验；产品失败仍进入修复。受限心跳中止的新任务恢复已本地验证、尚未发布及现场验证；用户暂停/取消不由技术恢复自动撤销，原生会话安全续跑另待验证</td>
+</tr>
+<tr>
+<td>自主决定的闭环</td>
+<td>结构化接口已发布并完成3条真实写入与历史读回，页面源码/构建已验；继续进行登录后网页交互验收，再接通CLI问题/选项抓取、复杂Pi裁决、受控执行/回退及独立证据关联。实际问题和真实备选绑定版本/影响/回退，变更追加新决定引用旧记录；不能只凭提示词、选定方案或源码文档声称自动闭环</td>
+</tr>
+<tr>
+<td>同版72小时观察</td>
+<td>受控长期候选尚未配置；须连续观察同一源码、目标及环境并保留真实时间、异常和用量，不能拼接旧版本或用墙钟等待冒充健康运行</td>
+</tr>
+<tr>
+<td>客户实际交付使用</td>
+<td>实际可下载全套文档与软件包、新环境安装、用户/管理员关键任务、迁移、工厂及客户两侧恢复、回滚和支持责任均须真实验证；仅下载台账或隔离健康检查不足</td>
+</tr>
+<tr>
+<td>全自动端到端与复用</td>
+<td>从客户原始需求到同版全部产物、软件使用及归档，正常路径逐关人工点击为0；74个目标取得独立同版有效证据，再在第二项目验证复用和数据隔离</td>
+</tr>
+</tbody></table></div>
+<p>早期101开发节点升级曾首次失败并自动回滚，第二次升级成功；此次固定任务配置也保留失败、回滚和对账证据。失败记录用于改进安全重试及指纹核验，不删除、不写成一次成功。</p>
+<p>专项监督曾按冻结目标及依赖实际启动，当前观察状态为执行对账阻塞。阻塞保留原因、已尝试措施、责任工作包和恢复条件；满足同版安全恢复条件后继续推进，不删除旧失败。已有授权与资源就绪的正常验证自动安排，缺业务输入或越出授权范围才进入明确例外。目标完成必须同时形成同版交付、实际使用和建设归档，不以停止工作代替完成。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E4%BA%A4%E4%BB%98%E6%80%BB%E7%BA%B2.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

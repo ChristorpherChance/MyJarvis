@@ -1,0 +1,10 @@
+/** Install IPC and the original product deadline before the first OS inspection. */
+export function observeBrowserLifecycle(child,{nonce,completion,deadlineMs,createScope,onScopeFailure,clock=globalThis,graceMs=6000}){
+ let scope,scopePromise,createdBeforeScope=0,browserACK=null,timedOut=false,stopAction=null;
+ const capture=()=>{if(scope)void scope.capture().catch(()=>onScopeFailure('OWNED_PROCESS_CAPTURE_FAILED'));else createdBeforeScope++;};
+ child.on('message',message=>{if(message?.nonce!==nonce)return;if(message.type==='owned-browser-created')capture();if(message.type==='owned-browser-closed')browserACK={created:message.created,closed:message.closed,pending:message.pending,remaining:message.remaining};});
+ const timer=clock.setTimeout(()=>{timedOut=true;stopAction=(async()=>{if(child.connected)child.send({type:'owned-browser-stop',nonce});await Promise.race([completion,new Promise(res=>clock.setTimeout(res,graceMs))]);const initialized=await scopePromise;return initialized.settle({force:true});})();},Math.max(1,deadlineMs));
+ const monitor=clock.setInterval(capture,10000);
+ scopePromise=Promise.resolve().then(createScope).then(value=>{scope=value;if(createdBeforeScope){createdBeforeScope=0;capture();}return value;}).catch(async()=>{onScopeFailure('OWNED_PROCESS_INITIAL_INSPECTION_FAILED');if(child.connected)child.send({type:'owned-browser-stop',nonce});await Promise.race([completion,new Promise(res=>clock.setTimeout(res,graceMs))]);if(child.exitCode==null&&child.signalCode==null)child.kill();scope={capture:async()=>{},settle:async()=>({clean:false,rootObserved:false,remainingExactProcesses:[],remainingExactProfileProcesses:[],unobservedScope:true,rawCommandsExported:false})};return scope;});
+ return {ready:scopePromise,get timedOut(){return timedOut;},get browserACK(){return browserACK;},async finish(){clock.clearTimeout(timer);clock.clearInterval(monitor);const initialized=await scopePromise;return stopAction?await stopAction:await initialized.settle({force:false});}};
+}

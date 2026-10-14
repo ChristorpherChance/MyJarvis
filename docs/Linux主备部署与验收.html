@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux主备部署与验收 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="https://192.168.10.112:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">后续版本更新</a><a href="#section-2">1. 现在怎么访问</a><a href="#section-3">2. 机器与服务分工</a><a href="#section-4">3. 本轮新增后台</a><a href="#section-5">4. 数据迁移与恢复点</a><a href="#section-6">5. 语音和知识处理的实际状态</a><a href="#section-7">6. 验收记录</a><a href="#section-8">7. 下一批工作</a></nav><h1>贾维斯 · Linux主备部署与验收</h1>
+<p>更新：2026-10-07。正式版本：20261007-linux-cluster。</p>
+<p><b>112已成为正式中心，101已部署同版本并恢复同批数据，业务保持停止。联想的旧生产服务已停止，开发使用独立数据目录。101目前是经过核验的冷备，持续同步和受控接管尚未完成。</b></p>
+<h2 id="section-1">后续版本更新</h2>
+<p>2026-10-07已切换到20261007-cloud-monitoring。112继续运行，101仍保持冷备；增加广州、日本两台云节点的签名监测。本文原恢复批次和验收数字保留为首轮迁移证据，不代表新增数据已复制到101。最新接入与验收见<a href="云服务器接入与验收.html">云服务器接入与验收</a>。</p>
+<h2 id="section-2">1. 现在怎么访问</h2>
+<div class="table-wrap"><table>
+<tr><td>用途</td><td>地址</td></tr>
+<tr><td>管理平台</td><td><a href="https://192.168.10.112:3140/?mode=platform">打开112管理平台</a></td></tr>
+<tr><td>房间语音入口</td><td><a href="https://192.168.10.112:3140/?mode=room">打开书房语音入口</a></td></tr>
+<tr><td>健康检查</td><td><a href="https://192.168.10.112:3140/api/health">112健康状态</a></td></tr>
+<tr><td>模型设置</td><td><a href="https://192.168.10.112:3140/?mode=platform#theme=stark&amp;view=settings">设置中心</a></td></tr>
+</table></div>
+<p>使用原管理员密码登录。地址属于家庭局域网。当前联想用户已安装家庭HTTPS证书，实际浏览器检查通过，没有绕过证书校验。其他终端需要先信任<a href="../artifacts/linux-deployment/jarvis-lan-ca.crt">家庭公开CA证书</a>，再允许麦克风；每台机器的浏览器权限分别设置。证书私钥不提供给房间终端。</p>
+<p>原127.0.0.1:3140生产入口已经停止。开发运行npm run dev时使用.jarvis-dev，API3140、前端5173；开发库与112家庭数据独立。默认生产旧目录.jarvis已设启动保护，旧Windows登录启动任务已禁用并保留任务导出，原库保留作迁移前恢复材料。</p>
+<h2 id="section-3">2. 机器与服务分工</h2>
+<div class="table-wrap"><table>
+<tr><td>机器</td><td>实际部署</td><td>运行状态</td></tr>
+<tr><td>112／48GB</td><td>完整前端、全部业务接口、Pi SDK、SQLite、知识处理、CPU ASR、基础TTS、只读节点观测</td><td>正式业务和观测服务运行，开机启动</td></tr>
+<tr><td>101／32GB</td><td>相同发布文件、相同Linux依赖、同批完整恢复数据、只读节点观测</td><td>观测服务运行；业务停止且禁止开机启动</td></tr>
+<tr><td>联想／64GB</td><td>开发源码、独立开发库、历史完整备份</td><td>旧生产守护和登录启动任务已停止，保留开发和书房浏览器用途</td></tr>
+<tr><td>116</td><td>已有SSH授权</td><td>本轮未部署平台业务</td></tr>
+<tr><td>i3后备及房间入口</td><td>等机器准备与具体地址</td><td>本轮未加入；卧室仍不接入</td></tr>
+</table></div>
+<p>业务使用jarvis系统账号运行，管理账号superopen负责安装和维护。发布文件、角色配置和恢复记录由root保护；业务账号可以读配置和写自己的数据，不能修改主备角色或发布代码。</p>
+<p>采用原生HTTPS3140。独立的HTTPS3141只读观测服务需要节点专用凭据，备用观测不打开业务库、不调度任务。没有开放远程任意命令接口。</p>
+<h2 id="section-4">3. 本轮新增后台</h2>
+<div class="table-wrap"><table>
+<tr><td>接口</td><td>作用</td></tr>
+<tr><td>GET /api/runtime/cluster</td><td>当前中心、节点角色、版本、恢复材料与阻断原因</td></tr>
+<tr><td>GET /api/runtime/cluster/nodes</td><td>已登记节点及新鲜观测</td></tr>
+<tr><td>POST /api/runtime/cluster/check</td><td>对固定节点做TLS、身份、时间和响应校验</td></tr>
+<tr><td>GET /api/runtime/cluster/snapshot</td><td>本机核验的完整恢复点</td></tr>
+<tr><td>GET /api/runtime/cluster/nodes/{id}/readiness</td><td>判断恢复材料是否就绪，始终不授予接管权</td></tr>
+</table></div>
+<p>以上接口仅管理者本人可访问。检查请求不接受临时URL，不修改角色，也不启动备用业务。后台每15秒检查已登记节点，机器中心同步刷新；过期或失效观测显示未知。Pi增加原生只读工具jarvis_platform_nodes，身份撤销后旧工具不能继续查询。</p>
+<p>角色配置为standby时，实际启动入口在打开业务库前拒绝启动。主节点运行中角色、代次、版本或授权目录变化时停止业务。旧生产目录的启动保护避免联想再次使用原家庭数据启动第二个中心。</p>
+<h2 id="section-5">4. 数据迁移与恢复点</h2>
+<p>迁移先暂停原业务，生成完整一致备份，再恢复到两台服务器。逐文件SHA256、业务库和执行库完整性均核验通过，原语音密钥保留。迁移中暴露的Windows语音路径、服务账号目录权限和启动入口问题已修复并增加实际进程及恢复测试；不完整尝试均保留，未覆盖原库。</p>
+<p>最终恢复批次：migration-20261007043835235；恢复点为2026-10-07 12:38:38（北京时间）。两台核验相同完整清单的11个文件，包括业务库、执行库、Pi及运行资料和语音模型。11表示此时实际文件数，不表示业务功能数。</p>
+<p>Windows本地语音程序转换为Linux程序。系统内部拥有的文件路径按数据根转换；开发项目和外部知识目录的Windows路径不假装在Linux存在，后续需要在对应执行节点配置。</p>
+<p>两台前后端发布文件共180个，逐文件哈希一致。备份留在联想和两个节点的受保护目录；升级前另有112完整快照。角色、证书和观测凭据与业务库分开管理。</p>
+<p><b>目前没有持续复制器。</b> 101的数据不会自动跟随112变化。恢复点超过15分钟或版本、依赖核验失败时，管理页面会明确取消“恢复材料就绪”。这不影响112正常运行，也不能用修改阈值代替实际同步。</p>
+<h2 id="section-6">5. 语音和知识处理的实际状态</h2>
+<p>两台使用固定Node24.15.0、独立Python3.12.15和已记录的依赖版本。Ubuntu自带Python3.14保留，OCR运行在独立环境中。</p>
+<p>实际服务账号已执行本地语音合成、Whisper CPU识别及中英扫描OCR；原模型随完整备份迁移，运行时不下载。当前TTS是espeak-ng基础离线声音，自然度有限。Piper程序与适配器已准备，但自然语音模型下载未成功，尚未切换；也可配置真实HTTP语音引擎。</p>
+<p>语音识别和合成可运行，不等于真实麦克风、房间回声和免触碰唤醒已验收。专业中文唤醒与声纹仍待接入。Pi真实对话仍需配置实际模型账户或本地模型地址；语音会话、身份、预算和工具链继续使用已有Pi SDK。</p>
+<h2 id="section-7">6. 验收记录</h2>
+<div class="table-wrap"><table>
+<tr><td>检查</td><td>结果</td></tr>
+<tr><td>独立前后端构建</td><td>通过</td></tr>
+<tr><td>后台回归</td><td>250项：249通过、1跳过、0失败</td></tr>
+<tr><td>接口契约与实际路由</td><td>328个操作都有处理器；765个Schema</td></tr>
+<tr><td>真实HTTPS启动进程</td><td>两台通过；角色撤销后停止，备用启动不创建业务库</td></tr>
+<tr><td>完整恢复与Windows语音配置</td><td>两台使用服务账号通过；错误哈希和额外文件拒绝恢复，原密钥保留</td></tr>
+<tr><td>CPU ASR、离线TTS、中文OCR</td><td>两台实际执行通过</td></tr>
+<tr><td>未登录接口、节点观测身份</td><td>未登录不能读私有数据；节点凭据与TLS校验通过</td></tr>
+<tr><td>实际管理页面</td><td>主备面板、总览、大屏、对话、设置、手机布局和退出清理通过；另有119项全页面与主题回归通过</td></tr>
+<tr><td>服务账号和启动配置</td><td>112业务启用，101业务禁用；观测两台启用，均为非root账号</td></tr>
+<tr><td>两台发布文件</td><td>180个文件哈希一致</td></tr>
+</table></div>
+<p>本次没有进行主机重启、网络分区、故障接管或真实房间麦克风实验，不能把服务重启和恢复测试当作这些实验的完成记录。</p>
+<ul>
+<li><a href="../artifacts/linux-deployment/report.json">完整部署核验报告</a></li>
+<li><a href="../artifacts/linux-deployment/migration.json">最终迁移报告</a></li>
+<li><a href="../artifacts/linux-platform-ui/report.json">实际页面报告</a></li>
+<li><a href="../artifacts/linux-platform-final-build-regression.txt">后台回归记录</a></li>
+<li><a href="../artifacts/v1-api-qa/contract.json">接口核对</a></li>
+</ul>
+<h2 id="section-8">7. 下一批工作</h2>
+<ol>
+<li>一致的持续恢复批次：业务库、执行库、Pi会话及文件协调，失败保留上一份成功数据，并显示真实滞后。</li>
+<li>受控接管与回切：旧主隔离证明、唯一主角色、任务与外部调用对账、角色代次和审计；先在隔离环境演练。</li>
+<li>统一入口：切换中心后房间不用逐个改地址，同时验证证书和断线恢复。</li>
+<li>实际模型与声音：配置Pi模型、自然TTS，先在书房验证收音、打断、持续对话和播报，再扩展客厅、厨房餐厅。</li>
+<li>真实执行节点：配对开发电脑和服务器，验证Claude Code/Codex实际项目的持续推进、预算、停止和交付验收。</li>
+</ol>
+<p>专业唤醒、声纹、离线通知、供应商账单API、实际GPU与电表采集以及i3后备仍按<a href="剩余开发与并行部署计划.html">剩余开发计划</a>继续。112已有历史磁盘错误记录，独立备份和巡检继续保留；备用副本与历史备份承担不同的恢复用途。</p></main></html>

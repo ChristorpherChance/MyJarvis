@@ -1,0 +1,11 @@
+const fs=require('fs'),path='docs/openapi-v1-planned.json',d=JSON.parse(fs.readFileSync(path,'utf8')),s=d.components.schemas;
+const family=d.paths['/api/runtime/family/conversations/{id}/messages'].post;
+const input=family.requestBody.content['application/json'].schema;
+const shape=input.$ref?s[input.$ref.split('/').at(-1)]:input;
+shape.properties.voiceMode={type:'boolean',default:false,description:'口语化呈现，不改变模型、身份或工具权限'};
+family.parameters??=[];if(!family.parameters.some(p=>p.name==='Accept'))family.parameters.push({in:'header',name:'Accept',schema:{type:'string',enum:['application/json','text/event-stream']},description:'实时模式返回status、delta、done或error；断流不自动重试。'});
+family.responses['200'].content['text/event-stream']={schema:{type:'string'},example:'event: delta\ndata: {"text":"你好。"}\n\nevent: done\ndata: {"message":{"content":"你好。"},"status":"complete","profileId":"me"}\n\n'};
+const audio=d.paths['/api/runtime/voice/sessions/{id}/audio'].post;audio.parameters??=[];if(!audio.parameters.some(p=>p.name==='X-Jarvis-Wake-Check'))audio.parameters.push({in:'header',name:'X-Jarvis-Wake-Check',schema:{type:'string',enum:['true','false']},description:'使用服务端当前认证成员的唤醒词；专用本地模型检测，不识别成员身份。'});
+d.paths['/api/runtime/voice/engines/health']={get:{operationId:'getResidentVoiceHealth',summary:'检测本地常驻语音引擎与最近耗时，不返回凭证或对话',tags:['中央语音'],security:[{SessionCookie:[]}],'x-implementation-status':'implemented',responses:{200:{description:'实际可用状态',content:{'application/json':{schema:{type:'object',additionalProperties:true,required:['configured','ready'],properties:{configured:{type:'boolean'},ready:{type:'boolean'}}}}}},401:{description:'管理员未认证'}}}};
+require('./reply-language-contract.cjs')(d);
+fs.writeFileSync(path,JSON.stringify(d,null,2)+'\n');console.log('Voice streaming and health contract updated');

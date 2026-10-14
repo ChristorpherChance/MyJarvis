@@ -1,0 +1,45 @@
+/** Contract for the seven structured decision ledger routes; never server rollback or product acceptance. */
+module.exports=function applyProjectDecisionContract(document){
+ document.paths??={};document.components??={};const schemas=document.components.schemas??={};
+ const ref=name=>({$ref:'#/components/schemas/'+name});
+ const text=(max=2000)=>({type:'string',minLength:1,maxLength:max});
+ const identifier=text(200),hash={type:'string',pattern:'^[a-f0-9]{64}$'},date={type:'string',format:'date-time'};
+ const nullable=schema=>({anyOf:[schema,{type:'null'}]});
+ const array=(items,maxItems=100,minItems=0)=>({type:'array',items,maxItems,minItems});
+ const object=(properties,required=Object.keys(properties))=>({type:'object',additionalProperties:false,properties,required});
+ const origin={enum:['human','ai','rule']};
+ schemas.ProjectDecisionReference=object({reference:text(2000),sha256:nullable(hash),kind:{enum:['observation','self-report','test-report','source','requirement']}},['reference','kind']);
+ schemas.ProjectDecisionContext=object({observedAt:date,goalSpecHash:nullable(hash),sourceFingerprint:nullable(hash),sourceVersion:nullable(text(500)),runId:nullable(identifier),taskId:nullable(identifier),machineId:nullable(identifier),objectives:array(identifier,1000),constraints:array(text(2000)),situation:text(8000)},['observedAt','situation']);
+ schemas.ProjectDecisionOption=object({id:identifier,title:text(500),advantages:array(text(2000),30),disadvantages:array(text(2000),30),impact:text(4000),compliesWithGoals:{enum:['yes','no','unknown']},withinAuthority:{enum:['yes','no','unknown']},environmentEvidence:{enum:['available','missing','unknown']},missingEvidence:array(text(2000),30),reversibility:{enum:['reversible','bounded','irreversible','unknown']},coveredObjectives:array(identifier,1000),operationalImpact:{type:'integer',minimum:0,maximum:3}});
+ schemas.ProjectDecisionRollback=object({plan:text(8000),triggers:array(text(2000),30),impact:text(4000),requiresNewExecutionPlan:{const:true}},['plan','triggers','impact']);
+ schemas.ProjectDecisionAction=object({summary:text(4000),at:date,state:{enum:['planned','performed','failed']},evidenceRefs:array(ref('ProjectDecisionReference'))});
+ const body={questionSummary:text(4000),context:ref('ProjectDecisionContext'),options:array(ref('ProjectDecisionOption'),30,1),chosenId:nullable(identifier),decisionRationale:text(8000),basisRefs:array(ref('ProjectDecisionReference')),risk:{enum:['low','medium','high','unknown']},affectedObjectives:array(identifier,1000),rollbackPlan:ref('ProjectDecisionRollback'),actions:array(ref('ProjectDecisionAction')),status:{enum:['proposed','selected','implemented']},origin};
+ const bodyRequired=Object.keys(body).filter(k=>!['chosenId','actions','status'].includes(k));
+ const command={commandId:{type:'string',format:'uuid'},expectedVersion:{type:'integer',minimum:1}};
+ schemas.ProjectDecisionRecordInput=object({...body,...command,expectedVersion:{const:0},changeOf:{type:'null',default:null}},[...bodyRequired,'commandId','expectedVersion']);
+ schemas.ProjectDecisionRecordInput.description='首次新增expectedVersion=0，changeOf必须null；至少一个真实方案，不补造选项。选定、实施分开。实际动作需证据引用，AI信息为自报，不能当独立验收。正文只保存问题和依据摘要，明显凭据及私有路径拒绝。';
+ schemas.ProjectDecisionSelectInput=object({...command,mode:{enum:['recommended','explicit']},chosenId:identifier,decisionRationale:text(8000),basisRefs:array(ref('ProjectDecisionReference')),origin,reason:text(4000)},['commandId','expectedVersion','mode','decisionRationale','basisRefs','origin','reason']);
+ schemas.ProjectDecisionImplementationInput=object({...command,actions:array(ref('ProjectDecisionAction'),100,1),reason:text(4000),origin});
+ schemas.ProjectDecisionChangeInput=object({...body,...command,reason:text(4000)},[...bodyRequired,'commandId','expectedVersion','reason']);
+ schemas.ProjectDecisionChangeInput.description='核对旧决策revision后创建changeOf关联的新决策。提案不替代原选择，选定后另追加旧决策superseded版本。回退只形成新指令依据，不自动执行服务器恢复；历史动作不覆盖。';
+ schemas.ProjectDecisionRecommendationInput=object({context:ref('ProjectDecisionContext'),options:array(ref('ProjectDecisionOption'),30,1)});
+ schemas.ProjectDecisionRecommendation=object({algorithm:{const:'bounded-evidence-r1'},chosenId:nullable(identifier),status:{enum:['recommended','needs-evidence','ambiguous']},candidates:array(object({id:identifier,eligible:{type:'boolean'},reasons:array(text(2000)),rank:nullable(array({type:'integer',minimum:0,maximum:3},2,2))}),30,1),rationale:text(4000),independentAcceptance:{const:false},usesPaidModel:{const:false}});
+ schemas.ProjectDecisionRecommendation.description='仅按提交的事实判断，不发模型调用：排除目标/授权/环境依据不满足或目标遗漏的方案，优先可逆性再比较运行影响。同分明确ambiguous，不伪造最优结论；可在有效边界内显式选择并记录理由。';
+ schemas.ProjectDecisionSnapshot=object({...body,status:{enum:['proposed','selected','implemented','superseded']},id:identifier,projectId:identifier,revision:{type:'integer',minimum:1},createdAt:date,updatedAt:date,changeOf:nullable(identifier),changeOfRevision:nullable({type:'integer',minimum:1}),supersededBy:nullable(identifier),recommendation:ref('ProjectDecisionRecommendation'),selfReported:{type:'boolean'},independentAcceptance:{const:false},previousHash:hash,hash,revisionReason:text(4000)});
+ schemas.ProjectDecisionDetail=object({...schemas.ProjectDecisionSnapshot.properties,revisions:array(ref('ProjectDecisionSnapshot'),100000,1)});
+ schemas.ProjectDecisionCollection=object({items:array(ref('ProjectDecisionSnapshot'),100),total:{type:'integer',minimum:0},offset:{type:'integer',minimum:0},limit:{type:'integer',minimum:1,maximum:100},nextOffset:nullable({type:'integer',minimum:0})});
+ const response=name=>({description:'真实SQLite决策快照；选择不代表执行或独立验收',content:{'application/json':{schema:object({data:ref(name)})}}});
+ const add=(method,path,id,result,input)=>{
+  document.paths[path]??={};const entry={operationId:id,tags:['Project decisions'],summary:id,security:[{SessionCookie:[]}],'x-implementation-status':'implemented',parameters:[...path.matchAll(/\{([^}]+)\}/g)].map(m=>({name:m[1],in:'path',required:true,schema:identifier})),responses:{200:response(result),400:{description:'字段、隐私摘要或决策条件无效'},401:{description:'未登录'},403:{description:'管理员身份要求'},404:{description:'项目或决策不可访问'},409:{description:'版本或同提交编号冲突，或自主选择缺依据'}}};
+  if(input)entry.requestBody={required:true,content:{'application/json':{schema:ref(input)}}};document.paths[path][method]=entry;return entry;
+ };
+ const base='/api/v1/projects/{id}/decisions';
+ add('get',base,'ProjectDecisionList','ProjectDecisionCollection').parameters.push({name:'offset',in:'query',schema:{type:'integer',minimum:0,default:0}},{name:'limit',in:'query',schema:{type:'integer',minimum:1,maximum:100,default:25}});
+ add('get',base+'/{decisionId}','ProjectDecisionRead','ProjectDecisionDetail');
+ add('post',base,'ProjectDecisionRecord','ProjectDecisionSnapshot','ProjectDecisionRecordInput');
+ add('post',base+'/recommendations','ProjectDecisionRecommend','ProjectDecisionRecommendation','ProjectDecisionRecommendationInput');
+ add('post',base+'/{decisionId}/select','ProjectDecisionSelect','ProjectDecisionSnapshot','ProjectDecisionSelectInput');
+ add('post',base+'/{decisionId}/implementation','ProjectDecisionImplementation','ProjectDecisionSnapshot','ProjectDecisionImplementationInput');
+ add('post',base+'/{decisionId}/change','ProjectDecisionChange','ProjectDecisionSnapshot','ProjectDecisionChangeInput');
+ return document;
+};

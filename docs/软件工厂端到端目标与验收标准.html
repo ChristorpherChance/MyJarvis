@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从客户原始需求到软件交付使用，各阶段有完整产物和真实证据，Agent 能持续优化，成熟后按质量门全自动运行。">
+  <meta name="jarvis-source-sha256" content="d2fe89a1c91a70ba93ae2a2cf95a4e67a44dd7fa2e03fb8d701d07269ccec54b">
+  <title>软件工厂端到端目标与验收标准</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">目标基线 R21 · Agent 与全自动补充</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9B%AE%E6%A0%87%E4%B8%8E%E9%AA%8C%E6%94%B6%E6%A0%87%E5%87%86.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 10 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 目标与验收对象</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 十个阶段与出口标准</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 101 最新代码怎样打包部署</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. PRD、设计和原型怎样检查质量</a>
+<a class="toc-link level-3" href="#section-4-1" data-parent="4">4.1 原始要求到 PRD</a>
+<a class="toc-link level-3" href="#section-4-2" data-parent="4">4.2 PRD 到概要/详细设计</a>
+<a class="toc-link level-3" href="#section-4-3" data-parent="4">4.3 全部独立高保真页面与整体交互</a>
+<a class="toc-link level-3" href="#section-4-4" data-parent="4">4.4 代码与 UI 一致性</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. 关联必须包含版本和语义</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 从零测试、统一修复与复验</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 发布后的版本与需求变更</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. 还需要补齐的要求</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">9. 判定口径与贾维斯管理视图</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">10. 当前事实与推进顺序</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-11<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">真实交付 / Agent 迭代 / 全自动运行</p>
+        <h1 id="document-title">软件工厂端到端目标与验收标准</h1>
+        <p class="subtitle">从客户原始需求到软件交付使用，各阶段有完整产物和真实证据，Agent 能持续优化，成熟后按质量门全自动运行。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-11</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>两层验收</strong><span>工厂本身 · 工厂生产的项目</span></div><div class="stat"><strong>双重闭环</strong><span>项目交付 · Agent 优化</span></div><div class="stat"><strong>全自动目标</strong><span>常规阶段无需逐关点击</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>本次用户明确的目标：<strong>贾维斯指挥并核验 101 软件工厂最新代码打包部署；各阶段产物完整、合格、相互承接；各阶段 Agent 与子 Agent 可迭代优化；流程走通后，从客户原始需求到最终产品文档及软件交付使用全自动运行。</strong></p>
+<p>明确目标纳入目标基线；示范业务、性能数值、费用额度及自动模式的具体质量门配置仍需落实。已有人工点和分期边界记录为当前设计/实现事实，不否定用户新增的全自动最终目标。本轮形成标准和深入公开源码审阅，没有执行新部署、产品测试或修改软件工厂源码；不能把要求当作已实现能力。详细角色、改进、全自动过关及使用标准见 <a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82Agent%E8%BF%AD%E4%BB%A3%E4%B8%8E%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88.html">Agent 迭代与全自动交付方案</a>。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 目标与验收对象</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>要证明的结果</th>
+<th>检查对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>软件工厂本身</td>
+<td>最新明确版本能打包、安装、运行、升级、恢复；各模块实际工作</td>
+<td>工厂自己的 PRD、设计、原型、源码、构建和数据库</td>
+</tr>
+<tr>
+<td>工厂生产的业务项目</td>
+<td>客户资料能够形成正确需求，经过设计、开发和验证，得到可运行交付物</td>
+<td>该客户项目自己的需求、设计、页面、代码和证据</td>
+</tr>
+<tr>
+<td>贾维斯监管</td>
+<td>能组织两层工作、发现遗漏或不一致、安排有限修复、核对结果并管理版本</td>
+<td>真实任务、执行器、产物、测试、用量及操作记录</td>
+</tr>
+</tbody></table></div>
+<p>必须分别记录两层验收。工厂自己运行正常，只证明部署或相应功能可用；还需要真实业务示范证明其生产能力。业务项目的 PRD 或页面也不能拿来验收工厂自己的界面。</p>
+<p>用户第 1 条要求属于<strong>贾维斯对软件工厂本身的外层发布监管</strong>。原工厂 PRD 将“自动把客户项目发布到生产”列为扩展范围，两者分别登记，不能混淆或据此删掉第 1 条目标。</p>
+<p>目标完成的总体条件：全部必需条款有真实合格成果，产物和证据对应同一有效版本，无阻断缺陷；完整文档和软件包可安装、运行及按约定角色使用；升级、恢复、Agent 改进与自动模式分别有验证。正常完整输入下，无需逐关人工点击，按已配置质量门自动形成交付决定；未执行、模拟、未知和旧版本结果单独展示。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 十个阶段与出口标准</h2>
+<p>阶段之间可以迭代，完整出口不能省略。每次推进使用已固定的输入版本；上游发生变化，先分析影响，再更新相关下游。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>必需产物</th>
+<th>达标检查</th>
+<th>进入下一阶段的依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① 原始需求与范围</td>
+<td>客户原件、访谈或补充记录、场景/角色清单、疑点与范围清单</td>
+<td>解析未漏附件/表格/关键原文；明确目标、边界、冲突、优先级和验收方式</td>
+<td>歧义有结论，原始要求逐条登记；新增推导要求单独标来源</td>
+</tr>
+<tr>
+<td>② PRD</td>
+<td>原子需求条目、业务规则、流程、数据要求、非功能要求、验收条款、追踪矩阵</td>
+<td>每条原始要求有承接或明确范围决定；无无依据删改；失败分支、权限与边界清楚</td>
+<td>范围及版本确认；本期必需需求全部可检查</td>
+</tr>
+<tr>
+<td>③ 概要设计</td>
+<td>架构、模块、主要流程、依赖、部署和数据流设计</td>
+<td>所有功能与非功能需求有设计承接；跨模块责任及技术约束不冲突</td>
+<td>需求—模块/流程关系完整；重大设计取舍有依据</td>
+</tr>
+<tr>
+<td>④ 详细设计</td>
+<td>接口/错误、数据结构/迁移、状态机、权限、后台任务、交互规则、异常与恢复方案</td>
+<td>足够直接实施和测试；接口、页面、数据和状态转换相符；不存在只有标题的空章节</td>
+<td>必需条款有可执行细节及测试条件，版本与概要设计匹配</td>
+</tr>
+<tr>
+<td>⑤ 高保真原型</td>
+<td>页面/子页面/状态清单、可独立查看的高保真页面、完整可交互原型、组件规范</td>
+<td>页面齐全，主要和异常旅程可走通；字段、权限、按钮及流程遵从设计；适用视口覆盖</td>
+<td>每个 UI 相关条款对应页面与状态；整体交互经过核对</td>
+</tr>
+<tr>
+<td>⑥ 开发计划与代码</td>
+<td>承接设计的任务、依赖、验收、源码差异、真实单测/CI、独立代码审查、实际合并回执、真实构建及接口/数据实现</td>
+<td>任务覆盖全部本期需求；源码真实实现；UI 与批准原型一致；单测/CI 有退出码及报告；不是仅写进度为完成</td>
+<td>当前候选的必需任务有代码与验证依据，审查及合并可核对，未完成项显式列出</td>
+</tr>
+<tr>
+<td>⑦ 从零独立测试</td>
+<td>清洁环境说明、初始化、用例、实际结果、UI 对照、缺陷和原始执行证据</td>
+<td>空环境能安装运行；全部本期必需且适用的旅程/边界/权限/异常/恢复用例实际执行通过；必测不能用跳过代替</td>
+<td>结果绑定测试对象、构建、输入、用例和环境；工程检查及各包约定覆盖率达标，缺失证据不算通过</td>
+</tr>
+<tr>
+<td>⑧ 缺陷修复与复验</td>
+<td>统一缺陷台账、修复任务、提交、新构建、同用例复验和影响回归</td>
+<td>原错误确实解决，无改断言掩盖问题；受影响功能通过；旧失败保留</td>
+<td>阻断缺陷有独立复验，P0/P1 无未关闭项；遗留决定不得豁免本期必需条款</td>
+</tr>
+<tr>
+<td>⑨ 打包、发布与验收</td>
+<td>可运行包/镜像、文件清单/校验、迁移/备份、部署记录、冒烟与回滚、交付报告</td>
+<td>发布的就是已验证候选；前端/接口/数据一致，域名访问及关键业务正常；失败可恢复</td>
+<td>已部署版本可识别、运行验证完整，最终交付决定记录清楚</td>
+</tr>
+<tr>
+<td>⑩ 运行维护与变更</td>
+<td>版本台账、实际使用核验、运行观察、故障、回归策略、需求变更和下一版计划</td>
+<td>目标环境以约定角色完成业务；故障可定位，变更可追溯并触发复验；旧发布与决定保留</td>
+<td>每次迭代重新形成范围、候选、测试及发布链，用户可实际使用</td>
+</tr>
+</tbody></table></div>
+<p>每个阶段分别显示：<strong>输入就绪、产物存在、完整性、内容质量、上下游一致、验证状态</strong>。文件存在、生成成功或模型评分高，都不能单独让阶段显示为“验收通过”。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 101 最新代码怎样打包部署</h2>
+<p>“最新”必须指向可核对的内容。在创建候选时同时记录 Git 提交、工作区实际文件指纹、未提交改动、明确纳入的新增文件、依赖锁和工具版本。打包过程中发生变化，需要重新固定候选，不能把同一 HEAD 当成相同代码。</p>
+<p>推荐执行顺序：<strong>只读检查 → 固定独立候选 → 构建与打包 → 隔离部署 → 运行核验 → 形成发布结论 → 按授权策略更新正式实例</strong>。新代码可以在候选环境部署验证，产品未正式验收的事实保持可见。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>检查环节</th>
+<th>需要确认的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发布基线</td>
+<td>源码/文档/锁文件版本一致；未提交内容是否纳入明确；正在运行版本与目标候选分开</td>
+</tr>
+<tr>
+<td>实际构建</td>
+<td>在固定候选上执行类型、编译与必需检查；保留退出码和真实输出，不用生成桩代替</td>
+</tr>
+<tr>
+<td>两种包</td>
+<td>源码包用于重建；可运行包或镜像用于部署。均有文件清单、版本、校验和用途，不能只登记台账</td>
+</tr>
+<tr>
+<td>包内边界</td>
+<td>包含必须的资源、迁移、配置示例和说明；凭据、真实业务数据、私人输入和运行日志由受控配置/存储管理</td>
+</tr>
+<tr>
+<td>部署目标</td>
+<td>固定机器、目录、服务、端口、数据卷和访问入口；候选与现有业务实例隔离</td>
+</tr>
+<tr>
+<td>运行核验</td>
+<td>进程及依赖就绪；前端不是白屏，静态资源和 API 匹配；授权登录、关键业务操作、写入读回及附件等适用能力实际正常</td>
+</tr>
+<tr>
+<td>访问链</td>
+<td>若目标提供域名访问，还要检查 HTTPS、代理路由、登录会话、下载与流式连接；本机端口通不能替代域名链验证</td>
+</tr>
+<tr>
+<td>数据与恢复</td>
+<td>当前数据备份有效；空库初始化和上一版升级分别验证；回滚明确代码与数据兼容性，不能只有换回旧程序</td>
+</tr>
+<tr>
+<td>恢复依赖</td>
+<td>配置、模板、提示词、执行器、模型路由及系统级套件纳入受控清单；不在项目备份中的依赖另有恢复来源与验证，私密值仍由授权配置保存</td>
+</tr>
+<tr>
+<td>发布后</td>
+<td>记录实际运行构建、配置版本引用、数据库迁移版本、资源与错误观察；失败停止扩大发布并核对恢复结果</td>
+</tr>
+</tbody></table></div>
+<p>构建通过、服务健康和产品交付是不同结论。健康检查返回 200 不能证明需求全部实现；上线时用的包与测试包哈希不同，也不能复用原验收。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. PRD、设计和原型怎样检查质量</h2>
+<h3 id="section-4-1" tabindex="-1">4.1 原始要求到 PRD</h3>
+<p>客户一句话可能包含多个条件，需拆成可验证条款，再保留原文定位。原件解析还要检查图片/表格/附件、扫描识别疑点和约束说明。无法确定的内容进入问题清单，记录提出、答复及采用结论。</p>
+<p>PRD 至少涵盖：目标和范围、用户/角色、场景/旅程、功能与业务规则、数据、异常与边界、权限、非功能要求、外部依赖、验收、明确分期。必要的工程推导可以补充，但应标为推导来源，不能伪称客户原话。</p>
+<p>完整性检查按原始需求和本期批准范围逐条做；语义评审核对意图、条件、否定、单位及边界。关键词相同或链接存在，不能证明意思相同。抽样审阅有范围声明，不能称“所有需求无遗漏”。</p>
+<h3 id="section-4-2" tabindex="-1">4.2 PRD 到概要/详细设计</h3>
+<p>每个需求都要有设计承接。非 UI 要求可由后台、数据或运维设计承接，不能强行每条配一页，也不能因此没有实现/测试位置。</p>
+<p>核对前端字段、接口、数据字段、权限和状态转换的同义关系；补齐幂等、并发、失败恢复、超时、重试及外部依赖。应当能从详细设计直接拆出实施任务和测试，不需要执行器临时猜规则。</p>
+<h3 id="section-4-3" tabindex="-1">4.3 全部独立高保真页面与整体交互</h3>
+<p>页面清单需含主页面、子页面、详情、编辑、弹窗/抽屉、权限场景及适用状态：正常、加载、空数据、错误、成功、校验失败、未授权、禁用、上游改动导致下游陈旧等。适用性逐项说明，不能只覆盖首页或顺利流程。</p>
+<p>两类成果同时验收：每个页面/子页面能单独查看并定位其版本；整体原型能实际完成相关旅程，包括跳转、返回、筛选分页、提交、失败提示及恢复等。原型使用模拟数据可以，但应明确其模拟范围，不能算真实后端或模型已通过。</p>
+<p>布局、组件、颜色、字体、间距、字段、文案和交互规则形成共同基线；桌面/手机等按当前项目范围逐页验证。不同页面和视口的错误不能靠全局平均隐藏。</p>
+<h3 id="section-4-4" tabindex="-1">4.4 代码与 UI 一致性</h3>
+<p>实际程序使用固定测试数据、页面状态和视口，与批准的原型版本逐页对照。分别检查信息结构、视觉关键项、字段/控件、交互、权限及数据行为；截图相似度不能替代点击行为，也不能证明后端约束正确。</p>
+<p>动态时间或随机数据的视觉忽略范围需明示，不能遮掉关键控件。经过批准的实现改动同步更新设计/原型和版本关系，不能把所有差异都解释成“优化”。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. 关联必须包含版本和语义</h2>
+<p>建立这条可双向查看的关系：</p>
+<p><strong>原始资料及条款 ↔ PRD 需求 ↔ 概要/详细设计 ↔ 页面与状态 ↔ 开发任务 ↔ 代码/构建 ↔ 用例/运行 ↔ 缺陷/修复 ↔ 发布。</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>关系记录</th>
+<th>必需信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份</td>
+<td>工厂或客户项目 ID、条款/产物 ID、类型及所属阶段</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>当前版本、内容哈希、来源版本、候选构建和测试批次；不只存可覆盖的 URL</td>
+</tr>
+<tr>
+<td>精确位置</td>
+<td>原文段落、文档章节、页面/状态、接口/代码位置、用例与执行结果</td>
+</tr>
+<tr>
+<td>承接理由</td>
+<td>为什么这个设计、实现或用例满足该条款，谁核对了内容</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>待产出、待检查、合格、失败、阻塞、待复验；历史版本的原结论保留</td>
+</tr>
+<tr>
+<td>责任与依据</td>
+<td>产出者、独立检查者、采用决定、实际报告及费用/任务引用</td>
+</tr>
+</tbody></table></div>
+<p>检查至少找出四类问题：<strong>有需求无承接、下游无来源、版本不匹配、链接完整但内容不符合</strong>。一个需求可以对应多份设计和多条测试；一个通用组件可以服务多条需求，但必须有明确覆盖范围。</p>
+<p>以下只是示意，不能算当前已有实现：客户要求“未审批的申请可以撤回，已经审批不能撤回”。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>条款</th>
+<th>设计</th>
+<th>原型</th>
+<th>实现</th>
+<th>测试与证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REQ-012A：未审批可撤回</td>
+<td>状态机、撤回接口和数据更新</td>
+<td>申请详情的待审批状态及撤回确认</td>
+<td>服务端状态校验、实际撤回及读回</td>
+<td>待审批撤回成功，同构建真实结果</td>
+</tr>
+<tr>
+<td>REQ-012B：已审批不可撤回</td>
+<td>审批态禁止转换规则</td>
+<td>按规则隐藏或禁用操作，并给解释</td>
+<td>接口同样拒绝，不能只靠前端隐藏</td>
+<td>直接 API 请求也拒绝；审批/撤回并发按约定处理</td>
+</tr>
+</tbody></table></div>
+<p>若下游提供“所有状态均可撤回”，即使文档、代码和测试都有 REQ-012 链接也不合格。若增加审计、幂等等工程要求，登记推导依据，不修改原始客户陈述。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 从零测试、统一修复与复验</h2>
+<p>“从零”包含两个维度：清洁环境安装测试，以及一个真实客户示范从原始资料走到交付的完整旅程。既有服务冒烟和旧数据上点几次按钮都不够。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>测试范围</th>
+<th>必须取得的真实依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>清洁安装</td>
+<td>从固定源码/包、受控配置和空数据库开始，依赖、迁移、初始化及启动可复现</td>
+</tr>
+<tr>
+<td>工厂自身</td>
+<td>当前适用单元/集成、接口、模块命令、真实浏览器旅程、权限及持久数据校验</td>
+</tr>
+<tr>
+<td>工程门槛</td>
+<td>当前约定的类型/构建/依赖等检查，逐包真实单测与 CI、退出码及报告；独立代码审查和实际合并回执可核对，各包覆盖率按实测及既有门槛判断</td>
+</tr>
+<tr>
+<td>各阶段生产</td>
+<td>真实输入产生文档、原型、代码及构建；人工修改/确认、退回、补齐和重新生成按设计工作</td>
+</tr>
+<tr>
+<td>示范交付</td>
+<td>一份未参与生成和实现的预设验收清单，核对业务项目实际成果；不能只让生成方自评</td>
+</tr>
+<tr>
+<td>异常与恢复</td>
+<td>无效输入、重复/并发、断流/超时、额度/权限问题、暂停取消、节点重启、资源不足；按本期需求及适用场景验证</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>每页、子页、适用状态和视口的行为/视觉对照，全部必需用户旅程真实走通</td>
+</tr>
+<tr>
+<td>升级与发布</td>
+<td>空库安装与旧版数据升级分别验证，发布后冒烟、备份恢复及回滚范围明确</td>
+</tr>
+</tbody></table></div>
+<p>使用独立数据库、文件存储、服务和测试数据；不清空现有运行数据。模拟 Provider 可用于明确的契约或故障注入测试，真实 AI 生产能力仍需有相应真实运行证据及费用记录。网络和模型价格、预算或依赖不具备时记录具体阻塞，不能悄悄改成模拟成功。</p>
+<p>完整测试的分母来自本期已确认的必需条款及全部适用用例，不等于“现有测试目录全跑完”。发布前必测全部实际执行通过，约定工程门槛同时满足；未跑、跳过、未知及批准不适用分别列明，不能用空分母、历史报告或跨包平均制造全绿。</p>
+<p>每条缺陷记录：唯一 ID、影响条款和版本、复现条件/步骤、预期与实际、严重性、证据、责任任务、修复提交/构建、原用例复验、影响回归和关闭决定。统一状态建议为：<strong>发现 → 确认/归类 → 安排 → 修复待验 → 复验通过/失败 → 关闭或重新打开</strong>。</p>
+<p>同一根因可合并处理，但保留每个表现和需求影响；误报、环境问题、波动、重复和需求变更分别标记。不能删除失败、改预期迎合错误实现、把所有失败都转成“环境问题”，或只凭开发者说已修好就关闭。</p>
+<p>建议严重度基线：P0 为严重数据损害、越权或系统不可用；P1 为关键旅程/必需能力不可用、错误放行或没有可靠替代；P2/P3 为影响较低的功能或体验问题。具体等级按实际影响判定。正式发布不得留下未关闭 P0/P1，也不得留下未实现或未验证的本期必需条款；其他遗留只有在确实不阻断必需验收、影响和解决版本明确、采用决定可追溯时才可接受。变更范围需另留决定，不能用降严重度绕过必需验收。</p>
+<p>修复先跑原失败用例，再跑影响范围；阶段结束跑必需完整回归。没有实质变化时按有限次数停止无意义重试，保留诊断和下一步建议。</p>
+<p>建议保留小型冒烟示范，再增加一个多页面、含详情/编辑/附件或导出/状态转换的代表性项目，证明子页面、交互和追溯。具体示范业务及范围待确定，旧单页待办示范不能独自证明全部生产能力。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 发布后的版本与需求变更</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>推荐管理规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新版本</td>
+<td>记录需求/设计/原型基线、源码指纹、包哈希、迁移、配置引用、测试报告、发布日期、目标及运行结果</td>
+</tr>
+<tr>
+<td>发布失败</td>
+<td>留下失败及真实恢复状态；代码、数据库、文件及必要系统级配置/模板依赖按兼容性恢复，不用“重启完成”代替恢复验证</td>
+</tr>
+<tr>
+<td>线上缺陷</td>
+<td>绑定实际运行版本和影响范围，进入统一缺陷台账；热修复也有新候选、最小必要回归和发布记录</td>
+</tr>
+<tr>
+<td>客户需求变更</td>
+<td>保存原始请求、理由、优先级；分析影响、费用和兼容性；范围确认后建立新版本，不直接覆盖原 PRD</td>
+</tr>
+<tr>
+<td>上游改动</td>
+<td>沿关系找到受影响设计、原型、任务、实现、测试和发布候选，标记当前目标待复验；历史旧版证据保留原结论</td>
+</tr>
+<tr>
+<td>下游实现偏离</td>
+<td>判断缺陷或有理由的设计变更，按采用决定更新相应基线，避免事后补文档替错误开脱</td>
+</tr>
+<tr>
+<td>持续运行</td>
+<td>观察就绪、错误、资源、关键业务和证据可访问性；根据变更影响及可靠性目标安排回归，不无必要全天重跑收费模型</td>
+</tr>
+<tr>
+<td>退役与恢复</td>
+<td>保留可用版本、依赖、数据策略和恢复说明，明确证据保留、访问及清理方式</td>
+</tr>
+</tbody></table></div>
+<p>已有目标、预算及发布策略内的常规工作自动推进；当前规则不能决定的范围冲突、额度或目标变化再交管理者处理。七个人工点保留为当前事实，用户已明确成熟后全自动的最终目标，后续需逐项替换为有证据的自动质量门，保留辅助模式和可查询决定；不永久要求每阶段手工点击，也不立即绕过当前门禁。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 还需要补齐的要求</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>容易遗漏的方面</th>
+<th>推荐补充</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>范围与验收分母</td>
+<td>区分本期必需、批准分期、待明确及取消；所有原始要求都有去向，不能通过删需求提高完成率</td>
+</tr>
+<tr>
+<td>角色与权限</td>
+<td>谁可查看客户材料、执行任务、改范围和交付；项目与公司/个人资料隔离，凭据只用受控引用</td>
+</tr>
+<tr>
+<td>非功能要求</td>
+<td>性能/容量、可用性、恢复、隐私、安全、响应式及可访问性；具体适用指标缺失时保持待确定</td>
+</tr>
+<tr>
+<td>数据正确性</td>
+<td>字段、单位、唯一性、关联、并发/事务、迁移、导入导出、文件及数据库一致性</td>
+</tr>
+<tr>
+<td>外部依赖</td>
+<td>接口契约、真实/模拟边界、失败和版本兼容；不能把外部接口假成功记成产品通过</td>
+</tr>
+<tr>
+<td>AI 内容质量</td>
+<td>文档事实和客户意图、来源引用、反例及独立评审；另一模型评分不能替代实际文件和行为验证</td>
+</tr>
+<tr>
+<td>费用与持续恢复</td>
+<td>各任务的 Token/费用、恢复次数、剩余预算、停止原因及检查点；未知费用不能视为零</td>
+</tr>
+<tr>
+<td>并发开发与重复执行</td>
+<td>每个代码/工件的写者、独立副本、提交与合并；重复回传不重复计费/发布，取消后不能自动复活</td>
+</tr>
+<tr>
+<td>证据与工具可靠性</td>
+<td>测试器和门禁自身要用合格/不合格正反例检查，防止模拟、零用例、未执行或陈旧报告放行</td>
+</tr>
+<tr>
+<td>交付使用性</td>
+<td>安装、运维、用户说明、真实文件下载与校验；包必须能由另一环境照说明运行</td>
+</tr>
+<tr>
+<td>学习与经验</td>
+<td>原因、处理和适用边界沉淀为经验候选，经验证再发布为通用 skill</td>
+</tr>
+<tr>
+<td>Agent 与子 Agent</td>
+<td>定义/提示词/工具/技能/路由实际生效版本，父子任务、上下文、预算/取消传播；独立评估、提升及回滚</td>
+</tr>
+<tr>
+<td>全自动质量门</td>
+<td>阶段通过后自动安排后续，检查失败自动返工；正常完整输入下无逐关点击，异常能恢复，缺项明确阻塞</td>
+</tr>
+<tr>
+<td>原始输入完整性</td>
+<td>扫描件/OCR、长文分段、表格/附件、解析与上下文截断及疑点回流，不遗漏未送模型的内容</td>
+</tr>
+<tr>
+<td>真正交付使用</td>
+<td>交付决定/报告/备份与客户完整包分别管理；全部文档与软件同版，实际下载校验、干净安装和目标环境使用</td>
+</tr>
+</tbody></table></div>
+<p>完整多租户、OIDC、原生 App 等边界未因此改变。用户新增的全自动最终目标，已要求后续补齐完整交付及约定目标环境安装/部署和使用适配；原 PRD 客户产品生产自动发布的分期事实保留，不以此否定新目标，也不视为未知客户环境/权限已配置。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9. 判定口径与贾维斯管理视图</h2>
+<p>你要求的“无遗漏”按<strong>本期已明确必需条款 100% 有承接、有可检验结果</strong>执行目标定义；不等于承诺客户尚未表达的隐含要求也已全部发现。未明确项、推导项和分期项公开展示。</p>
+<p>原工厂 PRD 的 RTM L0a≥95%、L0b=100%、L0c=100%，以及逐页/视口 UI 关键项 100%、一般项≥95%、严重偏差 0 是已有口径。它们不自动等于本次更明确的“所有必需条款无遗漏”。后续落实时形成补充验收及口径协调记录，不直接修改 101 的旧阈值或历史签收。UI 的百分比也不能让一个必需页面或业务能力缺失被平均掩盖。</p>
+<p>范围、语义一致性和真实性分别检查。结构检查核对条目、引用及版本，独立内容评审核对意图与设计，真实工具验证代码和行为；成熟后按已配置标准自动过关与交付，需人裁决的业务歧义单独处理。证据缺失、必测未跑、错版本或模拟冒充真实，阶段不能正式通过。</p>
+<p>贾维斯项目页建议增加以下可下钻视图：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>视图</th>
+<th>展示内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>交付总览</td>
+<td>固定目标版本、部署/工厂质量/示范项目分别处于何状态，当前阻塞与下一任务</td>
+</tr>
+<tr>
+<td>产物目录</td>
+<td>原件、文档、所有页面/状态、代码、包；版本、来源、检查结果、下载和关联</td>
+</tr>
+<tr>
+<td>追溯矩阵</td>
+<td>从原始条款到发布双向查看，突出无承接、无来源、错版本和语义差异</td>
+</tr>
+<tr>
+<td>测试与缺陷</td>
+<td>必需/实际/跳过/失败、修复与回归，明确当前对象和环境</td>
+</tr>
+<tr>
+<td>版本与部署</td>
+<td>候选、已测、已发布、实际运行版本和恢复状态，哈希及数据迁移关系</td>
+</tr>
+<tr>
+<td>任务与资源</td>
+<td>节点、执行器、日志、停止/恢复、实际用量及预算；不靠活动量计算完成率</td>
+</tr>
+<tr>
+<td>变更与决定</td>
+<td>需求变化、影响集合、采用理由、受影响证据和后续计划</td>
+</tr>
+<tr>
+<td>Agent 与优化</td>
+<td>阶段/子 Agent 的稳定候选版本、真实父子执行、评估改进/回滚、实际生效提示词及共享用量</td>
+</tr>
+<tr>
+<td>自动交付</td>
+<td>项目模式、各质量门及返工、实际包/文档、安装入口、目标环境使用、自动恢复及待澄清</td>
+</tr>
+</tbody></table></div>
+<p>这些是推荐扩展视图，当前平台没有因此自动具备全部能力。现有任务只提供单一 <code>dependsOn</code>，多产物、多依赖和语义追溯需要扩展或明确台账承接，不能把一个字段称为完整关系图。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10. 当前事实与推进顺序</h2>
+<p>已有 R19 外层强模型及可靠递送基础，软件工厂历史完整审计仍为 NO-GO，旧源码结果不能验收最新内容。</p>
+<p>以下是本日较早 R20 部署入口快照；随后 R21 深审已看到新 HEAD <code>266104923b7f49b259dc8a7b827d599c5220ad16</code>。R20 的源码与运行元数据保留为历史，不能直接称为此刻最新部署就绪。R21 静态审阅报告及具体新增缺口见 <a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82Agent%E8%BF%AD%E4%BB%A3%E4%B8%8E%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88.html#section-2">深入方案 §2</a>。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>核对项</th>
+<th>R20 当时事实</th>
+<th>新候选仍需取得的依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>源码</td>
+<td><code>main / e375bd1c1d6d2c32bd432cd088a1b62fcd571a5c</code>；公开清单 581 个文件，指纹 <code>8ff60a78…822f8</code>；当时检查稳定，已跟踪源码无修改</td>
+<td>实施前重新核对最新内容并创建不可变独立候选；私有配置单独管理，不能直接沿用旧源码身份</td>
+</tr>
+<tr>
+<td>后端实例</td>
+<td><code>msf-app.service</code> 对应 18920；8080 是另一实例；两个 <code>/health</code> 均为 200，数据库、Redis、MinIO 基础健康正常</td>
+<td>明确候选与正式实例归属，核对真实功能、数据及运行构建</td>
+</tr>
+<tr>
+<td>前端</td>
+<td>5173 为独立前端进程，磁盘存在前后端构建目录</td>
+<td>源码、磁盘构建和已加载进程之间没有可核对的构建清单，版本对应关系仍未知</td>
+</tr>
+<tr>
+<td>打包入口</td>
+<td>存在构建、Docker 和服务入口；现有 Dockerfile 只打包后端及 shared，未包含前端构建</td>
+<td>补完整可运行包、前后端版本映射、清单与校验</td>
+</tr>
+<tr>
+<td>部署隔离</td>
+<td>现有 Compose 使用固定 8080、5432、6379、9000 等端口，已有持久数据目录</td>
+<td>候选采用独立目录、端口、服务名、配置和 PostgreSQL/Redis/MinIO 数据，不能直接原样并行启动</td>
+</tr>
+</tbody></table></div>
+<p>R20 和本轮 R21 深审都没有运行新构建、产品测试、项目模型、打包、部署、重启或业务数据库读取。R20 两个健康检查只证明观察时基础依赖可用，不是新源码或全部产品功能的验收。<a href="../artifacts/software-factory/goals-r20/latest-deployment-readiness.json">R20 只读快照</a>及<a href="../artifacts/software-factory/goals-r20/independent-goal-review.json">目标复核</a>保留当时范围。</p>
+<p>推荐先后顺序：</p>
+<ol>
+<li><strong>固定最新候选并完成打包部署核验</strong>：明确实际源码、当前实例、隔离目标、可运行包和最小业务验证，先实现你的第 1 条目标。</li>
+<li><strong>建立需求/产物目录及追溯矩阵</strong>：逐条补齐范围、语义和版本关系，形成全部阶段的质量分母。</li>
+<li><strong>守住真实性门禁并补真实生产能力</strong>：基于已有反例处理模拟放行风险；候选部署可以帮助诊断，不能绕过正式交付门禁。</li>
+<li><strong>代表性示范从零走通</strong>：同时核验工厂自身及其产物，包含真实失败、统一修复和新构建复验。</li>
+<li><strong>形成 Agent 与子 Agent 改进闭环</strong>：接入真实能力版本、委派与独立评估，候选比较、提升/回滚和跨项目回归。</li>
+<li><strong>完成全自动交付使用及持续演练</strong>：质量门自动化、需求到文档/软件/目标环境使用，异常恢复、变更维护及有边界连续运行；正常流程不依赖逐关人工点击。</li>
+</ol>
+<p>相关依据：<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%A6%96%E9%A1%B9%E7%9B%AE%E4%BA%A4%E4%BB%98%E8%AE%A1%E5%88%92.html">首项目交付计划</a> · <a href="101%E7%9B%91%E7%9D%A3%E7%8E%AF%E5%A2%83%E6%A3%80%E6%9F%A5%E4%B8%8E%E9%A6%96%E6%AC%A1%E5%AE%8C%E6%95%B4%E6%B5%8B%E8%AF%95.html">首次监督实测</a> · <a href="%E5%85%A8%E5%A4%A9%E6%8C%81%E7%BB%AD%E7%A0%94%E5%8F%91%E4%B8%8E%E5%BF%AB%E9%80%9F%E8%AF%AD%E9%9F%B3%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88.html">全天研发方案</a> · <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.html">建设档案</a>。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9B%AE%E6%A0%87%E4%B8%8E%E9%AA%8C%E6%94%B6%E6%A0%87%E5%87%86.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

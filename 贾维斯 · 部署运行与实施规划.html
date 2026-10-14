@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="32GB 桌机开发，48GB 桌机承载生产核心，高算力节点提供语音与文本服务，i3 分布在家庭公共空间。">
+  <meta name="jarvis-source-sha256" content="da11b43da1c40c6b37642dba5b18ac1d3f522b68512b26aed1e70a4d5d962f8f">
+  <title>贾维斯 · 部署运行与实施规划</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">实施规划 1.1</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%B4%BE%E7%BB%B4%E6%96%AF%20%C2%B7%20%E9%83%A8%E7%BD%B2%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%AE%9E%E6%96%BD%E8%A7%84%E5%88%92.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 8 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 推荐落地方式</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 各机器具体安排</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 正式软件怎样组织</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">3.1 首版技术路线</a>
+<a class="toc-link level-3" href="#section-3-2" data-parent="3">3.2 九个业务域的部署边界</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. 平台每天如何运行</a>
+<a class="toc-link level-3" href="#section-4-1" data-parent="4">4.1 设备、项目和大屏</a>
+<a class="toc-link level-3" href="#section-4-2" data-parent="4">4.2 全天开发监督</a>
+<a class="toc-link level-3" href="#section-4-3" data-parent="4">4.3 家庭语音和个人记忆</a>
+<a class="toc-link level-3" href="#section-4-4" data-parent="4">4.4 知识神殿与经验成长</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. 服务发布、恢复与资源保障</a>
+<a class="toc-link level-3" href="#section-5-1" data-parent="5">5.1 开发、预发布、正式运行</a>
+<a class="toc-link level-3" href="#section-5-2" data-parent="5">5.2 数据与备份</a>
+<a class="toc-link level-3" href="#section-5-3" data-parent="5">5.3 故障与降级</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 分阶段实施与验收</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 真正安装前要核实的事实</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. 与现有设计的关系</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-04<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <aside id="multi-node-current-note" role="note" style="max-width:1360px;margin:20px auto;padding:14px 18px;border:1px solid #31505c;border-radius:10px;background:#12262f;color:#d6edf2;line-height:1.8">2026-10-07主备更新：<strong>112主节点 → 101接替 → i3第三后备</strong>；联想继续开发。此页保留历史安排。<a style="color:#80dbea;text-decoration:underline" href="docs/多节点主备与故障接替方案.html">查看当前主备方案 ↗</a></aside><main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">开发 / 生产 / 算力 / 房间入口</p>
+        <h1 id="document-title">贾维斯 · 部署运行与实施规划</h1>
+        <p class="subtitle">32GB 桌机开发，48GB 桌机承载生产核心，高算力节点提供语音与文本服务，i3 分布在家庭公共空间。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-04</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>32GB</strong><span>独立开发环境</span></div><div class="stat"><strong>48GB</strong><span>常驻生产核心</span></div><div class="stat"><strong>2＋1 处</strong><span>客厅、书房 · 厨房餐厅候选</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><blockquote>
+<p>日期：2026-10-04。以 V4 设备清单、已确认的 V5 平台拆分和 V15 原型为基线。本文件是部署与实施建议；本轮没有登录其他机器、安装服务或改变现有项目。</p>
+<p>当前已有可交互 UI 原型。正式平台需要补建后台、真实数据、节点接入、语音链路、权限、任务执行与恢复机制。原型中的进度和图形由模拟数据驱动。</p>
+</blockquote>
+<blockquote>
+<p>1.1 调整：按用户本轮提议，32GB 桌机承担平台开发，48GB 桌机承担生产，高算力机器提供语音与文本接口，i3 转为房间入口。本文将“生成环境”按“生产环境”理解。客厅、书房优先，厨房餐厅待现场验证，卧室暂不接入；算力节点是否专用常驻仍需确定。</p>
+</blockquote>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 推荐落地方式</h2>
+<p>采用 <strong>32GB 开发环境＋48GB 生产核心＋独立算力服务＋i3 房间终端</strong>。这一分工将开发、正式运行、模型计算和房间交互分开，适合作为首期部署方案。48GB 机与 QNAP 常驻，实时语音至少有一条常驻且经过验证的算力路线；重构建、OCR 和批处理按任务运行。</p>
+<p>32GB 的 i5-7400 是平台主开发环境，HP 和联想仍可用于编辑、远程开发及维护。32GB 内存适合首期轻量开发环境，但 4C4T CPU 需要限制同时构建、测试与后台工人的数量；重计算调用独立接口。48GB 机承载业务与数据，后台开发执行器安排到独立工人，保护家人正在使用的生产服务。两台机器的 256GB 磁盘余量和健康度优先核验。</p>
+<p>延续 V5 的“模块化核心＋独立任务工人”：九个业务域明确数据归属，首期共用业务应用和数据库；语音、OCR、索引、研发执行等工人独立运行。逐步交付可以使用的功能，业务量增长后再拆分服务。</p>
+<p>正式平台通过网址访问。电脑管理、手机管理、各领域大屏和语音终端调用同一套后台接口。V15 保留为设计基线；生产前端将拆成组件、按需加载主题资源，并处理网络异常、身份权限和真实状态。</p>
+<div class="table-wrap" aria-label="部署拓扑，可横向查看">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 475" role="img" aria-labelledby="deploy-title deploy-desc" style="display:block;width:100%;min-width:660px;background:var(--paper);color:var(--ink)">
+<title id="deploy-title">贾维斯分层部署拓扑</title><desc id="deploy-desc">32GB桌机负责开发，i3在客厅、书房和候选厨房餐厅提供语音入口。48GB生产核心保存业务与记忆，协调独立开发工人、GPU语音文本服务与批处理，并连接NAS和云端辅助。</desc>
+<defs><marker id="deploy-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="var(--accent)"/></marker></defs>
+<g fill="none" stroke="var(--accent)" stroke-width="2" opacity=".65" marker-end="url(#deploy-arrow)"><path d="M180 88V108H500V132"/><path d="M500 88V132"/><path d="M820 88V108H500V132"/><path d="M500 215V240H180V265"/><path d="M500 215V265"/><path d="M500 215V240H820V265"/><path d="M250 174H20V417H240"/><path d="M750 174H980V417H815"/></g>
+<g fill="var(--soft)" stroke="var(--line)"><rect x="45" y="25" width="270" height="63" rx="9"/><rect x="365" y="25" width="270" height="63" rx="9"/><rect x="685" y="25" width="270" height="63" rx="9"/><rect x="250" y="132" width="500" height="83" rx="10" stroke="var(--accent)"/><rect x="45" y="265" width="270" height="73" rx="9"/><rect x="365" y="265" width="270" height="73" rx="9"/><rect x="685" y="265" width="270" height="73" rx="9"/><rect x="240" y="385" width="280" height="63" rx="9"/><rect x="545" y="385" width="270" height="63" rx="9"/></g>
+<g fill="currentColor" font-family="Microsoft YaHei, sans-serif" text-anchor="middle" font-size="17" font-weight="600"><text x="180" y="52">32GB 桌机 · 平台开发</text><text x="500" y="52">i3 · 家庭房间入口</text><text x="820" y="52">电脑 · 手机 · 管理大屏</text><text x="500" y="165">48GB 桌机：Jarvis Core ＋ 正式数据</text><text x="180" y="295">独立开发工人 · i3 / E5</text><text x="500" y="295">4070 · 语音与文本服务</text><text x="820" y="295">2060 / 1070 · 备用与批处理</text><text x="380" y="411">QNAP · 原件与归档备份</text><text x="680" y="411">云端 · 模型及外部监测</text></g>
+<g fill="var(--muted)" font-family="Microsoft YaHei, sans-serif" text-anchor="middle" font-size="13"><text x="180" y="74">开发测试后按授权发布</text><text x="500" y="74">客厅、书房，厨房餐厅候选</text><text x="820" y="74">同一平台，按身份展示</text><text x="500" y="191">身份 · 记忆 · 任务 · 授权 · 事件 · 状态汇总</text><text x="180" y="319">有任务时运行，工作区独立</text><text x="500" y="319">实时交互优先，常驻路线待实测</text><text x="820" y="319">按兼容与质量测试结果分派</text><text x="380" y="435">生产数据库活跃数据留在本地 SSD</text><text x="680" y="435">按策略使用，不承载全部流量</text></g>
+</svg>
+</div>
+
+<p>图中为逻辑部署关系。生产应用与数据库集中在 48GB 机，首版依靠备份和人工恢复保障可恢复性；这是单机生产，自动故障接管需要后续单独建设和验证。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 各机器具体安排</h2>
+<p>以下配置来自现有确认记录，共 21 项资产：18 台电脑、1 台 QNAP、2 台云服务器。编号为规划编号，实际部署前绑定主机名和设备身份。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>主要运行内容</th>
+<th>运行安排</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i3-01，6100T / 16GB / 256GB</td>
+<td>一楼客厅语音入口：本地唤醒、拾音、回声处理、播放，屏幕可选</td>
+<td>需要随时对话时保持在线；先部署验证</td>
+</tr>
+<tr>
+<td>i3-02，同配置</td>
+<td>二楼书房语音入口，可显示对话与学习内容</td>
+<td>需要随时对话时保持在线；独立房间会话</td>
+</tr>
+<tr>
+<td>i3-03，同配置</td>
+<td>厨房／餐厅候选入口，重点验证噪声、拾音、播放与油烟环境</td>
+<td>客厅、书房通过后再决定启用</td>
+</tr>
+<tr>
+<td>i3-04</td>
+<td>冷备与恢复演练，恢复最低业务能力</td>
+<td>平时关闭；16GB 冷备按降级配置恢复，不能承诺全量承接 48GB 负载</td>
+</tr>
+<tr>
+<td>i3-05 / 06</td>
+<td>轻量开发工人、测试、资料同步与经验整理</td>
+<td>按任务运行，首期限制并发</td>
+</tr>
+<tr>
+<td>i3-07</td>
+<td>家庭办公与备用管理终端</td>
+<td>使用时开启</td>
+</tr>
+<tr>
+<td>i3-08</td>
+<td>独立全域大屏或机动终端</td>
+<td>按需；房间入口有屏幕时可复用其显示能力</td>
+</tr>
+<tr>
+<td>i3-09 / 10</td>
+<td>机动与故障替换</td>
+<td>平时关闭</td>
+</tr>
+<tr>
+<td>第 7 代 i7 / 48GB / 256GB</td>
+<td>生产网页、Jarvis Core、PostgreSQL、个人记忆、轻量检索、权限审批、监督协调与监测</td>
+<td>24 小时；具体 CPU、系统、磁盘与资源限额先核验</td>
+</tr>
+<tr>
+<td>ProDesk i5-7400 / 32GB / 256GB NVMe</td>
+<td>整个平台主开发环境，独立测试数据与预发布环境</td>
+<td>按开发安排；重构建可交工人，关闭开发机不影响生产</td>
+</tr>
+<tr>
+<td>E5-2696 v3 / 128GB / RTX 2060 6GB</td>
+<td>独立研发工人、重构建、多环境、大内存处理；GPU 可测试轻量语音与备用推理</td>
+<td>任务期间在线；若承担实时语音则对应服务需常驻</td>
+</tr>
+<tr>
+<td>E5-2698B v3 / 64GB / GTX 1070 8GB</td>
+<td>批处理、实验、备用算力</td>
+<td>默认关闭，确认软件与 GPU 兼容后启用</td>
+</tr>
+<tr>
+<td>家庭 i7-10700F / 64GB / RTX 4070 Ti SUPER 16GB</td>
+<td>语音识别／合成、文本解读、向量与 OCR 接口；支持专用或兼任家用两种安排</td>
+<td>专用方案常驻；兼任方案本人使用优先，需另一条常驻语音路线</td>
+</tr>
+<tr>
+<td>公司 HP / Core 7 240H / 64GB / 1TB</td>
+<td>保持办公与开发，可远程连接平台开发环境，提交指定经验</td>
+<td>按办公需求；采用已允许的接入范围</td>
+</tr>
+<tr>
+<td>联想 / Ryzen 7 PRO 4750U / 64GB / 512GB</td>
+<td>移动与备用开发，个人项目接入</td>
+<td>按需；家庭 GPU 机将来专用化时的替代开发候选</td>
+</tr>
+<tr>
+<td>Mac / 8GB / 256GB / 最高 macOS 12</td>
+<td>浏览器、资料阅读、远程终端、兼容性测试</td>
+<td>按需；先核对客户端兼容</td>
+</tr>
+<tr>
+<td>QNAP，型号与容量待核实</td>
+<td>扫描原件、家庭附件、知识版本、项目产物、加密版本化备份</td>
+<td>常驻；具体快照、卷和关机联动能力按型号确认</td>
+</tr>
+<tr>
+<td>广州云，2C2G / 40GB / 3Mbps</td>
+<td>从外部检查平台可用性、必要公网回调、轻量入口</td>
+<td>保持现有用途，按需增加轻服务</td>
+</tr>
+<tr>
+<td>日本云，2C4G / 80GB / 5Mbps</td>
+<td>必要模型网关、海外服务访问、容量允许的关键加密副本</td>
+<td>按需配置；大文件直接在适当存储链路传输</td>
+</tr>
+</tbody></table></div>
+<p>核心常驻服务器改为一台 48GB 机。QNAP、路由器、常驻语音算力以及启用的房间终端也需要在线；独立开发工人有任务时保持运行。10 台 i3 先使用客厅、书房两台，厨房餐厅为第三台候选，卧室暂不接入。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 正式软件怎样组织</h2>
+<h3 id="section-3-1" tabindex="-1">3.1 首版技术路线</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>建议</th>
+<th>原因与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>管理网页与大屏</td>
+<td>TypeScript + React，复用 V15 视觉与交互规范</td>
+<td>一套前端适配管理、手机和大屏；主题为呈现配置</td>
+</tr>
+<tr>
+<td>业务核心</td>
+<td>Python + FastAPI，九个业务域按模块组织</td>
+<td>便于统一接口、数据校验和接入语音/OCR 工人</td>
+</tr>
+<tr>
+<td>正式数据</td>
+<td>PostgreSQL；小规模语义检索优先评估 pgvector</td>
+<td>任务、审批、记忆与关系保存正式记录；中文检索需做分词与效果评测</td>
+</tr>
+<tr>
+<td>任务执行</td>
+<td>48GB 机调度并保存正式记录，i3 / E5 工人执行</td>
+<td>首期可用数据库派发队列；源码修改、构建、测试在独立工人，生产机保持业务稳定</td>
+</tr>
+<tr>
+<td>文件与版本</td>
+<td>NAS 原件/附件，工人本地缓存；Git 保存项目和发布的 Skill</td>
+<td>保存校验值、版本、权限和关联；原件可追溯，索引可重建</td>
+</tr>
+<tr>
+<td>节点接入</td>
+<td>Linux 系统服务、Windows 后台组件，统一 Jarvis Agent 协议</td>
+<td>只读采集与受控执行分别配置；老 Mac 可先仅作网页终端</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>经驱动验证的 Ubuntu 24.04 LTS + Docker Engine / Compose</td>
+<td>各机器管理自己的服务组；现有系统先盘点，不直接覆盖</td>
+</tr>
+<tr>
+<td>网络入口</td>
+<td>私有网络＋HTTPS 网关，优先评估 Tailscale 与 Caddy</td>
+<td>管理访问按设备/用户限制；数据库和执行器管理端口保持私网范围</td>
+</tr>
+<tr>
+<td>流程与监测</td>
+<td>内置状态规则；需要时接 n8n、基础指标与可用性检查</td>
+<td>工作流辅助跨系统流程，正式任务、授权和验收仍由 Core 管理</td>
+</tr>
+</tbody></table></div>
+<p>这是针对现有家庭规模的推荐选型，尚未完成本项目负载实测。Compose 可用于生产服务组与不同环境配置，但不会自动成为跨机器调度或高可用系统。<a href="https://docs.docker.com/compose/how-tos/production/">Docker 官方说明</a>。Ubuntu 24.04 LTS 的标准安全维护覆盖至 2029 年 5 月。<a href="https://ubuntu.com/about/release-cycle">Ubuntu 生命周期</a>。</p>
+<p>48GB 机内按容器区分应用、数据库、调度、网关与监测，设置 CPU、内存、并发和日志限额。内存容量不能替代 CPU 与磁盘性能，先验证两处房间交互及少量并发任务，再扩大规模。<a href="https://docs.docker.com/reference/compose-file/services/">Compose 服务资源配置</a>。开发和测试使用独立数据库、配置与凭证，避免实验任务修改正式记忆和项目状态。</p>
+<p>pgvector 将向量保存在 PostgreSQL，适合首期减少组件数量；规模、过滤召回或隔离需求超出实测能力时，再将检索迁入 Qdrant 等独立服务。<a href="https://github.com/pgvector/pgvector">pgvector 官方项目</a>。实体、关系和证据先用关系表组织，复杂图遍历出现实际需求后再评估专用图数据库。</p>
+<h3 id="section-3-2" tabindex="-1">3.2 九个业务域的部署边界</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>业务域</th>
+<th>Core 内的职责</th>
+<th>独立运行的部分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>智能交互与语音</td>
+<td>意图、参数校验、会话路由、业务动作与授权</td>
+<td>房间终端、ASR / TTS、流式播放与音频处理</td>
+</tr>
+<tr>
+<td>知识接入中心</td>
+<td>知识源注册、授权、同步状态、检索规则</td>
+<td>各类连接器、增量同步与索引工人</td>
+</tr>
+<tr>
+<td>知识神殿与原文工坊</td>
+<td>书籍版本、疑点、审核、发布、证据、故事与知识关系</td>
+<td>OCR、多路复核、解读、索引与课程生成</td>
+</tr>
+<tr>
+<td>记忆神殿</td>
+<td>个人设定、会话、记忆候选、确认、修订与遗忘</td>
+<td>按策略整理会话和生成候选的工人</td>
+</tr>
+<tr>
+<td>家庭学习与生活</td>
+<td>学习目标与反馈、课次、生活事项、家庭共享安排</td>
+<td>天气等外部适配器、陪练和讲述服务</td>
+</tr>
+<tr>
+<td>服务器与应用运维</td>
+<td>主机、项目落位、服务版本、健康、变更与恢复记录</td>
+<td>采集 Agent、健康检查、指定部署与运维工人</td>
+</tr>
+<tr>
+<td>AI 研发与交付</td>
+<td>项目目标、任务、预算、授权、验证证据、交付包</td>
+<td>各节点 CC / Codex 适配器、构建与测试环境</td>
+</tr>
+<tr>
+<td>灵感与深度研究</td>
+<td>灵感、问题、证据、方案、决策和转项目关系</td>
+<td>检索、资料整理、研究与报告工人</td>
+</tr>
+<tr>
+<td>经验与 Skill</td>
+<td>收件、去重、适用条件、验证、版本发布和复用反馈</td>
+<td>各终端提交入口、整理与验证工人</td>
+</tr>
+</tbody></table></div>
+<p>九个域可以分别开发；它们共用身份、对象 ID、授权、任务、事件和通知。总览与语音都查询领域的正式状态。聊天记录由记忆域维护；机器健康和项目验收等事实由对应业务域维护。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 平台每天如何运行</h2>
+<h3 id="section-4-1" tabindex="-1">4.1 设备、项目和大屏</h3>
+<p>设备上报心跳、资源、项目关联、服务状态和时间。建议心跳起步约 60 秒，连续三次缺失标记连接过期，后续按网络实测调整。任务变更即时推送，界面显示来源、更新时间与最后已知状态。</p>
+<p>管理员在任意已接入电脑上登记项目与工作副本。后台任务在独立分支和工作区运行，一个写入工作区只归一个执行者。本人临时维护某服务时可以暂停自动操作；恢复权限后再续接。</p>
+<p>Core 聚合这些事件，供总览、大屏、手机和语音查询。模型负责解释事实或形成建议，任务进度由阶段和验收证据汇总，未知状态明确显示。公司 HP 首期按指定范围只读接入，敏感资料由本人选择分享。</p>
+<h3 id="section-4-2" tabindex="-1">4.2 全天开发监督</h3>
+<p>本人设置目标、验收、允许的工具与目录、预算、运行时段和停止条件。48GB 生产机负责监督、派发和记录；独立 i3 / E5 工人领取任务，在本机启动执行器，将事件、提交、构建与测试产物上报。平台自身开发可在 32GB 开发环境执行；需要关机后继续时，先托管到有完整环境的工人。</p>
+<p>监督过程为：<strong>派发 → 执行 → 独立验证 → 未达标时有限续作 → 达标后形成交付包</strong>。正式部署另有授权与健康检查。进程退出、一轮回复结束、验收通过、部署成功和线上健康分别记录。</p>
+<p>首版为 Codex 与 Claude Code 分别实现适配器。可使用 Codex 非交互结构化输出，以及 Claude Code 程序化调用、流式事件和会话恢复；平台以自己的 Agent 通道跨机器传递任务。<a href="https://learn.chatgpt.com/docs/non-interactive-mode">Codex 非交互模式</a>、<a href="https://learn.chatgpt.com/docs/codex-sdk">Codex SDK</a>、<a href="https://code.claude.com/docs/en/headless">Claude Code 程序化运行</a>。</p>
+<p>已有桌面会话先接入观察；要托管续作，需确认执行器可用的接口、工作区和授权。后续可评估节点本地的 Codex App Server stdio 接入；其 WebSocket 传输目前属于实验用途，不作为首版生产跨机器底座。<a href="https://learn.chatgpt.com/docs/app-server">Codex App Server</a>。</p>
+<p>Core 全天监控，执行节点在任务期间保持开机。HP 关机后，已经托管到后台节点的任务仍可继续；只在 HP 上运行的任务进入离线或等待状态。迁移任务须带上仓库、环境和检查点并确认旧执行者停止，不能只搬一个会话 ID。</p>
+<p>任务与每次执行尝试持久保存，使用唯一标识、租约、心跳和去重。断网恢复先核对原进程，避免重复启动并同时改同一目录。人工暂停、权限拒绝、缺少输入、预算/额度耗尽、重复失败达到上限时进入对应等待或阻塞状态。提前批准范围内可持续推进，范围外动作形成具体审批项。</p>
+<p>模型预算按渠道分别设限与记账。Codex 使用 ChatGPT 登录时受订阅权益与额度约束；使用 API key 时按 OpenAI Platform API 用量计费。额度耗尽后不自动切换付费渠道。<a href="https://learn.chatgpt.com/docs/auth">Codex 官方认证说明</a>。</p>
+<h3 id="section-4-3" tabindex="-1">4.3 家庭语音和个人记忆</h3>
+<p>首版采用 <strong>i3 本地唤醒／拾音 → 生产核心协调识别 → 身份与意图确认 → 查询／任务与对话生成 → 合成 → 原房间播放</strong>，支持流式播放、打断和任务回执。ASR、TTS、OCR、向量生成与文本解读由算力接口提供，身份、记忆、权限、业务事实和任务状态由生产核心保存。</p>
+<p>房间实施次序为：一楼客厅 → 二楼书房 → 厨房／餐厅候选。卧室暂不部署。i3 主要负责交互、短音频缓存和离线提示；每个房间不另建长期记忆库。终端能力可先评估具备本地关键词检测与 VAD 的方案，实际唤醒词、语言、误触发和延迟须现场验证。<a href="https://github.com/k2-fsa/sherpa-onnx">sherpa-onnx 官方项目</a>。</p>
+<p>固定终端负责拾音、唤醒、回声处理和播放。通常保持本地唤醒，只把触发后的必要音频送入识别链路；提供物理或清楚可见的静音入口。普通浏览器需要麦克风授权和安全来源，全天唤醒优先使用有后台音频能力的专用终端组件。<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia">MDN 麦克风接口说明</a>。</p>
+<p>每个人独立配置声音、唤醒词、交流方式与记忆范围。声音和声纹帮助选择档案；敏感记忆与管理动作需要可靠认证。身份不明确时使用家庭公共范围，随后确认个人档案。原始音频默认不长期保存，会话与长期记忆按本人保留策略处理；候选偏好确认后才能成为正式记忆。</p>
+<p>房间身份、终端身份、会话身份和成员身份分别记录，避免把“厨房正在说话”直接认作某位家人。跨房间继续对话需确认原会话与播放交接；同一句唤醒被多个终端听到时由协调器选择一个响应端。两处可同时对话的能力单独实测，不以终端数量推定模型并发。</p>
+<p>若 4070 改为专用 AI 服务机，可作为实时算力常驻节点，32GB 桌机承担平台开发；若仍兼任家用，则需要经过验证的常驻 CPU、备用 GPU 或本人允许的云端语音路线。隐私模式只使用本地能力，能力不足时提示降级，不能悄悄转云端。实时 ASR / TTS 与大型 OCR、书籍解读采用不同任务队列和资源限额，确保批处理可暂停或让出资源。</p>
+<p>客厅与厨房的电视、抽油烟机、餐具声，以及终端自身播放都会影响交互。优先验证麦克风、扬声器、摆位、回声消除、噪声处理和插话；厨房小机应远离油烟与水汽，可将音频外设和主机分开放置。屏幕可选，全天唤醒使用具备后台音频能力的终端组件。</p>
+<h3 id="section-4-4" tabindex="-1">4.4 知识神殿与经验成长</h3>
+<p>书籍扫描原件写入 NAS，保存哈希、页序和版本；工人从本地缓存解析。OCR 输出进入校对暂存区，疑点、人工决定和原文修订入正式数据。只有达到约定质量门槛并发布的版本，才能生成正式教学故事与索引。</p>
+<p>知识关系、故事和课程均链接具体原文版本与页段。校勘变更触发派生内容复核与重建。反复 AI 一致不能证明零错误；无新证据的复核设上限，未决关键疑点交人工并阻止相关内容发布。先用约 30 页含古文、异体字或复杂排版的样本校验，再处理整本书。</p>
+<p>外部知识源通过连接器动态注册，可添加、停用、增量同步和撤权。连接数量可扩展，实际容量、费用、授权和处理速度分别限额；撤权时取消检索资格并清理适用的索引与缓存。</p>
+<p>任意终端提交的灵感与经验先进入收件区，关联机器和项目，再整理、去重、验证。经过验证的 Skill 发布为版本化文件，按适用环境提供给后续执行器；使用结果回流。知识缺口、证据冲突、学习薄弱点和重复问题均可形成有出处的建议，由本人或家人决定采用。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. 服务发布、恢复与资源保障</h2>
+<h3 id="section-5-1" tabindex="-1">5.1 开发、预发布、正式运行</h3>
+<p>32GB 桌机保存平台开发环境；HP、联想或其他电脑可远程开发与维护。开发、测试和预发布使用独立配置与数据库，首期在开发机上按需运行；复杂验证可交闲置 i3 或 E5。每个交付包包含源码版本、构建产物、配置模板、数据库迁移、验证报告、部署与回退说明。验证健康和恢复后，再按有效授权部署到 48GB 生产机。</p>
+<p>正式服务交给容器或系统服务管理，并配置启动、健康检查、日志限额和失败告警。已经运行的自研项目先登记所在机器、版本、启动方式、API 和恢复方法，只读监测；后续逐个纳入发布流程。</p>
+<p>回退前检查数据库变更是否兼容。破坏性迁移要有可验证的恢复路径，前端版本回退不能代替数据恢复。首期不承诺升级无感或自动切换。</p>
+<h3 id="section-5-2" tabindex="-1">5.2 数据与备份</h3>
+<p>活跃数据库、开发目录、解析临时文件和热索引放本地 SSD。NAS 保存大文件、原件、正式产出和备份。256GB 小盘要设置缓存清理与最低余量，扫描量和工作区增长到阈值时再规划扩盘。</p>
+<p>先建立每日数据库一致性备份、定期文件增量备份和 NAS 之外的关键加密副本。备份内容涵盖账号、任务、记忆、知识源配置、原文版本、Git、必要密钥恢复材料及删除标记。恢复到冷备环境后验证真实业务，记录耗时与可恢复时间点，再确定恢复目标。</p>
+<p>忘记个人记忆时撤回记录、摘要、索引与缓存；恢复旧备份后重新应用删除标记。保留期内的备份按策略到期清理。NAS RAID 和快照可辅助恢复，仍需独立副本。</p>
+<h3 id="section-5-3" tabindex="-1">5.3 故障与降级</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>应有行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>家庭断网或云模型失败</td>
+<td>本地采集和可用的本地查询继续；需要云端的任务等待，语音按已批准路线降级</td>
+</tr>
+<tr>
+<td>数据库失败</td>
+<td>暂停需要持久确认的新业务动作；端侧暂存有唯一标识的事件，界面显示过期状态，恢复后去重补传</td>
+</tr>
+<tr>
+<td>NAS 不可用</td>
+<td>暂停依赖原件或归档的新任务；有缓存的读取按权限继续，缓存不可当作已完成归档</td>
+</tr>
+<tr>
+<td>开发节点失联</td>
+<td>标记执行尝试失联，先核对旧进程与工作区；确认停止后才恢复或迁移</td>
+</tr>
+<tr>
+<td>48GB 生产机故障或断电</td>
+<td>本地房间唤醒可继续，中央记忆与业务服务不可用时给出明确离线提示；恢复生产机或在冷备上恢复最低业务能力，UPS 和来电恢复顺序经过演练</td>
+</tr>
+</tbody></table></div>
+<p>在预留给自动任务的资源配额内，调度优先保障家庭实时语音，再处理必要查询和后台开发，OCR 与资料批处理排队；本人正在使用的开发资源不被强制抢占。CPU、内存、GPU 显存、并发、模型费用和日志保留设独立限额。功耗、语音延迟和并发能力以实测为准；UPS 容量依据真实负载与目标续航选择。</p>
+<p>私网设备访问按用户、节点标签和端口显式限制；再由应用身份控制数据范围。Caddy 可提供 HTTPS，使用内部证书时还需让客户端信任相应证书。<a href="https://tailscale.com/docs/features/access-control/grants">Tailscale 访问策略</a>、<a href="https://caddyserver.com/docs/automatic-https">Caddy HTTPS</a>。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 分阶段实施与验收</h2>
+<p>阶段按结果放行。工期在基础环境盘点及第一条真实链路试做后估算；持续开发和家庭语音可在底座完成后并行推进。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>建设内容</th>
+<th>放行条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0：实机核验</td>
+<td>核验 32GB 开发机、48GB 生产机、算力节点与冷备；确认房间音频与网络</td>
+<td>清单对应实机；备份和迁移范围明确；生产与至少一条常驻语音路线稳定性测试通过</td>
+</tr>
+<tr>
+<td>1：平台底座</td>
+<td>登录与权限、Core、数据库、基础 Agent、真实总览、项目登记、经验收件、备份恢复</td>
+<td>至少两机器、一项目、一既有服务真实上报；两人数据隔离；重启与恢复后记录正确</td>
+</tr>
+<tr>
+<td>2：首版可用</td>
+<td>独立工人的 CC/Codex 开发闭环；客厅语音通过后扩到书房，厨房餐厅现场评估</td>
+<td>开发派发→验证→交付；固定终端唤醒、打断、个人档案、重复唤醒协调有效；人工暂停与离线不误续作</td>
+</tr>
+<tr>
+<td>3：双神殿</td>
+<td>样本 OCR、疑点审核、原文发布、故事引用、知识源接入与遗忘</td>
+<td>样本逐页可追溯；未决疑点阻止发布；两人学习进度独立；撤权与删除后不再召回</td>
+</tr>
+<tr>
+<td>4：完整交付</td>
+<td>灵感→研究→项目；经验→Skill→复用；预发布→授权发布→健康检查与恢复</td>
+<td>一小项目完成全过程，部署与验收有证据，一次恢复成功，经验可在下一任务复用</td>
+</tr>
+<tr>
+<td>5：扩展优化</td>
+<td>增加机器、知识源、房间和项目并发；资源调度、专用语音节点、必要服务拆分</td>
+<td>容量、成本、延迟、夜间持续运行和故障演练结果支持扩容；新增组件有恢复方法</td>
+</tr>
+</tbody></table></div>
+<p>首个可用版本应至少支持：查询真实机器与项目；语音询问进度；托管一个明确的小项目；从开发终端提交经验；两位家人的记忆隔离；管理大屏显示事实状态。随后将知识生产、课程、深研与运维交付接入。</p>
+<p>阶段 2 至少模拟一次断网、重复事件、执行器退出、审批拒绝、预算/额度不足与人工暂停。阶段 3 验证勘误传播和恢复备份后的遗忘状态。达到这些条件后，再把任务数量和知识规模扩大。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 真正安装前要核实的事实</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>事实</th>
+<th>为什么影响部署</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32GB 与 48GB 桌机系统、磁盘余量/健康；48GB 完整 CPU 型号</td>
+<td>确定开发与生产配置、容量和是否先扩盘</td>
+</tr>
+<tr>
+<td>两台 E5 的 CPU 路数、系统版本、磁盘和现有用途</td>
+<td>判断构建、虚拟化和 GPU 驱动的兼容范围</td>
+</tr>
+<tr>
+<td>i3 整机型号、SSD、网口、WOL 与来电启动</td>
+<td>选择稳定常驻机；自动唤醒须验证主板和网络支持</td>
+</tr>
+<tr>
+<td>QNAP 型号、容量、卷/RAID、现有备份、UPS</td>
+<td>确定原件容量、恢复方案和断电联动</td>
+</tr>
+<tr>
+<td>家庭网络、跨楼层连通性、上行带宽、可访问的模型服务</td>
+<td>优先有线连接生产、算力与房间小机；验证远程管理与云语音质量</td>
+</tr>
+<tr>
+<td>客厅、书房、候选厨房餐厅的麦克风/扬声器和噪声/回声</td>
+<td>确定有效终端摆位与并发，卧室暂不接入</td>
+</tr>
+<tr>
+<td>4070 专用常驻或兼任家用；备用语音路线质量与功耗</td>
+<td>保证家人随时可用的语音能力，与真人开发资源协调</td>
+</tr>
+<tr>
+<td>已有项目的启动、部署、API 与可接入范围</td>
+<td>先登记和只读接入，随后制定具体发布方案</td>
+</tr>
+<tr>
+<td>两台 Win10 设备实际版本与维护安排</td>
+<td>保留日常用途的同时确认受支持环境，公司 HP 按其实际管理条件处理</td>
+</tr>
+</tbody></table></div>
+<p>这些未知项不会阻止 Core 和业务接口的设计。涉及重装、迁移、正式发布或公司资料接入时，需基于核验后的具体对象与范围执行。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 与现有设计的关系</h2>
+<p><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV4.0%20%C2%B7%20%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%BE%E5%A4%87%E8%A7%84%E5%88%92.md">V4 总体设计与设备规划</a> 是硬件与管家职责基线；<a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV5.0%20%C2%B7%20%E5%B9%B3%E5%8F%B0%E6%8B%86%E5%88%86%E4%B8%8E%E5%8F%8C%E7%A5%9E%E6%AE%BF%E5%86%B3%E7%AD%96%E6%96%B9%E6%A1%88.md">V5 平台拆分与双神殿</a> 是业务设计；<a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV15.0%20%C2%B7%20%E5%8D%81%E5%A5%97%E4%B8%BB%E9%A2%98%E4%B8%8E%E5%85%A8%E5%B9%B3%E5%8F%B0%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">V15 交互原型</a> 是界面基线。本文件 1.1 按最新提议调整物理落位，替代此前两台 i3 承载核心、48GB 承载开发的分工；后续实测结果补入设备档案和实施记录。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%20%C2%B7%20%E9%83%A8%E7%BD%B2%E8%BF%90%E8%A1%8C%E4%B8%8E%E5%AE%9E%E6%96%BD%E8%A7%84%E5%88%92.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

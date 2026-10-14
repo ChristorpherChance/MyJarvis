@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向全家的日常服务，连接机器、项目、经验与技能，持续跟踪开发工作的进展。">
+  <meta name="jarvis-source-sha256" content="c8fd36bdde006c5a2f64ac5204b000e60ac7baf383cd6c579b6f6b65129c30cc">
+  <title>受控执行与节点接入</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">V4.0</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="execution-runtime.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 5 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">本机 Pi SDK</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">远程节点 Agent</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">主动与被动经验采集</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">发布、恢复与备份</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">R19 节点可靠回传</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-02<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">总体设计 / 设备规划 / V4.0</p>
+        <h1 id="document-title">受控执行与节点接入</h1>
+        <p class="subtitle">面向全家的日常服务，连接机器、项目、经验与技能，持续跟踪开发工作的进展。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-02</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>18 台</strong><span>电脑 · 另有 NAS 与两台云服务器</span></div><div class="stat"><strong>10 台</strong><span>i3 小机 · 每台 16G / 256G</span></div><div class="stat"><strong>5 项</strong><span>核心职责 · 家庭与开发服务</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>中央平台保存项目、任务、审批和运行回执。Pi 开发优先走原生 SDK；Claude Code、Codex 及固定发布程序通过独立节点 Agent 执行。仅配置模板不能证明执行成功：节点心跳、租约、真实进程日志和结果均单独保存，成功任务进入待验收，交付仍需人工验收。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">本机 Pi SDK</h2>
+<p>在“运行配置”中配置执行器：<code>engine: pi-sdk</code>、<code>machineId: local</code>、执行器 ID（例如 <code>pi</code>）、独立项目工作区父目录、最大轮次、单轮超时、租约和 <code>budgetCurrency: USD</code>。中央平台复用 Pi 的原有认证目录。不要将模型密钥填入项目、执行器 argv 或 Agent 配置。</p>
+<p>项目副本必须是工作区父目录内的真实子目录，并与任务机器一致。开发只使用开发、测试或预发布副本。Pi 工具限定在此目录中的读取、列表、写入和编辑；SDK 不能把聊天工具用作开发工具，不能触碰生产副本。设置实际 AI 预算后先手动执行一轮，再按需开启持续监督。</p>
+<p>任务和项目所选 Skill 会在启动时按 <code>experienceId/version</code> 解析准确的已发布、已验证版本，旧版从历史正文中提取，不自动升级。正文、适用条件、验证证据及来源冻结到运行请求，单项与集合均保存 SHA256。最多 16 个不同版本，总原始文字 12000 字、序列化内容 16000 字符；超过上限明确拒绝。每轮 SDK 与 CLI 开发提示都包含这些固定资料，但资料不能改变权限、工作目录、执行器、预算或验收规则。资料越范围、缺失或停用会阻止启动/领取；运行中的节点在签名续租时也重新检查并停止失效引用。暂停、取消和历史回执保留原快照。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">远程节点 Agent</h2>
+<ol>
+<li>在设备中心登记节点。公司机器可以授权遥测或显式经验采集，不能授权开发、休眠和发布。</li>
+<li>在中央运行配置保存固定执行器模板，然后为此机器签发短期、一次性配对票据，明确执行器 ID、<code>telemetry</code>、<code>capture</code> 等能力。</li>
+<li>复制 <a href="../apps/agent/config.example.json">配置示例</a> 到节点本地，填写中央 URL、机器 ID、票据和目录白名单。节点模板的程序、argv、目录必须与中央模板一致；LAN 地址使用 HTTPS，并将实际中央主机列入服务器的 <code>JARVIS_ALLOWED_HOSTS</code>。</li>
+<li>使用 Node.js 24 和项目已安装的依赖启动：</li>
+</ol>
+<pre><code class="language-powershell">node --import tsx apps/agent/src/index.ts --config D:\JarvisNode\agent.json
+</code></pre>
+<p>首次配对会在本机生成 Ed25519 密钥，移除已使用票据，并把配置权限限制给运行账户和 SYSTEM。中央仅保存公钥与票据哈希。进程要持续运行；注册台账或手工心跳不等同于在线节点。</p>
+<p>Claude 模板使用固定可执行文件绝对路径和 <code>--print --output-format stream-json --max-budget-usd {maxBudgetUSD}</code>，预算参数须仅出现一次且紧邻分配额度占位符。Codex 使用固定本地入口、<code>exec --json --sandbox workspace-write</code> 或 <code>read-only</code>，<code>--cd</code> / <code>-C</code> 如有配置只能取 <code>{workspace}</code>。两类 AI 模板都必须配置 <code>{prompt}</code>，引用 Skill 的固定开发模板也必须接收此占位符。Windows 的 <code>.cmd</code>、<code>.ps1</code> 及 shell 入口不受支持；可固定调用 Node.js 加官方 CLI 的 JavaScript 入口路径。具体 argv 先核对本机安装版本的 <code>--help</code>。禁止注入 shell 代码、扩大目录或绕过权限。CLI 凭据留在该节点原生认证配置中。工作目录白名单限定平台派发目标；Claude 及固定程序的系统读写权限仍取决于运行账户和原生 CLI 的权限设置，不构成操作系统沙箱。部署前须在独立低权限节点账户中核对原有 CLI 权限。</p>
+<p>节点校验中央租约、本地模板、真实项目目录和固定预算后才启动进程。输出脱敏，停止或超时会结束进程树；Agent 进程意外退出后子监督进程也会结束任务。节点须有 60 秒内的签名心跳才可领取；启用资源规则时，过期或缺失的 CPU、内存读数会阻止派发。CPU、内存、并发、安静时段和紧急停止在领取时检查。安静时段格式为 <code>22:00-07:00</code>，固定时区 <code>Asia/Shanghai</code>，跨午夜有效，结束时刻不包含。资源或预算暂不可用只延后新领取，不因额外领取失败杀死其他运行。</p>
+<p>持续推进须管理员开启监督，且任务未到截止时间、预算和轮次未耗尽。原生 CLI 可明确配置 supervision：API 计费要求可核算费用；subscription 按真实 Token 和轮次限制续轮，未知金额仍保留未定价。Codex 未提供金额时，可配置匹配实际模型的输入/输出目录单价；否则 API 计费停止续轮。Claude 会话累计费用按匹配会话检查点取差额，缺少基线或费用回退时不推算。额度/网络失败可按策略有限重试，或切换本机同工作根目录备选；登录、权限和未知问题需人工处理。详见 <a href="%E5%BC%80%E5%8F%91%E7%9B%91%E7%9D%A3%E4%B8%8E%E5%8F%8C%E6%9C%BA%E6%8E%A5%E5%85%A5.md">双机接入</a>。费用区分执行器报告、目录估算和人工供应商账单；未知费用不会代替成零元。SDK 失败或取消后的实际部分用量仍计入任务预算；旧运行迟到回执只追加费用，不会覆盖恢复后新运行的状态和租约。租约过期进入中断状态，需要人工决定恢复，避免自动重复执行。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">主动与被动经验采集</h2>
+<p>先为具体机器、项目、范围和字段保存启用且同意的采集策略，再给节点授权 <code>capture</code>。节点每次提交都会检查最新策略，撤销授权立即阻止后续提交。原话进入收件，候选 skill 不会自动发布到经验库。公司只读机器须绑定明确的公司项目及 company 资料范围；无项目或跨范围不允许采集。</p>
+<p>主动提交 JSON 文件的字段为 <code>policyId</code>、<code>eventId</code>、<code>scope</code>、可选 <code>projectId</code>、<code>field</code>、<code>text</code>、可选 <code>title</code>：</p>
+<pre><code class="language-powershell">node --import tsx apps/agent/src/index.ts --config D:\JarvisNode\agent.json --capture-file D:\JarvisProjects\demo\capture.json
+</code></pre>
+<p>被动采集只读取显式指定的项目 JSONL 文件。Agent 配置 <code>journals</code> 的每项为：</p>
+<pre><code class="language-json">{&quot;path&quot;:&quot;D:\\JarvisProjects\\demo\\lessons.jsonl&quot;,&quot;policyId&quot;:&quot;固定策略ID&quot;,&quot;scope&quot;:&quot;personal&quot;,&quot;projectId&quot;:&quot;固定项目ID&quot;,&quot;offset&quot;:0}
+</code></pre>
+<p>每行仅允许 <code>eventId</code>、<code>field</code>、<code>text</code>、<code>title</code>，例如 <code>{&quot;eventId&quot;:&quot;lesson-001&quot;,&quot;field&quot;:&quot;lesson&quot;,&quot;text&quot;:&quot;发布前先运行独立验证&quot;}</code>。采集保存字节游标并按事件去重。不扫描操作系统、私人文件夹或聊天软件；路径必须位于项目目录白名单。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">发布、恢复与备份</h2>
+<p>服务健康探测只请求管理员固定配置的 URL，不接受任务提交的任意地址，不跟随重定向。WoL 仅发送已配置 MAC 的真实 UDP 唤醒包，收到新的可信心跳前保持未确认在线。休眠须对应节点具备固定 <code>sleep:机器ID</code> 执行器，并逐次明确确认。</p>
+<p>部署先绑定服务、机器、项目、环境、固定发布版本、原版本和备份，再逐项审批。生产审批需逐字确认操作名称。<code>deploy:服务ID</code> 与 <code>restore:服务ID</code> 必须配置固定程序及独立验证程序，节点实际校验备份 SHA256，验证退出码及观察版本一致后才更新登记版本。恢复只能使用原批准备份与原版本；人工 external-pass 凭证不能进入真实恢复流程。</p>
+<p>项目文件备份实际复制并校验每个文件。隔离演练复制到新目录，不覆盖当前项目或生产服务。平台活跃 SQLite 数据由平台一致性快照接口备份，不能当普通文件拷贝。审批预算与资源配置也保存固定数据库配置恢复点，回滚时检查目标未漂移。</p>
+<p>执行 API 清单及请求/响应见 <code>docs/openapi-v1-planned.json</code>；运行日志支持分页和 SSE。<code>execution.sqlite</code> 保存节点、配置和租约，应与平台数据库及备份清单一起纳入平台快照。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">R19 节点可靠回传</h2>
+<p>开发节点 CLI 在 <code>agent.save(configPath)</code> 后，默认使用私有配置同级的 <code>.delivery-&lt;agentId&gt;/journal.sqlite</code>；也可在私有节点配置显式指定绝对路径 <code>deliveryDirectory</code>。Linux 目录归运行账户、0700，数据库0600；Windows关闭继承并只授权当前账户与SYSTEM。父目录由安装方预建、不得含符号链接。101 的目录由部署工具单独建立，配对身份、密钥和执行器模板不变。</p>
+<p>节点在执行前登记运行，脱敏日志和最终回执先进入SQLite待发送账本，每轮留下原生会话及累计计量检查点。待发送数据占用有边界，达到上限阻止新领取。私有账本包含租约、任务及检查点，不能作为公开报告上传；长期保留和清理需要单独策略。</p>
+<p>签名日志/结果可带稳定 <code>deliveryId</code>，每次重送更新时间、随机数和签名；正文与递送身份保持相同。中央确认包含递送、运行、类别和正文SHA256。只有核对确认后才清理待发送内容；相同身份相同正文返回原确认，异正文拒绝。短暂错误有限退避，永久错误或到达尝试上限保持阻塞，不自动重新执行原任务。</p>
+<p>日志以实际JSON UTF8正文分批，每批不超过96KiB，其他普通接口仍采用128KiB限制；签名最终结果单独限定2MiB，并在节点预检。默认待发送payload上限32MiB，预留2MiB+96KiB供终结及排空，条目上限20000。这些是待发送内容限制，不是SQLite、WAL、历史运行和检查点的全磁盘硬上限。达到边界时保留明确阻塞，不能把未发送结果丢弃后继续领取。</p>
+<p>中央保存递送确认和原终端租约身份。晚到结果仍核对原节点、租约及运行范围，只追加允许的旧证据与实际消耗，不能复活已取消任务或覆盖新一轮租约。旧节点未带 <code>deliveryId</code> 的协议仍保留兼容路径，不能据此声称旧节点也具备本地可靠补传。</p>
+<p>业务效果跨库通过先持久化的冻结意图与稳定业务命令身份恢复，重复回传不重复修订或加费用；真实计量保存原始汇总身份，与ledger同事务提交。observer后续补充只调整对应余量，不能改变原汇总重送身份。已经持久计量但随后到达预算线，停止下一任务而不拒绝已存在的消费证据。</p>
+<p><code>stopReason</code> 只含固定原因码及时间，局部详细错误先脱敏保存。节点重启将未结束运行记录为中止并补交检查点，不启动原CLI；中央需完成原进程、源码、费用及副作用对账后决定新运行。整轮检查点不是“原生会话崩溃自动续跑”已经通过的证明。</p>
+<p>中央每运行仍采用原有5000条日志滚动保留；本轮可靠补传不等同于永久全历史日志档案。项目级自动拆任务、自动独立验收、可靠后备和连续24/72小时演练尚需建设，见 <a href="%E5%85%A8%E5%A4%A9%E6%8C%81%E7%BB%AD%E7%A0%94%E5%8F%91%E4%B8%8E%E5%BF%AB%E9%80%9F%E8%AF%AD%E9%9F%B3%E5%AE%9E%E6%96%BD%E6%96%B9%E6%A1%88.html">全天实施方案</a>。</p>
+<p>本轮的永久递送阻塞可在节点私有状态及服务日志看到固定原因码；尚无中央spool状态页或已验证的解除阻塞工作流。配对在线只表示节点连接，不能独自证明它仍在推进任务。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="execution-runtime.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+(function(){
+ 'use strict';
+ const key='jarvis-v7-navigation-preferences';
+ let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch{}
+ const state={collapsed:!!saved.collapsed},groups=[
+  ['总览与指挥',[['overview','home','我的总览'],['chat','mic','和贾维斯说话'],['screen','screen','大屏中心'],['approvals','shield','审批与确认']]],
+  ['知识与记忆',[['sources','link','外部知识接入'],['temple','book','知识神殿'],['collation','edit','原文校对'],['memory','heart','记忆神殿'],['personas','speaker','专属管家']]],
+  ['灵感与交付',[['inbox','download','统一收件'],['research','bolt','灵感与深研'],['projects','project','项目空间'],['tasks','tasks','开发监督'],['knowledge','code','经验与技能']]],
+  ['设备与服务',[['machines','machine','设备管理'],['services','cloud','运行服务'],['operations','chart','运维与费用']]],
+  ['家庭与学习',[['family','family','家庭安排'],['learning','language','学习中心']]]
+ ];
+ let observer=null,observedNav=null,scrollHandler=null;
+ function allowed(route){return J6Usability.canNavigate(route)}
+ function button(route,icon,label){return '<button class="nav-item '+(U.route===route?'active':'')+'" data-act="nav" data-id="'+route+'" data-j7-nav-route="'+route+'" title="'+label+'" aria-label="'+label+'"'+(U.route===route?' aria-current="page"':'')+'>'+I(icon,18)+'<span>'+label+'</span></button>'}
+ function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch{}}
+ function applyLayout(){document.body.classList.toggle('j7-nav-compact',state.collapsed&&innerWidth>760);const toggle=document.querySelector('[data-j7-nav-act="collapse"]');if(toggle){const mobile=innerWidth<=760;toggle.setAttribute('aria-expanded',String(mobile?document.getElementById('sidebar').classList.contains('open'):!state.collapsed));toggle.title=mobile?'关闭导航':state.collapsed?'展开导航':'收起导航';toggle.setAttribute('aria-label',toggle.title);toggle.innerHTML=I(mobile?'close':state.collapsed?'menu':'chevron',17)}updateScroll()}
+ function updateScroll(){const nav=document.querySelector('#sidebar .nav'),hint=document.querySelector('.j7-nav-scroll-hint');if(!nav||!hint)return;const more=nav.clientHeight>0&&nav.scrollHeight-nav.scrollTop-nav.clientHeight>8;hint.hidden=!more;hint.title='向下滚动查看其余功能';hint.setAttribute('aria-label',hint.title)}
+ function decorate(){const side=document.getElementById('sidebar'),nav=side?.querySelector('.nav'),brand=side?.querySelector('.brand'),footer=side?.querySelector('.sidebar-footer');if(!nav||!brand||!footer)return;observer?.disconnect();if(observedNav&&scrollHandler)observedNav.removeEventListener('scroll',scrollHandler);side.querySelector('.j7-nav-bar')?.remove();const shown=groups.map(g=>[g[0],g[1].filter(n=>allowed(n[0]))]).filter(g=>g[1].length);const count=shown.reduce((n,g)=>n+g[1].length,0)+(allowed('settings')?1:0);brand.querySelector('small').textContent='YOUR AI COMPANION';brand.insertAdjacentHTML('afterend','<div class="j7-nav-bar"><span>'+count+' 个功能 · 完整导航</span><button data-j7-nav-act="collapse"></button></div>');nav.setAttribute('aria-label',J5.isPublic()?'公共功能导航':admin()?'全部管理功能导航':'我的功能导航');nav.setAttribute('tabindex','0');nav.innerHTML=shown.map(g=>'<section class="j7-nav-group"><h2 class="nav-label">'+g[0]+'</h2>'+g[1].map(n=>button(...n)).join('')+'</section>').join('');footer.innerHTML='<button class="j7-nav-scroll-hint" data-j7-nav-act="scroll">'+I('chevron',13)+'<span>向下滚动查看其余功能</span></button><button class="j7-sidebar-voice" data-j7-act="voice" title="进入语音对话">'+I('mic',17)+'<span>随时和贾维斯说话</span></button><div class="j7-nav-fixed">'+(allowed('settings')?button('settings','settings',admin()?'系统设置':'我的设置'):'')+'<button class="nav-item" data-j7-act="directory" title="全部能力目录">'+I('menu',18)+'<span>能力目录</span></button></div>';scrollHandler=updateScroll;observedNav=nav;nav.addEventListener('scroll',scrollHandler,{passive:true});if(window.ResizeObserver){observer=new ResizeObserver(()=>{applyLayout();updateScroll()});observer.observe(nav)}applyLayout();const active=nav.querySelector('[aria-current="page"]');if(active&&nav.clientHeight>0){const top=active.offsetTop-nav.offsetTop;if(top<nav.scrollTop||top+active.offsetHeight>nav.scrollTop+nav.clientHeight)nav.scrollTop=Math.max(0,top-nav.clientHeight/2)}updateScroll()}
+ const originalShell=shell;shell=function(){originalShell();decorate()};
+ document.addEventListener('click',function(e){const el=e.target.closest('[data-j7-nav-act]');if(!el)return;e.preventDefault();e.stopImmediatePropagation();if(el.dataset.j7NavAct==='collapse'){if(innerWidth<=760)return handleAction('close-menu');state.collapsed=!state.collapsed;save();applyLayout()}if(el.dataset.j7NavAct==='scroll'){const n=document.querySelector('#sidebar .nav');n?.scrollBy({top:n.clientHeight*.7,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}},true);
+ window.addEventListener('resize',applyLayout);
+ window.J7Navigation={state,decorate,applyLayout,updateScroll,groups};
+ decorate();
+})();

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="监督软件工厂本身的代码完善，查阅真实测试证据，并统一记录各类模型调用的用量。">
+  <meta name="jarvis-source-sha256" content="be5660d1112cedade8866bd7173f225b59824abfec17123cdef53ce1dcb36c4a">
+  <title>软件工厂接入与用量总账</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R18-1</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%8E%A5%E5%85%A5%E4%B8%8E%E7%94%A8%E9%87%8F%E6%80%BB%E8%B4%A6.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 6 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">从哪里查看</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">已登记的接入资料</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">本次真实验证</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">中央单轮连接的真实回执</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">如何安排后续开发</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">Token 如何统计</a>
+<a class="toc-link level-3" href="#section-5-1" data-parent="5">101 独立调用的持续采集</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">真实进度与工厂业务记录</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-10<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">软件工厂 / 开发监督 / 用量总账</p>
+        <h1 id="document-title">软件工厂接入与用量总账</h1>
+        <p class="subtitle">监督软件工厂本身的代码完善，查阅真实测试证据，并统一记录各类模型调用的用量。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-10</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>22 项</strong><span>内部项目 · 本次连接检查快照</span></div><div class="stat"><strong>15 / 15</strong><span>最新隔离基础测试 · 不含交付验收</span></div><div class="stat"><strong>120 秒</strong><span>101 用量观察器采集周期</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>贾维斯负责监督 <strong>软件工厂本身的代码完善、测试和交付</strong>；软件工厂内部创建的业务项目作为附属运行视图展示。两者分别记录，不把内部项目的模拟进度当成工厂源码的真实开发成果。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">从哪里查看</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>入口</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>项目管理 → 软件工厂 → 目标验收</td>
+<td>查看目标、里程碑与验收证据</td>
+</tr>
+<tr>
+<td>项目管理 → 软件工厂 → 关联任务</td>
+<td>查看工厂源码的开发、测试和交付任务</td>
+</tr>
+<tr>
+<td>项目管理 → 软件工厂 → 工厂运行</td>
+<td>查看工厂连接情况及内部项目的业务记录</td>
+</tr>
+<tr>
+<td>项目管理 → 任一项目 → 用量统计</td>
+<td>查看此项目全部历史 Token、来源和调用明细</td>
+</tr>
+<tr>
+<td>开发监督</td>
+<td>按项目、设备筛选任务，处理暂停、阻塞、预算与验收</td>
+</tr>
+<tr>
+<td>运维费用 → 实际用量</td>
+<td>查看全平台 AI 用量总账、筛选、分页与导出</td>
+</tr>
+<tr>
+<td>系统设置 → 运行引擎 → 费用治理</td>
+<td>调整预算、并发与未知价格处理规则，并查阅同一总账</td>
+</tr>
+<tr>
+<td>模型中心 → 查看用量</td>
+<td>快速进入总账</td>
+</tr>
+</tbody></table></div>
+<p>项目监督入口：<a href="https://cc-jarvis.ikvein.com/?mode=platform#theme=stark&view=tasks/project/70ec346f-6520-46ed-abed-22cac770a3e4&board=all">软件工厂开发任务</a>。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">已登记的接入资料</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>贾维斯项目</td>
+<td>软件工厂</td>
+</tr>
+<tr>
+<td>项目 ID</td>
+<td><code>70ec346f-6520-46ed-abed-22cac770a3e4</code></td>
+</tr>
+<tr>
+<td>开发服务器</td>
+<td>101，<code>192.168.10.101</code></td>
+</tr>
+<tr>
+<td>工作副本</td>
+<td><code>/home/superopen/All-Projects/msf</code>，<code>main</code> 分支</td>
+</tr>
+<tr>
+<td>工厂前端</td>
+<td><code>http://192.168.10.101:5173</code>，内网访问</td>
+</tr>
+<tr>
+<td>工厂后端</td>
+<td><code>http://192.168.10.101:8080</code>，健康入口 <code>/health</code></td>
+</tr>
+<tr>
+<td>运行项目</td>
+<td>已关联贾维斯中的软件工厂开发项目</td>
+</tr>
+<tr>
+<td>开发工具</td>
+<td>Claude Code <code>2.1.296</code>，现有 cc-switch 使用 <code>gpt-6-sol</code>；Codex 尚未安装</td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">本次真实验证</h2>
+<p>以下为 2026 年 10 月 10 日的最新验收快照。R18-1 已上线，发布后的中央单轮连接验证已取得真实回执；后续实际结果以平台任务和本地验收记录为准，节点状态和用量以平台最新记录为准。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>结果与范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>101 开发节点</td>
+<td>专用 Claude 节点 <code>0b5aea06-47e1-4f4b-a32e-969417915c9c</code> 已在线、执行器就绪；独立开发守护进程常驻，与机器遥测节点分别管理</td>
+</tr>
+<tr>
+<td>模型配置</td>
+<td>实际 Claude Code 使用现有 cc-switch 的 <code>gpt-6-sol</code>；中央单轮派发、真实执行、签名原生回执和固定隔离验证均已通过</td>
+</tr>
+<tr>
+<td>工厂接口</td>
+<td>发布后 25 项只读 GET 全部返回 200；核对 22 个内部项目、3 个详情（含旧格式 GUID）与 8 类分区，分区读取错误为 0；接口查询不派发内部开发或放行</td>
+</tr>
+<tr>
+<td>平台版本</td>
+<td>R18-1 已上线，112 业务健康；旧项目 GUID 兼容和 CLI 未知价格治理修复已生效</td>
+</tr>
+<tr>
+<td>最新独立基线</td>
+<td>在 Landlock 文件访问白名单、独立网络空间及连接限制下，对公开源码副本完成离线依赖安装、构建、类型检查及原有 3 个测试套件的 15 项基础测试；四阶段均成功且无超时</td>
+</tr>
+<tr>
+<td>隔离检查</td>
+<td>12 项安全检查通过；TCP、Unix socket、原项目、代理配置与副本外文件访问探针均按预期被阻止</td>
+</tr>
+<tr>
+<td>尚未验收的范围</td>
+<td>完整集成测试尚未运行，真实开发流水线与最终交付尚未验收</td>
+</tr>
+<tr>
+<td>持续监督</td>
+<td>当前全局持续监督仍关闭，未启用持续监督策略，也未自动启动源码完善；单轮连接验证结束后活动执行为 0，常规执行器配置已恢复</td>
+</tr>
+<tr>
+<td>用量采集</td>
+<td>101 观察器已按 120 秒周期运行；10 条历史 Claude 回执共 223,888 Token 已导入，重复采集不再增加，后续持续采集</td>
+</tr>
+</tbody></table></div>
+<p>最新基线使用 584 个公开源码文件的完整清单，保存每个文件的指纹，并以第二次读取确认前后文件树指纹一致。私有环境配置未复制到测试副本；这次基线未调用模型，也未写入工厂源码。版本信息通过限量读取原始 Git 引用获得，不执行 Git 子进程；工作区修改和未跟踪文件数未检查，记录为未知，不能解释为零。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>基线证据</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>源码提交</td>
+<td><code>b6c2fb07d5754a963108152eb1318253b9b28bce</code>，<code>main</code></td>
+</tr>
+<tr>
+<td>源文件树 SHA-256</td>
+<td><code>ee7a0c228377d8fb9559cb045fb59695a7b1d4c89ead898effbc20202bb1ddeb</code></td>
+</tr>
+<tr>
+<td>依赖锁文件 SHA-256</td>
+<td><code>7eaa5723166f51e4be57b252297fbf616e0aa966e6bdad19234dcd26b806d6b7</code></td>
+</tr>
+<tr>
+<td>最新基线执行记录</td>
+<td><code>7777777777777777777777777777777777777777</code></td>
+</tr>
+</tbody></table></div>
+<p>可查阅 <a href="../artifacts/software-factory/node/baseline-7777777777777777777777777777777777777777.json">最新隔离基线回执</a>、<a href="../artifacts/software-factory/node/validator-install.json">隔离访问探针</a>、<a href="../artifacts/software-factory/node/validator-regression.json">安全检查回执</a>、<a href="../artifacts/software-factory/published-verification.json">发布后接口与用量检查</a> 和 <a href="../artifacts/software-factory/usage-observer-verification.json">用量观察器检查</a>。旧网络隔离基线仅保留为历史记录；这里的 15 / 15 依据上述最新 Landlock 基线。<strong>这些检查不代表软件工厂已经完整交付</strong>。</p>
+<h3 id="section-3-1" tabindex="-1">中央单轮连接的真实回执</h3>
+<p>任务 <code>957e0cc8-2e1f-49da-9b15-61a004157386</code>、执行 <code>8bf9837f5730adc49abd178d6c3ea49b97281742</code> 只运行一轮接管通信验证，模型执行和隔离验证均以退出码 0 完成，收到开发节点签名回执。输入 2,445、输出 61、总 Token 2,506；费用 0.01375 USD 在执行回执中标记为目录估算（<code>catalog-estimate</code>），不是供应商账单。观察器复采前后此执行均为 2,506 Token，确认没有重复入账。执行前后的公开源码双指纹和原始版本引用一致。</p>
+<p>任务当前处于“待验收”，这次单轮没有开展源码完善，也不代表源码审查或交付验收。详细依据见 <a href="../artifacts/software-factory/node/managed-execution-r18-1.json">中央单轮端到端验收回执</a>；完整集成测试及软件工厂真实开发、测试和交付流水线仍需按明确目标另行安排。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">如何安排后续开发</h2>
+<ol>
+<li>在软件工厂项目中点击“项目监督”，查看已经完成的基线检查证据。接下来核对功能缺口，并安排完整集成测试、真实流水线和交付验证。</li>
+<li>点击“安排任务”，填写明确的完善目标、验收标准、101 工作目录、Claude 执行器和费用预算。任务登记后不会自动开始。</li>
+<li>确认节点和执行器就绪后，点击“开始执行”。持续开发仍受目标、轮次、Token、费用、重试次数与时限限制。</li>
+<li>在任务详情查看执行事件、日志、验证回执和产物。额度或网络问题按已保存的有限恢复策略处理；登录、权限和未知错误需要管理员处理。</li>
+<li>调整目标或验收标准前先暂停活动执行，再使用“调整边界”；修改后旧验收失效，依据与历史保留。预算可单独调整。</li>
+<li>进程完成后进入待验收；检查独立测试证据并记录验收结论，验收通过后才生成交付记录。交付记录与实际部署分别管理。</li>
+</ol>
+<p>工厂运行视图通过贾维斯后端读取固定的 101 服务，不要求浏览器保存软件工厂密钥。目前内部项目视图提供查询，不在该视图派发内部开发、合并代码或批准工厂放行。</p>
+<p>当前可选执行器以节点实际登记为准。101 已就绪的是 Claude；Codex 尚未安装，不能作为可用切换目标。中央单轮连接已验证，源码完善任务仍需按明确目标、验收标准和预算登记并启动。</p>
+<p>开始源码完善前，还需填写具体目标与验收标准，再手动启动任务；需要连续开发时，按预算启用持续监督。当前每日预算 <code>0</code> 表示尚未配置，不是供应商硬限额，也不表示免费。<code>gpt-6-sol</code> 目录价格 <code>0</code> 表示未知价格；R18-1 阻止没有可靠估价的持续开发。R18-1 支持明确填写 CLI 输入、输出的每百万 Token 美元估价；原生金额无法可靠确认时，可对完整本轮回执生成目录估算，价格未配置或回执不完整时费用仍未知。管理员估价用于本地预算治理，实际账单需向供应商核对。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">Token 如何统计</h2>
+<ul>
+<li>总账默认显示全部历史，支持今天、近七天、本月和指定日期；日期按服务器预算时区解释。</li>
+<li>可按模型、提供方、来源、场景、成员、项目和设备筛选。累计来自服务器全量汇总，不是当前页明细之和。</li>
+<li>对话、等待回应、知识解析、研究、模型验证、受控开发以及接入的独立调用都应留下计量记录。SDK 上下文压缩、缓存等返回的用量也需要记录。</li>
+<li>输入、输出、缓存读取和缓存写入分别展示，保留各提供方的原生口径。总 Token 使用提供方报告值，输入、输出与缓存分项不再叠加，避免重复统计。</li>
+<li>未返回或返回无效用量的调用记为“用量未知”，Token 留空；取消或中断不代表没有消耗，也不记成零用量或免费。本地语音等计算标明本地来源，实际不调用模型时记录为 0 Token，并可记录音频时长。</li>
+<li>软件工厂内部“用量”是上游原始汇总，金额币种未声明时保留原数并明确标记。它不直接累加到逐条总账；逐条接入需使用稳定来源标识去重。</li>
+<li>总账金额以 USD 报告或目录估算展示，未知价格单独列出。该金额不是网关账单，也不是付款凭证；供应商账单可另行导入核对。</li>
+<li>明细分页支持 25、50、100 或 200 条。“导出本页”仅导出当前页的计量元数据，不含聊天正文或密钥。</li>
+</ul>
+<p>历史已保留的实际用量继续累计。没有原始调用回执的历史消耗无法准确回填，应保留未知，不推算为零，也不生成虚构账单。预算用于限制新的调用与续轮，已经发出的调用可能超过本地预留估算。</p>
+<h3 id="section-5-1" tabindex="-1">101 独立调用的持续采集</h3>
+<p>观察器每 120 秒检查一次实际 Claude 调用回执。对于持续运行的会话，按每条消息采集；该消息的计量回执稳定至少 90 秒后才入账，不需要等整个会话关闭。新增用量会持续增长，请在“用量统计”查看最新汇总，文档不固定累计数。</p>
+<p>每条回执使用稳定的来源标识去重。贾维斯受控任务和观察器同时发现同一调用时，只记录一份消耗；不把整段会话反复累加。消息缺少有效用量时登记未知调用，Token 留空；回执变化或无法确认归属时保留待核对状态，不编造用量。中央只接收计量元数据，不上传独立会话的聊天正文。</p>
+<p>可以在软件工厂项目的用量页检查来源、设备、调用时间和未知用量。在外部会话还没有稳定回执时，当前统计可能暂未包含该消息；没有可读回执的调用仍无法准确计量。总账中“金额未知”也不代表免费：部分已知 Token 的调用缺少可靠价格，需等价格配置或供应商账单核对。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">真实进度与工厂业务记录</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>记录</th>
+<th>如何理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>贾维斯源码任务与签名执行回执</td>
+<td>软件工厂自身完善的执行依据</td>
+</tr>
+<tr>
+<td>独立测试证据及人工验收</td>
+<td>源码任务交付的依据</td>
+</tr>
+<tr>
+<td>工厂内部任务、自动运行与构建状态</td>
+<td>工厂报告的业务状态，当前开发流水线仍为模拟实现</td>
+</tr>
+<tr>
+<td>工厂内部自测、缺陷与放行决定</td>
+<td>上游业务记录，不能自动替代贾维斯源码任务验收</td>
+</tr>
+<tr>
+<td>接口读取失败或缺少证据</td>
+<td>标明未知，不显示为通过、完成或零消耗</td>
+</tr>
+</tbody></table></div>
+<p>最新隔离基线已通过构建、类型检查与原有 15 项基础测试。下一步依据明确目标、验收标准与实际功能缺口分配完善任务，补齐完整集成测试，并验证开发、测试和交付流水线的真实执行。内部业务记录只有获得相应真实证据后，才能作为生产进度和放行依据。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%8E%A5%E5%85%A5%E4%B8%8E%E7%94%A8%E9%87%8F%E6%80%BB%E8%B4%A6.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

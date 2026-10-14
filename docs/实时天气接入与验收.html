@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实时天气接入与验收 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">怎么使用</a><a href="#section-2">气象服务和数据边界</a><a href="#section-3">缓存、权限与部署</a><a href="#section-4">接口</a><a href="#section-5">已完成的验收</a><a href="#section-6">后续家庭陪练和做菜建议</a></nav><h1>实时天气接入与验收</h1>
+<p>更新时间：2026-10-06。天气后台、天气卡和城市设置已实现；下列验收使用隔离临时数据库，不代表已在48GB生产机或其他房间部署。</p>
+<h2 id="section-1">怎么使用</h2>
+<ol>
+<li>管理员打开运行设置里的天气设置，搜索城市，核对省份、国家和时区，再确认家庭共同城市。</li>
+<li>家庭页面显示共同城市的天气。独立登录的成员可以另选自己的城市；切换管理员管理的成员档案不会切换实际登录身份。</li>
+<li>问贾维斯“今天什么天气”“明天会下雨吗”，Pi通过只读天气工具获取真实数据。没有城市时先询问，不自动定位或猜测所在地。</li>
+<li>公共交流和公共天气卡只使用明确共享的家庭城市；个人城市不进入公共城市偏好响应。</li>
+</ol>
+<p>未配置城市时不会自动请求天气服务。城市确认、城市清除、服务停用都有版本保护；并发修改时保留当前输入，重新加载后再确认。</p>
+<h2 id="section-2">气象服务和数据边界</h2>
+<p>当前选择Open-Meteo开放接口：个人家庭非商业用途无需API密钥；商业使用应改用具有商业许可的服务配置。免费服务有请求额度且不保证持续可用。<a href="https://open-meteo.com/en/pricing">官方价格与额度</a>、<a href="https://open-meteo.com/en/terms">服务条款</a>。</p>
+<p>当前天气是气象模型估算，不是家中传感器或气象站现场实测。界面明确区分天气数据时间与查询时间，使用城市当地时区。接口没有提供模型运行更新时间，因此返回 <code>modelUpdatedAt: null</code>，不把处理耗时当作模型更新时间。不包含气象警报、空气质量或日出日落。<a href="https://open-meteo.com/en/docs">天气接口文档</a>。</p>
+<p>城市检索由Open-Meteo / GeoNames提供。只接受服务返回并校验过的城市ID，不接受浏览器或模型传入任意坐标、URL或成员身份。搜索结果保留20分钟；有同名城市时用户确认。<a href="https://open-meteo.com/en/docs/geocoding-api">地名接口文档</a>。</p>
+<p>固定服务地址是 <code>https://api.open-meteo.com</code> 与 <code>https://geocoding-api.open-meteo.com</code>。不跟随跳转，响应限制512KiB，默认8秒超时。<code>WeatherProvider</code>接口将服务传输与平台业务分开；替换服务时需注册新的受控适配器及契约，不在用户页面开放任意网址输入。</p>
+<h2 id="section-3">缓存、权限与部署</h2>
+<p>默认新鲜缓存10分钟，服务故障时最多使用120分钟内的旧缓存，并显示“缓存天气”、缓存年龄和原查询时间。超过保留上限则明确失败。未知测量值保留为null并显示“—”，不填成零。停用服务、撤回共同城市、退出成员或撤销凭据会在查询返回前再次检查。</p>
+<p>单个后台对相同城市的并行请求合并下载；某人取消自己的请求不会取消另一人的查询。默认本机500请求/日，并另外限制30请求/分钟、300请求/小时。每次请求只取一个地点、7天、10个天气变量。平台限额只是本机保护，不代表第三方服务剩余额度。</p>
+<p>城市偏好按真实成员档案隔离，与服务设置、查询预算和缓存一起存入 <code>jarvis.db</code>，包含在现有一致性数据库备份中。管理员可以配置公共城市，模型工具只能查询和搜索，不修改城市或服务策略。发往天气服务的是查询词或城市坐标，不发送成员标识、聊天或记忆。Open-Meteo可能记录服务器IP和查询坐标，详情见<a href="https://open-meteo.com/en/terms">官方隐私条款</a>。</p>
+<p>48GB主机只需运行现有Node后台，无需额外GPU或天气模型。第一次查询需要能访问这两个固定HTTPS服务。先在联想书房环境验收城市、语音问答及离线缓存，再迁移数据库和服务到48GB主机，最后逐房间现场验收。</p>
+<h2 id="section-4">接口</h2>
+<div class="table-wrap"><table>
+<tr><td>方法</td><td>路径</td><td>用途</td></tr>
+<tr><td>GET</td><td><code>/api/runtime/family/weather/preferences?scope=own或family</code></td><td>本人及共同城市；family响应不含本人城市</td></tr>
+<tr><td>PUT</td><td><code>/api/runtime/family/weather/preferences</code></td><td>本人明确保存或清除城市</td></tr>
+<tr><td>POST</td><td><code>/api/runtime/family/weather/locations/search</code></td><td>搜索城市候选</td></tr>
+<tr><td>GET</td><td><code>/api/runtime/family/weather?scope=own或family&amp;days=1..7</code></td><td>获取经过权限检查的天气</td></tr>
+<tr><td>GET / PUT</td><td><code>/api/runtime/weather/settings</code></td><td>管理员服务策略</td></tr>
+<tr><td>PUT</td><td><code>/api/runtime/weather/family-location</code></td><td>管理员保存或撤回共同城市</td></tr>
+</table></div>
+<p>保存城市输入为 <code>{expectedVersion, locationId}</code>；城市ID为检索结果中的 <code>geonames:数字</code>，清除时为null。检索输入为 <code>{query, countryCode?}</code>；天气查询可带刚搜索到的本人候选 <code>locationId</code>。任何客户端输入中的 <code>actorId</code>、<code>profileId</code>、任意 <code>endpoint</code> 都会被拒绝。</p>
+<p>Pi工具 <code>search_weather_locations</code> 和 <code>get_weather</code> 复用实际运行接口。工具创建时绑定当前登录凭据，网络返回后再次核验会话，不用模型推断成员权限。</p>
+<h2 id="section-5">已完成的验收</h2>
+<div class="table-wrap"><table>
+<tr><td>验收</td><td>结果</td><td>证据</td></tr>
+<tr><td>后台运行专项</td><td>8/8通过，零跳过</td><td><code>apps/api/test/weather-runtime.test.ts</code></td></tr>
+<tr><td>强契约专项</td><td>1/1通过</td><td><code>apps/api/test/weather-runtime-contract.test.ts</code></td></tr>
+<tr><td>官方只读查询</td><td>地名与天气两个固定地址均HTTP200，7天数据校验通过</td><td><code>artifacts/weather-readonly-qa/report.json</code></td></tr>
+<tr><td>实际后台 + React组件操作</td><td>6/6通过，桌面和390px手机无横向溢出</td><td><code>artifacts/weather-ui-qa/report.json</code></td></tr>
+</table></div>
+<p>运行专项用真正的本地HTTP传输验证固定服务参数、身份隔离、共同城市过滤、撤权、并行取消、缓存失效、超时、跳转与大小限制、重启恢复和服务预算。页面专项用真实 <code>createApp</code> 临时实例与气象HTTP fixture验证选择城市、公共天气、个人隔离、两种保存冲突保留输入和故障缓存标识。</p>
+<p>官方查询使用柏林这个公开示例城市，绝不是用户真实所在地。所有专项均零生产数据写入、零付费模型调用、零物理麦克风使用。天气工具与真实付费模型的最终语音答复、用户所在城市的日常可达性、48GB部署和房间现场效果仍需后续验收；不把fixture结果称为已完成这些验收。</p>
+<h2 id="section-6">后续家庭陪练和做菜建议</h2>
+<p>以下是后续推荐，尚未作为天气功能实现：</p>
+<ul>
+<li>语言陪练通过中央语音和Pi会话，绑定当前成员的语言、级别、练习目标，返回纠错候选和本次练习总结；学习记录需本人确认，不直接改写长期记忆。</li>
+<li>做菜建议接受菜名、人数、已有食材和个人明确提供的禁忌，先展示可选做法，再按确认方案分步讲解；厨房语音可以随时暂停、重复、继续。过敏和私人健康资料不能从他人的记忆读取。</li>
+<li>知识课程只引用已经人工审核发布的故事和原文版本；新生成解读先进入候选，不把天气、菜谱或陪练的生成内容自动当成权威知识入库。</li>
+</ul></main></html>

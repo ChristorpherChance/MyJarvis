@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="集中管理模型服务，各场景独立选择，身份、隐私与预算继续由后台执行。">
+  <meta name="jarvis-source-sha256" content="93519a509e1d20902855c02706d4762f669564b87b07f439bc77047fe073077d">
+  <title>多网关模型与场景配置</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">1.0</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E5%A4%9A%E7%BD%91%E5%85%B3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 5 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">从哪里配置</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">已接入的服务</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">九类场景对应哪些实际调用</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">隐私、价格与运行规则</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">验收与接口</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-08<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">模型中心 / Pi SDK / 场景分配</p>
+        <h1 id="document-title">多网关模型与场景配置</h1>
+        <p class="subtitle">集中管理模型服务，各场景独立选择，身份、隐私与预算继续由后台执行。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-08</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>2 套</strong><span>已接入网关</span></div><div class="stat"><strong>15 个</strong><span>实际返回的模型</span></div><div class="stat"><strong>9 类</strong><span>独立模型场景</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>正式版本：20261008-model-routing-r1。112 为主节点；101 已同步代码，保持冷备。密钥与最新业务数据没有持续复制到 101，接管前仍需恢复最新私有数据。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">从哪里配置</h2>
+<p>打开<a href="https://cc-jarvis.ikvein.com/?mode=platform#theme=stark&view=settings/models">系统设置 → 模型中心</a>，也可在对话页点击“模型配置”。</p>
+<ul>
+<li><strong>场景分配</strong>：选择每个场景的服务与模型，统一保存。沿用默认的场景随默认模型变化；独立选择的场景保持自己的配置。</li>
+<li><strong>模型服务</strong>：接入或更新网关、读取真实模型目录、设置默认模型、验证选中的模型。点“仅保存服务”不会切换默认模型。</li>
+<li><strong>用量价格</strong>：按网关实际报价填写输入、输出、缓存读取和缓存写入价格，单位为美元 / 百万 Token。免费项需明确填 0。</li>
+</ul>
+<p>当前默认保留 <strong>SuperOpen / CPA / gpt-6.1-sol</strong>。初始场景均沿用默认；验收时临时分配的测试配置已恢复，不替用户决定生产场景的模型。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">已接入的服务</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>地址</th>
+<th>模型目录</th>
+<th>实际验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SuperOpen 网关</td>
+<td><a href="https://gw.superopen.top">https://gw.superopen.top</a></td>
+<td>9 个</td>
+<td>已验证真实流式对话、只读功耗查询与会话保存</td>
+</tr>
+<tr>
+<td>IKVein 网关</td>
+<td><a href="https://cc-gateway.ikvein.com">https://cc-gateway.ikvein.com</a></td>
+<td>6 个</td>
+<td>Kimi K3、DeepSeek V4 Flash 均通过 Pi SDK 最小对话测试；家庭对话入口通过 Kimi 场景分配测试</td>
+</tr>
+</tbody></table></div>
+<p>IKVein 实际目录：Kimi-Coding/k3、Kimi-Coding/kimi-for-coding、Kimi-Coding/kimi-for-coding-highspeed、Kimi-Coding/k3-256k、DeepSeek/deepseek-v4-pro、DeepSeek/deepseek-v4-flash。目录名称来自网关；其他四个型号尚未逐一发起真实对话验收。</p>
+<p>两套网关均提供 Claude 兼容的 messages 接口，通过 Pi 原生模型配置与登录保存接入。SuperOpen 的已验证显示命名空间转换保持原有规则；IKVein 保留其原始模型编号。不能据目录名称确认底层模型的厂商身份或性能。</p>
+<p>以后可添加新的 HTTPS 网关，选择 Claude 兼容 messages 或 Chat Completions 兼容协议。每个网关独立编号、凭据和模型目录，最多 128 个网关。已接入编号的地址与协议固定，变更地址需新建服务，避免把原密钥发送到新目的地。目录读取不跟随重定向。</p>
+<p>网关未返回上下文长度、视觉和推理等能力元数据，当前使用保守的纯文本配置：32,768 上下文、4,096 最大输出。模型名称中的“256k”等字样不作为已核验能力。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">九类场景对应哪些实际调用</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>接入入口</th>
+<th>边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>管家对话</td>
+<td>管理员流式对话、只读平台查询</td>
+<td>操作另行授权，不因换模型增加权限</td>
+</tr>
+<tr>
+<td>家庭对话</td>
+<td>成员对话、房间语音对话中的文字理解</td>
+<td>每个身份的聊天和工具仍独立</td>
+</tr>
+<tr>
+<td>意图理解</td>
+<td>语音原话分析、兼容意图作业</td>
+<td>输出待确认选项，不直接执行</td>
+</tr>
+<tr>
+<td>学习陪伴</td>
+<td>语言陪练、知识教学和食谱提案</td>
+<td>当前只验证文本教学，不伪造发音评分</td>
+</tr>
+<tr>
+<td>知识整理</td>
+<td>校对后的原文解读、故事、课程候选和兼容知识作业</td>
+<td>原文与候选仍需独立人工审核</td>
+</tr>
+<tr>
+<td>记忆整理</td>
+<td>本人原话提取长期记忆候选</td>
+<td>隐私、证据与确认策略继续执行</td>
+</tr>
+<tr>
+<td>深度研究</td>
+<td>Pi 研究作业、证据与方案分析</td>
+<td>不自动采纳或发布结果</td>
+</tr>
+<tr>
+<td>项目开发</td>
+<td>Pi 项目执行器</td>
+<td>独立验收、项目目录与预算约束保持生效</td>
+</tr>
+<tr>
+<td>通用作业</td>
+<td>未单独归类的有边界智能作业</td>
+<td>无业务操作工具、无自动重试</td>
+</tr>
+</tbody></table></div>
+<p>语音识别 ASR、声音合成 TTS、唤醒与扫描件 OCR 属于独立引擎，继续在“运行引擎”中配置。外部 Claude Code / Codex 执行器自身的模型配置也独立，本页不向所有服务器分发网关密钥。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">隐私、价格与运行规则</h2>
+<p>场景来自服务器固定调用入口，家庭请求不能自行指定模型、引擎或身份。成员“仅本地”偏好检查实际场景模型及认证地址，外部网关不会被当成本地；切换模型不绕过单次云端同意。</p>
+<p>密钥仅由 Pi 原生登录保存在 112 私有认证目录，不出现在模型配置、接口响应、浏览器存储或验收报告。临时 cc-gateway-api-key.txt 已在保存和真实验证后删除。新网关保留原默认服务的凭据，重启后可继续使用。</p>
+<p>两套网关未提供价格，目前按实际返回记录 Token，费用为未定价，不能当成免费。需要费用预算的后台作业在模型未定价时拒绝执行；填写并确认价格后可用于估算与预算控制。估算不等于服务商账单，也不追溯改写历史未知费用。</p>
+<p>配置使用版本检查，旧页面不能覆盖新配置。有 Pi 对话运行时暂缓保存；下一轮调用使用新配置。已指定模型失效时明确报错，不静默换服务。模型目录更新会保护已被默认或场景引用的型号。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">验收与接口</h2>
+<p>已通过场景真实 SDK 路由、认证持久化、并发修改拒绝、过期版本、隐私拒绝、未知价格拒绝、人工价格估算和开发模型选择检查。HTTP 接口验证管理员认证及类型契约；完整应用回归覆盖语音、成员、知识、记忆与预算；Linux 隔离启动和冷备拒绝启动检查通过。</p>
+<p>生产浏览器已验证 9 类场景的保存与重载、15 个网关模型、密钥留空不回显、家庭对话实际使用指定 Kimi 模型及按场景记录用量、价格留空。临时路由已恢复。电脑与手机布局分别检查，十套主题的实际主题属性和样式文件单独验收。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>接口</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET /api/settings/pi</td>
+<td>默认模型、服务、凭据状态、场景及价格配置</td>
+</tr>
+<tr>
+<td>PUT /api/settings/pi</td>
+<td>保存默认模型与原生认证</td>
+</tr>
+<tr>
+<td>POST /api/settings/pi/gateway/discover</td>
+<td>向指定网关读取模型目录</td>
+</tr>
+<tr>
+<td>POST /api/settings/pi/gateways</td>
+<td>独立接入或更新网关，不切换默认模型</td>
+</tr>
+<tr>
+<td>PUT /api/settings/pi/routing</td>
+<td>按版本保存完整场景覆盖表</td>
+</tr>
+<tr>
+<td>PUT /api/settings/pi/pricing</td>
+<td>按版本保存或清除模型价格</td>
+</tr>
+<tr>
+<td>POST /api/settings/pi/test</td>
+<td>测试指定模型或已生效场景，不携带业务查询工具</td>
+</tr>
+</tbody></table></div>
+<p>验收记录：artifacts/model-routing/gateway-connection.json、artifacts/model-routing/ui/report.json、artifacts/model-routing/ui/layout-report.json。全平台契约现登记 355 项真实路由操作。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E5%A4%9A%E7%BD%91%E5%85%B3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

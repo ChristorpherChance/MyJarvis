@@ -1,0 +1,10 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+const App=React.lazy(()=>import('./App'));
+const DemoApp=React.lazy(()=>import('./DemoApp'));
+const ApiWorkbench=React.lazy(()=>import('./ApiWorkbench'));
+const PlatformApp=React.lazy(()=>import('./DemoApp').then(m=>({default:m.PlatformApp})));
+const RoomVoice=React.lazy(()=>import('./features/family/RoomVoice').then(m=>({default:m.RoomVoice})));
+import './style.css';
+const mode=new URLSearchParams(location.search).get('mode');
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><React.Suspense fallback={<div style={{padding:'30px',fontFamily:'Microsoft YaHei',color:'#b6d5df',background:'#09131d',minHeight:'100vh'}}>贾维斯正在载入…</div>}>{mode==='room'?<RoomVoice/>:mode==='live'?<App/>:mode==='api'?<ApiWorkbench/>:mode==='demo'?<DemoApp/>:<PlatformApp/>}</React.Suspense></React.StrictMode>);

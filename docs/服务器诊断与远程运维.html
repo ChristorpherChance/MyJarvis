@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="整台服务器与运行项目均可诊断，启停先确认，结果看实际回执。">
+  <meta name="jarvis-source-sha256" content="9bc204770ac6d6ec5d583bda9ac8f3407e3674ce787c9198b4cf20517fa4c5f8">
+  <title>服务器诊断与远程运维</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">1.0</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%8A%E6%96%AD%E4%B8%8E%E8%BF%9C%E7%A8%8B%E8%BF%90%E7%BB%B4.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 7 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">一、日常入口</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">二、整机与项目诊断</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">三、启停与电源操作</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">四、已授权机器与保护</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">五、语音指挥</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">六、独立恢复入口</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">七、部署与验收</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-08<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">真实诊断 / 固定操作 / 独立恢复</p>
+        <h1 id="document-title">服务器诊断与远程运维</h1>
+        <p class="subtitle">整台服务器与运行项目均可诊断，启停先确认，结果看实际回执。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-08</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>5 台</strong><span>已授权服务器</span></div><div class="stat"><strong>32 项</strong><span>登记运行服务</span></div><div class="stat"><strong>13 个</strong><span>登记运行项目</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><h2 id="section-1" tabindex="-1">一、日常入口</h2>
+<p>正式平台：<a href="https://cc-jarvis.ikvein.com/?mode=platform">贾维斯</a>。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>需要做什么</th>
+<th>页面位置</th>
+<th>支持操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>检查整台机器</td>
+<td>设备中心 → 点击服务器 → 远程运维</td>
+<td>整机诊断、重启服务器、关闭服务器</td>
+</tr>
+<tr>
+<td>操作登记项目</td>
+<td>运行服务 → 运行项目 → 点击项目 → 远程运维</td>
+<td>项目诊断、启动、重启、停止</td>
+</tr>
+<tr>
+<td>操作指定服务</td>
+<td>运行服务 → 服务监测 → 点击服务 → 远程运维</td>
+<td>固定服务诊断与已授权启停</td>
+</tr>
+<tr>
+<td>主平台服务停止后恢复</td>
+<td>提前打开独立运维入口</td>
+<td>查看回执、启动112上的贾维斯服务</td>
+</tr>
+</tbody></table></div>
+<p>只限已登录的本人管理员。普通家庭成员、共享房间身份和仅选择“本人”资料不获得服务器操作权限。</p>
+<p>这里提供服务器运维控制；图形桌面、鼠标键盘远控另行接入。业务数据库和项目文件查询也需要单独登记只读连接，当前诊断不读取私人数据。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-2" tabindex="-1">二、整机与项目诊断</h2>
+<p>整机检查实际 CPU 使用率、线程数、负载、运行时长、可用内存与交换空间、磁盘容量和索引节点使用、只读挂载、网络接口、系统失败服务，以及登记服务状态和近期日志。</p>
+<p>软件包只读镜像盘不参与容量告警。真实磁盘空间达到85%会提示注意，95%提示严重；可用内存不足10%、失败服务和只读挂载也会形成发现。硬盘 SMART 仅在工具及设备实际返回数据时展示，缺失保持未知，不能据此判断硬件健康。其他温度、风扇、电源传感器尚未接入。</p>
+<p>项目诊断限定关联服务，并检查登记且已启用的网址健康规则。诊断完成与项目健康分开报告：HTTP异常会作为结果展示，不能因为诊断命令运行完成就报告项目正常。日志进行常见凭据遮盖，仅向管理员展示；模型只读取简要发现、状态和回执，不读取完整日志或恢复码。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-3" tabindex="-1">三、启停与电源操作</h2>
+<p>操作先冻结目标、固定服务清单和影响，五分钟内明确确认才派发。同一任务重复提交不会再次执行；连接中断后只查询持久回执，不自动重发操作。目标地址、关联关系或授权改变，需要重新准备。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>实际含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>待确认</td>
+<td>尚未派发，可以取消</td>
+</tr>
+<tr>
+<td>已排队 / 执行中</td>
+<td>独立控制器正在处理，不能当作完成</td>
+</tr>
+<tr>
+<td>已提交 / 正在核实</td>
+<td>指令已接受，仍在观察实际状态</td>
+</tr>
+<tr>
+<td>已核实</td>
+<td>服务状态已验证；项目启用健康规则时还需网址检查通过</td>
+</tr>
+<tr>
+<td>执行失败</td>
+<td>未通过执行或恢复检查，应查看原因</td>
+</tr>
+<tr>
+<td>结果待核实</td>
+<td>连接或回执不完整，不重复执行</td>
+</tr>
+<tr>
+<td>已断联 · 电源未核实</td>
+<td>关机指令被接受且SSH已不可达；物理电源状态仍需人工核实</td>
+</tr>
+</tbody></table></div>
+<p>服务重启核对实际状态及新的启动时间；停止核对已停止状态。重启服务器核对新的系统启动标识，再核对登记服务预期状态，允许服务启动恢复时间。这里只检查登记服务，不代表全部业务数据完整性已验收。</p>
+<p>项目启停改变当前服务运行状态，不修改系统开机自启动策略。项目登记的暂停状态及自动健康检测开关可另行管理，实际进程状态以服务观测和操作回执为准。</p>
+<p>关闭服务器会列出登记项目中断影响。<strong>机器启动暂不支持</strong>，关机后需人工或云厂商控制台启动。原有机器管理中的其他唤醒接口，不代表这些服务器的开机已接入验收。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-4" tabindex="-1">四、已授权机器与保护</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>服务器</th>
+<th>角色</th>
+<th>当前操作范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>112 · 192.168.10.112</td>
+<td>主平台，独立运维控制器</td>
+<td>整机诊断、重启、关机；授权项目启停</td>
+</tr>
+<tr>
+<td>101 · 192.168.10.101</td>
+<td>冷备，业务与控制器停止</td>
+<td>整机诊断与电源操作；禁止直接启动或重启冷备贾维斯服务</td>
+</tr>
+<tr>
+<td>116 · 192.168.10.116</td>
+<td>项目服务器</td>
+<td>整机诊断、电源操作、授权项目启停</td>
+</tr>
+<tr>
+<td>广州 · 8.163.127.192</td>
+<td>公网域名网关及服务</td>
+<td>整机诊断、电源操作、授权业务服务启停</td>
+</tr>
+<tr>
+<td>日本 · 8.209.253.19</td>
+<td>云端项目及服务</td>
+<td>整机诊断、电源操作、授权业务服务启停</td>
+</tr>
+</tbody></table></div>
+<p>SSH、域名连接、网关、观测器、运维控制器及隧道等基础服务保护，仅能读取诊断；业务服务按固定清单开放操作。管理员仍可确认整台机器重启或关机，其影响会展示。</p>
+<p>101持续数据复制与自动主备接管仍待开发。当前保护会阻止冷备误启动，并不构成自动故障转移。i3后备节点尚未部署，后续接入沿用同一授权流程。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-5" tabindex="-1">五、语音指挥</h2>
+<p>本人管理员使用对话中的事项理解，或管理员语音入口，可说：</p>
+<ul>
+<li>“贾维斯，诊断一一六服务器。”</li>
+<li>“重启116上的MyFamily项目。”</li>
+<li>“重启112服务器。”</li>
+<li>“关闭广州服务器。”</li>
+</ul>
+<p>贾维斯会读出确切目标、动作和影响，再等待本次口头选择或页面确认。诊断同样可通过语音确认；页面诊断按钮可直接提交只读检查。</p>
+<p>目标不明确会要求明确编号和项目；未登记的项目名称不会降级成服务器重启。“不要重启”“如何重启”和日常“检查孩子作业”等不会直接变成服务器操作。口头确认必须来自当前会话的真实识别结果；后台使用与页面相同的冻结目标和防重复执行规则。</p>
+<p>Pi SDK提供对话理解与只读进度查询，机器动作由固定运维流程执行。模型不能临时编写服务器命令，不能替你批准操作。模型、ASR及TTS仍需完成各自配置和实体语音验收。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-6" tabindex="-1">六、独立恢复入口</h2>
+<p>公网：<a href="https://cc-jarvis.ikvein.com/control/">独立运维</a>。局域网：<a href="https://192.168.10.112:3142/control/">112独立运维</a>，需要本机信任项目局域网证书。</p>
+<p>管理员在远程运维页点击入口，获得十五分钟独立会话。也可点击“查看运维恢复码”，私下保存，主平台服务不可访问时使用恢复码登录；页面默认遮盖，六十秒自动收起，读取接口禁止缓存。退出独立运维会使该独立会话失效。平台登录和独立会话分别管理，后者到期自动失效。</p>
+<p>独立控制器与域名连接不依赖主平台服务，保留独立日志和持久回执，能够启动停止后的112平台。通过独立入口产生的任务会在平台恢复后归入同一管理员历史。</p>
+<p><strong>独立进程仍在112这台机器上。</strong> 重启112时该进程也会中断，机器回来后继续核实磁盘中的回执；关闭112、网络断开或硬件故障时，它不能继续提供在线控制。若广州网关关闭，公网入口也会中断，可改用仍在线的局域网入口。真正跨机器常在线的恢复控制面是后续阶段。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-7" tabindex="-1">七、部署与验收</h2>
+<p>应用版本 <code>20261008-remote-operations-r1</code>，112运行，101安装同版并保持冷备。维护账号负责安装；日常遥测仍是只读账号，新操作使用独立 <code>jarvis-ops</code> 账号、强制SSH命令、固定sudo包装器和服务器本地清单，不授予任意Shell。主平台只能写操作请求、读结果；控制器只处理固定操作，不能读取平台数据库。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>记录</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>artifacts/remote-operations/provisioning.json</code></td>
+<td>五节点固定操作、两控制器和公网入口安装</td>
+</tr>
+<tr>
+<td><code>artifacts/remote-operations/dispatcher-verification.json</code></td>
+<td>八项隔离测试、真实临时服务启停与重复执行验证、清理恢复</td>
+</tr>
+<tr>
+<td><code>artifacts/remote-operations/api-tests.log</code></td>
+<td>冻结目标、权限、回执持久化、独立结果导入、语音确认及原有项目接口回归</td>
+</tr>
+<tr>
+<td><code>artifacts/remote-operations/live-verification.json</code></td>
+<td>实际整机与项目诊断、独立入口和部署状态验收</td>
+</tr>
+<tr>
+<td><code>artifacts/remote-operations/ui/report.json</code></td>
+<td>页面、确认取消、独立入口、主题及移动端检查</td>
+</tr>
+</tbody></table></div>
+<p>电源命令以隔离模拟验证，<strong>没有为测试重启或关闭任何生产服务器</strong>。真实启停验证使用已清理的临时服务，未修改现有业务项目。验收报告以实际生成结果为准。</p>
+<p>本次验收已通过：五台整机和两个项目的真实诊断、独立入口诊断、八项隔离测试、四项后台回归、新增页面七项检查、原有监管页面十四项检查和域名浏览器八项检查。32个服务与13个项目也完成回归；两台平台节点269个构建文件一致，112运行、101冷备。116在收尾时短暂失联，随后恢复，最新诊断和监管均已核验；中断请求保留待核实，不自动重复执行。</p>
+<p>接口已补入 <code>docs/openapi-v1-planned.json</code> 的 <code>/api/runtime/remote-ops/*</code>。包含能力、历史、准备、确认派发、取消、独立会话和恢复码八类接口；这些运行期接口与既有 <code>/api/v1</code> 业务契约分别维护。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%8A%E6%96%AD%E4%B8%8E%E8%BF%9C%E7%A8%8B%E8%BF%90%E7%BB%B4.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

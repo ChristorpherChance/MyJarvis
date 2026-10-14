@@ -1,0 +1,9 @@
+const fs=require('node:fs/promises'),path=require('node:path'),{pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'artifacts/prototype-v11-qa/final-surfaces');
+(async()=>{await fs.mkdir(out,{recursive:true});const b=await chromium.launch({headless:true,executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'}),errors=[],shots=[];try{
+ const p=await b.newPage({viewport:{width:1440,height:900}});p.on('pageerror',e=>errors.push(e.message));await p.emulateMedia({reducedMotion:'reduce'});await p.goto(pathToFileURL(path.join(root,'贾维斯V11.0 · 十套主题与全平台交互原型.html')).href);
+ async function shot(theme,name){await p.evaluate(()=>{window.scrollTo(0,0);document.querySelector('#main')?.scrollTo(0,0)});await p.screenshot({path:path.join(out,theme+'-'+name+'.jpg'),type:'jpeg',quality:83});shots.push({theme,name});}
+ for(const t of ['pantheon','shanshui','baijia']){await p.evaluate(t=>J7.apply(t),t);for(const r of ['overview','chat','operations','machines','personas']){await p.evaluate(r=>{J5.state().terminal=r==='chat';navigate(r)},r);await shot(t,r)}await p.evaluate(()=>handleAction('v5-board','family'));await shot(t,'board-family');await p.evaluate(()=>{navigate('temple');handleAction('v5-k-temple-tab','gaps')});await shot(t,'temple-gaps');await p.evaluate(()=>{navigate('sources');J5.open('op-register')});await shot(t,'modal-register');await p.evaluate(()=>handleAction('close-overlay'));process.stdout.write(t+' final surfaces captured\n')}
+ await fs.writeFile(path.join(out,'capture-report.json'),JSON.stringify({shots,errors},null,2));if(errors.length)throw new Error(errors.join('\n'));console.log(JSON.stringify({surfaces:shots.length,errors}));
+ }finally{await b.close()}})().catch(e=>{console.error(e.stack);process.exitCode=1});

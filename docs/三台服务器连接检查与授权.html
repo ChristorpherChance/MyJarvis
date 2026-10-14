@@ -1,0 +1,76 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>三台服务器连接检查与授权 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 首次授权已完成</a><a href="#section-2">2. 授权 101</a><a href="#section-3">3. 授权 112</a><a href="#section-4">4. 授权 116</a><a href="#section-5">5. 授权后复核</a></nav><h1>三台服务器连接检查与授权</h1>
+<p>检查日期：2026-10-07。已读取项目根目录的服务器清单。三台已完成本机公钥授权并实际免密登录，主机ED25519指纹、superopen账号和主机名逐一核对通过。最初现有密钥被拒绝的问题已解决。</p>
+<p>这套流程已整理成<a href="通用服务器授权工具.html">通用服务器授权工具</a>，以后新增机器或管理电脑直接使用；下方保留首次授权与硬件检查记录。</p>
+<div class="table-wrap"><table>
+<tr><td>机器</td><td>已复核硬件</td><td>SSH 22端口</td><td>主机指纹</td><td>登录</td></tr>
+<tr><td>101 · 192.168.10.101</td><td>i5-7400 / 32GB</td><td>可达</td><td>一致</td><td>免密登录通过</td></tr>
+<tr><td>112 · 192.168.10.112</td><td>i7-7700 / 48GB</td><td>可达</td><td>一致</td><td>免密登录通过</td></tr>
+<tr><td>116 · 192.168.10.116</td><td>i5-6400 / 16GB</td><td>可达</td><td>一致</td><td>免密登录通过</td></tr>
+</table></div>
+<p>已通过实际SSH读取系统及SMART信息。三台均为Ubuntu 26.04.1 LTS、内核7.0.0-38-generic；CPU与内存符合清单。本次检查只读，未安装软件或重启服务器。</p>
+<h2 id="section-1">1. 首次授权已完成</h2>
+<p>你已在三台服务器完成授权，以下命令保留作为恢复访问的操作记录，无需再次执行。首次使用时，以superopen用户登录本机终端并粘贴对应整段。不要使用sudo；命令只追加本机专用公钥并整理SSH目录权限，保留原有公钥。也可以让已经能登录三台服务器的管理电脑代为执行。</p>
+<p>私钥只保存在这台联想的C:/Users/Admin/.ssh/，文件权限已核对为当前用户和SYSTEM；项目路径仅保存公钥和授权脚本。无需提供服务器密码或复制私钥。</p>
+<h2 id="section-2">2. 授权 101</h2>
+<p>仅在192.168.10.101的superopen终端执行；可重复执行，同一行不重复追加。</p>
+<pre><code># Run as superopen on 192.168.10.101; append only, preserve existing keys.
+set -eu
+if [ &quot;$(id -un)&quot; != &quot;superopen&quot; ]; then printf &quot;Please run as superopen, without sudo.\n&quot; &gt;&amp;2; exit 1; fi
+umask 077
+mkdir -p &quot;$HOME/.ssh&quot;
+chmod 700 &quot;$HOME/.ssh&quot;
+key='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNUFmQyCelq3IrrCmfMfFZwDVciVaNeKAOG6ikZrdpw jarvis-lenovo-server-101'
+auth=&quot;$HOME/.ssh/authorized_keys&quot;
+if [ ! -f &quot;$auth&quot; ]; then : &gt; &quot;$auth&quot;; fi
+# Ensure a separator if an existing final line has no newline.
+if ! grep -qxF &quot;$key&quot; &quot;$auth&quot;; then printf '\n%s\n' &quot;$key&quot; &gt;&gt; &quot;$auth&quot;; fi
+chmod 600 &quot;$auth&quot;
+printf 'Jarvis 101 public key authorized for %s\n' &quot;$(id -un)&quot;</code></pre>
+<p><a href="../artifacts/server-connection-qa/public-keys/jarvis-101.pub">公钥文件</a> · <a href="../artifacts/server-connection-qa/public-keys/authorize-101.sh">授权脚本</a></p>
+<h2 id="section-3">3. 授权 112</h2>
+<p>仅在192.168.10.112的superopen终端执行；可重复执行，同一行不重复追加。</p>
+<pre><code># Run as superopen on 192.168.10.112; append only, preserve existing keys.
+set -eu
+if [ &quot;$(id -un)&quot; != &quot;superopen&quot; ]; then printf &quot;Please run as superopen, without sudo.\n&quot; &gt;&amp;2; exit 1; fi
+umask 077
+mkdir -p &quot;$HOME/.ssh&quot;
+chmod 700 &quot;$HOME/.ssh&quot;
+key='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpw22ZU72YbRvb9jGsvqL9zQf5M8QvYWMgvLb15FZZw jarvis-lenovo-server-112'
+auth=&quot;$HOME/.ssh/authorized_keys&quot;
+if [ ! -f &quot;$auth&quot; ]; then : &gt; &quot;$auth&quot;; fi
+# Ensure a separator if an existing final line has no newline.
+if ! grep -qxF &quot;$key&quot; &quot;$auth&quot;; then printf '\n%s\n' &quot;$key&quot; &gt;&gt; &quot;$auth&quot;; fi
+chmod 600 &quot;$auth&quot;
+printf 'Jarvis 112 public key authorized for %s\n' &quot;$(id -un)&quot;</code></pre>
+<p><a href="../artifacts/server-connection-qa/public-keys/jarvis-112.pub">公钥文件</a> · <a href="../artifacts/server-connection-qa/public-keys/authorize-112.sh">授权脚本</a></p>
+<h2 id="section-4">4. 授权 116</h2>
+<p>仅在192.168.10.116的superopen终端执行；可重复执行，同一行不重复追加。</p>
+<pre><code># Run as superopen on 192.168.10.116; append only, preserve existing keys.
+set -eu
+if [ &quot;$(id -un)&quot; != &quot;superopen&quot; ]; then printf &quot;Please run as superopen, without sudo.\n&quot; &gt;&amp;2; exit 1; fi
+umask 077
+mkdir -p &quot;$HOME/.ssh&quot;
+chmod 700 &quot;$HOME/.ssh&quot;
+key='ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvBl/iseP8YGaJSGCGJHBFhyTElcDOxFwG/cWYk5Hgd jarvis-lenovo-server-116'
+auth=&quot;$HOME/.ssh/authorized_keys&quot;
+if [ ! -f &quot;$auth&quot; ]; then : &gt; &quot;$auth&quot;; fi
+# Ensure a separator if an existing final line has no newline.
+if ! grep -qxF &quot;$key&quot; &quot;$auth&quot;; then printf '\n%s\n' &quot;$key&quot; &gt;&gt; &quot;$auth&quot;; fi
+chmod 600 &quot;$auth&quot;
+printf 'Jarvis 116 public key authorized for %s\n' &quot;$(id -un)&quot;</code></pre>
+<p><a href="../artifacts/server-connection-qa/public-keys/jarvis-116.pub">公钥文件</a> · <a href="../artifacts/server-connection-qa/public-keys/authorize-116.sh">授权脚本</a></p>
+<h2 id="section-5">5. 授权后复核</h2>
+<p>2026-10-07已完成三台实连。下表为实际操作系统读数，内存总量是系统可用容量，区别于物理标称32/48/16GB。</p>
+<div class="table-wrap"><table>
+<tr><td>机器</td><td>CPU / 逻辑线程</td><td>系统内存总量</td><td>根盘剩余</td><td>SMART</td></tr>
+<tr><td>101</td><td>i5-7400 @ 3.00GHz / 4</td><td>30.22 GiB</td><td>204.58 GiB</td><td>PASSED</td></tr>
+<tr><td>112</td><td>i7-7700 @ 3.60GHz / 8</td><td>45.92 GiB</td><td>191.81 GiB</td><td>PASSED</td></tr>
+<tr><td>116</td><td>i5-6400 @ 2.70GHz / 4</td><td>15.01 GiB</td><td>146.6 GiB</td><td>PASSED</td></tr>
+</table></div>
+<p>101盘寿命消耗2%，介质错误0；116重映射扇区0、CRC错误0。112的Reported_Uncorrect仍为6361，与清单当日基线相同；这是已有历史值，不能仅凭整体PASSED断言没有风险，生产数据需保留独立备份并按原巡检计划复核。</p>
+<p>三台非交互SSH的PATH中尚未找到Node.js/npm/Docker，已找到Python3和smartctl。Node若由其他用户或版本管理器安装，需要先明确实际运行路径。正式部署前再准备运行环境；本次没有安装软件或部署贾维斯。</p>
+<p>本机也可直接测试：</p>
+<pre><code>ssh -F D:/AI/workspaces/MyJevis/artifacts/server-connection-qa/ssh-config jarvis-101
+ssh -F D:/AI/workspaces/MyJevis/artifacts/server-connection-qa/ssh-config jarvis-112
+ssh -F D:/AI/workspaces/MyJevis/artifacts/server-connection-qa/ssh-config jarvis-116</code></pre>
+<p>已建立独立SSH配置，按清单固定验证主机密钥，不修改现有CS02连接配置；IP若变化，先重新核对新地址的主机指纹。连接检查记录见<a href="../artifacts/server-connection-qa/report.json">JSON报告</a>。</p></main></html>

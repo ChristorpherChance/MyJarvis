@@ -1,0 +1,1 @@
+window.J12AvengersArt="";

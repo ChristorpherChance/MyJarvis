@@ -1,0 +1,45 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>服务器与运行项目管理 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="https://cc-jarvis.ikvein.com/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 放在哪里</a><a href="#section-2">2. 服务器卡片与资源口径</a><a href="#section-3">3. 管理每个运行项目</a><a href="#section-4">4. 项目资源如何计算</a><a href="#section-5">5. 登录信息与健康检测</a><a href="#section-6">6. 现有项目整理与运行限制</a><a href="#section-7">7. 核验资料</a><a href="#section-8">8. 域名接入更新</a></nav><h1>服务器与运行项目管理</h1>
+<p>本次将设备、运行项目和底层服务分成三个层次，入口仍在现有平台中。</p>
+<h2 id="section-1">1. 放在哪里</h2>
+<div class="table-wrap"><table>
+<tr><td>页面</td><td>管理内容</td></tr>
+<tr><td>设备管理</td><td>每台主机的地址、用途、系统、处理器、整机资源和监管服务数量</td></tr>
+<tr><td>运行服务 → 运行项目</td><td>已部署项目、访问与登录入口、加密登录凭据、访问检测、关联服务资源</td></tr>
+<tr><td>运行服务 → 服务监测</td><td>30项已登记服务的实际运行状态，按服务器筛选、搜索和分页</td></tr>
+<tr><td>项目管理</td><td>项目开发目标、工作副本、任务、里程碑与交付；可与运行项目关联</td></tr>
+</table></div>
+<p><a href="https://cc-jarvis.ikvein.com/?mode=platform#theme=stark&amp;view=machines">打开设备管理</a> · <a href="https://cc-jarvis.ikvein.com/?mode=platform#theme=stark&amp;view=services">打开运行项目</a></p>
+<p>设备卡片中的“运行项目”“服务监测”会直接打开该服务器的筛选结果。服务和项目列表均保留“全部服务器”，每页可选6、12、24、48条，切换筛选或搜索时返回第一页。</p>
+<h2 id="section-2">2. 服务器卡片与资源口径</h2>
+<p>主机名称与IP分开展示，包含用途、位置、系统及处理器。CPU、内存、根盘使用率用图形条显示，同时列出内存已用/总量、根盘剩余/总量、运行时间和本地时区的最近采样时间。</p>
+<p>容量统一显示GiB，为1024进制。系统可见内存会小于机器标称的48GB、32GB或16GB；磁盘读数是根分区，不能当作所有硬盘总容量。“监管服务”只统计已登记服务，不代表Ubuntu所有系统服务。</p>
+<p>在线资源来自各节点的签名采样。未连接、过期或缺失的数据保留为未知，不使用零冒充正常状态。主机在线、服务进程运行、项目网址可访问分别判断。</p>
+<h2 id="section-3">3. 管理每个运行项目</h2>
+<p>“登记运行项目”可填写项目名称、用途、服务器、环境、访问网址、登录入口、项目目录及运维备注，选择关联服务，并可关联已有开发项目。</p>
+<p>保存后打开项目详情：</p>
+<ul>
+<li><b>访问管理</b>：打开项目或登录页、编辑项目、管理账号密码、立即检测访问状态。</li>
+<li><b>资源监测</b>：关联服务的CPU与内存合计、已采样目录占用、所在服务器资源，以及各服务实际趋势。</li>
+<li><b>归档项目</b>：移出默认列表并清除保存的登录凭据；不会停止服务器上的服务。</li>
+</ul>
+<p>绑定服务只能选择同一台服务器的服务。记录更新使用版本检查，防止另一个页面的修改被旧表单覆盖。</p>
+<h2 id="section-4">4. 项目资源如何计算</h2>
+<p>CPU与内存取自关联systemd服务的实际cgroup，包含该服务的子进程。CPU按整机全部逻辑处理器的算力归一化；内存是当前cgroup占用，包含缓存等，并非仅进程RSS。缺少某个服务的资源时，不把它计为零，详情展示已采集服务数。</p>
+<p>一个服务可被多个项目引用，页面会提示共享资源可能包含其他项目。目录占用来自服务配置的实际工作目录，由服务器固定采样任务汇总，统计分配的磁盘空间；同一路径只统计一次。父子目录或多项目共享目录仍可能交叉，不能据此直接做精确成本结算。</p>
+<p>主机与服务心跳每15秒收集，页面每15秒刷新；服务记录通常约30秒更新。目录采样任务每分钟运行一次，已有目录读数缓存30分钟，超过两小时不展示为有效。目录未配置、过大导致采样超时或没有权限时显示待采样。手填目录仅用于筛选和记录，不会让监测账号获得任意目录扫描权限。</p>
+<p>112的贾维斯项目目录读数为发布代码占用，平台数据库位于另一目录，不能把代码目录当作完整数据占用。</p>
+<h2 id="section-5">5. 登录信息与健康检测</h2>
+<p>用户名和密码在独立表单中保存，采用AES-256-GCM加密，数据库、普通项目响应、操作回执和审计记录不保存明文。模型工具只能查询项目的公开管理信息，不能读取登录凭据。</p>
+<p>只有当前已登录管理员明确点击“查看登录凭据”才解密展示，密码默认遮盖，60秒自动收起；退出登录或认证失效会清理当前私密表单。账号密码不会写入浏览器本地存储。</p>
+<p>完整恢复需要同批次数据库和runtime/voice-master.key。丢失或拿错密钥时后台拒绝启动相关存储，不会生成新密钥掩盖已有凭据无法解密的问题；现有完整备份工具已包含该密钥。</p>
+<p>健康检测由中央平台按配置周期发出HTTP(S)请求，核对预期状态码、记录耗时；不携带保存的登录凭据，不跟随重定向，也不自动登录。需要认证的项目应配置专用健康地址。响应正常只证明该地址可访问，不代表所有业务功能已验收。自动探测遵守平台暂停设置；旧检测结果过期会明确显示。</p>
+<h2 id="section-6">6. 现有项目整理与运行限制</h2>
+<p>已整理13个实际部署项目：112主平台、101冷备、116的8个项目、广州语音网关、日本CCR与CLIProxyAPI。基于实际服务、监听端口、FRP映射和反向代理配置核对，已确认的访问地址预填，无法确认的入口保留为空。冷备单独标记暂停探测；只监听本机或VPN的服务不伪装成可直接访问的公网项目。根地址返回404的语音网关先记录实际情况，健康路径确认前不自动判定整个项目故障。</p>
+<p>监测账号继续无sudo权限、无平台数据读取权限，SSH只能运行固定签名采样器。目录汇总任务由管理员安装为受限服务，仅输出目录占用与时间，不向监测账号开放文件内容或任意命令。</p>
+<p>正式版本为20261007-application-console，112运行中央平台，101部署相同代码且业务停机待命。持续数据复制及自动接管仍待后续实现。</p>
+<h2 id="section-7">7. 核验资料</h2>
+<p>新增后台2项综合测试通过，覆盖加密、权限、持久化恢复、实际HTTP检测、版本与幂等提交、资源归属和分页。独立测试环境的9项项目交互检查、正式环境14项页面检查通过，包含28项服务分页与5台服务器过滤、十套主题及手机布局；未向正式库写入测试凭据。112与101实际HTTPS启动入口各1项通过，5台固定目录汇总任务正常，正式版本编译文件摘要一致。再次执行项目整理新增0条，仍为13个项目。</p>
+<p><a href="../artifacts/managed-servers/projects-import.json">项目导入记录</a> · <a href="../artifacts/managed-servers/application-tests.log">后台接口测试</a> · <a href="../artifacts/managed-servers/project-ui/report.json">隔离项目交互验收</a> · <a href="../artifacts/managed-servers/ui/report.json">正式页面验收</a> · <a href="../artifacts/managed-servers/report.json">正式服务器验收</a></p>
+<h2 id="section-8">8. 域名接入更新</h2>
+<p>主平台已使用https://cc-jarvis.ikvein.com，项目访问、登录入口与健康检测同步更新。112的域名连接运行，101的通道停机待命，两项均关联到各自贾维斯项目；现为30项服务、13个项目。局域网入口https://192.168.10.112:3140保留。</p>
+<p>域名接入后再次完成14项正式页面检查，覆盖30项服务分页、全部五台服务器过滤、十套主题与手机布局；新增8项域名浏览器检查通过。此前28项服务的页面报告保留在<a href="../artifacts/domain-access/prior-managed-ui-report.json">接入前记录</a>。接入方案、运行状态和验收见<a href="贾维斯域名与FRP接入.html">贾维斯域名与FRP接入</a>。</p></main></html>

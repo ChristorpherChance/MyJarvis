@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {runPG4QAStartupOnceR33,pg4QAStartupR33SourceReadOnce} from '../.jarvis-dev/maintenance/run-r33-pg4-qa-startup-once.mjs';
+test('PG4 entry: explicit default refuses before dependency IO',async()=>{let touched=0;const deps=new Proxy({}, {get(){touched++;throw Error('DEPENDENCY_TOUCHED')}});assert.equal((await runPG4QAStartupOnceR33(null,deps)).ready,false);await assert.rejects(runPG4QAStartupOnceR33({},deps),/OPTIONS_CHANGED/);assert.equal(touched,0)});
+test('PG4 entry: source intent failure never reads and completed failure retains outcome',async()=>{
+ let reads=0;const first=Error('PG4_ENTRY_TEST_WRITE_FAILED');await assert.rejects(pg4QAStartupR33SourceReadOnce({intent:{},recheck:async()=>{},writeIntent:async()=>{throw first},readSource:async()=>{reads++},saveOutcome:async()=>{throw Error('UNEXPECTED_OUTCOME')}}),e=>e===first);assert.equal(reads,0);
+ const events=[],error=Error('PG4_A_TEST_RETURN_FAILED'),receipt={path:'.jarvis-dev/maintenance/controlled-outcome.json',sha256:'a'.repeat(64),bytes:1};error.pg4SourceCaptureEvidence={captures:[{path:'.jarvis-dev/maintenance/controlled-wire.json',sha256:'b'.repeat(64),bytes:1}]};let recorded;
+ await assert.rejects(pg4QAStartupR33SourceReadOnce({intent:{isControlledFixture:true},recheck:async()=>{events.push('recheck')},writeIntent:async()=>{events.push('durable-intent')},readSource:async()=>{events.push('one-read');throw error},saveOutcome:async v=>{recorded=v;events.push('outcome');return receipt}}),e=>e===error&&e.entrySourceOutcome===receipt);
+ assert.deepEqual(events,['recheck','durable-intent','recheck','one-read','outcome','recheck']);assert.equal(recorded.status,'failed');assert.deepEqual(recorded.captureEvidence,error.pg4SourceCaptureEvidence);assert.equal(recorded.actualPG4Qualified,false);
+});

@@ -1,0 +1,28 @@
+import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
+import {createHash,randomUUID} from 'node:crypto';
+import {withPlatform} from './managed-server-client.mjs';
+const projectId='70ec346f-6520-46ed-abed-22cac770a3e4',dir='artifacts/software-factory/acceptance-r24';
+const q=JSON.parse(await readFile(dir+'/candidate-generated-fixtures-quarantined.json','utf8'));
+const refusal=JSON.parse(await readFile(dir+'/candidate-preflight-refusal.json','utf8'));
+if(q.fixtureDirs.length!==14||!q.allRemainingPublicSourceUnchanged||!q.restorable||q.helperPolicyChanged||q.originalFixturesDeleted||refusal.publicError!=='SOURCE_SYMLINK_NOT_ALLOWED')throw Error('FIXTURE_DECISION_PROOF_MISMATCH');
+const reference=async(path,kind)=>({reference:path,kind,sha256:createHash('sha256').update(await readFile(path)).digest('hex')});
+const refs=await Promise.all([reference(dir+'/candidate-preflight-refusal.json','observation'),reference(dir+'/candidate-fixture-source-review.json','source'),reference(dir+'/candidate-generated-fixtures-quarantined.json','test-report')]);
+const journalPath='.jarvis-dev/maintenance/factory-fixture-decisions-r24.json';let j;
+try{j=JSON.parse(await readFile(journalPath,'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;j={};}
+const save=async()=>{await mkdir('.jarvis-dev/maintenance',{recursive:true});const tmp=journalPath+'.'+randomUUID()+'.tmp';await writeFile(tmp,JSON.stringify(j,null,2)+'\n',{mode:0o600});await rename(tmp,journalPath);};
+const result=await withPlatform(async({api})=>{
+ const p=(await api(`/api/v1/projects/${projectId}/autonomy`)).data;if(p.revision!==20||p.spec.objectives.length!==74||p.config.costPolicy!=='record-only')throw Error('FIXTURE_DECISION_SCOPE_CHANGED');
+ const objectives=p.spec.workPackages.find(x=>x.id==='FA-01').objectiveIds;
+ const option=(id,title,advantages,disadvantages,impact,compliesWithGoals)=>({id,title,advantages,disadvantages,impact,compliesWithGoals,withinAuthority:'yes',environmentEvidence:'available',missingEvidence:[],reversibility:id==='preserve'?'reversible':'bounded',coveredObjectives:objectives,operationalImpact:1});
+ j.intent??={commandId:randomUUID(),expectedVersion:0,changeOf:null,questionSummary:'候选可信源码预检被旧测试生成的符号链接阻止，如何保留产物并安全继续？',context:{observedAt:new Date(refusal.at).toISOString(),goalSpecHash:p.goalSpecHash,sourceFingerprint:null,sourceVersion:'R22独立候选；严格fingerprint在符号链接处拒绝，未获得有效前置指纹',runId:null,taskId:null,machineId:p.config.machineId,objectives,constraints:['不能删除旧结果或放宽固定源码安全规则','只移动已核实的14精确生成fixture目录，不改业务代码','保存备份与来源、回退和未知状态；费用只记录不限额'],situation:'package.test.mjs与source-stability.test.mjs创建临时测试反例，但缺少finally清理；7个打包目录和7个快照目录留有symlink。源码固定读取被严格规则拒绝，尚未创建候选任务。'},options:[option('preserve','完整备份并隔离14临时fixture',['保留全部失败与链接文字','不改安全规则，剩余源码可精确比对','可按原位清单回迁'],['测试清理缺陷仍须修复'],'节点与中央空闲时仅同FS rename精确生成目录；树manifest与剩余源一致后新鲜登记。','yes'),option('relax','让固定快照忽略所有符号链接',['可立即绕过当前预检'],['可能隐藏越界链接和真实来源差异','削弱验收可信身份且不修根因'],'放宽可信固定源安全规则不符合独立验收。','no')],chosenId:'preserve',decisionRationale:'只读源审确认这些是反例测试残留；完整可逆隔离能保留证据并恢复有效源码身份。可信helper保持不变，真正的临时目录清理缺陷继续单独记录与修复。',basisRefs:refs,risk:'low',affectedObjectives:objectives,rollbackPlan:{plan:`用root私有备份标识${q.id}与逐树manifest，在节点空闲且原相对路径不存在时逐目录回迁；拒绝覆盖后来生成的路径。原symlink按原文字保存，回原位才恢复绝对链接含义。`,triggers:['fixture源判断有误','需复核原测试反例','移动之外的公开源出现差异'],impact:'只恢复这14生成fixture目录；恢复后原严格预检可能再次拒绝，不得以恢复作为产品通过。',requiresNewExecutionPlan:true},actions:[],status:'selected',origin:'ai'};await save();
+ if(!j.receipt){j.receipt=(await api(`/api/v1/projects/${projectId}/decisions`,j.intent)).data;await save();}
+ j.implementation??={commandId:randomUUID(),expectedVersion:j.receipt.revision,origin:'ai',reason:'14精确fixture已完整保存并隔离，依据真实前后manifest记录实施，不代表缺陷已修或产品通过。',actions:[{summary:`14目录同文件系统整体移至备份${q.id}，逐树SHA相同，剩余公开源前后相同；源码/生产数据/可信helper均未修改。`,at:new Date(q.at).toISOString(),state:'performed',evidenceRefs:refs},{summary:'在独立代码副本补齐两个反例测试finally清理；反例仍须验证拒绝链接，成功与异常路径均清理自身fixture。',at:new Date().toISOString(),state:'planned',evidenceRefs:refs}]};await save();
+ if(!j.implemented){j.implemented=(await api(`/api/v1/projects/${projectId}/decisions/${j.receipt.id}/implementation`,j.implementation)).data;await save();}
+ j.defectIntent??={commandId:randomUUID(),scope:'personal',expectedVersion:0,payload:{title:'F-R24-002：快照及打包反例测试残留临时目录',projectId,machineId:p.config.machineId,agent:'manual-review',mode:'observe',budget:1,retryLimit:0,goal:'公开source-stability.test.mjs和package.test.mjs使用mkdtemp生成反例fixture但缺finally/after清理。已产生14未跟踪symlink目录，阻止后续严格源码快照；已完整可逆隔离，测试源尚未修。在独立副本为各自临时目录添加可靠收尾，不放宽root helper拒绝链接规则，不清空整个artifacts。',criteria:'两个反例断言仍实际执行，成功/异常均仅清理自身创建的fixture；连续运行两次后无新增残留或进程；原生产源码与其他报告不改。新源码指纹、测试报告和差异审阅关联本记录。费用只记录不限额，此观察记录不派发模型、不设消费限制。'}};await save();
+ if(!j.defectReceipt){j.defectReceipt=(await api('/api/v1/tasks/commands/create',j.defectIntent)).data;await save();}
+ const decision=(await api(`/api/v1/projects/${projectId}/decisions/${j.receipt.id}`)).data;
+ const defect=(await api(`/api/v1/tasks/${j.defectReceipt.id}`)).data;
+ if(decision.status!=='implemented'||decision.revisions.length!==2||defect.mode!=='observe'||defect.executionRequest)throw Error('FIXTURE_DECISION_READBACK_FAILED');
+ return {at:new Date().toISOString(),projectId,decision:{id:decision.id,revision:decision.revision,status:decision.status,historyVersions:decision.revisions.length,hash:decision.hash},defect:{id:defect.id,title:defect.title,status:defect.status,fixDispatched:false},quarantineId:q.id,modelsInvoked:false,productAccepted:false};
+});
+await writeFile(dir+'/fixture-decision-and-defect-live.json',JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(result));

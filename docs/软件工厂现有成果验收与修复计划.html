@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="先验证现有软件工厂的完整代码包、隔离运行、现成测试与全新客户工程，再按真实缺陷修复复验，保留全部74项目标。">
+  <meta name="jarvis-source-sha256" content="8204b881f65ac744387de11114fb76e7cc30529be1a68c3762174707205c62a2">
+  <title>软件工厂现有成果验收与修复计划</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">验收计划 R24.4 · 简洁汇报入口</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%8E%B0%E6%9C%89%E6%88%90%E6%9E%9C%E9%AA%8C%E6%94%B6%E4%B8%8E%E4%BF%AE%E5%A4%8D%E8%AE%A1%E5%88%92.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 11 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 目标和原始依据不变</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 开始检查的顺序</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 现成测试怎样承接</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. 全新代表客户工程的验收</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. 后续小批次与最终出口</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 缺陷分类、修复及禁止放行</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 每批绑定当前内容和运行身份</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. 小任务收敛与超时交接</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">9. 费用政策与监管</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">10. 状态怎样更新</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">11. 74目标主责任批次索引</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-11<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">现有成果 / 独立验收 / 证实问题再修</p>
+        <h1 id="document-title">软件工厂现有成果验收与修复计划</h1>
+        <p class="subtitle">先验证现有软件工厂的完整代码包、隔离运行、现成测试与全新客户工程，再按真实缺陷修复复验，保留全部74项目标。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-11</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>74项目标</strong><span>原范围和验收条款保留</span></div><div class="stat"><strong>检查优先</strong><span>先已有成果，再修证实问题</span></div><div class="stat"><strong>主线基础执行成功</strong><span>完整交付仍待逐项目标验收</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><blockquote>
+<p>R26 当前执行：软件工厂进入测试验收为主的计划，其他项目保留持续开发方式。参见<a href="%E9%80%9A%E7%94%A8%E9%A1%B9%E7%9B%AE%E7%9B%91%E7%AE%A1%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C.html">通用监管与本轮执行</a>。当前主线代码已重新核验；本轮完整测试的实际结果会追加记录，旧 R22 阻塞及历史失败不重置。</p>
+</blockquote>
+<p><strong>当前汇报口径（R25）：</strong> 计划归纳为核验现状、全面测试、核对产物、交付验收、自动运行五步，下面20批次与74项目标的标准全部保留。最新已检查main为<code>89e6af3ac64f707c3ba6fc09e9e09fe4a4174171</code>，任务<code>4244fb55-7a54-45b9-a94a-ebaddd5d9a59</code>、运行<code>cbd1f5971f17a8c9990c05afc25a009536568322</code>；独立报告确认离线安装、构建、类型检查和3个shared测试文件15/15通过，范围仍是基础检查，完整目标0/74。历史失败在下文保留原时间和来源，不能代表这个新版本的当前结果。平台汇报从真实接口自动更新执行状态，用例细节查看<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%8E%B0%E6%9C%89%E6%88%90%E6%9E%9C%E9%A6%96%E8%BD%AE%E9%AA%8C%E6%94%B6%E6%8A%A5%E5%91%8A.html">首轮与新提交复验报告</a>，其依据为<a href="../artifacts/software-factory/acceptance-r24/main-baseline-independent-review-source-update-second-r24.json">新主线独立报告</a>。</p>
+<p><strong>先检查现有软件工厂是否已经满足要求，发现真实问题再修。</strong> 用户判断工厂已基本开发完，本轮把这个判断作为待验证假设，优先承接已有代码、文档、构建和测试成果，不再把大工作包整体交给模型从头建设。</p>
+<p>开始时先回答四件事：现有代码能否形成完整软件包；这个包能否在隔离环境独立安装运行；已有测试和当前全部必需条款是否通过；一个全新客户工程能否从原始资料实际走到软件和使用核验。随后只为已证实缺陷安排小范围修复，补齐缺少的验证证据，再做完整交付与自动化验收。</p>
+<p><strong>本文件是验收组织计划，批次定义不代表已经执行或通过。</strong> 2026-10-11 18:03北京时间已真实派发当前main的窄基线任务，18:08独立读回确认离线安装通过、构建失败，后续类型检查与三个shared测试文件未运行；实际范围和身份见第2节。启动时queued记录保留，最新结果明确为未通过。建设档案17:04记录的0/74表示冻结目标尚未取得已确认的独立验收证据，不是代码完成度，也不意味着已有代码为零。历史成功、失败、超时、费用未知及已有产物都保留；每批重新核对当前源码和运行身份。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 目标和原始依据不变</h2>
+<p>原74项目标的机器定义为 <a href="../artifacts/software-factory/autonomy-r22/objectives.json">R22.1目标集</a>，远端受控原件为 <code>/opt/jarvis-development/software-factory/objectives-r22.json</code>。目标原文件SHA-256为 <code>f12400050a791b2765951e501142f1f4aa1aac19a388d9564fd651cde6e90158</code>；既有平台冻结目标规范指纹为 <code>23d7db28c5b8d3c8516d2607564a03475609cf590b1523e1cd7e6596eac34b42</code>。原文件字节指纹和平台规范指纹口径不同，不能互换。</p>
+<p>本计划完整承接每个目标的编号、标题、详细验收、依赖、归账域和必需属性，承接8条共同验收规则、103个REQ与15个BR的118条映射，以及17项Agent、10项自动化、12项交付发现的39条映射。新批次只改变检查和修复的组织方式，不删原条款，不将尚未通过项改成取消、分期或不适用。</p>
+<p>正式目标和工作包验收仍遵守原 <code>dependsOn[]</code>。就绪的诊断、环境准备和独立观察可以先做，结果先标为候选证据；这些检查不能冒充原FA-01—09依赖已经通过。最终重新汇入同版74目标矩阵，逐项独立核对后再形成原工作包与产品结论。</p>
+<p>依据：<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E4%BA%A4%E4%BB%98%E6%80%BB%E7%BA%B2.html">无人值守交付总纲</a>、<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%A6%96%E9%A1%B9%E7%9B%AE%E4%BA%A4%E4%BB%98%E8%AE%A1%E5%88%92.html">首项目交付计划</a>、<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9B%AE%E6%A0%87%E4%B8%8E%E9%AA%8C%E6%94%B6%E6%A0%87%E5%87%86.html">端到端目标与验收标准</a>、<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82Agent%E8%BF%AD%E4%BB%A3%E4%B8%8E%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88.html">Agent迭代方案</a>、<a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.html">最新建设档案</a>及<a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.html">建设日志</a>。旧总纲和冻结目标集保持原样，本计划另存版本。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 开始检查的顺序</h2>
+<p><strong>先验收实际main现有成果，冻结候选只作单独对照。</strong> <a href="../artifacts/software-factory/acceptance-r24/source-and-fixed-entry-readiness.json">只读来源检查</a>显示：读取时main目录<code>/home/superopen/All-Projects/msf</code>的HEAD为<code>266104923b7f49b259dc8a7b827d599c5220ad16</code>，另有4个公开新增文件；<a href="../artifacts/software-factory/acceptance-r24/fixed-entry-boundaries.json">可信公开源码快照检查</a>取得589个公开文件、指纹<code>ea58c75228e69952f8e36456f4d83c8049acf917133783e41ec522d98be518db</code>。R22候选目录<code>/home/superopen/All-Projects/msf-jarvis-autonomy-r22</code>的HEAD为<code>90a89ea5535b7a6ef068054e7a1344cf906a40c0</code>，另有7项修改和18项新增；它不是此时main的新版本。两目录的HEAD、实际文件和指纹分别记录，使用同口径内容清单核对，不能只凭分支名或提交先后选择“最新成果”，也不能互借通过状态。Git公开清单与可信快照的排除项和计数口径不同，不能把清单文件数差值当成版本变更；HEAD相同也不能代替实际文件身份。</p>
+<p><a href="../artifacts/software-factory/acceptance-r24/main-baseline-start-1791712985295.json">main真实启动回执</a>的任务为<code>e9942a1f-d8d0-4995-8246-e284990e0dea</code>，运行为<code>edd530589f3adc669a313dcfc6207fa536afb3cb</code>，启动观察时间为<code>2026-10-11T10:03:04.964Z</code>。这次固定执行仅做独立快照中的离线依赖安装、构建、类型检查和三个shared测试文件；不调用模型，不修改原项目或生产数据，不等于完整A01—A03、更不等于74目标通过。候选另有固定检查批次时，明确标“冻结候选对照”，按其真实任务和报告单独展示，不替代main主验。</p>
+<p><strong>18:08独立读回的最新main结果：构建未通过。</strong> <a href="../artifacts/software-factory/acceptance-r24/main-baseline-independent-review.json">独立核验报告</a>绑定上述同一任务/run，确认签名运行状态为<code>failed</code>，固定原报告指纹为<code>26e8bed8ac464becd65db605e7bde04624918c79faafb128342f182cb1d54d0b</code>。离线安装<code>offline-install</code>退出0，实际6643毫秒；构建<code>build</code>退出1，实际28449毫秒，出现两处<code>TS2345</code>：<code>src/modules/platform/template-refresh.service.ts</code>第47行<code>template_refresh.start</code>与第67行<code>template_refresh.stop</code>尚未被命令类型定义承接。后续<code>typecheck</code>及三个shared测试文件未运行，集成与完整交付验收也未运行，不能报通过或补造用例数。</p>
+<p>独审确认源码在快照前、过程中及执行后均为<code>ea58c75228e69952f8e36456f4d83c8049acf917133783e41ec522d98be518db</code>，589个公开文件；原项目代码未修改，没有模型调用，原执行模板已恢复。用量尚未报告，费用和Token仍记未知，不能记零。该结果作为当前main的A01构建阻塞证据保存；先核对这两处命令类型承接并安排最小修复，再固定新候选复验构建及随后未跑步骤。它不能证明其他功能未开发，也不能替候选对照签通过；独立验收仍为0/74。</p>
+<p>后续结果只追加到匹配的source/任务/run身份；读取时未知、排队、失败或旧版本通过不能改写为本次通过。主线变化后重新固定新内容，旧报告保留为历史，完整测试、隔离部署、全新客户工程及逐目标独立评审继续按下表推进。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>本轮首先检查什么</th>
+<th>实际产物与出口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A00</td>
+<td>承接已有成果，分别固定main主验与候选对照和完整分母</td>
+<td>当前文件字节清单、源码哈希、依赖锁、工作区变化/新增文件、并发写者清单；74目标及所有原条款到检查的矩阵。main和候选分开，不对未知或旧结果签新验收。</td>
+</tr>
+<tr>
+<td>A01</td>
+<td>构建现有完整工厂包</td>
+<td>从固定候选实际执行适用工程检查和构建；前后端、共享代码、静态资源、迁移及无凭据配置示例齐全，包清单逐字节可核对。构建失败即留失败证据，不先重写功能。</td>
+</tr>
+<tr>
+<td>A02</td>
+<td>从空环境安装这个包并核对运行版本</td>
+<td>独立端口、服务、数据库、缓存、对象存储和目录；实际初始化、迁移、启动、鉴权、关键读写；源码→构建→包→进程→前端/API/数据身份一致。不得混用旧18920、8080、5173进程。</td>
+</tr>
+<tr>
+<td>A03</td>
+<td>先跑已有单元、集成、接口及原型检查</td>
+<td>核对现成基线全部适用文件、套件和新增测试，再按域分批实际执行；保存断言、用例分母、覆盖范围、退出码和原始报告。缺环境标阻塞，未跑标未跑，不将失败直接归为代码缺陷。</td>
+</tr>
+<tr>
+<td>A04</td>
+<td>让全新代表客户工程走现有真实流水线</td>
+<td>从新原始资料开始，观察需求/设计/原型、任务/真实代码、构建/独立测试、成套导出、干净安装和角色使用，逐段保存实际工件与状态。在哪一段卡住，就形成可复现问题；已有业务台账或复制旧项目不能替代。</td>
+</tr>
+</tbody></table></div>
+<p>第一轮以检查为主。只有包、隔离环境或测试入口确有缺失并已取得证据，才安排修复该阻塞的最小任务，再继续原检查。优先级高的安全或虚假放行问题先阻断有关路径；其余安全、独立的检查仍可继续。检查任务和修复任务分别登记，修复提交后使用新候选做原用例及影响回归。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 现成测试怎样承接</h2>
+<p>现成测试基线是 <a href="../scripts/project-autonomy-baseline-r22.json">project-autonomy-baseline-r22.json</a>，SHA-256为 <code>b6d21374b5d726d7b83fce1907d578548bebdeae8c362c3241f8b1c951598fb6</code>。它登记45个必需测试文件、30套必需原型套件，最低覆盖要求为行90%、分支80%。这是下限与历史内容索引，不是本轮通过结果，也不是74目标定义。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>A03子批次</th>
+<th>已登记范围</th>
+<th>执行时需额外核对</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A03-a 共享与事务</td>
+<td>shared编号/错误/指纹，命令总线、审计、API映射、幂等、鉴权、policy</td>
+<td>原子提交、审计失败零写、权限拒绝和重复/晚到回执的实际持久状态。</td>
+</tr>
+<tr>
+<td>A03-b 资料与文档</td>
+<td>上传、文件、批量、解析、ZIP；文档章节/约定/导出/模板/RTM/存储</td>
+<td>新增输入格式与扫描长文，原件保留、整包失败零写、跨项目隔离、实际导出字节。</td>
+</tr>
+<tr>
+<td>A03-c AI与执行</td>
+<td>模型、会话、委派、流式、工具提示用量、外部工具、沙箱</td>
+<td>哪些用例依赖真实模型/进程/容器，哪些只验证合成契约；断言版本与环境依赖真实可用。</td>
+</tr>
+<tr>
+<td>A03-d 需求设计开发测试</td>
+<td>需求及补丁、设计/独立页、开发路由/集成、联调、测试模块</td>
+<td>实际业务执行器与模拟路径逐项区分；既有通过不证明当前产品行为通过。</td>
+</tr>
+<tr>
+<td>A03-e 30套原型检查</td>
+<td>从syntax/logic到design-catalog、customer-*、workflow/regression/visual/design-visual等全部原套件</td>
+<td>核对清单逐项执行，不只挑易通过套件；原型演示数据明确标识，正式软件仍要独立实现和真实运行。</td>
+</tr>
+</tbody></table></div>
+<p>启动时从当前候选重新枚举所有适用测试，包括新增文件和新条款所需用例。原45文件、30套件不能静默从可信分母移除；测试改动、断言语义和覆盖排除项须独立审阅。按包/模块及批准的适用范围检查覆盖率，不用全仓均值掩盖关键模块缺测。单纯“现有测试全部通过”仍不足以签收全部必需条款；缺少的条款用例进入后续验收批次。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 全新代表客户工程的验收</h2>
+<p>默认代表场景为小型“服务请求管理”工程：客户只提供原始业务资料，说明角色、请求状态、附件、查询与导出等目标；不预置专业PRD、完成代码、历史绿色台账或交付成品。工程采用独立仓库/候选/数据库/对象空间，输入与结果标明“代表性验收项目”，不得冒充商业客户实际签收。</p>
+<p>最小场景包含列表、详情、创建/编辑及管理页面，普通用户和管理员，加载/空/错误/未授权/校验失败等适用状态，附件与导出、实际状态转换及重启读回。冻结客户语言和格式配置；主路径使用约定语言，另对语言变更做受影响复验。输入长文、扫描、表格和ZIP等专项在A07补齐，不把一个简单工程外推成所有格式与业务已支持。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>交接段</th>
+<th>当前软件应实际产出</th>
+<th>独立检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A04-a 原始资料到需求</td>
+<td>不可变原件、解析状态、澄清/项目配置、CRD/PRD/RTM</td>
+<td>原始条款全部有语义承接，不能截断后宣布完整；真实歧义显式记录。</td>
+</tr>
+<tr>
+<td>A04-b 需求到设计</td>
+<td>HLD、适用七册LLD、页面/子页/状态目录、独立高保真页及整体交互原型</td>
+<td>字段、权限、状态、接口和跨页数据一致，所有适用页面可实际打开操作。</td>
+</tr>
+<tr>
+<td>A04-c 设计到代码和测试</td>
+<td>有依据的开发计划、真实任务/Agent回执、代码差异、单测/CI/独立评审/实际合并、真实构建和测试批次</td>
+<td>工厂使用既有能力生产客户软件；不能复制原型HTML、模拟CI或直接把进度写100%。</td>
+</tr>
+<tr>
+<td>A04-d 软件到使用</td>
+<td>同版文档/源码/软件/迁移/配置示例及manifest，实际下载、解包、目标安装、角色业务与恢复读回</td>
+<td>ZIP或健康接口不足以通过；逐文件字节和运行版本一致，实际使用有数据与操作证据。</td>
+</tr>
+</tbody></table></div>
+<p>A04是第一轮贯通检查，结果可以是不通过或被阻塞；先发现当前最早实际缺口，再逐个修复、承接原工件和继续后段。完整内容在A07—A18进一步逐条验收，最终在A18复跑正常全自动路径，不能把辅助或逐关人工操作的首轮诊断写成全自动已通过。</p>
+<p>保留至少一次实际失败、实质修复、新构建/新测试批次及独立回归的链路。没有自然发现真实缺陷时，该出口保持未验；可在明确隔离的故障注入实验检查恢复方法，但不虚构历史缺陷，不把注入故障冒充线上事故或未经说明的真实产品通过。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. 后续小批次与最终出口</h2>
+<p>每个批次有主责任目标及可独立核对的交付物。A03主要产生基础测试证据，其结果由A12汇入完整验收；全部74目标各有唯一主责任批次，附表及<a href="../artifacts/software-factory/acceptance-r24/acceptance-first-plan.json">机器计划</a>列出承接关系。主责任不是提前签收，相关前置和最终同版复核继续有效。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>批次</th>
+<th>重点与主责任目标</th>
+<th>明确产物及达标条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A05 真实性和缺陷闭环</td>
+<td>033、041—043</td>
+<td>独立环境实跑正常及拒收反例；核对模拟/空用例/必测未跑/陈旧/伪CI/重复晚到/审计失败的持久决定；统一缺陷台账、原例与影响回归、新批次和不可变报告。</td>
+</tr>
+<tr>
+<td>A06 工厂安全与恢复</td>
+<td>005、006、045</td>
+<td>工厂空库安装与旧版数据升级、实际对象备份恢复/失败回滚、身份/文件/上传/沙箱/出向边界、数据库附件一致性报告。只有真实读回恢复才通过。</td>
+</tr>
+<tr>
+<td>A07 输入和语义</td>
+<td>009—011、014—015、019</td>
+<td>逐文件/页/表/附件完整性，OCR疑点校对，ZIP全部约定边界，编辑/批量/不可变历史；原文→需求→设计→实现→测试→发布的双向位置和版本矩阵。</td>
+</tr>
+<tr>
+<td>A08 全页面与原型</td>
+<td>007、017—018、037—038、046</td>
+<td>工厂自身页面和客户产品页面分别建目录；实际独立页/整体交互/独立实现对照、全部角色状态视口和导航/助手入口证据。关键项100%、单页一般项≥95%、严重偏差0，缺页和必需缺能力不能被均值抵消。</td>
+</tr>
+<tr>
+<td>A09 Pi定义和模型路线</td>
+<td>020—022、027</td>
+<td>当前SDK真实能力、有效提示词/技能/工具/路由快照及哈希、真实模型请求/返回与执行器输入输出；指定强路线和可用后备分别实测，不能用外层CLI成功代替内部Pi。</td>
+</tr>
+<tr>
+<td>A10 会话模板和用量</td>
+<td>023—026</td>
+<td>真实持久会话/分支、断流重连、工具控制、模板/导出配置实际加载；失败/重试/子Agent等调用的去重账目，已知/估算/未知费用及Token来源分列。</td>
+</tr>
+<tr>
+<td>A11 父子任务和恢复</td>
+<td>028—032</td>
+<td>父子ID、输入输出/依赖/汇合、独立写范围及合并；共享技术资源边界、实际暂停取消/晚到零写、物理会话或副作用对账后续做报告。原生resume没有独立证据不得声称完成。</td>
+</tr>
+<tr>
+<td>A12 完整测试与性能</td>
+<td>039—040、044</td>
+<td>四门真实自测和原子提测；现成及新增全部适用用例、每必需条款独立用例、接口/浏览器/权限/数据和性能规模报告。交互P95&lt;1s、平台首Token开销&lt;500ms、20并发及100+任务/1000+资料等按原条款实测，未测不写达标。</td>
+</tr>
+<tr>
+<td>A13 Agent独立迭代</td>
+<td>047—052</td>
+<td>从真实失败建立分类改进队列、隔离候选/有效定义、独立固定及未见评估集、稳定版对照/跨阶段回归、提升观察/退化回滚及经复验的Skill。项目缺陷修好与能力提高分别验收。</td>
+</tr>
+<tr>
+<td>A14 调度和监管</td>
+<td>053—054、058、061</td>
+<td>持久多依赖/租约/回执、就绪派发与实际停止，改目标/接管/晚到控制，真实目标/阻塞/用量下钻；服务重启不丢状态，UI状态不能代替真实动作。</td>
+</tr>
+<tr>
+<td>A15 自动门与返工</td>
+<td>055—057、059—060</td>
+<td>七关和非七关动作实际策略求值与系统身份；具体失败自动返工、停滞保护、provider/网络/权限/环境/发布例外，以及全工件变更影响和旧证据失效。缺实现先记缺陷，不能只切自动开关。</td>
+</tr>
+<tr>
+<td>A16 成套文档与下载</td>
+<td>062—065</td>
+<td>全套同版文档、独立页/整体原型、源码/锁文件/可运行包、迁移配置和授权证据；约定md/html/docx/pdf等逐格式实际打开对照；最终入口下载/权限/到期/大文件/断线、hash及解包验证。</td>
+</tr>
+<tr>
+<td>A17 目标使用和维护</td>
+<td>066—068</td>
+<td>从最终同包在约定真实目标干净安装/升级，全部关键角色业务、重启持久化和附件导入导出；按手册操作、实际备份恢复、支持接管及后续变更新发布/回滚。工厂恢复与客户软件恢复分别确认。</td>
+</tr>
+<tr>
+<td>A18 总体自动化与复用</td>
+<td>069—071、073—074</td>
+<td>工厂和客户两层独立矩阵；新原始资料到实际使用正常路径零逐关点击；异常/需求变更演练、第二项目隔离复用、全过程公开建设证据。不得复制旧项目绿色状态。</td>
+</tr>
+<tr>
+<td>A19 最后稳定观察</td>
+<td>072</td>
+<td>上述出口满足后，对同一源码/目标/环境做适用范围24及72小时观察，保留真实健康、错误/停滞/资源/费用与异常处置；变化后按影响重验并重新确定观察基线，不拼接旧版本时长。</td>
+</tr>
+</tbody></table></div>
+<p>A05之后仍以验证已有能力为主。只有当前可复现证据证明必需功能缺失或行为错误，才进入对应修复；已有正确实现不因旧设计文字或历史失败被重复重写。并行仅限独立空间和已就绪检查，不允许多个写者同时修改同一工件。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 缺陷分类、修复及禁止放行</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>判断与处理</th>
+<th>放行规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P0</td>
+<td>数据破坏/越权泄露、不可控写入或虚假正式放行等；保存复现，立即隔离相关路径</td>
+<td>不得继续相关发布或实际客户使用，不得降级清绿。</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>关键链路不可用、必需能力缺失、实际产物或同版证据错误</td>
+<td>必须修复及独立原例/影响回归通过后放行。</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>非关键功能或明显体验问题；说明真实影响及受影响条款</td>
+<td>若仍违反必需验收条款，依旧阻断；仅非阻断遗留可按真实策略逐项决定及安排版本。</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>不影响必需功能的细节问题或建议</td>
+<td>记录证据/范围和后续版本；不能借P3豁免必需缺页、错语义或未跑检查。</td>
+</tr>
+<tr>
+<td>环境/测试问题</td>
+<td>缺执行器或依赖、测试断言错误、波动、重复、需求变更、无法复现等分别留证据</td>
+<td>标blocked/not-run/待确认，不随意算产品缺陷或通过；测试修订须独立核对预期，不能改断言迎合错误。</td>
+</tr>
+</tbody></table></div>
+<p>每个确认缺陷保存：目标/原条款、候选及运行身份、复现输入步骤、预期与实际、证据指纹、严重度及依据、责任任务、修复差异、原用例与影响回归、关闭或重开事件。开发只能提交待回归，独立测试按适用策略关闭。定位输入、上下文、工具、环境、编排、模型或验证器原因，再选最小修复，不一律重生成或换模型。</p>
+<p>P0/P1、必需未实现或未验、零用例、必测跳过、模拟冒充真实、陈旧/错项目证据均禁止放行。报告可以定稿“不通过”；批次检查结束、执行exit0、环境健康、模型自报和包下载成功都不能直接形成产品交付通过。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 每批绑定当前内容和运行身份</h2>
+<p>每批开始重新读当前输入和候选；预期指纹不符即拒绝借用旧证据。使用批次ID、任务/尝试ID、工厂/客户/能力归账域和真实执行身份，对以下内容形成不可变manifest：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>身份范围</th>
+<th>必需记录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目标与输入</td>
+<td>原目标指纹、目标/原条款、客户原件及澄清、需求设计/页面状态/用例版本和字节哈希</td>
+</tr>
+<tr>
+<td>源码与构建</td>
+<td>当前HEAD及实际文件内容清单、未提交/新增纳入项、锁文件、工具版本、构建退出码、实际包文件/大小/hash</td>
+</tr>
+<tr>
+<td>实际运行</td>
+<td>安装包hash、独立服务/端口/数据库/对象空间、进程或容器身份、加载版本、前端/API/数据的同版核对及真实观察时间</td>
+</tr>
+<tr>
+<td>Agent与规则</td>
+<td>实际生效定义/提示词/技能/工具/模板、provider/model请求与返回、父子运行身份、验证器和质量策略版本</td>
+</tr>
+<tr>
+<td>结果与费用</td>
+<td>每适用用例pass/fail/blocked/not-run/not-applicable及原因、实际工件/证据hash、已知/估算/未知费用、Token回执及调用去重身份</td>
+</tr>
+</tbody></table></div>
+<p>源码或上游工件变化形成新候选与新批次，重新核对受影响用例及依赖；无关支路只有在明确影响证据支持时保留。HEAD相同但文件改变也会使旧验收过期；不能将R21静态指纹、R22测试清单内历史文件hash或旧运行快照当成当前源码身份。</p>
+<p>合成反例、故障注入、原型演示数据、模型/外部服务桩、真实运行分别标记。合成安全反例可以证明相应契约拒收，却不能替代真实模型、开发、客户生产、部署或使用通过。公开报告仅保存脱敏项目元数据、复现所需公开夹具及指纹，不收录密钥、私有配置、原始聊天或私人录音。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 小任务收敛与超时交接</h2>
+<p>批次还可按一个可验证产物、一个测试域或一个明确缺陷拆成子任务。每个执行卡写明目标、输入、独立副本、实际命令/环境、验收、模型路线、技术上下文/轮次/重试/时限、结束条件和交接文件。不得把A00—A04或整包74目标合成一轮“全部完成”任务。</p>
+<p>以实际执行器 <code>timeoutSec</code> 为准，启动前读回。旧FA-01两次1200秒超时是历史事实，不给新任务盲目套同一边界或扩大上限。任务设计预留软截止与报告交接时间；尚未实现软截止能力时，先采用足够小的任务并明确执行卡，不宣称后台已能自动安全续跑。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>时点</th>
+<th>必须留下的可核对状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开始</td>
+<td>当前候选和输入指纹，准确子范围，最小可验收出口，真实运行身份与停止条件</td>
+</tr>
+<tr>
+<td>每个子出口</td>
+<td>实际产物路径及hash、已完成检查与结果、未完成原因、下一子任务输入；费用/Token待补如实标记</td>
+</tr>
+<tr>
+<td>软截止</td>
+<td>停止扩大任务，保存成果和准确未完成范围，返回结构化summary、needs_more_work及实际artifacts；未达到验收不能填写完成</td>
+</tr>
+<tr>
+<td>硬超时/中断</td>
+<td>保存原停止码/终结回执/费用未知，核对旧进程、活动写者、未送结果、已有文件及副作用；对账完成前不得重试覆盖</td>
+</tr>
+<tr>
+<td>后续执行</td>
+<td>建立新的小任务和新尝试身份，明确继承的成果与重新核对项，保留旧失败；原生resume只有经过独立安全验证才使用</td>
+</tr>
+</tbody></table></div>
+<p>交接清单至少含目标/批次/任务/运行ID、sourceFingerprint、当前产物manifest、已跑检查及报告hash、剩余检查/缺陷、旧进程及递送对账观察、费用回执与下一步。建设档案和任务简明摘要分别保存，不把全部原始CLI聊天或私有运行配置公开复制。</p>
+<p>当前 <code>REPAIR_ATTEMPTS_EXHAUSTED</code> 与 <code>PROCESS_TIMEOUT</code> 不由普通启动接口解除，也不由已有仅支持特定心跳中止的恢复接口覆盖。采用本计划前必须将新小任务/验证执行方式实际配置为可运行，保留原任务和保护状态；本文件不声称已修改后台保护、重置次数、自动恢复或开始运行。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9. 费用政策与监管</h2>
+<p>保持用户已指定的费用只记录策略，不设金额或累计Token消费上限。工厂本身、客户工程和Agent能力实验分别归账；生成、评阅、失败、重试、工具和子Agent都保留调用身份，父级引用子账避免重复。估价、供应商账单和未知部分分列，未知不写零，也不单独阻止正常检查和修复。</p>
+<p>单次输出/上下文、时限、轮次/重试、并发、写范围、停滞保护及暂停取消继续有效。provider自身额度/限流、外部权限或必要环境缺失按真实原因处理。只在同版、就绪且授权范围内安排检查；不为补日志、累计测试数或72小时墙钟而反复调用收费模型、重启服务或重复部署。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10. 状态怎样更新</h2>
+<p>目标矩阵每条保留“未检查、检查中、已有实现待验、失败、环境阻塞、待回归、独立验收通过”等事实状态。74目标及其详细条款是验收分母；原目标每个必需子条款和依赖有当前合格依据，才计入该目标通过。不能按耗时、Token、模型完成声明、内部任务数量或批次数折算产品完成率。</p>
+<p>实现、固定验证、独立评阅、部署运行、使用验收分别记录。每次有意义结果由根管理任务按项目约定追加建设记录，更新档案及版本保护的项目资料/决策；更正引用旧记录，经验先候选后独立复验，不自动发布未验证Skill。</p>
+<p>最终工厂自身和客户产品分别有完整同版矩阵，全链路正常全自动、Agent独立优化、异常恢复/变更和复用均取得真实证据，再进入A19稳定观察。72小时在最后做，不用早期观察替代未通过的产品门禁。全部结果当前有效后才可宣布本期完成；本计划及其HTML生成成功只证明计划文件可读和承接关系完整。</p>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">11. 74目标主责任批次索引</h2>
+<p>下面标题按原机器目标逐字保留，编号、详细验收、归属和依赖完整快照见机器计划。A03的基础测试证据由A12负责汇总，其他批次可复用同候选的有效检查，不重复运行已通过且未受变化影响的测试。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>原目标</th>
+<th>原标题</th>
+<th>原工作包</th>
+<th>主责任批次</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSF-OBJ-001</td>
+<td>固定最新候选及并发写者</td>
+<td>FA-01</td>
+<td>A00</td>
+</tr>
+<tr>
+<td>MSF-OBJ-002</td>
+<td>构建完整前后端软件工厂包</td>
+<td>FA-01</td>
+<td>A01</td>
+</tr>
+<tr>
+<td>MSF-OBJ-003</td>
+<td>从空环境独立安装软件工厂</td>
+<td>FA-01</td>
+<td>A02</td>
+</tr>
+<tr>
+<td>MSF-OBJ-004</td>
+<td>核对工厂实际运行版本与入口</td>
+<td>FA-01</td>
+<td>A02</td>
+</tr>
+<tr>
+<td>MSF-OBJ-005</td>
+<td>验证工厂升级回滚与恢复</td>
+<td>FA-01</td>
+<td>A06</td>
+</tr>
+<tr>
+<td>MSF-OBJ-006</td>
+<td>落实工厂身份安全与数据边界</td>
+<td>FA-01</td>
+<td>A06</td>
+</tr>
+<tr>
+<td>MSF-OBJ-007</td>
+<td>验证工厂界面及兼容布局</td>
+<td>FA-01</td>
+<td>A08</td>
+</tr>
+<tr>
+<td>MSF-OBJ-008</td>
+<td>登记完整工厂需求与验收分母</td>
+<td>FA-01</td>
+<td>A00</td>
+</tr>
+<tr>
+<td>MSF-OBJ-009</td>
+<td>保留原始资料并安全入库</td>
+<td>FA-02</td>
+<td>A07</td>
+</tr>
+<tr>
+<td>MSF-OBJ-010</td>
+<td>完整解析扫描长文表格附件</td>
+<td>FA-02</td>
+<td>A07</td>
+</tr>
+<tr>
+<td>MSF-OBJ-011</td>
+<td>走通资料整理编辑与批量加工</td>
+<td>FA-02</td>
+<td>A07</td>
+</tr>
+<tr>
+<td>MSF-OBJ-012</td>
+<td>从客户原始需求提炼项目配置</td>
+<td>FA-02</td>
+<td>A04</td>
+</tr>
+<tr>
+<td>MSF-OBJ-013</td>
+<td>生成完整正确的CRD PRD与RTM</td>
+<td>FA-02</td>
+<td>A04</td>
+</tr>
+<tr>
+<td>MSF-OBJ-014</td>
+<td>保留编辑补丁及不可变历史</td>
+<td>FA-02</td>
+<td>A07</td>
+</tr>
+<tr>
+<td>MSF-OBJ-015</td>
+<td>建立双向语义与版本追溯</td>
+<td>FA-02</td>
+<td>A07</td>
+</tr>
+<tr>
+<td>MSF-OBJ-016</td>
+<td>形成可实施的HLD及七册LLD</td>
+<td>FA-02</td>
+<td>A04</td>
+</tr>
+<tr>
+<td>MSF-OBJ-017</td>
+<td>登记所有页面子页状态与视口</td>
+<td>FA-02</td>
+<td>A08</td>
+</tr>
+<tr>
+<td>MSF-OBJ-018</td>
+<td>共享视觉业务及客户语言契约</td>
+<td>FA-02</td>
+<td>A08</td>
+</tr>
+<tr>
+<td>MSF-OBJ-019</td>
+<td>核对生成上下文的完整来源</td>
+<td>FA-02</td>
+<td>A07</td>
+</tr>
+<tr>
+<td>MSF-OBJ-020</td>
+<td>尽可能复用Pi真实SDK能力</td>
+<td>FA-03</td>
+<td>A09</td>
+</tr>
+<tr>
+<td>MSF-OBJ-021</td>
+<td>让Agent定义及模板真正生效</td>
+<td>FA-03</td>
+<td>A09</td>
+</tr>
+<tr>
+<td>MSF-OBJ-022</td>
+<td>验证强模型路由和后备</td>
+<td>FA-03</td>
+<td>A09</td>
+</tr>
+<tr>
+<td>MSF-OBJ-023</td>
+<td>管理持久会话分支与引用</td>
+<td>FA-03</td>
+<td>A10</td>
+</tr>
+<tr>
+<td>MSF-OBJ-024</td>
+<td>接通助手工具流式与控制</td>
+<td>FA-03</td>
+<td>A10</td>
+</tr>
+<tr>
+<td>MSF-OBJ-025</td>
+<td>记录完整Token费用和归账</td>
+<td>FA-03</td>
+<td>A10</td>
+</tr>
+<tr>
+<td>MSF-OBJ-026</td>
+<td>固定实际模板套件与导出配置</td>
+<td>FA-03</td>
+<td>A10</td>
+</tr>
+<tr>
+<td>MSF-OBJ-027</td>
+<td>实现真实执行器输入输出契约</td>
+<td>FA-04</td>
+<td>A09</td>
+</tr>
+<tr>
+<td>MSF-OBJ-028</td>
+<td>建立真实父子Agent运行与汇合</td>
+<td>FA-04</td>
+<td>A11</td>
+</tr>
+<tr>
+<td>MSF-OBJ-029</td>
+<td>隔离写范围并受控合并</td>
+<td>FA-04</td>
+<td>A11</td>
+</tr>
+<tr>
+<td>MSF-OBJ-030</td>
+<td>落实父子共享资源边界</td>
+<td>FA-04</td>
+<td>A11</td>
+</tr>
+<tr>
+<td>MSF-OBJ-031</td>
+<td>传播暂停取消及晚到零写</td>
+<td>FA-04</td>
+<td>A11</td>
+</tr>
+<tr>
+<td>MSF-OBJ-032</td>
+<td>恢复物理会话与执行副作用</td>
+<td>FA-04</td>
+<td>A11</td>
+</tr>
+<tr>
+<td>MSF-OBJ-033</td>
+<td>强制业务命令事务与审计</td>
+<td>FA-04</td>
+<td>A05</td>
+</tr>
+<tr>
+<td>MSF-OBJ-034</td>
+<td>承接设计形成完整开发计划</td>
+<td>FA-05</td>
+<td>A04</td>
+</tr>
+<tr>
+<td>MSF-OBJ-035</td>
+<td>完成真实编码单测CI评审合并</td>
+<td>FA-05</td>
+<td>A04</td>
+</tr>
+<tr>
+<td>MSF-OBJ-036</td>
+<td>构建独立真实实现工件</td>
+<td>FA-05</td>
+<td>A04</td>
+</tr>
+<tr>
+<td>MSF-OBJ-037</td>
+<td>产出独立高保真页与完整交互</td>
+<td>FA-05</td>
+<td>A08</td>
+</tr>
+<tr>
+<td>MSF-OBJ-038</td>
+<td>逐页对照实现与批准原型</td>
+<td>FA-05</td>
+<td>A08</td>
+</tr>
+<tr>
+<td>MSF-OBJ-039</td>
+<td>执行四门开发自测并交接</td>
+<td>FA-05</td>
+<td>A12</td>
+</tr>
+<tr>
+<td>MSF-OBJ-040</td>
+<td>从零独立验证全部必需用例</td>
+<td>FA-05</td>
+<td>A12</td>
+</tr>
+<tr>
+<td>MSF-OBJ-041</td>
+<td>拒绝虚假陈旧及空分母放行</td>
+<td>FA-05</td>
+<td>A05</td>
+</tr>
+<tr>
+<td>MSF-OBJ-042</td>
+<td>统一缺陷修复与独立复验</td>
+<td>FA-05</td>
+<td>A05</td>
+</tr>
+<tr>
+<td>MSF-OBJ-043</td>
+<td>形成不可变报告及交付决定</td>
+<td>FA-05</td>
+<td>A05</td>
+</tr>
+<tr>
+<td>MSF-OBJ-044</td>
+<td>实测性能规模及可维护性</td>
+<td>FA-05</td>
+<td>A12</td>
+</tr>
+<tr>
+<td>MSF-OBJ-045</td>
+<td>核对数据依赖安全与可靠性</td>
+<td>FA-05</td>
+<td>A06</td>
+</tr>
+<tr>
+<td>MSF-OBJ-046</td>
+<td>走通全部功能页面和管理面</td>
+<td>FA-05</td>
+<td>A08</td>
+</tr>
+<tr>
+<td>MSF-OBJ-047</td>
+<td>按真实失败建立能力改进队列</td>
+<td>FA-06</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>MSF-OBJ-048</td>
+<td>创建隔离且可执行的能力候选</td>
+<td>FA-06</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>MSF-OBJ-049</td>
+<td>维护独立评估集与基准</td>
+<td>FA-06</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>MSF-OBJ-050</td>
+<td>比较能力质量效率及跨阶段退化</td>
+<td>FA-06</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>MSF-OBJ-051</td>
+<td>自动提升观察并回滚能力版本</td>
+<td>FA-06</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>MSF-OBJ-052</td>
+<td>发布经验证的经验技能</td>
+<td>FA-06</td>
+<td>A13</td>
+</tr>
+<tr>
+<td>MSF-OBJ-053</td>
+<td>让贾维斯项目级持续监督</td>
+<td>FA-07</td>
+<td>A14</td>
+</tr>
+<tr>
+<td>MSF-OBJ-054</td>
+<td>持久调度多依赖及阶段工作流</td>
+<td>FA-07</td>
+<td>A14</td>
+</tr>
+<tr>
+<td>MSF-OBJ-055</td>
+<td>实现七关真实自动质量策略</td>
+<td>FA-07</td>
+<td>A15</td>
+</tr>
+<tr>
+<td>MSF-OBJ-056</td>
+<td>改造非七关固定人工动作</td>
+<td>FA-07</td>
+<td>A15</td>
+</tr>
+<tr>
+<td>MSF-OBJ-057</td>
+<td>自动定位返工并阻止空转</td>
+<td>FA-07</td>
+<td>A15</td>
+</tr>
+<tr>
+<td>MSF-OBJ-058</td>
+<td>保留管理者暂停取消及改目标</td>
+<td>FA-07</td>
+<td>A14</td>
+</tr>
+<tr>
+<td>MSF-OBJ-059</td>
+<td>处理额度网络环境和发布例外</td>
+<td>FA-07</td>
+<td>A15</td>
+</tr>
+<tr>
+<td>MSF-OBJ-060</td>
+<td>传播所有工件变更及证据失效</td>
+<td>FA-07</td>
+<td>A15</td>
+</tr>
+<tr>
+<td>MSF-OBJ-061</td>
+<td>可视化真实目标进度阻塞和资源</td>
+<td>FA-07</td>
+<td>A14</td>
+</tr>
+<tr>
+<td>MSF-OBJ-062</td>
+<td>自动生成完整同版产品文档</td>
+<td>FA-08</td>
+<td>A16</td>
+</tr>
+<tr>
+<td>MSF-OBJ-063</td>
+<td>打包实际文档页面源码软件和证据</td>
+<td>FA-08</td>
+<td>A16</td>
+</tr>
+<tr>
+<td>MSF-OBJ-064</td>
+<td>验证约定导出格式内容可读性</td>
+<td>FA-08</td>
+<td>A16</td>
+</tr>
+<tr>
+<td>MSF-OBJ-065</td>
+<td>从最终客户入口下载校验解包</td>
+<td>FA-08</td>
+<td>A16</td>
+</tr>
+<tr>
+<td>MSF-OBJ-066</td>
+<td>在约定目标安装部署实际使用</td>
+<td>FA-08</td>
+<td>A17</td>
+</tr>
+<tr>
+<td>MSF-OBJ-067</td>
+<td>移交用户运维培训及维护支持</td>
+<td>FA-08</td>
+<td>A17</td>
+</tr>
+<tr>
+<td>MSF-OBJ-068</td>
+<td>验证客户软件恢复与后续变更</td>
+<td>FA-08</td>
+<td>A17</td>
+</tr>
+<tr>
+<td>MSF-OBJ-069</td>
+<td>分别验收工厂和客户生产能力</td>
+<td>FA-09</td>
+<td>A18</td>
+</tr>
+<tr>
+<td>MSF-OBJ-070</td>
+<td>证明完整正常路径无人值守</td>
+<td>FA-09</td>
+<td>A18</td>
+</tr>
+<tr>
+<td>MSF-OBJ-071</td>
+<td>完成异常和需求变更演练</td>
+<td>FA-09</td>
+<td>A18</td>
+</tr>
+<tr>
+<td>MSF-OBJ-072</td>
+<td>持续观察适用范围稳定交付</td>
+<td>FA-09</td>
+<td>A19</td>
+</tr>
+<tr>
+<td>MSF-OBJ-073</td>
+<td>复用下一项目的监督模板</td>
+<td>FA-09</td>
+<td>A18</td>
+</tr>
+<tr>
+<td>MSF-OBJ-074</td>
+<td>保存全过程建设与项目证据</td>
+<td>FA-09</td>
+<td>A18</td>
+</tr>
+</tbody></table></div>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%8E%B0%E6%9C%89%E6%88%90%E6%9E%9C%E9%AA%8C%E6%94%B6%E4%B8%8E%E4%BF%AE%E5%A4%8D%E8%AE%A1%E5%88%92.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

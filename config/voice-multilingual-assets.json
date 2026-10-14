@@ -1,0 +1,76 @@
+{
+  "revision": "20261010-multilingual-r1",
+  "whisper": {
+    "repository": "Systran/faster-whisper-small",
+    "revision": "536b0662742c02347bc0e980a01041f333bce120",
+    "directory": "faster-whisper-small",
+    "device": "cpu",
+    "computeType": "int8",
+    "files": [
+      {
+        "name": "model.bin",
+        "size": 483546902,
+        "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+        "gitBlob": "504a7fe023f19460564a623887a9f77ea53ac708",
+        "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/model.bin"
+      },
+      {
+        "name": "config.json",
+        "size": 2370,
+        "gitBlob": "e5047537059bd8f182d9ca64c470201585015187",
+        "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/config.json",
+        "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+      },
+      {
+        "name": "tokenizer.json",
+        "size": 2203239,
+        "gitBlob": "7818adb6de9fa3064d3ff81226fdd675be1f6344",
+        "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/tokenizer.json",
+        "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+      },
+      {
+        "name": "vocabulary.txt",
+        "size": 459861,
+        "gitBlob": "c9074644d9d1205686f16d411564729461324b75",
+        "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/vocabulary.txt",
+        "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+      }
+    ]
+  },
+  "piper": [
+    {
+      "language": "en",
+      "name": "vits-piper-en_US-lessac-medium",
+      "file": "vits-piper-en_US-lessac-medium.tar.bz2",
+      "size": 67230653,
+      "sha256": "9e3febfacf0abf4270172d2958bcec246032b7e88efc2720840cc80c93de334e",
+      "assetId": 323261600,
+      "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-lessac-medium.tar.bz2"
+    },
+    {
+      "language": "fr",
+      "name": "vits-piper-fr_FR-siwis-medium",
+      "file": "vits-piper-fr_FR-siwis-medium.tar.bz2",
+      "size": 67207459,
+      "sha256": "375909aa30842b3a4efa10b1beb1d761af792960ae6873b4d53889f96c66195b",
+      "assetId": 324609218,
+      "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-fr_FR-siwis-medium.tar.bz2"
+    },
+    {
+      "language": "de",
+      "name": "vits-piper-de_DE-thorsten-medium",
+      "file": "vits-piper-de_DE-thorsten-medium.tar.bz2",
+      "size": 67214254,
+      "sha256": "50487d9c95fdf2191f31d2588569381063ba1591dcd4c7d4bdd30f12b2191714",
+      "assetId": 324199296,
+      "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-de_DE-thorsten-medium.tar.bz2"
+    }
+  ],
+  "dependencies": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.6.0",
+    "sherpa-onnx": "1.13.8",
+    "numpy": "2.2.6",
+    "av": "19.0.0"
+  }
+}

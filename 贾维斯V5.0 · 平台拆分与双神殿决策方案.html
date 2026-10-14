@@ -1,0 +1,1430 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="把家庭陪伴、知识积累、持续研发与服务器运维组织成可分别建设、共同协作的管家平台。">
+  <meta name="jarvis-source-sha256" content="74dba92414731ab97f52fdd78d0e8f6ff66eaa267e8ddfbc6e756ebf3e285950">
+  <title>贾维斯 V5.0 · 平台拆分与双神殿决策方案</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">V5.0</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%B4%BE%E7%BB%B4%E6%96%AFV5.0%20%C2%B7%20%E5%B9%B3%E5%8F%B0%E6%8B%86%E5%88%86%E4%B8%8E%E5%8F%8C%E7%A5%9E%E6%AE%BF%E5%86%B3%E7%AD%96%E6%96%B9%E6%A1%88.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 19 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 我对这次新增需求的理解</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 推荐怎样拆分整个平台</a>
+<a class="toc-link level-3" href="#section-2-1" data-parent="2">2.1 九个业务域及其正式数据</a>
+<a class="toc-link level-3" href="#section-2-2" data-parent="2">2.2 公共 Jarvis Core 的职责</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 三种实现拆分方式与推荐</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">3.1 跨平台交接规则</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. 动态外接知识库怎样做到可扩展</a>
+<a class="toc-link level-3" href="#section-4-1" data-parent="4">4.1 “无限接入”的正确实现口径</a>
+<a class="toc-link level-3" href="#section-4-2" data-parent="4">4.2 可以接什么</a>
+<a class="toc-link level-3" href="#section-4-3" data-parent="4">4.3 每个知识源的档案</a>
+<a class="toc-link level-3" href="#section-4-4" data-parent="4">4.4 查询、失效与授权变化</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. 知识神殿的三层资产与两个使用面</a>
+<a class="toc-link level-3" href="#section-5-1" data-parent="5">5.1 原件、基库和神殿分别保存</a>
+<a class="toc-link level-3" href="#section-5-2" data-parent="5">5.2 给谁使用</a>
+<a class="toc-link level-3" href="#section-5-3" data-parent="5">5.3 版本和出处最小模型</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 扫描书籍到正式原文：校对与人工审核</a>
+<a class="toc-link level-3" href="#section-6-1" data-parent="6">6.1 完整流程</a>
+<a class="toc-link level-3" href="#section-6-2" data-parent="6">6.2 AI 怎样发现疑点</a>
+<a class="toc-link level-3" href="#section-6-3" data-parent="6">6.3 人工校对台需要什么操作</a>
+<a class="toc-link level-3" href="#section-6-4" data-parent="6">6.4 怎样落实“直到没有错误”</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 知识脉络、独立故事与课程怎样组织</a>
+<a class="toc-link level-3" href="#section-7-1" data-parent="7">7.1 原文证据与知识主张</a>
+<a class="toc-link level-3" href="#section-7-2" data-parent="7">7.2 两种知识关系分别管理</a>
+<a class="toc-link level-3" href="#section-7-3" data-parent="7">7.3 一个“故事单元”是什么</a>
+<a class="toc-link level-3" href="#section-7-4" data-parent="7">7.4 三种管理和使用方式</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. 怎样有规划地讲给每位家人听</a>
+<a class="toc-link level-3" href="#section-8-1" data-parent="8">8.1 学习路线由目标与证据驱动</a>
+<a class="toc-link level-3" href="#section-8-2" data-parent="8">8.2 学习状态不能只看“播放完成”</a>
+<a class="toc-link level-3" href="#section-8-3" data-parent="8">8.3 课程的变更与发布</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">9. 知识神殿还能主动提出什么建议</a>
+<a class="toc-link level-3" href="#section-9-1" data-parent="9">9.1 建议不只限于“还缺哪些书”</a>
+<a class="toc-link level-3" href="#section-9-2" data-parent="9">9.2 缺口建议怎样产生</a>
+<a class="toc-link level-3" href="#section-9-3" data-parent="9">9.3 一张建议卡应能让你决策</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">10. 记忆神殿：每个人的专属设定与记忆</a>
+<a class="toc-link level-3" href="#section-10-1" data-parent="10">10.1 个性设定、登录身份和长期记忆分别管理</a>
+<a class="toc-link level-3" href="#section-10-2" data-parent="10">10.2 聊天怎样帮助管家了解每个人</a>
+<a class="toc-link level-3" href="#section-10-3" data-parent="10">10.3 记忆生命周期</a>
+<a class="toc-link level-3" href="#section-10-4" data-parent="10">10.4 修改、遗忘与恢复</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">11. 智能语音平台的路线与决策</a>
+<a class="toc-link level-3" href="#section-11-1" data-parent="11">11.1 一条语音请求的完整链路</a>
+<a class="toc-link level-3" href="#section-11-2" data-parent="11">11.2 三种语音方案</a>
+<a class="toc-link level-3" href="#section-11-3" data-parent="11">11.3 不混淆声音、唤醒词、声纹与身份</a>
+<a class="toc-link level-3" href="#section-11-4" data-parent="11">11.4 候选工具与测试</a>
+<a class="toc-link level-3" href="#section-11-5" data-parent="11">11.5 账户、预算与路由</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">12. 服务器与已经运行的自研项目怎样管理</a>
+<a class="toc-link level-3" href="#section-12-1" data-parent="12">12.1 把机器、开发项目和运行服务分别建模</a>
+<a class="toc-link level-3" href="#section-12-2" data-parent="12">12.2 自研系统的接入层级</a>
+<a class="toc-link level-3" href="#section-12-3" data-parent="12">12.3 研发停止与线上服务停止</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">13. AI 持续开发监督怎样走到交付</a>
+<a class="toc-link level-3" href="#section-13-1" data-parent="13">13.1 交给管家的任务需要明确什么</a>
+<a class="toc-link level-3" href="#section-13-2" data-parent="13">13.2 监督闭环</a>
+<a class="toc-link level-3" href="#section-13-3" data-parent="13">13.3 监督的可靠边界</a>
+<a class="toc-link level-3" href="#section-13-4" data-parent="13">13.4 研发与运维的正式交接</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">14. 灵感、深研、经验与快速记录</a>
+<a class="toc-link level-3" href="#section-14-1" data-parent="14">14.1 灵感如何走成真实项目</a>
+<a class="toc-link level-3" href="#section-14-2" data-parent="14">14.2 任意终端的统一收件入口</a>
+<a class="toc-link level-3" href="#section-14-3" data-parent="14">14.3 主动与被动记录</a>
+<a class="toc-link level-3" href="#section-14-4" data-parent="14">14.4 经验怎样在下一次起作用</a>
+<a class="toc-link level-2" href="#section-15" data-parent="15">15. 主动程度、数据治理与统一资源策略</a>
+<a class="toc-link level-3" href="#section-15-1" data-parent="15">15.1 推荐的主动服务分层</a>
+<a class="toc-link level-3" href="#section-15-2" data-parent="15">15.2 原文与派生材料的变更传播</a>
+<a class="toc-link level-3" href="#section-15-3" data-parent="15">15.3 权限与来源内容</a>
+<a class="toc-link level-3" href="#section-15-4" data-parent="15">15.4 统一排队与预算</a>
+<a class="toc-link level-2" href="#section-16" data-parent="16">16. 现有机器怎样承接 V5</a>
+<a class="toc-link level-2" href="#section-17" data-parent="17">17. 怎样分阶段实现与验收</a>
+<a class="toc-link level-3" href="#section-17-1" data-parent="17">17.1 推荐建设顺序</a>
+<a class="toc-link level-3" href="#section-17-2" data-parent="17">17.2 首个知识样本建议</a>
+<a class="toc-link level-3" href="#section-17-3" data-parent="17">17.3 必须能通过的验收场景</a>
+<a class="toc-link level-2" href="#section-18" data-parent="18">18. 需要你决策的十二项</a>
+<a class="toc-link level-3" href="#section-18-1" data-parent="18">18.1 可以先这样回复</a>
+<a class="toc-link level-2" href="#section-19" data-parent="19">19. 官方依据与文档关系</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-03<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">平台拆分 / 知识神殿 / 记忆神殿 / 决策稿</p>
+        <h1 id="document-title">贾维斯 V5.0 · 平台拆分与双神殿决策方案</h1>
+        <p class="subtitle">把家庭陪伴、知识积累、持续研发与服务器运维组织成可分别建设、共同协作的管家平台。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-03</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>9 个</strong><span>业务域 · 共用一个公共底座</span></div><div class="stat"><strong>3 层</strong><span>原件、校勘基库、知识神殿</span></div><div class="stat"><strong>12 项</strong><span>待决策事项 · 附推荐与替代方案</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><blockquote>
+<p>更新日期：2026-10-03。本文基于 V4 设备规划、现有交互原型与本轮新增需求，给出 V5 的推荐设计和可选路线。</p>
+<p>文档状态：<strong>方案推荐方向已由用户确认，进入 V5 交互原型阶段</strong>。2026-10-03 用户确认所有推荐方向，并补充家庭绝大多数场景以语音为入口，管理员使用电脑与手机，各领域有独立大屏并汇成集合大屏。真实书目、家人声音与已有项目资料仍可在实施时补充，原型使用模拟数据。</p>
+<p>模块、流程和验收标准是正式系统的建设目标。本轮单 HTML 实现的是可交互原型，不代表真实 OCR、模型、服务器、持续执行或语音硬件已经部署。</p>
+</blockquote>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 我对这次新增需求的理解</h2>
+<p>你希望贾维斯成为一个能长期成长的家庭与工作平台：它连接越来越多的资料，严谨积累经典，理解每个人，把灵感、经验、学习、开发和已经运行的系统组织起来，既能执行已明确的目标，也能主动提出有依据的建议。</p>
+<p>这次需要解决六件事情：</p>
+<ol>
+<li><strong>开放知识储备</strong>：知识来源可以动态添加、停用和替换，不预设固定的知识库数量。</li>
+<li><strong>严谨的知识生产</strong>：书籍扫描件有完整原件，原文经过校对与审核，解读和故事有出处。</li>
+<li><strong>成体系的家庭学习</strong>：经典形成知识脉络，也能拆成独立听懂的小故事，按不同家人的目标编排。</li>
+<li><strong>每人的专属管家</strong>：声音、唤醒词、交流方式、习惯、任务、学习状态和私人记忆分别管理。</li>
+<li><strong>工作持续闭环</strong>：灵感研究、项目开发、交付部署、运行维护和经验复用可以衔接。</li>
+<li><strong>模块能分别实现</strong>：每部分职责明确，能逐步建设，最终共用身份、权限、任务和状态。</li>
+</ol>
+<p><strong>核心推荐：一个公共底座、九个业务域、一个统一入口。</strong> 九个业务域可以独立开发和验收；首版可以共用代码工程、数据库服务器和部分部署单元。设备数量不按模块数量机械分配。</p>
+<p>V4 中确认的 18 台电脑、1 台 QNAP 和两台云服务器，共 21 项资产，仍是本方案的硬件基线。新增知识处理任务会明显增加磁盘、备份和批处理需求，不能只按内存或显卡分工。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 推荐怎样拆分整个平台</h2>
+<h3 id="section-2-1" tabindex="-1">2.1 九个业务域及其正式数据</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>业务域</th>
+<th>负责什么</th>
+<th>正式管理的数据</th>
+<th>第一阶段边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P1</td>
+<td>智能交互与语音平台</td>
+<td>按键/唤醒、音频处理、识别、对话、打断、合成、意图与参数解析</td>
+<td>临时输入与音频缓冲、语音路由配置、交互事件；正式会话归 P4</td>
+<td>先做登录后的按键语音；业务动作交给 Core 和对应领域</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>知识接入中心</td>
+<td>动态连接外部知识库、索引同步、实时查询、来源选择、统一检索</td>
+<td>知识源注册、连接器配置、权限、版本、新鲜度、同步状态</td>
+<td>先接一个本地资料源和一个有权限的远程源</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>知识神殿与原文工坊</td>
+<td>扫描件管理、OCR、校对、基库、解读、知识关系、故事、教材与缺口建议</td>
+<td>作品/版本/扫描副本、原文修订、校勘决定、证据、主张、知识关系、故事和课程模板</td>
+<td>先用一部经典的代表性页面跑通完整生产链</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>记忆神殿</td>
+<td>每人的管家设定、会话档案、长期记忆候选、确认、修订和遗忘</td>
+<td>个人设定、通用个人偏好、私人会话、确认记忆、共享记忆、记忆来源与生命周期</td>
+<td>两个人独立使用，验证不串记忆、不串任务</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>家庭学习与生活平台</td>
+<td>语言陪练、知识学习、个人课程安排、复习、天气、做菜、健康信息辅助、家庭事项</td>
+<td>个人学习目标/结果、课次安排、生活业务记录、私人备忘、家庭共同事项；通用偏好引用 P4</td>
+<td>同一故事服务两个人，进度与反馈分别保存</td>
+</tr>
+<tr>
+<td>P6</td>
+<td>服务器与应用运维平台</td>
+<td>主机、已部署项目、服务依赖、健康、日志、配置、变更、备份、恢复</td>
+<td>机器、服务、环境、部署版本、运行事件、变更与恢复记录</td>
+<td>登记一个已经运行的自研项目，先只读监测</td>
+</tr>
+<tr>
+<td>P7</td>
+<td>AI 研发与交付平台</td>
+<td>项目目标、工作副本、CC/Codex 托管、监督、验收、有限续作、交付包</td>
+<td>Project、Repo、Workcopy、Task、Run、验证证据、产出、交付版本</td>
+<td>先托管一个明确目标，验证中断、暂停、额度和交付</td>
+</tr>
+<tr>
+<td>P8</td>
+<td>灵感与深度研究平台</td>
+<td>灵感捕获、讨论完善、研究问题、资料证据、反证、方案比较、决策和项目转化</td>
+<td>灵感、问题、假设、研究任务、证据、方案、决定及其理由</td>
+<td>一条灵感形成研究报告，并能转成项目需求</td>
+</tr>
+<tr>
+<td>P9</td>
+<td>经验与 Skill 平台</td>
+<td>任意终端的问题/教训收集、整理、去重、验证、Skill/Runbook 发布与复用</td>
+<td>原始经验、适用条件、验证记录、版本、使用与失败反馈</td>
+<td>一次真实问题进入库，下一次能按条件检索和提示</td>
+</tr>
+</tbody></table></div>
+<p>这里把九部分称为“业务域”，是为了明确数据和责任。它们可以在界面上汇成四个工作区：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>工作区</th>
+<th>主要入口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>我的家庭管家</td>
+<td>对话、语音、个人设定、记忆、学习与生活</td>
+</tr>
+<tr>
+<td>知识工坊</td>
+<td>外接知识源、书籍、校对台、原文基库、知识神殿与课程</td>
+</tr>
+<tr>
+<td>AI 研发工坊</td>
+<td>灵感、深研、项目、开发监督、交付、经验与 Skill</td>
+</tr>
+<tr>
+<td>运维中心</td>
+<td>设备、在线应用、部署、事件、备份、恢复与费用</td>
+</tr>
+</tbody></table></div>
+<p><strong>推荐首版统一登录、统一导航和大屏，按人展示工作区。</strong> 不要求家人分别登录九个系统，也不要求所有模块一起完成才可使用。</p>
+<h3 id="section-2-2" tabindex="-1">2.2 公共 Jarvis Core 的职责</h3>
+<p>Core 负责共享的规则和协调：</p>
+<ul>
+<li>账号、家庭身份、认证状态、授权范围与数据访问策略。</li>
+<li>全局对象 ID、业务对象之间的关系，以及可见范围。</li>
+<li>请求入口、结构化任务、执行尝试、公共状态与关联事件。</li>
+<li>审批、急停、停止请求、审计、预算和资源配额。</li>
+<li>模型与工具路由、能力注册、通知与统一收件箱。</li>
+<li>总览、大屏和语音查询使用的状态聚合。</li>
+</ul>
+<p>各业务域仍管理自己的正文、详细记录和状态逻辑。例如：原文版本由知识工坊发布；学习结果由学习平台确认；部署健康由运维系统提供；任务验收由研发平台记录。</p>
+<p>Core 不能只靠一段聊天摘要替代这些正式状态。</p>
+<p>P1 的输入和转写先用于当次交互；按个人保留策略需要形成正式会话档案时写入 P4，不另建一份永久聊天库。P5 保存学习与生活业务事实，通用的交流、饮食等个人偏好引用 P4；同一事实只由一个域正式维护。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 三种实现拆分方式与推荐</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>做法</th>
+<th>优点</th>
+<th>成本与限制</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A：一个整体程序</td>
+<td>所有业务直接写在一个应用里，边界较弱</td>
+<td>起步很快</td>
+<td>后期改动容易互相影响，记忆与权限容易混用</td>
+<td>适合临时实验</td>
+</tr>
+<tr>
+<td>B：模块化核心＋独立任务工人</td>
+<td>九个域有独立接口和数据归属，轻业务共用应用；OCR、模型、研发执行等重任务独立运行</td>
+<td>可分别开发，部署负担适中，后续能拆出服务</td>
+<td>需要从一开始明确契约和所有权</td>
+<td><strong>推荐首版</strong></td>
+</tr>
+<tr>
+<td>C：完整微服务</td>
+<td>每个域独立服务、独立数据库和发布</td>
+<td>适合较大团队与规模</td>
+<td>分布式事务、版本、网络、运维和恢复成本显著增加</td>
+<td>出现实际需求后逐步采用</td>
+</tr>
+</tbody></table></div>
+<p>推荐首期形成四类部署单元：</p>
+<ol>
+<li>Core 与轻量业务 API、统一门户。</li>
+<li>正式数据服务与文件/版本存储。</li>
+<li>CPU 后台工人：采集、同步、校对规则、索引、报告与执行适配。</li>
+<li>GPU/模型工人：按需 OCR 图文复核、语音、向量生成和解读。</li>
+</ol>
+<p>同一台主机可以运行多个单元；同一类工人也可以分布到多台主机。按负载、权限和故障隔离决定物理落位。</p>
+<h3 id="section-3-1" tabindex="-1">3.1 跨平台交接规则</h3>
+<pre><code class="language-text">本人 / 家人 / 终端
+        │
+统一入口 + 智能交互
+        │
+Jarvis Core：身份、授权、请求、任务、审批、预算、事件
+        │
+        ├─ 知识接入中心 ── 知识神殿 / 原文工坊
+        ├─ 记忆神殿 ── 家庭学习与生活
+        ├─ 灵感 / 深研 ── AI 研发 ── 交付包
+        │                              │
+        ├─ 运维平台 ◀── 审批部署 ◀─────┘
+        └─ 经验 / Skill ◀── 使用与复盘反馈
+</code></pre>
+<p>一次跨平台操作至少带：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>必要信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份</td>
+<td>请求人、当前认证方式、作用范围、终端、会话、个性设定版本</td>
+</tr>
+<tr>
+<td>对象</td>
+<td>所属领域、对象 ID、版本、关联项目/服务/知识源/人物档案</td>
+</tr>
+<tr>
+<td>执行</td>
+<td>操作 ID、任务 ID、执行尝试 ID、前置依赖、幂等标识</td>
+</tr>
+<tr>
+<td>边界</td>
+<td>目标、验收、允许工具、时间/费用/重试限制、停止条件</td>
+</tr>
+<tr>
+<td>权限</td>
+<td>有效授权、审批版本、允许访问和出网的范围</td>
+</tr>
+<tr>
+<td>结果</td>
+<td>来源时间、事件顺序、真实执行状态、验证与产出引用</td>
+</tr>
+</tbody></table></div>
+<p>请求已接收、节点已就绪、正在执行、等待用户、停止请求中、已停止、验收通过，应该是不同状态。</p>
+<p>事件可以重复投递，执行者必须识别同一次操作。数据库事件表/待发送表、执行租约和单工作区写入锁可作为起步方向；不假设网络天然提供“只投递一次”。本段属于工程设计建议。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 动态外接知识库怎样做到可扩展</h2>
+<h3 id="section-4-1" tabindex="-1">4.1 “无限接入”的正确实现口径</h3>
+<p>不在产品中把知识源数量固定成 5 个、10 个或某个厂商的上限。采用可扩展的知识源注册与连接器接口，允许动态接入、停用、迁移和替换。</p>
+<p>实际吞吐仍受磁盘、网络、上下文、模型费用和外部 API 配额限制。一次问题应选择相关且有权限的知识源，有限并行检索，再合并证据；不把所有库同时装进模型上下文。</p>
+<h3 id="section-4-2" tabindex="-1">4.2 可以接什么</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>来源类型</th>
+<th>接入方向</th>
+<th>关键要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NAS 文件夹、PDF、Markdown、电子书</td>
+<td>元数据发现与本地索引</td>
+<td>文件版本、允许目录、更新和删除检测</td>
+</tr>
+<tr>
+<td>现有知识系统</td>
+<td>官方 API、搜索接口或经核实的 MCP</td>
+<td>身份、权限、来源片段和版本</td>
+</tr>
+<tr>
+<td>已有向量/全文检索库</td>
+<td>受控查询适配器</td>
+<td>返回可核实原文和定位，不能只返一个无法追溯的回答</td>
+</tr>
+<tr>
+<td>网站或资料站</td>
+<td>经允许的页面读取、元数据或接口</td>
+<td>来源、时间、可缓存范围、更新与撤销</td>
+</tr>
+<tr>
+<td>公司知识源</td>
+<td>明确项目和内容范围的只读接入</td>
+<td>公司与家庭命名空间分别管理</td>
+</tr>
+<tr>
+<td>原文基库、经验库</td>
+<td>发布后的内部检索适配器</td>
+<td>正式版本、使用范围与来源引用</td>
+</tr>
+</tbody></table></div>
+<p>“接一个问答 API”与“获得可校对的原文”是不同能力。适配器要声明自己能提供搜索结果、片段、页图、全文还是仅能返回回答。</p>
+<h3 id="section-4-3" tabindex="-1">4.3 每个知识源的档案</h3>
+<p>知识源至少有名称、负责人、主题、语言、连接方式、凭证引用、作用范围、缓存规则、可信度类别、来源版本、更新周期、最后同步与查询时间、同步游标、健康状态和停用策略。</p>
+<p>建议采用三种模式：</p>
+<ul>
+<li><strong>本地索引</strong>：用于核心经典、常用资料、允许保存的稳定内容。</li>
+<li><strong>实时查询</strong>：用于时效性内容或不适合复制的外部系统。</li>
+<li><strong>混合模式</strong>：本地保存目录与必要索引，查询时向原站确认版本或取回正文。</li>
+</ul>
+<p><strong>推荐稳定核心来源本地化，实时来源保留远程查询。</strong> 大型源增量同步，失败可恢复，避免每次重新解析全库。</p>
+<h3 id="section-4-4" tabindex="-1">4.4 查询、失效与授权变化</h3>
+<p>查询先按身份和主题选择来源，再召回与排序，生成前检查证据，输出前再次检查引用的权限和有效版本。超时或停用要显示“部分来源不可用”，不能把未完成检索说成全部资料已查遍。</p>
+<p>删除源、撤权或改变共享范围时，应同时处理目录、索引、缓存、派生摘要和依赖材料。对共享知识的关联私有项目，也要检查关联对象权限，不能因共享一条资料就泄露其后台项目。</p>
+<p>向量库可以提供过滤能力，例如 Qdrant 的过滤条件；<strong>用户和家庭权限仍由我们的服务端策略决定</strong>，不能只依赖模型自觉过滤。<a href="https://qdrant.tech/documentation/search/filtering/">Qdrant 过滤文档</a></p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. 知识神殿的三层资产与两个使用面</h2>
+<h3 id="section-5-1" tabindex="-1">5.1 原件、基库和神殿分别保存</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>层</th>
+<th>内容</th>
+<th>更改规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原件库</td>
+<td>上传扫描 PDF、照片、完整页图、附件、哈希、上传与来源记录</td>
+<td>原件不被 OCR 或 AI 覆盖；重新扫描形成新副本</td>
+</tr>
+<tr>
+<td>校勘基库</td>
+<td>OCR 候选、阅读顺序、正文与注释、疑点、人工决定、忠实转录、正式修订版</td>
+<td>有版本和校对记录，每个区块能回到原页图</td>
+</tr>
+<tr>
+<td>知识神殿</td>
+<td>解读、主张、实体关系、术语、主题、故事、课程模板、索引与缺口</td>
+<td>绑定所用原文版本；可以改写、审核、撤回和重新发布</td>
+</tr>
+</tbody></table></div>
+<p>基库是你要求的“原文入库”。知识神殿是原文基础上的理解、联系和教学产品。</p>
+<p>忠实转录、规范化文本、现代标点、白话翻译、AI 解读分别保存。原件有错字、异体字或断句争议时，保留原件事实并附注，不由模型悄悄替换成它认为更合理的文字。</p>
+<h3 id="section-5-2" tabindex="-1">5.2 给谁使用</h3>
+<p>管理面包括书籍目录、版本、扫描件、处理作业、校对台、疑点队列、发布记录、知识关系、故事、课程与缺口建议。</p>
+<p>家庭使用面包括：选主题、听故事、追问、看出处、做小测、复习、继续路线。家人日常使用时不用理解 OCR 作业或索引参数。</p>
+<h3 id="section-5-3" tabindex="-1">5.3 版本和出处最小模型</h3>
+<pre><code class="language-text">作品 → 版本/译本/注本 → 扫描副本 → 页/区块
+                                      │
+                                转录修订与校勘
+                                      │
+                              正式原文发布版本
+                                      │
+                         证据片段 / 主张 / 解读
+                                      │
+                           关系 / 故事 / 课程
+</code></pre>
+<p>同一作品的不同版本、译文或注释不能直接去重合并。引用同时保存书名、版本、章节、书页码、文件页序号、区块位置和原文修订号。</p>
+<p>可借鉴 IIIF 把页图、区域、转录和注释关联起来的表达；起步可以先保存同等定位信息，后续再决定是否完整采用该标准。<a href="https://iiif.io/api/presentation/3.0/">IIIF Presentation API 3.0</a></p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 扫描书籍到正式原文：校对与人工审核</h2>
+<h3 id="section-6-1" tabindex="-1">6.1 完整流程</h3>
+<pre><code class="language-text">上传与查重
+  → 核对书目、版本、页数和页序
+  → 检查漏页、重复、截断、模糊与倾斜
+  → 版面解析和阅读顺序
+  → OCR 初稿
+  → 多轮交叉校对与图文复核
+  → 疑点集中待审
+  → 人工确认、手改、无法辨认或要求重新扫描
+  → 质量验收与正式原文版本
+  → 解读、证据、索引、知识关系
+  → 故事/课程审核与教学发布
+</code></pre>
+<p>识别和校对可以局部重跑，不必每次重新处理整本书。重试次数、费用和时间有上限；没有新证据的反复识别应转为待人工处置。</p>
+<h3 id="section-6-2" tabindex="-1">6.2 AI 怎样发现疑点</h3>
+<p>疑点候选来自多种信号：</p>
+<ul>
+<li>两条识别或复核路径给出不同文字。</li>
+<li>低识别分数、罕见字、异常符号或未能解析的区域。</li>
+<li>人名、地名、年代、数字、计量、公式等重要字段异常。</li>
+<li>标题、页码、章节、脚注、表格和阅读顺序不一致。</li>
+<li>页图中有内容却在转录中没有对应区块。</li>
+<li>词句合理性检查发现异常，但不自动按语言习惯改原文。</li>
+</ul>
+<p>多模型一致和高分数只能作为复核线索，不能证明原文正确。人工界面应让审核者同时看原页、放大区域、候选文字、前后文、异文和处理历史。</p>
+<h3 id="section-6-3" tabindex="-1">6.3 人工校对台需要什么操作</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接受某一候选</td>
+<td>保存决定、审核者与依据</td>
+</tr>
+<tr>
+<td>直接手改</td>
+<td>保存前后版本和原图位置</td>
+</tr>
+<tr>
+<td>标记无法辨认</td>
+<td>保留明确缺字/不确定标记，按发布策略处理</td>
+</tr>
+<tr>
+<td>要求重新扫描</td>
+<td>生成面向指定书页的补扫任务</td>
+</tr>
+<tr>
+<td>标记原件本身疑似错误</td>
+<td>忠实转录并附校勘注释</td>
+</tr>
+<tr>
+<td>标记需要另一版本对照</td>
+<td>形成资料补充建议，保留版本差异</td>
+</tr>
+<tr>
+<td>驳回自动修改</td>
+<td>原文字保留，候选说明进入记录</td>
+</tr>
+</tbody></table></div>
+<p>批量接受只适合规则明确、已经抽样验证的同类问题；关键内容和存在分歧的疑点保留逐项复核。</p>
+<h3 id="section-6-4" tabindex="-1">6.4 怎样落实“直到没有错误”</h3>
+<p>你的目标应体现在<strong>严格的正式发布门槛</strong>中。工程上不能证明任何 OCR 文本绝对零错误，但能把“哪些内容经过什么校对、还剩什么疑问”做成可检查的记录。</p>
+<p>推荐两个正式质量等级：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>等级</th>
+<th>要求</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>校核版</td>
+<td>所有已知疑点有处置；完整性通过；重点内容和约定抽样复核达标</td>
+<td>普通参考资料、先期整理</td>
+</tr>
+<tr>
+<td>精校版</td>
+<td>校核版要求，加完整逐页人工复核与记录</td>
+<td>你重视的经典和正式家庭教材</td>
+</tr>
+</tbody></table></div>
+<p><strong>推荐重点经典精校，普通资料校核。</strong> 对你要求极严格的内容，可以规定只允许精校版进入正式教学。无法消除的文字疑问不伪装成确定文本；关键未决疑点可以阻止相关章节发布。</p>
+<p>待校对稿可以在管理区明确标识后检索，但不参与默认正式教学。部分章节先发布必须显示覆盖范围，不能把整书标成已精校。</p>
+<p>正式发布检查包括：页图完整与可读取、版本信息齐全、疑点有处置、校对策略满足、可精确引用、来源使用范围明确、发布记录完整。之后仍有勘误入口。</p>
+<p>PP-StructureV3 已提供版面、文字、表格、公式与阅读顺序等解析能力；Label Studio 有页图 OCR 区块和转录编辑模板。疑点汇总、审核门槛、发布与勘误传播属于需要建设的业务层。<a href="https://github.com/PaddlePaddle/PaddleOCR/blob/main/docs/version3.x/pipeline_usage/PP-StructureV3.en.md">PP-StructureV3</a>、<a href="https://labelstud.io/templates/optical_character_recognition">Label Studio OCR 模板</a></p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 知识脉络、独立故事与课程怎样组织</h2>
+<h3 id="section-7-1" tabindex="-1">7.1 原文证据与知识主张</h3>
+<p>一段材料可以产生若干主张，但每条主张保存“哪个来源说了什么”。系统区分：</p>
+<ul>
+<li>原书文字或史料记载。</li>
+<li>经过比对的知识结论。</li>
+<li>某作者或学者的解释。</li>
+<li>AI 提出的关系候选或推断。</li>
+<li>文学虚构、民间传说和教学改编。</li>
+</ul>
+<p>相互矛盾的材料可以并存，展示来源和争议。不能通过多数票或模型选择把争议自动消掉。</p>
+<h3 id="section-7-2" tabindex="-1">7.2 两种知识关系分别管理</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>关系网</th>
+<th>例子</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内容关系</td>
+<td>人物与事件、概念与概念、作品与作者、地点、时期、行业、学科</td>
+<td>跨书关联、时间线、比较和证据发现</td>
+</tr>
+<tr>
+<td>学习关系</td>
+<td>先理解某概念，再学习某故事；某两单元适合比较；某问题需要补基础</td>
+<td>编排路线、调整难度与复习</td>
+</tr>
+</tbody></table></div>
+<p>“主题相似”“发生在前后”“可能影响”和“有证据支持的因果关系”使用不同关系类型。AI 抽取先产生候选，审核或按已授权规则发布。</p>
+<p>推荐初期把实体、关系和证据存在关系库，配合关键词与语义检索。图谱帮助组织路线，检索帮助取回正文证据。出现真实的复杂图遍历需求后再引入专用图数据库。</p>
+<p>Qdrant 支持混合查询路线，可作为检索候选；数据库选型不等于已经获得正确的知识关系。<a href="https://qdrant.tech/documentation/search/hybrid-queries/">Qdrant 混合查询</a></p>
+<h3 id="section-7-3" tabindex="-1">7.3 一个“故事单元”是什么</h3>
+<p>每个单元应能独立听懂，同时保留与其他单元的连接：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心问题</td>
+<td>这一小段到底帮助理解什么</td>
+</tr>
+<tr>
+<td>必要背景</td>
+<td>人物、时期、地点、概念，保证独立理解</td>
+</tr>
+<tr>
+<td>正文与结构</td>
+<td>有清楚的起点、发展和解释，不是几段零散摘要</td>
+</tr>
+<tr>
+<td>证据</td>
+<td>引用正式原文版本、页/段/区块</td>
+</tr>
+<tr>
+<td>内容标签</td>
+<td>事实、解释、争议、传说或创作分别说明</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>前后故事、人物、时期、学科、先修和比较主题</td>
+</tr>
+<tr>
+<td>讲述版本</td>
+<td>按基础、语言和偏好改写，事实层保持一致</td>
+</tr>
+<tr>
+<td>互动</td>
+<td>提问、复述、小测、讨论或简单实践</td>
+</tr>
+<tr>
+<td>使用范围</td>
+<td>适合的学习目标与内容边界</td>
+</tr>
+</tbody></table></div>
+<p>候选时长可以先按 3～10 分钟规划，再根据家人反馈调整，这是教学产品建议，不是固定要求。</p>
+<p>例如围绕“一个人物的一次抉择”组织单元，可连接时代背景、地理、制度、作品和个人经历；既可以单独听，也能进入人物路线、年代路线或学科路线。</p>
+<h3 id="section-7-4" tabindex="-1">7.4 三种管理和使用方式</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>体验</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>按书精读</td>
+<td>按作品章节逐步讲解，保留原书结构</td>
+<td>深入理解某部经典</td>
+</tr>
+<tr>
+<td>主题跨书</td>
+<td>按问题、人物、时期、学科或行业，把多书证据组织起来</td>
+<td><strong>推荐长期主线</strong></td>
+</tr>
+<tr>
+<td>自由探索</td>
+<td>临时提问、查证、看关系，再收藏为后续路线</td>
+<td>日常好奇心和深研</td>
+</tr>
+</tbody></table></div>
+<p>推荐三种方式并存，先挑一个主题做可确认的路线。家人不一定需要看复杂图谱；图谱更多用来帮助管家组织内容，想探索时再显示。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 怎样有规划地讲给每位家人听</h2>
+<h3 id="section-8-1" tabindex="-1">8.1 学习路线由目标与证据驱动</h3>
+<p>先确认兴趣、基础、目标语言、单次时长、希望的节奏与主题，再产生候选路线。孩子年龄和学习基础按你补充的信息配置，不按原型中的模拟值推定。</p>
+<pre><code class="language-text">家人确认目标
+  → 选择正式内容与先修概念
+  → 编排路线和每次的故事单元
+  → 按该人的声音与风格讲述
+  → 允许追问、回到原文、比较不同说法
+  → 小测、复述或实践
+  → 保存个人学习证据
+  → 安排复习、补基础或进入下一单元
+</code></pre>
+<p>同一份知识可以有不同讲述版本。例如爸爸希望简洁、有背景；妻子希望把生活主题和外语练习结合；儿子希望故事、互动和逐步解释。这里是可选设定示例，不替本人预设实际偏好。</p>
+<h3 id="section-8-2" tabindex="-1">8.2 学习状态不能只看“播放完成”</h3>
+<p>分开记录已听过、提问过、完成练习、能复述、需要复习与本人自评。听完故事不自动等于掌握。学习平台提供结构化结果，记忆神殿引用其摘要和目标。</p>
+<p>讲述速度、声音、用词可以按人调整；史实与证据不因更生动而改写。创造的对白或想象场景要作为改编说明。</p>
+<h3 id="section-8-3" tabindex="-1">8.3 课程的变更与发布</h3>
+<p>一个课程模板可以服务多个人，但个人安排、回答与薄弱点独立保存。课程修改保留版本；原文勘误后，相关故事、课程和音频标为待复核，复核后生成新版本。</p>
+<p>主动讲述遵守本人选择的时间窗、频率和安静时段。默认先推荐路线，确认后按计划提醒或播放；不因为知识更多就自动不断打扰家人。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9. 知识神殿还能主动提出什么建议</h2>
+<h3 id="section-9-1" tabindex="-1">9.1 建议不只限于“还缺哪些书”</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>建议类型</th>
+<th>触发依据</th>
+<th>可推荐的动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结构缺口</td>
+<td>已确认路线缺时期、基础概念、学科或行业环节</td>
+<td>补章节、基础单元或另一类资料</td>
+</tr>
+<tr>
+<td>证据缺口</td>
+<td>重要主张只有单一来源、引用不足</td>
+<td>增加原始材料或对照来源</td>
+</tr>
+<tr>
+<td>争议缺口</td>
+<td>两种说法冲突，缺解释或另一视角</td>
+<td>做跨版本/跨作者比较</td>
+</tr>
+<tr>
+<td>呈现缺口</td>
+<td>家人难以理解地理、年代或术语</td>
+<td>补地图、时间线、插图与术语卡</td>
+</tr>
+<tr>
+<td>学习缺口</td>
+<td>某人持续在同类问题卡住</td>
+<td>补先修、换讲述方式、安排复习</td>
+</tr>
+<tr>
+<td>时效缺口</td>
+<td>现代行业或学科资料已过时</td>
+<td>推荐新版资料与更新时间</td>
+</tr>
+<tr>
+<td>原文质量缺口</td>
+<td>模糊页、漏页、未决异文、重要内容只抽查</td>
+<td>补扫、精校、对照另一版本</td>
+</tr>
+<tr>
+<td>重复与组织问题</td>
+<td>同一主题多份重复摘要、关系混乱</td>
+<td>合并或澄清实体，保留来源</td>
+</tr>
+<tr>
+<td>研究机会</td>
+<td>多来源之间出现值得比较的问题</td>
+<td>创建研究候选，先明确范围与价值</td>
+</tr>
+<tr>
+<td>复用机会</td>
+<td>已有内容能回答新项目或生活问题</td>
+<td>提示相关资料、经验或经过验证的 Skill</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-9-2" tabindex="-1">9.2 缺口建议怎样产生</h3>
+<p>以你确认的主题、课程纲要或研究问题为参照，先查现有资料和权限范围，再判断缺少证据、缺少解释、索引未更新，还是只是这次没有检索到。</p>
+<p>可以按目标影响、出现频率、证据风险和补齐成本排序。这是用于安排工作的启发式评分，不是事实正确率。完整度百分比只对明确纲要计算，不宣称覆盖了整个人类知识。</p>
+<h3 id="section-9-3" tabindex="-1">9.3 一张建议卡应能让你决策</h3>
+<p>示例为产品场景，尚非已有书库的分析结果：</p>
+<blockquote>
+<p>当前历史路线即将讲到某地区的运输与政策，但库中只有人物和事件材料，缺地理与运输机制说明。建议先检查已有书籍相关章节；如果仍不足，补一份有出处的地图和说明。补齐后可增加一个“地理怎样影响决策”的故事单元。</p>
+</blockquote>
+<p>建议卡显示缺什么、为何需要、已有证据、影响哪些路线、推荐材料类型、可选行动、预计处理量、预算与优先级。操作包括接受、先查现有资料、生成研究任务、暂缓和忽略。</p>
+<p>默认提出建议；对你已预先授权的来源和预算，可自动做有限检索与整理。购买、上传私有资料、开放新来源、发布正式课程等按对应授权执行。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10. 记忆神殿：每个人的专属设定与记忆</h2>
+<h3 id="section-10-1" tabindex="-1">10.1 个性设定、登录身份和长期记忆分别管理</h3>
+<p>每个人使用稳定的个人 ID。可以有自己的管家称呼、输出声音、唤醒词、语言、语速、长短偏好、表达风格、常用时间、学习目标、允许模型与隐私模式。</p>
+<p>个性设定不是身份认证。不同家人可以选同一种声音，也可以叫不同名字；服务器权限和私人记忆访问仍由账号与有效认证决定。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>数据类别</th>
+<th>例子</th>
+<th>权威归属</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份与授权</td>
+<td>是谁、允许读什么、能执行什么</td>
+<td>Core</td>
+</tr>
+<tr>
+<td>管家个性</td>
+<td>声音、唤醒词、语速、交流风格</td>
+<td>记忆神殿的个人设定</td>
+</tr>
+<tr>
+<td>会话档案</td>
+<td>某人与管家的聊天、引用和摘要</td>
+<td>该人的私人会话空间</td>
+</tr>
+<tr>
+<td>已确认长期记忆</td>
+<td>喜好、目标、习惯、重要约定</td>
+<td>记忆神殿</td>
+</tr>
+<tr>
+<td>候选或推断</td>
+<td>可能更喜欢简短回答</td>
+<td>候选区，有依据与确认状态</td>
+</tr>
+<tr>
+<td>个人学习状态</td>
+<td>哪课学过、哪题需复习</td>
+<td>学习平台，记忆引用</td>
+</tr>
+<tr>
+<td>个人事项</td>
+<td>想做什么、何时提醒</td>
+<td>对应事项/学习/任务域</td>
+</tr>
+<tr>
+<td>家庭共同事项</td>
+<td>共同日程、家庭规则</td>
+<td>明确共享空间</td>
+</tr>
+</tbody></table></div>
+<p>机器当前状态、部署版本、开发验收结果、OCR 是否精校等从领域系统查询。记忆可以引用这些对象，不能用过去聊天中的结论替代当前状态。</p>
+<h3 id="section-10-2" tabindex="-1">10.2 聊天怎样帮助管家了解每个人</h3>
+<p>按每个人的设置分别控制：</p>
+<ol>
+<li>是否保存文字聊天以及保留方式。</li>
+<li>是否保存原始语音。</li>
+<li>是否提炼长期记忆。</li>
+<li>是否允许云端处理，以及哪些模型或资料可出网。</li>
+<li>哪些内容允许共享给家人。</li>
+</ol>
+<p>推荐：启用个人档案时确认文字聊天记录策略；原始音频默认不持久保存；明确“请记住”可立即形成已确认记忆，普通偏好由候选区定期集中确认。</p>
+<p>文字记录可选择有期限、长期归档或临时会话。本轮不替你规定固定保留天数，D5 给出选项。</p>
+<h3 id="section-10-3" tabindex="-1">10.3 记忆生命周期</h3>
+<pre><code class="language-text">对话/行为证据
+  → 候选记忆
+  → 本人确认或已授权的整理规则
+  → 生效
+  → 使用并显示依据
+  → 定期复核
+  → 修订、过期或遗忘
+</code></pre>
+<p>每条记忆保存所属人、作用范围、类型、证据、确认状态、适用场景、有效期、版本与撤销记录。“你今天想吃甜食”不直接变成“你永远喜欢甜食”；新偏好与旧偏好冲突时保留时间和适用条件。</p>
+<p>家庭共同记忆需要明确共享。成员的私密聊天、健康备忘或个人学习回答不自动变成全家资料。</p>
+<h3 id="section-10-4" tabindex="-1">10.4 修改、遗忘与恢复</h3>
+<p>“忘记”应覆盖原记录、派生摘要、索引、缓存和未来检索资格。保留用于执行删除的最小标记，恢复备份时重新应用删除标记，避免旧记忆复活。</p>
+<p>备份按保留策略到期清理；界面明确在线内容已撤回、哪些备份仍在保留期。不能只隐藏界面，却继续在后台使用。</p>
+<p>应用管理员管理系统资源，不因此自动获得读取家人私人会话的界面权限。服务器管理员在技术上可能接触底层数据，需通过分域加密、受控访问和审计管理；不能只靠界面隐藏承诺绝对隔离。</p>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">11. 智能语音平台的路线与决策</h2>
+<h3 id="section-11-1" tabindex="-1">11.1 一条语音请求的完整链路</h3>
+<pre><code class="language-text">按键 / 唤醒
+  → 音频处理、回声抑制与语音活动检测
+  → 转写或实时语音会话
+  → 当前身份与档案上下文
+  → 意图、对象、参数及缺项
+  → Core 权限与策略检查
+  → 查询 / 提出计划 / 等待选择 / 审批 / 派发
+  → 真实结果或明确等待状态
+  → 按该人的声音、语速与风格回应
+</code></pre>
+<p>“重新运行一下”可能指开发任务、正在运行的应用或 OCR 作业。界面应列出具体对象供你选择；不确定时不先执行。</p>
+<p>意图对象包括请求人、目标、动作、参数、缺失信息、影响等级、预算、所需决定和关联会话。模型识别候选，业务系统验证对象和授权。</p>
+<h3 id="section-11-2" tabindex="-1">11.2 三种语音方案</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>做法</th>
+<th>优点</th>
+<th>主要建设工作</th>
+<th>推荐用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A：分段式</td>
+<td>ASR → 文本/结构化业务 → TTS</td>
+<td>可校验转写、替换各组件、便于本地处理和审计</td>
+<td>流式播放、打断、端点检测与延迟优化</td>
+<td><strong>首版推荐</strong>，系统操作与精确记录</td>
+</tr>
+<tr>
+<td>B：端到端实时语音</td>
+<td>模型直接进行语音对话与工具交互</td>
+<td>陪聊与语言练习更自然</td>
+<td>会话隔离、云端与费用、工具授权及档案切换</td>
+<td>自然交流优先的场景</td>
+</tr>
+<tr>
+<td>C：混合</td>
+<td>自然交流用实时语音，业务动作进入统一受控后端</td>
+<td>兼顾陪伴与可靠执行</td>
+<td>两条链路的状态与上下文对齐</td>
+<td><strong>长期推荐</strong></td>
+</tr>
+</tbody></table></div>
+<p>官方文档同时提供 chained voice、Realtime 和实时交流与独立后端结合的方向，可作为候选适配器，业务架构保留替换能力。<a href="https://developers.openai.com/api/docs/guides/voice-agents">OpenAI Voice agents</a></p>
+<p>Realtime 支持语音和工具；使用应用拥有的函数工具时，由应用执行业务逻辑与许可检查。<a href="https://developers.openai.com/api/docs/guides/realtime-mcp">Realtime with tools</a></p>
+<h3 id="section-11-3" tabindex="-1">11.3 不混淆声音、唤醒词、声纹与身份</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>用来做什么</th>
+<th>能否单独授权敏感操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输出声音</td>
+<td>管家怎样说话</td>
+<td>不能</td>
+</tr>
+<tr>
+<td>唤醒词</td>
+<td>什么时候开始交互，提示档案候选</td>
+<td>不能，别人也能说出</td>
+</tr>
+<tr>
+<td>声纹辅助</td>
+<td>提示可能是哪位成员</td>
+<td>不能单独依赖</td>
+</tr>
+<tr>
+<td>登录/绑定/二次确认</td>
+<td>确认谁有权读或执行</td>
+<td>按操作风险决定</td>
+</tr>
+</tbody></table></div>
+<p>共享终端默认家庭公共会话。身份不确定时先确认档案；敏感内容可转本人已登录的手机确认或收听。MVP 多人同时讲话时先请求轮流说，不把无法归属的内容写进某个人的长期记忆。</p>
+<p>切换成员时隔离上一人的上下文、检索、音频队列和私人结果。部分语音服务还有会话声音限制：OpenAI Realtime 在会话已经输出音频后，不能继续在同一会话修改声音，需按档案建立合适的新会话。<a href="https://developers.openai.com/api/docs/guides/realtime-conversations">Realtime conversations</a></p>
+<h3 id="section-11-4" tabindex="-1">11.4 候选工具与测试</h3>
+<p>本地路线可以评估 sherpa-onnx 所提供的 ASR/TTS/VAD/关键词与说话人相关能力；最终按家中的中文、目标外语、噪声、方言、终端和硬件测试选择。<a href="https://github.com/k2-fsa/sherpa-onnx">sherpa-onnx 官方仓库</a></p>
+<p>第一阶段使用可选声音库、语速和表达风格即可。声音克隆单独作为以后选项，需要核实授权、账户资格和实际效果。</p>
+<p>测试至少覆盖：识别准确率、误唤醒、漏唤醒、第一段有效语音、打断、多人、身份不明确、GPU 关闭、隐私模式、云端故障、费用达到上限。</p>
+<h3 id="section-11-5" tabindex="-1">11.5 账户、预算与路由</h3>
+<p>每个人分别选择允许的云端语音/推理、默认本地路线、每日预算和故障处理。隐私模式中，GPU 关闭时只能使用已验证的本地 CPU 能力、文字或等待，不能自动把私人内容改走云端。</p>
+<p>ChatGPT 订阅不是通用 API key，也不意味着所有语音端点都能用于自研系统。当前官方存在符合条件的应用获取订阅用量授权的路径；需单独核实应用资格、授权、支持端点和额度。API 计费与订阅用量路径分别记录，不能在额度问题后静默改成另一种付费方式。<a href="https://developers.openai.com/siwc/quickstart">Sign in with ChatGPT quickstart</a>、<a href="https://developers.openai.com/siwc/token-sharing-open-source/errors-and-recovery">Errors and recovery</a></p>
+</section>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">12. 服务器与已经运行的自研项目怎样管理</h2>
+<h3 id="section-12-1" tabindex="-1">12.1 把机器、开发项目和运行服务分别建模</h3>
+<p>一台服务器可运行多个服务和工作副本；一个项目可在多台机器开发，也可部署为多个环境与服务。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>要记录的事实</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>机器 Host</td>
+<td>规格、系统、位置、心跳、资源、存储与最后上报</td>
+</tr>
+<tr>
+<td>开发项目 Project</td>
+<td>仓库、目标、工作副本、开发任务与验收</td>
+</tr>
+<tr>
+<td>应用 Application</td>
+<td>自研应用身份、负责人、业务作用与可接入能力</td>
+</tr>
+<tr>
+<td>运行环境 Environment</td>
+<td>测试、预发布、正式环境及访问范围</td>
+</tr>
+<tr>
+<td>服务 Service</td>
+<td>实际进程/容器/端口/入口、健康、日志与依赖</td>
+</tr>
+<tr>
+<td>部署 Deployment</td>
+<td>指定交付版本、配置引用、时间、执行者与验证</td>
+</tr>
+</tbody></table></div>
+<p>登记你的已有小项目时，可以先填写应用名称、所在服务器、运行方式、访问入口、健康检查、仓库/版本、日志和负责人。暂缺接口的保留手工登记或只读检查，不为接入强制重写应用。</p>
+<h3 id="section-12-2" tabindex="-1">12.2 自研系统的接入层级</h3>
+<ol>
+<li>仅登记位置和负责人。</li>
+<li>只读健康与运行指标。</li>
+<li>只读日志、版本、业务查询。</li>
+<li>已授权的运维动作，例如部署或重启。</li>
+<li>真实业务写入或控制动作，采用更明确的授权与验收。</li>
+</ol>
+<p>已有裸进程、系统服务、容器或其他运行方式都通过适配器接入。凭证保存引用与受控配置，不把密钥直接放进知识、日志或模型上下文。</p>
+<h3 id="section-12-3" tabindex="-1">12.3 研发停止与线上服务停止</h3>
+<p>暂停开发任务只作用于相应 Agent 与工作区。重启/停止在线服务属于运维动作，目标、环境、影响、备份和恢复方法分别确认。</p>
+<p>开发进度正常、项目目标完成、部署成功、线上健康是四种不同事实。</p>
+</section>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">13. AI 持续开发监督怎样走到交付</h2>
+<h3 id="section-13-1" tabindex="-1">13.1 交给管家的任务需要明确什么</h3>
+<p>项目目标、当前需求、工作副本、执行节点、允许范围、里程碑、验收、产出位置、时间/费用/重试限制、人工决策点和交付要求。</p>
+<h3 id="section-13-2" tabindex="-1">13.2 监督闭环</h3>
+<pre><code class="language-text">明确目标与验收
+  → 独立工作区与执行尝试
+  → CC/Codex 官方适配器
+  → 接收真实事件、心跳、计划、变更与验证
+  → 阶段检查
+  → 通过后进入下一明确目标
+  → 缺输入/审批/资源/额度时等待
+  → 重复失败达到边界时阻塞
+  → 项目目标验收通过
+  → 生成交付包与遗留事项
+</code></pre>
+<p>监督器判断结果，以状态规则和证据为基础；模型帮助总结和提出下一步。一次对话结束不等于项目交付完成，也不通过不断重复“继续”来定义工作。</p>
+<p>Codex 非交互模式支持 JSONL 事件，App Server 支持会话与事件接口；Claude Code 程序接口支持结构化/流式输出。它们为适配器提供接入基础，但不意味着能控制所有既有桌面会话。<a href="https://learn.chatgpt.com/docs/non-interactive-mode">Codex 非交互模式</a>、<a href="https://learn.chatgpt.com/docs/app-server">Codex App Server</a>、<a href="https://code.claude.com/docs/en/headless">Claude Code 程序接口</a></p>
+<h3 id="section-13-3" tabindex="-1">13.3 监督的可靠边界</h3>
+<ul>
+<li>人工暂停优先，不被“故障恢复”自动解除。</li>
+<li>同一工作副本只允许一个写入执行者，托管任务使用独立工作区。</li>
+<li>节点离线保留阶段；恢复时核实仓库、依赖、工作状态和有效授权。</li>
+<li>事件重复或断网补交不重复启动任务或重复部署。</li>
+<li>有限重试、有限费用与明确时间窗。</li>
+<li>无输出需要结合编译、心跳等证据判断，不直接判为卡住。</li>
+<li>关键验收可以采用独立验证和本人确认；同一个模型自称完成不是充分证据。</li>
+<li>达成约定目标后停在交付状态，新增需求产生新目标与授权。</li>
+</ul>
+<p>停止也有过程：请求停止、停止新派发、通知节点、等待安全检查点、保存中间产出、确认已停止。无法瞬间安全中断或撤销的动作应显示真实状态。</p>
+<h3 id="section-13-4" tabindex="-1">13.4 研发与运维的正式交接</h3>
+<pre><code class="language-text">交付版本 + 构建/测试 + 使用说明 + 配置引用 + 恢复要求
+    → 指定环境的部署申请
+    → 审批绑定该版本与操作
+    → 运维执行与验证
+    → 部署回执、线上健康与恢复记录
+    → 研发交付结果更新
+</code></pre>
+<p>默认可在明确授权的测试环境自动验证；正式环境部署单独审批。失败补偿针对对应版本和已执行步骤，无法恢复的动作不能伪报已回滚。</p>
+</section>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">14. 灵感、深研、经验与快速记录</h2>
+<h3 id="section-14-1" tabindex="-1">14.1 灵感如何走成真实项目</h3>
+<pre><code class="language-text">随手记录灵感
+  → 关联已有资料与经验
+  → 交流完善，形成研究问题
+  → 深研：证据、反证、可行性、方案与成本
+  → 本人选择采纳、暂存或否决
+  → 转项目需求与验收
+  → 托管实现与交付部署
+  → 使用反馈与复盘
+  → 经验 / Skill / 下一轮灵感
+</code></pre>
+<p>灵感保留原始表达，研究保留问题、假设、证据与来源。事实、解释、观点和决策分别记录。被否决的想法也保留原因，后续条件变化可以再次评估。</p>
+<p>深研必须有范围、输出、时间和费用上限。结论应能说明哪些证据支持它、哪些尚未验证、建议做哪个小实验。搜索得到的材料先进入证据候选，不直接变成正式基库。</p>
+<h3 id="section-14-2" tabindex="-1">14.2 任意终端的统一收件入口</h3>
+<p>手机、网页、语音、开发工具、命令入口和机器侧采集组件使用同一种记录封套：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td>灵感、问题、经验、学习笔记、资料或任务反馈</td>
+</tr>
+<tr>
+<td>原始内容</td>
+<td>用户说明、选中的日志、链接、附件或语音转写</td>
+</tr>
+<tr>
+<td>来源</td>
+<td>所属人、终端、项目、任务、机器、发生时间</td>
+</tr>
+<tr>
+<td>范围</td>
+<td>个人、家庭共享、指定项目或公司允许的范围</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>新收件、待补充、整理草稿、待验证、正式发布</td>
+</tr>
+<tr>
+<td>附件与版本</td>
+<td>原文件、摘要、修订、处理结果</td>
+</tr>
+</tbody></table></div>
+<p>统一收件箱负责分流。经验正文进入经验域，灵感进入研究域，私人偏好进入记忆候选，书籍进入原文工坊。</p>
+<h3 id="section-14-3" tabindex="-1">14.3 主动与被动记录</h3>
+<p>主动方式：一个快捷键、手机分享、选中日志发送、语音“记一下”、任务结束总结、导入已有 Skill。</p>
+<p>被动方式：在已选择的项目或服务范围内采集失败事件、验证结果、关键变更，生成经验候选，请本人确认必要内容。</p>
+<p>被动收集按设备、目录、项目和字段授权，不默认记录整台电脑的键盘、全部屏幕和所有家庭环境声音。公司 HP 继续采用已选择的项目与摘要范围。</p>
+<h3 id="section-14-4" tabindex="-1">14.4 经验怎样在下一次起作用</h3>
+<p>记录症状、环境、原因或未确定之处、尝试、处理、验证、适用条件和失效条件。相似问题出现时，先匹配环境和范围，再提示历史经验。</p>
+<p>经验达到可重复执行的程度才发布 Skill/Runbook，固定版本、权限和停止条件。使用结果回到原条目；发现环境不兼容或失败时，产生限制说明或新版本。</p>
+<p>私人记忆、公共知识、研究证据、经验与可执行 Skill 分别保存。它们通过稳定 ID 互相引用，每次引用检查权限和版本。</p>
+</section>
+<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">15. 主动程度、数据治理与统一资源策略</h2>
+<h3 id="section-15-1" tabindex="-1">15.1 推荐的主动服务分层</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>可以做什么</th>
+<th>推荐策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发现与提醒</td>
+<td>汇总缺口、阻塞、失效版本、学习复习和运行异常</td>
+<td>按安静时间与重要变化提醒</td>
+</tr>
+<tr>
+<td>建议与准备</td>
+<td>形成计划、课程候选、研究问题和变更草案</td>
+<td>主动准备可 review 的内容</td>
+</tr>
+<tr>
+<td>受控执行</td>
+<td>已授权知识同步、OCR、练习安排和开发里程碑</td>
+<td>明确范围、预算和停止条件后自动推进</td>
+</tr>
+<tr>
+<td>影响正式环境或新范围</td>
+<td>新付费来源、正式部署、权限、不可逆变更</td>
+<td>对具体动作进行决策与审批</td>
+</tr>
+</tbody></table></div>
+<p>主动建议应可关闭、调频、暂缓。正常运行不反复通知；家人的交流时段与开发告警分开。</p>
+<h3 id="section-15-2" tabindex="-1">15.2 原文与派生材料的变更传播</h3>
+<p>修订原文或撤回来源后，索引、主张、关系、故事、课程和音频形成受影响清单。先撤回失效资格或标为待复核，再局部重建与发布。</p>
+<p>课程、研究和任务保留当时引用版本，当前检索选择有效版本；版本可追溯，不把历史记录偷偷改成新版。</p>
+<h3 id="section-15-3" tabindex="-1">15.3 权限与来源内容</h3>
+<p>资料的原文、图谱边、摘要、故事、检索缓存、导出和通知均遵守可见范围。共享内容的背景机器、公司项目或私人任务需要单独过滤。</p>
+<p>书中的命令、外部文章的指令、日志文本和模型生成的 Skill 都是来源内容；不能未经审核升级成系统权限或执行政策。</p>
+<p>上传时登记来源和允许处理/展示/分享范围。原典与现代译文、注释、扫描副本的范围分别记录；未明确可公开的材料不自动公开发布。这是产品的数据管理要求，不替代具体来源的使用权判断。</p>
+<h3 id="section-15-4" tabindex="-1">15.4 统一排队与预算</h3>
+<p>家庭主力电脑先保留本人交互开发和日常使用的资源配额，自动任务只能使用剩余资源。家庭语音可以使用预留的小配额或已验证的替代节点/路线，不能为抢占语音优先级而强制中断本人开发。下面的优先级用于可调度的自动任务配额。</p>
+<p>推荐优先级由业务重要性决定：</p>
+<ol>
+<li>正在与家人交互的语音与必要查询。</li>
+<li>需要及时处理的运行异常与已约定的任务。</li>
+<li>已授权的研发与课程任务。</li>
+<li>批量 OCR、图文复核、向量重建和深研。</li>
+</ol>
+<p>每域分别设并发、每日费用、磁盘配额和运行窗口。知识处理和持续开发不能耗尽共享 GPU，让家人语音突然不可用。</p>
+<p>新来源同步量、扫描总量、派生版本、模型缓存与日志都计入容量计划。先用实测单页大小和任务样本估算增长，不根据“可以无限接入”假定存储无限。</p>
+</section>
+<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">16. 现有机器怎样承接 V5</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>推荐作用</th>
+<th>需要特别验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i3-01</td>
+<td>Core、身份与权限、入口、任务协调与通知</td>
+<td>常驻稳定性、负载、磁盘与断电恢复</td>
+</tr>
+<tr>
+<td>i3-02</td>
+<td>PostgreSQL、轻量正式状态、Git/元数据与适量索引</td>
+<td>16GB 和 256GB 的实际余量；日志和索引增长</td>
+</tr>
+<tr>
+<td>i3-03</td>
+<td>最小核心冷备与恢复演练</td>
+<td>真正能恢复身份、任务、来源和删除标记</td>
+</tr>
+<tr>
+<td>i3-04/05</td>
+<td>轻量测试、适配器和轻量 Agent 工人</td>
+<td>构建负载；不预设能同时跑大型项目</td>
+</tr>
+<tr>
+<td>i3-06</td>
+<td>来源同步、经验整理、轻量索引与发布工人</td>
+<td>重解析转到更强节点，避免重建挤满小盘</td>
+</tr>
+<tr>
+<td>i3-07</td>
+<td>家庭办公与备用入口</td>
+<td>保持家庭使用用途</td>
+</tr>
+<tr>
+<td>i3-08</td>
+<td>大屏与固定语音入口候选</td>
+<td>麦克风、扬声器、回声、接口与本地能力</td>
+</tr>
+<tr>
+<td>i3-09/10</td>
+<td>机动或故障备用</td>
+<td>不因有模块就强制常开</td>
+</tr>
+<tr>
+<td>48G 第七代 i7</td>
+<td>后台项目集成与托管开发、普通处理作业</td>
+<td>完整规格与 256GB 工作区容量</td>
+</tr>
+<tr>
+<td>128G E5</td>
+<td>批量解析、索引、较大隔离环境与 CPU 工作</td>
+<td>磁盘、功耗；图文模型按实际 GPU 能力测试</td>
+</tr>
+<tr>
+<td>64G E5</td>
+<td>批处理与实验备用</td>
+<td>GTX 1070 的软件兼容性与实际吞吐，不按 8GB 推定所有模型可运行</td>
+</tr>
+<tr>
+<td>家庭 i7-10700F / 4070 Ti SUPER</td>
+<td>人工开发优先；按需高质量 OCR/语音/向量与解读实验</td>
+<td>GPU 资源锁、并发、模型驻留、关机与冷启动</td>
+</tr>
+<tr>
+<td>ProDesk i5</td>
+<td>预发布、完整项目恢复和服务接入测试</td>
+<td>测试与正式环境区分</td>
+</tr>
+<tr>
+<td>公司 HP</td>
+<td>主开发、选定项目只读上报和主动发送经验</td>
+<td>继续保留公司内容范围</td>
+</tr>
+<tr>
+<td>联想 / Mac</td>
+<td>移动开发、校对台、私人语音与辅助终端</td>
+<td>实际软件支持和终端资源</td>
+</tr>
+<tr>
+<td>QNAP</td>
+<td>书籍原件、归档、版本化备份与附件</td>
+<td>型号、容量、盘与备份策略尚待核实</td>
+</tr>
+<tr>
+<td>日本 / 广州云</td>
+<td>必要网关、有限关键异地副本 / 回调和外部监测</td>
+<td>带宽和成本；不承担全库扫描件中转</td>
+</tr>
+</tbody></table></div>
+<p>推荐继续保留家庭主力电脑的人工作用。若日后要求高质量 GPU 语音全天在线，再根据实测决定另设常驻算力或调整主力用途，并先安排家中开发机。</p>
+<p>书籍原件和备份会成为重要容量需求。256GB 小机保存活跃状态与适量缓存，大量扫描件不集中压在这些系统盘上。NAS 容量未知时先做少量代表性样本并测量，不承诺存得下预期全部书库。</p>
+</section>
+<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">17. 怎样分阶段实现与验收</h2>
+<h3 id="section-17-1" tabindex="-1">17.1 推荐建设顺序</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>重点</th>
+<th>可以交付的真实结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S0：边界与基础</td>
+<td>Core、两个人的身份、台账、收件箱、数据归属和备份</td>
+<td>家人不串数据；一个项目与一个运行服务登记正确</td>
+</tr>
+<tr>
+<td>S1：两条最小闭环</td>
+<td>原件→校对→正式原文→故事；灵感/经验→项目/Skill→复用</td>
+<td>能校对一批真实页面；一条经验能在下次任务使用</td>
+</tr>
+<tr>
+<td>S2：监督与发布</td>
+<td>一个真实托管项目、停/续/额度/验收；原文勘误与派生更新</td>
+<td>明确目标可持续推进或准确阻塞；知识变更不会静默失效</td>
+</tr>
+<tr>
+<td>S3：个性化学习与按键语音</td>
+<td>两个人的声音、风格、私人档案、学习路线与复习</td>
+<td>同内容不同讲法，不同学习记录；语音动作走同一授权</td>
+</tr>
+<tr>
+<td>S4：已有应用运维与更多来源</td>
+<td>服务只读→测试部署→验证恢复；增加外部来源</td>
+<td>交付包能进入测试服务，来源停用与更新可追踪</td>
+</tr>
+<tr>
+<td>S5：主动建议与固定终端</td>
+<td>缺口、深研候选、授权自动整理、唤醒与声纹辅助</td>
+<td>建议能解释依据，家人能在真实环境使用</td>
+</tr>
+</tbody></table></div>
+<p>阶段表示依赖顺序，不承诺固定周数。你可以把“学习优先”和“研发优先”交换，但身份、正式状态和数据边界应共同先建设。</p>
+<h3 id="section-17-2" tabindex="-1">17.2 首个知识样本建议</h3>
+<p>由你选一部经典，先取约 30 页代表性内容，并补少量另一版本。覆盖正文、注释、繁体/竖排、模糊、数字、人名、页码和版式变化。</p>
+<p>这是验证流程的试验样本，不能据此宣布整本书已经无误。样本通过后再扩大页数、书籍与并发。</p>
+<h3 id="section-17-3" tabindex="-1">17.3 必须能通过的验收场景</h3>
+<ol>
+<li>人为准备的漏页、重复页、乱码、关键疑点进入异常或待审。</li>
+<li>关键未决疑点不能绕过正式发布门槛。</li>
+<li>回答、故事和关系能定位正式原文版本及页图区域。</li>
+<li>修改原文后，相关索引、故事、课程与音频有受影响记录。</li>
+<li>外接来源失败、更新、停用和撤权在检索及缓存中生效。</li>
+<li>两个人听同故事，进度、私人回答和记忆独立。</li>
+<li>身份不明、多人说话或切档时不先播私人结果。</li>
+<li>一条灵感形成证据与方案，经本人决定后转项目。</li>
+<li>托管任务在暂停、节点断网、重复事件、额度耗尽时保持正确边界。</li>
+<li>研发交付包部署到测试环境并生成运行验证回执。</li>
+<li>一次失败经过对应恢复步骤，不能只改界面状态。</li>
+<li>经验发布为固定版本 Skill，使用反馈和限制能回到条目。</li>
+<li>GPU 关闭后隐私模式的实际可用能力明确，无隐式云端绕行。</li>
+<li>忘记个人内容后，查询与备份恢复不会把旧记忆重新启用。</li>
+<li>最小核心从备份恢复后，项目、服务、知识源和任务关系仍完整。</li>
+</ol>
+</section>
+<section class="doc-section" data-section="18"><h2 id="section-18" tabindex="-1">18. 需要你决策的十二项</h2>
+<p>2026-10-03 已确认：D1～D12 按推荐方向推进。下面保留推荐与替代方案，供未来调整时参考；D11 的真实书目、主题和项目尚未指定，原型先使用明确标注的样例。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>决策</th>
+<th>推荐</th>
+<th>其他选择与影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D1</td>
+<td>系统拆分与入口</td>
+<td>九业务域独立契约，首版模块化核心＋工人，统一门户四工作区</td>
+<td>先大整体更快但边界弱；完整微服务建设和运维更重</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>原文质量门槛</td>
+<td>重点经典逐页精校，普通资料校核；正式教学只用相应达标版本</td>
+<td>全部精校更严谨但人工量大；全部校核起步快但质量等级较低</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>神殿首批使用方式</td>
+<td>主题跨书为长期主线，保留按书精读；首个主题由你选</td>
+<td>先按一本书、人物或年代路线也可</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>首版语音路线</td>
+<td>A 分段式先落地，之后进入 C 混合</td>
+<td>B 或 C 交流体验优先，但身份、费用与后端协调需更早建设</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>每人的聊天与记忆</td>
+<td>文字策略按人确认；音频默认不留；长期记忆候选可确认、修改和遗忘</td>
+<td>全文长期归档、定期摘要或临时会话分别可选；主动整理程度按人设定</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>研发自动程度</td>
+<td>在明确目标与边界内自动实现、验证和续作；正式部署单独审批</td>
+<td>先只跟踪；或对指定测试环境和 Runbook 授予更大范围</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>第一阶段优先级</td>
+<td>共同底座后，知识样本与研发/经验闭环并行</td>
+<td>先家庭知识，或先工作管理，按你最想先获得的价值排序</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>外部知识源模式</td>
+<td>稳定核心来源本地索引，动态信息远程查询</td>
+<td>全量本地增加存储与同步；主要远程更依赖外部可用性</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>云端与模型政策</td>
+<td>每人/每域配置隐私、允许模型、出网范围和预算</td>
+<td>全本地或云端优先均可，需接受对应能力与成本边界</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>公共终端身份</td>
+<td>公共会话默认；敏感内容转私人登录终端确认</td>
+<td>可加声纹辅助，但不单独作为敏感动作认证</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>首批书目与已运行项目</td>
+<td>你指定一部经典、一主题、一已运行应用、一待开发目标</td>
+<td>暂时用公开/自有样例，只验证工程链路后再接真实材料</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>主动建议与额度</td>
+<td>主动提出解释充分的建议；新来源、付费和正式发布按策略决策</td>
+<td>可预授权选定来源、时间窗和预算内的自动补充</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-18-1" tabindex="-1">18.1 可以先这样回复</h3>
+<p>例如：“D1 按推荐；D2 经典全部精校；D3 先人物与历史；D4 先分段式；D5 文字长期归档、偏好集中确认；D6 测试环境自动、正式环境我审批；D7 知识优先。”</p>
+<p>书目、家人实际设定和已有项目资料可以在相应模块开始前补齐。V5 原型已按确认方向组织知识源管理、校对台、神殿关系与故事、缺口建议、个人管家设定、记忆审核、灵感深研、在线应用与交付部署等模拟流程。语音交互是家庭端的主要体验，桌面与手机是管理端的主要载体。</p>
+</section>
+<section class="doc-section" data-section="19"><h2 id="section-19" tabindex="-1">19. 官方依据与文档关系</h2>
+<p>本文的模块拆分、数据归属、质量门槛、主动策略、硬件安排和阶段顺序是本项目的设计建议。以下官方资料用于核实可利用的工具能力，不代表现成工具已经包含整个平台：</p>
+<ul>
+<li><a href="https://iiif.io/api/presentation/3.0/">IIIF Presentation API 3.0</a>：页图、区域和内容注释表达。</li>
+<li><a href="https://github.com/PaddlePaddle/PaddleOCR/blob/main/docs/version3.x/pipeline_usage/PP-StructureV3.en.md">PP-StructureV3</a>：文档版面与结构解析。</li>
+<li><a href="https://labelstud.io/templates/optical_character_recognition">Label Studio OCR 模板</a>：区块与转录编辑。</li>
+<li><a href="https://labelstud.io/guide/predictions">Label Studio 预标注</a>：预测模型版本和预标注格式。</li>
+<li><a href="https://qdrant.tech/documentation/search/filtering/">Qdrant 过滤</a>与<a href="https://qdrant.tech/documentation/search/hybrid-queries/">混合查询</a>：检索能力候选。</li>
+<li><a href="https://developers.openai.com/api/docs/guides/voice-agents">OpenAI Voice agents</a>、<a href="https://developers.openai.com/api/docs/guides/realtime-conversations">Realtime conversations</a>、<a href="https://developers.openai.com/api/docs/guides/realtime-mcp">Realtime with tools</a>：语音链路、会话与工具选项。</li>
+<li><a href="https://github.com/k2-fsa/sherpa-onnx">sherpa-onnx</a>：本地语音能力候选。</li>
+<li><a href="https://developers.openai.com/siwc/quickstart">Sign in with ChatGPT</a>与<a href="https://developers.openai.com/siwc/token-sharing-open-source/errors-and-recovery">额度/授权错误处理</a>：合资格应用的授权边界。</li>
+<li><a href="https://learn.chatgpt.com/docs/non-interactive-mode">Codex 非交互模式</a>、<a href="https://learn.chatgpt.com/docs/app-server">App Server</a>、<a href="https://code.claude.com/docs/en/headless">Claude Code 程序接口</a>：受控研发执行适配方向。</li>
+</ul>
+<p>V4 保留已确认的机器规格与前阶段基线；V5 补充本轮新需求、已确认的设计方向和原型范围。旧原型作为历史版本保留，V5 新原型独立交付。两个原型均使用模拟数据，不能作为真实 OCR、声纹、模型服务或全天开发监督已经部署的证明。</p>
+<ul>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV4.0%20%C2%B7%20%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%BE%E5%A4%87%E8%A7%84%E5%88%92.md">V4 总体设计与设备规划</a></li>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%20%C2%B7%20%E9%AB%98%E4%BF%9D%E7%9C%9F%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">现有高保真交互原型</a></li>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV5.0%20%C2%B7%20%E9%AB%98%E4%BF%9D%E7%9C%9F%E4%BA%A4%E4%BA%92%E5%8E%9F%E5%9E%8B.html">V5 高保真交互原型</a></li>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV5.0%20%C2%B7%20%E5%8E%9F%E5%9E%8B%E4%BD%93%E9%AA%8C%E8%AF%B4%E6%98%8E.md">V5 原型体验说明</a></li>
+</ul>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV5.0%20%C2%B7%20%E5%B9%B3%E5%8F%B0%E6%8B%86%E5%88%86%E4%B8%8E%E5%8F%8C%E7%A5%9E%E6%AE%BF%E5%86%B3%E7%AD%96%E6%96%B9%E6%A1%88.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

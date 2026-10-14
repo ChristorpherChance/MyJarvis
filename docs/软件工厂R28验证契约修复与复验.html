@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="332项测试全过，正常登录、业务和页面通过；两项历史资料缺失待补，已清理并恢复配置。">
+  <meta name="jarvis-source-sha256" content="a2b95c2bb8d98925dc857a272854eeb163566c517e86c2ac6dcbebb88d194e45">
+  <title>软件工厂 R28 验证契约修复与复验</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R28 · 完整复验结果</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82R28%E9%AA%8C%E8%AF%81%E5%A5%91%E7%BA%A6%E4%BF%AE%E5%A4%8D%E4%B8%8E%E5%A4%8D%E9%AA%8C.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 4 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">最终结果</a>
+<a class="toc-link level-3" href="#section-1-1" data-parent="1">剩余两项怎么补</a>
+<a class="toc-link level-3" href="#section-1-2" data-parent="1">平台收尾</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">本次处理什么</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">保持的要求</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">当前进展</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-12<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">实际修复 / 签名复验 / 资料缺口</p>
+        <h1 id="document-title">软件工厂 R28 验证契约修复与复验</h1>
+        <p class="subtitle">332项测试全过，正常登录、业务和页面通过；两项历史资料缺失待补，已清理并恢复配置。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-12</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>332 / 332</strong><span>实际测试通过</span></div><div class="stat"><strong>28 / 30</strong><span>原型套件通过</span></div><div class="stat"><strong>2项待原件</strong><span>历史资料检查未通过</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><h2 id="section-1" tabindex="-1">最终结果</h2>
+<p><strong>本轮已定位的代码及运行问题已修复并复验；整体验收仍未通过，剩余两项历史资料缺失。</strong> 实际运行 <code>08ce8722e39ea5750857342cdaadc939ebb26d66</code> 取得签名、非晚到终态：50检查48通过2失败；332测试全部通过；原30套原型28通过2失败。严格错误登录401按用户要求暂缓、单列，不冒计通过。正常登录、Cookie、真实项目创建/修改/归档及读回、隔离健康检查和浏览器页面检查通过。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>检查范围</th>
+<th>本轮实际结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>完整测试</td>
+<td>45个必需文件标准保持，实际332/332，无失败、跳过或未知</td>
+</tr>
+<tr>
+<td>原型与交互</td>
+<td>30套中28通过；原7套超时检查本轮通过，原120秒标准保持</td>
+</tr>
+<tr>
+<td>登录与业务</td>
+<td>正常简单登录、真实写读和页面检查通过；错误登录401负向检查暂缓</td>
+</tr>
+<tr>
+<td>历史资料</td>
+<td>两项失败均由原件缺失触发，详见下表</td>
+</tr>
+<tr>
+<td>清理与恢复</td>
+<td>实际15资源、两类标签、进程/socket/ACK/队列独立通过，再恢复原9c模板</td>
+</tr>
+<tr>
+<td>源与费用</td>
+<td>冻结608/9b源、原main及R26保持；本固定无模型复验0 Token/0美元，旧费用及未知价格保留</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-1-1" tabindex="-1">剩余两项怎么补</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>失败检查</th>
+<th>本次实际证据</th>
+<th>所需资料</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>prototype-syntax</td>
+<td>首先读取V1.1初始版时ENOENT；九个历史目录实际全缺，尚未进入Git对比；有效原Git仓库当前也不能解析e129d9c</td>
+<td>原V1.1初始版、V1.2–V1.9的msf-prototype.html及包含e129d9c的原Git仓库/备份</td>
+</tr>
+<tr>
+<td>prototype-design-boundary</td>
+<td>实际21项中20通过；唯一失败为“API示例澄清新增版本并保留旧版原文”，加载V1.8时ERR_FILE_NOT_FOUND，尚未执行版本保留断言</td>
+<td>原V1.8/msf-prototype.html；保留真实历史版本作对照</td>
+</tr>
+</tbody></table></div>
+<p>这是本次日志与文件实存核对后的结论。进一步确认原Git仓库非浅克隆、HEAD有效且可达217个提交，origin指向不存在的本地目录，没有可用网络来源；未fetch。本机AI工作区精确文件名搜索也未找到所需九版本目录，本机MSF不是Git仓库。其他机器或备份仍需要提供位置。</p>
+<p>补齐原件后固定新候选复验；当前原件未提供，不能把缺件改成通过。精确需求见<a href="../artifacts/software-factory/acceptance-r28/historical-failure-context-1791782332533-cb52e275-9a63-4d65-b4e7-756d98ab31ae.md">本轮历史失败与环境契约</a>。旧报告仅凭Git exit128的不足已追加更正：新核对先排除safe.directory与Git环境覆写、确认实际仓库/HEAD，再按闭集错误分类；旧证据保留。</p>
+<h3 id="section-1-2" tabindex="-1">平台收尾</h3>
+<p>R28-2已在112主平台与101冷备上线；101开发节点及结果汇报同步。现场另发现发布目录权限过宽，已按原权限只移除组和其他人的写权限：每节点24目录、207普通文件收窄，当前发布树可写项为0；700/600、执行位、文件内容、inode和mtime保持。前后PID和私有配置一致，无权限操作引起的重启。独立现场核对公网/LAN健康、主冷角色、817编译文件、9c模板恢复、七件工具及三处源码通过。</p>
+<p>通用计划已修订13，软件工厂资料37、建设资料30；原标准、旧失败、绑定和费用记录完整保留。修复源码仍是独立候选，尚未合入原main或发布软件工厂产品；74个完整目标、从零客户交付及全天自动研发控制器仍待后续验收。</p>
+<p>未来发布工具也已补权限收口：保留cp原权限、解包前后两次FD收窄、私有意图文件/目录持久化、marker原子发布及既有文件权限交集；不覆写正在使用的发布目录。独立真实有界cp/tar验证保留默认行为的反例与修正证据，无未解决P1/P2。本次没有为这些文档重新stage、部署或重启。全过程已追加建设记录94。</p>
+<p>证据：<a href="../artifacts/software-factory/acceptance-r28/full-readback-1791781133917-ca266c57-2f68-4196-b958-8788e2c55d61.json">签名完整报告读回</a> · <a href="../artifacts/software-factory/acceptance-r28/independent-cleanup-1791781161209-356392f9-f593-43b6-8dbd-b8df02f9d519.json">独立15资源清理</a> · <a href="../artifacts/software-factory/acceptance-r28/fixed-validation-restore-1791781199160-f9f1983c-8222-420c-b731-8239ce3c58bc.json">实际恢复</a> · <a href="../artifacts/software-factory/acceptance-r28/platform-permissions-restored-final-proof-1791781772410-f937e5af-21db-4fdd-b02d-023fb7ac94c3.json">最终平台与权限核对</a> · <a href="../artifacts/software-factory/acceptance-r28/final-result-metadata-1791781671580.json">计划与资料同步</a></p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-2" tabindex="-1">本次处理什么</h2>
+<p>R27已取得签名失败，独立清理通过后恢复了原执行模板。49检查44通过、332测试327通过、30原型28通过；原7套超时检查在101全部通过。R28继续处理剩余沙箱及正常登录/业务/前端前置失败，历史原型来源缺失单独保留。</p>
+<p>本次复用R27冻结候选：608公开文件、内容指纹<code>9b07a5115c22d14f82e04ba45b66efbc5ac04f7faa696ab84d81e33696ec7b76</code>、元数据<code>c62497e11de2bb1eeb4873b7d4d70cd8cc05974cafe4c5408d5bfbd041de43ac</code>。R28修改的是独立验证工具，不声称本次修改了产品源码或发布了软件工厂。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>已核对的原因</th>
+<th>修复安排</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>沙箱创建失败</td>
+<td>实际Docker SDK将创建参数同时写入query与body；多段Cmd产生重复query，旧代理拒绝</td>
+<td>新代理只规范化与正文相同的Image、Cmd序列和HostConfig；其他重复或不一致参数仍拒</td>
+</tr>
+<tr>
+<td>正常登录及业务写读前置失败</td>
+<td>页面已有Idempotency-Key，验收脚本漏传；运行日志未记录具体HTTP400</td>
+<td>登录、创建、修改、归档分别使用独立标识；成功登录、Cookie和真实写读标准保持</td>
+</tr>
+<tr>
+<td>历史原型原件缺失</td>
+<td>真正V1.1–V1.9及e129设计Git来源仍缺</td>
+<td>等待真实原件；不复制当前页面冒充历史，不删除失败检查</td>
+</tr>
+</tbody></table></div>
+<p>真实SDK公开函数的隔离捕获共24个请求，明确重复参数发生在create阶段；HostConfig回显为与正文相同的JSON。此证据没有调用Docker、发HTTP请求或启动产品，不替代后续真实完整复验。<a href="../artifacts/software-factory/acceptance-r27/actual-normal-service-sdk-capture-1791778139910-65c66ffe-183c-48a1-9c0d-1bdc20ccc058.json">请求契约证据</a></p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-3" tabindex="-1">保持的要求</h2>
+<p>原45个必需测试文件、30套原型、90%行和80%分支覆盖、原单项120秒及全部真实沙箱行为断言保持。只暂缓错误凭据必须HTTP401的负向检查，单列不计通过；正常简单登录、HttpOnly/SameSite Cookie、真实项目创建/修改/归档和浏览器仍需通过。</p>
+<p>新R28入口、配置、证据、collector、broker/control及运行socket使用独立名字。旧六工具和R27工具/失败报告保留；使用明确有限入口和同一固定源，不开放任意root程序或机器。每次实际运行先绑定task/run及API/SQL冻结模板，终态签名与实际报告相互核对；独立检查15精确资源、两类Docker标签、进程身份、socket、ACK和队列后才恢复原record-only模板。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-4" tabindex="-1">当前进展</h2>
+<p>以下92/91/90为执行时的历史快照，当前结果以上面的“最终结果”为准。</p>
+<p><strong>最新：R28-2已上线，本轮单次完整复验实际运行中。</strong> 112主平台、101冷备及101独立开发节点已更新；原私有配置保持。实际task <code>bd55cfd8-33bb-4699-8de5-d43b73e46642</code>、run <code>08ce8722e39ea5750857342cdaadc939ebb26d66</code>，API/SQL固定模板898及通用计划12已核对，决策00800219实施修订2。起动末尾观察状态变化，后续只读check/reader确认running，未重派；旧冲突回执保留，具体转态原因未定论。</p>
+<p>04:48:51实际阶段证据：server317和shared15，共332项测试全部通过，无失败/跳过。原型继续执行，syntax历史缺件仍失败。正常登录、业务读写和实际页面尚待；还没有签名终态、本attempt独立清理或9c恢复，用量保持未知。建设记录92；以下91与90为各自历史快照。</p>
+<p><strong>最新：七件验证工具已在101实际安装并独立读回，准备正式协议R28-2发布。</strong> 七SHA、visudo、旧工具/源/报告、9c模板及ACK空闲核对通过，派发器只读ready且task/run仍为空。R28-1平台包仅预置，发现展示规则未同步后保留未激活；新严格R28展示分支绑定实际SQLite冻结模板、签名非晚到结果、源和完整有限代理合同，作者20、独立新10及此前API/web52检查通过。原74目标仍未验收。建设记录91，以下准备阶段内容保留为历史状态。</p>
+<p>方案已登记项目决策<code>00800219-02b7-4efd-ac5a-8768abb611d9</code>，选定修订1；通用计划修订11。工具及平台的窄入口扩展正在本地验证，尚未安装R28验证入口或派发新复验。本地测试不作为软件工厂产品用例累计。</p>
+<p>已完成的本地范围分别为broker44、collector/preparer9、核心协议13、root工具33；生成Python另做33项独立正负检查，host/installer另做5/4独审。新增root目录及工具只在JS约束的遗漏已在安装前发现并修正，实际Python在首次helper读写前约束完整scope、两个新工具SHA及固定源指纹/608/元数据。原费用恢复点9c和旧工具保护保持。实际只读101安装前检查为ready、尚无新安装；建设记录90保留各自证据与验证边界。</p>
+<p>费用和Token只记录，不设消费上限；终态确认前本轮用量未知。历史金额与缺价格调用保留。R28完整检查通过也不能替代全部74目标、从零客户交付、生产使用或通用全天自动研发控制器验收。</p>
+<p><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82R27%E9%9B%86%E4%B8%AD%E4%BF%AE%E5%A4%8D%E4%B8%8E%E5%A4%8D%E9%AA%8C.html">R27完整结果及清理恢复</a> · <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.html">建设日志</a> · <a href="../artifacts/software-factory/acceptance-r28/scope-metadata-sync.json">R28范围与计划回执</a></p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82R28%E9%AA%8C%E8%AF%81%E5%A5%91%E7%BA%A6%E4%BF%AE%E5%A4%8D%E4%B8%8E%E5%A4%8D%E9%AA%8C.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

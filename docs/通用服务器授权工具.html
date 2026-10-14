@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>通用服务器授权工具 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 工具与适用范围</a><a href="#section-2">2. 第一步：填写服务器清单</a><a href="#section-3">3. 第二步：在管理电脑生成授权包</a><a href="#section-4">4. 第三步：在服务器添加公钥</a><a href="#section-5">5. 第四步：验证与以后连接</a><a href="#section-6">6. 当前联想与新增机器的用法</a><a href="#section-7">7. 检查与维护</a></nav><h1>贾维斯 · 通用服务器授权工具</h1>
+<p>更新：2026-10-07。将三台服务器的专用授权脚本整理成可复用工具，适用于新增Linux服务器、新管理电脑和访问恢复。</p>
+<p><b>每台管理电脑生成自己的密钥；服务器只接收公钥。重复操作会复用本机已有密钥，并保留服务器原有授权。</b> 不需要把任何密码或私钥交给AI。</p>
+<p>已新增<a href="服务器权限选择与授权.html">服务器权限选择器</a>：普通登录、巡检、应用运维、完整管理需密码、完整管理免密码。当前三台superopen实测均已有完整免密sudo；权限按Linux账号生效，不按单把SSH公钥生效。</p>
+<h2 id="section-1">1. 工具与适用范围</h2>
+<div class="table-wrap"><table>
+<tr><td>文件</td><td>用途</td></tr>
+<tr><td><a href="../scripts/server-access.mjs">server-access.mjs</a></td><td>读取服务器清单、核对主机指纹、准备本机密钥、生成公钥授权包和验证登录</td></tr>
+<tr><td><a href="../scripts/authorize-ssh-key.sh">authorize-ssh-key.sh</a></td><td>通用Linux授权脚本，可直接传入公钥文件，也可生成每台服务器专用脚本</td></tr>
+<tr><td><a href="../config/servers.example.json">servers.example.json</a></td><td>三台已核实服务器的公开连接信息示例；新增服务器继续添加条目</td></tr>
+<tr><td><a href="../scripts/test-server-access.mjs">专项测试</a></td><td>密钥复用、指纹拒绝、脚本追加、限制保留与连接核对验证</td></tr>
+</table></div>
+<p>管理电脑使用Node.js及OpenSSH客户端，可在Windows、Linux或macOS运行生成工具。服务器端脚本面向Linux，需要Bash、OpenSSH的ssh-keygen及常用系统工具；它不替服务器安装SSH或修改防火墙。Windows与Git Bash已实际验证，其他管理系统保留相同流程，仍需在对应系统实测。</p>
+<p>不需要安装本项目的npm依赖。单独携带两个工具文件和清单，也能使用。Windows通过Node入口运行，不需要执行.ps1或调整系统脚本执行策略。</p>
+<h2 id="section-2">2. 第一步：填写服务器清单</h2>
+<p>可直接在<a href="服务器权限选择与授权.html">权限选择器</a>中选择已有服务器或手动填写新服务器，补齐可信主机指纹后下载连接清单。下载清单的user是选定的授权账号，即新电脑以后要登录的服务器账号。也可复制<a href="../config/servers.example.json">示例清单</a>为config/servers.json，保留需要授权的服务器。新增机器时填写：</p>
+<div class="table-wrap"><table>
+<tr><td>字段</td><td>示例或说明</td></tr>
+<tr><td>id</td><td>i3-backup；唯一编号，只使用字母、数字、下划线或短横线</td></tr>
+<tr><td>host</td><td>实际IP或域名，支持IPv4、IPv6和自定义SSH端口</td></tr>
+<tr><td>port</td><td>SSH端口，默认22</td></tr>
+<tr><td>user</td><td>实际Linux登录用户，如superopen</td></tr>
+<tr><td>hostname</td><td>服务器实际主机名；填写后授权和连接均会检查</td></tr>
+<tr><td>fingerprint</td><td>真实ED25519主机SHA256指纹，必须从可信渠道取得</td></tr>
+</table></div>
+<p>首次安装服务器时，可在服务器本机终端读取：</p>
+<pre><code>whoami
+hostname
+ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub -E sha256</code></pre>
+<p>清单只保存连接信息，不接受密码、私钥等额外字段。扫描到的主机公钥必须与事先填写的指纹一致；不自动信任首次扫描到的陌生主机。</p>
+<p>现有三台示例信息来自已核对的<a href="../服务器硬件与连接清单.md">服务器清单</a>。它们的IP使用DHCP，地址变化后更新host并重新准备；指纹不一致时先查清原因，不跳过检查。</p>
+<h2 id="section-3">3. 第二步：在管理电脑生成授权包</h2>
+<p>在项目目录运行，CLIENT换成这台管理电脑的标识，例如office-hp、home-pc、lenovo：</p>
+<pre><code>node scripts/server-access.mjs prepare --inventory config/servers.json --output artifacts/server-access/CLIENT --client-id CLIENT</code></pre>
+<p>默认密钥保存在本机用户目录的.ssh/jarvis下；每台服务器使用独立的id_ed25519_jarvis_编号。现有密钥不会重新生成或覆盖；私钥与公钥不匹配、只剩公钥、指纹错误等情况会停止并说明原因。</p>
+<p>Windows私钥权限限制为当前用户与SYSTEM；Linux/macOS私钥为600，新建私有目录为700。工具只整理选中的专用私钥，不修改全局SSH配置或整个.ssh目录。新建无人值守密钥使用空口令，并以本机文件权限保护。</p>
+<p>生成目录包含：</p>
+<div class="table-wrap"><table>
+<tr><td>文件</td><td>内容</td></tr>
+<tr><td>jarvis-编号.pub</td><td>本机给该服务器的公钥</td></tr>
+<tr><td>authorize-编号.sh</td><td>已填入用户、主机名和公钥的独立授权脚本；UTF-8、LF换行</td></tr>
+<tr><td>ssh-config</td><td>本机独立SSH连接配置，使用jarvis-编号别名</td></tr>
+<tr><td>known_hosts</td><td>已与清单指纹核对的ED25519主机公钥</td></tr>
+<tr><td>bundle.json</td><td>生成时间、公钥指纹、连接信息与文件完整性清单；不含私钥</td></tr>
+</table></div>
+<p>每次重新准备都会核对服务器指纹并更新本机授权包。工具不会自动在服务器添加授权，也不会安装软件或改变sudo权限。</p>
+<h2 id="section-4">4. 第三步：在服务器添加公钥</h2>
+<p>把生成的authorize-编号.sh交给能登录该服务器的人。用清单中的用户登录，在服务器终端执行：</p>
+<pre><code>bash authorize-编号.sh</code></pre>
+<p>专用脚本已经包含完整公钥，无需再粘贴公钥参数；也可以打开脚本，将其完整内容粘贴到服务器终端。不要使用sudo。</p>
+<p>若使用通用脚本和单独公钥文件：</p>
+<pre><code>bash authorize-ssh-key.sh --user superopen --key-file jarvis-i3-backup.pub</code></pre>
+<p>已有访问权的管理电脑也能代为授权。下面以它已经具有jarvis-112连接配置为例，PATH替换为这台已授权电脑的配置路径，脚本文件来自新管理电脑生成的公钥包：</p>
+<pre><code>scp -F PATH/ssh-config authorize-112.sh jarvis-112:~/jarvis-authorize-new-client.sh
+ssh -F PATH/ssh-config jarvis-112 'bash ~/jarvis-authorize-new-client.sh'</code></pre>
+<p>这里传送的只有公钥授权脚本。首次没人能SSH登录的新服务器，用服务器本机终端，或由你在交互终端正常登录后执行；工具不读取或保存登录密码。</p>
+<p>授权结果为status=added或status=already-present。相同密钥即使注释变化也不会再追加；已有from=、command=等访问限制保留，不另加不受限制的重复授权。已有文件末尾没有换行会补齐分隔，并使用锁避免同时写入。</p>
+<p>用户或主机名不符、非法公钥、路径为符号链接、授权文件存在硬链接或所有权不符时会拒绝。正常执行仅追加当前账号的authorized_keys并整理其SSH目录权限，不覆盖旧公钥。</p>
+<h2 id="section-5">5. 第四步：验证与以后连接</h2>
+<p>回到生成授权包的管理电脑：</p>
+<pre><code>node scripts/server-access.mjs verify --output artifacts/server-access/CLIENT</code></pre>
+<p>验证使用固定指纹、非交互免密登录和实际用户/主机名核对；只读，不修改服务器。结果保存为同目录verification.json。登录失败会显示具体问题，不回退为密码登录或关闭主机指纹校验。</p>
+<p>以后直接使用本机生成的独立配置：</p>
+<pre><code>ssh -F artifacts/server-access/CLIENT/ssh-config jarvis-112</code></pre>
+<p>也可使用npm run server:access -- prepare ...或npm run server:access -- verify ...。授权包中的ssh-config含本机绝对路径：换电脑需由新电脑重新生成，不能将旧电脑私钥复制过去。</p>
+<h2 id="section-6">6. 当前联想与新增机器的用法</h2>
+<p>当前联想已有三台专用密钥，位于.ssh根目录。使用以下命令复用原密钥；三台服务器不用再次授权：</p>
+<pre><code>node scripts/server-access.mjs prepare --inventory config/servers.example.json --output artifacts/server-access/lenovo --client-id lenovo --identity-dir ~/.ssh
+node scripts/server-access.mjs verify --output artifacts/server-access/lenovo</code></pre>
+<p>通用版另建授权包，不覆盖<a href="../artifacts/server-connection-qa/ssh-config">原连接配置</a>。当前本机生成包见<a href="../artifacts/server-access/lenovo/ssh-config">连接配置</a>、<a href="../artifacts/server-access/lenovo/bundle.json">授权清单</a>与<a href="../artifacts/server-access/lenovo/verification.json">实连结果</a>。</p>
+<p>以后新增i3：把真实连接信息加入config/servers.json，再执行准备命令，给i3运行对应脚本，最后验证。其他管理电脑访问现有服务器：在那台电脑重新准备自己的包，将新公钥脚本授权到需要访问的服务器即可。</p>
+<p>一台服务器可以授权多台管理电脑，家庭平台主备角色不受影响。这些授权仅用于SSH管理，不会自动赋予贾维斯成员身份、执行节点身份或额外sudo权限。</p>
+<h2 id="section-7">7. 检查与维护</h2>
+<pre><code>npm run test:server-access</code></pre>
+<p>专项测试使用隔离目录与临时密钥，实际执行密钥生成及Bash授权文件操作；连接边界使用隔离响应。现有三台服务器另做真实只读登录验证，报告见<a href="../artifacts/server-access-qa/report.json">工具验收记录</a>。测试未向服务器添加新公钥。</p>
+<p>本次7项专项测试全部通过，失败与跳过均为0。通用版已复用联想原密钥，101、112、116三台实际登录均通过，原私钥字节保持不变；三台无需重复授权。</p>
+<p>管理电脑丢失或退役时，由仍有管理权限的人按该电脑公钥指纹移除服务器对应授权；不删除其他人的公钥。授权锁超时先检查是否有操作正在运行，确认没有后才清理遗留锁。工具不自动破坏旧锁，也不提供批量删除全部授权的操作。</p>
+<p>本次完成SSH授权工具。硬件巡检所需的受限sudo、平台安装、主备同步和房间终端部署仍按各自计划处理。</p></main></html>

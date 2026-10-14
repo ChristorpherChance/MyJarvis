@@ -1,0 +1,11 @@
+// Pure extension; apply after model-routing contract, root owns merged OpenAPI.
+module.exports=function applyConversationRoutingContract(contract){
+ const s=contract.components.schemas,ref=name=>({$ref:'#/components/schemas/'+name}),integer=(min,max)=>({type:'integer',minimum:min,maximum:max});
+ const selection=s.PiModelSelection?ref('PiModelSelection'):{type:'object',additionalProperties:false,required:['provider','model'],properties:{provider:{type:'string',minLength:1,maxLength:100},model:{type:'string',minLength:1,maxLength:200}}};
+ const config={type:'object',additionalProperties:false,required:['enabled','fast','advanced','transition','transitionAfterMs','transitionTimeoutMs'],properties:{enabled:{type:'boolean'},fast:{anyOf:[selection,{type:'null'}]},advanced:{anyOf:[selection,{type:'null'}]},transition:{type:'boolean'},transitionAfterMs:integer(0,5000),transitionTimeoutMs:integer(1000,15000)}};
+ s.PiConversationRouting=config;
+ s.PiConversationRoutingInput={type:'object',additionalProperties:false,required:['expectedVersion','conversation'],properties:{expectedVersion:integer(0,2147483647),conversation:{...config,required:[]}}};
+ for(const name of ['PiModelSettings','PiDefaultModelResult']){const routing=s[name]?.properties?.routing;if(!routing?.properties)throw Error('Apply model routing contract before conversation routing');routing.properties.conversation=ref('PiConversationRouting');routing.required??=[];if(!routing.required.includes('conversation'))routing.required.push('conversation');}
+ contract.paths['/api/settings/pi/conversation-routing']={put:{operationId:'pi_put_conversation_routing',summary:'Admin configure fast/advanced conversation models and independent bounded waiting acknowledgement',tags:['Pi'],security:[{SessionCookie:[]}],'x-implementation-status':'implemented',requestBody:{required:true,content:{'application/json':{schema:ref('PiConversationRoutingInput')}}},responses:{200:{description:'Versioned conversation routing; global default and other scenarios unchanged',content:{'application/json':{schema:ref('PiModelSettings')}}},400:{description:'Strict input or invalid selected model'},401:{description:'Administrator login required'},409:{description:'Busy conversation or stale routing revision'},503:{description:'Selected model/auth unavailable'}}}};
+ return contract;
+};

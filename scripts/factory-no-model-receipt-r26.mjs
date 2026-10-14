@@ -1,0 +1,2 @@
+/** Fixed no-model receipt; actual test results come from the separate verifier. */
+process.stdout.write(JSON.stringify({type:'execution.result',summary:'当前主线固定无模型测试入口；等待独立验证结果',needs_more_work:false,artifacts:[],usage:{inputTokens:0,outputTokens:0,cacheReadTokens:0,cacheWriteTokens:0,totalTokens:0,usageComplete:true,provider:'fixed-test',model:'no-model',costUSD:0,costKind:'provider-reported'}})+'\n');

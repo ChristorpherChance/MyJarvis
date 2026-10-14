@@ -1,0 +1,11 @@
+/* Shared finishing touches: keep the sidebar and header as the single entry system. */
+html[data-j7-theme] #j7-dock{display:none!important}
+html[data-j7-theme] #sidebar .nav-item,
+html[data-j7-theme] #sidebar .j14-nav-items .nav-item{font-size:13px}
+html[data-j7-theme] #sidebar .j14-group-toggle{font-size:12px}
+html[data-j7-theme] #sidebar .j7-nav-fixed .nav-item{font-size:11px}
+html[data-j7-theme] .j7-directory>header{padding-bottom:12px}
+@media(max-width:760px){
+ html[data-j7-theme] #sidebar .nav-item,
+ html[data-j7-theme] #sidebar .j14-nav-items .nav-item{font-size:14px}
+}

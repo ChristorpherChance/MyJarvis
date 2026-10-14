@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {freshDemo,reduceDemo,snapshotForProfile} from '../apps/web/src/demo/model';
+test('导出只含本人的私人正文及允许访问的业务范围',()=>{const d=freshDemo();d.v5.vm.memories.wife.push({id:'secret',text:'不可导出的妻子私人正文'});d.chat.wife.push({role:'user',text:'不可导出的妻子私人对话'});d.v5.research.inbox.push({id:'private',scope:'private',owner:'wife',text:'不可导出的妻子收件'});d.knowledge.materials.push({id:'private-book',scope:'private',owner:'wife',text:'不可导出的妻子原件'});const exported=JSON.stringify(snapshotForProfile(d));assert(!exported.includes('不可导出的妻子'));assert.deepEqual(JSON.parse(exported).chat.me,d.chat.me);assert.equal(d.chat.wife.at(-1)?.text,'不可导出的妻子私人对话')});
+test('平台设置不能绕过监督停机与预算验证',()=>{let d=freshDemo();assert.throws(()=>reduceDemo(d,{type:'settings.save',payload:{dailyBudget:-1}}),/预算/);d=reduceDemo(d,{type:'settings.save',payload:{emergency:true,reason:'测试停机'}});assert(!d.tasks.some(t=>t.mode!=='observe'&&t.status==='running'));assert(d.tasks.some(t=>t.mode==='observe'&&t.status==='running'));assert(d.tasks.every(t=>!t.lease));assert.equal(d.settings.emergency,true)});
+test('切换档案取消旧人的待确认意图而不触发业务执行',()=>{let d=freshDemo();d=reduceDemo(d,{type:'chat.plan',payload:{profile:'me',text:'重新运行开发任务',type:'development',objectId:d.tasks[0].id}});const count=d.tasks.length;d=reduceDemo(d,{type:'profile.select',payload:{id:'wife'}});assert.equal(d.v5.vm.pendingCommands.at(-1).status,'cancelled');assert.equal(d.tasks.length,count);assert.equal(d.v5.vm.nowPlaying,null)});
+

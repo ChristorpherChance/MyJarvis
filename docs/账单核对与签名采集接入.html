@@ -1,0 +1,105 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>账单核对与签名采集接入 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 在哪里使用</a><a href="#section-2">2. 账单准备与核对</a><a href="#section-3">3. 日志来源配置</a><a href="#section-4">4. GPU与功耗读数</a><a href="#section-5">5. 本轮接口清单</a><a href="#section-6">6. 发布与验证</a><a href="#section-7">7. 后续仍需接入</a></nav><h1>贾维斯 · 账单核对与签名采集接入</h1>
+<p>更新：2026-10-07。本轮先实现不依赖供应商账户或新硬件、可以实际验证的接口：<b>账单核对11项，日志与硬件采集5项，共16项</b>。新增页面沿用完整平台入口和十套主题。</p>
+<p>接口契约累计323个操作，均已核对实际注册处理器；755个Schema、2757个本地引用通过检查。接口有实现不等于第三方服务和实体设备已经接通。本轮构建编号为20261006-prepared，实际发布结果以<a href="../artifacts/prepared-runtime-qa/report.json">验收报告</a>为准。</p>
+<h2 id="section-1">1. 在哪里使用</h2>
+<div class="table-wrap"><table>
+<tr><td>入口</td><td>本轮新增内容</td></tr>
+<tr><td>系统设置 → 运行引擎 → 费用治理</td><td>账单预览、导入、核对、人工关联、作废、核对记录与实际用量</td></tr>
+<tr><td>系统设置 → 运行引擎 → 节点执行</td><td>日志与硬件来源配置，默认关闭</td></tr>
+<tr><td>运行服务 → 服务详情 → 日志</td><td>已授权节点实际读取的服务日志，分页查看</td></tr>
+<tr><td>设备管理 → 设备详情 → 运行趋势</td><td>CPU、内存、GPU、功耗；未采集保留未知</td></tr>
+<tr><td>管理者与贾维斯对话</td><td>Pi只读查询账单核对概况和真实运行趋势</td></tr>
+</table></div>
+<p>账单与原始日志只有实际登录的管理者本人可查。切换页面展示档案不改变身份。管理员与家庭成员Cookie并存时，实际成员身份优先，不能借管理员Cookie越权读取。</p>
+<h2 id="section-2">2. 账单准备与核对</h2>
+<p>先把供应商导出的明细整理为标准CSV或JSON数组，填入供应商、账户标识、账单编号、币种、来源文件及账期。页面日期按北京时间处理，结束日期不包含当天；明细时间需携带ISO时区。</p>
+<pre><code>id,at,model,amount,usageId,providerRequestId,totalTokens
+line-1,2026-10-06T08:00:00+08:00,实际模型名,0.150000,,供应商请求号,12</code></pre>
+<p>金额使用十进制字符串，支持负数退款和抵扣，最多6位小数。CSV必填id、at、model、amount，其余列可留空。单次最多2000行，页面文件上限500KB，导入HTTP请求上限1MiB。JSON方式使用同样字段。</p>
+<p>流程：预览 → 确认冻结的内容 → 导入 → 按明确用量ID核对 → 人工处理未匹配项。页面可以查阅本账期的实际用量，查看原币种金额、估算USD、差异及核对记录。账单列表支持继续加载更早记录；详细表格先展示100行，人工核对仍可选择全部明细。</p>
+<p>只有明确填写且与供应商、模型、账期一致的本平台usageId，才会自动关联实际SDK用量。供应商providerRequestId单独保留，不猜测它等于本平台usageId。人工关联或解除需要说明；同一用量不能被两条账单重复占用。作废需要原因，保留原账单和核对证据，不能用重新导入覆盖已作废账单。</p>
+<p>提交编号和内容指纹用于重试去重，版本防止覆盖他人的核对结果。重复请求返回当前权威记录，不恢复旧版本。审计记录保留动作、版本、关联说明或作废原因，不重复复制整个账单。</p>
+<p>USD账单与USD估算费用比较；CNY、EUR保持原金额，明确显示不可直接比较。按币种分别汇总，最近500张的概况会标明是否截断。使用整数微单位计算账单金额，避免浮点累积误差。原SDK使用账本、预算预留与未知费用保持各自实际含义，导入不会修改它们。</p>
+<p><b>当前实现标准明细导入与核对。供应商API自动下载、账单真伪认证、自动换汇和付款尚未接入。</b></p>
+<h2 id="section-3">3. 日志来源配置</h2>
+<p>先登记真实设备和服务，配对节点并授予service-logs能力。在中央配置来源，明确同意后开启。来源绑定固定机器、服务和绝对文件路径；不能从上报接口临时指定任意路径。</p>
+<p>已有配对票据接口POST /api/v1/execution/tickets可用capabilities:[&quot;service-logs&quot;,&quot;telemetry&quot;]开启两类采集能力；同时承担开发执行时保留原固定执行器ID。页面生成票据的逗号分隔输入框也填写这些能力名。票据仅返回一次，放入节点私有配置，不写入日志或项目文档。</p>
+<pre><code>{
+  &quot;expectedVersion&quot;: 0,
+  &quot;logSources&quot;: [{
+    &quot;id&quot;: &quot;jarvis-api-log&quot;,
+    &quot;serviceId&quot;: &quot;实际服务ID&quot;,
+    &quot;machineId&quot;: &quot;实际机器ID&quot;,
+    &quot;path&quot;: &quot;D:\\Jarvis\\logs\\api.log&quot;,
+    &quot;enabled&quot;: true,
+    &quot;consent&quot;: true,
+    &quot;retentionDays&quot;: 7
+  }],
+  &quot;hardwareSources&quot;: []
+}</code></pre>
+<p>更新时使用GET读到的当前version作为expectedVersion，PUT提交完整配置，不是增量合并。来源ID不能重复，每类最多100个。公司电脑或只读设备不允许采集服务原始日志。</p>
+<p>节点本地还必须明确允许同一个文件；中央配置不会自行添加本地授权目录：</p>
+<pre><code>{
+  &quot;workspaceRoots&quot;: [&quot;D:\\Jarvis\\logs&quot;, &quot;D:\\Jarvis\\metrics&quot;],
+  &quot;serviceLogs&quot;: [{
+    &quot;sourceId&quot;: &quot;jarvis-api-log&quot;,
+    &quot;path&quot;: &quot;D:\\Jarvis\\logs\\api.log&quot;
+  }],
+  &quot;hardwareReadings&quot;: []
+}</code></pre>
+<p>这是已有节点配置的扩展片段，保留原apiUrl、machineId、配对身份和templates。节点需要升级运行器；已有已配对节点若没有service-logs能力，需重新签发所需能力并配对。固定文件须位于本地允许目录，符号链接和越界路径拒绝读取。</p>
+<pre><code>node --import tsx apps/agent/src/index.ts --config D:/Jarvis/node.json</code></pre>
+<p>默认从新配置文件末尾开始跟随，避免初次上传整个历史文件；明确设置fromStart:true才从头读取。节点每轮读取最多64KiB，仅上传完整UTF-8行，超长行整行跳过；中央确认后才推进文件偏移。初始流编号在发送前保存，文件轮转或截断使用新流编号；断线重试按流和偏移去重。</p>
+<p>客户端和中央都执行脱敏，覆盖密码、令牌、私钥、Cookie、Authorization等常见形式。日志页面显示服务器接收时间，不将它冒充日志原始事件时间。签名证明是当前授权节点的上报，不能证明节点上的应用绝无篡改。</p>
+<p>每来源最多保存5000行，留存1–30天；取消来源不会延长既有过期时间，缩短留存会及时清理。中央每30秒清理一次。去重回执保留30天，仅含必要指纹及回执信息。</p>
+<h2 id="section-4">4. GPU与功耗读数</h2>
+<p>中央已有CPU、内存的实际操作系统采样。新增GPU与功耗只接受当前授权来源、匹配配置版本和新鲜采样时间的签名节点读数；未配置、过期或缺失保持未知，不能根据CPU估算瓦数。</p>
+<p>中央hardwareSources示例：</p>
+<pre><code>[
+  {&quot;id&quot;:&quot;gpu-sensor&quot;,&quot;machineId&quot;:&quot;实际机器ID&quot;,&quot;field&quot;:&quot;gpuPercent&quot;,&quot;adapterId&quot;:&quot;实际GPU采集器ID&quot;,&quot;enabled&quot;:true},
+  {&quot;id&quot;:&quot;power-meter&quot;,&quot;machineId&quot;:&quot;实际机器ID&quot;,&quot;field&quot;:&quot;powerWatts&quot;,&quot;adapterId&quot;:&quot;实际电表采集器ID&quot;,&quot;enabled&quot;:true}
+]</code></pre>
+<p>同一机器的同一指标只能有一个当前来源。节点需要telemetry能力，本地hardwareReadings示例：</p>
+<pre><code>[
+  {&quot;sourceId&quot;:&quot;gpu-sensor&quot;,&quot;field&quot;:&quot;gpuPercent&quot;,&quot;path&quot;:&quot;D:\\Jarvis\\metrics\\gpu.json&quot;},
+  {&quot;sourceId&quot;:&quot;power-meter&quot;,&quot;field&quot;:&quot;powerWatts&quot;,&quot;path&quot;:&quot;D:\\Jarvis\\metrics\\power.json&quot;}
+]</code></pre>
+<p>分别由真实采集器生成小型UTF-8 JSON文件，单文件上限4096字节：</p>
+<pre><code>{&quot;value&quot;:36.5,&quot;unit&quot;:&quot;%&quot;,&quot;adapterId&quot;:&quot;实际GPU采集器ID&quot;,&quot;measuredAt&quot;:&quot;当前采样ISO时间&quot;}</code></pre>
+<pre><code>{&quot;value&quot;:42.3,&quot;unit&quot;:&quot;W&quot;,&quot;adapterId&quot;:&quot;实际电表采集器ID&quot;,&quot;measuredAt&quot;:&quot;当前采样ISO时间&quot;}</code></pre>
+<p>GPU范围0–100，功耗非负且小于10000000W；单位、adapterId与中央配置必须对应。允许最多30秒旧读数或10秒时钟超前，真实0值可以入库，过期不会变成0。坏文件或缺失来源不影响普通CPU/内存心跳。</p>
+<p>现有7天原始采样、90天汇总、趋势时间窗口和空值策略继续适用。Pi运行趋势只读工具也显示实际GPU/功耗或未知值。</p>
+<p><b>本轮完成文件读取、签名传输、来源校验、存储和趋势展示，尚未替实际机器安装GPU传感器或智能电表采集器。</b></p>
+<h2 id="section-5">5. 本轮接口清单</h2>
+<div class="table-wrap"><table>
+<tr><td>方法</td><td>路径</td><td>用途</td></tr>
+<tr><td>GET</td><td>/api/runtime/governance/billing/template</td><td>CSV字段模板</td></tr>
+<tr><td>GET</td><td>/api/runtime/governance/billing/ledger</td><td>查询实际SDK用量</td></tr>
+<tr><td>GET</td><td>/api/runtime/governance/billing/summary</td><td>原币种核对概况</td></tr>
+<tr><td>POST</td><td>/api/runtime/governance/billing/preview</td><td>解析、校验、冻结指纹，无业务写入</td></tr>
+<tr><td>GET</td><td>/api/runtime/governance/billing/imports</td><td>分页账单列表</td></tr>
+<tr><td>POST</td><td>/api/runtime/governance/billing/imports</td><td>确认导入</td></tr>
+<tr><td>GET</td><td>/api/runtime/governance/billing/imports/{id}</td><td>当前账单及关联差异</td></tr>
+<tr><td>GET</td><td>/api/runtime/governance/billing/imports/{id}/events</td><td>核对记录</td></tr>
+<tr><td>POST</td><td>/api/runtime/governance/billing/imports/{id}/reconcile</td><td>依据明确平台用量ID关联</td></tr>
+<tr><td>PUT</td><td>/api/runtime/governance/billing/imports/{id}/lines/{lineId}/link</td><td>人工关联或解除</td></tr>
+<tr><td>POST</td><td>/api/runtime/governance/billing/imports/{id}/void</td><td>留证作废</td></tr>
+<tr><td>GET</td><td>/api/v1/execution/observations</td><td>管理者读取来源</td></tr>
+<tr><td>PUT</td><td>/api/v1/execution/observations</td><td>管理者版本化更新来源</td></tr>
+<tr><td>GET</td><td>/api/v1/execution/services/{id}/logs</td><td>管理者分页读取原始日志</td></tr>
+<tr><td>POST</td><td>/api/v1/agents/{agentId}/observations</td><td>签名节点获取本人配置</td></tr>
+<tr><td>POST</td><td>/api/v1/agents/{agentId}/service-logs</td><td>签名节点上传固定文件行</td></tr>
+</table></div>
+<p>现有POST /api/v1/agents/{agentId}/heartbeat扩展observationVersion、metricSources、metricMeasuredAt及gpuPercent、powerWatts，无需另建一套心跳。签名节点请求继续绑定Ed25519身份、方法、路径、完整正文、时间和nonce；撤销或重放请求会拒绝。</p>
+<p>Pi新增原生只读工具jarvis_billing_summary。执行前重新验证当前管理员身份，仅返回概况，不返回账户标识和账单编号，不产生付款或核对写操作。</p>
+<p>具体严格请求和响应字段见<a href="openapi-v1-planned.json">OpenAPI</a>。标准账单接口直接返回对象；/api/v1采集接口继续使用已有data响应封装。</p>
+<h2 id="section-6">6. 发布与验证</h2>
+<p>使用隔离测试目录、真实HTTP、SQLite和临时实际文件验证节点传输及页面流程；测试中未读取真实供应商账户、调用收费模型、写入生产账单或开启真实采集源。测试读数是隔离文件样本，不冒充实体传感器测量。</p>
+<p>本轮后台244项、专项页面5项验证；构建在独立.dist-next目录完成，发布时先核对当前常驻进程，再暂停后台、完整备份业务库与执行库、核验哈希和语音密钥，随后替换构建并验证恢复。具体最终结果及备份位置见<a href="../artifacts/prepared-runtime-qa/report.json">发布报告</a>。</p>
+<pre><code>npm run build:stage
+node scripts/upgrade-local-platform.mjs 20261006-prepared
+npm run service:status</code></pre>
+<p>仅适用于本项目已运行的私有常驻进程。当前仍是Windows当前用户登录后常驻，注销、睡眠、关机会中断访问；48GB生产中心、可信HTTPS和各房间实体设备尚未部署。</p>
+<h2 id="section-7">7. 后续仍需接入</h2>
+<p>专业中文唤醒、声纹登记与撤销验证；离线Web Push和邮件/短信投递适配器；供应商API自动下载与请求号对照；真实GPU、电表采集器；实际模型和房间收音播放验收；48GB生产迁移与开机服务。</p>
+<p>上述功能涉及实际引擎、账户或设备，仍按真实配置逐项接入与验收。完整前端和接口登记覆盖范围不能替代现场测试。</p></main></html>

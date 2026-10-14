@@ -1,0 +1,329 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>服务器权限选择与授权 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="http://127.0.0.1:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 现在是否拥有全部权限</a><a href="#section-2">2. 五种可选档案</a><a href="#section-3">3. 不同电脑想要不同权限怎么办</a><a href="#section-4">4. 各字段怎么填，其他机器怎么用</a><a href="#section-5">5. 如何授予完整权限或其他档案</a><a href="#section-6">6. 工具会改哪些文件</a><a href="#section-7">7. 实际审计与验收</a><a href="#section-8">8. 我的推荐</a></nav><h1>贾维斯 · 服务器权限选择与授权</h1><style>
+.permission-picker{margin:26px 0;padding:25px;border:1px solid #365264;border-radius:16px;background:linear-gradient(145deg,#122836,#0d1e2b)}.permission-picker h3{margin:0 0 8px;font-size:20px}.perm-sub{margin:0 0 20px;font-size:13px}.perm-profiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.perm-profiles button{font:inherit;text-align:left;color:#c6d9e2;background:#102230;border:1px solid #345363;border-radius:10px;padding:14px 12px;cursor:pointer}.perm-profiles button[aria-checked=true]{border-color:#8be5ec;background:#183f4d;box-shadow:0 0 0 1px #8be5ec}.perm-profiles b{font-size:14px;display:block;color:#a9eff3}.perm-profiles span{font-size:11px;display:block;line-height:1.7;margin-top:8px}.perm-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0 10px}.perm-form label{font-size:12px;color:#b4cbd5}.perm-form input,.perm-form select{box-sizing:border-box;width:100%;margin-top:7px;background:#091721;color:#dceaf0;border:1px solid #416171;border-radius:7px;padding:10px;font:14px 'Segoe UI','Microsoft YaHei',sans-serif}.perm-form input:disabled{opacity:.5}.perm-help{display:block;font-size:11px;line-height:1.7;color:#94b2c2;margin-top:7px}.perm-custom{padding:16px;border:1px solid #2f5266;border-radius:9px;background:#0b1b28}.perm-custom[hidden]{display:none}.perm-presets,.perm-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.perm-presets button,.perm-actions button{font:13px 'Segoe UI','Microsoft YaHei',sans-serif;border:1px solid #436171;color:#bdd9e4;background:#132c3a;padding:8px 12px;border-radius:7px;cursor:pointer}.perm-actions button:first-child{background:#85dfe8;color:#09202b;border-color:#85dfe8;font-weight:600}.perm-actions button:disabled{opacity:.4;cursor:default}.perm-presets label{font-size:12px;color:#b4c7d1}.perm-snapshot,.perm-target{font-size:12px;color:#86d4db;margin:15px 0 5px;overflow-wrap:anywhere}.perm-notice{font-size:13px;border-left:3px solid #8be5ec;padding:10px 14px;background:#102330}.perm-notice.warn{border-color:#ffc78a;color:#ffe2bb}.permission-picker pre{margin:12px 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.permission-picker details{margin:18px 0;color:#b5d0dc;font-size:13px}.permission-picker summary{cursor:pointer}.permission-picker details pre{max-height:350px;overflow:auto}.perm-status{font-size:12px;color:#8be5ec}.perm-actions{margin-top:15px}.permission-picker small{display:block;margin-top:10px;color:#93afbd;font-size:11px}.perm-guide{border-top:1px solid #29414e;padding-top:15px}.perm-guide li{font-size:12px;line-height:1.8}.perm-guide p{font-size:12px}.permission-picker code{white-space:normal}@media(max-width:850px){.perm-profiles{grid-template-columns:repeat(2,minmax(0,1fr))}.perm-form{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){.permission-picker{padding:16px}.perm-form{grid-template-columns:1fr}}
+</style>
+<section class="permission-picker" aria-label="权限方案选择器">
+<h3>选择服务器权限</h3><p class="perm-sub">选已有服务器，或手动填写新服务器。页面只生成方案，不会连接服务器或应用权限。适用于Linux；应用运维档需要systemd。</p>
+<div class="perm-profiles" role="radiogroup" aria-label="权限档案"><button type="button" role="radio" aria-checked="false" data-profile="login"><b>普通登录</b><span>仅账号已有权限，不新增sudo授权</span></button><button type="button" role="radio" aria-checked="false" data-profile="diagnostics"><b>硬件巡检</b><span>固定SMART读取与内存信息命令</span></button><button type="button" role="radio" aria-checked="true" data-profile="operator"><b>应用运维</b><span>硬件巡检，以及指定非root服务的状态、日志、启停和重启</span></button><button type="button" role="radio" aria-checked="false" data-profile="admin-password"><b>完整管理·需密码</b><span>全部sudo命令，要求密码认证；受现有规则和认证缓存影响</span></button><button type="button" role="radio" aria-checked="false" data-profile="admin-full"><b>完整管理·免密码</b><span>全部sudo命令免密码，可取得root权限</span></button></div>
+<div class="perm-form">
+<label>服务器<select id="perm-server"><option value="101">101 · 192.168.10.101</option><option value="112" selected>112 · 192.168.10.112</option><option value="116">116 · 192.168.10.116</option><option value="custom">手动填写其他服务器…</option></select><span class="perm-help">已有机器可直接选；新i3或其他Linux服务器选手动填写。</span></label>
+<label>授权账号（服务器上）<input id="perm-user" value="jarvis-ops" autocomplete="off" maxlength="32" aria-describedby="perm-user-help"><span class="perm-help" id="perm-user-help">被授予权限的Linux账号，不是本机Windows用户名或家庭成员。1–32位小写字母、数字、-、_，以字母或_开头，不填root。</span></label>
+<label>管理服务<input id="perm-unit" value="jarvis-platform.service" autocomplete="off" aria-describedby="perm-unit-help"><span class="perm-help" id="perm-unit-help"></span></label>
+</div>
+<div class="perm-form perm-custom" id="perm-custom" hidden>
+<label>服务器编号<input id="perm-id" value="i3-backup" autocomplete="off" maxlength="64"><span class="perm-help">自定标识，如i3-backup；字母、数字、-、_，开头用字母或数字。清单内须唯一。</span></label>
+<label>IP地址或域名<input id="perm-host" placeholder="192.168.10.120" autocomplete="off" maxlength="253"><span class="perm-help">填实际地址。不要加http://、端口或路径；IPv6不加方括号。</span></label>
+<label>SSH端口<input id="perm-port" type="number" min="1" max="65535" value="22"><span class="perm-help">一般填22；改过SSH端口则填实际值。</span></label>
+<label>实际主机名<input id="perm-hostname" placeholder="粘贴服务器执行hostname的结果" autocomplete="off" maxlength="253"><span class="perm-help">用于应用时核对目标机器。IP变化可更新地址，主机名仍按实际填写。</span></label>
+<label>现有管理账号<input id="perm-admin" value="superopen" autocomplete="off" maxlength="32"><span class="perm-help">服务器已有的普通Linux账号，如ubuntu或superopen。应用脚本时需由拥有sudo权限的管理员执行。</span></label>
+<label>ED25519主机指纹<input id="perm-fingerprint" placeholder="SHA256:…（下载连接清单时必填）" autocomplete="off" maxlength="50"><span class="perm-help">取自服务器本机。只生成权限脚本可留空；SSH连接清单必须有真实可信指纹。</span></label>
+</div>
+<div class="perm-presets"><button type="button" id="perm-existing">沿用现有管理账号</button><button type="button" id="perm-dedicated">使用独立账号</button><label><input type="checkbox" id="perm-create" checked> 账号不存在时创建</label></div>
+<small>创建的是所选服务器上的普通账号；不会设置密码、授权SSH公钥、创建服务或部署项目。需密码档须另由管理员设置账号密码。</small>
+<p class="perm-snapshot" id="perm-snapshot"></p><p class="perm-notice" id="perm-notice" aria-live="polite"></p>
+<b style="font-size:13px;color:#d0e2ea">在目标服务器上应用方案</b><p class="perm-target" id="perm-target"></p><pre id="perm-apply"></pre>
+<div class="perm-actions"><button type="button" id="perm-download">下载权限脚本</button><button type="button" id="perm-copy">复制应用命令</button><button type="button" id="perm-inventory">下载连接清单</button><span class="perm-status" id="perm-status" role="status"></span></div>
+<small id="perm-inventory-note"></small>
+<details class="perm-guide" open><summary>新服务器、新管理电脑怎么用</summary>
+<ol><li><b>新服务器：</b>在服务器执行下方信息查询，选“手动填写”，将真实信息填入。下载权限脚本，交给现有管理员在目标服务器先预览，再应用。</li><li><b>新管理电脑：</b>目标服务器填它要访问的服务器，授权账号填它将登录的Linux账号。同账号无需重新授予sudo，但每台电脑都要生成自己的SSH密钥并授权公钥。</li><li><b>SSH登录：</b>下载连接清单，放在项目目录。在新电脑生成公钥包，将生成的authorize-编号.sh交给管理员按目标账号执行，之后再验证连接。不要复制旧电脑的私钥或含绝对路径的ssh-config。</li></ol>
+<pre>whoami
+hostname
+ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub -E sha256
+systemctl list-unit-files --type=service
+systemctl show jarvis-platform.service --property=User --property=FragmentPath</pre>
+<p>上面命令在Linux服务器执行。服务名从列表选择，最后一行替换为实际服务名。jarvis-platform.service只是预定示例，目前尚未部署；Docker容器名、网页地址和项目目录不能直接填这里。此版本每个账号管理一个指定服务，更换服务会替换本工具此前管理的服务授权。</p>
+<b>在新管理电脑生成SSH公钥包</b><pre id="perm-access"></pre>
+<p>office-hp换成这台电脑的标识，例如home-pc或lenovo；同一组命令保持一致。新账号的公钥安装方式见下方文档。生成工具需要Node.js和OpenSSH；HTML本身可离线使用。</p>
+</details>
+<details><summary>查看权限脚本内容</summary><pre id="perm-script"></pre></details>
+<details><summary>通过本机工具生成同一权限方案</summary><p>先下载连接清单并放入项目目录，再执行下方命令。</p><pre id="perm-node"></pre></details>
+</section>
+<p>更新：2026-10-07。支持五档权限、手动填写服务器、下载权限脚本与SSH连接清单。账号和服务名有就地填写说明。上方HTML选择器仅生成方案；查看或下载不会改变服务器权限。</p>
+<h2 id="section-1">1. 现在是否拥有全部权限</h2>
+<p><b>当前101、112、116三台的superopen账号均已具备完整免密sudo权限，可通过sudo执行root操作。</b> 普通SSH登录仍是superopen；需要管理员操作时使用sudo。</p>
+<p>这次实际检查同时确认了NOPASSWD: ALL规则和sudo -n /usr/bin/id -u返回0。不是只依据sudo用户组或一次认证缓存推断。实际版本为sudo-rs 0.2.13-0ubuntu1.2，结果见<a href="../artifacts/server-permissions-qa/permissions.json">权限审计</a>。</p>
+<div class="table-wrap"><table>
+<tr><td>服务器</td><td>SSH账号</td><td>当前实际权限</td><td>本次是否修改权限</td></tr>
+<tr><td>101 · 192.168.10.101</td><td>superopen</td><td>完整免密sudo，可取得root</td><td>否</td></tr>
+<tr><td>112 · 192.168.10.112</td><td>superopen</td><td>完整免密sudo，可取得root</td><td>否</td></tr>
+<tr><td>116 · 192.168.10.116</td><td>superopen</td><td>完整免密sudo，可取得root</td><td>否</td></tr>
+</table></div>
+<p>早期清单只记录smartctl与dmidecode的免密授权；当前实际配置已经更高。SSH公钥脚本负责获得账号访问权，完整权限来自服务器已有sudo配置，本次工具没有自动给三台扩权。</p>
+<p>完整权限指Linux系统管理员权限，可管理软件、文件、服务、网络和用户。平台中的任务审批、第三方账户授权等仍按各自规则处理。</p>
+<h2 id="section-2">2. 五种可选档案</h2>
+<div class="table-wrap"><table>
+<tr><td>选择</td><td>参数</td><td>新增权限</td><td>适用情况</td></tr>
+<tr><td>普通登录</td><td>login</td><td>不新增sudo授权；移除本工具对该账号的旧sudo授权</td><td>普通开发与文件操作</td></tr>
+<tr><td>硬件巡检</td><td>diagnostics</td><td>固定SMART读取、内存信息读取</td><td>专用巡检账号</td></tr>
+<tr><td>应用运维</td><td>operator</td><td>巡检，以及指定非root服务的状态、日志、启动、停止和重启</td><td>贾维斯日常自动化运维</td></tr>
+<tr><td>完整管理·需密码</td><td>admin-password</td><td>全部sudo命令，使用PASSWD规则</td><td>由人交互管理的独立管理员账号</td></tr>
+<tr><td>完整管理·免密码</td><td>admin-full</td><td>全部sudo命令使用NOPASSWD规则，可取得root</td><td>明确授予完整管理权的管理机或部署工具</td></tr>
+</table></div>
+<p>硬件巡检通过root持有的固定封装执行smartctl -a和dmidecode --type memory，不直接授权smartctl任意参数。应用运维只操作选择的固定服务，日志关闭分页器，不授权任意shell、任意服务或软件安装命令。</p>
+<p>普通登录仍能修改该账号有权限的文件，不应称为“全系统只读”。真正的受限账号还取决于目录权限、所属组和其他sudo规则。</p>
+<h2 id="section-3">3. 不同电脑想要不同权限怎么办</h2>
+<p><b>sudo权限属于Linux账号，不属于某一把SSH公钥。</b> 多台电脑都登录superopen，就都继承superopen的完整权限。想按电脑或用途区分，使用独立账号和独立密钥。</p>
+<div class="table-wrap"><table>
+<tr><td>建议账号</td><td>用途</td><td>建议档案</td></tr>
+<tr><td>superopen</td><td>当前主管理和首次部署</td><td>保留现有完整管理权限</td></tr>
+<tr><td>jarvis-ops</td><td>日常平台运维</td><td>应用运维</td></tr>
+<tr><td>jarvis-watch</td><td>硬件巡检</td><td>硬件巡检</td></tr>
+<tr><td>jarvis-admin</td><td>另一个管理员</td><td>按需要选择需密码或免密码</td></tr>
+<tr><td>jarvis运行账号</td><td>后台进程</td><td>普通账号，由部署流程设置必要目录权限</td></tr>
+</table></div>
+<p><b>给已经拥有完整权限的superopen选择巡检档，不会自动剥离其完整权限。</b> 本工具只修改自己管理的文件，保留其他sudo授权、用户组、现有公钥与SSH配置。要降低现有账号的实际权限，需另外核对并撤销其原授权；这次未执行降权。</p>
+<p>sudo、Docker、LXD、disk等组可能带来额外权限。独立账号应用后检查id与sudo -l，不能只凭档案名称认定受限。需密码档还需要设置该账号密码，并检查其他免密规则及sudo认证缓存；工具不读取或设置明文密码。</p>
+<h2 id="section-4">4. 各字段怎么填，其他机器怎么用</h2>
+<p>服务器下拉框已加入“手动填写其他服务器”。它不要求新机器先进入项目清单，可离线生成独立脚本。IP、主机名和主机指纹都应填新服务器的实际信息，不要照抄示例。</p>
+<div class="table-wrap"><table>
+<tr><td>字段</td><td>填写规则</td><td>示例</td></tr>
+<tr><td>服务器编号</td><td>自定标识，1–64位字母、数字、短横线或下划线；开头是字母或数字；合并清单时须唯一</td><td>i3-backup</td></tr>
+<tr><td>IP地址或域名</td><td>服务器实际地址，不加协议、端口或路径；IPv6不加方括号</td><td>192.168.10.120仅为示例</td></tr>
+<tr><td>SSH端口</td><td>1–65535整数，默认22；修改过SSH端口则用实际值</td><td>22</td></tr>
+<tr><td>实际主机名</td><td>在服务器执行hostname，粘贴完整结果；权限脚本应用时检查此值</td><td>jarvis-i3仅为示例</td></tr>
+<tr><td>现有管理账号</td><td>服务器已有的普通Linux账号；应用权限须由具备sudo的现有管理员执行</td><td>superopen或ubuntu，以实际为准</td></tr>
+<tr><td>授权账号</td><td>被授予所选权限、以后登录服务器的Linux账号；不是Windows用户名、家庭成员或项目名</td><td>jarvis-ops</td></tr>
+<tr><td>管理服务</td><td>只在应用运维档填写；指定已安装的systemd服务名，包含.service，区分大小写</td><td>jarvis-platform.service</td></tr>
+<tr><td>ED25519主机指纹</td><td>从服务器本机或可信渠道读取真实SHA256指纹；只下载权限脚本可留空，下载SSH清单必填</td><td>SHA256:后接43位指纹</td></tr>
+</table></div>
+<p>授权账号支持1–32位小写字母、数字、短横线或下划线，以小写字母或下划线开头，不允许root；完整管理仍通过普通账号加sudo实现。已有账号直接填写其真实名称，新账号可填写jarvis-ops、jarvis-watch或jarvis-admin，并勾选“账号不存在时创建”。创建不会设置密码或授权SSH登录，也不会把普通账号自动加入sudo组。</p>
+<p>“沿用现有管理账号”会把该服务器的管理账号填入授权账号；“使用独立账号”会按所选档案提供建议名称。选择需密码管理档时，管理员还要在服务器设置账号密码，例如sudo passwd jarvis-admin。表单不收集密码或私钥。</p>
+<p>管理服务不是网址、项目目录、Docker容器名或启动命令。可在服务器执行以下查询；最后一行的服务名换成你的真实服务：</p>
+<pre><code>systemctl list-unit-files --type=service
+systemctl show jarvis-platform.service --property=User --property=FragmentPath</code></pre>
+<p>服务名与查询方式见<a href="https://github.com/systemd/systemd/blob/main/man/systemd.service.xml">systemd服务说明</a>、<a href="https://github.com/systemd/systemd/blob/main/man/systemctl.xml">systemctl官方说明</a>。</p>
+<p>服务必须已安装、使用非root账号运行，其定义文件、附加配置及父目录由root持有且不能被普通用户改写。jarvis-platform.service目前只是贾维斯预定服务名，尚未部署到服务器；不能据示例认定它已经存在。不知道服务名、准备首次安装或配置Docker时，先用现有管理员完成部署，其他权限档不需要填服务名。当前工具每个账号管理一个指定服务；给同一账号改选服务会替换本工具原来的服务授权。</p>
+<h3>情况A：新增一台i3或其他Linux服务器</h3>
+<ol>
+<li>在新服务器本机执行whoami、hostname，以及下面的主机指纹查询。</li>
+<li>选择“手动填写”，按实际填写地址、端口、管理账号、主机名和指纹。选权限档与授权账号；未部署服务时暂不使用应用运维档。</li>
+<li>下载权限脚本，交给新服务器现有管理员；在目标服务器先预览，再明确应用。若新服务器没有sudo，须由它的现有root管理员完成授权，本工具不能凭空获得管理员权限。</li>
+<li>下载连接清单，生成新管理电脑自己的SSH公钥包，给授权账号添加公钥，再验证登录。权限授予和SSH公钥授权分开执行。</li>
+</ol>
+<pre><code>whoami
+hostname
+ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub -E sha256</code></pre>
+<p>下载的权限脚本以主机名防止误用；IP和端口用于标识及后续SSH连接，不会在权限安装时检测网络地址。手动填写的机器显示“尚未核验”，即使编号与已有112相同也不会继承112的审计结论。</p>
+<h3>情况B：另一台电脑访问已有服务器</h3>
+<p>服务器选择它要访问的101、112或116；授权账号选择它要登录的服务器账号。与联想一样使用superopen，就继承该账号现有完整权限，无需再授予sudo，只需添加新电脑的公钥。需要更低权限时，使用独立账号和独立密钥。</p>
+<p>例如公司HP仅管理112的贾维斯服务：服务器选112，授权账号填jarvis-ops，档案选应用运维，服务填部署后的真实服务名。由112管理员应用一次权限和公钥授权，然后在HP生成并保留自己的密钥。</p>
+<p>HTML会按当前选择生成SSH连接清单；清单里的user是授权账号，不是另填的现有管理账号。下载后放到项目目录。下面示例中office-hp是管理电脑标识，换成home-pc、lenovo等即可；文件名随选择变化，使用页面显示的命令：</p>
+<pre><code>node scripts/server-access.mjs prepare --inventory servers-112-jarvis-ops.json --output artifacts/server-access/office-hp-jarvis-ops --client-id office-hp --identity-dir ~/.ssh/jarvis-ops
+node scripts/server-access.mjs verify --output artifacts/server-access/office-hp-jarvis-ops</code></pre>
+<p>先执行prepare生成授权包，再让服务器管理员按目标账号安装其中的公钥，之后执行verify。新电脑不复制旧电脑私钥或ssh-config；不同角色使用独立的密钥目录。新电脑需要Node.js、OpenSSH及<a href="通用服务器授权工具.html">通用授权工具</a>所列文件；不需要安装整套贾维斯。HTML选择器本身可独立离线使用。这套服务器授权脚本面向Linux；Windows目标机需要另用Windows账户与OpenSSH权限流程。</p>
+<p>SSH公钥记录在目标账号的authorized_keys中，参见<a href="https://man.openbsd.org/sshd#AUTHORIZED_KEYS_FILE_FORMAT">OpenSSH公钥授权说明</a>。</p>
+<h2 id="section-5">5. 如何授予完整权限或其他档案</h2>
+<p>在HTML选择器里选服务器、档案、账号和服务，再下载脚本。脚本默认只预览，应用时必须由服务器现有管理员执行。</p>
+<p>以112为superopen生成完整免密管理方案：</p>
+<pre><code>node scripts/server-permissions.mjs prepare --inventory config/servers.example.json --output artifacts/server-permissions/admin-full --server 112 --profile admin-full --user superopen</code></pre>
+<p>将生成的permissions-112-superopen-admin-full.sh放到112，用superopen登录后先预览，再明确应用：</p>
+<pre><code>bash permissions-112-superopen-admin-full.sh
+sudo bash permissions-112-superopen-admin-full.sh --apply
+sudo -l
+sudo -n /usr/bin/id -u</code></pre>
+<p>当前三台已经有完整权限，通常无需再次应用该档案。以上流程用于新服务器或明确需要新增授权的账号。</p>
+<p>为112创建独立运维账号的示例：</p>
+<pre><code>node scripts/server-permissions.mjs prepare --inventory config/servers.example.json --output artifacts/server-permissions/operator --server 112 --profile operator --user jarvis-ops --unit jarvis-platform.service</code></pre>
+<pre><code>bash permissions-112-jarvis-ops-operator.sh
+sudo bash permissions-112-jarvis-ops-operator.sh --apply --create-user</code></pre>
+<p>--create-user仅在账号不存在时新建普通账号，不为它加入sudo组；系统权限由所选档案授予。应用运维档要求指定服务已经安装、使用普通用户运行，且服务定义及父目录由root持有、不可被普通用户改写。当前贾维斯服务尚未部署到三台，因此该档应在服务部署后应用。</p>
+<p>账号创建与SSH授权分别处理：在该账号下执行<a href="通用服务器授权工具.html">通用公钥授权脚本</a>。管理员代为操作时，先把新公钥脚本放到该账号可读取的位置，例如/tmp/authorize-112.sh，再以目标身份执行：</p>
+<pre><code>sudo -iu jarvis-ops env -u SUDO_USER -u SUDO_UID -u SUDO_GID bash /tmp/authorize-112.sh</code></pre>
+<p>使用独立密钥目录，避免复用已经能登录完整管理员的同一把密钥。例如将新清单config/servers-ops.json的user改为jarvis-ops，其余主机信息与指纹保持真实：</p>
+<pre><code>node scripts/server-access.mjs prepare --inventory config/servers-ops.json --output artifacts/server-access/ops-lenovo --client-id lenovo-ops --identity-dir ~/.ssh/jarvis-ops</code></pre>
+<p>上面的委托命令由管理员明确切换到jarvis-ops，并清除原sudo调用的标识变量；公钥脚本仍检查实际用户名与HOME所有权。不要直接sudo bash公钥脚本，把授权误写到root。权限安装脚本自身则要求root。</p>
+<h2 id="section-6">6. 工具会改哪些文件</h2>
+<div class="table-wrap"><table>
+<tr><td>位置</td><td>作用</td></tr>
+<tr><td>/etc/sudoers.d/80-jarvis-access-账号</td><td>本工具独立管理的sudo规则；权限0440</td></tr>
+<tr><td>/usr/local/libexec/jarvis-permissions/账号</td><td>root持有的巡检和运维封装；权限0755</td></tr>
+<tr><td>/var/backups/jarvis-permissions/change.随机编号</td><td>修改前的本工具规则、封装与本次方案；仅root访问</td></tr>
+</table></div>
+<p>安装前检查现有sudo语法、目标账号、所有权、链接和目录写权限；拒绝覆盖无本工具标识的文件。新规则先用visudo校验，最后再检查整套sudo配置，失败恢复本次涉及的管理文件。同一账号的权限修改通过锁串行处理。</p>
+<p>普通登录档只撤销本工具管理的sudo规则，不删除账号、公钥、其他sudo文件或其他人的授权。权限安装不会自行重启服务、安装软件或修改SSH登录设置。新建账号若后续安装失败可能保留，但不会因该步骤自动获得完整管理权限。</p>
+<p>现有所有完整权限规则不能靠新增低档规则“覆盖成受限”。真正降权需单独审核其他来源；不会假装降权成功。</p>
+<h2 id="section-7">7. 实际审计与验收</h2>
+<p>查看全部选择：</p>
+<pre><code>node scripts/server-permissions.mjs profiles</code></pre>
+<p>重新审计服务器实际权限：</p>
+<pre><code>node scripts/server-permissions.mjs audit --inventory config/servers.example.json --ssh-config artifacts/server-access/lenovo/ssh-config --output artifacts/server-permissions-qa/permissions.json</code></pre>
+<p>审计仅查询账号、组、sudo版本与规则，再执行固定的root身份探测；不改权限，不读取密码。既有平台SSH验证仍只核对登录，不能替代权限审计。</p>
+<pre><code>npm run test:server-permissions</code></pre>
+<p>本机8项专项测试通过，增加了手动服务器字段校验、IPv6与端口、指纹必填边界、账号区分，以及下载清单在生成工具中的实际使用验证。此前在三台真实Ubuntu服务器分别验证5档sudo-rs规则、Bash预览与root门禁，以及封装对非法参数的拒绝，共39项检查通过。测试只使用独立临时目录，未安装任何权限规则或新账号。记录见<a href="../artifacts/server-permissions-qa/linux-policy-validation.json">Linux校验报告</a>。</p>
+<p>HTML选择器45项交互检查通过，覆盖已有与手动服务器、五档方案、权限脚本和SSH清单实际下载、现有完整权限提示、错误输入拦截、切换服务器及手机布局。页面无JavaScript错误，不发送外部请求，不修改服务器权限。记录见<a href="../artifacts/server-permissions-qa/picker-ui.json">选择器校验报告</a>与<a href="../artifacts/server-permissions-qa/report.json">验收汇总</a>。</p>
+<p>目前完成方案生成、审计和语法/参数验证；新档案的实际安装、失败恢复、服务控制与新账号登录仍需在选定档案后实测。已有superopen完整权限的三台实连已通过。</p>
+<h2 id="section-8">8. 我的推荐</h2>
+<p>首次部署直接使用当前superopen完整权限，能准备运行环境与开机服务。平台进程用普通服务账号运行；日常自动化另设jarvis-ops，硬件巡检另设jarvis-watch。需要让新管理电脑执行完整部署时，明确给其独立账号选择完整管理档。</p>
+<p>权限属于账号及其sudo配置；原理与授权语法可参考<a href="https://documentation.ubuntu.com/server/how-to/security/user-management/">Ubuntu用户管理</a>、<a href="https://github.com/sudo-project/sudo/blob/main/examples/sudoers.in">sudo项目示例</a>。当前Ubuntu使用sudo-rs，因此本工具使用实际服务器的visudo验证兼容性，避免依赖不支持的命令参数通配规则。<a href="https://github.com/trifectatechfoundation/sudo-rs/issues/1455">sudo-rs参数支持说明</a></p></main><script>
+const PROFILES=[{"id":"login","name":"普通登录","scope":"仅账号已有权限，不新增sudo授权"},{"id":"diagnostics","name":"硬件巡检","scope":"固定SMART读取与内存信息命令"},{"id":"operator","name":"应用运维","scope":"硬件巡检，以及指定非root服务的状态、日志、启停和重启"},{"id":"admin-password","name":"完整管理·需密码","scope":"全部sudo命令，要求密码认证；受现有规则和认证缓存影响"},{"id":"admin-full","name":"完整管理·免密码","scope":"全部sudo命令免密码，可取得root权限"}];
+const shellQuote=value => "'" + value.replaceAll("'", "'\\''") + "'";
+const wrapperPreamble=user => `#!/bin/bash -p\n# Jarvis managed permission wrapper v1; account=${user}\nset -euo pipefail\n[ "$(/usr/bin/id -u)" = 0 ] || { printf 'Use sudo for this operation.\\n' >&2; exit 1; }\nexport PATH=/usr/sbin:/usr/bin:/sbin:/bin\n`;
+function normalizePermissionServer(input) {
+  if (!input || Object.keys(input).some(key => !['id', 'host', 'port', 'user', 'hostname', 'fingerprint'].includes(key))) throw new Error('服务器信息只填写连接字段，不填写密码或私钥。');
+  const { id, host, user, hostname } = input;
+  if (typeof id !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/.test(id)) throw new Error('服务器编号需为1–64位字母、数字、短横线或下划线，且以字母或数字开头。');
+  let hostValid = false;
+  if (typeof host === 'string' && host.length <= 253) {
+    if (host.includes(':') && /^[0-9a-fA-F:.]+$/.test(host)) {
+      try { hostValid = Boolean(new URL('http://[' + host + ']/').hostname); } catch { /* Invalid IPv6. */ }
+    } else if (/^[0-9.]+$/.test(host)) {
+      const parts = host.split('.');
+      hostValid = parts.length === 4 && parts.every(part => /^(0|[1-9][0-9]{0,2})$/.test(part) && Number(part) <= 255);
+    } else hostValid = host.split('.').every(part => /^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$/.test(part));
+  }
+  if (!hostValid) throw new Error('服务器地址填写有效IP或域名，不加http://、端口、路径或方括号。');
+  const port = input.port ?? 22;
+  if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('SSH端口需为1–65535之间的整数，通常填22。');
+  if (typeof user !== 'string' || !/^[a-z_][a-z0-9_-]{0,31}$/.test(user) || user === 'root') throw new Error('现有管理账号填服务器上的普通Linux账号，如superopen，不填root。');
+  if (typeof hostname !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,252}$/.test(hostname)) throw new Error('主机名需填写服务器执行hostname得到的完整结果，不填IP地址。');
+  const fingerprint = input.fingerprint;
+  if (fingerprint !== undefined && fingerprint !== '' && (typeof fingerprint !== 'string' || !/^SHA256:[A-Za-z0-9+/]{43}$/.test(fingerprint))) throw new Error('主机指纹填写真实ED25519的SHA256指纹；只生成权限脚本时可暂时留空。');
+  return { id, host, port, user, hostname, ...(fingerprint ? { fingerprint } : {}) };
+}
+function permissionConnectionInventory(server, user) {
+  const normalized = normalizePermissionServer({ ...server, user });
+  if (!normalized.fingerprint) throw new Error('下载SSH连接清单前，请从服务器本机取得可信的ED25519主机指纹。');
+  return { version: 1, servers: [normalized] };
+}
+function permissionPlan({ user, profile, unit = 'jarvis-platform.service' }) {
+  if (typeof user !== 'string' || !/^[a-z_][a-z0-9_-]{0,31}$/.test(user) || user === 'root') throw new Error('Choose an ordinary Linux account, not root');
+  if (!PROFILES.some(row => row.id === profile)) throw new Error('Unknown permission profile');
+  if (typeof unit !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9_.@:-]{0,120}\.service$/.test(unit)) throw new Error('Invalid systemd service unit');
+  const wrapperDir = `/usr/local/libexec/jarvis-permissions/${user}`;
+  const marker = `# Jarvis managed sudo grant v1; account=${user}`;
+  let rule = '';
+  const wrappers = {};
+  if (['diagnostics', 'operator'].includes(profile)) {
+    wrappers.diagnostics = wrapperPreamble(user) + `case "\${1:-}" in
+  memory)
+    [ "$#" = 1 ] || exit 2
+    exec /usr/bin/env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin /usr/sbin/dmidecode --type memory ;;
+  smart)
+    [ "$#" = 2 ] || exit 2
+    device="$2"
+    [[ "$device" =~ ^/dev/(sd[a-z]+|nvme[0-9]+n[0-9]+|mmcblk[0-9]+)$ ]] || exit 2
+    [ -b "$device" ] && [ ! -L "$device" ] || exit 2
+    exec /usr/bin/env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin /usr/sbin/smartctl -a "$device" ;;
+  *) printf 'Allowed: memory | smart /dev/DISK\\n' >&2; exit 2 ;;
+esac
+`;
+    rule = `${user} ALL=(root) NOPASSWD: ${wrapperDir}/diagnostics`;
+    if (profile === 'operator') {
+      wrappers.operator = wrapperPreamble(user) + 'unit=' + shellQuote(unit) + `
+[ "$#" = 1 ] || exit 2
+case "$1" in
+  status) exec /usr/bin/env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin /usr/bin/systemctl --no-pager --full status "$unit" ;;
+  start|stop|restart) exec /usr/bin/env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin /usr/bin/systemctl "$1" "$unit" ;;
+  logs) exec /usr/bin/env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin /usr/bin/journalctl --no-pager --unit="$unit" --lines=200 ;;
+  *) printf 'Allowed: status | start | stop | restart | logs\\n' >&2; exit 2 ;;
+esac
+`;
+      rule += `, ${wrapperDir}/operator`;
+    }
+  } else if (profile === 'admin-password') rule = `${user} ALL=(ALL:ALL) PASSWD: ALL`;
+  else if (profile === 'admin-full') rule = `${user} ALL=(ALL:ALL) NOPASSWD: ALL`;
+  return { user, profile, unit, wrapperDir, marker, policyPath: `/etc/sudoers.d/80-jarvis-access-${user}`, sudoers: marker + '\n' + (rule ? rule + '\n' : '# No additional sudo grant.\n'), wrappers };
+}
+function renderInstallerTemplate(template, server, plan) {
+  const values = { USER: plan.user, PROFILE: plan.profile, UNIT: plan.unit, HOSTNAME: server.hostname ?? '', MARKER: plan.marker };
+  let rendered = template;
+  for (const [name, value] of Object.entries(values)) rendered = rendered.replace(`@@${name}@@`, shellQuote(value));
+  rendered = rendered.replace('@@POLICY@@', plan.sudoers.trimEnd());
+  for (const name of ['diagnostics', 'operator']) rendered = rendered.replace(`@@${name.toUpperCase()}@@`, (plan.wrappers[name] ?? '# Not used for this profile.\n').trimEnd());
+  return rendered;
+}
+
+const PERMISSION_DATA={"servers":[{"id":"101","host":"192.168.10.101","port":22,"user":"superopen","hostname":"superopen-HP-ProDesk-600-G3-SFF","fingerprint":"SHA256:QBPjkVEK4Ss9A6JBqdcg4SmRzei4bDqeZMrLDgExgj8"},{"id":"112","host":"192.168.10.112","port":22,"user":"superopen","hostname":"superopen-ProDesk-i7","fingerprint":"SHA256:mblMezmNEMdlO1dyohXFwwlKSwceT4k7Rje4120RZ5c"},{"id":"116","host":"192.168.10.116","port":22,"user":"superopen","hostname":"superopen-ProDesk-400-i5-6400","fingerprint":"SHA256:v1YJWJjMgcLh+JCJsZBFD+a0/oG9iHF3yB4xJiX1QmM"}],"template":"#!/bin/bash -p\n# Generated account-level sudo grants. Preview by default; apply only as root.\nset -euo pipefail\nexport PATH=/usr/sbin:/usr/bin:/sbin:/bin\numask 077\ntarget_user=@@USER@@\nprofile=@@PROFILE@@\nunit=@@UNIT@@\nexpected_host=@@HOSTNAME@@\nmarker=@@MARKER@@\napply=0\ncreate_user=0\ndie() { printf 'ERROR: %s\\n' \"$*\" >&2; exit 1; }\nfor arg in \"$@\"; do\n  case \"$arg\" in\n    --apply) apply=1 ;;\n    --create-user) create_user=1 ;;\n    --help) printf 'Preview: bash SCRIPT\\nApply: sudo bash SCRIPT --apply [--create-user]\\n'; exit 0 ;;\n    *) die \"Unknown argument: $arg\" ;;\n  esac\ndone\n[[ \"$target_user\" =~ ^[a-z_][a-z0-9_-]{0,31}$ && \"$target_user\" != root ]] || die 'Invalid target account'\n[[ \"$unit\" =~ ^[a-zA-Z0-9][a-zA-Z0-9_.@:-]{0,120}\\.service$ ]] || die 'Invalid service unit'\ncase \"$profile\" in login|diagnostics|operator|admin-password|admin-full) ;; *) die 'Invalid profile' ;; esac\nprintf 'Account: %s\\nProfile: %s\\nService: %s\\n' \"$target_user\" \"$profile\" \"$unit\"\nprintf 'Existing permissions from other policies or groups remain unchanged.\\n'\npolicy() {\ncat \u003c\u003c'JARVIS_POLICY_EOF'\n@@POLICY@@\nJARVIS_POLICY_EOF\n}\nif [ \"$apply\" = 0 ]; then\n  printf '\\nProposed managed sudoers file:\\n'\n  policy\n  printf '\\nNo permissions changed. To apply, use sudo bash SCRIPT --apply.\\n'\n  exit 0\nfi\n[ \"$(id -u)\" = 0 ] || die 'Apply requires root; use sudo from an existing administrator account'\nif [ -n \"$expected_host\" ]; then [ \"$(hostname)\" = \"$expected_host\" ] || die 'Wrong server hostname'; fi\n[ -x /usr/sbin/visudo ] || die 'visudo is required'\n/usr/sbin/visudo -c >/dev/null || die 'Existing sudo configuration is invalid; nothing changed'\n\n# Every managed parent directory must be root-owned and not writable by others.\nsafe_directory() {\n  local path=\"$1\" mode\n  [ ! -L \"$path\" ] && [ -d \"$path\" ] || die \"Unsafe directory: $path\"\n  [ \"$(stat -c %u -- \"$path\")\" = 0 ] || die \"Directory is not root-owned: $path\"\n  mode=$(stat -c %a -- \"$path\")\n  (( (8#$mode & 0022) == 0 )) || die \"Directory is writable by others: $path\"\n}\nsafe_file() {\n  local path=\"$1\" mode\n  [ ! -L \"$path\" ] && [ -f \"$path\" ] || die \"Unsafe file: $path\"\n  [ \"$(stat -c %u -- \"$path\")\" = 0 ] && [ \"$(stat -c %h -- \"$path\")\" = 1 ] || die \"Unsafe file owner or links: $path\"\n  mode=$(stat -c %a -- \"$path\")\n  (( (8#$mode & 0022) == 0 )) || die \"File is writable by others: $path\"\n}\nsafe_tree_file() {\n  local path parent\n  path=$(readlink -f -- \"$1\")\n  safe_file \"$path\"\n  parent=$(dirname -- \"$path\")\n  while [ \"$parent\" != / ]; do safe_directory \"$parent\"; parent=$(dirname -- \"$parent\"); done\n  safe_directory /\n}\nsafe_directory /etc\nsafe_directory /etc/sudoers.d\nlock=\"/etc/sudoers.d/.jarvis-permissions-$target_user.lock\"\nlocked=0\nunlock() { if [ \"$locked\" = 1 ]; then rmdir -- \"$lock\" 2>/dev/null || true; fi; }\ntrap unlock EXIT\ntrap 'exit 130' INT\ntrap 'exit 143' TERM\nfor attempt in {1..50}; do\n  if mkdir -- \"$lock\" 2>/dev/null; then locked=1; break; fi\n  sleep 0.1\ndone\n[ \"$locked\" = 1 ] || die 'Another permissions change is running or an old lock needs checking'\nsafe_directory /usr\nsafe_directory /usr/local\n[ -e /usr/local/libexec ] || install -d -o root -g root -m 0755 /usr/local/libexec\nsafe_directory /usr/local/libexec\n[ -e /usr/local/libexec/jarvis-permissions ] || install -d -o root -g root -m 0755 /usr/local/libexec/jarvis-permissions\nsafe_directory /usr/local/libexec/jarvis-permissions\nwrapper_dir=\"/usr/local/libexec/jarvis-permissions/$target_user\"\npolicy_file=\"/etc/sudoers.d/80-jarvis-access-$target_user\"\nif [ -e \"$policy_file\" ] || [ -L \"$policy_file\" ]; then\n  safe_file \"$policy_file\"\n  grep -qxF \"$marker\" \"$policy_file\" || die 'Existing sudoers file is not managed by this tool'\nfi\nif [ -e \"$wrapper_dir\" ] || [ -L \"$wrapper_dir\" ]; then safe_directory \"$wrapper_dir\"; fi\nfor name in diagnostics operator; do\n  if [ -e \"$wrapper_dir/$name\" ] || [ -L \"$wrapper_dir/$name\" ]; then\n    safe_file \"$wrapper_dir/$name\"\n    grep -qxF \"# Jarvis managed permission wrapper v1; account=$target_user\" \"$wrapper_dir/$name\" || die 'Existing wrapper is not managed by this tool'\n  fi\ndone\nif [ \"$profile\" = diagnostics ] || [ \"$profile\" = operator ]; then\n  [ -x /usr/sbin/smartctl ] && [ -x /usr/sbin/dmidecode ] || die 'Install smartmontools and dmidecode using an administrator first'\nfi\nif [ \"$profile\" = operator ]; then\n  [ -x /usr/bin/systemctl ] && [ -x /usr/bin/journalctl ] || die 'systemd tools are unavailable'\n  service_user=$(/usr/bin/systemctl show \"$unit\" --property=User --value)\n  [ -n \"$service_user\" ] && [ \"$service_user\" != root ] && [ \"$service_user\" != 0 ] || die 'Operator service must exist and run as a nonroot user'\n  [ \"$(id -u -- \"$service_user\")\" != 0 ] || die 'Operator service user has root UID'\n  unit_file=$(/usr/bin/systemctl show \"$unit\" --property=FragmentPath --value)\n  [ -n \"$unit_file\" ] || die 'Service definition is missing'\n  safe_tree_file \"$unit_file\"\n  for unit_dropin in $(/usr/bin/systemctl show \"$unit\" --property=DropInPaths --value); do safe_tree_file \"$unit_dropin\"; done\nfi\n\nstage=$(mktemp -d /etc/sudoers.d/.jarvis-permissions.XXXXXXXX)\nchmod 700 \"$stage\"\nchanged=0\ncommitted=0\nhad_policy=0\ncleanup() {\n  local name\n  if [ \"$changed\" = 1 ] && [ \"$committed\" = 0 ]; then\n    if [ \"$had_policy\" = 1 ]; then install -o root -g root -m 0440 \"$stage/old-policy\" \"$policy_file\"; else rm -f -- \"$policy_file\"; fi\n    for name in diagnostics operator; do\n      if [ -f \"$stage/old-$name\" ]; then install -o root -g root -m 0755 \"$stage/old-$name\" \"$wrapper_dir/$name\"; else rm -f -- \"$wrapper_dir/$name\"; fi\n    done\n    printf 'Installation failed; managed files restored.\\n' >&2\n    /usr/sbin/visudo -c >/dev/null || printf 'Check sudo configuration immediately.\\n' >&2\n  fi\n  # Stage contains only our bounded, named regular files.\n  for name in policy diagnostics operator old-policy old-diagnostics old-operator; do rm -f -- \"$stage/$name\"; done\n  rmdir -- \"$stage\" 2>/dev/null || true\n  unlock\n}\ntrap cleanup EXIT\ntrap 'exit 130' INT\ntrap 'exit 143' TERM\npolicy > \"$stage/policy\"\nchmod 0440 \"$stage/policy\"\n/usr/sbin/visudo -c -f \"$stage/policy\" >/dev/null || die 'Proposed sudo policy is invalid'\ncat > \"$stage/diagnostics\" \u003c\u003c'JARVIS_DIAGNOSTICS_EOF'\n@@DIAGNOSTICS@@\nJARVIS_DIAGNOSTICS_EOF\ncat > \"$stage/operator\" \u003c\u003c'JARVIS_OPERATOR_EOF'\n@@OPERATOR@@\nJARVIS_OPERATOR_EOF\nif ! id \"$target_user\" >/dev/null 2>&1; then\n  [ \"$create_user\" = 1 ] || die 'Account does not exist; use --create-user for a dedicated account'\n  /usr/sbin/useradd --create-home --shell /bin/bash -- \"$target_user\"\n  printf 'Created account %s; SSH public key authorization is a separate step.\\n' \"$target_user\"\nfi\nprintf 'Current supplementary groups: '\nid -nG \"$target_user\"\nprintf 'Selected grants do not revoke existing sudo, Docker, LXD or other privileges.\\n'\nif [ -f \"$policy_file\" ]; then cp -p -- \"$policy_file\" \"$stage/old-policy\"; had_policy=1; fi\nfor name in diagnostics operator; do\n  if [ -f \"$wrapper_dir/$name\" ]; then cp -p -- \"$wrapper_dir/$name\" \"$stage/old-$name\"; fi\ndone\n\n# Persist a private history before changing managed policies.\nsafe_directory /var\n[ -e /var/backups ] || install -d -o root -g root -m 0755 /var/backups\nsafe_directory /var/backups\n[ -e /var/backups/jarvis-permissions ] || install -d -o root -g root -m 0700 /var/backups/jarvis-permissions\nsafe_directory /var/backups/jarvis-permissions\nbackup=$(mktemp -d /var/backups/jarvis-permissions/change.XXXXXXXX)\nchmod 700 \"$backup\"\nfor name in policy old-policy old-diagnostics old-operator; do [ ! -f \"$stage/$name\" ] || cp -p -- \"$stage/$name\" \"$backup/$name\"; done\nprintf 'user=%s\\nprofile=%s\\nunit=%s\\n' \"$target_user\" \"$profile\" \"$unit\" > \"$backup/plan\"\n[ -e \"$wrapper_dir\" ] || install -d -o root -g root -m 0755 \"$wrapper_dir\"\nsafe_directory \"$wrapper_dir\"\nchanged=1\nif [ \"$profile\" = diagnostics ] || [ \"$profile\" = operator ]; then install -o root -g root -m 0755 \"$stage/diagnostics\" \"$wrapper_dir/diagnostics\"; fi\nif [ \"$profile\" = operator ]; then install -o root -g root -m 0755 \"$stage/operator\" \"$wrapper_dir/operator\"; fi\nif [ \"$profile\" = login ]; then rm -f -- \"$policy_file\"; else install -o root -g root -m 0440 \"$stage/policy\" \"$policy_file\"; fi\n/usr/sbin/visudo -c >/dev/null || die 'Final sudo validation failed'\ncommitted=1\nprintf 'APPLIED user=%s profile=%s backup=%s\\n' \"$target_user\" \"$profile\" \"$backup\"\nprintf 'Verify actual rights with sudo -l from that account. Existing external grants remain.\\n'\n","checks":[{"id":"101","ok":true,"fullUnattendedRoot":true},{"id":"112","ok":true,"fullUnattendedRoot":true},{"id":"116","ok":true,"fullUnattendedRoot":true}],"at":"2026-10-07T02:40:02.507Z"};
+(function initializePicker() {
+  const byId = id => document.getElementById(id);
+  let selected = 'operator', body = '', filename = '', inventoryBody = '', inventoryFilename = '', valid = false, inventoryValid = false;
+  const suggestions = { login: 'jarvis-user', diagnostics: 'jarvis-watch', operator: 'jarvis-ops', 'admin-password': 'jarvis-admin', 'admin-full': 'jarvis-admin' };
+  const custom = () => byId('perm-server').value === 'custom';
+  function serverValue() {
+    return normalizePermissionServer(custom() ? {
+      id: byId('perm-id').value.trim(), host: byId('perm-host').value.trim(),
+      port: Number(byId('perm-port').value), hostname: byId('perm-hostname').value.trim(),
+      user: byId('perm-admin').value.trim(), fingerprint: byId('perm-fingerprint').value.trim()
+    } : PERMISSION_DATA.servers.find(row => row.id === byId('perm-server').value));
+  }
+  function update() {
+    const isCustom = custom();
+    byId('perm-custom').hidden = !isCustom;
+    byId('perm-unit').disabled = selected !== 'operator';
+    byId('perm-unit-help').textContent = selected === 'operator' ? '填服务器已有的systemd服务名，含.service，如jarvis-platform.service；它必须以非root账号运行。' : '当前权限档不需要填写管理服务。';
+    document.querySelectorAll('[data-profile]').forEach(button => button.setAttribute('aria-checked', String(button.dataset.profile === selected)));
+    byId('perm-status').textContent = '';
+    byId('perm-snapshot').textContent = isCustom ? '手动填写的服务器尚未核验；本页面不会连接或检测该机器。' : '';
+    inventoryValid = false; inventoryBody = ''; inventoryFilename = '';
+    try {
+      const server = serverValue(), user = byId('perm-user').value.trim();
+      const unit = selected === 'operator' ? byId('perm-unit').value.trim() : 'jarvis-platform.service';
+      if (!/^[a-z_][a-z0-9_-]{0,31}$/.test(user) || user === 'root') throw Error('授权账号需为1–32位小写字母、数字、短横线或下划线，以小写字母或下划线开头，不填root。');
+      if (selected === 'operator' && !/^[a-zA-Z0-9][a-zA-Z0-9_.@:-]{0,120}\.service$/.test(unit)) throw Error('管理服务填写完整服务名，如jarvis-platform.service，不填网址、路径或启动命令。');
+      const plan = permissionPlan({ user, profile: selected, unit });
+      const snapshot = isCustom ? null : PERMISSION_DATA.checks.find(row => row.id === server.id);
+      if (!isCustom) byId('perm-snapshot').textContent = '已核验 ' + new Date(PERMISSION_DATA.at).toLocaleString('zh-CN') + '：' + server.user + ' · ' + (snapshot?.ok && snapshot.fullUnattendedRoot ? '已有完整免密sudo权限' : '实际权限请重新审计');
+      body = renderInstallerTemplate(PERMISSION_DATA.template, server, plan);
+      filename = 'permissions-' + server.id + '-' + user + '-' + selected + '.sh'; valid = true;
+      byId('perm-script').textContent = body;
+      byId('perm-target').textContent = '目标：' + server.id + ' · ' + server.host + ':' + server.port + ' · 主机名 ' + server.hostname + ' · 授权账号 ' + user;
+      byId('perm-apply').textContent = 'bash ' + filename + '\n' + 'sudo bash ' + filename + ' --apply' + (byId('perm-create').checked ? ' --create-user' : '');
+      let notice = PROFILES.find(row => row.id === selected).scope + '。';
+      if (user === server.user && snapshot?.fullUnattendedRoot && selected !== 'admin-full') notice += ' 当前账号已有完整免密权限，这一档不撤销旧授权；需要受限访问或要求密码时请使用独立账号和独立密钥。';
+      else if (selected === 'admin-full') notice += ' 该账号可以用sudo取得完整root权限。';
+      else if (selected === 'admin-password') notice += ' 需由管理员为账号设置密码；还要检查其他免密规则及认证缓存。';
+      else notice += ' 该账号的现有权限仍需在应用后检查。';
+      if (selected === 'operator') notice += ' 应用前须安装指定服务；服务器管理员检查其运行账号和服务文件权限。';
+      byId('perm-notice').textContent = notice;
+      byId('perm-notice').className = 'perm-notice' + (selected === 'admin-full' || (user === server.user && snapshot?.fullUnattendedRoot && selected !== 'admin-full') ? ' warn' : '');
+      try {
+        const inventory = permissionConnectionInventory(server, user);
+        inventoryBody = JSON.stringify(inventory, null, 2) + '\n';
+        inventoryFilename = 'servers-' + server.id + '-' + user + '.json'; inventoryValid = true;
+        byId('perm-inventory-note').textContent = '连接清单将登录授权账号 ' + user + '；主机指纹必须来自服务器本机或其他可信渠道。';
+        byId('perm-node').textContent = 'node scripts/server-permissions.mjs prepare --inventory ' + inventoryFilename + ' --output artifacts/server-permissions/' + server.id + '-' + user + '-' + selected + ' --server ' + server.id + ' --profile ' + selected + ' --user ' + user + (selected === 'operator' ? ' --unit ' + unit : '');
+        byId('perm-access').textContent = 'node scripts/server-access.mjs prepare --inventory ' + inventoryFilename + ' --output artifacts/server-access/office-hp-' + user + ' --client-id office-hp --identity-dir ~/.ssh/' + user + '\n' + 'node scripts/server-access.mjs verify --output artifacts/server-access/office-hp-' + user;
+      } catch (error) {
+        byId('perm-inventory-note').textContent = error.message + ' 权限脚本仍可下载并在服务器本机预览。';
+        byId('perm-node').textContent = '权限脚本可直接下载，无需连接服务器。补齐可信主机指纹后，可下载连接清单并使用本机工具生成。';
+        byId('perm-access').textContent = '补齐可信主机指纹后显示SSH授权包的生成命令。';
+      }
+    } catch (error) {
+      valid = false; body = ''; filename = '';
+      byId('perm-notice').textContent = error.message; byId('perm-notice').className = 'perm-notice warn';
+      byId('perm-target').textContent = '';
+      byId('perm-apply').textContent = '请按提示填写服务器、授权账号与服务信息。';
+      byId('perm-script').textContent = ''; byId('perm-node').textContent = '';
+      byId('perm-access').textContent = ''; byId('perm-inventory-note').textContent = '补齐有效信息后生成连接清单。';
+    }
+    byId('perm-download').disabled = !valid; byId('perm-copy').disabled = !valid;
+    byId('perm-inventory').disabled = !inventoryValid;
+  }
+  document.querySelectorAll('[data-profile]').forEach(button => button.addEventListener('click', () => { selected = button.dataset.profile; update(); }));
+  ['perm-server', 'perm-user', 'perm-unit', 'perm-create', 'perm-id', 'perm-host', 'perm-port', 'perm-hostname', 'perm-admin', 'perm-fingerprint'].forEach(id => byId(id).addEventListener('input', update));
+  byId('perm-existing').addEventListener('click', () => {
+    byId('perm-user').value = custom() ? byId('perm-admin').value.trim() : PERMISSION_DATA.servers.find(row => row.id === byId('perm-server').value).user;
+    byId('perm-create').checked = false; update();
+  });
+  byId('perm-dedicated').addEventListener('click', () => { byId('perm-user').value = suggestions[selected]; byId('perm-create').checked = true; update(); });
+  function download(content, name) {
+    const url = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
+    const anchor = document.createElement('a'); anchor.href = url; anchor.download = name; anchor.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  byId('perm-download').addEventListener('click', () => { if (!valid) return; download(body, filename); byId('perm-status').textContent = '脚本已生成；服务器权限尚未改变。'; });
+  byId('perm-inventory').addEventListener('click', () => { if (!inventoryValid) return; download(inventoryBody, inventoryFilename); byId('perm-status').textContent = '连接清单已生成，不含密码或私钥；它不会自动授权登录。'; });
+  byId('perm-copy').addEventListener('click', async () => {
+    if (!valid) return;
+    const text = byId('perm-apply').textContent;
+    try {
+      if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
+      else {
+        const box = document.createElement('textarea'); box.value = text; document.body.appendChild(box); box.select();
+        const copied = document.execCommand('copy'); box.remove(); if (!copied) throw Error('copy');
+      }
+      byId('perm-status').textContent = '应用命令已复制。';
+    } catch { byId('perm-status').textContent = '请选中上方命令复制。'; }
+  });
+  update();
+})();
+</script></html>

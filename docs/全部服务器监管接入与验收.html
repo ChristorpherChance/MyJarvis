@@ -1,0 +1,63 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>全部服务器监管接入与验收 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="https://192.168.10.112:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">1. 当前服务器</a><a href="#section-2">2. 可以查看什么</a><a href="#section-3">3. 监测如何运行</a><a href="#section-4">4. 后续机器如何接入</a><a href="#section-5">5. 部署和备份</a><a href="#section-6">6. 历史机器与待接入机器</a><a href="#section-7">7. 验收依据</a><a href="#section-8">8. 服务器与运行项目管理更新</a></nav><h1>贾维斯 · 全部服务器监管接入与验收</h1>
+<p>更新：2026-10-07。正式版本：20261007-managed-stable。</p>
+<p><b>已将当前正式清单中的5台服务器全部接入112上的贾维斯，持续采集真实资源和28个基础、业务服务的状态。</b> 联想关闭后，监测仍由112继续运行。</p>
+<h2 id="section-1">1. 当前服务器</h2>
+<div class="table-wrap"><table>
+<tr><td>服务器</td><td>地址</td><td>当前用途</td><td>监管服务数</td></tr>
+<tr><td>112 · 平台主机</td><td>192.168.10.112</td><td>贾维斯正式平台、主备观察、统一服务器监管</td><td>4</td></tr>
+<tr><td>101 · 平台冷备</td><td>192.168.10.101</td><td>冷备平台停机待命；主备观察保持运行</td><td>3</td></tr>
+<tr><td>116 · 项目服务器</td><td>192.168.10.116</td><td>已迁移项目与内网穿透</td><td>10</td></tr>
+<tr><td>广州云服务器</td><td>8.163.127.192</td><td>网站反向代理、内网穿透、MV Gateway</td><td>4</td></tr>
+<tr><td>日本云服务器</td><td>8.209.253.19</td><td>模型接口、开发路由、WireGuard及网络代理</td><td>7</td></tr>
+</table></div>
+<p>三台本地服务器的实测系统内存分别约45.92、30.22、15.01GiB；设备资料以实际系统与硬件巡检为依据。GPU利用率、功耗没有接入真实采样时保持未知。</p>
+<p>112的旧“本机”记录保留兼容引用，并关联唯一的实际网卡地址所对应的正式设备。设备页和Pi设备查询只展示一次物理主机，不再将正式主机当成额外开发机。没有匹配或匹配有歧义时保留原记录，避免误合并其他设备。</p>
+<h2 id="section-2">2. 可以查看什么</h2>
+<p>在<a href="https://192.168.10.112:3140/?mode=platform#theme=stark&amp;view=machines">设备管理</a>查看可信在线、CPU、内存、根盘使用率与剩余容量、负载、运行时间。点击设备可查看实际资源和运行趋势。</p>
+<p>在<a href="https://192.168.10.112:3140/?mode=platform#theme=stark&amp;view=services">运行服务</a>查看已登记服务及实际进程状态，按项目名称或服务器编号搜索即可筛选。</p>
+<p>资源每15秒采集一次；服务状态发生变化时立即保存，不变时约30秒刷新。超过60秒未收到有效心跳或服务观察，界面会显示未知或过期，Pi设备查询也不继续把旧读数当成实时在线。</p>
+<div class="table-wrap"><table>
+<tr><td>节点</td><td>已纳入监管的业务与基础服务</td></tr>
+<tr><td>112</td><td>贾维斯平台、主备观察、服务器监测、SSH</td></tr>
+<tr><td>101</td><td>贾维斯平台（冷备）、主备观察、SSH</td></tr>
+<tr><td>116</td><td>开发模型路由、InspireFlash、Marrow、MyFamily、OpenConnector、OSS Radar正式与开发环境、幸运抽奖、frpc、SSH</td></tr>
+<tr><td>广州</td><td>nginx、frps、MV Gateway、SSH</td></tr>
+<tr><td>日本</td><td>nginx、CLIProxyAPI、WireGuard、tinyproxy、danted、CCR、SSH</td></tr>
+</table></div>
+<p>101平台停止是冷备的预期状态，服务名称、说明及登记版本都明确标注“冷备待命”。WireGuard的active/exited显示“单元已生效”；其他常驻服务显示实际运行、停止或失败状态。</p>
+<p><b>进程运行不能证明应用可用。</b> 本次覆盖服务器资源和固定systemd单元；尚未配置的应用HTTP健康检查保持“未探测”，不会自动写成健康。项目业务日志、告警通知规则、自动重启和发布需按各项目的实际接口与授权继续配置。</p>
+<h2 id="section-3">3. 监测如何运行</h2>
+<p>112的独立监测服务连接5台服务器 → 各服务器读取本机资源和固定服务状态 → 各节点用自己的Ed25519密钥签名 → 112核对设备、签名、路径及时间 → 中央Agent接口再次核验 → 保存设备和服务观察。</p>
+<p>所有节点均使用独立jarvis-monitor账号，无sudo权限。监测SSH公钥由root固定，只允许运行采样器，客户端指定其他命令仍返回固定采样结果。账号不能读取贾维斯业务数据；没有授予开发、服务重启、发布或任意命令执行能力。管理员原有连接账号与权限继续独立使用。</p>
+<p>监测不新增公网监听端口。各节点的签名私钥留在本节点，112的连接私钥留在112。项目内只有公开清单、脚本和验收记录，没有管理员密码、会话或私钥。</p>
+<h2 id="section-4">4. 后续机器如何接入</h2>
+<p>先使用<a href="通用服务器授权工具.html">通用服务器授权工具</a>为管理电脑建立专用密钥和固定主机指纹，再填写config/servers.managed.json中的服务器名称、用途和固定服务单元。</p>
+<p>接入前检查主机名、指纹、Python/OpenSSL及服务是否真实存在；全部检查通过后才安装轻量采样器并配对。新增记录通过正式后台接口保存，在线状态来自真实签名心跳。工具重用已有设备、服务、配对和密钥，并保留原有监测节点。</p>
+<pre><code>npm run server:onboard -- --check
+npm run server:onboard
+npm run server:verify</code></pre>
+<p>服务器清单不接受任意命令或服务名称中的命令片段；每台绑定最多32个服务。其他管理电脑需先生成自己的连接包，并调整清单中的公开连接包路径。</p>
+<p>当前统一采集节点固定为112。增加新的贾维斯主备中心、调整主节点或建立其他跳板链路，需要配套修改部署和接替配置，不是只填写一个地址即可自动生效。</p>
+<h2 id="section-5">5. 部署和备份</h2>
+<p>112和101使用相同的20261007-managed-stable正式代码。112平台运行；101平台仍停止，两个节点的主备观察均运行。116和两台云服务器安装轻量监测，不部署完整贾维斯中心。</p>
+<p>监测单元为112上的jarvis-cloud-relay.service，已开启自启和失败重启。名称沿用上一版以保留既有配置，现在负责全部5台服务器。节点采样器位于/opt/jarvis-cloud-agent/collector.py，固定配置位于/etc/jarvis-cloud-agent/node.json。</p>
+<p>扩展监测前的配置保存在112的/var/lib/jarvis-control/monitoring-backups。版本切换前的配置和业务数据保存在各中心节点的/var/lib/jarvis-control/pre-managed-stable（前一次接入备份仍在pre-managed-servers），上一版发布目录保留，可据此恢复。</p>
+<p>101尚未实现持续业务数据复制和自动故障接替。当前监管由112提供，112整体停机时监管也会暂停；不能将本次接入描述成已经具备无损自动接替能力。</p>
+<p>页面每15秒直接更新设备和服务记录；默认活动历史省略周期采样，避免每次打开平台加载全部心跳。签名采样原始事件、运行趋势和业务操作历史仍保留；需要核查完整事件时，事件接口默认返回原始历史。</p>
+<h2 id="section-6">6. 历史机器与待接入机器</h2>
+<p>旧档案中的CS02和CS03分别使用广州127.0.0.1的20022、30022隧道。本次实际探测两个端口均不可连接，CS02现有旧登录入口也连接失败。</p>
+<p>116上发现并核实了cs02-restore系列服务，已按116当前地址和硬件纳入监管；没有把旧CS02再登记为额外在线机器。CS03是否已经迁移、改地址或停止使用，还需要新的实际连接信息。用户此前提到的i3后备正在准备，未安装与授权完成前不登记为在线。</p>
+<h2 id="section-7">7. 验收依据</h2>
+<ul>
+<li>5台主机固定指纹、主机名、实际硬件与服务预检通过。</li>
+<li>接入执行两次，第二次重用全部配对；仍为5台正式设备、5个监测Agent、28个服务，原有云节点身份保持不变。</li>
+<li>5台真实签名心跳、资源读数和28个服务状态均由正式后台保存；后续心跳持续刷新。</li>
+<li>5个监测账号均无sudo、不能读取平台数据；从112请求其他命令，仍只能运行固定采样器。</li>
+<li>正式页面9项交互检查通过：5台实际资源、主机去重、周期事件加载优化、设备详情、28项服务、冷备与WireGuard状态、后续心跳和手机布局；无页面脚本错误，TLS证书校验开启。</li>
+<li>112与101编译产物和依赖锁文件摘要一致；112业务和主备观察运行，101只运行主备观察。正式接口确认完整周期采样仍可查询，页面只需加载43条业务事件。</li>
+</ul>
+<p>后台整套测试覆盖252项：首次251项通过，1项工作流在本机重负载下达到原有20秒超时；原测试文件单独重跑2项全部通过，没有放宽断言或超时。随后对本次页面加载修正完成3项HTTP鉴权/重放/持久化回归、1项设备身份检查和1项周期事件过滤检查。事件过滤的新测试首次缺少测试账户初始化，修正独立测试夹具后通过。另有2项采集计划与签名检查；生产112和101的实际启动入口各1项通过。详细统计与日志见验收文件。</p>
+<p><a href="../artifacts/managed-servers/backend-tests.json">测试统计</a> · <a href="../artifacts/managed-servers/entrypoints.json">生产入口检查</a> · <a href="../artifacts/managed-servers/activity-live.json">事件加载核验</a> · <a href="../artifacts/managed-servers/onboarding.json">接入记录</a> · <a href="../artifacts/managed-servers/report.json">正式环境最终验收</a> · <a href="../artifacts/managed-servers/ui/report.json">界面验收</a> · <a href="../artifacts/managed-servers/backend-tests.log">后台测试输出</a> · <a href="../artifacts/managed-servers/activation.json">版本切换</a></p>
+<p>可复用实现：scripts/onboard-managed-servers.mjs、scripts/managed-server-plan.mjs、scripts/install-managed-monitor.py、scripts/install-managed-relay.py、scripts/verify-managed-servers.mjs。旧云节点接入入口现转入同一追加式工具，不会再次接云端时覆盖本地节点。</p>
+<h2 id="section-8">8. 服务器与运行项目管理更新</h2>
+<p>正式版本已更新为20261007-application-console。新增服务器资源卡片、服务筛选与分页、运行项目登记、加密账号密码、实际访问检测及服务资源归属。5台服务器升级资源采样，原设备、Agent和28个服务的身份保持不变；13个已部署项目按实际服务和入口整理（含101冷备）。详细说明与本轮验收见<a href="服务器与运行项目管理.html">服务器与运行项目管理</a>。上一轮版本的验收记录保存在artifacts/managed-servers/history/20261007-managed-stable。</p></main></html>

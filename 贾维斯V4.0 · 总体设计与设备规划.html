@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="贾维斯家庭与开发管家的总体设计：设备规划、家庭学习、项目与技能管理、全天开发监督、大屏和语音。">
+  <meta name="jarvis-source-sha256" content="1b36cf07181f18185a4cb2c1ca85e931c675dcca9415bbfbbba4fc3ba7ba6c22">
+  <title>贾维斯 V4.0 · 总体设计与设备规划</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">V4.0</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%B4%BE%E7%BB%B4%E6%96%AFV4.0%20%C2%B7%20%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%BE%E5%A4%87%E8%A7%84%E5%88%92.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 17 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 项目定位与版本关系</a>
+<a class="toc-link level-3" href="#section-1-1" data-parent="1">1.1 五项核心职责</a>
+<a class="toc-link level-3" href="#section-1-2" data-parent="1">1.2 与历史文档的关系</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2. 已确认信息与设备清单</a>
+<a class="toc-link level-3" href="#section-2-1" data-parent="2">2.1 已确认的使用情况</a>
+<a class="toc-link level-3" href="#section-2-2" data-parent="2">2.2 全部设备</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3. 设计原则与总体架构</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">3.1 设计原则</a>
+<a class="toc-link level-3" href="#section-3-2" data-parent="3">3.2 总体架构</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4. 全部机器的安排规划</a>
+<a class="toc-link level-3" href="#section-4-1" data-parent="4">4.1 10 台 i3 的建议分工</a>
+<a class="toc-link level-3" href="#section-4-2" data-parent="4">4.2 其他桌面机</a>
+<a class="toc-link level-3" href="#section-4-3" data-parent="4">4.3 笔记本与家庭主力的安排</a>
+<a class="toc-link level-3" href="#section-4-4" data-parent="4">4.4 NAS 与云服务器</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5. 身份、家庭档案与权限</a>
+<a class="toc-link level-3" href="#section-5-1" data-parent="5">5.1 使用者档案</a>
+<a class="toc-link level-3" href="#section-5-2" data-parent="5">5.2 身份与权限的关系</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6. 机器与项目管理</a>
+<a class="toc-link level-3" href="#section-6-1" data-parent="6">6.1 每台已接入机器知道什么</a>
+<a class="toc-link level-3" href="#section-6-2" data-parent="6">6.2 项目档案</a>
+<a class="toc-link level-3" href="#section-6-3" data-parent="6">6.3 自动发现与明确登记结合</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7. 经验、问题与通用 Skill 管理</a>
+<a class="toc-link level-3" href="#section-7-1" data-parent="7">7.1 收集方式</a>
+<a class="toc-link level-3" href="#section-7-2" data-parent="7">7.2 整理与复用链路</a>
+<a class="toc-link level-3" href="#section-7-3" data-parent="7">7.3 存储与发布</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8. CC / Codex 的全天监督与持续开发</a>
+<a class="toc-link level-3" href="#section-8-1" data-parent="8">8.1 全天在线的含义</a>
+<a class="toc-link level-3" href="#section-8-2" data-parent="8">8.2 两种接入模式</a>
+<a class="toc-link level-3" href="#section-8-3" data-parent="8">8.3 官方执行器接入方向</a>
+<a class="toc-link level-3" href="#section-8-4" data-parent="8">8.4 任务创建时的必要信息</a>
+<a class="toc-link level-3" href="#section-8-5" data-parent="8">8.5 统一任务状态</a>
+<a class="toc-link level-3" href="#section-8-6" data-parent="8">8.6 监督闭环</a>
+<a class="toc-link level-3" href="#section-8-7" data-parent="8">8.7 工作区与人工开发协作</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">9. 家庭聊天、学习与生活服务</a>
+<a class="toc-link level-3" href="#section-9-1" data-parent="9">9.1 日常聊天与个人记忆</a>
+<a class="toc-link level-3" href="#section-9-2" data-parent="9">9.2 语言陪练</a>
+<a class="toc-link level-3" href="#section-9-3" data-parent="9">9.3 历史与知识学习</a>
+<a class="toc-link level-3" href="#section-9-4" data-parent="9">9.4 天气、信息与烹饪</a>
+<a class="toc-link level-3" href="#section-9-5" data-parent="9">9.5 健康信息辅助</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">10. 网页、大屏、手机与语音</a>
+<a class="toc-link level-3" href="#section-10-1" data-parent="10">10.1 三类大屏视图</a>
+<a class="toc-link level-3" href="#section-10-2" data-parent="10">10.2 管理视图要展示什么</a>
+<a class="toc-link level-3" href="#section-10-3" data-parent="10">10.3 同一份状态用于语音</a>
+<a class="toc-link level-3" href="#section-10-4" data-parent="10">10.4 语音落地路径</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">11. 技术选型与各组件职责</a>
+<a class="toc-link level-3" href="#section-11-1" data-parent="11">11.1 起步采用轻量业务核心</a>
+<a class="toc-link level-3" href="#section-11-2" data-parent="11">11.2 Core API 的业务契约</a>
+<a class="toc-link level-3" href="#section-11-3" data-parent="11">11.3 最小数据模型</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">12. 私有组网与执行接入</a>
+<a class="toc-link level-3" href="#section-12-1" data-parent="12">12.1 网络方向</a>
+<a class="toc-link level-3" href="#section-12-2" data-parent="12">12.2 执行通道</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">13. 安全、审批、审计与停止</a>
+<a class="toc-link level-3" href="#section-13-1" data-parent="13">13.1 操作风险分级</a>
+<a class="toc-link level-3" href="#section-13-2" data-parent="13">13.2 审批与执行绑定</a>
+<a class="toc-link level-3" href="#section-13-3" data-parent="13">13.3 凭证、内容与记录</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">14. 存储、备份、监控与成本</a>
+<a class="toc-link level-3" href="#section-14-1" data-parent="14">14.1 存储安排</a>
+<a class="toc-link level-3" href="#section-14-2" data-parent="14">14.2 恢复职责</a>
+<a class="toc-link level-3" href="#section-14-3" data-parent="14">14.3 监控重点</a>
+<a class="toc-link level-3" href="#section-14-4" data-parent="14">14.4 费用与功耗</a>
+<a class="toc-link level-2" href="#section-15" data-parent="15">15. 实施顺序与验收</a>
+<a class="toc-link level-3" href="#section-15-1" data-parent="15">15.1 第一版重点验收场景</a>
+<a class="toc-link level-3" href="#section-15-2" data-parent="15">15.2 语音与硬件实测</a>
+<a class="toc-link level-2" href="#section-16" data-parent="16">16. 待确认事项</a>
+<a class="toc-link level-2" href="#section-17" data-parent="17">17. 官方参考与维护方式</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-02<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">总体设计 / 设备规划 / V4.0</p>
+        <h1 id="document-title">贾维斯 V4.0 · 总体设计与设备规划</h1>
+        <p class="subtitle">面向全家的日常服务，连接机器、项目、经验与技能，持续跟踪开发工作的进展。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-02</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>18 台</strong><span>电脑 · 另有 NAS 与两台云服务器</span></div><div class="stat"><strong>10 台</strong><span>i3 小机 · 每台 16G / 256G</span></div><div class="stat"><strong>5 项</strong><span>核心职责 · 家庭与开发服务</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><blockquote>
+<p>更新日期：2026-10-02。本文汇总 V1～V3 与本轮讨论中明确的需求、设备情况和建议设计，作为下一阶段规划基线。</p>
+<p>文档状态：需求与设计稿。设备规格按用户提供的信息记录；分工、技术选型和实施顺序属于建议。本文不表示相应服务已经部署，也不表示所列性能目标已经实测达到。</p>
+</blockquote>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 项目定位与版本关系</h2>
+<p>贾维斯是面向本人和全家的数字管家。它统一了解机器和项目、监督开发任务、积累经验与技能，同时提供家庭聊天、语言陪练、知识学习和生活信息服务。用户通过网页、手机、大屏或语音使用同一套能力。</p>
+<h3 id="section-1-1" tabindex="-1">1.1 五项核心职责</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>职责</th>
+<th>目标</th>
+<th>典型表达</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>家庭陪伴与学习</td>
+<td>为不同家人提供适合其年龄、基础和偏好的交流、语言练习、知识讲解</td>
+<td>“陪我练十分钟英语。”</td>
+</tr>
+<tr>
+<td>生活信息服务</td>
+<td>查询天气、信息，提供烹饪建议和健康信息辅助</td>
+<td>“这些食材怎样做更合口味？”</td>
+</tr>
+<tr>
+<td>机器与项目管理</td>
+<td>掌握设备状态、服务、项目位置、开发环境和当前工作</td>
+<td>“家里哪台机器正在开发哪个项目？”</td>
+</tr>
+<tr>
+<td>开发任务监督</td>
+<td>跟踪 CC/Codex 等执行器，按目标持续推进、验证和汇报</td>
+<td>“昨晚的任务推进到哪里了？哪些问题需要我处理？”</td>
+</tr>
+<tr>
+<td>经验与技能积累</td>
+<td>收集各机器上的问题、经验教训和通用 Skill，并在后续任务中复用</td>
+<td>“把这次排查过程交给贾维斯整理。”</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-1-2" tabindex="-1">1.2 与历史文档的关系</h3>
+<ul>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%20%C2%B7%20%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88.md">贾维斯 · 实现方案</a>：保留最初目标和部署步骤，具体命令使用前仍需核对版本与环境。</li>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV2.0%20%C2%B7%20%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88%EF%BC%88%E7%AE%A1%E5%AE%B6%E7%89%88%EF%BC%89.md">贾维斯 V2.0 · 完整方案（管家版）</a>：保留资产台账、可观测、执行通道、Runbook、自愈和后台任务的完整能力目标。</li>
+<li><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV3.0.md">贾维斯 V3.0</a>：保留私有组网、云端与本地协作、分阶段验收和降低起步成本的方向。</li>
+<li>V4：补齐设备数量与真实用途，增加家庭服务、跨机器项目管理、经验与 Skill 管理、持续开发监督以及统一大屏。</li>
+</ul>
+<p>V4 对之前“只用现成工具拼出编排核心”的想法作了进一步收敛：需要一层轻量自研 Jarvis Core 来保存统一业务状态；模型推理、执行器和工作流仍使用现有能力。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 已确认信息与设备清单</h2>
+<h3 id="section-2-1" tabindex="-1">2.1 已确认的使用情况</h3>
+<ul>
+<li>HP 笔记本是公司电脑，也是本人主开发电脑。</li>
+<li>i7-10700F + RTX 4070 Ti SUPER 是家里主用电脑，目前使用 Windows 10。它可在以后改作服务器，但届时要先安排另一台家庭开发机器。</li>
+<li>有 10 台 i3-6100T，每台 16GB 内存、256GB 硬盘。</li>
+<li>HP ProDesk 600 G3 SFF 为 i5-7400（4 核 4 线程）、32GB 内存、256GB NVMe、Intel HD Graphics 630 核显。</li>
+<li>另一台桌机为第 7 代 i7、48GB 内存、256GB 硬盘，完整 CPU 型号和显卡情况仍待核实。</li>
+<li>NAS 是威联通 QNAP；已有 ChatGPT 订阅。</li>
+<li>自研系统具有 API，细节暂不方便提供。OA、Solar EMS 等接入先保留标准接口设计，不假设现有 API 的具体内容。</li>
+<li>用户希望能使用自研平台作为入口，家人也需要使用管家。</li>
+</ul>
+<h3 id="section-2-2" tabindex="-1">2.2 全部设备</h3>
+<p>按当前信息，共有 <strong>18 台电脑：15 台桌面机/小机与 3 台笔记本</strong>，另有 <strong>1 台 NAS、2 台云服务器</strong>。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>CPU / 内存</th>
+<th>存储 / 图形</th>
+<th>已知系统与用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>家庭主力电脑（原 3 号机）</td>
+<td>i7-10700F / 64GB</td>
+<td>硬盘待补充；RTX 4070 Ti SUPER 16GB</td>
+<td>Windows 10；家庭主用</td>
+</tr>
+<tr>
+<td>大内存节点（原 2 号机）</td>
+<td>Xeon E5-2696 v3 / 128GB</td>
+<td>硬盘待补充；RTX 2060 6GB</td>
+<td>原文档记为 Linux / Ubuntu，实际版本待核实</td>
+</tr>
+<tr>
+<td>批处理节点（原 1 号机）</td>
+<td>Xeon E5-2698B v3 / 64GB</td>
+<td>硬盘待补充；GTX 1070 8GB</td>
+<td>原文档记为 Linux / Ubuntu，实际版本待核实</td>
+</tr>
+<tr>
+<td>48G 桌机</td>
+<td>第 7 代 i7，完整型号待核实 / 48GB</td>
+<td>256GB，介质待确认；图形待核实</td>
+<td>系统待核实</td>
+</tr>
+<tr>
+<td>HP ProDesk 600 G3 SFF</td>
+<td>i5-7400（4C4T）/ 32GB</td>
+<td>256GB NVMe；Intel HD Graphics 630</td>
+<td>系统待核实</td>
+</tr>
+<tr>
+<td>i3 小机 × 10</td>
+<td>i3-6100T / 每台 16GB</td>
+<td>每台 256GB，介质与健康度待确认</td>
+<td>实际系统、机型、网络接口待补充</td>
+</tr>
+<tr>
+<td>公司 HP 笔记本</td>
+<td>Intel Core 7 240H / 64GB</td>
+<td>1TB；用户界面显示约 128MB 显存，完整适配器信息待确认</td>
+<td>Windows 10；公司主开发电脑</td>
+</tr>
+<tr>
+<td>联想笔记本</td>
+<td>Ryzen 7 PRO 4750U / 64GB</td>
+<td>512GB；Radeon Graphics，界面显示约 500MB 显存</td>
+<td>Windows 11</td>
+</tr>
+<tr>
+<td>Mac 笔记本</td>
+<td>完整型号与 CPU 待补充 / 8GB</td>
+<td>256GB；用户提供约 1.5GB 显存，图形型号待确认</td>
+<td>系统最高到 macOS 12</td>
+</tr>
+<tr>
+<td>威联通 QNAP</td>
+<td>型号、CPU、内存待补充</td>
+<td>盘位、磁盘、容量、RAID/卷配置待补充</td>
+<td>存储与备份</td>
+</tr>
+<tr>
+<td>阿里云广州</td>
+<td>2 核 / 2GB</td>
+<td>40GB / 3Mbps</td>
+<td>云端轻服务</td>
+</tr>
+<tr>
+<td>阿里云日本</td>
+<td>2 核 / 4GB</td>
+<td>80GB / 5Mbps</td>
+<td>网关、必要的海外访问与关键备份</td>
+</tr>
+</tbody></table></div>
+<p>说明：E5 机器的 CPU 路数、原三台桌机的磁盘和系统版本不能仅凭旧方案推定。“Ubuntu 26”暂视为用户此前的概括，需要实际版本号。笔记本界面中的少量显存可能只是核显预留内存，不能直接用来判断整机开发能力，也不能按独显显存估算 AI 性能。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 设计原则与总体架构</h2>
+<h3 id="section-3-1" tabindex="-1">3.1 设计原则</h3>
+<ol>
+<li><strong>统一状态</strong>：网页、大屏、手机和语音查询同一套机器、项目、任务、经验、技能与家庭档案。</li>
+<li><strong>根据事实汇报</strong>：状态带来源和时间；任务完成要有验收结果与产出物，未知信息明确标为未知。</li>
+<li><strong>云端推理与本地能力协作</strong>：复杂推理使用合适的云端模型；本地承担可胜任的感知、处理与执行任务，保留本地/云端选择权。</li>
+<li><strong>隐私模式可落实</strong>：选择隐私模式后，相关内容不进入云端推理或云端语音链路；必要时报告能力降级。</li>
+<li><strong>常驻服务与计算节点分离</strong>：低负载的控制、记录、查询与监控保持在线；重任务按需使用 GPU、E5 或其他节点。</li>
+<li><strong>目标驱动的持续工作</strong>：监督器依据任务目标、验收、预算与停止条件推进工作。</li>
+<li><strong>按身份开放能力</strong>：家庭成员、个人项目、公司项目和系统运维具有不同的数据范围与执行权限。</li>
+<li><strong>每步可验收</strong>：先实现真实的小场景，再扩大设备和任务数量。</li>
+</ol>
+<h3 id="section-3-2" tabindex="-1">3.2 总体架构</h3>
+<pre><code class="language-text">本人 / 家人
+    │
+    ├─ 自研网页与手机入口
+    ├─ 家庭大屏 / 个人管理大屏
+    ├─ 语音终端
+    └─ 开发工具、命令与事件接入
+    │
+    ▼
+Jarvis Core：身份与权限、机器与项目、任务状态、经验与技能、家庭档案
+    │
+    ├─ 家庭服务：聊天、语言练习、知识学习、天气与生活信息
+    ├─ 开发监督器：派发、跟踪、验收、续作、阻塞处理、汇报
+    ├─ n8n：流程、定时、通知与审批界面
+    ├─ 模型网关：路由、限额、调用记录与故障处理
+    ├─ 工具适配器：SSH、Docker、Git、NAS、自研 API 等
+    └─ 数据服务：业务库、Git 文档/Skill 仓库、检索索引、产出物与备份
+    │
+    ▼
+各设备上的采集组件 / 受控执行节点 / GPU 节点 / 家庭终端
+</code></pre>
+<p>入口访问 Jarvis Core，由 Core 根据身份、任务和策略决定如何调用模型、工作流或执行器。家庭信息、任务进度和运维操作不必全部经过海外模型网关；大文件和原始数据也不应为了统一入口而强制绕行云服务器。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 全部机器的安排规划</h2>
+<h3 id="section-4-1" tabindex="-1">4.1 10 台 i3 的建议分工</h3>
+<p>编号为规划编号，后续绑定实际主机名、序列号和网络身份。选择常驻机时，优先考虑稳定性、磁盘健康、散热、网络和实测整机功耗。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>角色</th>
+<th>建议运行内容</th>
+<th>开机策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i3-01</td>
+<td>管家控制与入口</td>
+<td>Jarvis Core、网页入口、n8n、任务派发与审批控制、WOL 控制、离线事件暂存</td>
+<td>常开</td>
+</tr>
+<tr>
+<td>i3-02</td>
+<td>轻量数据与应用服务</td>
+<td>业务状态库、Gitea、适量知识检索服务、基础指标与 Uptime Kuma、备份结果检查</td>
+<td>常开</td>
+</tr>
+<tr>
+<td>i3-03</td>
+<td>基础服务冷备</td>
+<td>可恢复的部署环境；定期恢复 i3-01/02 的备份，故障时人工接管</td>
+<td>默认关闭，演练时开启</td>
+</tr>
+<tr>
+<td>i3-04</td>
+<td>轻量测试</td>
+<td>新服务试装、配置验证、小项目测试；与日常服务分离</td>
+<td>按需</td>
+</tr>
+<tr>
+<td>i3-05</td>
+<td>轻量任务执行</td>
+<td>中小 Agent 任务、脚本、文档生成、轻量 CI；起步限制并发</td>
+<td>按需，有任务时保持在线</td>
+</tr>
+<tr>
+<td>i3-06</td>
+<td>经验与资料整理</td>
+<td>文件索引、经验整理、Skill 入库与同步、无需 GPU 的资料处理</td>
+<td>按需或定时</td>
+</tr>
+<tr>
+<td>i3-07</td>
+<td>家庭办公</td>
+<td>文档、浏览器、学习和远程访问，家人按权限使用</td>
+<td>使用时开启</td>
+</tr>
+<tr>
+<td>i3-08</td>
+<td>大屏与固定语音入口</td>
+<td>浏览器大屏、家庭控制入口；有合适音频设备后接语音</td>
+<td>按家庭需求；屏幕可单独休眠</td>
+</tr>
+<tr>
+<td>i3-09</td>
+<td>机动备用</td>
+<td>故障替换、临时项目或未来扩展</td>
+<td>默认关闭</td>
+</tr>
+<tr>
+<td>i3-10</td>
+<td>机动备用</td>
+<td>故障替换、实验或按实际价值转作其他用途</td>
+<td>默认关闭</td>
+</tr>
+</tbody></table></div>
+<p>基础服务先控制在两台常驻 i3 内。6100T 的 CPU 能力有限，内存容量不等于可无限增加服务和并发；数据库、索引、日志保留和工作流都需按实际负载调整。</p>
+<p>01/02 之间存在依赖，不能将两台机器简单视为高可用集群。主数据服务失效时，控制端应报告降级，暂存可保留的事件，并通过冷备和备份恢复。大屏终端常开时是额外的常开设备；其语音能力也要单独验收。</p>
+<p>有学习需求时，可从测试与备用机中选三台搭建独立集群实验环境。日常任务先使用简单、可恢复的部署结构。10 台小机的内存与磁盘是分散资源，需要任务调度或显式分布式软件才能协作，不能自动合成单机资源。</p>
+<h3 id="section-4-2" tabindex="-1">4.2 其他桌面机</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>主要角色</th>
+<th>用途</th>
+<th>开机策略与限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>家庭 i7-10700F + 4070 Ti SUPER</td>
+<td>家庭开发主力，兼任 GPU 节点</td>
+<td>日常开发；本地模型、ASR/TTS、向量、OCR、图像等 GPU 任务</td>
+<td>优先保障本人正在使用的工作；后台任务有资源配额，按时段运行</td>
+</tr>
+<tr>
+<td>第 7 代 i7 / 48GB</td>
+<td>后台开发与项目集成主机</td>
+<td>托管开发任务、项目环境、较大的知识处理、少量隔离环境</td>
+<td>有持续任务时保持运行；无任务可休眠。256GB 磁盘需先评估</td>
+</tr>
+<tr>
+<td>ProDesk i5-7400 / 32GB / 256GB NVMe</td>
+<td>预发布与恢复演练</td>
+<td>升级前验证、部署测试、完整应用恢复；虚拟化学习</td>
+<td>按需，优先与常驻服务隔离</td>
+</tr>
+<tr>
+<td>E5 / 128GB / RTX 2060</td>
+<td>大内存与多环境计算</td>
+<td>多个任务工作区、大内存处理、较重构建、虚拟化实验；2060 可作兼容的备用感知节点</td>
+<td>按需；任务期间保持在线。GPU 直通与软件兼容要另行核实</td>
+</tr>
+<tr>
+<td>E5 / 64GB / GTX 1070</td>
+<td>批处理与实验备用</td>
+<td>批量文件处理、离线分析、并行构建、已经验证兼容的 GPU 任务</td>
+<td>默认关闭。1070 需要匹配兼容的软件环境</td>
+</tr>
+</tbody></table></div>
+<p>4070 的 16GB 显存应按服务和任务分配。不能同时承诺大模型、ASR、TTS、OCR 均常驻且不限并发；优先保证交互任务，批处理排队，必要时按需装卸模型。</p>
+<p>Proxmox 优先在大内存 E5 或需要虚拟机隔离的 48G 主机上评估。具体落位取决于磁盘、主板支持、现有环境和并发需求；它是隔离与恢复工具，不能替代任务管理。家庭主力电脑的服务器化属于单独的迁移决策。</p>
+<h3 id="section-4-3" tabindex="-1">4.3 笔记本与家庭主力的安排</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>安排</th>
+<th>接入管家的范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公司 HP / 64GB / 1TB</td>
+<td>主开发与办公电脑</td>
+<td>本人指定的项目、任务状态和选择分享的经验；公司项目与个人项目分别管理</td>
+</tr>
+<tr>
+<td>联想 / 64GB / 512GB</td>
+<td>移动开发、第二开发机；未来可承担家庭主力开发</td>
+<td>个人项目、已接入的开发任务、设备状态与经验提交</td>
+</tr>
+<tr>
+<td>Mac / 8GB / 256GB / macOS 12</td>
+<td>辅助终端、文档阅读、远程使用、旧版 macOS 场景测试</td>
+<td>根据兼容情况接网页、SSH 或轻量组件；不依赖其承担核心常驻服务</td>
+</tr>
+</tbody></table></div>
+<p>默认优先保留家庭 4070 电脑的开发用途。如果以后将其改为专用 GPU 服务器，先以联想笔记本配外接显示器、键盘等方式验证家庭开发体验，再安排项目迁移。第 7 代桌机也可作为备用开发机，但不能在未测试前认定与现有主力体验相同。</p>
+<p>公司 HP 和家庭电脑的 Windows 10 版本、驱动和升级安排应单独核实。普通 Home/Pro 已结束常规支持，LTSC、ESU 等情况要看实际版本；公司电脑的系统安排遵循其实际管理条件。</p>
+<h3 id="section-4-4" tabindex="-1">4.4 NAS 与云服务器</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>主要角色</th>
+<th>内容与限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>QNAP</td>
+<td>集中存储与备份</td>
+<td>原始资料、家庭文件、项目归档、产出物、版本化备份。容器、快照、SMART 等能力以具体型号和卷配置为准</td>
+</tr>
+<tr>
+<td>日本云 2C4G / 80GB / 5Mbps</td>
+<td>模型网关、必要的海外访问、关键异地备份</td>
+<td>只保存容量允许的关键加密副本；80GB 是总磁盘容量，不能据此认为能备份整台 NAS</td>
+</tr>
+<tr>
+<td>广州云 2C2G / 40GB / 3Mbps</td>
+<td>公网回调与外部监测</td>
+<td>必须公网可达的回调、轻量页面和从外部进行的可用性检查；不承担主要大文件传输</td>
+</tr>
+</tbody></table></div>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. 身份、家庭档案与权限</h2>
+<h3 id="section-5-1" tabindex="-1">5.1 使用者档案</h3>
+<p>每位使用者有自己的身份、偏好和数据范围，不按家庭角色推定兴趣或学习水平。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>使用者</th>
+<th>默认服务方向</th>
+<th>可配置内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本人</td>
+<td>家庭服务、项目管理、任务监督和运维控制</td>
+<td>项目范围、执行授权、通知、预算、模型与隐私模式</td>
+</tr>
+<tr>
+<td>妻子</td>
+<td>聊天、语言练习、知识学习、个人事项</td>
+<td>目标语言、水平、兴趣、纠错方式、回答风格</td>
+</tr>
+<tr>
+<td>儿子</td>
+<td>年龄适合的语言与知识学习、兴趣交流</td>
+<td>年龄阶段、学习目标、练习方式、家长可管理的使用规则</td>
+</tr>
+<tr>
+<td>爸妈</td>
+<td>聊天、天气、烹饪、生活与健康信息辅助</td>
+<td>大字、简洁回答、语音速度、口味和经本人选择记录的偏好</td>
+</tr>
+</tbody></table></div>
+<p>个人学习进度、聊天记忆、健康记录按个人权限保存。家庭共同日程、共同待办和共享知识进入家庭共享范围。公司项目与个人项目分别标记，上传和检索都遵循项目的可共享范围。</p>
+<h3 id="section-5-2" tabindex="-1">5.2 身份与权限的关系</h3>
+<ul>
+<li>账号负责确定身份和可访问范围。</li>
+<li>声纹可帮助选择档案或提示使用者，但不能成为敏感查询和系统操作的唯一鉴权依据。</li>
+<li>未确定身份时，可提供普通公开知识服务，私密内容要求进一步确认身份。</li>
+<li>能查询某台机器，不等于能修改它；能看到任务，不等于能给执行器发送续作指令。</li>
+<li>每个后台执行节点使用范围受限的凭证，任务权限与任务本身关联。</li>
+</ul>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 机器与项目管理</h2>
+<h3 id="section-6-1" tabindex="-1">6.1 每台已接入机器知道什么</h3>
+<p>设备身份、CPU/内存/磁盘/GPU、系统版本、资源使用、服务状态、当前项目与任务、最近上报时间、备份状态和恢复方法。</p>
+<p>每台设备可部署轻量采集组件，或通过适合的只读通道接入。项目目录由用户登记或批准发现；不默认扫描整台机器的所有文件。</p>
+<p>建议起步时：机器心跳约每 60 秒；资源指标按负载选择 30～60 秒；任务使用事件推送，另有心跳确认连接。这些是待调优配置，不是固定性能承诺。</p>
+<p>离线设备显示最后在线时间、最后已知项目与状态。管家区分机器失联、执行器停止、任务等待输入和无任务空闲。</p>
+<h3 id="section-6-2" tabindex="-1">6.2 项目档案</h3>
+<p>每个项目使用稳定的项目 ID，记录：</p>
+<ul>
+<li>仓库与项目说明、关联机器和工作目录、当前分支或 worktree。</li>
+<li>环境依赖、启动与验证方法、部署目标、配置与密钥引用。</li>
+<li>当前阶段、目标与验收条件、待办、阻塞和已知问题。</li>
+<li>相关任务、会话、提交、构建、测试、经验、Skill 和产出物。</li>
+</ul>
+<p>同一项目可以存在多个工作副本，管家记录各副本的机器、分支与状态，而不是把某个本地目录当成项目唯一身份。</p>
+<h3 id="section-6-3" tabindex="-1">6.3 自动发现与明确登记结合</h3>
+<p>自动采集擅长发现进程、服务和仓库状态；它不能可靠推断所有工作的业务意图。项目目标、里程碑、敏感范围与“这次在做什么”需要明确登记或由用户确认。</p>
+<p>可提供简短入口：“在这台机器上登记当前项目”“把这个任务关联到某项目”“结束本次开发并归档总结”。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 经验、问题与通用 Skill 管理</h2>
+<h3 id="section-7-1" tabindex="-1">7.1 收集方式</h3>
+<p>网页或手机提交、命令入口、开发工具集成、任务结束总结、语音记录均可进入统一收件区。用户可以选择提交一段说明、日志摘录、链接、文件或已有 Skill。</p>
+<p>公司和个人项目分别确定可上传的内容，密钥等敏感内容应在出网或共享前处理。原始记录与摘要可采用不同保存和共享范围。</p>
+<h3 id="section-7-2" tabindex="-1">7.2 整理与复用链路</h3>
+<pre><code class="language-text">问题与原始记录
+    → 关联机器、项目和任务
+    → 整理背景、排查、解决方法与验证结果
+    → 标记适用环境，合并重复经验
+    → 提炼可复用步骤
+    → 形成有版本的 Skill 或 Runbook
+    → 在后续任务中检索、提供并记录使用结果
+</code></pre>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>内容</th>
+<th>建议字段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>问题 / 经验</td>
+<td>来源、时间、环境、症状、原因或未确定部分、处理步骤、验证证据、适用范围</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>名称、用途、触发条件、前置条件、步骤、可选脚本、验证方式、版本、来源与权限要求</td>
+</tr>
+<tr>
+<td>Runbook</td>
+<td>运维对象、检查步骤、执行条件、变更与恢复方法、验证、所需权限</td>
+</tr>
+<tr>
+<td>使用记录</td>
+<td>哪个任务用了哪个版本、结果如何、是否发现新的限制</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-7-3" tabindex="-1">7.3 存储与发布</h3>
+<ul>
+<li>Git 保存正式的经验文档、Skill 与 Runbook，便于版本比较和追溯。</li>
+<li>业务库保存关联、状态、标签和验证记录。</li>
+<li>检索索引帮助查找，原文和正式版本仍有明确来源。</li>
+<li>NAS 保存原始附件和归档，工作副本与活跃数据库使用合适的本地快速磁盘。</li>
+<li>项目经验、家庭共享知识、个人学习记录分别管理访问范围。</li>
+</ul>
+<p>Skill 可处于“待整理、待验证、可用、已废弃”等状态。新提交的内容不自动成为全局规则；正式发布后按各工具的原生格式提供。项目自身的规则文件与中央 Skill 分别管理，发生冲突时按项目范围、有效版本和明确优先级处理。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. CC / Codex 的全天监督与持续开发</h2>
+<h3 id="section-8-1" tabindex="-1">8.1 全天在线的含义</h3>
+<p>管家的状态服务、事件收集和监督调度保持在线。执行节点有任务时保持运行；没有任务时可按策略休眠。模型只在需要理解、规划、总结或执行任务时调用，不必为监控而持续推理。</p>
+<p>关掉 HP 或家庭电脑后，后台节点上的任务仍可继续；仅在该电脑上运行的任务不能因管家在线而自动继续。跨机器接续要有仓库、必要环境、工作状态和执行器可恢复条件，不能只复制一个会话 ID。</p>
+<h3 id="section-8-2" tabindex="-1">8.2 两种接入模式</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>管家职责</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>跟踪本人手动开启的会话</td>
+<td>汇总可获取的工具事件、Git 变更、测试和产出，显示状态并提醒</td>
+<td>对已有桌面或 IDE 会话的可见范围取决于版本与接入方式</td>
+</tr>
+<tr>
+<td>管家托管任务</td>
+<td>创建任务、选择节点、启动执行器、保存会话、验收、续作与停止</td>
+<td>先支持通过官方 CLI / 程序接口创建的任务，再扩展其他入口</td>
+</tr>
+</tbody></table></div>
+<p>不能仅凭某工具支持程序接口，就认定管家能直接控制所有既有桌面窗口。对不支持直接接入的会话，可以先提供登记和只读证据跟踪。</p>
+<h3 id="section-8-3" tabindex="-1">8.3 官方执行器接入方向</h3>
+<ul>
+<li>Codex：非交互执行的 JSONL 事件可提供执行状态；App Server 提供会话恢复、计划、变更、执行与完成事件等接口。</li>
+<li>Claude Code：结构化输出、Hooks 和会话恢复可用于记录活动与继续指定会话。</li>
+<li>两类工具都应通过各自适配器转为统一任务事件。部署时核实实际版本、认证方式、许可范围和错误处理。</li>
+</ul>
+<p>依据：<a href="https://learn.chatgpt.com/docs/app-server">Codex App Server</a>、<a href="https://learn.chatgpt.com/docs/non-interactive-mode">Codex 非交互模式</a>、<a href="https://code.claude.com/docs/en/headless">Claude Code 编程接口</a>、<a href="https://code.claude.com/docs/en/hooks">Claude Code Hooks</a>。</p>
+<h3 id="section-8-4" tabindex="-1">8.4 任务创建时的必要信息</h3>
+<p>目标、项目与工作副本、验收条件、可执行范围、执行节点或资源需求、时间/费用/重试边界、停止条件、产出位置、需要用户决定的事项。</p>
+<p>“继续开发”应对应明确的目标和待办。第一阶段结束后，监督器读取证据并决定下一步，不把“说完一轮”直接当成“项目完成”。</p>
+<h3 id="section-8-5" tabindex="-1">8.5 统一任务状态</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+<th>监督动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>待执行</td>
+<td>排队或等待节点可用</td>
+<td>按优先级与资源派发，必要时唤醒节点</td>
+</tr>
+<tr>
+<td>执行中</td>
+<td>有有效执行活动</td>
+<td>记录事件；避免重复派发同一任务</td>
+</tr>
+<tr>
+<td>验证中</td>
+<td>检查阶段产出与验收条件</td>
+<td>运行相应验证、收集测试或构建证据</td>
+</tr>
+<tr>
+<td>等待用户</td>
+<td>需要明确输入或授权</td>
+<td>告知具体缺项，收到答复后再继续依赖它的工作</td>
+</tr>
+<tr>
+<td>等待资源 / 额度</td>
+<td>节点、网络、登录或额度暂不可用</td>
+<td>保留状态，按允许策略恢复；不擅自切换付费方式</td>
+</tr>
+<tr>
+<td>阻塞</td>
+<td>已有证据表明无法继续，或重复失败达到配置上限</td>
+<td>整理问题、已尝试方法与建议，交给用户处理</td>
+</tr>
+<tr>
+<td>暂停</td>
+<td>用户主动暂停</td>
+<td>保留恢复信息，不自动续作</td>
+</tr>
+<tr>
+<td>已完成</td>
+<td>明确的目标通过验收</td>
+<td>归档成果、总结与经验；按项目计划决定是否有新的独立任务</td>
+</tr>
+<tr>
+<td>失败 / 取消</td>
+<td>本次执行失败或任务被取消</td>
+<td>标记结果与可恢复信息，避免误报完成</td>
+</tr>
+</tbody></table></div>
+<p>机器离线、会话连接断开、日志暂时安静都是观察信号，需要结合心跳、工具事件和任务环境判断。长时间编译不等于卡住，提交数量也不等于有效进展。</p>
+<h3 id="section-8-6" tabindex="-1">8.6 监督闭环</h3>
+<pre><code class="language-text">明确目标与验收
+    → 派发到合适节点
+    → 接收事件、心跳、Git 与测试结果
+    → 判断正在推进 / 等待 / 重复失败 / 阶段完成
+    → 验证结果
+    → 续作下一明确步骤，或请求用户处理阻塞
+    → 达成目标后归档产出与经验
+</code></pre>
+<p>监督器的续作逻辑以确定性状态规则为基础，必要时调用模型总结或提出下一步。一次恢复操作、一次重试和一次新任务应有不同标识，避免在断网重连时重复执行。</p>
+<h3 id="section-8-7" tabindex="-1">8.7 工作区与人工开发协作</h3>
+<ul>
+<li>托管任务使用独立工作目录、Git worktree 或隔离环境。</li>
+<li>同一工作副本默认只允许一个写入执行者；多人或多个执行器协作时使用明确分支和合并流程。</li>
+<li>人工接管、暂停和取消具有明确优先级，监督器不能把用户停止当成需要自动恢复的故障。</li>
+<li>任务完成证据包含适合该变更的验证、相关提交或变更、产出物与遗留事项；不要求为低影响变更无意义地重复测试。</li>
+</ul>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9. 家庭聊天、学习与生活服务</h2>
+<h3 id="section-9-1" tabindex="-1">9.1 日常聊天与个人记忆</h3>
+<p>提供自然交流，按使用者偏好调整回答长度、语音速度与风格。个人记忆由本人选择保存、修改和删除；不默认把所有家庭对话永久保存，也不把个人内容自动发布为共享知识。</p>
+<h3 id="section-9-2" tabindex="-1">9.2 语言陪练</h3>
+<p>目标语言与当前水平分别配置，可使用日常交流、旅行、学校、工作等情景。练习支持自由对话、重点表达、纠错、解释与复习。</p>
+<p>学习记录保存目标、最近练习、薄弱点和复习建议。发音反馈属于需要单独实测的能力，不能仅凭普通语音转文字可靠评价所有发音细节。</p>
+<h3 id="section-9-3" tabindex="-1">9.3 历史与知识学习</h3>
+<p>按年龄和基础解释概念，结合故事、时间线、地图或小练习帮助理解。涉及事实争议时区分资料证据与解释；需要更新的知识查询实时来源。孩子的年龄与学习目标后续确认，不预设具体年级或能力。</p>
+<h3 id="section-9-4" tabindex="-1">9.4 天气、信息与烹饪</h3>
+<p>天气明确地点、预报时间与查询时间；新闻、政策、价格等会变化的信息也标记来源和时间。</p>
+<p>做饭建议结合食材、人数、口味、饮食限制与厨具。可提供分步语音指导、计时与替代方案，饮食偏好按家人各自选择保存。</p>
+<h3 id="section-9-5" tabindex="-1">9.5 健康信息辅助</h3>
+<p>帮助整理不适表现、持续时间和相关背景，查询权威健康资料，并提示需要专业帮助的情况。回答区分一般信息与个体判断，不把不确定推测当作确诊，不自动生成并执行诊疗或用药决策。</p>
+<p>健康信息按个人范围保存。遇到可能紧急的情况，服务应明确提示及时寻求专业医疗或急救帮助；具体回答需根据问题、所在地和可靠来源生成。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10. 网页、大屏、手机与语音</h2>
+<h3 id="section-10-1" tabindex="-1">10.1 三类大屏视图</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>视图</th>
+<th>主要内容</th>
+<th>使用范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>家庭视图</td>
+<td>天气、共同日程与待办、适合共享的信息、学习入口</td>
+<td>家庭共享</td>
+</tr>
+<tr>
+<td>个人管理视图</td>
+<td>机器、项目、任务、阻塞、审批、成果、费用与资源使用</td>
+<td>按本人或授权管理者权限</td>
+</tr>
+<tr>
+<td>个人学习视图</td>
+<td>练习记录、进度、复习计划与学习资料</td>
+<td>按个人档案权限</td>
+</tr>
+</tbody></table></div>
+<p>家庭大屏默认使用适合共享的视图。进入个人管理视图需有相应身份；私密项目和健康信息不因屏幕在家里就自动公开。</p>
+<h3 id="section-10-2" tabindex="-1">10.2 管理视图要展示什么</h3>
+<ul>
+<li>机器在线状态、资源使用、当前任务与最后上报时间。</li>
+<li>项目所处阶段、关联机器、目标和待办。</li>
+<li>CC/Codex 的真实活动、当前步骤、阻塞与验证结果。</li>
+<li>待本人处理的输入、审批、登录或决策。</li>
+<li>新产出、经验和 Skill 版本。</li>
+<li>能获得的费用与用量；估算和未知分别标记。</li>
+</ul>
+<p>有可衡量里程碑时展示完成比例，否则显示步骤与证据。任务详情可以追溯到机器、会话、变更、测试和产出物，不根据输出字数编造进度百分比。</p>
+<h3 id="section-10-3" tabindex="-1">10.3 同一份状态用于语音</h3>
+<p>“昨晚项目推进到哪里了？”“有哪些任务需要我处理？”“陪我练十分钟英语。”等请求由同一 Core 处理。语音识别后的系统操作仍走身份与执行权限检查。</p>
+<h3 id="section-10-4" tabindex="-1">10.4 语音落地路径</h3>
+<p>先做手机或网页按键语音，再做固定终端和连续对话，最后完善自定义唤醒词、打断与声纹档案选择。</p>
+<p>ASR/TTS 的候选可延续 V3 的 FunASR、SenseVoice、CosyVoice 等方向，最终按中文效果、CPU/GPU 占用、延迟和兼容性实测选择。家庭主力 GPU 电脑关机时，要明确可用的 CPU 或经用户选择的云端语音路径；隐私模式不得自动绕到云端。</p>
+<p>V2/V3 的约 1.2～2.5 秒预算只能作为“说完后到第一段有效语音”的待测目标，不能当作所有问题完整回答的时长。复杂查询和开发任务采用确认接收、后台执行、结果推送。</p>
+<p>家庭语音终端需要合适的麦克风、扬声器、网络和权限设置。唤醒检测、音频上传与录音保存分别配置，普通会话无需持续存档环境录音。</p>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">11. 技术选型与各组件职责</h2>
+<h3 id="section-11-1" tabindex="-1">11.1 起步采用轻量业务核心</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>层</th>
+<th>建议方向</th>
+<th>职责与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>业务核心</td>
+<td>轻量自研 Jarvis Core；FastAPI 可作为候选</td>
+<td>身份、范围、项目与任务、状态、经验和技能关联、查询与调度</td>
+</tr>
+<tr>
+<td>业务状态库</td>
+<td>PostgreSQL 可作为候选</td>
+<td>保存正式状态、事件索引、关联与任务队列；低负载起步可先用数据库队列</td>
+</tr>
+<tr>
+<td>工作流</td>
+<td>n8n</td>
+<td>定时、通知、审批界面和外部流程；执行许可由 Core 验证</td>
+</tr>
+<tr>
+<td>模型网关</td>
+<td>New-API 或经核实满足需求的同类网关</td>
+<td>模型路由、限额、可获得的调用记录、费用和故障处理</td>
+</tr>
+<tr>
+<td>早期对话入口</td>
+<td>Open WebUI 可选</td>
+<td>快速验证聊天与知识查询；自研平台负责最终统一业务体验</td>
+</tr>
+<tr>
+<td>工具与适配器</td>
+<td>MCP 与受控 API</td>
+<td>暴露能力；权限、业务校验和审计仍由服务端落实</td>
+</tr>
+<tr>
+<td>开发执行器</td>
+<td>Codex / Claude Code 官方 CLI 或程序接口</td>
+<td>根据受控任务执行代码、文档与其他工作</td>
+</tr>
+<tr>
+<td>文档与 Skill</td>
+<td>Git / Gitea</td>
+<td>版本化原文、脚本、资源和发布记录</td>
+</tr>
+<tr>
+<td>检索</td>
+<td>小规模先用简单检索，规模与效果需要时引入 Qdrant 等</td>
+<td>提供资料检索，不替代原始来源和正式记录</td>
+</tr>
+<tr>
+<td>可观测</td>
+<td>Uptime Kuma、基础指标；需要时加入 Prometheus/Grafana/Loki</td>
+<td>监测、诊断与保留适量日志</td>
+</tr>
+</tbody></table></div>
+<p>不为起步同时引入所有组件。复杂队列、多执行器并发、长任务恢复或高流量出现实际需求后，再扩大实现。</p>
+<h3 id="section-11-2" tabindex="-1">11.2 Core API 的业务契约</h3>
+<p>至少覆盖身份与档案、机器和项目、任务与事件、审批、经验和技能、知识查询、家庭会话和状态摘要。入口之间通过统一契约复用能力。</p>
+<p>模型接口是否采用 OpenAI 兼容形式，与业务 API 的职责分开。单个聊天接口不承担所有任务状态、权限和资料管理。</p>
+<h3 id="section-11-3" tabindex="-1">11.3 最小数据模型</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>关键关联</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>使用者 / 家庭档案</td>
+<td>数据范围、偏好、学习与个人记忆</td>
+</tr>
+<tr>
+<td>机器 / 服务</td>
+<td>硬件、环境、状态、时间、恢复信息</td>
+</tr>
+<tr>
+<td>项目 / 工作副本</td>
+<td>仓库、目录、分支、机器、目标和规则</td>
+</tr>
+<tr>
+<td>任务 / 执行尝试 / 会话</td>
+<td>项目、节点、执行器、目标、状态、预算与产出</td>
+</tr>
+<tr>
+<td>事件 / 验证 / 产出物</td>
+<td>来源、时间、序号或幂等标识、证据、权限范围</td>
+</tr>
+<tr>
+<td>经验 / Skill / Runbook</td>
+<td>来源、版本、验证、适用范围与使用记录</td>
+</tr>
+<tr>
+<td>审批 / 变更 / 备份</td>
+<td>对应任务与具体动作、决定、恢复信息和结果</td>
+</tr>
+</tbody></table></div>
+<p>执行节点离线时可暂存事件，恢复后按标识补交。进度汇报带最近数据时间；缺失或估算字段不伪装成确定事实。</p>
+</section>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">12. 私有组网与执行接入</h2>
+<h3 id="section-12-1" tabindex="-1">12.1 网络方向</h3>
+<p>以 Tailscale 等私有组网为起步方向；费用、设备限制和实际功能在部署时核实。Headscale/DERP 自建作为以后有明确需求时的选项。</p>
+<p>公网入口仅承担必须公开的回调或分享服务，并配置身份验证、HTTPS 与必要的访问限制。日常管理界面和数据库优先在私网访问。</p>
+<p>日本服务器可承担必要的模型访问出口，但机器心跳、原始文件和家庭数据不因统一管理而全部绕行海外。脱敏处理应在内容出网前完成，具体规则和还原方式按任务场景验证。</p>
+<h3 id="section-12-2" tabindex="-1">12.2 执行通道</h3>
+<p>Linux 可用专用账号与受限 SSH；Windows 按实际系统评估适合的采集与执行通道；容器、虚拟机、NAS、Git 和业务系统优先使用明确权限的 API。</p>
+<p>每个自研系统适配器可提供五类能力：状态、日志、业务只读查询、运维变更、业务动作。后三类中的写入和业务控制按风险策略授权。具体 OA/EMS 接入等待真实接口资料。</p>
+</section>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">13. 安全、审批、审计与停止</h2>
+<h3 id="section-13-1" tabindex="-1">13.1 操作风险分级</h3>
+<p>沿用 L0～L3 的思路，但按对象、环境与影响判定，不能只根据命令名称分类。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>等级</th>
+<th>示例</th>
+<th>默认策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>L0</td>
+<td>在授权范围内查状态、读日志、查知识和任务</td>
+<td>自动查询并留必要记录</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>在独立工作区生成文档、修改代码、运行适合的验证、可恢复的整理</td>
+<td>在任务授权范围内自动执行，记录结果</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>部署、修改运行配置、生产服务重启、业务库写入、覆盖或删除文件</td>
+<td>审批明确的动作；准备适合的备份或恢复方法，再执行与验证</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>删除不可替代数据、修改关键权限、付款、实际业务控制指令</td>
+<td>审批与可靠的二次确认，明确范围及恢复限制</td>
+</tr>
+</tbody></table></div>
+<p>生成一份测试文档与覆盖正式资料、重启测试容器与重启关键生产服务应有不同判定。</p>
+<h3 id="section-13-2" tabindex="-1">13.2 审批与执行绑定</h3>
+<p>审批对应具体任务、目标、操作内容和有效范围。待审批内容改变后重新核对授权；n8n 的按钮只是交互入口，不能独立绕过 Core 的许可检查。</p>
+<p>急停或暂停应停止新派发，并向执行节点传递停止请求；无法瞬时安全中止的步骤记录状态并采取适合的停止方式。用户主动暂停后不自动恢复。</p>
+<h3 id="section-13-3" tabindex="-1">13.3 凭证、内容与记录</h3>
+<p>凭证使用受限账户和明确的密钥引用，存储方式按可用密钥管理能力选定。不默认认为某个密码管理工具可以直接提供所有短期凭证功能。</p>
+<p>日志、外部资料、经验和 Skill 中的文本是来源内容，不能未经检查转为系统执行指令。记录包括请求、判断、授权、执行、验证和结果，并按个人/项目权限限制访问。</p>
+</section>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">14. 存储、备份、监控与成本</h2>
+<h3 id="section-14-1" tabindex="-1">14.1 存储安排</h3>
+<ul>
+<li>活跃数据库、任务工作区和经常运行的虚拟机优先放合适的本机快速磁盘。</li>
+<li>NAS 汇聚原始资料、归档与版本化备份。</li>
+<li>256GB 可起步，但要核实余量、介质、健康和写入负载。虚拟机、镜像、日志与模型文件需要明确配额和清理策略。</li>
+<li>48G 桌机、E5 和 GPU 主机的磁盘情况是扩容决策的重要依据；确认需求后再购买。</li>
+</ul>
+<h3 id="section-14-2" tabindex="-1">14.2 恢复职责</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>恢复安排</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i3-01/02 基础服务</td>
+<td>版本化备份到 NAS；i3-03 定期恢复并验证</td>
+</tr>
+<tr>
+<td>项目与完整应用</td>
+<td>ProDesk i5 进行恢复演练和预发布验证</td>
+</tr>
+<tr>
+<td>Git 与 Skill</td>
+<td>版本记录加独立备份，不仅保留在线仓库</td>
+</tr>
+<tr>
+<td>任务记录与产出物</td>
+<td>状态库备份、附件归档、保留恢复所需映射</td>
+</tr>
+<tr>
+<td>关键资料</td>
+<td>在 NAS 之外保留合适的异地或离线副本</td>
+</tr>
+</tbody></table></div>
+<p>以多份副本、不同介质和异地副本为目标；只有完成实际配置与恢复演练后，才记录已达到的备份保障。NAS 内部复制、RAID 或同机快照不能覆盖整台设备损坏的情况。</p>
+<h3 id="section-14-3" tabindex="-1">14.3 监控重点</h3>
+<p>机器心跳、服务健康、磁盘余量、备份成功、任务阻塞、执行器登录/额度、GPU 资源、证书与必要的 NAS 状态。告警区分需要用户处理、可以按已授权策略处理和仅需记录的情况。</p>
+<p>正常状态不持续打扰家人。完成、失败、需要决策和重要状态变化才推送；用户选择的晨报汇总机器、任务成果、备份与费用。</p>
+<h3 id="section-14-4" tabindex="-1">14.4 费用与功耗</h3>
+<p>区分实际 API 账单、工具能提供的用量、订阅额度以及估算费用。订阅登录与按量 API 分别管理；额度耗尽不默认转为付费调用。</p>
+<p>CPU 的 TDP 不是整机待机功耗。对常驻 i3、NAS、GPU 主机和 E5 分别测量闲置、典型任务和满载功耗，再配置开关机策略。每增加 10W 的全年持续负载，理论上增加约 87.6kWh 用电，实际费用按当地电价计算。</p>
+</section>
+<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">15. 实施顺序与验收</h2>
+<p>阶段名称代表顺序，不承诺固定周数。家庭服务与开发管理并行验证，不必等所有机器接入后才使用。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>建设内容</th>
+<th>验收标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S0 基础与首批入口</td>
+<td>核实设备、私有访问、两台常驻 i3、Core 基础、身份与备份；家庭文字聊天、个人项目登记</td>
+<td>手机可访问；不同账号只看到其范围；一个真实项目有机器与目录记录</td>
+</tr>
+<tr>
+<td>S1 状态与经验</td>
+<td>一张大屏、机器采集、一个 CC 或 Codex 任务接入、经验收件和检索</td>
+<td>任务状态有来源与时间；可见测试/产出；一条经验可提交、检索和复用</td>
+</tr>
+<tr>
+<td>S2 托管持续开发</td>
+<td>独立工作区、持久任务队列、监督状态机、验收、有限重试、暂停与恢复</td>
+<td>一个明确目标能持续推进到验收，或准确报告阻塞；不会重复派发，不自动恢复用户暂停</td>
+</tr>
+<tr>
+<td>S3 家庭学习与语音</td>
+<td>家庭档案、语言与知识学习、按键语音、大屏家庭视图；语音路线实测</td>
+<td>家人可独立使用；学习记录按人保存；GPU 主机关闭时语音可用范围清楚</td>
+</tr>
+<tr>
+<td>S4 扩展与主动服务</td>
+<td>更多机器与执行器、唤醒终端、自研 API、Runbook、晨报和受控自愈</td>
+<td>真实系统接入通过验收；重要动作有授权、记录和验证，恢复方法经过演练</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-15-1" tabindex="-1">15.1 第一版重点验收场景</h3>
+<ol>
+<li>家庭成员使用各自身份进行聊天、信息查询或简单学习。</li>
+<li>登记一个真实个人项目，看到其所在机器、目录、当前目标与任务。</li>
+<li>在后台节点运行一个官方执行器任务，大屏显示实际步骤、状态、阻塞和产出。</li>
+<li>从任意已接入入口提交一条经验，整理后能够查到并关联原项目。</li>
+<li>将一条经过验证的经验整理为可复用 Skill，后续任务能获得指定版本。</li>
+<li>机器关机、任务暂停和数据过期时，网页与管家回答保持一致。</li>
+<li>从备份恢复最小核心并验证项目与任务记录。</li>
+</ol>
+<h3 id="section-15-2" tabindex="-1">15.2 语音与硬件实测</h3>
+<ul>
+<li>中文 ASR 的准确率、CPU/GPU 耗时、噪声环境与长辈使用效果。</li>
+<li>TTS 首段延迟、音质、语速与资源占用。</li>
+<li>出网模型的首字延迟和语音首段响应。</li>
+<li>4070 上模型与感知服务的显存占用、并发和任务切换。</li>
+<li>i3 的业务服务、采集与轻量任务负载，以及数据库/日志磁盘增长。</li>
+<li>WOL 成功率、节点从唤醒到可执行的耗时和错误恢复。</li>
+<li>24 小时托管任务的中断、重连、额度、停止和验收行为。</li>
+</ul>
+</section>
+<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">16. 待确认事项</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>缺少的信息</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>48G 桌机</td>
+<td>完整 CPU、图形、系统、硬盘介质与健康</td>
+<td>并发、虚拟化和存储安排</td>
+</tr>
+<tr>
+<td>原三台桌机</td>
+<td>磁盘、CPU 路数、系统版本、主板与网络</td>
+<td>工作区、备份、直通与唤醒</td>
+</tr>
+<tr>
+<td>10 台 i3</td>
+<td>具体机型、硬盘、系统、网络、功耗与音视频接口</td>
+<td>常驻机选择、终端和备用部署</td>
+</tr>
+<tr>
+<td>NAS</td>
+<td>型号、内存、盘位与容量、卷配置和现有备份</td>
+<td>快照、备份容量、容器与监测能力</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>交换机、网速、已有组网、云端访问与可用出口</td>
+<td>远程访问、同步和语音路径</td>
+</tr>
+<tr>
+<td>现有软件</td>
+<td>已运行服务、CC/Codex 版本与当前使用方式</td>
+<td>接入可见范围与托管方案</td>
+</tr>
+<tr>
+<td>家庭设置</td>
+<td>儿子年龄、目标语言、各人偏好与共享范围</td>
+<td>教学方式、个人档案与界面</td>
+</tr>
+<tr>
+<td>公司项目</td>
+<td>可共享的项目/经验范围、可用接入条件</td>
+<td>HP 接入与内容归档</td>
+</tr>
+<tr>
+<td>执行策略</td>
+<td>首批项目、验收、额度/费用和自动执行范围</td>
+<td>持续任务与审批配置</td>
+</tr>
+</tbody></table></div>
+<p>这些缺项按实施阶段补齐，不阻塞已经可以验证的小场景。</p>
+</section>
+<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">17. 官方参考与维护方式</h2>
+<p>以下资料用于核实接口与相关硬件事实；部署时仍需检查实际版本。硬件角色、阶段顺序和业务模型是本方案的设计建议。</p>
+<ul>
+<li><a href="https://learn.chatgpt.com/docs/app-server">Codex App Server</a>：任务事件、计划、变更、会话与控制接口。</li>
+<li><a href="https://learn.chatgpt.com/docs/non-interactive-mode">Codex 非交互模式</a>：结构化事件与非交互执行。</li>
+<li><a href="https://code.claude.com/docs/en/headless">Claude Code 编程接口</a>：结构化输出和会话恢复。</li>
+<li><a href="https://code.claude.com/docs/en/hooks">Claude Code Hooks</a>：生命周期事件与接入。</li>
+<li><a href="https://www.intel.com/content/www/us/en/products/sku/90734/intel-core-i36100t-processor-3m-cache-3-20-ghz/specifications.html">Intel i3-6100T 规格</a>。</li>
+<li><a href="https://www.intel.com/content/www/us/en/products/sku/97147/intel-core-i57400-processor-6m-cache-up-to-3-50-ghz/specifications.html">Intel i5-7400 规格</a>。</li>
+<li><a href="https://www.intel.com/content/www/us/en/products/sku/241653/intel-core-7-processor-240h-24m-cache-up-to-5-20-ghz/specifications.html">Intel Core 7 240H 规格</a>。</li>
+<li><a href="https://www.amd.com/en/support/downloads/drivers.html/processors/ryzen-pro/ryzen-pro-4000-series/amd-ryzen-7-pro-4750u.html">AMD Ryzen 7 PRO 4750U 规格</a>。</li>
+<li><a href="https://www.proxmox.com/en/products/proxmox-virtual-environment/requirements">Proxmox 硬件要求</a>：虚拟化支持、宿主机资源和存储要求。</li>
+<li><a href="https://devblogs.microsoft.com/directx/gpus-in-the-task-manager/">微软关于 GPU 内存的说明</a>：核显预留与共享内存。</li>
+<li><a href="https://support.microsoft.com/en-us/windows/deployment/updates-lifecycle/windows-10-support-has-ended-on-october-14-2025">Windows 10 支持说明</a>。</li>
+<li><a href="https://docs.nvidia.com/cuda/archive/13.0.1/cuda-toolkit-release-notes/index.html">NVIDIA CUDA 13.0 发布说明</a>：Pascal 等旧架构的编译与库支持变化。</li>
+</ul>
+<p>Markdown 是本设计的内容源，HTML 从同一内容生成。后续修订先更新本文，再重新生成 HTML，使两种格式保持一致。硬件台账、阶段验收和待确认事项应随实际情况更新。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AFV4.0%20%C2%B7%20%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%BE%E5%A4%87%E8%A7%84%E5%88%92.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+/** Local admission for a later matrix epoch. Defaults are null; this never queries or starts anything. */
+import {createHash} from 'node:crypto';
+import {safeReadLocal,settleEvidenceReads} from './factory-repair-evidence-read-r26.mjs';
+import {canonical} from './run-factory-main-repair-r26.mjs';
+import {assertBoundProtectionActivationR32R2,assertBoundProtectionContractR32R2} from './verify-factory-bound-protection-contract-r32-r2.mjs';
+import {failureRecoveryCleanupR32R2Scope as recoveryScope,parseFailureRecoveryOperationR32R2,assertFailureRecoveryCleanupContextR32R2,assertFailureRecoveryCleanupHostR32R2} from './verify-factory-truth-gate-redis-recovery-cleanup-r32-r2.mjs';
+const H=/^[a-f0-9]{64}$/,sha=b=>createHash('sha256').update(b).digest('hex'),need=(v,c)=>{if(!v)throw Error(c)},same=(a,b)=>canonical(a)===canonical(b);
+export const matrixR32BoundAdmission=null;
+export const matrixR32BoundAdmissionSources=Object.freeze([
+ {path:'scripts/verify-factory-bound-protection-contract-r32-r2.mjs',sha256:'58955c845603768c208364682bc991fead7a4a363191574ef78de442f3ac1d41'},
+ {path:'scripts/factory-bound-protection-capture-r32-r2.mjs',sha256:'b2efd3a841a06817d88ff04eedc254e21a17cd4a6fbd6ba5113bd028aa6ef7b1'},
+ {path:'scripts/verify-factory-truth-gate-redis-recovery-cleanup-r32-r2.mjs',sha256:'05a26cf08bc1a8ac44d92c6bb54ca918fd13ad36beebdddf996af9dd7838aa60'},
+ {path:'scripts/run-factory-main-repair-r26.mjs',sha256:'31094cee37b1005e43d3e3810c9c7c3916fe31c6e8ed8c23185dbe6f78a3c462'},
+ {path:'scripts/factory-repair-evidence-read-r26.mjs',sha256:'4db9e5fd1f80bde99ae53609a4bbad788d871ecc098528499cbf0c43d864911e'},
+ {path:'scripts/factory-matrix-bound-admission-r32.mjs'}]);
+function ref(v){need(v&&same(Object.keys(v).sort(),['path','sha256'])&&/^artifacts\/software-factory\/goals-r29\/[A-Za-z0-9._-]+\.json$/.test(v.path??'')&&H.test(v.sha256??''),'QA_R32_BOUND_ADMISSION_REFERENCE_REQUIRED');}
+export function assertMatrixR32BoundAdmission(a){
+ need(a&&same(Object.keys(a).sort(),['familyIndependentReview','kind','protectionActivation','recoveryOperation','recoveryQualification'])&&a.kind==='r32-matrix-bound-protection-and-recovery-admission','QA_R32_BOUND_ADMISSION_REQUIRED');
+ for(const k of ['familyIndependentReview','recoveryOperation','recoveryQualification'])ref(a[k]);assertBoundProtectionActivationR32R2(a.protectionActivation);return a;
+}
+export function assertMatrixR32PriorRecovery(p,a){
+ need(p?.kind==='software-factory-r32-truth-gate-redis-recovery-independent-cleanup-r2'&&p.attempt===recoveryScope.originalAttempt&&p.runID===recoveryScope.originalRunID&&['ready','cleanupIndependentlyVerified','originalRecordsUnchanged','unknownOriginalCreationIdentityPreserved','originalCreatedRecordStillMissing','protectedInventoryFullyVerified','fullQueueSQLVerified','queueIdle'].every(k=>p[k]===true)&&['originalMatrixCleanupQualified','productAccepted','modelsInvoked','remoteMutations','signalsSent','resourcesRemoved','rawPrivateDataExported'].every(k=>p[k]===false)&&p.protectionConsumerSHA256===matrixR32BoundAdmissionSources[0].sha256&&p.protectionObserverKind==='software-factory-r32-bound-census-protection-observation-r2'&&same(p.protectionActivation,a.protectionActivation),'QA_R32_PRIOR_REDIS_INDEPENDENT_RECOVERY_REQUIRED');
+ need(Number.isFinite(Date.parse(p.observedAt)),'QA_R32_PRIOR_REDIS_RECOVERY_TIME_INVALID');return p; // A completed historical recovery is not a new 300-second host protection proof.
+}
+export async function verifyMatrixR32BoundAdmission(a=matrixR32BoundAdmission,{expectedSources,action='start',now=Date.now()}={},deps={}){
+ if(a===null)return{ready:false,reason:'QA_R32_BOUND_ADMISSION_NOT_FROZEN',remoteOperations:false,journalWritten:false};assertMatrixR32BoundAdmission(a);
+ need(['start','check'].includes(action)&&expectedSources&&same(Object.keys(expectedSources).sort(),['normal','results','starter','worker'])&&Object.values(expectedSources).every(r=>r&&typeof r.path==='string'&&r.path.startsWith('scripts/')&&(r.sha256===undefined||H.test(r.sha256))),'QA_R32_BOUND_ADMISSION_SOURCES_REQUIRED');
+ const d={readLocal:safeReadLocal,...deps},refs=[...matrixR32BoundAdmissionSources,...Object.values(expectedSources),a.familyIndependentReview,a.recoveryQualification,a.recoveryOperation],initial=await settleEvidenceReads(refs.map(r=>()=>d.readLocal(r.path)));
+ need(initial.every((b,i)=>!refs[i].sha256||sha(b)===refs[i].sha256),'QA_R32_BOUND_ADMISSION_SOURCE_OR_REFERENCE_CHANGED');
+ const n=matrixR32BoundAdmissionSources.length+4,family=JSON.parse(initial[n]),p=assertMatrixR32PriorRecovery(JSON.parse(initial[n+1]),a),op=JSON.parse(initial[n+2]);
+ need(family.kind==='r32-bound-matrix-family-independent-local-review'&&family.staticPreparationReady===true&&family.remainingP0P1===0&&family.remoteOperations===false&&same(family.sourceSHA256,Object.fromEntries(Object.entries(expectedSources).map(([k,r],i)=>[k,sha(initial[matrixR32BoundAdmissionSources.length+i])])) )&&family.admissionSHA256===sha(initial[matrixR32BoundAdmissionSources.length-1]),'QA_R32_BOUND_ADMISSION_FAMILY_REVIEW_CHANGED');
+ const more=[op.privateResult,p.readerReview,...Object.values(p.evidence),recoveryScope.activationManifest,{path:'.jarvis-dev/maintenance/factory-r32-truth-gate-matrix-r3-once.json'}];need(more.every(r=>r&&typeof r.path==='string'&&/^(?:artifacts\/software-factory\/goals-r29|\.jarvis-dev\/maintenance)\/[A-Za-z0-9._/-]+\.json$/.test(r.path)&&!r.path.split('/').some(s=>['.','..'].includes(s))&&(r.sha256===undefined||H.test(r.sha256))),'QA_R32_BOUND_ADMISSION_PRIOR_EVIDENCE_MISSING');
+ refs.push(...more);const added=await settleEvidenceReads(more.map(r=>()=>d.readLocal(r.path)));initial.push(...added);need(added.every((b,i)=>!more[i].sha256||sha(b)===more[i].sha256),'QA_R32_BOUND_ADMISSION_PRIOR_BYTES_CHANGED');const at=r=>JSON.parse(initial[refs.findIndex(v=>v===r)]),rr=at(p.readerReview);
+ need(rr.kind==='r32-redis-failure-recovery-reader-independent-local-review-r2'&&rr.readerSHA256===matrixR32BoundAdmissionSources[2].sha256&&rr.protectionConsumerSHA256===matrixR32BoundAdmissionSources[0].sha256&&rr.staticPreparationReady===true&&rr.remainingP0P1===0&&rr.remoteOperations===false,'QA_R32_BOUND_ADMISSION_PRIOR_READER_REVIEW_CHANGED');
+ const operation=parseFailureRecoveryOperationR32R2(op,at(op.privateResult)),q=at(more.at(-1));ref(q.receipts?.start);refs.push(q.receipts.start);const startRaw=await d.readLocal(q.receipts.start.path);need(sha(startRaw)===q.receipts.start.sha256,'QA_R32_BOUND_ADMISSION_PRIOR_START_CHANGED');initial.push(startRaw);
+ const scope={...recoveryScope,recoveryReceipt:a.recoveryOperation},B=assertFailureRecoveryCleanupContextR32R2(q,JSON.parse(startRaw),at(recoveryScope.activationManifest),operation,scope),wrapped=at(p.evidence.hostRaw);need(wrapped.status===0&&typeof wrapped.stdout==='string'&&sha(wrapped.stdout)===wrapped.stdoutSHA256,'QA_R32_BOUND_ADMISSION_PRIOR_ORIGINAL_HOST_BYTES_REQUIRED');const h=JSON.parse(wrapped.stdout),flags=assertFailureRecoveryCleanupHostR32R2(h,B);
+ need(flags.cleanupIndependentlyVerified===true&&p.recoveryNamespace===B.recoveryNamespace&&p.host.stateSHA256===h.stateSHA256&&h.failureRecovery.recordProtection.rootResultSHA256===op.rootResult.sha256&&h.failureRecovery.recordProtection.rootIntentSHA256===op.rootIntent.sha256,'QA_R32_BOUND_ADMISSION_PRIOR_PHYSICAL_SCOPE_UNPROVEN');
+ for(const k of ['protectionBefore','protectionAfter']){const proof=at(p.evidence[k]);assertBoundProtectionContractR32R2(proof);need(proof.ready===true&&proof.consumerSHA256===matrixR32BoundAdmissionSources[0].sha256&&same(proof.activation,a.protectionActivation),'QA_R32_BOUND_ADMISSION_PRIOR_COMPLETE_PROTECTION_REQUIRED');}
+ const last=await settleEvidenceReads(refs.map(r=>()=>d.readLocal(r.path)));need(initial.every((b,i)=>sha(b)===sha(last[i])),'QA_R32_BOUND_ADMISSION_CHANGED_AFTER');
+ return {ready:true,kind:'r32-matrix-bound-admission-qualified-local',protectionActivation:a.protectionActivation,recoveryQualification:a.recoveryQualification,recoveryOperation:a.recoveryOperation,familyIndependentReview:a.familyIndependentReview,sourceHashes:refs.map((r,i)=>({path:r.path,sha256:sha(initial[i])})),originalMatrixHistoryQualified:false,remoteOperations:false,productAccepted:false};
+}

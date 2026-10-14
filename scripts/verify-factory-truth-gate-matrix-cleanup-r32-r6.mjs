@@ -1,0 +1,500 @@
+/** Independent new eight-resource matrix scope. Unknown pins perform zero IO. */
+import {mkdir,open} from 'node:fs/promises';
+import {resolve} from 'node:path';import {pathToFileURL} from 'node:url';import {randomUUID} from 'node:crypto';
+import {canonical,sha} from './run-factory-main-repair-r26.mjs';
+import {safeReadLocal,settleEvidenceReads} from './factory-repair-evidence-read-r26.mjs';
+import {defaultReadRoot} from './install-factory-repair-verifier-r26.mjs';
+import {buildCleanupR29Scope as oldScope} from './verify-factory-truth-gate-build-cleanup-r29.mjs';
+import {independentPGCleanupR29RootProgram as oldRootProgram} from './verify-factory-independent-pg-cleanup-r29.mjs';
+import {independentPGCjsCleanupR29RootProgram as cjsRootProgram} from './verify-factory-independent-pg-cjs-cleanup-r29.mjs';
+import {verifyFactoryProtectionContractR29R2,protectionContractR29R2 as P} from './verify-factory-protection-contract-r29-r2.mjs';
+import {assertR29R4ProtectionProof} from './start-factory-truth-gate-build-r29-r4.mjs';
+import {matrixR32Scope as producerScope} from './start-factory-truth-gate-matrix-r32-r2.mjs';
+import {matrixR32NativePrerequisite as nativePrerequisite,matrixR32NativePrerequisiteSHA256 as nativePrerequisiteSHA256} from './factory-truth-gate-matrix-supervisor-r32-r2.mjs';
+const H=/^[a-f0-9]{64}$/,A=/^[a-f0-9]{32}$/,need=(v,c)=>{if(!v)throw Error(c)};
+export const matrixCleanupR32PreparedPins=Object.freeze({workerSHA256:'2f105290e937bc755c853602b572df222429433c7c4178ac2d250e0986fe82a1',starterSHA256:null,supervisorSHA256:'25513cbfcd37e3e1b40c52bc3312372fd51e87418d875ab700971311fd535541',probeSHA256:'2a8872244474d159e14a3d6c3dab68f6e66a192d7e49db73558fb651df1d056d'});
+export const matrixCleanupR32Scope=Object.freeze({
+ schemaVersion:1,kind:'r32-truth-gate-matrix-independent-cleanup-scope-r4',root:'/var/lib/jarvis-development/101/r32-truth-gate',
+ nativePrerequisite,nativePrerequisiteSHA256,
+ contract:{path:'artifacts/software-factory/goals-r29/r32-truth-gate-environment-preparation-1791838253326-82aff93d-c65c-40be-bd33-13f72e391d3e.json',sha256:'3b3456e873d77cc4239d6db29e32ecab22934a66e5fced4ea8599aead4942801'},
+ source:{path:'/var/lib/jarvis-development/101/targets-r32-candidate/source',fingerprint:'f4a86cfb949863b6f5cb0dd80dde83f8b97ea4a66e1e047fbd77fc90f92d53e2',files:625,bytes:18413560,metadataSHA256:'06791cd7c8024c3aae33e93f14b4c29de1dbd42ee439a96e50711bfb21abc3f7',identity:{device:66306,inode:7530600},receipt:{path:'artifacts/software-factory/goals-r29/target-source-r32-1791837838039-0ae86692-b64a-4e6e-add9-aa2b6cd20fe7.json',sha256:'88e8dd3a68bd8e7b79bf438ae113520579921276470de11aa16d7b803da69232'}},
+ containerRoles:Object.freeze(['postgres','redis','minio','api-probe']),volumeRoles:Object.freeze(['postgres-data','redis-data','minio-data']),networkRole:'network',
+ ownerRuntimeMaxSec:1800,ownerStopTimeoutSec:120,producerCleanupDeadlineSec:90,
+ workerSHA256:null,starterSHA256:null,installedWorker:null,artifactContract:null,imageContract:null,producerProtocolSHA256:null,producerScope:null,protocol:null,
+ runtime:{root:'/var/lib/jarvis-development/101/r29-qa-pg-runtime/3c7ade1178fc47184cd9aaba9e84b855/runtime',manifestSHA256:'d916c96e199ab7230a6397cd1f4f6fdbceacf30588a16b6943dc8da2996b6eb1',metadataSHA256:'3fee74b974414acce00e557f3d598f0c881f38717465ebd3abfff12d4b3345ca'},
+});
+export const matrixCleanupR32JournalPath='.jarvis-dev/maintenance/factory-r32-truth-gate-matrix-r4-once.json';
+export function matrixCleanupR32Names(attempt){need(A.test(attempt??''),'R32_MATRIX_CLEANUP_ATTEMPT_INVALID');const prefix='jarvis-tg-r32-'+attempt;return {containers:matrixCleanupR32Scope.containerRoles.map(r=>prefix+'-'+r),network:prefix+'-net',volumes:matrixCleanupR32Scope.volumeRoles.map(r=>prefix+'-'+r),ownerUnit:prefix+'-owner.service',labels:{'jarvis.truthgate.r32.attempt':attempt,'jarvis.truthgate.r32.kind':'http-sql-validation'}};}
+export function matrixCleanupR32MissingPins(s=matrixCleanupR32Scope){const missing=['workerSHA256','starterSHA256','producerProtocolSHA256'].filter(k=>!H.test(s[k]??''));for(const k of ['artifactContract','imageContract'])if(!s[k]||!H.test(s[k].sha256??'')||!s[k].value)missing.push(k);if(typeof s.installedWorker!=='string')missing.push('installedWorker');if(!s.producerScope||!s.protocol)missing.push('producerScope/protocol');const a=s.artifactContract?.value;if(!a?.rootIdentity||!H.test(a.manifestSHA256??'')||!H.test(a.metadataSHA256??'')||!H.test(a.treeSHA256??''))missing.push('actualArtifactIdentityAndBytes');if(!same(a?.nativePrerequisite,nativePrerequisite))missing.push('actualNativePrerequisiteDescriptor');return missing;}
+const base=()=>({schemaVersion:1,kind:'software-factory-r32-truth-gate-matrix-independent-cleanup',observerRevision:4,reportWitnessSchemaVersion:2,ready:false,cleanupIndependentlyVerified:false,eightResourceScopeVerified:false,fullProcessCensusVerified:false,artifactIndependentlyRead:false,productResultsIndependentlyQualified:false,productAccepted:false,full74ObjectivesAccepted:false,modelsInvoked:false,rootPackageJavaScriptExecuted:false,productCodeExecutedByObserver:false,workerCleanupClaimsUsedAsProof:false,remoteReadPerformed:false,remoteMutationsPerformed:false,signalsSent:false,resourcesRemoved:false,rawPrivateDataExported:false});
+export function matrixCleanupR32Failure(e){const m=String(e?.message??''),refs=Object.fromEntries(Object.entries(e?.matrixEvidenceRefs??{}).filter(([k,v])=>['protectionBefore','host','protectionAfter'].includes(k)&&/^artifacts\/software-factory\/goals-r29\/matrix-cleanup-r32-(protection|host)-\d{13}-[a-f0-9-]{36}\.json$/.test(v?.path??'')&&H.test(v.sha256??'')));return {...base(),errorCode:/^R32_MATRIX_CLEANUP_[A-Z0-9_]+$/.test(m)?m:'R32_MATRIX_CLEANUP_OBSERVATION_FAILED',evidence:refs,remoteReadPerformed:!!Object.keys(refs).length,rawErrorExported:false,automaticRetry:false};}
+
+const same=(a,b)=>canonical(a)===canonical(b),U=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+export const matrixCleanupR32ControlFiles=Object.freeze(['activation.json','artifact-contract.json','build-proof.json','cleanup-review.json','image-contract.json','protection.json','review.json','tools-contract.json']);
+export const matrixCleanupR32ToolFiles=Object.freeze(['execution-contract.json','factory-independent-pg-cjs-consumer-r29.mjs','probe.mjs','r29-qa-runtime-manifest.json','r32-source-actual-index.json','supervisor.mjs']);
+const roleKinds={postgres:'container',redis:'container',minio:'container','api-probe':'container',network:'network','postgres-data':'volume','redis-data':'volume','minio-data':'volume'};
+export const matrixCleanupR32Protocol=Object.freeze({journalKind:'r32-truth-gate-matrix-once-journal',startKind:'software-factory-r32-truth-gate-start',activationKind:'r32-truth-gate-exact-activation',stateKind:'r32-truth-gate-execution-state',controlFiles:matrixCleanupR32ControlFiles,toolsFiles:matrixCleanupR32ToolFiles,resourceKindByRole:roleKinds});
+const protectedR31=Object.freeze({'/var/lib/jarvis-development/101/targets-r31-candidate-r2/source':{sha256:'7814f74e1e7c62b1aeb862a6617970551a00493ba2884bf65595cfe65ef2a981',files:625,bytes:18413026,metadataSHA:'38102dd6642558fbbfefeca3d680b00678797ff86a369cfbb8c12c47fa10779e',identity:{device:66306,inode:7136362},stable:true}});
+const nodeIdentity=v=>Object.fromEntries(['pid','ppid','startTicks','boot','procDevice','procInode','uid','cwdSHA256','exeSHA256','argvSHA256','active','cgroup'].map(k=>[k,v[k]]));
+export function assertMatrixCleanupR32Context(q,start,S=matrixCleanupR32Scope){
+ need(!matrixCleanupR32MissingPins(S).length&&same(S.protocol,matrixCleanupR32Protocol)&&S.producerProtocolSHA256===sha(canonical(matrixCleanupR32Protocol))&&S.root===matrixCleanupR32Scope.root&&same(S.source,matrixCleanupR32Scope.source)&&same(S.runtime,matrixCleanupR32Scope.runtime),'R32_MATRIX_CLEANUP_FIXED_SCOPE_UNPROVEN');
+ const s=S.producerScope;need(s?.kind===producerScope.kind&&s.root===S.root&&s.sourceFingerprint===S.source.fingerprint&&same(s.images,producerScope.images)&&same(s.sourceIndex,producerScope.sourceIndex)&&s.runtimeRoot===S.runtime.root&&s.PGManifestSHA256===S.runtime.manifestSHA256&&s.worker.sha256===S.workerSHA256&&s.worker.installedPath===S.installedWorker&&s.librarySHA256===producerScope.librarySHA256&&s.resourceCount===8&&s.httpSQLDenominator===34&&s.additionalPGDenominator===4&&s.ownerRuntimeMaxSec===1800&&s.ownerStopSec===120&&s.cleanupGlobalDeadlineSec===90&&s.qualification.artifactContract.sha256===S.artifactContract.sha256&&s.qualification.imageContract.sha256===S.imageContract.sha256&&s.tools?.length===3&&same(s.tools.map(t=>({name:t.name,path:t.path})),producerScope.tools.map(t=>({name:t.name,path:t.path})))&&s.tools.every(t=>H.test(t.sha256??''))&&same(Object.keys(s.qualification).sort(),Object.keys(producerScope.qualification).sort())&&Object.values(s.qualification).every(r=>H.test(r.sha256??'')&&typeof r.path==='string'&&r.path.startsWith('artifacts/software-factory/goals-r29/')),'R32_MATRIX_CLEANUP_PRODUCER_SCOPE_UNPROVEN');
+ need(q?.schemaVersion===1&&q.kind===S.protocol.journalKind&&q.dispatched===true&&A.test(q.attempt??'')&&/^[a-f0-9]{40}$/.test(q.runID??'')&&q.automaticRetry===false&&q.starterSHA256===S.starterSHA256&&same(q.immutableScope,s)&&Number.isFinite(Date.parse(q.startIntentAt)),'R32_MATRIX_CLEANUP_JOURNAL_UNPROVEN');
+ const ref=q.receipts?.start;need(/^artifacts\/software-factory\/goals-r29\/truth-gate-matrix-r32-(start|check)-\d{13}-[a-f0-9-]{36}\.json$/.test(ref?.path??'')&&H.test(ref.sha256??''),'R32_MATRIX_CLEANUP_START_REFERENCE_INVALID');
+ const n=matrixCleanupR32Names(q.attempt),expectedResources={containers:Object.fromEntries(S.containerRoles.map((r,i)=>[r,n.containers[i]])),network:n.network,volumes:Object.fromEntries(S.volumeRoles.map((r,i)=>[r,n.volumes[i]]))},o=start?.owner;
+ need(start?.schemaVersion===1&&start.kind===S.protocol.startKind&&start.attempt===q.attempt&&start.runID===q.runID&&start.dispatched===true&&start.workerSHA256===S.workerSHA256&&same(start.resources,expectedResources)&&same(q.owner,o)&&start.httpSQLDenominator===34&&start.additionalPGDenominator===4&&start.cleanupIndependentlyVerified===false&&start.productAccepted===false&&start.modelsInvoked===false&&(start.readOnly===false||start.readOnly===true&&q.reconciledFromCheck===true&&q.startUncertain===true)&&['onceIntentSHA256','ownershipSHA256','activationSHA256','controlInventorySHA256','toolsInventorySHA256'].every(k=>H.test(start[k]??'')&&start[k]===q[k]),'R32_MATRIX_CLEANUP_START_BINDING_CHANGED');
+ need(o?.unit===n.ownerUnit&&Number.isSafeInteger(o.pid)&&o.pid>1&&/^[0-9]+$/.test(o.startTicks??'')&&U.test(o.boot??'')&&o.controlGroup==='/system.slice/'+n.ownerUnit&&o.runtimeMaxSec===1800&&o.stopTimeoutSec===120&&o.restart==='no'&&o.killMode==='control-group','R32_MATRIX_CLEANUP_OWNER_IDENTITY_UNKNOWN');
+ need(same(Object.keys(start.controlFiles??{}).sort(),matrixCleanupR32ControlFiles)&&same(Object.keys(start.toolsFiles??{}).sort(),matrixCleanupR32ToolFiles)&&Object.values(start.controlFiles).every(x=>H.test(x))&&Object.values(start.toolsFiles).every(x=>H.test(x))&&sha(canonical(start.controlFiles))===q.controlInventorySHA256&&sha(canonical(start.toolsFiles))===q.toolsInventorySHA256&&start.controlFiles['activation.json']===q.activationSHA256&&start.controlFiles['artifact-contract.json']===S.artifactContract.sha256&&start.controlFiles['image-contract.json']===S.imageContract.sha256&&start.toolsFiles['r29-qa-runtime-manifest.json']===S.runtime.manifestSHA256&&start.toolsFiles['r32-source-actual-index.json']===s.sourceIndex.sha256&&s.tools.every(t=>start.toolsFiles[t.name]===t.sha256),'R32_MATRIX_CLEANUP_ACTUAL_INVENTORY_CHANGED');
+ const a=S.artifactContract.value;need(a.schemaVersion===1&&a.kind==='r32-frozen-application-runtime-artifact'&&/^\/var\/lib\/jarvis-development\/101\/r32-truth-artifacts\/[a-f0-9]{64}\/runtime$/.test(a.root??'')&&a.manifestPath===a.root.slice(0,-8)+'/runtime-manifest.json'&&same(a.source,{fingerprint:S.source.fingerprint,files:625,bytes:18413560})&&a.sourceIndexSHA256===s.sourceIndex.sha256&&a.buildProofSHA256===start.controlFiles['build-proof.json']&&a.readOnlyRootOwned===true&&a.twoCompleteReadbacks===true&&Number.isSafeInteger(a.rootIdentity?.device)&&a.rootIdentity.device>=0&&Number.isSafeInteger(a.rootIdentity.inode)&&a.rootIdentity.inode>0,'R32_MATRIX_CLEANUP_ACTUAL_ARTIFACT_SCOPE_UNKNOWN');
+ need(S.imageContract.value?.schemaVersion===1&&S.imageContract.value.kind==='r32-exact-dependency-image-config'&&same(Object.keys(S.imageContract.value.images??{}).sort(),Object.keys(s.images).sort())&&Object.entries(S.imageContract.value.images).every(([r,v])=>v.Id===s.images[r]&&v.Os==='linux'&&v.Architecture==='amd64'&&v.Config&&same(Object.keys(v.Config).sort(),['Cmd','Entrypoint','User','Volumes'])),'R32_MATRIX_CLEANUP_ACTUAL_IMAGE_CONTRACT_UNKNOWN');
+ need(same(S.nativePrerequisite,nativePrerequisite)&&S.nativePrerequisiteSHA256===nativePrerequisiteSHA256&&same(s.nativePrerequisite,nativePrerequisite)&&s.nativePrerequisiteSHA256===nativePrerequisiteSHA256&&same(a.nativePrerequisite,nativePrerequisite),'R32_MATRIX_CLEANUP_NATIVE_PREREQUISITE_UNPROVEN');
+ return {...oldScope,nativePrerequisite,nativePrerequisiteSHA256,attempt:q.attempt,root:S.root,source:S.source.path,fingerprint:S.source.fingerprint,metadataSHA:S.source.metadataSHA256,sourceFiles:625,sourceBytes:18413560,sourceIdentity:S.source.identity,tool:S.installedWorker,toolSHA:S.workerSHA256,runID:q.runID,ownerPID:o.pid,ownerStartTicks:o.startTicks,ownerBoot:o.boot,controlFiles:start.controlFiles,toolsFiles:start.toolsFiles,...Object.fromEntries(['activationSHA256','onceIntentSHA256','ownershipSHA256','controlInventorySHA256','toolsInventorySHA256'].map(k=>[k,q[k]])),runtimeRoot:S.runtime.root,manifestSHA256:S.runtime.manifestSHA256,runtimeMetadataSHA256:S.runtime.metadataSHA256,freezerPath:S.runtime.root.slice(0,-8)+'/control/factory-freeze-independent-pg-runtime-r29.py',freezerSHA256:'09dd6ecef0ba1df906c1f938db8fa99cde4b8fccc2fa71bae8b281b9dc8a0dbb',libraryPath:'/opt/jarvis-development/software-factory/factory-build-independent-pg-runtime-r29-r2-57eb441548b43362.py',librarySHA256:s.librarySHA256,sourceIndexSHA256:s.sourceIndex.sha256,artifactContract:a,imageContract:S.imageContract.value,images:s.images,protectedSources:protectedR31,sourceOrigin:'/var/lib/jarvis-development/101/targets-r32-preparation/5c6a2fce137ed52b9f55ae233b708b7b/origin.json',sourceOriginSHA256:'05ec0428f614ffd03a90a730d356392ecc6b0ff01c0bee1d22adf5efbf409606',journalPath:matrixCleanupR32JournalPath,startPath:ref.path,startSHA:ref.sha256,checkPath:null,checkSHA:null};
+}
+
+function assertProtection(v,now){assertR29R4ProtectionProof(v,{fresh:true,now});need(v.newContractInventoryVerified===true&&v.protectedInventoryFullyVerified===true&&v.fullQueueSQLVerified===true&&v.newProtectedInventorySHA256===P.newStockSHA256,'R32_MATRIX_CLEANUP_FULL_PROTECTION_INCOMPLETE');}
+function assertPreparationScope(S){const s=S.producerScope;need(same(S.source,matrixCleanupR32Scope.source)&&S.root===matrixCleanupR32Scope.root&&same(S.runtime,matrixCleanupR32Scope.runtime)&&same(S.protocol,matrixCleanupR32Protocol)&&S.producerProtocolSHA256===sha(canonical(matrixCleanupR32Protocol))&&s&&s.kind===producerScope.kind&&s.root===S.root&&s.worker.sha256===S.workerSHA256&&s.worker.installedPath===S.installedWorker&&['artifactContract','imageContract'].every(k=>/^artifacts\/software-factory\/goals-r29\/[A-Za-z0-9._-]+\.json$/.test(S[k]?.path??'')&&same({path:S[k].path,sha256:S[k].sha256},s.qualification[k]))&&same(S.nativePrerequisite,nativePrerequisite)&&S.nativePrerequisiteSHA256===nativePrerequisiteSHA256&&same(s.nativePrerequisite,nativePrerequisite)&&s.nativePrerequisiteSHA256===nativePrerequisiteSHA256&&same(S.artifactContract.value.nativePrerequisite,nativePrerequisite),'R32_MATRIX_CLEANUP_PRE_IO_SCOPE_INVALID');}
+export async function matrixCleanupR32EvidenceWX(value,prefix='matrix-cleanup-r32-observation'){
+ need(/^matrix-cleanup-r32-(observation|protection|host)$/.test(prefix),'R32_MATRIX_CLEANUP_EVIDENCE_PREFIX_INVALID');await mkdir('artifacts/software-factory/goals-r29',{recursive:true});const path='artifacts/software-factory/goals-r29/'+prefix+'-'+Date.now()+'-'+randomUUID()+'.json',raw=JSON.stringify(value,null,2)+'\n',f=await open(path,'wx',0o644);try{await f.writeFile(raw);await f.sync()}finally{await f.close()}return {path,sha256:sha(raw)};
+}
+export async function verifyFactoryTruthGateMatrixCleanupR32(options={},deps={}){
+ need(Object.keys(options).every(k=>k==='attempt')&&(options.attempt===undefined||A.test(options.attempt)),'R32_MATRIX_CLEANUP_ARGUMENT_INVALID');
+ need(!deps.fixedScope||typeof deps.readRoot==='function','R32_MATRIX_CLEANUP_TEST_SCOPE_REQUIRES_READER');const S=deps.fixedScope??matrixCleanupR32Scope,missing=matrixCleanupR32MissingPins(S);
+ if(missing.length)return {...base(),reason:'R32_MATRIX_CLEANUP_PREPARATION_NOT_FROZEN',missingPins:missing};
+ assertPreparationScope(S);
+ const d={readLocal:safeReadLocal,readRoot:defaultReadRoot,verifyProtection:verifyFactoryProtectionContractR29R2,evidence:matrixCleanupR32EvidenceWX,now:Date.now,...deps};let raw;
+ try{raw=await d.readLocal(matrixCleanupR32JournalPath,'utf8')}catch(e){if(e.code==='ENOENT')return {...base(),reason:'R32_MATRIX_CLEANUP_NOT_DISPATCHED'};throw e}
+ const q=JSON.parse(raw);if(q.dispatched!==true)return {...base(),reason:'R32_MATRIX_CLEANUP_NOT_DISPATCHED'};need(options.attempt===q.attempt,'R32_MATRIX_CLEANUP_EXACT_ATTEMPT_REQUIRED');const ref=q.receipts?.start;need(/^artifacts\/software-factory\/goals-r29\/truth-gate-matrix-r32-(start|check)-\d{13}-[a-f0-9-]{36}\.json$/.test(ref?.path??'')&&H.test(ref.sha256??''),'R32_MATRIX_CLEANUP_START_REFERENCE_INVALID');
+ const paths=[matrixCleanupR32JournalPath,ref.path,S.artifactContract.path,S.imageContract.path],initial=await settleEvidenceReads(paths.map(path=>()=>d.readLocal(path,'utf8')));need(initial[0]===raw&&sha(initial[1])===ref.sha256&&sha(initial[2])===S.artifactContract.sha256&&sha(initial[3])===S.imageContract.sha256&&same(JSON.parse(initial[2]),S.artifactContract.value)&&same(JSON.parse(initial[3]),S.imageContract.value),'R32_MATRIX_CLEANUP_LOCAL_EVIDENCE_CHANGED');const B=assertMatrixCleanupR32Context(q,JSON.parse(initial[1]),S);
+ const evidence={};try{
+ const before=await d.verifyProtection(),beforeRef=await d.evidence(before,'matrix-cleanup-r32-protection');evidence.protectionBefore=beforeRef;assertProtection(before,d.now());
+ const host=parseMatrixCleanupR32Host(await d.readRoot(B,matrixCleanupR32HostProgram(B))),hostRef=await d.evidence(host,'matrix-cleanup-r32-host');evidence.host=hostRef;const flags=assertMatrixCleanupR32Host(host,B);
+ const after=await d.verifyProtection(),afterRef=await d.evidence(after,'matrix-cleanup-r32-protection');evidence.protectionAfter=afterRef;assertProtection(after,d.now());need(same(before.sources,after.sources)&&same(before.terminal,after.terminal)&&before.nodeConfigSHA256===after.nodeConfigSHA256&&same(nodeIdentity(host.node),nodeIdentity(before.node))&&same(nodeIdentity(host.node),nodeIdentity(after.node))&&same(host.nodeACK,before.observations.nativeSource.nodeACK)&&same(host.nodeACK,after.observations.nativeSource.nodeACK),'R32_MATRIX_CLEANUP_PROTECTION_NODE_OR_ACK_CHANGED');
+ const final=await settleEvidenceReads(paths.map(path=>()=>d.readLocal(path,'utf8')));need(same(initial,final),'R32_MATRIX_CLEANUP_LOCAL_CONTEXT_CHANGED');need(Number.isFinite(Date.parse(host.observedAt))&&d.now()-Date.parse(host.observedAt)>=-30000&&d.now()-Date.parse(host.observedAt)<300000,'R32_MATRIX_CLEANUP_HOST_OBSERVATION_STALE');
+ return {...base(),at:new Date(d.now()).toISOString(),attempt:B.attempt,runID:B.runID,ready:flags.cleanupIndependentlyVerified,...flags,...(flags.cleanupIndependentlyVerified?{}:{reason:'R32_MATRIX_CLEANUP_RESOURCES_PROCESS_IDENTITY_OR_SOCKETS_NOT_CLOSED'}),workerSHA256:B.toolSHA,starterSHA256:S.starterSHA256,startReceiptSHA256:ref.sha256,activationSHA256:B.activationSHA256,onceIntentSHA256:B.onceIntentSHA256,ownershipSHA256:B.ownershipSHA256,controlInventorySHA256:B.controlInventorySHA256,toolsInventorySHA256:B.toolsInventorySHA256,stateSHA256:host.stateSHA256,executionStatus:host.executionStatus,protectedInventoryFullyVerified:true,fullQueueSQLVerified:true,newProtectionContract:true,originalContractProtectionVerified:false,nodeACKIdle:flags.nodeACKIdle,queueIdle:true,newProtectedInventorySHA256:P.newStockSHA256,sourceFingerprint:B.fingerprint,sourceFiles:625,artifactContractSHA256:S.artifactContract.sha256,imageContractSHA256:S.imageContract.sha256,remoteReadPerformed:true,evidence,host};
+ }catch(e){e.matrixEvidenceRefs=evidence;throw e}
+}
+
+function assertMatrixCleanupR32PhysicalHost(h,B){
+ need(h?.attempt===B.attempt&&h.runID===B.runID&&['passed','failed'].includes(h.executionStatus)&&same(h.source,{sha256:B.fingerprint,metadataSHA:B.metadataSHA,files:625,bytes:18413560,identity:B.sourceIdentity,stable:true})&&h.sourceBeforeAfterStable===true&&h.privateReceiptsStable===true&&h.workerSHA256===B.toolSHA&&h.sourceOriginSHA256===B.sourceOriginSHA256&&same(h.protectedSources,B.protectedSources)&&['activationSHA256','onceIntentSHA256','ownershipSHA256','controlInventorySHA256','toolsInventorySHA256'].every(k=>H.test(B[k]??'')&&h[k]===B[k])&&H.test(h.stateSHA256??''),'R32_MATRIX_CLEANUP_HOST_BINDING_CHANGED');
+ const ep=h.executionPhase;need(ep?.trustedProducerDataOnly===true&&typeof ep.candidateCodeMayHaveExecuted==='boolean'&&typeof ep.apiProbeEntryStarted==='boolean'&&(ep.productCodeExecuted===false||ep.productCodeExecuted===null)&&(ep.candidateCodeMayHaveExecuted?ep.productCodeExecuted===null:ep.productCodeExecuted===false&&ep.apiProbeEntryStarted===false)&&(h.executionStatus!=='passed'||ep.candidateCodeMayHaveExecuted&&ep.apiProbeEntryStarted),'R32_MATRIX_CLEANUP_EXECUTION_PHASE_UNKNOWN');
+ for(const [k,mode,count] of [['attemptDirectory',448,null],['control',448,8],['tools',365,6]]){const v=h[k];need(v?.stable===true&&v.nofollow===true&&v.uid===0&&v.mode===mode&&Number.isSafeInteger(v.identity?.device)&&v.identity.device>=0&&Number.isSafeInteger(v.identity.inode)&&v.identity.inode>0&&H.test(v.metadataSHA256??'')&&Number.isSafeInteger(v.entries)&&v.entries>0&&(count===null||v.entries===count),'R32_MATRIX_CLEANUP_DIRECTORY_INVALID');}
+ need(h.control.activationBound===true&&h.control.requiredFilesBound===true&&same(h.control.files,B.controlFiles)&&same(Object.keys(h.control.files).sort(),matrixCleanupR32ControlFiles)&&sha(canonical(h.control.files))===B.controlInventorySHA256&&same(h.tools.files,B.toolsFiles)&&same(Object.keys(h.tools.files).sort(),matrixCleanupR32ToolFiles)&&sha(canonical(h.tools.files))===B.toolsInventorySHA256,'R32_MATRIX_CLEANUP_CONTROL_OR_TOOLS_CHANGED');
+ const reg=h.registry;need(reg?.readOnly===true&&Array.isArray(reg.intentRoles)&&Array.isArray(reg.unknownRoles)&&reg.intentRoles.every(r=>Object.hasOwn(roleKinds,r))&&new Set(reg.intentRoles).size===reg.intentRoles.length&&new Set(reg.unknownRoles).size===reg.unknownRoles.length&&reg.unknownRoles.every(r=>reg.intentRoles.includes(r))&&reg.records&&typeof reg.records==='object'&&!Array.isArray(reg.records)&&reg.knownContainerIDs&&typeof reg.knownContainerIDs==='object'&&!Array.isArray(reg.knownContainerIDs),'R32_MATRIX_CLEANUP_RESOURCE_HISTORY_INVALID');
+ const names=matrixCleanupR32Names(B.attempt),rows=Object.entries(roleKinds).map(([role,resourceKind])=>({role,resourceKind,name:role==='network'?names.network:(resourceKind==='container'?names.containers: names.volumes)[(resourceKind==='container'?matrixCleanupR32Scope.containerRoles:matrixCleanupR32Scope.volumeRoles).indexOf(role)]}));
+ const known={};for(const [role,c] of Object.entries(reg.records)){const expected=rows.find(r=>r.role===role);need(expected&&reg.intentRoles.includes(role)&&!reg.unknownRoles.includes(role)&&c.schemaVersion===1&&c.kind==='r32-truth-gate-created-resource'&&c.attempt===B.attempt&&c.role===role&&c.resourceKind===expected.resourceKind&&c.name===expected.name&&same(c.labels,names.labels)&&H.test(c.creationIntentSHA256??'')&&H.test(c.configSHA256??'')&&typeof c.createdAt==='string'&&Number.isFinite(Date.parse(c.createdAt))&&(expected.resourceKind==='volume'?c.id===c.name:H.test(c.id??''))&&c.imageID===(expected.resourceKind==='container'?B.images[role==='api-probe'?'node':role]:null),'R32_MATRIX_CLEANUP_RESOURCE_RECORD_INVALID');need(reg.raws?.[role]?.intent===c.creationIntentSHA256&&H.test(reg.raws[role].created??''),'R32_MATRIX_CLEANUP_REGISTRY_BYTES_UNBOUND');if(expected.resourceKind==='container')known[role]=c.id;}
+ need(same(known,reg.knownContainerIDs)&&reg.unknownRoles.every(r=>!Object.hasOwn(reg.records,r))&&reg.identitiesComplete===(reg.unknownRoles.length===0),'R32_MATRIX_CLEANUP_RESOURCE_IDENTITY_FLAG_CHANGED');
+ if(h.executionStatus==='passed')need(Object.keys(reg.records).length===8&&reg.identitiesComplete,'R32_MATRIX_CLEANUP_PASSED_IDENTITIES_INCOMPLETE');
+ need(h.mutationsPerformed===false&&h.signalsSent===false&&h.resourcesRemoved===false&&h.rawLogsExported===false&&h.privateEnvironmentExported===false&&h.rawArgvExported===false&&h.packageJavaScriptExecuted===false&&h.workerCleanupClaimsUsedAsProof===false&&h.procScope?.fullProcScan===true&&h.procScope.includesAllDescendants===true&&h.procScope.includesUnitCgroupOrphans===true&&h.procScope.includesWorkspaceCwdExeArgvFD===true&&h.procScope.includesInstallerOwnerCgroup===true&&h.procScope.includesAllKnownContainerCgroups===true&&h.procScope.includesKnownContainerArgv===true&&same(h.procScope.knownContainerIDs,known)&&h.procScope.workspace===B.root+'/'+B.attempt&&h.procScope.persistentMainPIDExcluded===h.node?.pid&&h.procScope.twoScans===true&&h.scans?.length===2,'R32_MATRIX_CLEANUP_SCOPE_OR_READ_BOUNDARY_CHANGED');
+ need(Number.isSafeInteger(h.node.pid)&&h.node.pid>1&&h.node.uid===1000&&h.node.active===true&&U.test(h.node.boot??'')&&/^[0-9]+$/.test(h.node.startTicks??'')&&Number.isSafeInteger(h.node.procDevice)&&Number.isSafeInteger(h.node.procInode)&&h.node.procInode>0&&h.node.cgroup==='/system.slice/jarvis-software-factory-development.service'&&['cwdSHA256','exeSHA256','argvSHA256'].every(k=>H.test(h.node[k]??'')),'R32_MATRIX_CLEANUP_NODE_IDENTITY_INVALID');
+ for(const s of h.scans){
+  need(s.fullProcScan===true&&s.pidfdSupported===true&&same(s.node,h.node)&&same(s.ack,h.nodeACK)&&['allDescendants','unitCgroupOtherProcesses','workspaceRelatedProcesses','ownerCgroupProcesses','containerCgroupProcesses','relatedProcesses','listedPIDs','inspectedPIDs','readIncompletePIDs','exitedDuringScan'].every(k=>Array.isArray(s[k])),'R32_MATRIX_CLEANUP_CENSUS_INCOMPLETE');
+  const exits=s.exitedDuringScan.map(e=>e.pid),ids=[...s.inspectedPIDs,...exits,...s.readIncompletePIDs];need(ids.every(n=>Number.isSafeInteger(n)&&n>0)&&new Set(ids).size===ids.length&&new Set(s.listedPIDs).size===s.listedPIDs.length&&same([...ids].sort((a,b)=>a-b),[...s.listedPIDs].sort((a,b)=>a-b))&&s.inspectedPIDs.includes(h.node.pid)&&s.processesScanned===ids.length&&same(s.counts,{listed:ids.length,inspected:s.inspectedPIDs.length,pidfdProvenExits:exits.length,incomplete:s.readIncompletePIDs.length}),'R32_MATRIX_CLEANUP_COUNTS_NOT_CLOSED');
+  const groups=['allDescendants','unitCgroupOtherProcesses','workspaceRelatedProcesses','ownerCgroupProcesses','containerCgroupProcesses'];need(groups.every(k=>s[k].every(n=>Number.isSafeInteger(n)&&n>0&&s.inspectedPIDs.includes(n))&&new Set(s[k]).size===s[k].length)&&same(s.relatedProcesses.map(v=>v.pid).sort((a,b)=>a-b),[...new Set(groups.flatMap(k=>s[k]))].sort((a,b)=>a-b)),'R32_MATRIX_CLEANUP_RELATED_SCOPE_NOT_CLOSED');
+  for(const e of s.exitedDuringScan){const k=e.kernelProof,v=e.processIdentity,i=e.listedProcIdentity;need(e.boot===h.node.boot&&Number.isSafeInteger(i?.device)&&i.device>=0&&Number.isSafeInteger(i.inode)&&i.inode>0&&k?.type==='pidfd-POLLIN'&&k.attached===true&&k.identityBound===true&&k.requestedPID===e.pid&&k.exitConfirmed===true&&k.procPathAbsent===true&&[1,17].includes(k.pollEvents)&&v?.pid===e.pid&&v.boot===e.boot&&v.procDevice===i.device&&v.procInode===i.inode&&(v.startTicks===undefined||/^[0-9]+$/.test(v.startTicks))&&(v.ppid===undefined||Number.isSafeInteger(v.ppid)&&v.ppid>=0),'R32_MATRIX_CLEANUP_PIDFD_IDENTITY_UNPROVEN');}
+ }
+ need(h.workspaceSockets?.nofollow===true&&Array.isArray(h.workspaceSockets.filesystem)&&Array.isArray(h.workspaceSockets.procNetUnix)&&Object.keys(h.nodeACK?.counts??{}).sort().join(',')==='deliveries,logs,runs'&&Object.values(h.nodeACK.counts).every(n=>Number.isSafeInteger(n)&&n>=0),'R32_MATRIX_CLEANUP_ACK_OR_SOCKET_INVALID');
+ const processesComplete=reg.identitiesComplete&&h.scans.every(s=>!s.readIncompletePIDs.length&&['relatedProcesses','allDescendants','unitCgroupOtherProcesses','workspaceRelatedProcesses','ownerCgroupProcesses','containerCgroupProcesses'].every(k=>!s[k].length))&&!h.workspaceSockets.filesystem.length&&!h.workspaceSockets.procNetUnix.length&&Object.values(h.nodeACK.counts).every(n=>n===0);need(h.nativeProcessAndSocketCleanupVerified===processesComplete,'R32_MATRIX_CLEANUP_PROCESS_FLAG_CHANGED');
+ const d=h.docker;need(d?.readOnly===true&&d.containersNetworksVolumesQueried===true&&same(d.exactResources,rows)&&Array.isArray(d.absent)&&Array.isArray(d.present)&&d.labelScopes?.length===2&&same(d.labelScopes.map(x=>x.filters),[['label=jarvis.truthgate.r32.attempt='+B.attempt],['label=jarvis.truthgate.r32.attempt='+B.attempt,'label=jarvis.truthgate.r32.kind=http-sql-validation']])&&d.labelScopes.every(x=>['containers','networks','volumes'].every(k=>Array.isArray(x[k])&&x[k].length<=1000&&new Set(x[k]).size===x[k].length&&x[k].every(id=>/^[A-Za-z0-9_.-]{1,128}$/.test(id)))),'R32_MATRIX_CLEANUP_DOCKER_CENSUS_INCOMPLETE');
+ const seen=[...d.absent,...d.present].map(r=>r.role);need(seen.length===8&&new Set(seen).size===8&&same([...seen].sort(),Object.keys(roleKinds).sort())&&d.absent.every(x=>same(x,rows.find(r=>r.role===x.role)))&&d.present.every(x=>same({role:x.role,resourceKind:x.resourceKind,name:x.name},rows.find(r=>r.role===x.role))&&x.scopeVerified===true&&x.id===reg.records[x.role]?.id&&H.test(x.labelsSHA256??'')),'R32_MATRIX_CLEANUP_DOCKER_EXACT_COUNTS_UNBOUND');
+ const dockerComplete=d.absent.length===8&&!d.present.length&&d.labelScopes.every(s=>['containers','networks','volumes'].every(k=>!s[k].length));need(d.complete===dockerComplete,'R32_MATRIX_CLEANUP_DOCKER_FLAG_CHANGED');
+ const o=h.owner,cg='/system.slice/'+names.ownerUnit;need(o?.readOnly===true&&same(o.identity,{pid:B.ownerPID,startTicks:B.ownerStartTicks,boot:B.ownerBoot})&&o.bootSame===true&&typeof o.pidAbsent==='boolean'&&o.unit?.Id===names.ownerUnit&&['loaded','not-found'].includes(o.unit.LoadState)&&['active','inactive','failed','activating','deactivating'].includes(o.unit.ActiveState)&&/^[0-9]+$/.test(o.unit.MainPID??'')&&['',cg].includes(o.unit.ControlGroup)&&o.cgroupPath===cg&&Array.isArray(o.cgroupPIDs)&&o.cgroupPIDs.every(n=>Number.isSafeInteger(n)&&n>0)&&o.originalOwnerContractReceiptBound===true&&o.runtimeMaxSec===1800&&o.stopTimeoutSec===120&&o.currentOwnerContractObserved===(o.unit.LoadState==='loaded'),'R32_MATRIX_CLEANUP_OWNER_INVALID');
+ const ownerComplete=o.pidAbsent&&['inactive','failed'].includes(o.unit.ActiveState)&&o.unit.MainPID==='0'&&!o.cgroupPIDs.length;need(o.complete===ownerComplete,'R32_MATRIX_CLEANUP_OWNER_FLAG_CHANGED');
+ const a=h.artifact,c=B.artifactContract;need(h.artifactBeforeAfterStable===true&&a?.stable===true&&a.nofollow===true&&a.uid===0&&a.mode===365&&a.root===c.root&&same(a.identity,c.rootIdentity)&&a.manifestSHA256===c.manifestSHA256&&a.treeSHA256===c.treeSHA256&&a.metadataSHA256===c.metadataSHA256&&a.sourceIndexSHA256===B.sourceIndexSHA256&&a.fullClosureVerified===true&&a.sourceFilesVerified===625&&Number.isSafeInteger(a.entries)&&a.entries>=625&&Number.isSafeInteger(a.bytes)&&a.bytes>=18413560&&h.runtimeBeforeAfterStable===true&&h.runtimeClosure?.stable===true&&h.runtimeClosure.nofollow===true&&h.runtimeClosure.uid===0&&h.runtimeClosure.mode===365&&h.runtimeClosure.manifestSHA256===B.manifestSHA256&&h.runtimeClosure.metadataRawSHA256===B.runtimeMetadataSHA256&&['treeSHA256','metadataSHA256'].every(k=>H.test(h.runtimeClosure[k]??''))&&Number.isSafeInteger(h.runtimeClosure.entries)&&h.runtimeClosure.entries>0,'R32_MATRIX_CLEANUP_ARTIFACT_OR_RUNTIME_CHANGED');
+ need(h.images?.readOnly===true&&h.images.actualConfigRead===true&&h.images.noAnonymousVolumes===true&&same(Object.keys(h.images.images??{}).sort(),Object.keys(B.images).sort())&&Object.entries(h.images.images).every(([r,v])=>v.imageID===B.images[r]&&v.publicConfigSHA256===sha(canonical(B.imageContract.images[r]))),'R32_MATRIX_CLEANUP_IMAGE_CONFIG_UNBOUND');
+ need(h.privateExecutionLogSHA256===null&&h.privateExecutionLogBytes===null||H.test(h.privateExecutionLogSHA256??'')&&Number.isSafeInteger(h.privateExecutionLogBytes)&&h.privateExecutionLogBytes>=0&&h.privateExecutionLogBytes<=4*1024**2,'R32_MATRIX_CLEANUP_LOG_METADATA_INVALID');
+ const resourceScopeReadComplete=reg.identitiesComplete&&h.scans.every(s=>!s.readIncompletePIDs.length);return {processesComplete,dockerComplete,ownerComplete,containerCgroupIdentityComplete:reg.identitiesComplete,resourceScopeReadComplete,nodeACKIdle:Object.values(h.nodeACK.counts).every(n=>n===0),artifactIndependentlyRead:true,eightResourceScopeVerified:dockerComplete&&reg.identitiesComplete,fullProcessCensusVerified:resourceScopeReadComplete,cleanupIndependentlyVerified:processesComplete&&dockerComplete&&ownerComplete};
+}
+export function parseMatrixCleanupR32Host(raw){let value;try{value=typeof raw==='string'?JSON.parse(raw):raw}catch{throw Error('R32_MATRIX_CLEANUP_HOST_RESULT_INVALID')}need(value&&typeof value==='object'&&!Array.isArray(value),'R32_MATRIX_CLEANUP_HOST_RESULT_INVALID');return value;}
+
+/** Pure generator. The old reviewed R3 PIDFD implementation is reused byte for byte. */
+function matrixCleanupR32PhysicalHostProgram(B){
+ need(A.test(B?.attempt??'')&&B.root===matrixCleanupR32Scope.root&&B.source===matrixCleanupR32Scope.source.path&&B.fingerprint===matrixCleanupR32Scope.source.fingerprint&&B.sourceFiles===625&&B.sourceBytes===18413560&&B.metadataSHA===matrixCleanupR32Scope.source.metadataSHA256&&same(B.sourceIdentity,matrixCleanupR32Scope.source.identity)&&H.test(B.toolSHA??'')&&B.tool==='/opt/jarvis-development/software-factory/factory-truth-gate-matrix-worker-r32-r4-'+B.toolSHA.slice(0,16)+'.py'&&Number.isSafeInteger(B.ownerPID)&&B.ownerPID>1&&/^[0-9]+$/.test(B.ownerStartTicks??'')&&U.test(B.ownerBoot??''),'R32_MATRIX_CLEANUP_ROOT_SCOPE_INVALID');
+ const original=oldRootProgram(B),end=original.indexOf('import datetime,posixpath,select,errno');need(end>0,'R32_MATRIX_CLEANUP_BASE_TEMPLATE_CHANGED');const prefix=original.slice(0,end).replace(/expected_scope=json.loads\('[^\n]*'\)/,'expected_scope=json.loads('+JSON.stringify(JSON.stringify(B))+')');
+ const directoryStart=original.indexOf('def directory_state('),directoryEnd=original.indexOf('def control_state():',directoryStart);
+ need(directoryStart>0&&directoryEnd>directoryStart,'R32_MATRIX_CLEANUP_DIRECTORY_TEMPLATE_CHANGED');const directories=original.slice(directoryStart,directoryEnd).replace('def directory_state(path,uid,strict_owner=True):','def directory_state(path,uid,strict_owner=True,mode=0o700):').replace('stat.S_IMODE(info.st_mode)==0o700','stat.S_IMODE(info.st_mode)==mode');
+ const runtimeBase=cjsRootProgram(B),runtimeStart=runtimeBase.indexOf('def runtime_state():'),runtimeEnd=runtimeBase.indexOf('def docker(args):',runtimeStart);need(runtimeStart>0&&runtimeEnd>runtimeStart,'R32_MATRIX_CLEANUP_RUNTIME_TEMPLATE_CHANGED');const runtime=runtimeBase.slice(runtimeStart,runtimeEnd);
+ const censusStart=original.indexOf('def unit_state():'),censusEnd=original.indexOf("p={**p,'workspace':str(private)}",censusStart);need(censusStart>0&&censusEnd>censusStart,'R32_MATRIX_CLEANUP_CENSUS_TEMPLATE_CHANGED');let census=original.slice(censusStart,censusEnd);
+ const anchor='related=sorted(descendants|cgroup|workspace|owner_group)',recordCall='value=process_record(pid,boot,a);state=pidfd_poll';need(census.split(anchor).length===2&&census.split(recordCall).length===2,'R32_MATRIX_CLEANUP_CENSUS_TEMPLATE_CHANGED');census=census.replace(recordCall,"value=process_record(pid,boot,a);value['containerArgvRelated']=container_argv_related(pid,boot,a,value);state=pidfd_poll").replace(anchor,"container_group={pid for pid,v in records.items() if v['containerArgvRelated'] or any(any(part in OWNED_CONTAINER_IDS or part.startswith('docker-') and part.endswith('.scope') and part[7:-6] in OWNED_CONTAINER_IDS for part in x.split('/')) for x in v['cgroups'])};related=sorted(descendants|cgroup|workspace|owner_group|container_group)").replace("'ownerCgroupProcesses':sorted(owner_group)","'containerCgroupProcesses':sorted(container_group),'ownerCgroupProcesses':sorted(owner_group)");
+ const result=prefix+String.raw`
+import datetime,posixpath,select,errno,time
+from pathlib import PurePosixPath
+account=pwd.getpwnam('superopen')
+def digest(v):return hashlib.sha256(v if isinstance(v,bytes) else str(v).encode()).hexdigest()
+def compact(v):return json.dumps(v,ensure_ascii=False,separators=(',',':')).encode()
+def stat_key(s):return list(key(s))
+def duplicate_pairs(rows):
+ value={}
+ for k,v in rows:need(k not in value,'R32_MATRIX_CLEANUP_JSON_DUPLICATE_KEY');value[k]=v
+ return value
+def strict_json(raw):return json.loads(raw,object_pairs_hook=duplicate_pairs,parse_constant=lambda _:need(False,'R32_MATRIX_CLEANUP_JSON_NONFINITE'))
+ROOT=Path(p['root']);private=ROOT/p['attempt'];control=private/'control';tools=private/'tools';registry=private/'registry'
+OWNER_UNIT='jarvis-tg-r32-'+p['attempt']+'-owner.service';OWNER_CGROUP='/system.slice/'+OWNER_UNIT
+prefix_name='jarvis-tg-r32-'+p['attempt'];ROLES=['postgres','redis','minio','api-probe'];VOLUMES={'postgres-data':'/var/lib/postgresql/data','redis-data':'/data','minio-data':'/data'}
+resources={'containers':{r:prefix_name+'-'+r for r in ROLES},'network':prefix_name+'-net','volumes':{r:prefix_name+'-'+r for r in VOLUMES}}
+labels={'jarvis.truthgate.r32.attempt':p['attempt'],'jarvis.truthgate.r32.kind':'http-sql-validation'}
+roles={**{r:'container' for r in ROLES},'network':'network',**{r:'volume' for r in VOLUMES}}
+def resource_name(role):return resources['containers'][role] if roles[role]=='container' else resources['network'] if role=='network' else resources['volumes'][role]
+for path in [ROOT,private,control]:
+ trusted(path);s=path.lstat();need(stat.S_ISDIR(s.st_mode) and s.st_uid==s.st_gid==0 and stat.S_IMODE(s.st_mode)==0o700,'R32_MATRIX_CLEANUP_ROOT_UNTRUSTED')
+worker_raw=private_read(Path(p['tool']),150000);need(digest(worker_raw)==p['toolSHA'],'R32_MATRIX_CLEANUP_WORKER_CHANGED')
+library_raw=private_read(Path(p['libraryPath']),100000);need(digest(library_raw)==p['librarySHA256'],'R32_MATRIX_CLEANUP_BYTE_LIBRARY_CHANGED')
+once_raw=private_read(private/'once.json');ownership_raw=private_read(private/'ownership.json');state_raw=private_read(private/'state.json')
+once=strict_json(once_raw);ownership=strict_json(ownership_raw);state=strict_json(state_raw)
+need(set(once)=={'schemaVersion','kind','attempt','runID','workerSHA256','activationSHA256','automaticRetry'} and once.get('schemaVersion')==1 and once.get('kind')=='r32-truth-gate-once-intent' and once.get('attempt')==p['attempt'] and once.get('runID')==p['runID'] and once.get('workerSHA256')==p['toolSHA'] and once.get('activationSHA256')==p['activationSHA256'] and once.get('automaticRetry') is False and digest(once_raw)==p['onceIntentSHA256'],'R32_MATRIX_CLEANUP_ONCE_CHANGED')
+need(set(ownership)=={'schemaVersion','kind','attempt','resources','labels','workerSHA256','activationSHA256','emptyResourceScopeVerified'} and ownership.get('schemaVersion')==1 and ownership.get('kind')=='r32-truth-gate-ownership' and ownership.get('attempt')==p['attempt'] and ownership.get('resources')==resources and ownership.get('labels')==labels and ownership.get('workerSHA256')==p['toolSHA'] and ownership.get('activationSHA256')==p['activationSHA256'] and ownership.get('emptyResourceScopeVerified') is True and digest(ownership_raw)==p['ownershipSHA256'],'R32_MATRIX_CLEANUP_OWNERSHIP_CHANGED')
+owner_identity={'pid':p['ownerPID'],'startTicks':p['ownerStartTicks'],'boot':p['ownerBoot']}
+expected_owner={'unit':OWNER_UNIT,**owner_identity,'controlGroup':OWNER_CGROUP,'runtimeMaxSec':1800,'stopTimeoutSec':120,'killMode':'control-group','restart':'no'}
+need(state.get('schemaVersion')==1 and state.get('kind')=='r32-truth-gate-execution-state' and state.get('attempt')==p['attempt'] and state.get('runID')==p['runID'] and state.get('workerSHA256')==p['toolSHA'] and state.get('activationSHA256')==p['activationSHA256'] and state.get('owner')==expected_owner and state.get('resources')==resources and state.get('status') in ['passed','failed'] and state.get('modelsInvoked') is False and state.get('rootPackageJavaScriptExecuted') is False and state.get('cleanupIndependentlyVerified') is False and state.get('productAccepted') is False and state.get('httpSQLDenominator')==34 and state.get('additionalPGDenominator')==4,'R32_MATRIX_CLEANUP_NOT_BOUND_TERMINAL')
+need(type(state.get('candidateCodeMayHaveExecuted')) is bool and type(state.get('apiProbeEntryStarted')) is bool and (state.get('productCodeExecuted') is False or state.get('productCodeExecuted') is None) and (state['candidateCodeMayHaveExecuted'] and state['productCodeExecuted'] is None or not state['candidateCodeMayHaveExecuted'] and state['productCodeExecuted'] is False and not state['apiProbeEntryStarted']),'R32_MATRIX_CLEANUP_EXECUTION_PHASE_UNKNOWN')
+log_path=private/'api-probe.log';log_raw=private_read(log_path,4*1024*1024) if os.path.lexists(log_path) else None
+if log_raw is not None:need(state.get('privateLog')=={'bytes':len(log_raw),'sha256':digest(log_raw)},'R32_MATRIX_CLEANUP_PRIVATE_LOG_CHANGED')
+else:need(state['status']=='failed' and state.get('privateLog') is None,'R32_MATRIX_CLEANUP_PRIVATE_LOG_MISSING')
+`+directories+String.raw`
+CONTROL_FILES=sorted(p['controlFiles']);TOOLS_FILES=sorted(p['toolsFiles'])
+def control_state():
+ tree=directory_state(control,0);need(sorted(tree.pop('paths'))==CONTROL_FILES,'R32_MATRIX_CLEANUP_CONTROL_SET_CHANGED');files={n:digest(private_read(control/n,16*1024*1024)) for n in CONTROL_FILES}
+ need(files==p['controlFiles'] and hashv(files)==p['controlInventorySHA256'] and files['activation.json']==p['activationSHA256'],'R32_MATRIX_CLEANUP_CONTROL_BYTES_CHANGED');v=strict_json(private_read(control/'activation.json'))
+ need(set(v)=={'schemaVersion','kind','attempt','runID','workerSHA256','librarySHA256','sourceFingerprint','sourceIndexSHA256','images','pins','toolPins'} and v.get('schemaVersion')==1 and v.get('kind')=='r32-truth-gate-exact-activation' and v.get('attempt')==p['attempt'] and v.get('runID')==p['runID'] and v.get('workerSHA256')==p['toolSHA'] and v.get('librarySHA256')==p['librarySHA256'] and v.get('sourceFingerprint')==p['fingerprint'] and v.get('sourceIndexSHA256')==p['sourceIndexSHA256'] and v.get('images')==p['images'] and v.get('pins')=={k:x for k,x in files.items() if k!='activation.json'} and v.get('toolPins')==p['toolsFiles'],'R32_MATRIX_CLEANUP_ACTIVATION_CHANGED')
+ need(strict_json(private_read(control/'artifact-contract.json'))==p['artifactContract'] and strict_json(private_read(control/'image-contract.json'))==p['imageContract'],'R32_MATRIX_CLEANUP_QUALIFICATION_CONTRACT_CHANGED')
+ need(strict_json(private_read(control/'tools-contract.json'))=={'schemaVersion':1,'kind':'r32-truth-gate-readonly-tools','attempt':p['attempt'],'files':p['toolsFiles']},'R32_MATRIX_CLEANUP_TOOL_CONTRACT_CHANGED')
+ return {**tree,'files':files,'activationBound':True,'requiredFilesBound':True}
+def tools_state():
+ tree=directory_state(tools,0,mode=0o555);need(sorted(tree.pop('paths'))==TOOLS_FILES,'R32_MATRIX_CLEANUP_TOOLS_SET_CHANGED');files={n:digest(private_read(tools/n,16*1024*1024)) for n in TOOLS_FILES}
+ need(files==p['toolsFiles'] and hashv(files)==p['toolsInventorySHA256'] and all(stat.S_IMODE((tools/n).lstat().st_mode)==0o444 for n in files),'R32_MATRIX_CLEANUP_TOOL_BYTES_OR_MODES_CHANGED');return {**tree,'files':files}
+def registry_state():
+ raws={};records={};intents={};unknown=[]
+ if not os.path.lexists(registry):need(not state.get('created') and state['status']=='failed','R32_MATRIX_CLEANUP_REGISTRY_MISSING')
+ else:
+  tree=directory_state(registry,0);allowed=[r+s for r in roles for s in ['.intent.json','.created.json']];need(all(x in allowed for x in tree['paths']),'R32_MATRIX_CLEANUP_REGISTRY_EXTRA_FILE')
+  for role,kind in roles.items():
+   ip=registry/(role+'.intent.json');cp=registry/(role+'.created.json');ir=private_read(ip) if os.path.lexists(ip) else None;cr=private_read(cp) if os.path.lexists(cp) else None;raws[role]={'intent':digest(ir) if ir is not None else None,'created':digest(cr) if cr is not None else None}
+   if ir is not None:
+    i=strict_json(ir);need(set(i)=={'schemaVersion','kind','attempt','resourceKind','role','name','labels','workerSHA256','activationSHA256','emptyResourceScopeVerified'} and i=={'schemaVersion':1,'kind':'r32-truth-gate-creation-intent','attempt':p['attempt'],'resourceKind':kind,'role':role,'name':resource_name(role),'labels':labels,'workerSHA256':p['toolSHA'],'activationSHA256':p['activationSHA256'],'emptyResourceScopeVerified':True},'R32_MATRIX_CLEANUP_REGISTRY_INTENT_CHANGED');intents[role]=i
+   if cr is not None:
+    need(ir is not None,'R32_MATRIX_CLEANUP_CREATED_WITHOUT_INTENT');c=strict_json(cr)
+    need(set(c)=={'schemaVersion','kind','attempt','resourceKind','role','name','id','createdAt','imageID','labels','configSHA256','creationIntentSHA256'} and c.get('schemaVersion')==1 and c.get('kind')=='r32-truth-gate-created-resource' and c.get('attempt')==p['attempt'] and c.get('resourceKind')==kind and c.get('role')==role and c.get('name')==resource_name(role) and c.get('labels')==labels and c.get('creationIntentSHA256')==digest(ir) and re.fullmatch('[a-f0-9]{64}',c.get('configSHA256','')) and isinstance(c.get('createdAt'),str) and c['createdAt'],'R32_MATRIX_CLEANUP_REGISTRY_CREATED_CHANGED')
+    need(isinstance(c.get('id'),str) and (re.fullmatch('[a-f0-9]{64}',c['id']) if kind!='volume' else c['id']==resource_name(role)) and c.get('imageID')==(p['images']['node' if role=='api-probe' else role] if kind=='container' else None),'R32_MATRIX_CLEANUP_REGISTRY_ID_UNKNOWN');records[role]=c
+   elif ir is not None:unknown.append(role)
+ need(isinstance(state.get('created'),dict) and all(r in records and state['created'][r]==records[r] for r in state['created']),'R32_MATRIX_CLEANUP_STATE_REGISTRY_CONTRADICTS')
+ if state['status']=='passed':need(set(records)==set(roles) and not unknown and state['created']==records,'R32_MATRIX_CLEANUP_PASSED_WITHOUT_EIGHT_IDENTITIES')
+ return {'raws':raws,'records':records,'intentRoles':sorted(intents),'unknownRoles':sorted(unknown),'knownContainerIDs':{r:c['id'] for r,c in records.items() if roles[r]=='container'},'identitiesComplete':not unknown,'readOnly':True}
+def link_target(path,target):
+ need(isinstance(target,str) and 0<len(target)<=4096 and not target.startswith('/') and chr(92) not in target and not any(ord(c)<32 or ord(c)==127 for c in target),'R32_MATRIX_CLEANUP_ARTIFACT_LINK_INVALID');parts=list(PurePosixPath(path).parent.parts)
+ for k in target.split('/'):
+  if k in ['','.']:continue
+  if k=='..':need(parts,'R32_MATRIX_CLEANUP_ARTIFACT_LINK_ESCAPES');parts.pop()
+  else:parts.append(k)
+ need(parts,'R32_MATRIX_CLEANUP_ARTIFACT_LINK_ESCAPES');return '/'.join(parts)
+def artifact_state():
+ c=p['artifactContract'];root=Path(c['root']);need(root.parent.parent==Path('/var/lib/jarvis-development/101/r32-truth-artifacts') and re.fullmatch('[a-f0-9]{64}',root.parent.name) and root.name=='runtime' and c.get('manifestPath')==str(root.parent/'runtime-manifest.json'),'R32_MATRIX_CLEANUP_ARTIFACT_PATH_CHANGED')
+ raw=private_read(Path(c['manifestPath']),128*1024**2);need(digest(raw)==c['manifestSHA256'],'R32_MATRIX_CLEANUP_ARTIFACT_MANIFEST_CHANGED');m=strict_json(raw);entries=[];metadata=[];total=0;fd=h.open_directory(str(root));root_stat=os.fstat(fd)
+ def walk(d,pre='',depth=0):
+  nonlocal total
+  need(depth<=64,'R32_MATRIX_CLEANUP_ARTIFACT_DEPTH');before=os.fstat(d);need(before.st_uid==before.st_gid==0 and stat.S_IMODE(before.st_mode)==0o555,'R32_MATRIX_CLEANUP_ARTIFACT_DIRECTORY_UNTRUSTED');listing=sorted(os.listdir(d))
+  for n in listing:
+   need(n not in ['.','..'] and chr(92) not in n and not any(ord(c)<32 or ord(c)==127 for c in n) and len(entries)<200000,'R32_MATRIX_CLEANUP_ARTIFACT_PATH_INVALID');path=pre+n;s=os.stat(n,dir_fd=d,follow_symlinks=False);need(s.st_uid==s.st_gid==0,'R32_MATRIX_CLEANUP_ARTIFACT_OWNER_CHANGED')
+   if stat.S_ISDIR(s.st_mode):
+    child=os.open(n,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=d)
+    try:need(key(s)==key(os.fstat(child)),'R32_MATRIX_CLEANUP_ARTIFACT_DIRECTORY_CHANGED');entries.append({'path':path,'type':'directory'});metadata.append([path,*stat_key(s)]);walk(child,path+'/',depth+1)
+    finally:os.close(child)
+   elif stat.S_ISREG(s.st_mode):
+    need(s.st_nlink==1 and stat.S_IMODE(s.st_mode) in [0o444,0o555] and 0<=s.st_size<=400*1024**2,'R32_MATRIX_CLEANUP_ARTIFACT_FILE_UNTRUSTED');f=os.open(n,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=d)
+    try:
+     need(key(s)==key(os.fstat(f)),'R32_MATRIX_CLEANUP_ARTIFACT_FILE_REPLACED');value=hashlib.sha256();size=0
+     while True:
+      b=os.read(f,65536)
+      if not b:break
+      size+=len(b);need(size<=s.st_size,'R32_MATRIX_CLEANUP_ARTIFACT_FILE_GREW');value.update(b)
+     need(size==s.st_size and key(s)==key(os.fstat(f))==key(os.stat(n,dir_fd=d,follow_symlinks=False)),'R32_MATRIX_CLEANUP_ARTIFACT_FILE_CHANGED');total+=size;need(total<=2*1024**3,'R32_MATRIX_CLEANUP_ARTIFACT_TOTAL_BOUND');entries.append({'path':path,'type':'file','sha256':value.hexdigest(),'bytes':size});metadata.append([path,*stat_key(s)])
+    finally:os.close(f)
+   elif stat.S_ISLNK(s.st_mode):
+    target=os.readlink(n,dir_fd=d);link_target(path,target);need(key(s)==key(os.stat(n,dir_fd=d,follow_symlinks=False)),'R32_MATRIX_CLEANUP_ARTIFACT_LINK_CHANGED');entries.append({'path':path,'type':'symlink','target':target});metadata.append([path,*stat_key(s)])
+   else:raise RuntimeError('R32_MATRIX_CLEANUP_ARTIFACT_SPECIAL_FILE')
+  need(listing==sorted(os.listdir(d)) and key(before)==key(os.fstat(d)),'R32_MATRIX_CLEANUP_ARTIFACT_DIRECTORY_CHANGED')
+ try:
+  walk(fd);need(key(root_stat)==key(os.fstat(fd))==key(root.lstat()),'R32_MATRIX_CLEANUP_ARTIFACT_ROOT_CHANGED');entries.sort(key=lambda e:e['path']);metadata.sort(key=lambda e:e[0]);allowed={e['path'] for e in entries}
+  for e in entries:
+   if e['type']=='symlink':
+    target=(root/e['path']).resolve(strict=True);need(root in target.parents and target.relative_to(root).as_posix() in allowed,'R32_MATRIX_CLEANUP_ARTIFACT_LINK_RESOLUTION_ESCAPES')
+  rid=stat_key(root_stat);treeSHA=digest(compact(entries));metaSHA=digest(compact({'rootIdentity':rid,'metadata':metadata}));need(m.get('schemaVersion')==1 and m.get('kind')=='r32-application-runtime-manifest' and m.get('root')=='/work' and m.get('sourceFingerprint')==p['fingerprint'] and m.get('sourceIndexSHA256')==p['sourceIndexSHA256'] and m.get('entries')==entries and m.get('treeSHA256')==c['treeSHA256']==treeSHA and m.get('metadataSHA256')==c['metadataSHA256']==metaSHA and c['rootIdentity']==identity(fd),'R32_MATRIX_CLEANUP_ARTIFACT_COMPLETE_BYTES_CHANGED')
+  index_raw=private_read(tools/'r32-source-actual-index.json',16*1024*1024);need(digest(index_raw)==p['sourceIndexSHA256'],'R32_MATRIX_CLEANUP_SOURCE_INDEX_CHANGED');index=strict_json(index_raw);by={e['path']:e for e in entries};need(len(index.get('manifest',[]))==625 and sum(x['bytes'] for x in index['manifest'])==18413560 and all(by.get('source/'+x['path'],{}).get('type')=='file' and by['source/'+x['path']]['sha256']==x['sha256'] and by['source/'+x['path']]['bytes']==x['bytes'] for x in index['manifest']),'R32_MATRIX_CLEANUP_ARTIFACT_SOURCE_CLOSURE_CHANGED')
+  return {'root':str(root),'identity':identity(fd),'entries':len(entries),'bytes':total,'manifestSHA256':digest(raw),'treeSHA256':treeSHA,'metadataSHA256':metaSHA,'sourceIndexSHA256':digest(index_raw),'fullClosureVerified':True,'sourceFilesVerified':625,'stable':True,'nofollow':True,'uid':0,'mode':0o555}
+ finally:os.close(fd)
+`+runtime+String.raw`
+def docker(args):return subprocess.run(['/usr/bin/docker',*args],capture_output=True,timeout=15,env={'PATH':'/usr/bin:/bin','HOME':'/root','LANG':'C.UTF-8','DOCKER_API_VERSION':'1.49'})
+def image_state():
+ expected=p['imageContract'];need(expected.get('schemaVersion')==1 and expected.get('kind')=='r32-exact-dependency-image-config' and set(expected.get('images',{}))==set(p['images']),'R32_MATRIX_CLEANUP_IMAGE_CONTRACT_CHANGED');rows={}
+ for role,id in p['images'].items():
+  r=docker(['image','inspect',id]);need(r.returncode==0,'R32_MATRIX_CLEANUP_IMAGE_READ_FAILED');v=strict_json(r.stdout);need(isinstance(v,list) and len(v)==1 and isinstance(v[0],dict) and isinstance(v[0].get('Config'),dict) and 'Volumes' in v[0]['Config'],'R32_MATRIX_CLEANUP_IMAGE_READ_INVALID');z=v[0];c=z['Config'];public={'Id':z.get('Id'),'Os':z.get('Os'),'Architecture':z.get('Architecture'),'Config':{k:c.get(k) for k in ['User','Volumes','Entrypoint','Cmd']}};need(public==expected['images'][role] and public['Id']==id and public['Os']=='linux' and public['Architecture']=='amd64','R32_MATRIX_CLEANUP_IMAGE_CONFIG_CHANGED');declared=c.get('Volumes');need(declared is None or isinstance(declared,dict),'R32_MATRIX_CLEANUP_IMAGE_VOLUME_SCHEMA');need(set(declared or {})<=set([] if role=='node' else [VOLUMES[role+'-data']]),'R32_MATRIX_CLEANUP_IMAGE_ANONYMOUS_VOLUME_FORBIDDEN');rows[role]={'imageID':id,'publicConfigSHA256':hashv(public)}
+ return {'images':rows,'actualConfigRead':True,'noAnonymousVolumes':True,'readOnly':True}
+def dependency_caps_match(value):
+    # Docker may return one CAP_ prefix and any ordering. No duplicate/extra cap.
+    allowed={'CHOWN','DAC_OVERRIDE','FOWNER','SETUID','SETGID'}
+    if type(value) is not list or len(value)!=len(allowed):return False
+    normalized=[]
+    for item in value:
+        if type(item) is not str:return False
+        name=item[4:] if item.startswith('CAP_') else item
+        if name not in allowed:return False
+        normalized.append(name)
+    return len(set(normalized))==len(allowed)
+
+def present_resource(role,v):
+ kind=roles[role];name=resource_name(role);need(v.get('Name')==('/'+name if kind=='container' else name),'R32_MATRIX_CLEANUP_PRESENT_NAME_CHANGED');lab=v.get('Config',{}).get('Labels') if kind=='container' else v.get('Labels');need(isinstance(lab,dict) and all(lab.get(k)==x for k,x in labels.items()),'R32_MATRIX_CLEANUP_PRESENT_LABEL_CHANGED')
+ id=v.get('Id') if kind!='volume' else v.get('Name');need(isinstance(id,str) and (re.fullmatch('[a-f0-9]{64}',id) if kind!='volume' else id==name),'R32_MATRIX_CLEANUP_PRESENT_ID_INVALID');record=registry_before['records'].get(role);need(record is not None and record['id']==id,'R32_MATRIX_CLEANUP_PRESENT_ID_UNBOUND')
+ if kind=='network':need(v.get('Internal') is True and v.get('Driver')=='bridge' and v.get('Ingress') is False and v.get('Attachable') is False,'R32_MATRIX_CLEANUP_PRESENT_NETWORK_CHANGED')
+ elif kind=='volume':need(v.get('Driver')=='local' and not v.get('Options'),'R32_MATRIX_CLEANUP_PRESENT_VOLUME_CHANGED')
+ else:
+  app=role=='api-probe';c=v.get('Config',{});hc=v.get('HostConfig',{});need(v.get('Image')==p['images']['node' if app else role] and c.get('User')==('1000:1000' if app else '') and c.get('WorkingDir')==('/work/source' if app else '/') and hc.get('NetworkMode')==resources['network'] and hc.get('Privileged') is False and hc.get('PidMode')=='' and hc.get('IpcMode')=='private' and hc.get('CapDrop')==['ALL'] and (hc.get('CapAdd') in [None,[]] if app else dependency_caps_match(hc.get('CapAdd'))) and hc.get('Init') is True and hc.get('ReadonlyRootfs') is app and hc.get('SecurityOpt') in [['no-new-privileges'],['no-new-privileges=true']] and not hc.get('PortBindings') and not hc.get('Devices') and not hc.get('DeviceRequests'),'R32_MATRIX_CLEANUP_PRESENT_CONTAINER_ISOLATION_CHANGED')
+  need(hc.get('LogConfig')=={'Type':'json-file','Config':{'max-size':'4m','max-file':'2'}},'R32_MATRIX_CLEANUP_PRESENT_LOG_BOUND_CHANGED');expected=[('bind',p['artifactContract']['root'],'/work',False),('bind',str(tools),'/tools',False),('bind',p['runtimeRoot'],'/qa-runtime',False),('bind',str(private/'evidence'),'/evidence',True)] if app else [('volume',resources['volumes'][role+'-data'],VOLUMES[role+'-data'],True)];mounts=v.get('Mounts');need(isinstance(mounts,list) and len(mounts)==len(expected),'R32_MATRIX_CLEANUP_PRESENT_EXTRA_MOUNT')
+  for t,src,dst,rw in expected:
+   match=[m for m in mounts if m.get('Destination')==dst];need(len(match)==1 and match[0].get('Type')==t and match[0].get('Source' if t=='bind' else 'Name')==src and match[0].get('RW') is rw,'R32_MATRIX_CLEANUP_PRESENT_MOUNT_CHANGED')
+  declared=c.get('Volumes');need(declared is None or isinstance(declared,dict),'R32_MATRIX_CLEANUP_PRESENT_VOLUME_SCHEMA');need(set(declared or {})<=set([] if app else [VOLUMES[role+'-data']]),'R32_MATRIX_CLEANUP_ANONYMOUS_VOLUME_FORBIDDEN')
+ return {'role':role,'resourceKind':kind,'name':name,'id':id,'scopeVerified':True,'labelsSHA256':hashv(lab)}
+def docker_census():
+ absent=[];present=[]
+ for role,kind in roles.items():
+  name=resource_name(role);r=docker(['container','inspect',name] if kind=='container' else [kind,'inspect',name])
+  if r.returncode==1:
+   errors=['Error: No such object: '+name,'Error response from daemon: No such '+kind+': '+name,'Error: No such '+kind+': '+name]
+   if kind=='network':errors.append('Error response from daemon: network '+name+' not found')
+   elif kind=='volume':errors.append('Error response from daemon: get '+name+': no such volume')
+   need(strict_json(r.stdout)==[] and r.stderr.decode('utf8','strict').strip() in errors,'R32_MATRIX_CLEANUP_DOCKER_ABSENCE_UNCONFIRMED');absent.append({'role':role,'resourceKind':kind,'name':name})
+  else:
+   need(r.returncode==0,'R32_MATRIX_CLEANUP_DOCKER_READ_FAILED');v=strict_json(r.stdout);need(isinstance(v,list) and len(v)==1 and isinstance(v[0],dict),'R32_MATRIX_CLEANUP_DOCKER_INSPECT_INVALID');present.append(present_resource(role,v[0]))
+ scopes=[]
+ for filters in [['label=jarvis.truthgate.r32.attempt='+p['attempt']],['label=jarvis.truthgate.r32.attempt='+p['attempt'],'label=jarvis.truthgate.r32.kind=http-sql-validation']]:
+  values={}
+  for kind,head in [('containers',['ps','-aq']),('networks',['network','ls','-q']),('volumes',['volume','ls','-q'])]:
+   args=list(head)
+   for f in filters:args+=['--filter',f]
+   r=docker(args);need(r.returncode==0,'R32_MATRIX_CLEANUP_DOCKER_LABEL_READ_FAILED');ids=r.stdout.decode('utf8','strict').splitlines();need(len(ids)<=1000 and len(set(ids))==len(ids) and all(re.fullmatch('[A-Za-z0-9_.-]{1,128}',x) for x in ids),'R32_MATRIX_CLEANUP_DOCKER_LABEL_FORMAT_INVALID');values[kind]=ids
+  scopes.append({'filters':filters,**values})
+ return {'exactResources':[{'role':r,'resourceKind':k,'name':resource_name(r)} for r,k in roles.items()],'absent':absent,'present':present,'labelScopes':scopes,'readOnly':True,'containersNetworksVolumesQueried':True,'complete':len(absent)==8 and not present and all(not s[k] for s in scopes for k in ['containers','networks','volumes'])}
+def owner_probe():
+ boot=Path('/proc/sys/kernel/random/boot_id').read_text().strip();need(boot==p['ownerBoot'],'R32_MATRIX_CLEANUP_OWNER_BOOT_CHANGED')
+ try:os.stat('/proc/'+str(p['ownerPID']),follow_symlinks=False);absent=False
+ except FileNotFoundError as e:need(e.errno==errno.ENOENT,'R32_MATRIX_CLEANUP_OWNER_READ_FAILED');absent=True
+ r=subprocess.run(['/usr/bin/systemctl','show',OWNER_UNIT,'--property=Id,LoadState,ActiveState,SubState,MainPID,ControlGroup,RuntimeMaxUSec,TimeoutStopUSec,KillMode,Restart,ExecStopPost'],capture_output=True,text=True,timeout=10,env=env);need(r.returncode==0,'R32_MATRIX_CLEANUP_OWNER_UNIT_READ_FAILED');v=dict(x.split('=',1) for x in r.stdout.splitlines() if '=' in x)
+ need(v.get('Id')==OWNER_UNIT and v.get('LoadState') in ['loaded','not-found'] and v.get('ActiveState') in ['active','inactive','failed','activating','deactivating'] and re.fullmatch('[0-9]+',v.get('MainPID','')) and v.get('ControlGroup') in ['',OWNER_CGROUP],'R32_MATRIX_CLEANUP_OWNER_UNIT_INVALID')
+ if v['LoadState']=='loaded':
+  need(v.get('RuntimeMaxUSec')=='30min' and v.get('TimeoutStopUSec')=='2min' and v.get('KillMode')=='control-group' and v.get('Restart')=='no','R32_MATRIX_CLEANUP_OWNER_LIMIT_CHANGED');post=re.fullmatch(r'\{\s*path=([^;{}]+?)\s*;\s*argv\[\]=(.*?)\s*;\s*ignore_errors=(yes|no)\s*;[^{}]*\}',v.get('ExecStopPost',''));need(post and post.group(1)=='/usr/bin/python3' and post.group(2).split()==['/usr/bin/python3',p['tool'],'--reconcile-cleanup',p['attempt']] and post.group(3)=='no','R32_MATRIX_CLEANUP_OWNER_STOPPOST_CHANGED')
+ cg=Path('/sys/fs/cgroup'+OWNER_CGROUP);pids=[];present=os.path.lexists(cg)
+ if present:
+  def visit(path):
+   s=path.lstat();need(stat.S_ISDIR(s.st_mode) and not stat.S_ISLNK(s.st_mode),'R32_MATRIX_CLEANUP_OWNER_CGROUP_INVALID');text=(path/'cgroup.procs').read_text();need(all(re.fullmatch('[0-9]+',x) for x in text.splitlines()),'R32_MATRIX_CLEANUP_OWNER_CGROUP_PARSE_FAILED');pids.extend(int(x) for x in text.splitlines());need(len(pids)<=100000,'R32_MATRIX_CLEANUP_OWNER_CGROUP_LIMIT')
+   for e in path.iterdir():
+    if e.is_dir():visit(e)
+  visit(cg)
+ return {'identity':owner_identity,'bootSame':True,'pidAbsent':absent,'unit':{k:v[k] for k in ['Id','LoadState','ActiveState','SubState','MainPID','ControlGroup']},'cgroupPath':OWNER_CGROUP,'cgroupPresent':present,'cgroupPIDs':sorted(set(pids)),'readOnly':True,'originalOwnerContractReceiptBound':True,'runtimeMaxSec':1800,'stopTimeoutSec':120,'currentOwnerContractObserved':v['LoadState']=='loaded','complete':absent and v['ActiveState'] in ['inactive','failed'] and v['MainPID']=='0' and not pids}
+def container_argv_related(pid,boot,a,value):
+ if not OWNED_CONTAINER_IDS:return False
+ need(a.get('identityBound') is True and a.get('requestedPID')==pid and a.get('boot')==boot and value.get('pid')==pid and value.get('boot')==boot,'R32_MATRIX_CLEANUP_CONTAINER_ARGV_IDENTITY_UNBOUND');path=Path('/proc')/str(pid);fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+ try:
+  s=os.fstat(fd);need(a['listedProcIdentity']=={'device':s.st_dev,'inode':s.st_ino} and value['procDevice']==s.st_dev and value['procInode']==s.st_ino,'R32_MATRIX_CLEANUP_CONTAINER_ARGV_INODE_CHANGED')
+  def text(name):
+   f=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd)
+   try:
+    data=b''
+    while len(data)<=1048576:
+     q=os.read(f,min(65536,1048577-len(data)))
+     if not q:break
+     data+=q
+    need(len(data)<=1048576,'R32_MATRIX_CLEANUP_CONTAINER_ARGV_READ_LIMIT');return data.decode('utf8','strict')
+   finally:os.close(f)
+  first=text('stat');fields=first[first.rfind(')')+2:].split();need(len(fields)>=20 and fields[19]==value['startTicks'] and int(fields[1])==value['ppid'],'R32_MATRIX_CLEANUP_CONTAINER_ARGV_PROCESS_CHANGED');argv=text('cmdline');need(digest(argv)==value['argvSHA256'],'R32_MATRIX_CLEANUP_CONTAINER_ARGV_CHANGED');again=text('stat');later=again[again.rfind(')')+2:].split();current=os.stat(path,follow_symlinks=False);need(len(later)>=20 and later[19]==fields[19] and later[1]==fields[1] and (current.st_dev,current.st_ino)==(s.st_dev,s.st_ino)==(os.fstat(fd).st_dev,os.fstat(fd).st_ino),'R32_MATRIX_CLEANUP_CONTAINER_ARGV_PROCESS_CHANGED')
+  return any(t in OWNED_CONTAINER_IDS or t.startswith('-id=') and t[4:] in OWNED_CONTAINER_IDS or t.startswith('--id=') and t[5:] in OWNED_CONTAINER_IDS for t in argv.split('\0'))
+ finally:os.close(fd)
+`+census+String.raw`
+p={**p,'workspace':str(private)}
+source_before,_=source_state(p['source']);expected_source={'sha256':p['fingerprint'],'files':p['sourceFiles'],'bytes':p['sourceBytes'],'metadataSHA':p['metadataSHA'],'identity':p['sourceIdentity']};need({k:source_before[k] for k in expected_source}==expected_source,'R32_MATRIX_CLEANUP_SOURCE_CHANGED')
+origin_raw=private_read(Path(p['sourceOrigin']));need(digest(origin_raw)==p['sourceOriginSHA256'],'R32_MATRIX_CLEANUP_SOURCE_ORIGIN_CHANGED')
+def protected_source_state():
+ result={}
+ for path,expected in p['protectedSources'].items():
+  observed,_=source_state(path);need(observed==expected,'R32_MATRIX_CLEANUP_PROTECTED_SOURCE_CHANGED');result[path]=observed
+ return result
+protected_before=protected_source_state();registry_before=registry_state();OWNED_CONTAINER_IDS=set(registry_before['knownContainerIDs'].values());control_before=control_state();tools_before=tools_state();attempt_before=directory_state(private,0,False);artifact_before=artifact_state();runtime_before=runtime_state();images_before=image_state();sockets_before=workspace_sockets();docker_before=docker_census();owner_before=owner_probe();scan_before=census()
+protected_after=protected_source_state();registry_after=registry_state();control_after=control_state();tools_after=tools_state();attempt_after=directory_state(private,0,False);artifact_after=artifact_state();runtime_after=runtime_state();images_after=image_state();sockets_after=workspace_sockets();docker_after=docker_census();owner_after=owner_probe();scan_after=census();source_after,_=source_state(p['source'])
+need(source_before==source_after and protected_before==protected_after and registry_before==registry_after and control_before==control_after and tools_before==tools_after and attempt_before==attempt_after and artifact_before==artifact_after and runtime_before==runtime_after and images_before==images_after and sockets_before==sockets_after and docker_before==docker_after and owner_before==owner_after and scan_before['node']==scan_after['node'] and scan_before['ack']==scan_after['ack'],'R32_MATRIX_CLEANUP_OBSERVATION_CHANGED')
+need(private_read(private/'once.json')==once_raw and private_read(private/'ownership.json')==ownership_raw and private_read(private/'state.json')==state_raw and private_read(Path(p['tool']),150000)==worker_raw and private_read(Path(p['libraryPath']),100000)==library_raw,'R32_MATRIX_CLEANUP_RECEIPTS_CHANGED')
+need((private_read(log_path,4*1024*1024) if os.path.lexists(log_path) else None)==log_raw,'R32_MATRIX_CLEANUP_PRIVATE_LOG_READ_CHANGED')
+need(private_read(Path(p['sourceOrigin']))==origin_raw,'R32_MATRIX_CLEANUP_SOURCE_ORIGIN_READ_CHANGED')
+if state['status']=='passed':need(state.get('candidateCodeMayHaveExecuted') is True and state.get('apiProbeEntryStarted') is True and state.get('containerStopped') is True and state.get('containerExitCode')==0 and state.get('containerWait')=={'cliExitCode':0,'timedOut':False,'replyExitCode':0} and log_raw is not None,'R32_MATRIX_CLEANUP_PASSED_EXECUTION_UNPROVEN')
+complete=registry_after['identitiesComplete'] and not scan_before['readIncompletePIDs'] and not scan_after['readIncompletePIDs'] and not scan_before['relatedProcesses'] and not scan_after['relatedProcesses'] and not sockets_after['filesystem'] and not sockets_after['procNetUnix'] and all(v==0 for v in scan_after['ack']['counts'].values());attempt_after.pop('paths')
+print(json.dumps({'observedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'attempt':p['attempt'],'runID':p['runID'],'executionStatus':state['status'],'source':source_after,'sourceBeforeAfterStable':True,'protectedSources':protected_after,'sourceOriginSHA256':digest(origin_raw),'privateReceiptsStable':True,'workerSHA256':digest(worker_raw),'activationSHA256':p['activationSHA256'],'onceIntentSHA256':digest(once_raw),'ownershipSHA256':digest(ownership_raw),'controlInventorySHA256':hashv(control_after['files']),'toolsInventorySHA256':hashv(tools_after['files']),'stateSHA256':digest(state_raw),'attemptDirectory':attempt_after,'control':control_after,'tools':tools_after,'registry':registry_after,'artifact':artifact_after,'artifactBeforeAfterStable':True,'runtimeClosure':runtime_after,'runtimeBeforeAfterStable':True,'images':images_after,'privateExecutionLogSHA256':digest(log_raw) if log_raw is not None else None,'privateExecutionLogBytes':len(log_raw) if log_raw is not None else None,'docker':docker_after,'owner':owner_after,'node':scan_after['node'],'nodeACK':scan_after['ack'],'scans':[scan_before,scan_after],'workspaceSockets':sockets_after,'procScope':{'fullProcScan':True,'includesAllDescendants':True,'includesUnitCgroupOrphans':True,'includesWorkspaceCwdExeArgvFD':True,'includesInstallerOwnerCgroup':True,'includesAllKnownContainerCgroups':True,'includesKnownContainerArgv':True,'knownContainerIDs':registry_after['knownContainerIDs'],'workspace':str(private),'persistentMainPIDExcluded':scan_after['node']['pid'],'twoScans':True},'nativeProcessAndSocketCleanupVerified':complete,'mutationsPerformed':False,'signalsSent':False,'resourcesRemoved':False,'rawLogsExported':False,'privateEnvironmentExported':False,'rawArgvExported':False,'packageJavaScriptExecuted':False,'workerCleanupClaimsUsedAsProof':False}))
+`;
+ return result.replace("'executionStatus':state['status'],","'executionStatus':state['status'],'executionPhase':{'candidateCodeMayHaveExecuted':state['candidateCodeMayHaveExecuted'],'apiProbeEntryStarted':state['apiProbeEntryStarted'],'productCodeExecuted':state['productCodeExecuted'],'trustedProducerDataOnly':True},");
+}
+
+// These projections describe persisted producer facts. Business verdicts belong
+// to the separate, case-specific result reader; none changes physical cleanup.
+export const matrixReportWitnessFourTitles=Object.freeze([
+ 'orders a later serialized rerun after an older-BEGIN transaction and rejects the old draft basis',
+ 'invalidates a finalized report when an older-BEGIN manual revision obtains the batch afterwards',
+ 'places a manual revision strictly after a future prior timestamp without JavaScript rounding',
+ 'allows only one real concurrent selftest start and orders it after a future prior selftest',
+]);
+export const matrixReportWitnessCheckIDs=Object.freeze(['N01-mock-normal','N01-mock-conditional','N02-unknown-source','N02-unknown-run-source','N03-zero-case-run','N04-required-result-missing','N04-required-not-run','N05-fail','N05-blocked','N05-blocked-batch','N05-unwaivable-P0','N05-unwaivable-P1','N06-missing-evidence','N06-evidence-hash-tampered','N07-environment-mismatch','N07-new-current-build','N08-result-change','N08-source-change','N09-required-flag-change','N09-content-change','N09-required-case-added','N10-current-baseline-invalid','N10-new-same-build-failed-report','N10-new-postfinal-blocking-defect','N11-mandatory-na-without-applicability','N12-route-body-project-report-override','N12-manual-stale-after-batch-lock','N12-attachment-stale-after-batch-lock','N12-idempotency-same-key-other-body','P01-real-manual-http-and-byte-evidence','P02-lawful-optional-na','P03-legacy-unknown-preserved-new-real-run','P03-real-legacy-migration','P04-lawful-P2-conditional']);
+const reportObject=(required,fields)=>['object',required,fields],reportArray=(max,item)=>['array',max,item],reportEnum=values=>['enum',values],literal=v=>['literal',v];
+const reportStatuses=reportEnum(['pass','fail','incomplete']);
+const assertionStatuses=reportEnum(['passed','failed','pending','skipped','todo','disabled']);
+const committedStateSpec=reportObject(['batchStatus','releaseDecisions','formalPassReports'],{batchStatus:reportEnum(['received','planned','approved','executing','reported','released','blocked']),releaseDecisions:'uint',formalPassReports:'uint'});
+const outcomeSpec=reportObject(['stage','status','errorCode'],{stage:reportEnum(['generate','finalize','release','execute','concurrent-execute','stale-write','cross-project-release','idempotency-replay']),status:'http',errorCode:'code',detailCodes:reportArray(20,'code'),transactionBeforeSHA256:'hash',transactionAfterSHA256:'hash',transactionUnchanged:'bool-null'});
+const checkFields={id:reportEnum(matrixReportWitnessCheckIDs),kind:reportEnum(['positive','negative']),status:reportStatuses,actualHTTP:'bool',actualPostgreSQL:'bool',startedAt:'date',finishedAt:'date',errorCode:'code',readbackErrorCode:'code',outcomes:reportArray(6,outcomeSpec),committedState:committedStateSpec,targetProjectCommittedState:committedStateSpec,sourceProjectCommittedState:committedStateSpec,byteEvidence:reportObject(['sha256','bytes','downloaded'],{sha256:'hash',bytes:'uint',downloaded:'bool'}),runRows:'uint'};
+for(const k of ['barrierActuallyObserved','oldCaseUnchanged','staleCommandAuditUnchanged','staleEvidenceLedgerUnchanged','sourceProjectAuditUnchanged','archivedTargetReleased','conditionalDecisionAndFinalizedReportVerified','legacyPreserved','oldRowsPreserved','oldRunPreserved','oldReportsPreserved','manualLegacyRemainsUnknown','knownMockMarkedSimulated','oldMockRunMarkedSimulated'])checkFields[k]='bool';
+checkFields.optionalApprovalVerified='bool-null';
+const probeFields={schemaVersion:literal(1),kind:literal('software-factory-r32-independent-truth-gate-probe'),sourceFingerprint:'hash',sourceManifestSHA256:'hash',runId:'run',attempt:'attempt',startedAt:'date',finishedAt:'date',status:reportStatuses,plannedCheckCount:literal(34),exactCheckSetCompleted:'bool',counts:reportObject(['total','passed','failed','incomplete'],{total:'uint',passed:'uint',failed:'uint',incomplete:'uint'}),problems:reportArray(20,reportObject(['errorCode'],{errorCode:'code',scope:reportEnum(['setup-or-matrix-infrastructure','source-or-runtime-after','sql-resolver-restore'])})),checks:reportArray(34,reportObject(['id','kind','status','actualHTTP','actualPostgreSQL','startedAt','finishedAt'],checkFields))};
+for(const [k,v] of Object.entries({syntheticUpstreamContext:true,serviceReturnValuesMocked:false,actualHTTP:true,actualPostgreSQL:true,modelsInvoked:false,productionDatabaseUsed:false,sourceCodeChanged:false,productAccepted:false,full74ObjectivesAccepted:false,rawCredentialsExported:false,rawPrivateResponsesExported:false}))probeFields[k]=literal(v);
+const supervisorFields={schemaVersion:literal(1),kind:literal('r32-truth-gate-supervisor-report'),sourceFingerprint:'hash',runID:'run',attempt:'attempt',sourceUID:literal(1000),status:reportEnum(['execution-complete','failed','incomplete']),httpSQLDenominator:literal(34),additionalPGDenominator:literal(4),productAccepted:literal(false),customerDelivery:literal(false),modelsInvoked:literal(false),apiChildStopped:'bool',errorCode:'code',fourReportErrorCode:'code',fourOriginalCases:reportArray(4,reportObject(['title','status'],{title:reportEnum(matrixReportWitnessFourTitles),status:assertionStatuses})),stages:reportArray(4,reportObject(['id'],{id:reportEnum(['fresh-databases-and-migrations','api-health','http-sql34','original-handler-pg4']),status:reportEnum(['pass','fail','incomplete']),actualSQLMigrations:'uint',main:literal('jarvis_truth_gate_r32'),upgrade:literal('jarvis_truth_upgrade_r32'),upgradeInitialPublicTables:'uint',db:'bool',redis:'bool',minio:'bool',code:'int-null',signal:reportEnum([null,'SIGTERM','SIGKILL','SIGABRT','SIGSEGV','SIGINT']),logBytes:'uint',timedOut:'bool',errorCode:'code'}))};
+supervisorFields.kind=literal('r32-truth-gate-supervisor-report-r2');supervisorFields.nativePrerequisiteDenominator=literal(1);supervisorFields.stages[1]=5;
+supervisorFields.stages[2][2].id[1].unshift('locked-native-load');
+Object.assign(supervisorFields.stages[2][2],{nativeDenominator:literal(1),actualLoadVerified:'bool',uid:literal(1000),reportSHA256:'hash',reportBytes:'uint',nativePrerequisiteSHA256:literal(nativePrerequisiteSHA256),nativeModuleSHA256:literal(nativePrerequisite.nativeModule.sha256),exportCount:'uint',nodeABI:'uint',compressionInvoked:literal(false),databaseQueriesInvoked:literal(false)});
+const nativeFields={schemaVersion:literal(1),kind:literal('r32-locked-native-load-observation'),attempt:'attempt',runID:'run',sourceFingerprint:'hash',artifactContractSHA256:'hash',nativePrerequisiteSHA256:literal(nativePrerequisiteSHA256),package:literal(nativePrerequisite.package),version:literal(nativePrerequisite.version),packageJSONSHA256:literal(nativePrerequisite.packageJSON.sha256),nativeModuleSHA256:literal(nativePrerequisite.nativeModule.sha256),startedAt:'date',finishedAt:'date',uid:literal(1000),gid:literal(1000),pid:'uint',nodeABI:'uint',status:reportEnum(['loaded','incomplete']),loadAttempted:'bool',actualLoadVerified:'bool',exportCount:'uint',compressionInvoked:literal(false),databaseQueriesInvoked:literal(false),rootPackageCodeExecuted:literal(false),modelsInvoked:literal(false),productAccepted:literal(false)};
+export const matrixReportWitnessSpec=Object.freeze({
+ paths:{probe:'truth-gate-result.json',supervisor:'supervisor-result.json',four:'pg-four-result.json',native:'locked-native-load-result.json'},
+ probe:reportObject(Object.keys(probeFields),probeFields),
+ supervisor:reportObject(['schemaVersion','kind','sourceFingerprint','runID','attempt','sourceUID','status','httpSQLDenominator','additionalPGDenominator','nativePrerequisiteDenominator','productAccepted','customerDelivery','modelsInvoked','stages'],supervisorFields),
+ native:reportObject(Object.keys(nativeFields),{...nativeFields,errorCode:'code'}),nativePrerequisite,nativePrerequisiteSHA256,
+ four:reportObject(['success','numTotalTests','numFailedTestSuites','suiteStatus','selected','unexpectedPassedCount'],{success:'bool',numTotalTests:'uint',numFailedTestSuites:'uint',numRuntimeErrorTestSuites:'uint',suiteStatus:reportArray(100,reportEnum(['passed','failed','pending','skipped'])),selected:reportArray(4,reportObject(['title','status'],{title:reportEnum(matrixReportWitnessFourTitles),status:assertionStatuses})),unexpectedPassedCount:'uint'}),
+ fourTitles:matrixReportWitnessFourTitles,checkIDs:matrixReportWitnessCheckIDs,
+ errorCodes:['R32_REPORT_WITNESS_UNCLASSIFIED_CODE','QA_UNCLASSIFIED_ERROR','GATE_BLOCKED','REPORT_BASIS_MISMATCH','ZERO_CASES_FORBIDDEN','STALE_EVIDENCE','IDEMPOTENCY_CONFLICT','INVALID_STATE','WAIVER_NOT_ALLOWED','VALIDATION_FAILED','FORBIDDEN','SEVERITY_NOT_WAIVABLE','WAIVER_INCOMPLETE','WAIVER_INVALID','WAIVER_UNKNOWN','SIMULATION_DISTORTION','MUST_RUN_NOT_EXECUTED','UNWAIVED_CASE_RESULT','ZERO_PASS','TRUTH_GATE','VERDICT_NOT_PASS',
+ 'QA_HTTP_TRANSPORT_FAILED','QA_SETUP_REQUEST_FAILED','QA_PROJECT_ID_MISSING','QA_REPORT_ID_MISSING','QA_IDEMPOTENCY_BASE_FAILED','QA_TRANSACTION_READBACK_MISSING','QA_DATABASE_CLOSE_UNCONFIRMED','QA_ATTACHMENT_NOT_PERSISTED','QA_R32_CHILD_LOG_BOUND','QA_R32_CHILD_LOG_WRITE_FAILED','QA_R32_API_PROCESS_EXITED','QA_R32_API_HEALTH_TIMEOUT','QA_R32_FOUR_REPORT_UNTRUSTED','QA_R32_FOUR_SELECTION_OR_HOOK_INCOMPLETE','QA_R32_FOUR_REPORT_INCOMPLETE','QA_R32_SUPERVISOR_INCOMPLETE','QA_R32_BOOTSTRAP_DATABASE_CLOSE_INCOMPLETE',
+ 'QA_R32_NATIVE_FILE_UNTRUSTED','QA_R32_NATIVE_FILE_CHANGED','QA_R32_NATIVE_BYTES_CHANGED','QA_R32_NATIVE_ISOLATED_NONROOT_REQUIRED','QA_R32_NATIVE_PREREQUISITE_SCOPE_CHANGED','QA_R32_NATIVE_EVIDENCE_UNTRUSTED','QA_R32_NATIVE_PACKAGE_SCOPE_CHANGED','QA_R32_NATIVE_EXPORTS_EMPTY','QA_R32_NATIVE_LOAD_INCOMPLETE','QA_R32_NATIVE_ADMISSION_INCOMPLETE','QA_R32_NATIVE_FD_CLOSE_INCOMPLETE','QA_R32_NATIVE_REPORT_BOUND','QA_R32_NATIVE_REPORT_SHORT_WRITE','QA_R32_NATIVE_ACTUAL_LOAD_NOT_QUALIFIED','QA_R32_NATIVE_PREREQUISITE_NOT_FROZEN','QA_R32_NATIVE_CHILD_INCOMPLETE','QA_R32_NATIVE_REPORT_UNTRUSTED'],
+});
+function projectReportValue(value,spec){
+ const bad=()=>need(false,'R32_REPORT_WITNESS_SHAPE_INVALID');
+ if(Array.isArray(spec)){
+  if(spec[0]==='literal'){if(value!==spec[1])bad();return value}
+  if(spec[0]==='enum'){if(!spec[1].includes(value))bad();return value}
+  if(spec[0]==='array'){if(!Array.isArray(value)||value.length>spec[1])bad();return value.map(v=>projectReportValue(v,spec[2]))}
+  if(spec[0]==='object'){if(!value||typeof value!=='object'||Array.isArray(value)||spec[1].some(k=>!Object.hasOwn(value,k)))bad();return Object.fromEntries(Object.entries(spec[2]).filter(([k])=>Object.hasOwn(value,k)).map(([k,s])=>[k,projectReportValue(value[k],s)]))}
+  bad();
+ }
+ if(spec==='bool'){if(typeof value!=='boolean')bad()}
+ else if(spec==='bool-null'){if(value!==null&&typeof value!=='boolean')bad()}
+ else if(spec==='uint'){if(!Number.isSafeInteger(value)||value<0)bad()}
+ else if(spec==='int-null'){if(value!==null&&(!Number.isSafeInteger(value)||value<0||value>255))bad()}
+ else if(spec==='http'){if(!Number.isSafeInteger(value)||value<0||value>599)bad()}
+ else if(spec==='hash'){if(!H.test(value??'')||typeof value!=='string')bad()}
+ else if(spec==='run'){if(typeof value!=='string'||!/^[a-f0-9]{40}$/.test(value))bad()}
+ else if(spec==='attempt'){if(typeof value!=='string'||!A.test(value))bad()}
+ else if(spec==='date'){if(typeof value!=='string'||!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?(?:Z|\+00:00)$/.test(value)||!Number.isFinite(Date.parse(value)))bad()}
+ else if(spec==='code'){if(value!==null&&typeof value!=='string')bad();return value===null||matrixReportWitnessSpec.errorCodes.includes(value)?value:'R32_REPORT_WITNESS_UNCLASSIFIED_CODE'}
+ else bad();return value;
+}
+export function projectMatrixReportWitnessR32(kind,value,B){
+ need(['probe','supervisor','four','native'].includes(kind),'R32_REPORT_WITNESS_KIND_INVALID');
+ if(kind==='four'){
+  need(value&&typeof value==='object'&&!Array.isArray(value)&&Array.isArray(value.testResults)&&value.testResults.length<=100,'R32_REPORT_WITNESS_SHAPE_INVALID');
+  const selected=[],suiteStatus=[];let unexpectedPassedCount=0,total=0;
+  for(const s of value.testResults){need(s&&Array.isArray(s.assertionResults)&&s.assertionResults.length<=1000,'R32_REPORT_WITNESS_SHAPE_INVALID');suiteStatus.push(s.status);for(const a of s.assertionResults){need(a&&typeof a.title==='string'&&['passed','failed','pending','skipped','todo','disabled'].includes(a.status),'R32_REPORT_WITNESS_SHAPE_INVALID');total++;if(matrixReportWitnessFourTitles.includes(a.title))selected.push({title:a.title,status:a.status});else if(a.status==='passed')unexpectedPassedCount++;}}
+  need(total<=10000&&new Set(selected.map(x=>x.title)).size===selected.length,'R32_REPORT_WITNESS_SHAPE_INVALID');
+  value={success:value.success,numTotalTests:value.numTotalTests,numFailedTestSuites:value.numFailedTestSuites,...(Object.hasOwn(value,'numRuntimeErrorTestSuites')?{numRuntimeErrorTestSuites:value.numRuntimeErrorTestSuites}:{}),suiteStatus,selected,unexpectedPassedCount};
+ }
+ const out=projectReportValue(value,matrixReportWitnessSpec[kind]);
+ if(kind!=='four')need(out.attempt===B.attempt&&(out.runId??out.runID)===B.runID&&out.sourceFingerprint===B.fingerprint,'R32_REPORT_WITNESS_SCOPE_CHANGED');
+ if(kind==='probe'){
+  need(out.sourceManifestSHA256===B.sourceIndexSHA256&&new Set(out.checks.map(x=>x.id)).size===out.checks.length,'R32_REPORT_WITNESS_SCOPE_CHANGED');
+  const counts={total:out.checks.length,passed:out.checks.filter(x=>x.status==='pass').length,failed:out.checks.filter(x=>x.status==='fail').length,incomplete:out.checks.filter(x=>x.status==='incomplete').length};need(same(out.counts,counts),'R32_REPORT_WITNESS_COUNTS_NOT_CLOSED');
+ }
+ if(kind==='supervisor')need(new Set(out.stages.map(x=>x.id)).size===out.stages.length&&(!out.fourOriginalCases||new Set(out.fourOriginalCases.map(x=>x.title)).size===out.fourOriginalCases.length),'R32_REPORT_WITNESS_SHAPE_INVALID');
+ if(kind==='native')need(out.artifactContractSHA256===B.controlFiles?.['artifact-contract.json']&&out.pid>1&&out.nodeABI>0,'R32_REPORT_WITNESS_SCOPE_CHANGED');
+ return out;
+}
+
+export function assertMatrixReportEvidenceR32(evidence,B){
+ need(evidence&&same(Object.keys(evidence).sort(),['four','native','probe','supervisor']),'R32_REPORT_WITNESS_SET_INVALID');
+ for(const [kind,w] of Object.entries(evidence)){
+  need(w&&same(Object.keys(w).sort(),['bytes','errorCode','metadataSHA256','parseComplete','path','projection','readComplete','reportQualified','sha256','stable'])&&w.path==='/evidence/'+matrixReportWitnessSpec.paths[kind]&&['readComplete','stable','parseComplete','reportQualified'].every(k=>typeof w[k]==='boolean')&&(w.sha256===null||H.test(w.sha256))&&(w.metadataSHA256===null||H.test(w.metadataSHA256))&&(w.bytes===null||Number.isSafeInteger(w.bytes)&&w.bytes>=0&&w.bytes<=4194304)&&w.reportQualified===(w.readComplete&&w.stable&&w.parseComplete),'R32_REPORT_WITNESS_EVIDENCE_INVALID');
+  need(w.parseComplete?w.errorCode===null&&w.readComplete&&w.stable&&H.test(w.sha256)&&H.test(w.metadataSHA256)&&w.bytes!==null&&w.projection!==null:w.projection===null&&/^R32_REPORT_WITNESS_(MISSING|UNTRUSTED|BOUND|READ_FAILED|CHANGED|JSON_INVALID|SHAPE_INVALID|SCOPE_CHANGED|COUNTS_NOT_CLOSED)$/.test(w.errorCode??''),'R32_REPORT_WITNESS_QUALIFICATION_INVALID');
+  if(w.parseComplete){let projected;if(kind==='four'){projected=projectReportValue(w.projection,matrixReportWitnessSpec.four);need(new Set(projected.selected.map(x=>x.title)).size===projected.selected.length,'R32_REPORT_WITNESS_SHAPE_INVALID')}else projected=projectMatrixReportWitnessR32(kind,w.projection,B);need(same(projected,w.projection),'R32_REPORT_WITNESS_PRIVATE_FIELDS_PRESENT');}
+ }
+ return {reportWitnessesIndependentlyRead:Object.values(evidence).every(w=>w.readComplete&&w.stable),reportWitnessesShapeComplete:Object.values(evidence).every(w=>w.parseComplete),reportWitnessesArePersistedProducerFacts:true,nativePrerequisiteDescriptorActualLoadVerified:false,nativeResultsIndependentlyQualified:false,productDatabaseQueriedByObserver:false,productResultsIndependentlyQualified:false};
+}
+export function assertMatrixCleanupR32Host(h,B){const physical=assertMatrixCleanupR32PhysicalHost(h,B);return {...physical,...assertMatrixReportEvidenceR32(h.reportEvidence,B)};}
+
+export function matrixCleanupR32ReportWitnessPython(B){return 'REPORT_SPEC=json.loads('+JSON.stringify(JSON.stringify(matrixReportWitnessSpec))+')\n'+String.raw`
+def witness_need(value,code='R32_REPORT_WITNESS_SHAPE_INVALID'):
+ if not value:raise RuntimeError(code)
+def report_project_value(value,spec):
+ if isinstance(spec,list):
+  tag=spec[0]
+  if tag=='literal':witness_need(type(value) is type(spec[1]) and value==spec[1]);return value
+  if tag=='enum':witness_need(any(type(value) is type(v) and value==v for v in spec[1]));return value
+  if tag=='array':witness_need(isinstance(value,list) and len(value)<=spec[1]);return [report_project_value(v,spec[2]) for v in value]
+  if tag=='object':witness_need(isinstance(value,dict) and all(k in value for k in spec[1]));return {k:report_project_value(value[k],s) for k,s in spec[2].items() if k in value}
+  witness_need(False)
+ if spec=='bool':witness_need(type(value) is bool)
+ elif spec=='bool-null':witness_need(value is None or type(value) is bool)
+ elif spec=='uint':witness_need(type(value) is int and 0<=value<=9007199254740991)
+ elif spec=='int-null':witness_need(value is None or type(value) is int and 0<=value<=255)
+ elif spec=='http':witness_need(type(value) is int and 0<=value<=599)
+ elif spec in ['hash','run','attempt']:witness_need(isinstance(value,str) and re.fullmatch('[a-f0-9]{'+str({'hash':64,'run':40,'attempt':32}[spec])+'}',value))
+ elif spec=='date':
+  witness_need(isinstance(value,str) and re.fullmatch(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?(?:Z|\+00:00)',value));datetime.datetime.fromisoformat(value.replace('Z','+00:00'))
+ elif spec=='code':witness_need(value is None or isinstance(value,str));return value if value is None or value in REPORT_SPEC['errorCodes'] else 'R32_REPORT_WITNESS_UNCLASSIFIED_CODE'
+ else:witness_need(False)
+ return value
+def report_projection(kind,value):
+ if kind=='four':
+  witness_need(isinstance(value,dict) and isinstance(value.get('testResults'),list) and len(value['testResults'])<=100);selected=[];statuses=[];unexpected=0;total=0
+  for suite in value['testResults']:
+   witness_need(isinstance(suite,dict) and isinstance(suite.get('assertionResults'),list) and len(suite['assertionResults'])<=1000);statuses.append(suite.get('status'))
+   for row in suite['assertionResults']:
+    witness_need(isinstance(row,dict) and isinstance(row.get('title'),str) and row.get('status') in ['passed','failed','pending','skipped','todo','disabled']);total+=1
+    if row['title'] in REPORT_SPEC['fourTitles']:selected.append({'title':row['title'],'status':row['status']})
+    elif row['status']=='passed':unexpected+=1
+  witness_need(total<=10000 and len({r['title'] for r in selected})==len(selected));v={k:value[k] for k in ['success','numTotalTests','numFailedTestSuites','numRuntimeErrorTestSuites'] if k in value};value={**v,'suiteStatus':statuses,'selected':selected,'unexpectedPassedCount':unexpected}
+ out=report_project_value(value,REPORT_SPEC[kind])
+ if kind!='four':witness_need(out['attempt']==p['attempt'] and out.get('runId',out.get('runID'))==p['runID'] and out['sourceFingerprint']==p['fingerprint'],'R32_REPORT_WITNESS_SCOPE_CHANGED')
+ if kind=='probe':
+  witness_need(out['sourceManifestSHA256']==p['sourceIndexSHA256'] and len({r['id'] for r in out['checks']})==len(out['checks']),'R32_REPORT_WITNESS_SCOPE_CHANGED');counts={'total':len(out['checks']),**{k:sum(r['status']==s for r in out['checks']) for k,s in [('passed','pass'),('failed','fail'),('incomplete','incomplete')]}};witness_need(out['counts']==counts,'R32_REPORT_WITNESS_COUNTS_NOT_CLOSED')
+ if kind=='supervisor':witness_need(len({r['id'] for r in out['stages']})==len(out['stages']) and ('fourOriginalCases' not in out or len({r['title'] for r in out['fourOriginalCases']})==len(out['fourOriginalCases'])))
+ if kind=='native':witness_need(out['artifactContractSHA256']==p['controlFiles']['artifact-contract.json'] and out['pid']>1 and out['nodeABI']>0,'R32_REPORT_WITNESS_SCOPE_CHANGED')
+ return out
+def report_read_once(name):
+ rootfd=folder=filefd=None
+ try:
+  rootfd=os.open(private,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);rootstat=os.fstat(rootfd);witness_need(stat.S_ISDIR(rootstat.st_mode) and rootstat.st_uid==rootstat.st_gid==0 and stat.S_IMODE(rootstat.st_mode)==0o700 and stat_key(os.stat(private,follow_symlinks=False))==stat_key(rootstat),'R32_REPORT_WITNESS_UNTRUSTED')
+  ds=os.stat('evidence',dir_fd=rootfd,follow_symlinks=False);witness_need(stat.S_ISDIR(ds.st_mode) and ds.st_uid==ds.st_gid==1000 and stat.S_IMODE(ds.st_mode)==0o700,'R32_REPORT_WITNESS_UNTRUSTED');folder=os.open('evidence',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=rootfd);witness_need(stat_key(os.fstat(folder))==stat_key(ds),'R32_REPORT_WITNESS_CHANGED')
+  s=os.stat(name,dir_fd=folder,follow_symlinks=False);witness_need(stat.S_ISREG(s.st_mode) and s.st_uid==s.st_gid==1000 and s.st_nlink==1 and not s.st_mode&0o022,'R32_REPORT_WITNESS_UNTRUSTED');witness_need(0<=s.st_size<=4194304,'R32_REPORT_WITNESS_BOUND')
+  filefd=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=folder);opened=os.fstat(filefd);witness_need(stat_key(opened)==stat_key(s),'R32_REPORT_WITNESS_CHANGED');data=b''
+  while True:
+   chunk=os.read(filefd,min(65536,4194305-len(data)))
+   if not chunk:break
+   data+=chunk;witness_need(len(data)<=4194304,'R32_REPORT_WITNESS_BOUND')
+  witness_need(len(data)==s.st_size and stat_key(os.fstat(filefd))==stat_key(s) and stat_key(os.stat(name,dir_fd=folder,follow_symlinks=False))==stat_key(s) and stat_key(os.fstat(folder))==stat_key(ds) and stat_key(os.stat('evidence',dir_fd=rootfd,follow_symlinks=False))==stat_key(ds) and stat_key(os.fstat(rootfd))==stat_key(rootstat) and stat_key(os.stat(private,follow_symlinks=False))==stat_key(rootstat),'R32_REPORT_WITNESS_CHANGED')
+  return {'raw':data,'metadataSHA256':digest(compact({'root':stat_key(rootstat),'evidence':stat_key(ds),'file':stat_key(s)})),'errorCode':None}
+ except FileNotFoundError:return {'raw':None,'metadataSHA256':None,'errorCode':'R32_REPORT_WITNESS_MISSING'}
+ except RuntimeError as error:return {'raw':None,'metadataSHA256':None,'errorCode':str(error) if str(error) in ['R32_REPORT_WITNESS_UNTRUSTED','R32_REPORT_WITNESS_BOUND','R32_REPORT_WITNESS_CHANGED'] else 'R32_REPORT_WITNESS_READ_FAILED'}
+ except (OSError,ValueError,UnicodeError):return {'raw':None,'metadataSHA256':None,'errorCode':'R32_REPORT_WITNESS_READ_FAILED'}
+ finally:
+  for fd in [filefd,folder,rootfd]:
+   if fd is not None:os.close(fd)
+def report_read_all():return {kind:report_read_once(name) for kind,name in REPORT_SPEC['paths'].items()}
+def report_finish(before,after):
+ result={}
+ for kind,name in REPORT_SPEC['paths'].items():
+  a=before[kind];b=after[kind];raw=b['raw'];same_reads=a['errorCode'] is None and b['errorCode'] is None and a['metadataSHA256']==b['metadataSHA256'] and a['raw']==raw;code=b['errorCode'] or a['errorCode'] or (None if same_reads else 'R32_REPORT_WITNESS_CHANGED');out={'path':'/evidence/'+name,'sha256':digest(raw) if raw is not None else None,'bytes':len(raw) if raw is not None else None,'metadataSHA256':b['metadataSHA256'],'readComplete':raw is not None,'stable':same_reads,'parseComplete':False,'reportQualified':False,'projection':None,'errorCode':code}
+  if same_reads:
+   try:value=strict_json(raw)
+   except Exception:out['errorCode']='R32_REPORT_WITNESS_JSON_INVALID'
+   else:
+    try:out['projection']=report_projection(kind,value);out['parseComplete']=True;out['reportQualified']=True;out['errorCode']=None
+    except Exception as error:out['errorCode']=str(error) if str(error) in ['R32_REPORT_WITNESS_SHAPE_INVALID','R32_REPORT_WITNESS_SCOPE_CHANGED','R32_REPORT_WITNESS_COUNTS_NOT_CLOSED'] else 'R32_REPORT_WITNESS_SHAPE_INVALID'
+  result[kind]=out
+ return result
+`;}
+export function matrixCleanupR32HostProgram(B){
+ let py=matrixCleanupR32PhysicalHostProgram(B);const marker='protected_before=protected_source_state();',printMarker='print(json.dumps({';
+ need(py.split(marker).length===2&&py.split(printMarker).length===2&&py.endsWith('))\n'),'R32_REPORT_WITNESS_PHYSICAL_TEMPLATE_CHANGED');
+ py=py.replace(marker,matrixCleanupR32ReportWitnessPython(B)+'\nreports_before=report_read_all()\n'+marker);
+ py=py.replace(printMarker,'base_observation={').slice(0,-3)+'\nreports_after=report_read_all()\nbase_observation["reportEvidence"]=report_finish(reports_before,reports_after)\nprint(json.dumps(base_observation))\n';
+ return py;
+}
+
+if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
+ let result;try{need(process.argv.length<=3&&(process.argv[2]===undefined||/^--attempt=[a-f0-9]{32}$/.test(process.argv[2])),'R32_MATRIX_CLEANUP_ARGUMENT_INVALID');result=await verifyFactoryTruthGateMatrixCleanupR32(process.argv[2]?{attempt:process.argv[2].slice(10)}:{});if(!result.ready)process.exitCode=1}catch(e){await mkdir('.jarvis-dev/maintenance',{recursive:true});const f=await open('.jarvis-dev/maintenance/matrix-cleanup-r32-private-error-'+Date.now()+'-'+randomUUID()+'.json','wx',0o600);try{await f.writeFile(JSON.stringify({message:String(e.message),stack:String(e.stack)})+'\n');await f.sync()}finally{await f.close()}result=matrixCleanupR32Failure(e);process.exitCode=1}
+ const ref=await matrixCleanupR32EvidenceWX(result);console.log(JSON.stringify({...ref,ready:result.ready,attempt:result.attempt,reason:result.reason,errorCode:result.errorCode}));
+}

@@ -1,0 +1,33 @@
+/* Browser regression: isolated browser storage; never calls a production operation. */
+const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const base=process.env.JARVIS_QA_URL||'http://127.0.0.1:3140/?mode=demo';
+const out=path.resolve('artifacts/react-operations-qa');
+(async()=>{
+ await fs.mkdir(out,{recursive:true});const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});const errors=[],geometry=[],steps=[];
+ try{
+  const context=await browser.newContext({viewport:{width:1440,height:900}});const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base+'#view=operations');await page.getByRole('heading',{name:'运维费用',exact:true}).waitFor();
+  const state=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('jarvis-platform-demo-v2')));
+  const go=async route=>{await page.evaluate(r=>{location.hash='view='+r},route);await page.locator('.op-heading').waitFor()};
+  const dialog=()=>page.getByRole('dialog');const save=async()=>{await dialog().getByRole('button',{name:'保存记录',exact:true}).click()};const close=async()=>{await dialog().getByRole('button',{name:'关闭',exact:true}).click()};
+  await page.getByRole('button',{name:'调整策略',exact:true}).click();await dialog().getByLabel('每日模型预算（元）',{exact:true}).fill('1000');await dialog().getByLabel('批处理并发上限',{exact:true}).fill('8');await save();
+  await go('projects');await page.getByRole('button',{name:'新建项目',exact:true}).click();await dialog().getByLabel('项目名称',{exact:true}).fill('QA运营闭环');await dialog().getByLabel('项目说明',{exact:true}).fill('模拟项目，检验任务交付与发布恢复');await dialog().getByLabel('交付目标',{exact:true}).fill('验收证据与恢复回执完整');await dialog().getByLabel('里程碑（每行一项）',{exact:true}).fill('实现样例\n验收交付');await save();steps.push('项目登记');
+  let d=await state();const pid=d.projects.find(p=>p.name==='QA运营闭环').id;const mid=d.machines.find(m=>!m.readOnly&&m.status==='online').id;
+  await go('tasks');const supervise=page.getByRole('button',{name:'开启监督',exact:true});if(await supervise.count())await supervise.click();
+  await page.getByRole('button',{name:'新建任务',exact:true}).click();await dialog().getByLabel('任务名称',{exact:true}).fill('QA有限托管任务');await dialog().getByLabel('所属项目',{exact:true}).selectOption(pid);await dialog().getByLabel('执行设备',{exact:true}).selectOption(mid);await dialog().getByLabel('交付目标',{exact:true}).fill('完成演示构建物');await dialog().getByLabel('验收标准',{exact:true}).fill('角色隔离与交付文件验证');await dialog().getByLabel('费用上限（元）',{exact:true}).fill('70');await save();
+  await page.getByRole('button',{name:'QA有限托管任务',exact:true}).click();await dialog().getByRole('button',{name:'开始执行',exact:true}).click();for(let i=0;i<4;i++)await dialog().getByRole('button',{name:'推进一轮',exact:true}).click();
+  await dialog().getByRole('button',{name:'验收通过',exact:true}).click();await dialog().getByLabel('验收证据',{exact:true}).fill('QA模拟报告：身份隔离与产物检查通过');await dialog().getByLabel('交付说明',{exact:true}).fill('目标达成，交付证据完整');await save();
+  await dialog().getByRole('button',{name:'生成交付包',exact:true}).click();await dialog().getByLabel('交付版本',{exact:true}).fill('v1.0.0-qa-demo');await save();await close();steps.push('托管推进、显式验收、交付包');
+  await go('services');await page.getByRole('button',{name:'登记服务',exact:true}).click();await dialog().getByLabel('服务名称',{exact:true}).fill('QA独立运行服务');await dialog().getByLabel('服务用途',{exact:true}).fill('用于模拟发布与恢复');await dialog().getByLabel('所属项目',{exact:true}).selectOption(pid);await dialog().getByLabel('运行设备',{exact:true}).selectOption(mid);await dialog().getByLabel('运行环境',{exact:true}).selectOption('staging');await dialog().getByLabel('当前版本',{exact:true}).fill('v0.9.0-qa-demo');await dialog().getByLabel('部署方式',{exact:true}).fill('模拟交付包');await save();
+  await page.getByRole('tab',{name:'交付版本',exact:true}).click();await page.locator('.op-card').filter({hasText:'QA有限托管任务'}).getByRole('button',{name:'申请部署',exact:true}).click();await dialog().getByLabel('发布目的与影响',{exact:true}).fill('发布已通过验收的模拟版本');await save();
+  await page.getByRole('tab',{name:'部署恢复',exact:true}).click();await page.locator('.op-card').filter({hasText:'QA独立运行服务'}).getByRole('button',{name:'查看部署',exact:true}).click();
+  await dialog().getByRole('button',{name:'批准请求',exact:true}).click();await dialog().getByLabel('操作理由',{exact:true}).fill('已核对目标与恢复点');await save();d=await state();assert.equal(d.v5.ops.services.find(s=>s.name==='QA独立运行服务').version,'v0.9.0-qa-demo','approval must not deploy');
+  await dialog().getByRole('button',{name:'模拟执行发布',exact:true}).click();await dialog().getByRole('button',{name:'验证失败',exact:true}).click();await dialog().getByLabel('验证证据',{exact:true}).fill('模拟健康检查失败，保留现场');await save();
+  await dialog().getByRole('button',{name:'恢复旧版本',exact:true}).click();await dialog().getByLabel('操作理由',{exact:true}).fill('使用绑定快照恢复旧版本');await save();await dialog().getByRole('button',{name:'验证恢复结果',exact:true}).click();await dialog().getByLabel('验证证据',{exact:true}).fill('旧版本业务查询与权限检查通过');await save();
+  d=await state();assert.equal(d.v5.ops.services.find(s=>s.name==='QA独立运行服务').version,'v0.9.0-qa-demo');assert.equal(d.v5.ops.deployments.find(x=>x.version==='v1.0.0-qa-demo').status,'restored');steps.push('发布审批、执行失败、恢复与验证');await page.screenshot({path:path.join(out,'deployment-recovery.png'),fullPage:true});await close();
+  // Every route has meaningful content and fits a mobile viewport; tables scroll internally.
+  for(const width of [1440,375]){await page.setViewportSize({width,height:width===375?812:900});for(const route of ['inbox','research','projects','tasks','knowledge','machines','services','operations','approvals']){await go(route);await page.locator('.op-heading h2').waitFor();const g=await page.evaluate(()=>({width:innerWidth,documentWidth:document.documentElement.scrollWidth,heading:document.querySelector('.op-heading h2')?.textContent}));geometry.push({route,...g});assert.ok(g.documentWidth<=g.width+1,route+' viewport overflow '+JSON.stringify(g));if(width===375&&['tasks','operations'].includes(route))await page.screenshot({path:path.join(out,route+'-mobile.png'),fullPage:true})}}
+  assert.deepEqual(errors,[],'browser page errors');await fs.writeFile(path.join(out,'report.json'),JSON.stringify({steps,geometry,errors},null,2));console.log(JSON.stringify({steps,views:geometry.length,errors}));
+ }finally{await browser.close()}
+})().catch(e=>{console.error(e.stack);process.exitCode=1});

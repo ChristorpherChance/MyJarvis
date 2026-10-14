@@ -1,0 +1,24 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createBoundProtectionObserverR32Adapter,verifyBoundProtectionObserverR32} from './factory-bound-protection-observer-r32.mjs';
+import {targetCleanupR29HostProgram,targetCleanupR29Scope} from './verify-factory-target-cleanup-r29.mjs';
+import {buildCleanupR29HostProgram} from './verify-factory-truth-gate-build-cleanup-r29.mjs';
+import {newProtectionR29HostProgram} from './verify-factory-protection-contract-r29-r2.mjs';
+import {boundProcessCensusR32NativeProgram,boundProcessCensusR32BuildProgram} from './factory-bound-process-census-r32.mjs';
+const manifest=JSON.parse(await readFile(targetCleanupR29Scope.installedManifestPath,'utf8')),preparation=manifest.preparation;
+const programs=[newProtectionR29HostProgram(preparation),targetCleanupR29HostProgram(),buildCleanupR29HostProgram(),newProtectionR29HostProgram(preparation)];
+test('exact generated source order routes only new census and preserves params',async()=>{
+ const calls=[],a=createBoundProtectionObserverR32Adapter(preparation,async(p,program)=>{calls.push([p,program]);return {readOnly:true};});
+ const p={fixed:'scope'};for(const program of programs)await a.readRoot(p,program);
+ assert.deepEqual(calls.map(x=>x[1]),[programs[0],boundProcessCensusR32NativeProgram(),boundProcessCensusR32BuildProgram(),programs[3]]);assert.ok(calls.every(x=>x[0]===p));
+ const receipts=a.receipts();assert.equal(receipts.length,4);assert.notEqual(receipts[1].originalProgramSHA256,receipts[1].actualProgramSHA256);assert.equal(receipts[0].originalProgramSHA256,receipts[0].actualProgramSHA256);
+ receipts[0].stage='bad';assert.equal(a.receipts()[0].stage,'inventory-before');
+});
+test('out-of-order original program is refused and closes adapter before transport',async()=>{let n=0;const a=createBoundProtectionObserverR32Adapter(preparation,async()=>{n++;});await assert.rejects(a.readRoot({},programs[1]),/CALL_SEQUENCE|PROGRAM_SOURCE/);await assert.rejects(a.readRoot({},programs[0]),/CALL_SEQUENCE/);assert.equal(n,0);assert.throws(a.receipts,/INCOMPLETE/);});
+test('changed original bytes are refused and close adapter before transport',async()=>{let n=0;const a=createBoundProtectionObserverR32Adapter(preparation,async()=>{n++;});await assert.rejects(a.readRoot({},programs[0]+'\n'),/PROGRAM_SOURCE/);await assert.rejects(a.readRoot({},programs[0]),/CALL_SEQUENCE/);assert.equal(n,0);});
+test('transport failure permanently closes this adapter; no internal retry',async()=>{let n=0;const a=createBoundProtectionObserverR32Adapter(preparation,async()=>{n++;throw Error('controlled');});await assert.rejects(a.readRoot({},programs[0]),/controlled/);await assert.rejects(a.readRoot({},programs[0]),/CALL_SEQUENCE/);assert.equal(n,1);assert.throws(a.receipts,/INCOMPLETE/);});
+test('params drift while transport runs is refused',async()=>{const p={fixed:1},a=createBoundProtectionObserverR32Adapter(preparation,async()=>{p.fixed=2;return {};});await assert.rejects(a.readRoot(p,programs[0]),/PARAMETERS_CHANGED/);assert.throws(a.receipts,/INCOMPLETE/);});
+test('overlap closes the adapter and invalidates its pending response',async()=>{let finish;const a=createBoundProtectionObserverR32Adapter(preparation,()=>new Promise(r=>{finish=r;}));const pending=a.readRoot({},programs[0]);await assert.rejects(a.readRoot({},programs[0]),/CALL_SEQUENCE/);finish({});await assert.rejects(pending,/CALL_FAILED_DURING_TRANSPORT/);await assert.rejects(a.readRoot({},programs[0]),/CALL_SEQUENCE/);assert.throws(a.receipts,/INCOMPLETE/);});
+test('a fifth call is refused after the exact four reads',async()=>{let n=0;const a=createBoundProtectionObserverR32Adapter(preparation,async()=>{n++;return {};});for(const p of programs)await a.readRoot({},p);assert.equal(a.receipts().length,4);await assert.rejects(a.readRoot({},programs[0]),/CALL_SEQUENCE/);assert.equal(n,4);assert.throws(a.receipts,/INCOMPLETE/);});
+test('default prepared verifier rejects before operational transport',async()=>{await assert.rejects(verifyBoundProtectionObserverR32(),/PREPARATION_NOT_QUALIFIED/);});

@@ -1,0 +1,23 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import vm from 'node:vm';
+import {createHash} from 'node:crypto';
+const root=process.cwd(),names=['orbit','bridge','daybreak','sanctuary','nocturne'];
+let html=await readFile(resolve(root,'贾维斯V5.0 · 高保真交互原型.html'),'utf8');
+const common=await readFile(resolve(root,'prototype-v6/appearance.css'),'utf8');
+const usabilityCSS=await readFile(resolve(root,'prototype-v6/usability.css'),'utf8').catch(()=> '');
+const finishingCSS=await readFile(resolve(root,'prototype-v6/integration.css'),'utf8');
+const css=await Promise.all(names.map(name=>readFile(resolve(root,'prototype-v6/skins/'+name+'.css'),'utf8').catch(()=>'')));
+const usabilityJS=await readFile(resolve(root,'prototype-v6/usability.js'),'utf8').catch(()=> '');
+const previews={};
+for(const name of names){previews[name]={};for(const view of ['overview','chat','screen']){try{previews[name][view]='data:image/jpeg;base64,'+(await readFile(resolve(root,'artifacts/prototype-v6-qa/previews/'+name+'-'+view+'.jpg'))).toString('base64')}catch{}}}
+let js=await readFile(resolve(root,'prototype-v6/appearance.js'),'utf8');js=js.replace('__J6_PREVIEWS__',JSON.stringify(previews));
+html=html.replace('<title>贾维斯 V5 · 家庭与工作智能中枢</title>','<title>贾维斯 V6 · 五套外观交互原型</title>');
+html=html.replace("const STORE='jarvis-v5-interactive-prototype-20261003';","const STORE='jarvis-v6-five-appearance-prototype-20261003';");
+html=html.replace('</style>',common+'\n'+usabilityCSS+'\n'+css.join('\n')+'\n'+finishingCSS+'\n</style>');
+html=html.replace('</script>',usabilityJS+'\n'+js+'\n</script>');
+const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];new vm.Script(script,{filename:'jarvis-v6-inline.js'});
+const output=resolve(root,'贾维斯V6.0 · 五套外观交互原型.html');await writeFile(output,html,'utf8');
+await mkdir(resolve(root,'prototype-v6'),{recursive:true});
+await writeFile(resolve(root,'prototype-v6/build-manifest.json'),JSON.stringify({output,bytes:Buffer.byteLength(html),skins:names.map((name,i)=>({name,bytes:Buffer.byteLength(css[i]),sha256:createHash('sha256').update(css[i]).digest('hex')})),previews:Object.values(previews).reduce((a,x)=>a+Object.keys(x).length,0),syntax:'valid'},null,2),'utf8');
+console.log(JSON.stringify({output,bytes:Buffer.byteLength(html),skins:css.map((x,i)=>({name:names[i],bytes:x.length})),previews:Object.values(previews).reduce((a,x)=>a+Object.keys(x).length,0),syntax:'valid'},null,2));

@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>api-contract-status · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / BACKEND V1</strong><a href="https://192.168.10.112:3140/?mode=api">打开真实工作台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">历史：2026-10-05首批接入记录</a></nav><h1>贾维斯接口状态</h1>
+<p>更新：2026-10-07。本轮新增5个管理者主备接口，Pi增加节点只读工具。OpenAPI登记328个操作、765个Schema，已核对实际处理器。112正式服务已运行，101已部署同版本冷恢复数据；持续复制与接管尚未实现。</p>
+<p>当前版本20261007-linux-cluster。后台250项中249通过、1跳过、0失败；两台真实HTTPS启动、完整恢复、CPU ASR/TTS/OCR与实际管理页面检查通过。详见<a href="Linux主备部署与验收.html">Linux主备部署与验收</a>和<a href="../artifacts/linux-deployment/report.json">部署报告</a>。接口有处理器不代表真实模型账户、专业唤醒或实体设备已接通。</p>
+<p>当前契约见 <a href="openapi-v1-planned.json">OpenAPI 3.1 JSON</a>。文件保留历史名称，具体状态以各操作的 <code>x-implementation-status</code>、运行器能力检查和真实作业结果为准。接口已实现后仍需配置Pi模型、目录或HTTP授权、执行节点及房间设备；不把尚未配置的外部服务报告为运行成功。</p>
+<div class="table-wrap"><table>
+<tr><td>当前平台</td><td>真实实现</td></tr>
+<tr><td>完整前端</td><td>完整导航、十主题、七类大屏与业务接口；演示状态和真实数据独立</td></tr>
+<tr><td>Pi与执行</td><td>SDK对话、研究、知识、记忆和受控开发；真实进程、租约、验收与取消</td></tr>
+<tr><td>知识神殿</td><td>本地CPU多轮OCR、分批绝对页码、疑点及非文字页人工复核、动态来源同步检索</td></tr>
+<tr><td>家庭与语音</td><td>成员认证隔离、管理及房间中央ASR/Pi/TTS、冻结语音确认、播放回执及留存治理</td></tr>
+<tr><td>通知与天气</td><td>持久提醒、本人偏好、静默时段、空闲房间播报、真实天气及Pi只读工具</td></tr>
+<tr><td>机器与治理</td><td>心跳、CPU/内存历史、可明确开启的周期探测、固定程序、部署恢复、预算和实际使用账本</td></tr>
+<tr><td>专项陪伴</td><td>Pi生成有限语言陪练、实际答句反馈与本人学习记录；食谱核对、步骤和持久提醒计时</td></tr>
+<tr><td>账单核对</td><td>CSV/JSON预览与确认、实际用量查询、明确ID关联、人工说明、作废和核对记录；各币种分别汇总</td></tr>
+<tr><td>原始观测</td><td>固定文件白名单、双端脱敏、签名去重与过期清理；GPU/功耗授权读数和实际趋势，缺失保留未知</td></tr>
+</table></div>
+<h2 id="section-1">历史：2026-10-05首批接入记录</h2>
+<p>以下内容完整保留当时的实现范围和验收数字。54已实现、95待实现、118命令等均为历史阶段，不能用于评估当前完成率；其中关于家庭登录、扫描件上传或执行器尚未接入的描述也只适用于当时。</p>
+<div class="table-wrap"><table>
+<tr><td>层次</td><td>当前状态</td><td>使用入口</td></tr>
+<tr><td>原 S0 <code>/api</code></td><td>已实现并保持兼容</td><td><code>http://127.0.0.1:3140/?mode=live</code>；原账号、本机、台账、成员及 Pi SDK 文本会话</td></tr>
+<tr><td>完整真实平台</td><td>已回接完整导航、十主题与七类大屏；具体能力按接入状态启用</td><td><code>http://127.0.0.1:3140/</code> 或 <code>?mode=platform</code></td></tr>
+<tr><td>完整交互演示</td><td>已实现</td><td><code>http://127.0.0.1:3140/?mode=demo</code>；20 页面与独立模拟状态</td></tr>
+<tr><td>V1 首批 <code>/api/v1</code></td><td>5 个业务域、36 个命令处理入口、54 个操作已实现</td><td><code>http://127.0.0.1:3140/?mode=api</code>；真实数据库与人工业务闭环</td></tr>
+<tr><td>V1 后续域</td><td>95 个操作仍待实现</td><td>知识校对、课程、家庭认证与记忆、房间语音、远程代理、服务部署等</td></tr>
+</table></div>
+<p>首批包括统一收件、灵感研究、项目管理、任务交付、经验技能。36 个命令入口包括原目录的 34 个命令与 <code>tasks/commands/report</code>、<code>inbox/commands/keep-independent</code> 扩展。启动/恢复/重试执行器、AI 后台研究及取消、被动采集和记忆/资料分流仍待接入，相关请求明确拒绝执行。54 是接口处理统计，包含这种拒绝未就绪执行的入口，不等于 54 项完整运行能力；接口存在与执行就绪分别标注。</p>
+<p>V1 在现有 <code>jarvis.db</code> 增加业务表、提交回执及事件表，保留原表、账号与 Pi 专用资料。原 S0 台账与 V1 数据分别保留，旧记录可在原控制台使用，Pi 查询工具可以同时查询两批真实数据。</p>
+<p>沿用管理员 HttpOnly Cookie 会话与本机来源限制。服务器绑定 <code>server-admin</code>，请求不能指定或冒用成员所有者。<code>personal/private/family/company</code> 表示资料范围；家庭共享范围目前也只由管理员管理，尚不代表家人可以登录。</p>
+<p>命令请求为 <code>{ commandId, expectedVersion, scope, payload }</code>。同编号同请求重放原回执；同编号不同请求拒绝。新记录版本为 0，修改使用目标 revision；旧版本写入返回冲突。对象、联动记录、事件、审计与回执在一个事务中提交，输出契约校验失败也回滚。</p>
+<p>成功为 <code>{ requestId, version, data, events }</code>；失败为 <code>{ requestId, code, message, details }</code>。输入拒绝未声明字段。事件与审计保留必要元数据；报告证据保存在受权限保护的任务记录。S0 保持原负载、错误格式与 Pi SSE，不能只替换 URL。</p>
+<p>单次 UTF-8 请求体上限为 128 KiB（131,072 字节），超限返回 413。字段长度与数组上限还需同时满足；大量记录应分批提交，当前接口不用于上传书籍扫描件。</p>
+<p><code>GET /api/v1/events</code> 为真实持久化 SSE，可按 <code>Last-Event-ID</code> 或 <code>afterSequence</code> 续订，会话失效与服务关闭时断开。<code>GET /api/v1/events/history</code> 支持分页回读事件。列表游标绑定身份、域与范围。</p>
+<p>人工 report 保存来源、证据、状态、进度和产物声明，标记 <code>verification: unverified_external</code>、<code>executionDispatched: false</code>。本人验收记录核对说明；它不代表平台已运行测试、读取产物路径或完成实际部署。</p>
+<p>契约与实现同步修正了三个返回类型：采集授权返回 CapturePolicy；研究立项返回 Project；任务打包返回 Task，固定包由 <code>/api/v1/releases</code> 查询。原话与历史引用继续保留。</p>
+<p>后台 43 项测试通过，覆盖原接口兼容、契约、幂等、并发、范围权限、回滚、SSE、研究立项、技能版本、人工交付及备份恢复。测试使用临时数据库与离线 Pi SDK，不请求远程模型。</p>
+<p>真实工作台浏览器验收 18 项通过，覆盖五域操作、响应中断重试、超过 50 条的关联分页、移动端与会话失效；原控制台浏览器回归 10 项通过。所有写入均在临时库中完成。证据见 <code>artifacts/v1-workbench-qa/report.json</code> 与 <code>artifacts/runtime-qa/result.json</code>。</p>
+<p>OpenAPI 静态校验：149 个唯一操作，54 个已实现、95 个待实现，437 个 Schema，2,056 个本地引用均有效。证据为 <code>artifacts/v1-api-qa/contract.json</code>。</p>
+<p>本轮完整界面接入说明见 <a href="完整前端与真实接口接入.html">完整前端与真实接口接入</a>，先前底座说明见 <a href="后台首批接口.html">后台首批接口</a>。</p>
+<p>上一轮记录：<a href="../artifacts/conversation-runtime-qa/report.json">中央语音与通知接入</a>。当前状态及新功能以<a href="常驻修复与家庭陪练接入.html">常驻修复与家庭陪练接入</a>及其发布报告为准。</p></main></html>

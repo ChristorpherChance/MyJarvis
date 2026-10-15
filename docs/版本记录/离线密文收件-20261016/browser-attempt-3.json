@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-15T16:01:44.042Z",
+  "attempt": "3",
+  "selected": [
+    "offline-originals-encrypted-and-locked",
+    "explicit-ciphertext-transfer-no-overwrite"
+  ],
+  "expectedOfflineBundle": "offlineCapture-DS8hRncI.js",
+  "realHttp": true,
+  "syntheticOriginals": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "loadedBundles": [
+    "/assets/offlineCapture-DS8hRncI.js",
+    "/assets/offline-vault-D3_LiM_i.js",
+    "/assets/client-OI5hagxP.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "offline-originals-encrypted-and-locked",
+      "status": "passed",
+      "evidence": {
+        "textAndLinkRoundTrip": true,
+        "realPdfSha256": "83ecc9d972d44705aa4c1acc5ec09b47cf8ff83f3770ea7ef467ab740a1490f7",
+        "realMediaRecorderWithSyntheticDevice": true,
+        "recordedBytes": 11567,
+        "allOriginalBytesMatchedAfterOfflineReopen": true,
+        "independentEnvelopeDecryptionMatched": true,
+        "idbContainsOnlyEnvelope": true,
+        "passwordNotPersisted": true,
+        "lockRemovesEditorAndObjectUrls": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "explicit-ciphertext-transfer-no-overwrite",
+      "status": "passed",
+      "evidence": {
+        "separateBrowserStorageContext": true,
+        "explicitDownloadedCiphertextRequired": true,
+        "wrongPassphraseNoWrite": true,
+        "corruptCiphertextNoWrite": true,
+        "validImportExactEnvelope": true,
+        "originalPdfPreserved": true,
+        "existingVaultHasNoOverwriteEntry": true,
+        "sourceUnchanged": true,
+        "automaticSynchronization": false
+      }
+    }
+  ],
+  "originalSha256": "5e65552dc1034a9da292a6d494f5a5ddf95f32a551b11e0a1720e1b2777cf413"
+}

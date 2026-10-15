@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-15T15:59:58.482Z",
+  "attempt": "2",
+  "selected": [
+    "offline-originals-encrypted-and-locked",
+    "explicit-ciphertext-transfer-no-overwrite"
+  ],
+  "expectedOfflineBundle": "offlineCapture-gKTtUnTN.js",
+  "realHttp": true,
+  "syntheticOriginals": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "loadedBundles": [
+    "/assets/offlineCapture-gKTtUnTN.js",
+    "/assets/offline-vault-D3_LiM_i.js",
+    "/assets/client-OI5hagxP.js"
+  ],
+  "labelDiagnostics": [
+    {
+      "exactLabelIncludesBody": true,
+      "initialTextNodeLength": 59
+    },
+    {
+      "exactLabelIncludesBody": true,
+      "initialTextNodeLength": 59
+    }
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "offline-originals-encrypted-and-locked",
+      "status": "passed",
+      "evidence": {
+        "textAndLinkRoundTrip": true,
+        "realPdfSha256": "7f14479897f4cda0d845297d5e77da0e6453859dd411c41015d668e87adb6071",
+        "realMediaRecorderWithSyntheticDevice": true,
+        "recordedBytes": 11567,
+        "allOriginalBytesMatchedAfterOfflineReopen": true,
+        "independentEnvelopeDecryptionMatched": true,
+        "idbContainsOnlyEnvelope": true,
+        "passwordNotPersisted": true,
+        "lockRemovesEditorAndObjectUrls": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "explicit-ciphertext-transfer-no-overwrite",
+      "status": "passed",
+      "evidence": {
+        "separateBrowserStorageContext": true,
+        "explicitDownloadedCiphertextRequired": true,
+        "wrongPassphraseNoWrite": true,
+        "corruptCiphertextNoWrite": true,
+        "validImportExactEnvelope": true,
+        "originalPdfPreserved": true,
+        "existingVaultHasNoOverwriteEntry": true,
+        "sourceUnchanged": true,
+        "automaticSynchronization": false
+      }
+    }
+  ],
+  "originalSha256": "a9dde01100ddf0913476edc785f52fe5f54c7ea37ba0174fa2f22c2d1b4b0d31"
+}

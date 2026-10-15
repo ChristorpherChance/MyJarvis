@@ -1,0 +1,131 @@
+{
+  "scope": "New offline capture and explicit encrypted transfer only; no old matrix, production, ASR, build, or model invocation by this reviewer",
+  "script": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-offline-capture.ts",
+  "scriptSha256": "c444979e28441344774425eaf072e1a97e808c435eee8a06c7a8363a7c4712c3",
+  "uniqueGroupsPassed": 5,
+  "groupExecutions": 9,
+  "passedExecutions": 7,
+  "failedExecutions": 2,
+  "diagnosticOnlyExecutions": 2,
+  "finalHeadWholeSuiteRerun": false,
+  "failureExplanation": "Attempt 1 G2/G3 restored nonempty React textarea text into the wrapped label, so the exact label locator did not match. Original bytes were present. Attempt 2 used DOM locator only to diagnose this. Root added explicit aria-label and rebuilt; attempt 3 passed original exact-label assertions for G2/G3 only. Other three groups retain attempt 1 bundle boundary.",
+  "reports": [
+    {
+      "attempt": "1",
+      "role": "acceptance scope",
+      "report": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\attempt-1.json",
+      "sha256": "e144a2bd32c4622fcae45391c700d60db74f45d872000fb6ff2385bde808ce6b",
+      "offlineBundle": "offlineCapture-gKTtUnTN.js",
+      "groups": [
+        {
+          "name": "prepared-real-offline-reopen",
+          "status": "passed",
+          "cut": null
+        },
+        {
+          "name": "offline-originals-encrypted-and-locked",
+          "status": "failed",
+          "cut": "offline-originals/lock-reopen-and-original-byte-compare"
+        },
+        {
+          "name": "explicit-ciphertext-transfer-no-overwrite",
+          "status": "failed",
+          "cut": "offline-transfer/valid-original-package-imports-in-new-context"
+        },
+        {
+          "name": "real-admin-import-and-lost-reply",
+          "status": "passed",
+          "cut": null
+        },
+        {
+          "name": "static-cache-and-shared-identity-clear",
+          "status": "passed",
+          "cut": null
+        }
+      ],
+      "finalAuditFailures": 1,
+      "cleanupVerified": true,
+      "modelCalls": 0,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0
+    },
+    {
+      "attempt": "2",
+      "role": "DOM locator diagnostic only",
+      "report": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\attempt-2.json",
+      "sha256": "a9dde01100ddf0913476edc785f52fe5f54c7ea37ba0174fa2f22c2d1b4b0d31",
+      "offlineBundle": "offlineCapture-gKTtUnTN.js",
+      "groups": [
+        {
+          "name": "offline-originals-encrypted-and-locked",
+          "status": "passed",
+          "cut": null
+        },
+        {
+          "name": "explicit-ciphertext-transfer-no-overwrite",
+          "status": "passed",
+          "cut": null
+        }
+      ],
+      "finalAuditFailures": 0,
+      "cleanupVerified": true,
+      "modelCalls": 0,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0
+    },
+    {
+      "attempt": "3",
+      "role": "acceptance scope",
+      "report": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\attempt-3.json",
+      "sha256": "5e65552dc1034a9da292a6d494f5a5ddf95f32a551b11e0a1720e1b2777cf413",
+      "offlineBundle": "offlineCapture-DS8hRncI.js",
+      "groups": [
+        {
+          "name": "offline-originals-encrypted-and-locked",
+          "status": "passed",
+          "cut": null
+        },
+        {
+          "name": "explicit-ciphertext-transfer-no-overwrite",
+          "status": "passed",
+          "cut": null
+        }
+      ],
+      "finalAuditFailures": 0,
+      "cleanupVerified": true,
+      "modelCalls": 0,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\phone-complete-offline-reopen-1.png",
+      "sha256": "7c47100929228987ae679b66aff75abcca7e45bd07997b15360c8cdae3835839"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\phone-offline-restored-real-pdf-and-recording-3.png",
+      "sha256": "01636aea991b253bffbf3145947f38c38cbc93e660ddb71ef4c67bf589dd0cf6"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\desktop-explicit-ciphertext-transfer-3.png",
+      "sha256": "6c2129623dec0fcabda34eae0d5efa87207e007966e58cf1dc9c48b685fa9235"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\phone-real-admin-import-explicit-submit-1.png",
+      "sha256": "7c7c4a1686ccd8df0c96db01eac983b3b39f52c59d23e26760ea0024e7abdbe1"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\artifacts\\offline-capture-browser-qa\\desktop-locked-before-real-member-login-1.png",
+      "sha256": "5b695c89da63a9299fdc99b6b3b8546f6ff49c83ba83dd9988e0148126d8f1e4"
+    }
+  ],
+  "boundaries": [
+    "Synthetic-device browser MediaRecorder; physical microphone/mobile/room terminal not verified",
+    "Portable migration used isolated browser storage contexts, not background synchronization",
+    "Temporary loopback createApp and owned generated PDF; no external account or production server",
+    "Each new temporary directory was verified under owned Temp prefix and removed; three old policy-denied directories untouched",
+    "Reviewer edited only the new QA script and its reports; no business source/build/commit/deploy"
+  ],
+  "originalSha256": "76eb19fb3a84d7c32aa6ec4339183ddec6f91621dd03e09959143fbd71ec04f3"
+}

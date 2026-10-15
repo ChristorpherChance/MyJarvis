@@ -7,6 +7,8 @@ import {bookAllowed,citation,criticalDoubts,modeNames,profileNames,publicationGa
 import './knowledge.css';
 import {KnowledgeRuntimePanel,KnowledgePageEvidence,KnowledgeSourceExecution} from './KnowledgeRuntimePanel';
 import {PageTextForm,PageReviewForm,PageRevisionForm,DoubtForm,StoryDraftForm,StoryReviewForm,RescanForm} from './live-forms';
+import {V1Error,v1Request} from '../../v1-client';
+import {materialSessionGeneration} from '../operations/inbox-material-store';
 
 type Overlay={type:'source'|'upload'|'book'|'publish'|'reviewAll'|'revision'|'history'|'story'|'quiz'|'quizResult'|'course'|'courseRemove'|'gap'|'sourceFailure'|'material'|'node'|'pageText'|'pageReview'|'newDoubt'|'storyDraft'|'storyReview'|'rescan';id?:string;version?:string;target?:string};
 const routeTitles:Record<string,[string,string]>={sources:['知识接入','动态连接知识储备，授权与出处始终可查。'],temple:['知识神殿','独立故事相互连接，经典与解读各有来处。'],collation:['原文校对','保留原件，逐页精校，让每次裁决有迹可循。'],learning:['学习计划','按家人的兴趣与节奏，把知识讲成一条路线。'],originals:['原文基库','原件、校勘与知识衍生，分层保存。']};
@@ -45,5 +47,59 @@ export function KnowledgePage({route,navigate}:{route:string;navigate:(route:str
 }
 
 function EventList({items}:{items:{time:string;text:string}[]}){return <div className="kn-events">{items.map((event,i)=><div key={i}><i/><p>{event.text}</p><time>{event.time}</time></div>)}{!items.length&&<KEmpty title="暂无记录"/>}</div>}
-function QuerySection({k,profile,run,onSource}:{k:KnowledgeData;profile:string;run:RunAction;onSource:(id:string)=>void}){const {data}=useDemo();const live=data.runtime?.mode==='live';const [busy,setBusy]=useState(false);const [queryScope,setQueryScope]=useState('family');const [query,setQuery]=useState(k.query.text||'');const [mode,setMode]=useState('all');const results=k.query.results.filter(r=>sourceAllowed(k.sources.find(s=>s.id===r.source),profile)&&(!r.book||k.books.some(b=>b.id===r.book&&b.status==='published'&&bookAllowed(k,b,profile))));const failures=k.sources.filter(s=>sourceAllowed(s,profile)&&['同步异常','连接失败'].includes(s.health));async function submit(e:FormEvent){e.preventDefault();if(busy||!query.trim())return;setBusy(true);try{await run('knowledge.query',{query:query.trim(),mode,profile,scope:queryScope});}finally{setBusy(false)}}return <section className="panel kn-query"><div className="kn-section-head"><div><h3>授权知识联合检索</h3><p className="kn-hint">检索授权原文、已同步资料与实时来源，结果保留出处与正文指纹。</p></div><KTag>{live?'授权原文检索':'离线模拟'}</KTag></div><form className="kn-query-form" onSubmit={submit}><label>提问或关键词<input required aria-label="知识检索问题" value={query} onChange={e=>setQuery(e.target.value)} placeholder="例如：人物、学习、地理"/></label><label>检索方式<select value={mode} onChange={e=>setMode(e.target.value)}><option value="all">所有有效授权源</option><option value="local">本地与混合索引</option><option value="live">实时与混合来源</option></select></label>{live&&profile==='me'&&<label>资料范围<select value={queryScope} onChange={e=>setQueryScope(e.target.value)}>{Object.entries(scopeNames).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>}<KButton primary type="submit" disabled={busy}>{busy?'正在检索':'开始检索'}</KButton></form>{failures.length>0&&<KNotice warn>{failures.map(s=>s.name).join('、')} 同步异常。已授权的本地快照可用，实时部分不完整。</KNotice>}<div className="kn-query-summary">{k.query.at?`${k.query.at} · ${results.length} 个匹配结果`:'输入关键词，观察授权、停用与发布状态如何影响结果。'}</div><div className="kn-query-results">{results.map((r,i)=>{const source=k.sources.find(s=>s.id===r.source);return <article key={i}><div><h3>{r.title}</h3><p>{r.text}</p><small>{source?.name} · {modeNames[source?.mode||'']} · {r.book?`原文 v${k.books.find(b=>b.id===r.book)?.version}`:`来源版本 ${source?.version}`}</small></div>{profile==='me'&&<KButton onClick={()=>onSource(r.source)}>查看来源</KButton>}</article>})}{k.query.at&&!results.length&&<KEmpty title="未找到匹配的有效知识" detail="可以调整关键词、恢复来源授权，或先发布相关原文。"/>}{!k.query.at&&<KEmpty title="检索结果将在这里出现" detail={live?'搜索选定范围的授权原文及实际目录／HTTP资料；来源须先同步或启用实时连接器。':'本流程只搜索统一模拟中心的样例资料，不访问实时网络。'}/>}</div></section>}
-
+type KnowledgeQueryHit=Omit<KnowledgeData['query']['results'][number],'book'>&{book?:string|null;page?:number|null;version?:string|number|null;location?:string;sha256?:string;offset?:number};
+interface KnowledgeReference {sourceId:string;sourceName:string;title:string;kind:'book-page'|'stored-document'|'query-excerpt';location:string;sha256:string;bookId?:string;page?:number;version?:number|string;sourceRevision:number|string;text:string;contextStart:number;quote:string;quoteOffset:number;quoteStart:number;hasEarlierText:boolean;hasLaterText:boolean;resolvedAt:string;notice:string;externalUrl?:string;verifiedSourceText:boolean}
+type ReferenceReader={hit:KnowledgeQueryHit;loading:boolean;issue:string;reference:KnowledgeReference|null};
+function externalReferenceUrl(value:unknown):string|null {if(typeof value!=='string')return null;try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)&&!url.username&&!url.password?url.href:null}catch{return null}}
+function verifiedReference(value:KnowledgeReference):KnowledgeReference {
+  if(!value||!['book-page','stored-document','query-excerpt'].includes(value.kind)||typeof value.title!=='string'||typeof value.text!=='string'||typeof value.quote!=='string'||!value.quote||!Number.isSafeInteger(value.quoteStart)||value.quoteStart<0||value.text.slice(value.quoteStart,value.quoteStart+value.quote.length)!==value.quote||typeof value.verifiedSourceText!=='boolean')throw new Error('本次出处返回不完整，请重新检索后再打开。');
+  if(value.kind==='query-excerpt'&&value.verifiedSourceText)throw new Error('检索摘录不能冒充已经核对的全文，请重新检索。');
+  return value;
+}
+function QuerySection({k,profile,run,onSource}:{k:KnowledgeData;profile:string;run:RunAction;onSource:(id:string)=>void}) {
+  const {data,real,handleApiError}=useDemo(),live=data.runtime?.mode==='live';
+  const [busy,setBusy]=useState(false),[queryScope,setQueryScope]=useState('family'),[query,setQuery]=useState(k.query.text||''),[mode,setMode]=useState('all'),[reader,setReader]=useState<ReferenceReader|null>(null);
+  const queryRecord=(real?.records.sources??[]).filter(record=>record.kind==='query'&&String(record.text??'')===k.query.text&&String(record.createdAt??'')===k.query.at).at(-1),queryId=String(queryRecord?.id||'');
+  const actorId=String(data.runtime?.capabilities?.identity?.actorId||'');
+  const bindings=JSON.stringify([(real?.records.sources??[]).filter(record=>record.kind==='source').map(record=>[record.id,record.revision,record.active,record.authorized,record.scope]).sort(),(real?.records.books??[]).filter(record=>record.kind==='book').map(record=>[record.id,record.revision,record.version,record.status]).sort()]);
+  const context=useRef({profile,actorId,queryId,bindings});context.current={profile,actorId,queryId,bindings};
+  const active=useRef(true),request=useRef<AbortController|null>(null),sequence=useRef(0);
+  const closeReader=()=>{sequence.current++;request.current?.abort();request.current=null;setReader(null)};
+  useEffect(()=>{closeReader()},[profile,actorId,queryId,bindings]);
+  useEffect(()=>{active.current=true;const invalidate=()=>closeReader();window.addEventListener('jarvis:inbox-materials-invalidated',invalidate);return()=>{active.current=false;sequence.current++;request.current?.abort();window.removeEventListener('jarvis:inbox-materials-invalidated',invalidate)}},[]);
+  const results=(k.query.results as KnowledgeQueryHit[]).filter(result=>sourceAllowed(k.sources.find(source=>source.id===result.source),profile)&&(!result.book||k.books.some(book=>book.id===result.book&&book.status==='published'&&bookAllowed(k,book,profile))));
+  const failures=k.sources.filter(source=>sourceAllowed(source,profile)&&['同步异常','连接失败'].includes(source.health));
+  async function submit(event:FormEvent){event.preventDefault();if(busy||!query.trim())return;closeReader();setBusy(true);try{await run('knowledge.query',{query:query.trim(),mode,profile,scope:queryScope})}finally{if(active.current)setBusy(false)}}
+  async function openReference(hit:KnowledgeQueryHit) {
+    request.current?.abort();const serial=++sequence.current,sharedSession=materialSessionGeneration(),started={...context.current},controller=new AbortController();request.current=controller;
+    const current=()=>active.current&&sequence.current===serial&&sharedSession===materialSessionGeneration()&&Object.entries(started).every(([key,value])=>context.current[key as keyof typeof started]===value);
+    setReader({hit,loading:true,issue:'',reference:null});
+    if(!live||!queryId||!hit.location||!hit.sha256){setReader({hit,loading:false,issue:live?'这条检索还没有完整的出处记录，请重新检索后再打开。':'这是演示检索，没有读取真实原文。',reference:null});return}
+    try {
+      const reference=verifiedReference(await v1Request<KnowledgeReference>('/api/v1/knowledge/references/resolve',{method:'POST',body:JSON.stringify({queryId,source:hit.source,location:hit.location,sha256:hit.sha256}),signal:controller.signal}));
+      if(current())setReader({hit,loading:false,issue:'',reference});
+    } catch(error) {
+      if(!current()||controller.signal.aborted)return;
+      const issue=error instanceof V1Error&&error.status===403?'这份来源已经停用、撤销授权或不在当前可见范围内，无法打开。':error instanceof V1Error&&error.status===409?'这条出处的来源或原文版本已经变化，请重新检索后再打开。':error instanceof TypeError?'出处暂时无法读取，请恢复网络后再试。':error instanceof Error?error.message:'出处暂时无法读取，请重新检索。';
+      setReader({hit,loading:false,issue,reference:null});
+      if(error instanceof V1Error&&error.status===401)handleApiError(error);
+    } finally {if(request.current===controller)request.current=null}
+  }
+  const reference=reader?.reference,externalUrl=externalReferenceUrl(reference?.externalUrl);
+  return <section className="panel kn-query">
+    <div className="kn-section-head"><div><h3>授权知识联合检索</h3><p className="kn-hint">检索授权原文、已同步资料与实时来源，结果保留出处与正文指纹。</p></div><KTag>{live?'授权原文检索':'离线模拟'}</KTag></div>
+    <form className="kn-query-form" onSubmit={submit}><label>提问或关键词<input required aria-label="知识检索问题" value={query} onChange={event=>setQuery(event.target.value)} placeholder="例如：人物、学习、地理"/></label><label>检索方式<select value={mode} onChange={event=>setMode(event.target.value)}><option value="all">所有有效授权源</option><option value="local">本地与混合索引</option><option value="live">实时与混合来源</option></select></label>{live&&profile==='me'&&<label>资料范围<select value={queryScope} onChange={event=>setQueryScope(event.target.value)}>{Object.entries(scopeNames).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>}<KButton primary type="submit" disabled={busy}>{busy?'正在检索':'开始检索'}</KButton></form>
+    {failures.length>0&&<KNotice warn>{failures.map(source=>source.name).join('、')} 同步异常。已授权的本地快照可用，实时部分不完整。</KNotice>}
+    <div className="kn-query-summary">{k.query.at?k.query.at+' · '+results.length+' 个匹配结果':'输入关键词，观察授权、停用与发布状态如何影响结果。'}</div>
+    <div className="kn-query-results">{results.map((hit,index)=>{const source=k.sources.find(source=>source.id===hit.source);return <article key={index}><div><h3>{hit.title}</h3><p>{hit.text}</p><small>{source?.name} · {modeNames[source?.mode||'']} · {hit.book?'原文 v'+(hit.version??'待核对'):'外部来源'}{typeof hit.page==='number'?' · 第'+hit.page+'页':''}</small></div><div className="kn-query-actions"><KButton primary onClick={()=>void openReference(hit)}>打开命中内容</KButton>{profile==='me'&&<KButton onClick={()=>onSource(hit.source)}>来源配置</KButton>}</div></article>})}{k.query.at&&!results.length&&<KEmpty title="未找到匹配的有效知识" detail="可以调整关键词、恢复来源授权，或先发布相关原文。"/>}{!k.query.at&&<KEmpty title="检索结果将在这里出现" detail={live?'搜索选定范围的授权原文及实际目录／HTTP资料；来源须先同步或启用实时连接器。':'本流程只搜索统一模拟中心的样例资料，不访问实时网络。'}/>}</div>
+    {reader&&<KDialog title="检索出处" wide onClose={closeReader} footer={<KButton onClick={closeReader}>关闭</KButton>}>
+      {reader.loading?<p role="status">正在核对来源并读取原文…</p>:reader.issue?<><KNotice warn>{reader.issue}</KNotice><p className="kn-hint">旧的检索摘录不会替代当前原文。请关闭此处，重新检索后再打开。</p></>:reference&&<>
+        <div className="kn-reference-heading"><KTag tone={reference.verifiedSourceText?'good':'warn'}>{reference.kind==='book-page'?'已发布原文':reference.verifiedSourceText?'已保存的来源正文':'检索时的摘录'}</KTag><h3>{reference.title}</h3><p>{reference.sourceName}</p><strong>{typeof reference.page==='number'?'第'+reference.page+'页'+(reference.version!==undefined?' · 原文版本 '+reference.version:''):'命中片段'}</strong></div>
+        {reference.notice&&<KNotice warn={!reference.verifiedSourceText}>{reference.notice}</KNotice>}
+        <section className="kn-reference-context" aria-label="前后文"><h4>{reference.verifiedSourceText?'前后文':'保留的检索摘录'}</h4><p className="kn-hint">高亮部分是检索时保留的摘录，不代表每个字都命中关键词。</p>{reference.hasEarlierText&&<p className="kn-reference-boundary">前文已省略</p>}<p className="kn-reading kn-transcription">{reference.text.slice(0,reference.quoteStart)}<mark aria-label="检索摘录">{reference.quote}</mark>{reference.text.slice(reference.quoteStart+reference.quote.length)}</p>{reference.hasLaterText&&<p className="kn-reference-boundary">后文已省略</p>}</section>
+        {externalUrl&&<a className="kn-button button ghost kn-reference-link" tabIndex={0} href={externalUrl} target="_blank" rel="noopener noreferrer">打开外部原始链接</a>}
+        <details className="kn-reference-details"><summary>出处详情</summary><KFacts items={[["来源定位",reference.location],["正文指纹",reference.sha256],["来源修订",reference.sourceRevision],["摘录起点",reference.quoteOffset],["上下文起点",reference.contextStart],["核对时间",reference.resolvedAt]]}/></details>
+      </>}
+    </KDialog>}
+  </section>;
+}

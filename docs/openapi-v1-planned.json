@@ -30087,6 +30087,165 @@
           }
         }
       }
+    },
+    "/api/v1/knowledge/references/resolve": {
+      "post": {
+        "operationId": "KnowledgeReferenceResolve",
+        "summary": "只读打开已保存检索记录中的可信出处；重新核当前授权、版本与指纹，不访问传入位置。实时全文未保留时仅返回明确标注的当时摘录。",
+        "tags": [
+          "Knowledge"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeReferenceResolveInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "只读打开已保存检索记录中的可信出处；重新核当前授权、版本与指纹，不访问传入位置。实时全文未保留时仅返回明确标注的当时摘录。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReferenceContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "请求字段或范围无效"
+          },
+          "401": {
+            "description": "本人身份未认证或已失效"
+          },
+          "403": {
+            "description": "来源撤权、范围变化或跨身份访问"
+          },
+          "404": {
+            "description": "没有可信检索记录或匹配引用"
+          },
+          "409": {
+            "description": "版本、正文指纹或来源配置已变化"
+          }
+        }
+      }
+    },
+    "/api/runtime/memory/query": {
+      "post": {
+        "operationId": "MemoryQuestionQuery",
+        "summary": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryQuestionQueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryQuestionQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "请求字段或范围无效"
+          },
+          "401": {
+            "description": "本人身份未认证或已失效"
+          },
+          "403": {
+            "description": "来源撤权、范围变化或跨身份访问"
+          },
+          "404": {
+            "description": "没有可信检索记录或匹配引用"
+          },
+          "409": {
+            "description": "版本、正文指纹或来源配置已变化"
+          }
+        }
+      }
+    },
+    "/api/runtime/family/memory/query": {
+      "post": {
+        "operationId": "MemberMemoryQuestionQuery",
+        "summary": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "MemberCookie": []
+          },
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryQuestionQueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryQuestionQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "请求字段或范围无效"
+          },
+          "401": {
+            "description": "本人身份未认证或已失效"
+          },
+          "403": {
+            "description": "来源撤权、范围变化或跨身份访问"
+          },
+          "404": {
+            "description": "没有可信检索记录或匹配引用"
+          },
+          "409": {
+            "description": "版本、正文指纹或来源配置已变化"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -70629,6 +70788,280 @@
             "format": "date-time"
           }
         }
+      },
+      "KnowledgeReferenceResolveInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "queryId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4500
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "queryId",
+          "source",
+          "location",
+          "sha256"
+        ]
+      },
+      "KnowledgeReferenceContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "sourceRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "book-page",
+              "stored-document",
+              "query-excerpt"
+            ]
+          },
+          "location": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bookId": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": [
+              "number",
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "contextStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "quoteOffset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quoteStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hasEarlierText": {
+            "type": "boolean"
+          },
+          "hasLaterText": {
+            "type": "boolean"
+          },
+          "verifiedSourceText": {
+            "type": "boolean"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notice": {
+            "type": "string"
+          },
+          "externalUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "sourceId",
+          "sourceName",
+          "sourceRevision",
+          "kind",
+          "location",
+          "sha256",
+          "text",
+          "contextStart",
+          "quote",
+          "quoteOffset",
+          "quoteStart",
+          "hasEarlierText",
+          "hasLaterText",
+          "verifiedSourceText",
+          "resolvedAt",
+          "notice"
+        ]
+      },
+      "MemoryQuestionQueryInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "MemoryQuestionQueryMatch": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "const": "memory"
+          },
+          "text": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sourceEvidenceStatus": {
+            "type": "string",
+            "enum": [
+              "current-confirmation",
+              "historical-before-edit"
+            ]
+          },
+          "sourceEvidenceNotice": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "score": {
+            "type": "number"
+          },
+          "matchedField": {
+            "type": "string"
+          },
+          "confirmedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "nextReviewAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "revision",
+          "sourceEvidenceStatus",
+          "quote",
+          "location",
+          "sha256",
+          "offset",
+          "score",
+          "matchedField"
+        ]
+      },
+      "MemoryQuestionQueryResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "records": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/MemoryQuestionQueryMatch"
+            }
+          },
+          "retrieval": {
+            "const": "literal-fragments"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "query",
+          "total",
+          "records",
+          "retrieval",
+          "notice"
+        ]
       }
     },
     "responses": {

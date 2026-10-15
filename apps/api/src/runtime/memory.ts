@@ -7,6 +7,7 @@ import { V1Repository, type CommandReceipt } from '../v1/repository.js';
 import { BusinessError, type DomainHandler, type CommandEnvelope } from '../v1/types.js';
 import { familyHandlers } from '../v1/family-domains.js';
 import { validateCommand } from '../v1/contract.js';
+import {searchAuthorizedMemories} from './personal-retrieval.js';
 
 export interface MemoryPrincipal { actorId: string; profileId: string; administrator?: boolean }
 const memoryHandler = familyHandlers.find(h => h.domain === 'memory')!;
@@ -147,6 +148,20 @@ export class MemoryRuntime {
   register(app: FastifyInstance) {
     for (const base of ['/api/runtime/memory', '/api/runtime/family/memory']) {
       const identity = (req: FastifyRequest) => base.includes('/family/') ? this.options.principal?.(req) ?? (() => { throw new BusinessError('FORBIDDEN', '请先登录成员身份', 401); })() : { actorId: 'server-admin', profileId: 'me' };
+      app.post(`${base}/query`,async(req,reply)=>{
+        if(!base.includes('/family/')){
+          if(!this.store.validateLogin(req.cookies?.jarvis_session??''))throw new BusinessError('FORBIDDEN','请先以管理员本人登录',401);
+          if(req.cookies?.jarvis_member_session!==undefined)throw new BusinessError('FORBIDDEN','成员会话不能读取管理员私人记忆，请使用本人查询入口',403);
+          const authenticated=this.options.principal?.(req);
+          if(this.options.principal&&(authenticated?.administrator!==true||authenticated.actorId!=='server-admin'||authenticated.profileId!=='me'))throw new BusinessError('FORBIDDEN','当前身份不能读取管理员私人记忆',403);
+        }
+        const actor:MemoryPrincipal=identity(req);
+        if(base.includes('/family/')&&req.cookies?.jarvis_member_session!==undefined&&actor.administrator)throw new BusinessError('FORBIDDEN','成员会话已失效，请重新验证成员身份',401);
+        const input=z.object({query:z.string().trim().min(1).max(1000),limit:z.number().int().min(1).max(50).default(20)}).strict().parse(req.body);
+        const matches=searchAuthorizedMemories(this.repository,actor.actorId,input.query);
+        // Read-only retrieval: no persisted question, candidate confirmation or model invocation.
+        return reply.header('Cache-Control','private, no-store').send({actorId:actor.actorId,query:input.query,total:matches.length,records:matches.slice(0,input.limit),retrieval:'literal-fragments',notice:'按当前本人的生效记忆逐字与中文词片段匹配，尚未使用同义或语义检索。修订前的来源仅供历史溯源，不参与现行内容召回。'});
+      });
       app.get(base, async req => ({ items: this.records(identity(req).actorId), policy: this.policy(identity(req).actorId) ?? null, cleanup: 'scheduled-every-minute', automaticExtraction: 'four-new-user-turns-after-opt-in' }));
       app.post<{ Params: { command: string } }>(`${base}/commands/:command`, async req => { const actor = identity(req); const e = z.object({ commandId: z.string().min(1).max(200), expectedVersion: z.number().int().min(0), scope: z.literal('private'), payload: z.record(z.string(), z.unknown()) }).strict().parse(req.body); if (req.params.command === 'policy') policySchema.parse(e.payload); return this.command(req.params.command, e as CommandEnvelope, actor.actorId); });
       app.post(`${base}/extract`, async req => { const actor = identity(req); const p = z.object({ conversationId: z.string().min(1).max(200), consent: z.literal(true),cloudConsent:z.boolean().default(false) }).strict().parse(req.body); return this.extract(actor.actorId, p.conversationId, true,p.cloudConsent); });

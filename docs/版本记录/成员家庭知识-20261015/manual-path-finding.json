@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-15T15:28:11.699229+00:00",
+  "status": "failed",
+  "priority": "P1",
+  "finding": "A real Windows directory-sync default document title exposed the absolute local source path to the member through query and reader titles. Omitting location keys did not prevent this label data flow.",
+  "affectedCase": "member-phone-current-reference",
+  "automatedAttempt": "attempt-1.json",
+  "automatedPassDoesNotEstablishNoPath": true,
+  "evidence": {
+    "path": "artifacts/family-knowledge-browser-qa/phone-saved-family-document-1.png",
+    "sha256": "7a64c99c7ae9f82d37440ed232cea9b29ada4fce26ba4484d859c1a9b69e45ea"
+  },
+  "otherPassedCasesRemain": [
+    "member-revoked-and-version-changed",
+    "member-cross-tab-switch-and-logout",
+    "member-late-real-401",
+    "member-platform-private-bridge"
+  ],
+  "nextVerification": "Only the affected member-phone-current-reference case after the API boundary correction, with real Windows directory source and explicit query/reader DTO and UI path assertions. No old matrix or four unaffected cases will be rerun."
+}

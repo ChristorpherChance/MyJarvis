@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-15T15:25:23.292Z",
+  "attempt": "1",
+  "expectedRoomBundle": "RoomVoice-D5YcehUx.js",
+  "realHttp": true,
+  "syntheticMembersAndOriginals": true,
+  "independentAdministratorFixtureCookie": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "loadedBundles": [
+    "/assets/index-BgioMN34.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/DemoApp-QfCTEukt.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/NotificationPreferencesPanel-5ljS3YhF.js",
+    "/assets/MaterialManager-6aQ5Geor.js",
+    "/assets/OperationsPage-D29IA5FM.js",
+    "/themes/stark.js",
+    "/assets/RoomVoice-D5YcehUx.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "member-phone-current-reference",
+      "status": "passed",
+      "evidence": {
+        "realMemberPin": true,
+        "adminFallbackDenied": true,
+        "realPdfUploadedAndManuallyPublished": true,
+        "publishedPage": 2,
+        "privateSameWordExcluded": true,
+        "currentWholeHashVerified": true,
+        "realDirectoryTextSynchronized": true,
+        "unreviewedDocumentLabel": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "member-revoked-and-version-changed",
+      "status": "passed",
+      "evidence": {
+        "revocationHttp": 403,
+        "versionChangeHttp": 409,
+        "controlledCanonicalReferenceWait": true,
+        "noReaderBodyOnErrors": true,
+        "noOldContextRetained": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "member-cross-tab-switch-and-logout",
+      "status": "passed",
+      "evidence": {
+        "twoRealMemberIdentities": true,
+        "oldQuestionResultsAndReaderCleared": true,
+        "oldReferenceUnderNewSession": 404,
+        "loggedOutReference": 401,
+        "logoutAlsoClearedReader": true
+      }
+    },
+    {
+      "name": "member-late-real-401",
+      "status": "passed",
+      "evidence": {
+        "actualExpiredMemberRequest": 401,
+        "request": "voice/catalog",
+        "oldResponses": 1,
+        "newMemberStillAuthenticated": true,
+        "newKnowledgeQuestionPreserved": true,
+        "noExtraSessionEpoch": true,
+        "oldReaderCleared": true
+      }
+    },
+    {
+      "name": "member-platform-private-bridge",
+      "status": "failed",
+      "cut": "member-bridge/old-admin-private-detail-really-visible",
+      "publicFailureBoundary": "测试管理登录准备的异步竞态；未进入该组隐私联动断言。最终汇总条数不符为同一次失败的派生检查。"
+    },
+    {
+      "name": "harness-or-final-audit",
+      "status": "failed",
+      "cut": "member-bridge/old-admin-private-detail-really-visible",
+      "publicFailureBoundary": "测试管理登录准备的异步竞态；未进入该组隐私联动断言。最终汇总条数不符为同一次失败的派生检查。"
+    }
+  ],
+  "originalReportSha256": "3ec63e4ad6dbc8510eba89d1f4db84b3bc42e222a93a87824c22fdb60cc02cd9",
+  "manualFindingSupersedesFirstCaseNoPathClaim": "首组自动通过未检查标题内绝对路径，人工P1发现另保，安全标题修正后仅在attempt3复验此组。"
+}

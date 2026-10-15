@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-16",
+  "scope": "真实本地材料转写与模型原始时间分段，固定合成样本有限验收",
+  "codeCommit": "077d9bd7dce4a3b26cd47be460de379525651e26",
+  "state": {
+    "implementation": "complete",
+    "verification": "partial",
+    "selectedSamplesQualified": true,
+    "defaultModelChanged": false,
+    "deployed112": false,
+    "fieldAcceptance": false
+  },
+  "implemented": [
+    "现本地Whisper worker原来只拼接文字，丢弃模型segments；现保留真实start/end/text，原文字拼接及模型参数不改，不生成或钳制定位。",
+    "沿真实临时平台的管理员身份、原件上传、显式转写、时长探测、usage记账及保存流程验证，实际模型调用，不替换假引擎。"
+  ],
+  "preregistered": {
+    "samples": 2,
+    "languages": [
+      "zh",
+      "en"
+    ],
+    "audio": "现有Windows SAPI合成，各一次，16kHz/16bit/mono，不播放到扬声器",
+    "thresholdInclusive": 0.25,
+    "normalization": "仅去标点空白，英文lower；未简繁、数字或同义归一",
+    "maximumSampleSeconds": 15,
+    "cpuThreads": 2,
+    "device": "cpu int8",
+    "localFilesOnly": true,
+    "retryPerModelLanguage": 0,
+    "automaticFallback": false
+  },
+  "results": [
+    {
+      "model": "tiny",
+      "language": "zh",
+      "errors": 9,
+      "units": 26,
+      "segments": 3,
+      "passed": false,
+      "inputSha256": "3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510"
+    },
+    {
+      "model": "tiny",
+      "language": "en",
+      "errors": 1,
+      "units": 18,
+      "segments": 1,
+      "passed": true,
+      "inputSha256": "6c8caa798334b3a56e30d09c7de317e50e578a69dce7140d83b695ebbf3d6e79"
+    },
+    {
+      "model": "small",
+      "language": "zh",
+      "errors": 0,
+      "units": 26,
+      "segments": 1,
+      "passed": true,
+      "inputSha256": "3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510"
+    }
+  ],
+  "decision": "tiny中文先因9/26逐字差异未达25%门，包含简繁差异及知识库误词；保留失败后，仅对同一原SHA中文WAV选择已存在small一次补验，0/26通过；英文tiny1/18通过未重跑。不能由两合成小样推出所有录音或默认模型准确率。",
+  "counts": {
+    "sapiSyntheses": 2,
+    "realLocalAsrCalls": 3,
+    "httpTranscribeRequests": 3,
+    "piCalls": 0,
+    "observedNodeExternalFetchAttempts": 0,
+    "pureWorkerProtocolGroups": 2,
+    "pureProtocolPassed": 2
+  },
+  "verification": [
+    "原件上传/下载指纹、转写来源指纹、文字指纹、真实command引擎均核同。",
+    "tiny中文3段0–6.9秒、tiny英文1段0–5秒、small中文1段0–7秒；各段非负有序端点且在实测WAV时长容差内。",
+    "Root只读原保存证据独立重算Levenshtein差异和各段指纹/时间，没有为日志重跑推理。",
+    "纯worker协议2新组仅假segment检验输出协议，不冒真实识别；脚本语法、单文件类型和空白检查通过。",
+    "两次临时服务与自建Temp已清，合成WAV按事前合同保留本机供同音频比较；未访问生产或更改默认引擎。"
+  ],
+  "networkBoundary": "Node fetch仅临时loopback，HF离线环境与local_files_only；没有声称操作系统级网络trace。",
+  "costs": {
+    "ledgerLocalEngineUSD": 0,
+    "ledgerMeaning": "本地usage账本值，不是实际算力或内部AI总成本为零",
+    "actualLocalComputeUnitPriceUSD": null,
+    "internalTokens": null,
+    "internalAmountUSD": null,
+    "spendingCap": null
+  },
+  "remaining": [
+    "真实麦克风、口音、噪声与长录音的代表性准确率。",
+    "正式设备引擎/模型选择和性能资源评估；本轮没有自动更换默认tiny。",
+    "真实终端回听定位现场验收、PR合并、112发布；在线项目资料/决定版本同步未执行。",
+    "离线后台自动同步及语义模型问答仍未完成。"
+  ],
+  "preserved": {
+    "factoryTenMinuteFollowup": "paused",
+    "formalVersion": "20261012-supervision-r28-2",
+    "all74AndCustomer12Delivered": false
+  },
+  "evidence": [
+    {
+      "path": "contract-tiny-1.json",
+      "sha256": "f91b705a05dc7bb4f3006adb3a81e896265e4890842aca5fb5ef7d14412070a8",
+      "bytes": 4100
+    },
+    {
+      "path": "attempt-tiny-1.json",
+      "sha256": "69601c53b9f906f28b3fcf2d34a36f075164f53885b4422640bd508f22e84e80",
+      "bytes": 8239
+    },
+    {
+      "path": "contract-small-1.json",
+      "sha256": "72b8f6480f39983ef7b68b214c5ed0d4b505b43eaf7accf48b08d5fbb39811ab",
+      "bytes": 3920
+    },
+    {
+      "path": "attempt-small-1.json",
+      "sha256": "dc8fe2882c0b7095b78bacc44685b1f9902a572d2b1dee2fdc5952551a3a6943",
+      "bytes": 4742
+    },
+    {
+      "path": "root-independent-saved-readback.json",
+      "sha256": "6f84a730aa314b84be60dfa864d0a9eca739515fd7a630b4b3e1408b762d3496",
+      "bytes": 838
+    }
+  ]
+}

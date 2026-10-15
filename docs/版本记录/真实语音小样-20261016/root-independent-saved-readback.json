@@ -1,0 +1,35 @@
+{
+  "savedEvidenceIndependentlyRecomputed": true,
+  "localAsrCalls": 3,
+  "sapiSyntheses": 2,
+  "noNewInferenceForReadback": true,
+  "cases": [
+    {
+      "model": "tiny",
+      "language": "zh",
+      "errors": 9,
+      "units": 26,
+      "segments": 3,
+      "passed": false,
+      "inputSha256": "3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510"
+    },
+    {
+      "model": "tiny",
+      "language": "en",
+      "errors": 1,
+      "units": 18,
+      "segments": 1,
+      "passed": true,
+      "inputSha256": "6c8caa798334b3a56e30d09c7de317e50e578a69dce7140d83b695ebbf3d6e79"
+    },
+    {
+      "model": "small",
+      "language": "zh",
+      "errors": 0,
+      "units": 26,
+      "segments": 1,
+      "passed": true,
+      "inputSha256": "3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510"
+    }
+  ]
+}

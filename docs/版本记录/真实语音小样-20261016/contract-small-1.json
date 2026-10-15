@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "preparedAt": "2026-10-15T16:07:59.469Z",
+  "mode": "preregistered-not-executed",
+  "attempt": "1",
+  "selected": [
+    "zh"
+  ],
+  "identities": {
+    "scriptSha256": "a11ae2d19aac5fea031ec3e22dadfd253279d9673f1a080383f464ce93559911",
+    "workerSha256": "016a8ec264a95cbd0cef757daafeaa749a6a7dffb2f38d5f5607ed6e00aca0f6",
+    "sapiSha256": "cee3b0a8e88e9b0fd80ebedf4d04a0528017086c592019751d4e8e0bef304638",
+    "model": "small",
+    "modelFiles": [
+      {
+        "file": "config.json",
+        "bytes": 2370,
+        "sha256": "b55496ac7940a7ae47d2c01eab40edfd8701feec1229d9cce3b40014383fb828"
+      },
+      {
+        "file": "model.bin",
+        "bytes": 483546902,
+        "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+      },
+      {
+        "file": "tokenizer.json",
+        "bytes": 2203239,
+        "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+      },
+      {
+        "file": "vocabulary.txt",
+        "bytes": 459861,
+        "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+      }
+    ]
+  },
+  "samples": [
+    {
+      "language": "zh",
+      "voice": "Microsoft Huihui Desktop",
+      "reference": "明天下午三点，我想整理今天的灵感，再把会议记录加入知识库。",
+      "metric": "CER"
+    },
+    {
+      "language": "en",
+      "voice": "Microsoft Zira Desktop",
+      "reference": "Tomorrow at three in the afternoon I want to review my project ideas and collect the meeting notes.",
+      "metric": "WER"
+    }
+  ],
+  "normalization": {
+    "zh": "Remove Unicode punctuation and whitespace only; compare Unicode code points with Levenshtein distance.",
+    "en": "Remove Unicode punctuation, lowercase, split on whitespace; compare words with Levenshtein distance.",
+    "thresholdInclusive": 0.25,
+    "numeralConversion": false,
+    "synonymReplacement": false
+  },
+  "synthesis": {
+    "engine": "Windows SAPI via existing tts_sapi.ps1",
+    "rate": 0,
+    "sampleRate": 16000,
+    "bits": 16,
+    "channels": 1,
+    "output": "file-only; no speaker playback",
+    "maximumSecondsInclusive": 15,
+    "synthesesPerLanguage": 1,
+    "originalReferenceMustNotChange": true
+  },
+  "recognition": {
+    "http": "new temporary createApp; authenticated upload then explicit transcribe",
+    "model": "small",
+    "device": "cpu",
+    "computeType": "int8",
+    "threads": 2,
+    "workerMaximumSeconds": 65,
+    "engineTimeoutMs": 180000,
+    "callsPerModelAndLanguage": 1,
+    "language": "explicit zh/en",
+    "cloudConsent": false,
+    "localFilesOnly": true,
+    "noInstallOrDownload": true,
+    "noAutomaticModelFallback": true
+  },
+  "acceptance": {
+    "sourceSha256": "exact uploaded/downloaded WAV SHA-256",
+    "engine": "command",
+    "textSha256": "exact recognized text SHA-256",
+    "segmentCount": "at least one actual segment",
+    "segmentTimes": "finite, start >= 0, end >= start, end <= measured WAV duration + 0.25",
+    "segmentsMustReconstructText": true,
+    "maximumErrorRateInclusive": 0.25,
+    "physicalMicrophoneOrRealSpeakerVerified": false
+  },
+  "retention": {
+    "fixtures": "Only these public synthetic sentences and their generated WAV bytes are retained for same-audio comparison.",
+    "results": "Each attempt and first failure retained without overwrite.",
+    "temporaryData": "Own mkdtemp directory only; removed after createApp closes.",
+    "prohibited": "No credentials, endpoint, session, private recording, provider setup, production operation, old test matrix, or legacy temporary-directory cleanup."
+  },
+  "usage": {
+    "policy": "record only; no spend cap",
+    "localAsr": "actual child launches and local usage entries reported separately from Pi",
+    "piExpected": 0,
+    "externalFetchExpected": 0,
+    "localComputePriceUSD": null,
+    "internalAssistantTokens": null,
+    "internalAssistantCostUSD": null
+  }
+}

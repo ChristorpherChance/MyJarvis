@@ -1,0 +1,44 @@
+{
+  "scope": "Independent static review of the local release packager and its fixture tests. Reviewer did not run tests, build, create an actual package, contact services, use SSH or change either implementation file.",
+  "originalFrozenInputs": [
+    { "path": "scripts/package-capture-release.mjs", "sha256": "1e9f282c862b6c7378764276c901409f5bd7a34604b8e06611fc797e76ba39fb", "bytesReportedByAuthor": 18752, "sha256IndependentlyRead": true },
+    { "path": "scripts/test-package-capture-release.mjs", "sha256": "e16e1d91f035ca35cd03d14cb07bf4bc3c0308b41ef995f60b4d62689f448cc7", "bytesReportedByAuthor": 7741, "sha256IndependentlyRead": true }
+  ],
+  "originalReviewStatus": "Two validation gaps found before any Root actual package. Author corrections and targeted counterexample results requested; final delta review pending.",
+  "findings": [
+    {
+      "id": "PACKAGE-001",
+      "priority": "P1",
+      "title": "Public directory prefixes alone do not exclude captured audio or model binaries",
+      "location": "allowedSource(), sourceDirectories and runtimeFiles()",
+      "fact": "The source selector accepts arbitrary safeRelative filenames anywhere under docs, apps/api/resources, tests, web/public and other selected public directories. The compiled selector recursively accepts every regular file except a small filename/path denylist. Audio such as captured.webm or private-voice.wav and models such as model.bin or model.onnx are not excluded by type. Metadata unconditionally states privateDataIncluded:false.",
+      "impact": "If such files are tracked under a selected source directory or placed in an explicitly supplied dist, they enter the archive despite the stated audio/model exclusion. This is a rule-level counterexample; reviewer did not assert that the current real tree or any actual package contained private files.",
+      "requestedNarrowCorrection": "Use an explicit public-source/compiled-resource type policy, reject audio/model/archive/private-data categories and preserve exact required runtime source resources. Apply directory component exclusions without case sensitivity where platform paths may be case insensitive. Add one focused counterexample group covering source and compiled input rejection without packaging real user data."
+    },
+    {
+      "id": "PACKAGE-002",
+      "priority": "P2",
+      "title": "Offline HTML dependencies can exist in dist while being absent from precache manifest",
+      "location": "validateBuilds() manifest seen set and subsequent HTML asset-reference checks",
+      "fact": "Listed offline manifest entries are hash checked and required to match the service worker, but the offline HTML src/href references are only required to exist in webByPath. They are not required to be present in the manifest seen set. A manifest containing another valid JS entry can therefore pass while a directly referenced offline HTML asset is omitted from precache.",
+      "impact": "The package can preserve a self-consistent but incomplete offline precache list, so its offline association check does not establish direct HTML dependency coverage. This is a static protocol counterexample, not a claim that the currently built page failed offline reopening.",
+      "requestedNarrowCorrection": "Require every direct compiled asset referenced by offline-capture.html to be explicitly covered by the current hash-verified manifest; check the known emitted dependency graph as applicable. Add one focused missing-precache counterexample without rerunning the prior six passing cases."
+    }
+  ],
+  "confirmedStaticProperties": [
+    "Archive version and unchanged runtime build are separate metadata fields. README explicitly says candidate-only, not production acceptance, and warns against feeding the new archive name directly to the legacy deployment stage.",
+    "Selected full Git source commit is resolved explicitly. All tracked raw working-tree bytes are compared to Git blob IDs, including nonselected tracked paths, and the tracked path set must match; this scan repeats after copying.",
+    "Symlinks and unsupported tracked Git entries are refused. Input/output ancestor checks refuse symlink boundaries, existing output is refused, and file copies and output writes use exclusive creation. Output is checked against selected input directory overlap.",
+    "The implementation invokes only local Git read operations and local Python zipfile operations. It contains no network, SSH, deployment, installation, build or service-start action.",
+    "API entry, source-map path associations, source/build runtime identity and mtime checks are explicit. Required offline HTML, service worker and manifest exist; each listed manifest resource hash and worker manifest/version are checked.",
+    "Payload copies are checked against previously captured sizes and SHA-256. ZIP creation uses exclusive mode, fixed timestamps and explicit Unix regular-file modes; ZIP inventory, CRC, every payload size/hash, modes and embedded manifest are read back before the whole-archive SHA-256 is written."
+  ],
+  "limitations": [
+    "Static code review only; no independent execution results or actual ZIP acceptance were produced by this reviewer.",
+    "Build timestamps and source-map source-path membership associate outputs with source but do not prove compiled byte equivalence or reproducible build. The candidate README already states that boundary.",
+    "No dependency installation, Linux startup, real service health, 112 release, 101 cold-standby or rollback execution was verified.",
+    "Author-reported fixture passes are separate evidence and were not rerun here. Existing pass history must remain intact when targeted new counterexamples are added."
+  ],
+  "finalDeltaReview": { "status": "pending author frozen correction" },
+  "cost": { "projectModelCalls": 0, "projectModelTokens": 0, "projectModelCostUsd": 0, "internalAgentTokens": "not available to this subtask", "internalAgentPrice": "unknown; not represented as zero", "spendCap": "none; record only" }
+}

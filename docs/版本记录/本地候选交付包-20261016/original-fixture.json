@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "local-candidate-packager-fixture",
+  "at": "2026-10-15T16:15:39.601637+00:00",
+  "sourceFrozen": true,
+  "files": [
+    {
+      "path": "scripts/package-capture-release.mjs",
+      "sha256": "1e9f282c862b6c7378764276c901409f5bd7a34604b8e06611fc797e76ba39fb",
+      "bytes": 18752
+    },
+    {
+      "path": "scripts/test-package-capture-release.mjs",
+      "sha256": "e16e1d91f035ca35cd03d14cb07bf4bc3c0308b41ef995f60b4d62689f448cc7",
+      "bytes": 7741
+    }
+  ],
+  "verification": {
+    "uniqueGroups": 1,
+    "uniqueCases": 6,
+    "groupRuns": 2,
+    "passedRuns": 2,
+    "failedRuns": 0,
+    "firstRunPassed": true,
+    "secondRunReason": "After first pass, ZIP metadata was explicitly marked Unix on Windows and mode readback was added; same affected fixture group passed again.",
+    "cases": [
+      "Generated owned Git repository builds a readable ZIP with correct source/runtime identities and offline source/runtime files; excludes synthetic private directories and .env",
+      "Existing output rejected and archive fingerprint unchanged",
+      "Stale built web entry rejected",
+      "Corrupt offline asset hash rejected",
+      "Compiled directory junction/symlink rejected",
+      "Uncommitted tracked source bytes rejected"
+    ],
+    "newTemporaryResourcesCleaned": true,
+    "realSourcePackaged": false,
+    "realProductBuilds": 0,
+    "networkCalls": 0,
+    "models": 0,
+    "productionAccess": false
+  },
+  "runtimeIdentityDecision": {
+    "archiveVersion": "explicit new --version argument",
+    "runtimeBuild": "independently recorded, source and compiled must match each other; not required to equal archive version",
+    "directLegacyStageCompatibility": false,
+    "linuxInstalledOrStarted": false
+  },
+  "cli": "JARVIS_PACKAGE_PYTHON=<available Python executable> node scripts/package-capture-release.mjs --version=<archive-version> --source-commit=<full-committed-source-hash> --api-dist=<already-built-api-dir> --web-dist=<already-built-web-dir> --output=<new-absent-output-directory>",
+  "actualPackaging": "Reserved for Root after final source commit and build; not executed by reviewer",
+  "scope": "New sibling only; old package/deploy scripts and all production configuration preserved"
+}

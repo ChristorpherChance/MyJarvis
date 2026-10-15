@@ -1,0 +1,85 @@
+{
+  "at": "2026-10-15T12:42:19.801Z",
+  "attempt": "2",
+  "only": "knowledge-book-context,knowledge-revoked-reference,knowledge-version-stale-reference,memory-query-edit-forget,memory-session-details-cleared",
+  "expectedMemoryBundle": "index-BtLKip5p.js",
+  "loadedBundleUrls": [
+    "/assets/index-CyvFmm60.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/DemoApp-BRDVfhZl.js",
+    "/assets/NotificationPreferencesPanel-D_FIvUK7.js",
+    "/assets/KnowledgePage-BVCH6Xc_.js",
+    "/themes/stark.js",
+    "/assets/index-BtLKip5p.js",
+    "/assets/RoomVoice-BpJZVYWH.js"
+  ],
+  "realHttp": true,
+  "temporarySqlite": true,
+  "syntheticPdfAndManualTranscriptions": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "knowledge-book-context",
+      "status": "passed",
+      "evidence": {
+        "publishedFixturePages": 2,
+        "openedPage": 2,
+        "resultVersion": "1.0",
+        "canonicalReference": true,
+        "currentWholePageShaVerified": true,
+        "excerptRangeVerified": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "knowledge-revoked-reference",
+      "status": "passed",
+      "evidence": {
+        "oldCanonicalReferenceStatus": 403,
+        "rejectedReaderState": "human-error",
+        "returnedPrivateText": false,
+        "staleContextCleared": true,
+        "revokedResultRemoved": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "knowledge-version-stale-reference",
+      "status": "passed",
+      "evidence": {
+        "oldCanonicalReferenceStatus": 409,
+        "rejectedReaderState": "human-error",
+        "currentPublishedVersion": "1.1",
+        "oldBodyNotSubstituted": true,
+        "staleContextCleared": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "memory-query-edit-forget",
+      "status": "passed",
+      "evidence": {
+        "confirmedOwnFixtureCount": 55,
+        "foundPosition": 51,
+        "actualOwner": "server-admin",
+        "editedThroughUi": true,
+        "oldEvidenceNotRecalled": true,
+        "forgottenThroughUi": true,
+        "foreignOwnerMatches": 0,
+        "modelsInvoked": 0,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "memory-session-details-cleared",
+      "status": "failed",
+      "failedStep": "memory-session/another-tab-logout-clears-detail-and-query",
+      "diagnostic": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('heading', { name: '记忆神殿', exact: true }) to be visible\u001b[22m\n\n    at <anonymous> (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-knowledge-memory-references.ts:157:216)\n    at async check (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-knowledge-memory-references.ts:33:50)\n    at async <anonymous> (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-knowledge-memory-references.ts:151:2)"
+    }
+  ]
+}

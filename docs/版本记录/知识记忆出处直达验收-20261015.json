@@ -1,0 +1,260 @@
+{
+  "kind": "knowledge-citation-context-and-current-memory-ui-validation",
+  "observedAt": "2026-10-15T12:49:25.143Z",
+  "codeCommit": "44cbb53a1758aeb32f7dda0f369e071d870da56c",
+  "baselineCommit": "bb5ea477712311d340e99423d4c836b61fe9a06a",
+  "independentWorktree": ".jarvis-dev/capture-r34",
+  "originalSourceApplied": true,
+  "sourceFiles": [
+    {
+      "path": "apps/api/src/app.ts",
+      "beforeSHA256": "9dda6e824ec14d8de072ba613f17b2d9884e1131bb3be14193f2b3d55a87dbd0",
+      "sha256": "d08bb2b91ec1a63125e4257673d2bee28f4ecffcec2bd3135d6df9248b119df3",
+      "bytes": 51643
+    },
+    {
+      "path": "apps/api/src/runtime/knowledge-reference.ts",
+      "beforeSHA256": null,
+      "sha256": "d0bd527fefacc70f4e692540e2f5cddab3b399ada02437003b7b48ec310707ac",
+      "bytes": 4901
+    },
+    {
+      "path": "apps/api/src/runtime/knowledge-runtime.ts",
+      "beforeSHA256": "5a4178680942b08d2720b83f4bd0add49536c0988d233180531ed7f86011fb9d",
+      "sha256": "d0e0b28fff1d1f76ec4dbe9200ba38dd422bde74ba9f9001fae27ea278c1571a",
+      "bytes": 43423
+    },
+    {
+      "path": "apps/api/src/runtime/memory.ts",
+      "beforeSHA256": "0205bf1cae85edf1755d46ce6cb6f54e4909f6d6cc4bc5c3f78e25623491a232",
+      "sha256": "1a8a8b334c92d0427ff80d9fa898e67bac6db2152cdffa916144962af45ae080",
+      "bytes": 20679
+    },
+    {
+      "path": "apps/api/test/knowledge-reference.test.ts",
+      "beforeSHA256": null,
+      "sha256": "c0f197fdf85b36e7913b59d8181e24387b428b748ecd1c87ebd6de341ff53ca0",
+      "bytes": 10627
+    },
+    {
+      "path": "apps/api/test/memory-query-http.test.ts",
+      "beforeSHA256": null,
+      "sha256": "63416553e358803a3b430ddc4f780f667dfd02f2a21375e378d5f32d4baa72ec",
+      "bytes": 10171
+    },
+    {
+      "path": "apps/web/src/features/family/memory-query-client.ts",
+      "beforeSHA256": null,
+      "sha256": "e306dbea4243c0faf17e0eddcddf194f76df30ea393628c2776cd2b5f06b9ac0",
+      "bytes": 1067
+    },
+    {
+      "path": "apps/web/src/features/family/memory.tsx",
+      "beforeSHA256": "31fe61ca1f1d97100cf7a1b2473355c7227c260dcaba7281948e77f93ac87b51",
+      "sha256": "4f538b30d328badd1d4243b2831aa63c345a7c07103e20ac19783bbbf44b1c30",
+      "bytes": 19563
+    },
+    {
+      "path": "apps/web/src/features/knowledge/KnowledgePage.tsx",
+      "beforeSHA256": "2fe0632bf899e749eb711c2df2e99f8c6f808040127ca3b88330f234ce3bba08",
+      "sha256": "64864669aeb02dbf3cfb9a9d8c72cc44d1640edb7193859a03a1a67e1dbfe469",
+      "bytes": 68739
+    },
+    {
+      "path": "apps/web/src/features/knowledge/knowledge.css",
+      "beforeSHA256": "748b6bf7bf7a4a68d2aaccc5957b990e07e1f9c76ce96ec7910ff827d0fa78c7",
+      "sha256": "e1ba244f14b01bbaa1abdfd8b29e6b62bf9d5923b49d0d91def536dad79a888f",
+      "bytes": 38469
+    },
+    {
+      "path": "docs/openapi-v1-planned.json",
+      "beforeSHA256": "0daa6a072cd410bd4b08663f4a83011ede97857699f6fdbad6f349193f2d8cac",
+      "sha256": "a8b4b1ad124330a7719896b1a0d0032e47f70f06add1b9d07be9b86a5ad11ef3",
+      "bytes": 1939728
+    },
+    {
+      "path": "scripts/qa-knowledge-memory-references.ts",
+      "beforeSHA256": null,
+      "sha256": "ba989e8e6f52873a6ffedeeabcd4226b210a220f6c29bfe858ea4af72ead70ff",
+      "bytes": 26248
+    }
+  ],
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "merged": false,
+  "productionDeployed": false,
+  "productionVersion": "20261012-supervision-r28-2",
+  "factoryAutomation": "paused",
+  "projectModelCalls": 0,
+  "internalAiUsage": {
+    "tokens": null,
+    "price": null,
+    "amount": null,
+    "policy": "已知记录，未知分列，不设消费上限"
+  },
+  "implementation": [
+    "知识结果可直接打开可信出处：页码、版本、有限上下文和检索摘录，来源配置入口单列。",
+    "只读resolver匹配服务器已保存查询的canonical引用，重新核对owner、范围、来源授权、发布状态、版本、完整正文指纹及摘录位置；不访问传入location。",
+    "已存书页及资料核对原文；实时全文未保留时只显示当时摘录，不冒新鲜全文、不自动重抓网页。",
+    "来源revision在异步抓取前冻结，保存时再次核对，不能把旧资料绑定到新配置。",
+    "新知识引用入口复用identity.requireAdmin并拒任何成员Cookie存在的混合上下文；没有向成员或终端开放管理员私有引用。",
+    "记忆页显式按问题查询；POST正文传问题，不写URL，不持久保存问题；先匹配当前本人全部active再限制结果，保留候选与历史管理。",
+    "编辑、遗忘及记录版本变化清除旧查询；修订前来源只作历史，不作为现行偏好召回。",
+    "共享会话失效清详情、表单、查询并隐藏旧全量缓存；刷新或重开验证后恢复，不能靠UI档案切换解除。",
+    "管理员查询拒有效、失效及空成员Cookie，注入身份必须为管理员本人；family查询保留真实成员本人，终端不能借残留管理员Cookie。"
+  ],
+  "validation": {
+    "knowledgeReferenceApi": {
+      "uniqueGroupsPassed": 5,
+      "firstNewGroupsPassed": 3,
+      "concurrentRevisionNewCasePassed": true,
+      "mixedRoleNewCasePassed": true,
+      "finalAllFiveSingleRun": false,
+      "targetedRechecks": "来源revision修补只复核受影响live项；成员Cookie收紧只补身份项，空Cookie新边界亦限定该项。",
+      "method": "真实随机本机HTTP、SQLite和两个受控live来源，无模型。"
+    },
+    "memoryApi": {
+      "uniqueGroupsPassed": 3,
+      "finalPostThreePassed": true,
+      "finalPostDurationMs": 2419,
+      "lastAffectedIdentityGroupPassed": true,
+      "lastIdentityDurationMs": 525,
+      "preparationFailures": "首3组未设置夹具密码而setup失败；补夹具后2过1项断言过窄（来源字段命中合法），改正后只补失败项。",
+      "contractChange": "GET改POST后只重此3新组；最后混合Cookie和终端身份收紧只补该身份组。",
+      "realIdentityCoverage": "真实成员凭据、issuePairing/claimPairing终端、混合/失效/空Cookie及纯管理员；请求字段不能选择他人。",
+      "rawOutput": "仅当时工具stdout，无独立raw/TAP报告。"
+    },
+    "browser": {
+      "uniqueGroupsPassed": 5,
+      "finalWholeSuiteSingleRun": false,
+      "attempts": [
+        {
+          "file": "attempt-1.json",
+          "passed": 0,
+          "failed": 5,
+          "scope": "role、预填textarea标签及移动导航等夹具定位，流程未完整通过。"
+        },
+        {
+          "file": "attempt-2.json",
+          "passed": 4,
+          "failed": 1,
+          "scope": "前三知识组和记忆查找/更正/遗忘通过；第二标签准备未到退出动作。"
+        },
+        {
+          "file": "attempt-3.json",
+          "passed": 1,
+          "failed": 0,
+          "scope": "仅会话失效组。"
+        },
+        {
+          "file": "attempt-4.json",
+          "passed": 1,
+          "failed": 0,
+          "scope": "仅新增退出因果检查：第二标签已认证inbox就绪，退出前首标签详情仍可见，然后实际退出再核清理。"
+        }
+      ],
+      "executedGroupOccurrences": 12,
+      "passedOccurrences": 6,
+      "failedOccurrences": 6,
+      "finalMemoryBundle": "index-BtLKip5p.js",
+      "loadedBundleEvidence": true,
+      "coverage": [
+        "第2页/版本/上下文",
+        "撤权403与版本409无旧正文",
+        "55条中第51项可查",
+        "更正遗忘后重查不召回旧内容",
+        "其他所有者同词为空",
+        "跨标签退出后详情/输入/正文/旧全量卡片消失"
+      ],
+      "cleanupVerified": true,
+      "modelCalls": 0,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0,
+      "device": "390x844浏览器模拟，不是实体手机",
+      "screenshots": "作者实看6张，Root实看书页、第51项与退出遮挡3张。最终空结果图不单独冒编辑/遗忘全部过程证明。",
+      "pdfFixtureBoundary": "实际PDF生成与人工转录发布只发生于知识组；attempt3/4固定fixture标识不当本轮创建证明。"
+    },
+    "build": "完整前后端通过；会话门最后收紧只再build受影响web；身份守卫最后收紧只再build API，均exit0。",
+    "contract": {
+      "operations": 408,
+      "schemas": 927,
+      "resolvedReferences": 3244,
+      "newEndpoints": 3
+    },
+    "independentReview": "非作者复核发现来源异步revision误绑定、详情和旧全量缓存回落、混合身份借用边界；已窄修及限定验证。",
+    "formatCorrection": "OpenAPI首稿意外转CRLF，未发布前还原原有LF，解析JSON严格相同；首稿/修正回执保留，未为行尾更正重跑业务。",
+    "reportWritingCorrection": "最初用于写验收报告的长编排命令被自动审批以blocked by policy拒绝，未执行；改用直接文件编辑和单独复制合成证据完成，不包含删除动作。"
+  },
+  "cleanupLimitation": {
+    "retainedSyntheticDirectories": 3,
+    "origin": "首次memory API初始化失败的Windows Temp自建夹具",
+    "automaticApproval": "rejected: blocked by policy",
+    "additionalReasonProvided": false,
+    "cleanupRetriedOrBypassed": false,
+    "status": "原样保留，无用户私人记忆。浏览器各次临时资源已清理，不冒全部Temp已清。"
+  },
+  "limits": [
+    "知识resolver是管理员入口，未扩真实成员知识页/语音端完整直达。",
+    "确定性字词与中文片段匹配，不是同义语义或真实模型问答质量验收。",
+    "实时只留摘录时没有未保存全文；失权和版本变化须重新检索。",
+    "上下文有限，offset是摘录位置，不等于查询词或PDF图像坐标。"
+  ],
+  "remaining": [
+    "统一原件管理、引用使用情况、删除/保留、未引用上传清理与复用原件进入知识整理。",
+    "记忆冲突比较、合并与到期复核工作台。",
+    "真实ASR、实体手机/麦克风/房间终端与真实成员知识入口。",
+    "完整离线重开、草稿跨浏览器同步、语义检索及真实问答引用质量。",
+    "PR评审合并、112发布和现场验收；项目在线资料/决策版本同步本次未执行。"
+  ],
+  "evidence": [
+    {
+      "bytes": 4250,
+      "path": "docs/版本记录/知识记忆出处-20261015/attempt-1.json",
+      "sha256": "e5195d908cf2383473099f6ca5399cf2011b3ccd955b7150d42486936f8e8e2c"
+    },
+    {
+      "bytes": 3083,
+      "path": "docs/版本记录/知识记忆出处-20261015/attempt-2.json",
+      "sha256": "eebdd2b9278af8c281c410d60c04f46d05a1bc267db309f17cbee5bf3000452e"
+    },
+    {
+      "bytes": 1535,
+      "path": "docs/版本记录/知识记忆出处-20261015/attempt-3.json",
+      "sha256": "2d79ab11df6c2065f7d5daca9a05bad210eb834bd53c4b1b116e14efdef90356"
+    },
+    {
+      "bytes": 1621,
+      "path": "docs/版本记录/知识记忆出处-20261015/attempt-4.json",
+      "sha256": "c516d129236fc3bd1912c190f3223e0f58b67fb8053a097deb35671b3fc2b6be"
+    },
+    {
+      "bytes": 89491,
+      "path": "docs/版本记录/知识记忆出处-20261015/phone-book-page-context-2.png",
+      "sha256": "703b8b53bd75cc453f0770469ec459f15da53b18e73939c00f14150258f4dba4"
+    },
+    {
+      "bytes": 87604,
+      "path": "docs/版本记录/知识记忆出处-20261015/phone-revoked-reference-human-error-2.png",
+      "sha256": "4b94d330f7142fc4669a155490280eba2af9e56e9e0a9123a385c2ffa227dbf8"
+    },
+    {
+      "bytes": 87542,
+      "path": "docs/版本记录/知识记忆出处-20261015/phone-stale-reference-human-error-2.png",
+      "sha256": "e73467437e0fa9997c77571dea791adf5448a3c5dadf474c5afc0affe4b3c856"
+    },
+    {
+      "bytes": 112574,
+      "path": "docs/版本记录/知识记忆出处-20261015/phone-memory-51st-result-2.png",
+      "sha256": "6076ff87c33969a9a14c98e28a8c75798f4c8f0e60258bdd2bcaa733acf9cab4"
+    },
+    {
+      "bytes": 111145,
+      "path": "docs/版本记录/知识记忆出处-20261015/phone-memory-edited-forgotten-empty-2.png",
+      "sha256": "38bacc32550cab43aabf3002c12f9b0a0114dd195599ee3f7985454a0e66be0a"
+    },
+    {
+      "bytes": 24930,
+      "path": "docs/版本记录/知识记忆出处-20261015/phone-cross-tab-logout-private-detail-cleared-4.png",
+      "sha256": "a260fb1c55add56a1846fbaa92d23b5ab7aa57225830afe0a360898f707f8616"
+    }
+  ]
+}

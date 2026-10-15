@@ -1,6 +1,7 @@
 import { BusinessError, type BusinessRecord, type CommandContext, type DomainHandler } from './types.js';
 import { familyLearningRecord } from './knowledge-domains.js';
 import { randomUUID } from 'node:crypto';
+import {forgetMemoryLineage,memoryLineageRecords} from './memory-maintenance.js';
 
 type Values = Record<string, any>;
 const ensure = (condition: unknown, message: string, code = 'VALIDATION', status = 400): void => { if (!condition) throw new BusinessError(code, message, status); };
@@ -102,9 +103,9 @@ const memory: DomainHandler = {
       ensure(item.status === 'candidate', '只有候选记忆可拒绝', 'REVIEW_REQUIRED', 422); text(p.reason, '拒绝理由');
       const record = ctx.update('memory', item.id, { status: 'rejected', history: history(item, ctx, 'rejected'), updatedAt: ctx.now }); ctx.emit('memory', item.id, 'rejected', { status: 'rejected' }); return record;
     }
-    ensure(['active', 'candidate', 'rejected'].includes(item.status), '记忆已遗忘，不能恢复或重复修改', 'REVIEW_REQUIRED', 422); text(p.reason, '遗忘理由');
-    const record = ctx.update('memory', item.id, { text: null, source: null, previousTexts: [], nextReviewAt: null, status: 'forgotten', category: '已遗忘', confirmedAt: null, forgottenAt: ctx.now, history: [{ at: ctx.now, event: 'forgotten', actorId: ctx.actorId }], updatedAt: ctx.now });
-    ctx.redactReceipts('memory', item.id, record); ctx.emit('memory', item.id, 'forgotten', { status: 'forgotten' }); return record;
+    ensure(['active', 'candidate', 'rejected', 'merged'].includes(item.status), '记忆已遗忘，不能恢复或重复修改', 'REVIEW_REQUIRED', 422); text(p.reason, '遗忘理由');
+    ensure(memoryLineageRecords(ctx.list('memory'),item.id).length===1,'合并关联记忆须重新读取完整范围并明确确认遗忘','REVIEW_REQUIRED',422);
+    return forgetMemoryLineage(ctx,item);
   }
 };
 

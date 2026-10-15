@@ -65,8 +65,9 @@ export function registerV1(app:FastifyInstance,store:Store,pi:PiService,hooks:V1
   const send=()=>{if(closed)return;if(!store.validateLogin(req.cookies.jarvis_session??'')){reply.raw.write('event: session-expired\ndata: {"code":"FORBIDDEN"}\n\n');close();return}if(reply.raw.writableLength>1024*1024){close();return}try{for(const event of repository.events(ACTOR,cursor,100,q.scope,q.domain,q.objectId,q.excludeObservations)){reply.raw.write(`id: ${event.id}\nevent: ${event.domain}.${event.type}\ndata: ${JSON.stringify(event)}\n\n`);cursor=event.sequence}}catch{close()}};
   const poll=setInterval(send,500),heartbeat=setInterval(()=>{if(!closed)reply.raw.write(': heartbeat\n\n')},15000);poll.unref();heartbeat.unref();streams.add(close);reply.raw.on('close',close);send();
  });
- registerKnowledgeFiles(app,repository,{directory:join(dirname(store.databasePath),'knowledge-uploads'),authenticated:cookie=>store.validateLogin(cookie)});
- registerInboxMaterials(app,repository,{directory:join(dirname(store.databasePath),'inbox-materials'),authenticated:cookie=>store.validateLogin(cookie),runtime:hooks.inboxMaterials});
+ const authorizeOriginal=(req:any)=>{const principal=hooks.inboxMaterials?.principal(req);if(hooks.inboxMaterials&&(!principal||!principal.administrator||principal.actorId!==ACTOR||!hooks.inboxMaterials.current(principal)))throw new BusinessError('FORBIDDEN','请重新验证当前管理员身份后管理原件',403);};
+ registerKnowledgeFiles(app,repository,{directory:join(dirname(store.databasePath),'knowledge-uploads'),authenticated:cookie=>store.validateLogin(cookie),authorize:authorizeOriginal});
+ registerInboxMaterials(app,repository,{directory:join(dirname(store.databasePath),'inbox-materials'),authenticated:cookie=>store.validateLogin(cookie),authorize:authorizeOriginal,runtime:hooks.inboxMaterials});
  app.addHook('preClose',async()=>{for(const close of [...streams])close();await jobs.close()});
  app.addHook('onClose',async()=>repository.close());
  return repository;

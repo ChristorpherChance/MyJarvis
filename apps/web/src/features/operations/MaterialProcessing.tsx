@@ -38,7 +38,7 @@ export function MaterialProcessing({asset:initial,actorId,disabled=false,onChang
   },[initial.id,actorId]);
   const refresh=async()=>{if(submitting.current||refreshing||!current())return;setRefreshing(true);setIssue('');try{accept(await readInboxMaterial(asset.id))}catch(error){unauthorized(error);if(current())setIssue(error instanceof TypeError?'文字状态暂时无法读取，请恢复网络后再刷新。':error instanceof Error?error.message:'状态刷新未完成。')}finally{if(current())setRefreshing(false)}};
   const run=async(intent:MaterialIntent)=>{
-    if(disabled||submitting.current||!actorId||!current()||intent.kind==='link')return;
+    if(disabled||submitting.current||!actorId||!current()||(intent.kind!=='process'&&intent.kind!=='review'))return;
     submitting.current=true;setBusy(true);setIssue('');setNotice('');callbacks.current.onWorking?.(true);
     try{
       saveMaterialIntent(actorId,name,intent);setPending(intent);

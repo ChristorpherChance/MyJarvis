@@ -1,12 +1,13 @@
 import type { FastifyInstance } from 'fastify';
 import { createHash, randomUUID } from 'node:crypto';
-import { link, mkdir, open, readFile, unlink } from 'node:fs/promises';
-import { resolve, sep } from 'node:path';
+import { link, mkdir, open, readFile, unlink,lstat } from 'node:fs/promises';
+import { resolve, sep,dirname } from 'node:path';
 import { inflateRawSync } from 'node:zlib';
 import { z } from 'zod';
 import { BusinessError, type BusinessRecord, type CommandContext, type DomainHandler } from './types.js';
 import type { V1Repository } from './repository.js';
 import {registerInboxMaterialProcessing,type InboxMaterialRuntime} from './inbox-material-processing.js';
+import {assertMaterialActive,registerInboxMaterialLifecycle} from './inbox-material-lifecycle.js';
 
 export const MAX_INBOX_MATERIAL_BYTES=32*1024*1024;
 export const MAX_INBOX_MATERIAL_TEXT=120000;
@@ -137,25 +138,31 @@ const handler:DomainHandler={domain:'inbox-assets',commands:[],execute(command,p
 export function materialReference(ctx:CommandContext,id:string):{metadata:InboxMaterialMetadata;extractedText:string;textTruncated:boolean} {
  const parsed=uuid.parse(id).toLowerCase(),record=ctx.require('inbox-assets',parsed);
  if(record.ownerId!==ctx.actorId||record.scope!==ctx.scope)throw new BusinessError('FORBIDDEN','不能关联其他身份或范围的原件',403);
+ assertMaterialActive(record);
  if(record.kind!=='upload'||record.status!=='stored'||typeof record.sha256!=='string'||!/^[a-f0-9]{64}$/.test(record.sha256))throw new BusinessError('DEPENDENCY_PENDING','请先完成原件上传',422);
  return {metadata:{id:record.id,filename:record.filename,mime:record.mime,size:record.size,sha256:record.sha256,mediaKind:record.mediaKind,textStatus:record.textStatus},extractedText:record.extractedText??'',textTruncated:record.textTruncated===true};
 }
 /** Save and expose original bytes locally. Never fetch an URL or interpret a client pathname. */
-export function registerInboxMaterials(app:FastifyInstance,repository:V1Repository,options:{directory:string;actorId?:string;authenticated:(cookie:string)=>boolean;runtime?:InboxMaterialRuntime}):void {
+export function registerInboxMaterials(app:FastifyInstance,repository:V1Repository,options:{directory:string;knowledgeDirectory?:string;actorId?:string;authenticated:(cookie:string)=>boolean;authorize?:(req:any)=>void|Promise<void>;runtime?:InboxMaterialRuntime}):void {
  const actorId=options.actorId??'server-admin',root=resolve(options.directory),prefix='/api/v1/inbox-materials/uploads';
  if(!app.hasContentTypeParser('application/octet-stream'))app.addContentTypeParser('application/octet-stream',{parseAs:'buffer',bodyLimit:MAX_INBOX_MATERIAL_BYTES},(_req,body,done)=>done(null,body));
- const authenticate=async(req:any)=>{if(!options.authenticated(req.cookies.jarvis_session??''))throw new BusinessError('FORBIDDEN','请登录后访问收件原件',401);};
+ const authenticate=async(req:any)=>{
+  if(Object.keys(req.cookies??{}).some(key=>/member|terminal|pairing/i.test(key))||req.headers.authorization!==undefined||Object.keys(req.headers).some(key=>/^x-(?:jarvis-)?(?:terminal|pairing)(?:-|$)/i.test(key)))throw new BusinessError('FORBIDDEN','请退出成员或终端身份，再以管理员本人访问原件',403);
+  if(!options.authenticated(req.cookies.jarvis_session??''))throw new BusinessError('FORBIDDEN','请登录后访问收件原件',401);await options.authorize?.(req);
+ };
  const response=(record:BusinessRecord)=>({requestId:randomUUID(),version:record.revision,data:record,events:[]});
  const readTicket=(id:string)=>{const parsed=uuid.parse(id).toLowerCase(),record=repository.read('inbox-assets',parsed,actorId);if(!record||record.kind!=='upload')throw new BusinessError('VALIDATION','原件上传不存在或不可访问',404);return record;};
  const readVerified=async(record:BusinessRecord)=>{let bytes:Buffer;try{bytes=await readFile(ownedPath(root,record.id))}catch{throw new BusinessError('NOT_CONFIGURED','原件暂不可用，请核查存储',503)}if(bytes.length!==record.size||hash(bytes)!==record.sha256)fail('原件指纹异常，请核查存储',409);return bytes;};
- const saveOriginal=async(id:string,bytes:Buffer)=>{
-  await mkdir(root,{recursive:true,mode:0o700});
-  const target=ownedPath(root,id),temporary=resolve(root,`.pending-${randomUUID()}`);
+ const saveOriginalTo=async(directory:string,id:string,bytes:Buffer)=>{
+  await mkdir(directory,{recursive:true,mode:0o700});
+  const target=ownedPath(directory,id),temporary=resolve(directory,`.pending-${randomUUID()}`);
   try{
    const file=await open(temporary,'wx',0o600);try{await file.writeFile(bytes);await file.sync()}finally{await file.close()}
    try{await link(temporary,target)}catch(error){if((error as NodeJS.ErrnoException).code!=='EEXIST')throw error;const previous=await readFile(target);if(previous.length!==bytes.length||hash(previous)!==hash(bytes))fail('此上传编号已有不同原件，不能覆盖',409);}
   }finally{await unlink(temporary).catch(()=>{});}
  };
+ const saveOriginal=(id:string,bytes:Buffer)=>saveOriginalTo(root,id,bytes);
+ const readActiveTicket=(id:string)=>{const record=readTicket(id);assertMaterialActive(record);if(record.lastReuse?.status==='running')fail('原件正在复用，请完成后再处理',409);return record;};
  app.post(prefix,{onRequest:authenticate},async req=>{
   const input=checkedPreparation(req.body),existing=repository.read('inbox-assets',input.id,actorId);
   if(existing){if(existing.kind!=='upload'||existing.scope!==input.scope||existing.filename!==input.filename||existing.mime!==input.mime||existing.size!==input.size)fail('同一上传编号不能用于不同原件或范围',409);return response(existing);}
@@ -164,22 +171,30 @@ export function registerInboxMaterials(app:FastifyInstance,repository:V1Reposito
  });
  app.get<{Params:{id:string}}>(prefix+'/:id',{onRequest:authenticate},async(req,reply)=>{reply.header('Cache-Control','private, no-store');return response(readTicket(req.params.id));});
  app.put<{Params:{id:string};Body:Buffer}>(prefix+'/:id/file',{bodyLimit:MAX_INBOX_MATERIAL_BYTES,onRequest:authenticate},async req=>{
-  const record=readTicket(req.params.id),bytes=req.body;
+  const record=readActiveTicket(req.params.id),bytes=req.body;
   if(canonicalMime(String(req.headers['content-type']??''))!=='application/octet-stream'||!Buffer.isBuffer(bytes)||bytes.length<1||bytes.length>MAX_INBOX_MATERIAL_BYTES)fail('请以原始字节上传1字节至32MiB原件');
   const extracted=inspect(bytes,record),sha256=hash(bytes);
-  if(record.status==='stored'){if(record.sha256!==sha256)fail('同一上传编号已有不同原件，不能覆盖',409);await readVerified(record);return response(record);}
+  if(record.status==='stored'){if(record.sha256!==sha256)fail('同一上传编号已有不同原件，不能覆盖',409);await readVerified(record);await authenticate(req);const latest=readActiveTicket(record.id);if(latest.status!=='stored'||latest.sha256!==sha256)fail('原件状态已改变，请重新确认',409);return response(latest);}
   if(record.status!=='awaiting-file')fail('上传状态不可用',409);
   // Link a fully synced temporary file into place atomically. Parallel writes cannot see a partial original.
   await saveOriginal(record.id,bytes);
+  await authenticate(req);
   // A metadata failure leaves the immutable original recoverable by retrying this same id and bytes.
   return repository.execute(handler,'store',{commandId:`inbox-material-store:${record.id}:${sha256}`,expectedVersion:record.revision,scope:record.scope,payload:{id:record.id,sha256,...extracted}},actorId,()=>undefined);
  });
  app.get<{Params:{id:string}}>(prefix+'/:id/file',{onRequest:authenticate},async(req,reply)=>{
-  const record=readTicket(req.params.id);if(record.status!=='stored')throw new BusinessError('VALIDATION','原件尚未上传',404);
+  const record=readTicket(req.params.id);if(record.status==='deleted')throw new BusinessError('VALIDATION','原件已永久删除',410);if(record.status!=='stored'||record.deletion?.status==='running')throw new BusinessError('VALIDATION','原件尚未上传或正在删除',404);
   const bytes=await readVerified(record),extension=FORMATS[record.mime]?.extensions[0]??'bin',disposition=['audio','image'].includes(record.mediaKind)?'inline':'attachment';
+  await authenticate(req);
+  const latest=readTicket(record.id);if(latest.status==='deleted')throw new BusinessError('VALIDATION','原件已永久删除',410);if(latest.status!=='stored'||latest.deletion?.status==='running'||latest.sha256!==record.sha256||latest.size!==record.size)fail('原件状态已改变，停止下载',409);
   const encoded=encodeURIComponent(record.filename).replace(/[!'()*]/g,value=>'%'+value.charCodeAt(0).toString(16).toUpperCase());
   reply.header('Cache-Control','private, no-store').header('X-Content-Type-Options','nosniff').header('Content-Security-Policy',"default-src 'none'; sandbox").header('Content-Disposition',`${disposition}; filename="original.${extension}"; filename*=UTF-8''${encoded}`);
   return reply.type(record.mime).send(bytes);
  });
- registerInboxMaterialProcessing(app,repository,{read:readTicket,bytes:readVerified,write:saveOriginal},authenticate,options.runtime,actorId);
+ registerInboxMaterialProcessing(app,repository,{read:readActiveTicket,bytes:readVerified,write:saveOriginal},authenticate,options.runtime,actorId);
+ registerInboxMaterialLifecycle(app,repository,{read:readTicket,bytes:readVerified,writeBook:(id,bytes)=>saveOriginalTo(resolve(options.knowledgeDirectory??resolve(dirname(root),'knowledge-uploads')),id,bytes),remove:async(record,beforeUnlink)=>{
+  const target=ownedPath(root,record.id);let handle;
+  try{handle=await open(target,'r')}catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return;throw error;}
+  try{const stat=await handle.stat(),bytes=await handle.readFile();if(!stat.isFile()||bytes.length!==record.size||hash(bytes)!==record.sha256)fail('原件内容或类型异常，未删除',409);const pathStat=await lstat(target);if(pathStat.isSymbolicLink()||pathStat.ino!==stat.ino||pathStat.dev!==stat.dev||pathStat.size!==stat.size)fail('原件文件已改变，未删除',409);beforeUnlink();await unlink(target);}finally{await handle.close();}
+ }},authenticate,req=>{if(!options.authenticated(req.cookies.jarvis_session??''))return false;try{const result=options.authorize?.(req);if(result instanceof Promise){void result.catch(()=>{});return false}return true}catch{return false}},actorId);
 }

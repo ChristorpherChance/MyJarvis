@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="记录贾维斯怎样建成、为什么这样选择、哪些结果已得到证实，以及下一步如何推进。">
-  <meta name="jarvis-source-sha256" content="c9e73d131a98c7dc98169d8a6101525ec078be5917a59289b08e7b078aeabca2">
+  <meta name="jarvis-source-sha256" content="094b4dc5697bc2f5465181fa1bb7fe62cee16496327a87e82cf247613dd2bf4b">
   <title>贾维斯建设档案</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -30,7 +30,7 @@
 <body>
   <a class="skip" href="#main-content">跳至正文</a>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">建设档案 3.72 · 多材料灵感收件与知识记忆检索</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">建设档案 3.73 · 材料文字提取与来源校正</span></div>
     <div class="tools">
       <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
       <a class="tool source-tool" href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">Markdown 源文档</a>
@@ -42,91 +42,93 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 81 章 · Ctrl / ⌘ + K 查找</div>
-    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">当前进展（记录262）：灵感四种输入与知识记忆按问题检索已实现，隔离验证通过</a>
-<a class="toc-link level-2" href="#section-2" data-parent="2">记录261范围快照</a>
-<a class="toc-link level-2" href="#section-3" data-parent="3">记录260原文快照</a>
-<a class="toc-link level-2" href="#section-4" data-parent="4">当前进展（记录260）：灵感收件首批已实现，隔离验证通过，待正式发布</a>
-<a class="toc-link level-2" href="#section-5" data-parent="5">记录259原文快照</a>
-<a class="toc-link level-2" href="#section-6" data-parent="6">当前进展（记录259）：下一阶段重点为跨端灵感收集、知识库与记忆</a>
-<a class="toc-link level-2" href="#section-7" data-parent="7">记录258原文快照</a>
-<a class="toc-link level-2" href="#section-8" data-parent="8">当前进展（记录258）：MyJarvis 已改为公开仓库</a>
-<a class="toc-link level-2" href="#section-9" data-parent="9">记录257原文快照</a>
-<a class="toc-link level-2" href="#section-10" data-parent="10">当前进展（记录257）：完整平台源码已上传 GitHub，软件工厂跟进保持暂停</a>
-<a class="toc-link level-2" href="#section-11" data-parent="11">记录256原文快照</a>
-<a class="toc-link level-2" href="#section-12" data-parent="12">当前进展（记录256）：当前读取被主源码守卫拒绝，最窄诊断准备中</a>
-<a class="toc-link level-2" href="#section-13" data-parent="13">记录255原文快照</a>
-<a class="toc-link level-2" href="#section-14" data-parent="14">当前进展（记录255）：终态报告不完整，诊断与当前收口入口准备中</a>
-<a class="toc-link level-2" href="#section-15" data-parent="15">记录254原文快照</a>
-<a class="toc-link level-2" href="#section-16" data-parent="16">当前进展（记录254）：失败范围已收口，新QA已真实派发，产品验收等待结果</a>
-<a class="toc-link level-2" href="#section-17" data-parent="17">记录253原文快照</a>
-<a class="toc-link level-2" href="#section-18" data-parent="18">当前进展（记录253）：本机两域守卫修正已实施，失败current仍不完整，计划76分层收尾</a>
-<a class="toc-link level-2" href="#section-19" data-parent="19">记录252原文快照</a>
-<a class="toc-link level-2" href="#section-20" data-parent="20">当前进展（记录252）：原生就绪前置失败已确认，五份记录原字节独审完成，当前收口待验</a>
-<a class="toc-link level-2" href="#section-21" data-parent="21">记录251原文快照</a>
-<a class="toc-link level-2" href="#section-22" data-parent="22">当前进展（记录251）：新post保护时段获独立资格，QA唯一启动，终态仍待证</a>
-<a class="toc-link level-2" href="#section-23" data-parent="23">记录250原文快照</a>
-<a class="toc-link level-2" href="#section-24" data-parent="24">当前进展（记录250）：有限方法已获限域独立资格，保护集成来源推进待完整独审</a>
-<a class="toc-link level-2" href="#section-25" data-parent="25">记录249原文快照</a>
-<a class="toc-link level-2" href="#section-26" data-parent="26">当前进展（记录249）：第二次观察中段完整、整体未闭合，有限自有子进程方法已选定</a>
-<a class="toc-link level-2" href="#section-27" data-parent="27">记录248原文快照</a>
-<a class="toc-link level-2" href="#section-28" data-parent="28">当前进展（记录248）：精确移除已成功，首次独立收口未完成，新观察来源审通过</a>
-<a class="toc-link level-2" href="#section-29" data-parent="29">记录247原文快照</a>
-<a class="toc-link level-2" href="#section-30" data-parent="30">当前进展（记录247）：预检真实未完成，精确错误前缀另立来源修正</a>
-<a class="toc-link level-2" href="#section-31" data-parent="31">记录246原文快照</a>
-<a class="toc-link level-2" href="#section-32" data-parent="32">当前进展（记录246）：挂载完整对象修正已独审，现场预检待入口最终核验</a>
-<a class="toc-link level-2" href="#section-33" data-parent="33">记录245原文快照</a>
-<a class="toc-link level-2" href="#section-34" data-parent="34">当前进展（记录245）：执行入口已核，恢复来源审发现挂载排序阻断</a>
-<a class="toc-link level-2" href="#section-35" data-parent="35">记录244原文快照</a>
-<a class="toc-link level-2" href="#section-36" data-parent="36">当前进展（记录244）：两处后继阻断已修，完整SOURCE审通过</a>
-<a class="toc-link level-2" href="#section-37" data-parent="37">记录243原文快照</a>
-<a class="toc-link level-2" href="#section-38" data-parent="38">当前进展（记录243）：真实派发止于标签校验，四用例仍未运行</a>
-<a class="toc-link level-2" href="#section-39" data-parent="39">记录242原文快照</a>
-<a class="toc-link level-2" href="#section-40" data-parent="40">当前进展（记录242）：证明比较漏项已修，进入真实四用例入口</a>
-<a class="toc-link level-2" href="#section-41" data-parent="41">记录241原文快照</a>
-<a class="toc-link level-2" href="#section-42" data-parent="42">当前进展：主项目变化已查明，新保护范围已接入</a>
-<a class="toc-link level-2" href="#section-43" data-parent="43">记录239快照：源码读取真实通过，库存保护拒绝启动</a>
-<a class="toc-link level-2" href="#section-44" data-parent="44">记录236快照：权限修正和插件源码齐，进入完整执行入口审查</a>
-<a class="toc-link level-2" href="#section-45" data-parent="45">记录235快照：两个原件已核，修正启动器后验证四用例</a>
-<a class="toc-link level-2" href="#section-46" data-parent="46">记录233快照：当前PG属性已核，优先完成真实四用例</a>
-<a class="toc-link level-2" href="#section-47" data-parent="47">记录230快照：来源补采部分保存，继续PG单叶属性诊断</a>
-<a class="toc-link level-2" href="#section-48" data-parent="48">记录227快照：PG4局部源码已审，补齐实际必要来源</a>
-<a class="toc-link level-2" href="#section-49" data-parent="49">记录224快照：PG4四组件源码已审，继续完整入口与原件衔接</a>
-<a class="toc-link level-2" href="#section-50" data-parent="50">记录219快照：PG4局部源码独审完成，继续来源与范围准入</a>
-<a class="toc-link level-2" href="#section-51" data-parent="51">记录214快照：PG4最小启动契约已选，实施有限执行家族</a>
-<a class="toc-link level-2" href="#section-52" data-parent="52">记录212快照：实际框架字节独验通过，继续PG4行为资格</a>
-<a class="toc-link level-2" href="#section-53" data-parent="53">记录204快照：R6完整收尾独验通过，推进PG4实际来源</a>
-<a class="toc-link level-2" href="#section-54" data-parent="54">记录195快照：新完整保护通过，推进R6范围收尾</a>
-<a class="toc-link level-2" href="#section-55" data-parent="55">记录186快照：主源码内容保持，推进新库存合同</a>
-<a class="toc-link level-2" href="#section-56" data-parent="56">记录179快照：新完整读取被库存门拒绝，定点诊断准备中</a>
-<a class="toc-link level-2" href="#section-57" data-parent="57">记录176快照：新完整读取源码已核，有限入口待验</a>
-<a class="toc-link level-2" href="#section-58" data-parent="58">记录174快照：有限方法已独验，推进完整保护</a>
-<a class="toc-link level-2" href="#section-59" data-parent="59">记录166快照：新父源码已核，完整读取族待审</a>
-<a class="toc-link level-2" href="#section-60" data-parent="60">记录164快照：定点缺口已确认，启动修正已选</a>
-<a class="toc-link level-2" href="#section-61" data-parent="61">记录160快照：失败单位范围已核，新方法待实测</a>
-<a class="toc-link level-2" href="#section-62" data-parent="62">记录158快照：有限父运行失败，正在补早期留证</a>
-<a class="toc-link level-2" href="#section-63" data-parent="63">记录155快照：方法夹具与并发判据已作局部独审</a>
-<a class="toc-link level-2" href="#section-64" data-parent="64">记录153—154快照：新观察来源已独审，有限方法待实测</a>
-<a class="toc-link level-2" href="#section-65" data-parent="65">记录152快照：有限实测通过，完整核验待接通</a>
-<a class="toc-link level-2" href="#section-66" data-parent="66">记录150—151快照：四项并发专门复验</a>
-<a class="toc-link level-2" href="#section-67" data-parent="67">记录145—149快照：真实业务部分结果</a>
-<a class="toc-link level-2" href="#section-68" data-parent="68">记录放在哪里</a>
-<a class="toc-link level-2" href="#section-69" data-parent="69">贾维斯的长期目标</a>
-<a class="toc-link level-2" href="#section-70" data-parent="70">历史状态：2026 年 10 月 12 日</a>
-<a class="toc-link level-3" href="#section-70-1" data-parent="70">R22 当前推进与费用决定</a>
-<a class="toc-link level-2" href="#section-71" data-parent="71">第一项目怎样达成最终目标</a>
-<a class="toc-link level-2" href="#section-72" data-parent="72">每次记录哪些内容</a>
-<a class="toc-link level-2" href="#section-73" data-parent="73">持续记录工作流</a>
-<a class="toc-link level-3" href="#section-73-1" data-parent="73">事件输入示例</a>
-<a class="toc-link level-3" href="#section-73-2" data-parent="73">保存与生成</a>
-<a class="toc-link level-2" href="#section-74" data-parent="74">下一步建设队列</a>
-<a class="toc-link level-2" href="#section-75" data-parent="75">R26 通用计划与实际测试</a>
-<a class="toc-link level-2" href="#section-76" data-parent="76">R26-3 汇报上线与 R26-4 报告复验</a>
-<a class="toc-link level-2" href="#section-77" data-parent="77">R26-4 完整失败基线与定点修复</a>
-<a class="toc-link level-2" href="#section-78" data-parent="78">部分修复结束与独立复验安排 · 2026-10-12</a>
-<a class="toc-link level-2" href="#section-79" data-parent="79">固定候选完整复验已启动 · 2026-10-12</a>
-<a class="toc-link level-2" href="#section-80" data-parent="80">部分候选完整复验终态与实际恢复 · 2026-10-12</a>
-<a class="toc-link level-2" href="#section-81" data-parent="81">本轮归档与后续交接完成 · 2026-10-12</a></nav>
+    <div class="search-status" id="search-status" aria-live="polite">共 83 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">当前进展（记录263）：文档、图片及网页可提取校正文字，录音转写接入待真实引擎验收</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">记录262原文快照</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">当前进展（记录262）：灵感四种输入与知识记忆按问题检索已实现，隔离验证通过</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">记录261范围快照</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">记录260原文快照</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">当前进展（记录260）：灵感收件首批已实现，隔离验证通过，待正式发布</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">记录259原文快照</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">当前进展（记录259）：下一阶段重点为跨端灵感收集、知识库与记忆</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">记录258原文快照</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">当前进展（记录258）：MyJarvis 已改为公开仓库</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">记录257原文快照</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">当前进展（记录257）：完整平台源码已上传 GitHub，软件工厂跟进保持暂停</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">记录256原文快照</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">当前进展（记录256）：当前读取被主源码守卫拒绝，最窄诊断准备中</a>
+<a class="toc-link level-2" href="#section-15" data-parent="15">记录255原文快照</a>
+<a class="toc-link level-2" href="#section-16" data-parent="16">当前进展（记录255）：终态报告不完整，诊断与当前收口入口准备中</a>
+<a class="toc-link level-2" href="#section-17" data-parent="17">记录254原文快照</a>
+<a class="toc-link level-2" href="#section-18" data-parent="18">当前进展（记录254）：失败范围已收口，新QA已真实派发，产品验收等待结果</a>
+<a class="toc-link level-2" href="#section-19" data-parent="19">记录253原文快照</a>
+<a class="toc-link level-2" href="#section-20" data-parent="20">当前进展（记录253）：本机两域守卫修正已实施，失败current仍不完整，计划76分层收尾</a>
+<a class="toc-link level-2" href="#section-21" data-parent="21">记录252原文快照</a>
+<a class="toc-link level-2" href="#section-22" data-parent="22">当前进展（记录252）：原生就绪前置失败已确认，五份记录原字节独审完成，当前收口待验</a>
+<a class="toc-link level-2" href="#section-23" data-parent="23">记录251原文快照</a>
+<a class="toc-link level-2" href="#section-24" data-parent="24">当前进展（记录251）：新post保护时段获独立资格，QA唯一启动，终态仍待证</a>
+<a class="toc-link level-2" href="#section-25" data-parent="25">记录250原文快照</a>
+<a class="toc-link level-2" href="#section-26" data-parent="26">当前进展（记录250）：有限方法已获限域独立资格，保护集成来源推进待完整独审</a>
+<a class="toc-link level-2" href="#section-27" data-parent="27">记录249原文快照</a>
+<a class="toc-link level-2" href="#section-28" data-parent="28">当前进展（记录249）：第二次观察中段完整、整体未闭合，有限自有子进程方法已选定</a>
+<a class="toc-link level-2" href="#section-29" data-parent="29">记录248原文快照</a>
+<a class="toc-link level-2" href="#section-30" data-parent="30">当前进展（记录248）：精确移除已成功，首次独立收口未完成，新观察来源审通过</a>
+<a class="toc-link level-2" href="#section-31" data-parent="31">记录247原文快照</a>
+<a class="toc-link level-2" href="#section-32" data-parent="32">当前进展（记录247）：预检真实未完成，精确错误前缀另立来源修正</a>
+<a class="toc-link level-2" href="#section-33" data-parent="33">记录246原文快照</a>
+<a class="toc-link level-2" href="#section-34" data-parent="34">当前进展（记录246）：挂载完整对象修正已独审，现场预检待入口最终核验</a>
+<a class="toc-link level-2" href="#section-35" data-parent="35">记录245原文快照</a>
+<a class="toc-link level-2" href="#section-36" data-parent="36">当前进展（记录245）：执行入口已核，恢复来源审发现挂载排序阻断</a>
+<a class="toc-link level-2" href="#section-37" data-parent="37">记录244原文快照</a>
+<a class="toc-link level-2" href="#section-38" data-parent="38">当前进展（记录244）：两处后继阻断已修，完整SOURCE审通过</a>
+<a class="toc-link level-2" href="#section-39" data-parent="39">记录243原文快照</a>
+<a class="toc-link level-2" href="#section-40" data-parent="40">当前进展（记录243）：真实派发止于标签校验，四用例仍未运行</a>
+<a class="toc-link level-2" href="#section-41" data-parent="41">记录242原文快照</a>
+<a class="toc-link level-2" href="#section-42" data-parent="42">当前进展（记录242）：证明比较漏项已修，进入真实四用例入口</a>
+<a class="toc-link level-2" href="#section-43" data-parent="43">记录241原文快照</a>
+<a class="toc-link level-2" href="#section-44" data-parent="44">当前进展：主项目变化已查明，新保护范围已接入</a>
+<a class="toc-link level-2" href="#section-45" data-parent="45">记录239快照：源码读取真实通过，库存保护拒绝启动</a>
+<a class="toc-link level-2" href="#section-46" data-parent="46">记录236快照：权限修正和插件源码齐，进入完整执行入口审查</a>
+<a class="toc-link level-2" href="#section-47" data-parent="47">记录235快照：两个原件已核，修正启动器后验证四用例</a>
+<a class="toc-link level-2" href="#section-48" data-parent="48">记录233快照：当前PG属性已核，优先完成真实四用例</a>
+<a class="toc-link level-2" href="#section-49" data-parent="49">记录230快照：来源补采部分保存，继续PG单叶属性诊断</a>
+<a class="toc-link level-2" href="#section-50" data-parent="50">记录227快照：PG4局部源码已审，补齐实际必要来源</a>
+<a class="toc-link level-2" href="#section-51" data-parent="51">记录224快照：PG4四组件源码已审，继续完整入口与原件衔接</a>
+<a class="toc-link level-2" href="#section-52" data-parent="52">记录219快照：PG4局部源码独审完成，继续来源与范围准入</a>
+<a class="toc-link level-2" href="#section-53" data-parent="53">记录214快照：PG4最小启动契约已选，实施有限执行家族</a>
+<a class="toc-link level-2" href="#section-54" data-parent="54">记录212快照：实际框架字节独验通过，继续PG4行为资格</a>
+<a class="toc-link level-2" href="#section-55" data-parent="55">记录204快照：R6完整收尾独验通过，推进PG4实际来源</a>
+<a class="toc-link level-2" href="#section-56" data-parent="56">记录195快照：新完整保护通过，推进R6范围收尾</a>
+<a class="toc-link level-2" href="#section-57" data-parent="57">记录186快照：主源码内容保持，推进新库存合同</a>
+<a class="toc-link level-2" href="#section-58" data-parent="58">记录179快照：新完整读取被库存门拒绝，定点诊断准备中</a>
+<a class="toc-link level-2" href="#section-59" data-parent="59">记录176快照：新完整读取源码已核，有限入口待验</a>
+<a class="toc-link level-2" href="#section-60" data-parent="60">记录174快照：有限方法已独验，推进完整保护</a>
+<a class="toc-link level-2" href="#section-61" data-parent="61">记录166快照：新父源码已核，完整读取族待审</a>
+<a class="toc-link level-2" href="#section-62" data-parent="62">记录164快照：定点缺口已确认，启动修正已选</a>
+<a class="toc-link level-2" href="#section-63" data-parent="63">记录160快照：失败单位范围已核，新方法待实测</a>
+<a class="toc-link level-2" href="#section-64" data-parent="64">记录158快照：有限父运行失败，正在补早期留证</a>
+<a class="toc-link level-2" href="#section-65" data-parent="65">记录155快照：方法夹具与并发判据已作局部独审</a>
+<a class="toc-link level-2" href="#section-66" data-parent="66">记录153—154快照：新观察来源已独审，有限方法待实测</a>
+<a class="toc-link level-2" href="#section-67" data-parent="67">记录152快照：有限实测通过，完整核验待接通</a>
+<a class="toc-link level-2" href="#section-68" data-parent="68">记录150—151快照：四项并发专门复验</a>
+<a class="toc-link level-2" href="#section-69" data-parent="69">记录145—149快照：真实业务部分结果</a>
+<a class="toc-link level-2" href="#section-70" data-parent="70">记录放在哪里</a>
+<a class="toc-link level-2" href="#section-71" data-parent="71">贾维斯的长期目标</a>
+<a class="toc-link level-2" href="#section-72" data-parent="72">历史状态：2026 年 10 月 12 日</a>
+<a class="toc-link level-3" href="#section-72-1" data-parent="72">R22 当前推进与费用决定</a>
+<a class="toc-link level-2" href="#section-73" data-parent="73">第一项目怎样达成最终目标</a>
+<a class="toc-link level-2" href="#section-74" data-parent="74">每次记录哪些内容</a>
+<a class="toc-link level-2" href="#section-75" data-parent="75">持续记录工作流</a>
+<a class="toc-link level-3" href="#section-75-1" data-parent="75">事件输入示例</a>
+<a class="toc-link level-3" href="#section-75-2" data-parent="75">保存与生成</a>
+<a class="toc-link level-2" href="#section-76" data-parent="76">下一步建设队列</a>
+<a class="toc-link level-2" href="#section-77" data-parent="77">R26 通用计划与实际测试</a>
+<a class="toc-link level-2" href="#section-78" data-parent="78">R26-3 汇报上线与 R26-4 报告复验</a>
+<a class="toc-link level-2" href="#section-79" data-parent="79">R26-4 完整失败基线与定点修复</a>
+<a class="toc-link level-2" href="#section-80" data-parent="80">部分修复结束与独立复验安排 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-81" data-parent="81">固定候选完整复验已启动 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-82" data-parent="82">部分候选完整复验终态与实际恢复 · 2026-10-12</a>
+<a class="toc-link level-2" href="#section-83" data-parent="83">本轮归档与后续交接完成 · 2026-10-12</a></nav>
     <div class="sidebar-foot">更新于 2026-10-15<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
@@ -142,64 +144,83 @@
       </header>
       <article class="article">
         <div class="intro"><p>这份档案是贾维斯后续建设的入口。用户要求从现在开始清楚记录逐步搭建的过程，供后续完善、项目管理和经验复用。早期过程按已有文档回顾；从本轮开始，每次有意义的改动、验证、故障处理或发布都追加记录。</p>
-<!-- record262-current-block-begin -->
+<!-- record263-current-block-begin -->
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
-        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">当前进展（记录262）：灵感四种输入与知识记忆按问题检索已实现，隔离验证通过</h2>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">当前进展（记录263）：文档、图片及网页可提取校正文字，录音转写接入待真实引擎验收</h2>
+<p>快速收件现可明确点击处理原件：Word提取正文段落，PDF提取页内文字，扫描PDF及图片使用本机OCR；链接只在点击后访问当前允许的来源。网页先保存HTML/纯文本原件，再提取静态正文，解析失败仍可下载原件。手机默认显示页码、段落或录音时间，详细来源信息折叠查看。</p>
+<p>机器提取、人工校正与原件分别保留；校正文会更新待整理收件和归档候选的检索文字，不篡改机器原提取，也不会自动发布知识或确认长期记忆。处理前保存固定编号，刷新只查状态；失败或重启中断需明确重做，未知结果可确认同一次处理。跨标签重新登录后，迟到旧401或成功回包不会清掉新草稿。</p>
+<p>真实本机Word、PDF、PNG、扫描PDF和静态网页已验证；浏览器新5组首跑通过，手机呈现改变后只补文档/网页两组，均通过。原件、校正、页码与旧401两路径均已核对。录音转写桥接已实现，但本次只用本机假引擎和真实PCM夹具验证隐私、时长、时间字段与故障边界，真实识别服务和准确率尚未验收；未配置时明确提示并保留回听、下载和保存。</p>
+<p>24份代码、契约及验收脚本已核对原始指纹、备份并同步本项目，代码提交33f7eb8，见<a href="https://github.com/ChristorpherChance/MyJarvis/pull/1">MyJarvis草稿PR1</a>。前后端构建和契约核对通过；早期关闭的流异常与首次类型错误如实保留，修正后仅验证受影响项。详细范围、失败与边界见<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E6%9D%90%E6%96%99%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86%E4%B8%8E%E6%9D%A5%E6%BA%90%E6%A0%A1%E6%AD%A3%E9%AA%8C%E6%94%B6-20261015.json">材料文字处理与来源校正验收</a>。</p>
+<p><strong>剩余事项（按后续价值排序）：</strong></p>
+<ol>
+<li>打通知识、记忆页面和对话检索结果，直接打开命中的原文页/段；当前仍是确定性词语/片段匹配。</li>
+<li>统一原件管理及知识整理复用，补引用使用情况、删除/保留和未引用上传清理。移除附件或草稿仍不删除服务器原件。</li>
+<li>增加记忆冲突比较、合并和到期复核工作台；现有确认、更正、遗忘及复核日期保持原边界。</li>
+<li>配置和验收真实ASR、实体手机/麦克风及房间终端；完整离线重开与未提交草稿跨浏览器同步仍待做。</li>
+<li>完成草稿PR评审合并、112正式发布及现场验收；本次未访问执行项目在线资料/决策版本同步，后续须保留既有证据。</li>
+</ol>
+<p>正式版本仍为20261012-supervision-r28-2，没有生产或项目模型调用。软件工厂每十分钟跟进保持暂停，原74与客户12未交付事实保留。</p>
+<!-- record263-current-block-end --></section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">记录262原文快照</h2>
+<p>以下保留多材料原件收件及知识记忆检索的当时范围，不回填本轮文字处理结果。</p>
+<!-- record262-current-block-begin -->
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">当前进展（记录262）：灵感四种输入与知识记忆按问题检索已实现，隔离验证通过</h2>
 <p>灵感入口现支持文字、粘贴链接、拖入文档/图片及显式录音；无需先填写文字。录音可停止、回听和下载，文件原件按指纹保存；本机附件草稿可恢复，丢失回包后按同一编号确认，退出会跨窗口失效。文字原件可检索，合并和归档保留来源。</p>
 <p>完成收件后，已继续接通知识与本人记忆按问题检索：先查全部当前授权内容再限制结果，保留版本与出处；撤权、遗忘和更正按当前状态生效。更正前证据保留为历史，不用旧偏好继续召回；脱敏摘录会明确标注。当前为词语/中文片段匹配，不冒同义语义检索。</p>
 <p>真实临时HTTP、客户端及领域回归通过；手机尺寸与桌面浏览器主3组、会话/异常2组通过，录音使用合成麦克风。两次IDB拦截探针未触发及夹具/本机连接准备失败保留，修正后只补失败项。前后端与最终受影响构建通过；隔离验证无项目模型调用、外部服务或生产访问。25份代码、契约与验收脚本已同步回项目，见 <a href="https://github.com/ChristorpherChance/MyJarvis/pull/1">MyJarvis草稿PR1</a>。</p>
 <p><strong>剩余工作：</strong> 录音转写和时间定位；PDF/Word正文解析与图片OCR；网页正文提取；原件删除/保留与未引用上传清理；语义召回、知识页与对话统一引用体验及记忆冲突管理；实体手机、真实麦克风、房间终端和正式发布验收。完整离线重开与未提交草稿跨浏览器同步仍未实现。</p>
 <p>代码尚未合并或发布112，正式版本仍为20261012-supervision-r28-2。软件工厂每十分钟跟进保持暂停，原74/客户12未交付事实保留。证据见<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E5%A4%9A%E6%9D%90%E6%96%99%E7%81%B5%E6%84%9F%E6%94%B6%E4%BB%B6%E9%AA%8C%E6%94%B6-20261015.json">多材料收件验收</a>及<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BF%86%E6%8C%89%E9%97%AE%E9%A2%98%E6%A3%80%E7%B4%A2%E9%AA%8C%E6%94%B6-20261015.json">知识记忆检索验收</a>。</p>
 <!-- record262-current-block-end --></section>
-<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">记录261范围快照</h2>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">记录261范围快照</h2>
 <!-- record261-current-block-begin -->
 <p>记录261保存四种输入的实现、原件可信引用、浏览器草稿、录音生命周期和出处保留范围。原件保存不等于转写、OCR或知识发布；PDF/DOCX文字仍待解析，来源链接尚未抓取正文。删除本机草稿或移除引用不会撤回已上传原件，服务器原件管理列为待办。后续按问题检索的实施与边界单列记录262。</p>
 <!-- record261-current-block-end --></section>
-<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">记录260原文快照</h2>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">记录260原文快照</h2>
 <p>以下保留首批只接受原话时的真实实现与验证范围，不用本轮新增功能回填。</p>
 <!-- record260-current-block-begin -->
 </section>
-<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">当前进展（记录260）：灵感收件首批已实现，隔离验证通过，待正式发布</h2>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">当前进展（记录260）：灵感收件首批已实现，隔离验证通过，待正式发布</h2>
 <p>首批“手机随手记 → 电脑整理 → 按补充关键词找回 → 打开归档目标”已在独立副本实现并同步本项目源码。快速记录只需原话，标题和来源自动补齐；真实身份分区的本机草稿、提交前固定编号、未知结果重试确认、标签和合并来源检索均已接入。</p>
 <p>真实HTTP2项、草稿定向9项及既有命令18项分别通过；桌面与手机尺寸浏览器累计11项通过（首轮3项保留，修复后只续8项）。已确认回包丢失后刷新重试仍只生成一条，存储失败不发请求且正文可导出，退出和跨标签变化不会让旧稿重新写入。首次非2xx及harness异常保留，精确旧状态未留不后填。构建通过，临时资源已清理，模型调用0。</p>
 <p>代码见 <a href="https://github.com/ChristorpherChance/MyJarvis/pull/1">MyJarvis草稿PR1</a>，核验与边界见<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%B7%A8%E7%AB%AF%E7%81%B5%E6%84%9F%E6%94%B6%E4%BB%B6%E9%A6%96%E6%89%B9%E9%AA%8C%E6%94%B6-20261015.json">首批隔离验收</a>。目前未合并、未发布112或验收实体手机。已加载页面可断网记草稿，重新打开平台需联网；本机未提交草稿不跨浏览器同步。</p>
 <p>下一步完成评审与正式发布核验，再继续知识页面/对话一致检索及准确引用、记忆按问题召回与更正。软件工厂每十分钟跟进保持暂停，原74/客户12未完成项不因本轮局部功能而完成；正式版本仍为20261012-supervision-r28-2。</p>
 <!-- record260-current-block-end --></section>
-<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">记录259原文快照</h2>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">记录259原文快照</h2>
 <p>以下保留首批范围选定但尚未实施时的状态。</p>
 <!-- record259-current-block-begin -->
 </section>
-<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">当前进展（记录259）：下一阶段重点为跨端灵感收集、知识库与记忆</h2>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">当前进展（记录259）：下一阶段重点为跨端灵感收集、知识库与记忆</h2>
 <p>按用户新方向，优先打磨各终端的灵感创意收集整理、知识库和记忆。三块已有原话收件与归档、知识原件校对和检索、本人记忆确认更正遗忘的基础；本轮只完成当前源码核对与首批范围选择，尚未实施新功能或现场验收。</p>
 <p>首批以“手机随手记 → 明确保存状态 → 电脑整理 → 按补充关键词找回并打开归档对象”为完整流程，减少先填表的负担，补强弱网恢复和重复提交处理。之后贯通知识页面与对话按问题检索、准确原文引用，并改善长期记忆召回、新旧偏好更正和房间入口的管理体验。</p>
 <p>验收以原话是否找回、出处是否可打开、更正与遗忘是否生效、成员之间是否隔离为准。源码中的问题线索不作为现场故障定论；没有把接口、入库数或审阅数当作交付。软件工厂每十分钟跟进保持暂停，本轮未启动服务、调用项目模型、发布生产或向公开仓库推送这些规划更新。</p>
 <p>具体断点、源码指纹与验收场景见<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E7%81%B5%E6%84%9F%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BF%86%E4%BC%98%E5%85%88%E7%BA%A7-20261015.json">三板块优先级核对</a>。</p>
 <!-- record259-current-block-end --></section>
-<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">记录258原文快照</h2>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">记录258原文快照</h2>
 <p>以下保留仓库公开时的状态。</p>
 <!-- record258-current-block-begin -->
 </section>
-<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">当前进展（记录258）：MyJarvis 已改为公开仓库</h2>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">当前进展（记录258）：MyJarvis 已改为公开仓库</h2>
 <p>已按用户明确要求，将 <a href="https://github.com/ChristorpherChance/MyJarvis">ChristorpherChance/MyJarvis</a> 从私有设为公开，并实际读回确认 PUBLIC。此前私有上传、构建及远端文件核对记录保留为当时事实；当前代码范围及私有资料排除规则见<a href="GitHub%E6%BA%90%E7%A0%81%E5%BF%AB%E7%85%A7%E8%AF%B4%E6%98%8E.md">源码快照说明</a>。</p>
 <p>本次仅仓库设置及文档更新，没有服务部署或重复构建测试。软件工厂每十分钟跟进保持暂停；原产品验收未完成项与开发节点下载包版本一致性待确认项仍保留。设置回退可通过仓库可见性改回私有，本次未执行回退。</p>
 <p>见<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/GitHub%E4%BB%93%E5%BA%93%E5%85%AC%E5%BC%80-20261015.json">可见性实际读回</a>。</p>
 <!-- record258-current-block-end --></section>
-<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">记录257原文快照</h2>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">记录257原文快照</h2>
 <p>以下保留仓库初始为私有时的上传事实。</p>
 <!-- record257-current-block-begin -->
 </section>
-<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">当前进展（记录257）：完整平台源码已上传 GitHub，软件工厂跟进保持暂停</h2>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">当前进展（记录257）：完整平台源码已上传 GitHub，软件工厂跟进保持暂停</h2>
 <p>已按用户指定名称建立私有仓库 <a href="https://github.com/ChristorpherChance/MyJarvis">ChristorpherChance/MyJarvis</a>，main 首次提交 <code>d544cb29fa94d91fb833dcfbcdc86712bf3843ea</code> 已真实上传并逐文件核对远端1811文件。</p>
 <p>本次包含前后端、Agent、运行资源、测试、脚本、示例配置、建设文档和历代原型；独立副本的前端及后端构建均通过，使用本机现有依赖。密钥、私有配置、运行数据、历史现场证据、已安装依赖和编译目录未上传。原业务源码保留，没有启动服务或生产发布。</p>
 <p><strong>当前待办：</strong> 现有开发节点下载包与当前源码的版本一致性未确认。软件工厂每十分钟修复与验收跟进已按用户要求暂停，本次上传不恢复该任务，不改变旧失败、74目标或客户12未交付事实。正式版本仍为20261012-supervision-r28-2。</p>
 <p>详见<a href="GitHub%E6%BA%90%E7%A0%81%E5%BF%AB%E7%85%A7%E8%AF%B4%E6%98%8E.md">源码快照说明</a>及<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/GitHub%E6%BA%90%E7%A0%81%E4%B8%8A%E4%BC%A0-20261015.json">首个提交真实上传核验</a>。本条保存首个提交的已验证范围；后续文档提交不倒填该报告。</p>
 <!-- record257-current-block-end --></section>
-<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">记录256原文快照</h2>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">记录256原文快照</h2>
 <p>以下保留暂停前的诊断准备状态；其中下一步属于历史计划，当前不继续执行。</p>
 <!-- record256-current-block-begin -->
 </section>
-<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">当前进展（记录256）：当前读取被主源码守卫拒绝，最窄诊断准备中</h2>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">当前进展（记录256）：当前读取被主源码守卫拒绝，最窄诊断准备中</h2>
 <p><strong>实际计划79、PG4分层29、Env23；四用例仍0通过、0业务失败、4未完成。</strong> 当前失败已保存，driver原错误和主源码具体差异仍未知。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -237,11 +258,11 @@
 <p>“通信失败”的旧表述在此更正：已证的是远端程序守卫拒绝，未证网络故障或超时。原记录255、CAS78、旧SOURCE/ENTRY及所有失败unknown原件不回填。正式20261012-supervision-r28-2/R22与112正式、101冷备独立工厂、联想独立.jarvis-dev保持；无新模型或生产发布，费用只记录无上限，未知金额/Token/单价分列。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-actual-observation-1791991168369-fd9ce63a-daf3-427d-a873-e0badcd7c046.json">实际current失败</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-saved-evidence-independent-local-review-1791991642338-c50da96a-8bec-4ce0-94c4-f8cd9dadff64.json">保存证据限域独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-root-selection-1791991753684-1da164fd-4242-44ae-8a7e-c3a9eace8d55.json">新有限诊断选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-current-refusal-plan79-decision29-sync-1791991972467.json">实际CAS79</a>。</p>
 <!-- record256-current-block-end --></section>
-<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">记录255原文快照</h2>
+<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">记录255原文快照</h2>
 <p>以下保留记录255当时的终态报告不完整及诊断入口准备状态；实际current拒绝和新选择独立记录在上文。</p>
 <!-- record255-current-block-begin -->
 </section>
-<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">当前进展（记录255）：终态报告不完整，诊断与当前收口入口准备中</h2>
+<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">当前进展（记录255）：终态报告不完整，诊断与当前收口入口准备中</h2>
 <p><strong>实际计划78、PG4分层28、Env23；四用例仍0通过、0业务失败、4未完成。</strong> 本轮验证进程已结束，四份关键报告缺失；没有产品验收结论。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -283,11 +304,11 @@
 <p>正式20261012-supervision-r28-2/R22、112正式、101冷备独立工厂、联想独立.jarvis-dev保持；无新模型或生产发布，费用只记录无上限，未知金额、Token、单价分列。旧254、CAS77及所有失败/unknown原件不回填，后继结果另记。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-entry-r2-main-actual-check-observation-1791987503640-00339cd1-7fbc-4100-87ea-915756459dab.json">实际CHECK</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-terminal-binding-byte-saved-evidence-independent-local-review-1791989024962-5a4fc478-7aac-4596-a18a-a4b6dcdf16a8.json">五文件保存独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-r7-check-plan78-decision28-sync-1791989077851.json">实际CAS78</a>。</p>
 <!-- record255-current-block-end --></section>
-<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">记录254原文快照</h2>
+<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">记录254原文快照</h2>
 <p>以下保留记录254当时派发成功、终态待证的历史；本次实际终态和报告缺失独立记录在上文。</p>
 <!-- record254-current-block-begin -->
 </section>
-<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">当前进展（记录254）：失败范围已收口，新QA已真实派发，产品验收等待结果</h2>
+<section class="doc-section" data-section="18"><h2 id="section-18" tabindex="-1">当前进展（记录254）：失败范围已收口，新QA已真实派发，产品验收等待结果</h2>
 <p><strong>记录254：实际计划77、PG4分层27、Env23保持。四用例仍0通过、0业务失败、4未完成。</strong> r2失败范围只在已观察时段独立收口；新r7 ENTRY-r2已实际启动，尚无业务结果。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -333,11 +354,11 @@
 <p>原记录253全文与原账本前缀保留；本次新结果不回填旧false/unknown。后续保存独审与终态另记。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-r2-current-r7-dispatched-plan77-decision27-sync-1791986833502.json">实际CAS77</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-entry-r2-main-actual-start-observation-1791986203800-03a383f9-74dd-4391-ba42-4d6ee7a33fea.json">新QA真实启动</a>。</p>
 <!-- record254-current-block-end --></section>
-<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">记录253原文快照</h2>
+<section class="doc-section" data-section="19"><h2 id="section-19" tabindex="-1">记录253原文快照</h2>
 <p>以下保留记录253当时的失败current与后继准备状态；后来的r2收口及新QA启动独立记录在上文。</p>
 <!-- record253-current-block-begin -->
 </section>
-<section class="doc-section" data-section="18"><h2 id="section-18" tabindex="-1">当前进展（记录253）：本机两域守卫修正已实施，失败current仍不完整，计划76分层收尾</h2>
+<section class="doc-section" data-section="20"><h2 id="section-20" tabindex="-1">当前进展（记录253）：本机两域守卫修正已实施，失败current仍不完整，计划76分层收尾</h2>
 <p><strong>记录253：实际计划76、PG4分层26、Env23；四用例仍0通过、0业务失败、4未完成。</strong> r1 current保存证据独审通过，但staticfalse/rem1/currentclosurefalse。原start/check和r1当前读取机会均closed，后继新来源/入口准备不替当前现场验收。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -387,11 +408,11 @@
 <p>Root r2DATAhelper首prep inverse替换collision在WX前拒、targetabsent；修限定mapping/fullinverse后final161957实际纯DATA成功，过程问题与现场失败分开。原252/CAS75、所有draft、r5 missingcreated/旧false/unknown和旧审查原件保留，后来的ENTRY/现场另记不倒填。正式20261012-supervision-r28-2/R22、112正式、101冷备独立工厂、联想独立.jarvis-dev保持；无新模型/生产发布，费用仅记录无上限，金额/Token/单价未知分列，不冒零。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-failure-readiness-current-r1-actual-observation-1791981760373-9ccc7760-8df1-4532-ba32-78ad24e020a7.json">r1真实读取</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failure-readiness-current-r1-saved-evidence-independent-local-review-1791982700906-5549e6e7-f7eb-4aa6-8db3-2c6ca69306f9.json">SAVED失败独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failure-readiness-current-r2-independent-local-source-review-1791983194703-3401652e-34d7-4953-9642-455fbe4a0277.json">r2 SOURCE</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failure-current-windows-plan76-decision26-sync-1791983486990.json">实际CAS76</a>。</p>
 <!-- record253-current-block-end --></section>
-<section class="doc-section" data-section="19"><h2 id="section-19" tabindex="-1">记录252原文快照</h2>
+<section class="doc-section" data-section="21"><h2 id="section-21" tabindex="-1">记录252原文快照</h2>
 <p>以下完整保留记录252当时的check失败与五份记录原字节资格；本次真实current失败及新准备另录上文。</p>
 <!-- record252-current-block-begin -->
 </section>
-<section class="doc-section" data-section="20"><h2 id="section-20" tabindex="-1">当前进展（记录252）：原生就绪前置失败已确认，五份记录原字节独审完成，当前收口待验</h2>
+<section class="doc-section" data-section="22"><h2 id="section-22" tabindex="-1">当前进展（记录252）：原生就绪前置失败已确认，五份记录原字节独审完成，当前收口待验</h2>
 <p><strong>记录252：实际计划75、PG4分层25、Env23；四用例仍0通过、0业务失败、4未完成。</strong> 唯一start/check均已closed。check的exit0只表示失败状态观察完成；就绪前置的真实失败、来源与入口修正、记录原字节资格及当前现场验收分别保留。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -441,11 +462,11 @@
 <p>旧251、CAS74和plan75 pending候选均保原快照；原r5 failed/missing runner-created、旧post/epoch2 unknown/false以及A头遗漏失败与修正不倒填。本条只本机归档，无新provider、模型/生产部署或发布。正式20261012-supervision-r28-2/R22、112正式、101冷备及独立工厂、联想独立.jarvis-dev保持；global3、Env23、五步criteria/task-run/title-goal-mode/actions与费用口径不变。费用只记录无上限，金额、Token、单价已知与未知分列，不把未知冒零。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-hup-r3-entry-r2-main-actual-check-observation-1791978499372-507530e7-281a-4b49-a38a-9b089be734cf.json">唯一check</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-label-r6-hup-r3-actual-check-saved-evidence-independent-limited-audit-1791978732104-a0a8551a-14ad-4f1f-b849-0afbeb267c2f.json">check保存独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-label-r6-hup-r3-terminal-binding-byte-saved-evidence-independent-local-review-1791979047423-7eb74b18-0cf7-4154-9013-741059cda407.json">五份原字节独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-qa-check-failed-plan75-decision25-sync-1791979756222.json">实际计划75</a>。</p>
 <!-- record252-current-block-end --></section>
-<section class="doc-section" data-section="21"><h2 id="section-21" tabindex="-1">记录251原文快照</h2>
+<section class="doc-section" data-section="23"><h2 id="section-23" tabindex="-1">记录251原文快照</h2>
 <p>以下保留记录251当时的QA唯一启动与终态待证状态；本次已知失败及五份原记录资格另记于上文。</p>
 <!-- record251-current-block-begin -->
 </section>
-<section class="doc-section" data-section="22"><h2 id="section-22" tabindex="-1">当前进展（记录251）：新post保护时段获独立资格，QA唯一启动，终态仍待证</h2>
+<section class="doc-section" data-section="24"><h2 id="section-24" tabindex="-1">当前进展（记录251）：新post保护时段获独立资格，QA唯一启动，终态仍待证</h2>
 <p><strong>建设251，实际计划74／PG4局部24／Env23；四用例已验证计数仍0通过、0业务失败、4未完成。</strong> 新HUP谱系完成一次完整保护观察，保存独审确认的资格仅覆盖2026-10-14T11:00:12.913Z至11:00:33.204Z这一已结束的post时段。新QA来源和更正后的具体入口已通过，唯一start实际返回成功；启动时unit active/running，但其state、四用例结果和当前资源收尾仍未知。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -497,11 +518,11 @@
 <p>归档保原250账本前缀和8份MD/HTML整byte快照，新251块与版本之外可逆回原三份MD，生成日志由原construction-records工具追加/render，四对MD/HTML核同源。正式20261012-supervision-r28-2／R22／profile／templates、112正式／101冷备及独立工厂／联想独立.jarvis-dev不变；原五步criteria/taskrun/title-goal-mode/actions、Env23整H/global3均保持，无额外provider、模型或生产部署。费用/Token只记录无上限，未知数量、单价、金额分列，不冒零，不以检查数或时长计交付率。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-post-hup-r3-saved-evidence-independent-limited-audit-1791977028091-afe376a2-82dc-4341-87c4-6dbadc0e4dd6.json">本次保存独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-hup-r3-entry-r2-specific-entry-independent-local-review-1791977282563-a5a25ff4-c630-4343-a3a3-786e25eae04f.json">更正后具体ENTRY</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-label-r6-hup-r3-actual-start-limited-saved-facts-1791977448647-9b0a50f5-a1fa-4a25-87fb-bbe0b36cfa5e.json">唯一start安全事实</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-hup-post-plan74-decision24-sync-1791977583213.json">计划74实际同步</a>。</p>
 <!-- record251-current-block-end --></section>
-<section class="doc-section" data-section="23"><h2 id="section-23" tabindex="-1">记录250原文快照</h2>
+<section class="doc-section" data-section="25"><h2 id="section-25" tabindex="-1">记录250原文快照</h2>
 <p>以下保留记录250当时完整状态，后继保护资格、QA入口与实际start不回填旧文。</p>
 <!-- record250-current-block-begin -->
 </section>
-<section class="doc-section" data-section="24"><h2 id="section-24" tabindex="-1">当前进展（记录250）：有限方法已获限域独立资格，保护集成来源推进待完整独审</h2>
+<section class="doc-section" data-section="26"><h2 id="section-26" tabindex="-1">当前进展（记录250）：有限方法已获限域独立资格，保护集成来源推进待完整独审</h2>
 <p><strong>建设250，实际计划73／PG4局部23／Env23；四用例仍0通过、0业务失败、4未完成。</strong> 一个新的有限自有子进程方法已通过完整来源审、具体入口审、唯一实际运行和保存证据独审。资格只覆盖原fixture及一个child与保存的已知范围收尾；完整保护、当前资源收口与PG4仍false。Root已选择最窄LOCAL保护集成，消费者本机来源和新绑定检查完成，完整集成SOURCE独审、实际DATA/ENTRY与whole仍待。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -559,11 +580,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-bounded-hup-method-actual-result-1791972621857-c8d855cd-46fb-47ad-97b8-35d01bd97a55.json">真实有限方法</a>、<a href="../artifacts/software-factory/goals-r29/r33-bounded-hup-method-saved-evidence-independent-local-review-1791973060024-d2530690-3c83-4ee5-8205-b5bb4daa7580.json">限域保存证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-bounded-hup-integration-root-selection-1791973407016-21c4153b-4cbb-4673-9220-41832b65e89b.json">最窄集成选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-hup-consumer-root-local-source-completion-1791973825644-133bbf9b-6b93-49e2-97b4-8217e68b1071.json">消费者本机来源</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-bounded-hup-method-plan73-decision23-sync-1791973860300.json">计划73实际同步</a>。</p>
 <!-- record250-current-block-end -->
 </section>
-<section class="doc-section" data-section="25"><h2 id="section-25" tabindex="-1">记录249原文快照</h2>
+<section class="doc-section" data-section="27"><h2 id="section-27" tabindex="-1">记录249原文快照</h2>
 <p>以下保留记录249当时完整快照，不以后来的来源、入口或现场结果倒填旧事实。</p>
 <!-- record249-current-block-begin -->
 </section>
-<section class="doc-section" data-section="26"><h2 id="section-26" tabindex="-1">当前进展（记录249）：第二次观察中段完整、整体未闭合，有限自有子进程方法已选定</h2>
+<section class="doc-section" data-section="28"><h2 id="section-28" tabindex="-1">当前进展（记录249）：第二次观察中段完整、整体未闭合，有限自有子进程方法已选定</h2>
 <p><strong>建设249，实际计划72／PG4局部22／Env23；四用例仍0通过、0业务失败、4未完成。</strong> post-only epoch2的SOURCE及具体ENTRY通过后，唯一实际观察35.484秒exit1；前whole完整、中段四资源及进程范围完整，后whole仍严格unknown拒绝，整体资源收口false。保存证据独审已完成；Root仅选一个新finite ownedchild方法LOCAL准备，尚无最终SOURCE、实际方法执行或资格，未选whole集成、第三POST或QA。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -621,11 +642,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-post-profile-r4-post-epoch2-actual-observation-1791969622334-be7135d3-0d61-45c3-b4e6-8c9dca052c99.json">唯一epoch2实际不完整</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r4-post-epoch2-saved-evidence-independent-limited-audit-1791970268615-5ad7c806-ec26-425b-8167-cdc716a167b6.json">保存证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-bounded-hup-owned-child-method-root-selection-1791970781280-62c31587-9467-4d8b-b452-b1ec262736be.json">有限方法选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-post-epoch2-incomplete-plan72-v2-author-local-literal-correction-1791971343344-02264baa-0201-4392-9320-0b570b6ac8d5.json">本机更正</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-post-epoch2-incomplete-plan72-decision22-sync-1791971376407.json">计划72同步</a>。</p>
 <!-- record249-current-block-end -->
 </section>
-<section class="doc-section" data-section="27"><h2 id="section-27" tabindex="-1">记录248原文快照</h2>
+<section class="doc-section" data-section="29"><h2 id="section-29" tabindex="-1">记录248原文快照</h2>
 <p>以下保留记录248当时完整快照，不以后来的来源、入口或现场结果倒填旧事实。</p>
 <!-- record248-current-block-begin -->
 </section>
-<section class="doc-section" data-section="28"><h2 id="section-28" tabindex="-1">当前进展（记录248）：精确移除已成功，首次独立收口未完成，新观察来源审通过</h2>
+<section class="doc-section" data-section="30"><h2 id="section-30" tabindex="-1">当前进展（记录248）：精确移除已成功，首次独立收口未完成，新观察来源审通过</h2>
 <p><strong>建设248，实际计划71／PG4局部21／Env23；四用例仍0通过、0业务失败、4未完成。</strong> r4唯一预检完整通过后，fresh门内的精确nonforce移除已真实成功；首次独立post因严格进程读取unknown拒绝，current资源中段未到。依据保存的进程总体变化另选一次post-only完整epoch2，新来源审已通过，具体ENTRY尚未最终确认、未执行新现场观察、无新QA nonce。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -683,11 +704,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-remove-profile-r4-actual-observation-1791967387432-72500487-2d91-4f21-861c-9cd4ef2c4c21.json">真实精确移除</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-post-profile-r4-actual-observation-1791967442533-27723e0d-3915-4b04-a140-2db585978b47.json">首次post不完整</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r4-three-purpose-saved-evidence-independent-limited-audit-1791968181948-b44487c0-a278-4f33-8779-7ae49e30afdf.json">三阶段保存证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r4-post-epoch2-independent-local-source-review-1791969345300-5474db55-bb2a-4238-95ef-4c694315a533.json">新观察来源独审</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-r4-removed-post-incomplete-plan71-decision21-sync-1791969443308.json">计划71同步</a>。</p>
 <!-- record248-current-block-end -->
 </section>
-<section class="doc-section" data-section="29"><h2 id="section-29" tabindex="-1">记录247原文快照</h2>
+<section class="doc-section" data-section="31"><h2 id="section-31" tabindex="-1">记录247原文快照</h2>
 <p>以下保留记录247当时完整快照，不以后来的来源、入口或现场结果倒填旧事实。</p>
 <!-- record247-current-block-begin -->
 </section>
-<section class="doc-section" data-section="30"><h2 id="section-30" tabindex="-1">当前进展（记录247）：预检真实未完成，精确错误前缀另立来源修正</h2>
+<section class="doc-section" data-section="32"><h2 id="section-32" tabindex="-1">当前进展（记录247）：预检真实未完成，精确错误前缀另立来源修正</h2>
 <p><strong>建设247，实际计划70／PG4局部20／Env23；四用例仍0通过、0业务失败、4未完成。</strong> r3具体preflight入口独审通过后唯一实际预检26.266秒exit0但ready=false；保存证据独审确定容器不存在回复的daemon前缀被源码误拒。r4最窄完整SOURCE已独审通过，pre/post纯DATA已封，具体ENTRY仍待最终核验，没有新pre、删除或QA。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -736,11 +757,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-preflight-profile-r3-actual-observation-1791964696028-6e858cd2-b347-4863-94f7-a7a64c0b98bf.json">唯一实际预检</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-preflight-profile-r3-saved-evidence-and-cause-independent-limited-audit-1791965591870-8e4edf03-d4b2-41ac-9748-86c1321a3d8f.json">保存证据与原因独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r4-independent-local-source-review-1791966837521-12f06a69-2786-48eb-9897-d1b2e5ef7a2c.json">r4完整SOURCE独审</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-container-prefix-r4-plan70-decision20-sync-1791966934385.json">计划70同步</a>。</p>
 <!-- record247-current-block-end -->
 </section>
-<section class="doc-section" data-section="31"><h2 id="section-31" tabindex="-1">记录246原文快照</h2>
+<section class="doc-section" data-section="33"><h2 id="section-33" tabindex="-1">记录246原文快照</h2>
 <p>以下保留记录246当时完整快照，不以后来的入口、现场或来源修正倒填旧事实。</p>
 <!-- record246-current-block-begin -->
 </section>
-<section class="doc-section" data-section="32"><h2 id="section-32" tabindex="-1">当前进展（记录246）：挂载完整对象修正已独审，现场预检待入口最终核验</h2>
+<section class="doc-section" data-section="34"><h2 id="section-34" tabindex="-1">当前进展（记录246）：挂载完整对象修正已独审，现场预检待入口最终核验</h2>
 <p><strong>建设246，实际计划69／PG4局部19／Env23；四用例仍0通过、0业务失败、4未完成。</strong> failed-r5 profile-r3完整来源独审已通过，现场pre8CTX已封，具体preflight ENTRY正在同链接续审。未执行新预检、删除或QA。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -784,11 +805,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r3-independent-local-source-review-1791964284633-0efd5a1e-4af3-4bf1-a212-4d337e9d47c2.json">完整恢复SOURCE独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r3-author-local-mount-semantic-source-preparation-1791963841237-4fc7e750-80fb-4500-acba-90a76107e1b2.json">作者修正</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-mount-r3-plan69-decision19-sync-1791964375838.json">计划69同步</a>。</p>
 <!-- record246-current-block-end -->
 </section>
-<section class="doc-section" data-section="33"><h2 id="section-33" tabindex="-1">记录245原文快照</h2>
+<section class="doc-section" data-section="35"><h2 id="section-35" tabindex="-1">记录245原文快照</h2>
 <p>以下保留记录245当时快照，不以后来的来源独审改写旧事实。</p>
 <!-- record245-current-block-begin -->
 </section>
-<section class="doc-section" data-section="34"><h2 id="section-34" tabindex="-1">当前进展（记录245）：执行入口已核，恢复来源审发现挂载排序阻断</h2>
+<section class="doc-section" data-section="36"><h2 id="section-36" tabindex="-1">当前进展（记录245）：执行入口已核，恢复来源审发现挂载排序阻断</h2>
 <p><strong>建设245，实际计划仍68／PG4局部18；四用例仍为0通过、0业务失败、4未完成。</strong> QA具体执行入口已独审通过；失败r5恢复完整来源审真实完成，但发现1项挂载排序兼容阻断，尚未放行现场预检、移除或新QA。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -828,11 +849,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-nodepath-r2-specific-entry-independent-local-review-1791960884939-53805c77-60aa-4a12-a222-db002c380ca5.json">具体QA入口独审</a>与<a href="../artifacts/software-factory/goals-r29/r33-pg4-failed-r5-profile-r2-independent-local-source-review-1791963251173-01809f3c-1a25-412d-a197-4be0c9cc1454.json">恢复SOURCE真实阻断</a>。</p>
 <!-- record245-current-block-end -->
 </section>
-<section class="doc-section" data-section="35"><h2 id="section-35" tabindex="-1">记录244原文快照</h2>
+<section class="doc-section" data-section="37"><h2 id="section-37" tabindex="-1">记录244原文快照</h2>
 <p>以下保留记录244当时快照，不以后来的ENTRY或恢复源码审改写旧事实。</p>
 <!-- record244-current-block-begin -->
 </section>
-<section class="doc-section" data-section="36"><h2 id="section-36" tabindex="-1">当前进展（记录244）：两处后继阻断已修，完整SOURCE审通过</h2>
+<section class="doc-section" data-section="38"><h2 id="section-38" tabindex="-1">当前进展（记录244）：两处后继阻断已修，完整SOURCE审通过</h2>
 <p><strong>建设244，实际计划68／PG4局部18；四用例仍为0通过、0业务失败、4未完成。</strong> 标签修正后独审发现两个后继兼容问题：NODE_PATH未清空和D终态not-found属性门。最窄独立版本已修复并通过完整SOURCE审，具体执行入口及旧r5当前资源收口尚待；没有新的现场派发或删除。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -872,11 +893,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-nodepath-r2-full-source-and-data-independent-local-review-1791959845320-5ea1505b-97d8-41b9-8b90-641f04b161bc.json">SOURCE独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-next-environment-guard-independent-static-finding-1791957960219-692b41db-1b5a-4067-9515-b76dd3d674c9.json">环境finding</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-source-incomplete-root-limited-findings-1791958639491-67763e02-17da-425f-90a0-0c0cff2bf0e6.json">两项原阻断</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-nodepath-r2-plan68-decision18-sync-1791960620780.json">计划68同步</a>。</p>
 <!-- record244-current-block-end -->
 </section>
-<section class="doc-section" data-section="37"><h2 id="section-37" tabindex="-1">记录243原文快照</h2>
+<section class="doc-section" data-section="39"><h2 id="section-39" tabindex="-1">记录243原文快照</h2>
 <p>以下保留记录243当时快照，不以本次SOURCE修正改写旧事实。</p>
 <!-- record243-current-block-begin -->
 </section>
-<section class="doc-section" data-section="38"><h2 id="section-38" tabindex="-1">当前进展（记录243）：真实派发止于标签校验，四用例仍未运行</h2>
+<section class="doc-section" data-section="40"><h2 id="section-40" tabindex="-1">当前进展（记录243）：真实派发止于标签校验，四用例仍未运行</h2>
 <p><strong>建设记录243，实际计划67／PG4局部17；产品尚未交付。</strong> 新r5已经真实派发，失败停在测试容器身份检查，独立保存证据已确定标签比较是拒绝项。不是四个业务用例失败：四个用例均未到达，仍为0通过、0业务失败、4 incomplete。下一步按已知身份核验并恢复本次资源，完成最窄修正后再做一次真实四用例。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -917,11 +938,11 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-r5-main-actual-start-observation-1791952514180-92566932-12b4-4a14-ba64-ecbb733737fc.json">真实派发</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-r5-main-actual-check-observation-1791953591741-6a5dd092-7933-4636-aa86-6d70c0b50f14.json">失败check</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-r5-failure-diagnostic-saved-evidence-independent-limited-audit-1791955424625-78356bb3-49af-4b9b-b850-2ebba5d7b0c3.json">失败信息独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-r5-inspect-capture-saved-evidence-and-cause-independent-limited-audit-1791956525092-859030e8-ba74-4802-bae3-fb38ce92cb75.json">标签原因独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-label-r6-and-r5-failure-recovery-root-selection-1791956876243-dc01a7b2-e5a5-4e7d-a480-33715a74cc73.json">修复与恢复选择</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-r5-plan67-decision17-sync-1791956076419.json">计划67同步</a>。</p>
 <!-- record243-current-block-end -->
 </section>
-<section class="doc-section" data-section="39"><h2 id="section-39" tabindex="-1">记录242原文快照</h2>
+<section class="doc-section" data-section="41"><h2 id="section-41" tabindex="-1">记录242原文快照</h2>
 <p>以下完整保留记录242当时原文，后续实际失败不改写当时来源准备状态。</p>
 <!-- record242-current-block-begin -->
 </section>
-<section class="doc-section" data-section="40"><h2 id="section-40" tabindex="-1">当前进展（记录242）：证明比较漏项已修，进入真实四用例入口</h2>
+<section class="doc-section" data-section="42"><h2 id="section-42" tabindex="-1">当前进展（记录242）：证明比较漏项已修，进入真实四用例入口</h2>
 <p><strong>建设记录242，实际计划66／PG4局部16；四用例尚未启动，产品未交付。</strong> 最近一次读取已完成源码准入与四路保护数据读取，最终本机证明检查仍引用旧 Main 数据而拒绝。三个比较项已以独立版本修正，新r5完整SOURCE/data独审通过。本次记录快照尚未取得r5实际 context／具体ENTRY独审和现场结果，来源准备不能代替四用例验收。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -958,10 +979,10 @@
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-r4-main-actual-start-observation-1791949594285-235dcb72-6884-4e62-930d-f8a17f7019a5.json">本次实际失败</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-r4-failed-start-saved-evidence-independent-limited-audit-1791950444689-83195679-dc5b-4ea3-90f2-a6be14579ae8.json">保存证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main602-stale-main-proof-projection-independent-finding-1791949957873-a09429ab-6264-4db3-995a-fa3090f93cec.json">确定证明漏项</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main602-proof-r2-physical-verifier-independent-local-review-1791950984098-1318cbcb-d746-401d-bde8-e535cd902e7b.json">三operand修正审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-r5-full-source-and-data-independent-local-review-1791951980102-8e357fd9-06ab-4796-ba2e-fbce8a192bea.json">新r5完整SOURCE审</a>与<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-proof-plan66-decision16-sync-1791951615241.json">计划66同步</a>。</p>
 <!-- record242-current-block-end -->
 </section>
-<section class="doc-section" data-section="41"><h2 id="section-41" tabindex="-1">记录241原文快照</h2>
+<section class="doc-section" data-section="43"><h2 id="section-43" tabindex="-1">记录241原文快照</h2>
 <p>以下保留记录241当时原文，不用后续失败或修正改写旧判断。</p>
 </section>
-<section class="doc-section" data-section="42"><h2 id="section-42" tabindex="-1">当前进展：主项目变化已查明，新保护范围已接入</h2>
+<section class="doc-section" data-section="44"><h2 id="section-44" tabindex="-1">当前进展：主项目变化已查明，新保护范围已接入</h2>
 <p><strong>建设记录241，实际计划65；产品尚未交付。</strong> 四用例没有启动的直接原因已查明：主项目从593变为602个文件，并有18个原文件修改，旧保护基线严格拒绝了启动。新的库存范围只保护当前已存在的源码；旧失败及未知保留。新保护代码已独立审查通过，四用例入口联动仍在最终源码审查，现场完整保护和产品结果尚未取得。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -997,7 +1018,7 @@
 <p><strong>下一步：</strong> 完整main602-r4 SOURCE和实际main context/ENTRY审齐后，Root一次当前源码A读取及现场完整保护，随后新nonce、本批四资源缺席检查、实际Node/框架配置、SQL baseline及唯一四用例；终态另做九路当前资源独立收口。原callbacks/hooks/SQL和900运行+120停止、850共享work、child600、UID1000cap0NNP边界保持。继续真实devCI独测缺陷闭环、软件文档包安装使用升级恢复、客户12实际工厂使用和原74/Agent成熟链。工具准备与记录不算产品交付。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-preflight-fixed-main-diagnostic-result-1791944835900-8e8e38e8-ee32-42e7-8c7a-0063482b50d0.json">真实当前源码诊断</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main602-single-entry-protection-source-local-preparation-1791946943589-ea4c1cec-4169-4e16-8539-3d7d864077b0.json">新保护源码作者</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-r4-current-entry-stale-source-pins-independent-static-finding-1791948018397-c722e5ce-d9e6-434d-aa3a-6ca2d8831ec5.json">入口指纹问题</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-main602-plan65-decision15-sync-1791948046279.json">计划65同步</a>。</p>
 </section>
-<section class="doc-section" data-section="43"><h2 id="section-43" tabindex="-1">记录239快照：源码读取真实通过，库存保护拒绝启动</h2>
+<section class="doc-section" data-section="45"><h2 id="section-45" tabindex="-1">记录239快照：源码读取真实通过，库存保护拒绝启动</h2>
 <p><strong>建设记录239，实际计划64；产品尚未交付。</strong> 新r3完整SOURCE与实际入口已独审，唯一运行已实际读完当前运行包、625虚拟源和独立PG包，两个私有receipt接入通过。随后首次库存保护返回主项目不匹配保存基线，尚未生成执行nonce或启动四用例。原生1项、HTTP/SQL34项仍仅历史资格；PG4四incomplete、客户12及原全部74未交付。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1037,7 +1058,7 @@
 <p><strong>下一步：</strong> 新Main-only来源及具体入口审齐后唯一纯只读，取得具体当前不匹配字段，保原guard失败与unknown；根据实际差异和来源自主择优留证新的保护范围/实施/验收，不还原时间戳或改旧pin、不无改进重whole。当前保护与新的有限入口就绪后取得四selected真实结果；Node/Vite/config/reporters/空PG30迁移SQL baseline/finalfresh/WXmay和真实terminal D九路当前scope必须实际完成。900run+120stop两阶段/850work/child600、Root不执行包JS/UID1000cap0NNP及原callbacks/hooks/SQL保持。随后真实devCI独测缺陷闭环、软件文档包安装使用升级恢复、客户12实际跑工厂与原74/Agent成熟链仍持续推进。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-receipts-r3-main-actual-start-observation-1791943425888-2808c67b-a258-4ffd-9d2d-217848ce22ee.json">本次实际运行</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-r3-current-source-passed-and-fresh-inventory-refused-saved-facts-1791943870901-e209020f-767f-4a4c-8a1b-c4b37a9fb8c6.json">源码通过与库存拒绝事实</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-receipts-r3-main-partial-start-saved-evidence-independent-limited-audit-1791944079088-e78e5f49-1858-4d1a-8137-909ab6f74c8a.json">保存证据独审</a>与<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-receipts-plan64-decision14-sync-1791943274427.json">计划64同步</a>。</p>
 </section>
-<section class="doc-section" data-section="44"><h2 id="section-44" tabindex="-1">记录236快照：权限修正和插件源码齐，进入完整执行入口审查</h2>
+<section class="doc-section" data-section="46"><h2 id="section-46" tabindex="-1">记录236快照：权限修正和插件源码齐，进入完整执行入口审查</h2>
 <p><strong>建设记录236，实际计划62；产品尚未交付。</strong> 精确PG私有清单接入修正已完成七源联合静审；新增必需mocker原件已实际取得并独立核准。当前13模块、32插件摘要和4内部源码的预期数据已装配，完整执行家族与实际main context/入口仍待独审。没有PG4 nonce或四用例派发；原native1/HTTP-SQL34只是历史资格，PG4四incomplete、customer12与原全部74仍未交付。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1072,7 +1093,7 @@
 <p><strong>下一步：</strong> 完整SOURCE/data独审通过后，仅绑定review H、历史priorScope H及阶段占位，实际main context/entry独审通过再由Root串行A当前源码→新nonce→B本批4名双label缺席→C实际Node/框架配置、SQL baseline、物理与finalfresh准入→唯一四selected用例→terminal新的D九路当前scope闭合。NodeH/bytes在C实测前仍null，默认worker实例不可公开则null/source派生，不新循环门；原callbacks/hooks/SQL不改。随后推进真正devCI独测缺陷闭环、软件文档包安装使用升级恢复、customer12实际跑工厂及原全部74和Agent成熟链。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-manifest-r2-combined-source-independent-local-review-1791937900571-f8c5ed01-8fa9-40e0-9b3e-688c9775f343.json">七源联合SOURCE审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-mocker-node-byte-actual-observation-1791938772541-44fb2a4a-330d-4668-8875-9bba68f74e55.json">mocker实际读取</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-mocker-node-byte-saved-evidence-independent-limited-audit-1791939070112-b7993b9f-a9be-4c7d-8f90-3f80f1ff7108.json">mocker保存独审</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-complete-source-derived-driver-input-assembly-data-1791938996328-a3373128-00a4-4456-948c-e9207a9e5807.json">启动预期数据</a>。</p>
 </section>
-<section class="doc-section" data-section="45"><h2 id="section-45" tabindex="-1">记录235快照：两个原件已核，修正启动器后验证四用例</h2>
+<section class="doc-section" data-section="47"><h2 id="section-47" tabindex="-1">记录235快照：两个原件已核，修正启动器后验证四用例</h2>
 <p><strong>实际计划62、建设记录235；产品尚未交付。</strong> 原生1项、HTTP/SQL34项仅原R32历史资格；PG4四用例未执行，客户12项及原74目标未交付。此前过多校验准备和接口衔接使推进过慢。当前集中处理已确认的实际阻断，随后按四用例真实通过、失败或明确阻断报告结果，工具准备不计交付。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1110,7 +1131,7 @@
 <p>旧whole14失败、历史被拒合取null、旧四incomplete、236/fda两false与三个unknown永久保留，不拼later样本或重native34。两新byte及旧metadata/75/3830/2dd所有closed入口均不重读；10分钟跟进只重要变化通知，不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-pg-manifest-byte-actual-observation-1791936530000.json">PG原件实际</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-pg-manifest-byte-saved-evidence-independent-limited-audit-1791936880631-e06e8b17-aa4d-4628-9e35-7dcf608f46db.json">PG保存独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-vite-single-creator-byte-actual-observation-1791936704000.json">Vite原件实际</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-vite-single-creator-byte-saved-evidence-independent-limited-audit-1791937028147-b66938eb-ea17-42c1-ba99-be040dd67fb4.json">Vite保存独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-current-family-source-and-actual-assembly-fact-list-1791936652257-92c63962-4033-48c0-9eef-ce4d4c20c945.json">实际装配缺口</a>与<a href="../artifacts/software-factory/goals-r29/r33-pg4-two-byte-qualified-plan62-decision12-sync-1791937132383.json">计划62同步</a>。</p>
 </section>
-<section class="doc-section" data-section="46"><h2 id="section-46" tabindex="-1">记录233快照：当前PG属性已核，优先完成真实四用例</h2>
+<section class="doc-section" data-section="48"><h2 id="section-48" tabindex="-1">记录233快照：当前PG属性已核，优先完成真实四用例</h2>
 <p><strong>实际计划61、建设记录233；产品尚未交付。</strong> 原生1项及HTTP/SQL34项仅为原R32历史资格，PG4四个用例仍未实际完成，客户12项需求及全部74项目标未验收。当前优先补齐两个准确来源，推进真实四用例验证；设计、源码检查、台账和清场都不当产品成果。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1152,7 +1173,7 @@
 <p><strong>下一步：</strong> 完成两个准确byte的源码和具体入口审，Root各唯一读取并保存独审；缺件齐后封完整PG4 family/实际入口，真实Node/config/reporters、readonly37B/effective625、空PG30迁移业务baseline和fresh+当前D齐后只PG4一次。按实际四用例通过、失败或明确阻断报告产品结果，再推进真实devCI独测缺陷闭环、软件文档包安装使用升级恢复、客户12到工厂实际使用、全部74与Agent成熟链。旧75/83fa/c3e8、3830/2dd及新metadata/old14所有closed入口不重，R6两false三个unknown永久保留。10分钟跟进不代表通用全天无人controller完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-pg-manifest-leaf-metadata-actual-observation-1791934371144-bf339026-07dc-4187-8cb9-3f53284c95a9.json">当前属性实际报告</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-pg-manifest-leaf-metadata-saved-evidence-independent-limited-audit-1791934571009-1be384ad-2508-4511-ad3d-54d94a3f85b8.json">保存属性独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-private-pg-manifest-original-byte-root-selection-1791934719329-c5bb427e-eeb1-43f4-879e-ad3cc4739906.json">PG单叶内容选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-vite-single-creator-byte-root-selection-1791934096514-b771b6d3-3a9f-45dc-a969-0503c458239d.json">Vite单文件选择</a>及<a href="../artifacts/software-factory/goals-r29/r33-pg4-metadata-and-next-byte-plan61-decision11-sync-1791935119367.json">计划61同步</a>。</p>
 </section>
-<section class="doc-section" data-section="47"><h2 id="section-47" tabindex="-1">记录230快照：来源补采部分保存，继续PG单叶属性诊断</h2>
+<section class="doc-section" data-section="49"><h2 id="section-49" tabindex="-1">记录230快照：来源补采部分保存，继续PG单叶属性诊断</h2>
 <p><strong>实际计划60、建设记录230。</strong> 新有限collector与具体来源入口已审并唯一执行；六包声明和七入口共13件332204字节保存独审通过。整14件补采在PG manifest信任门失败并关闭，PG原字节为0，具体拒绝条件未知。新单叶属性诊断已选择并通过设计审，正在本机实施，尚未读取现场。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1195,7 +1216,7 @@
 <p><strong>下一步：</strong> 读取新单叶metadata实际final head、作者必要新checks和独审，另封具体once/actualcontext与外entry-review后才能唯一新观察。其后按真实属性另立PG内容读取合同；Vite必要creator/config/plugin只据新literal定点另选，不猜chunk/全closure/切B/generic profileprobe。完整PG4 family和实际入口审齐、真实Node/config/reporters/readonly37B/effective625/空PG30迁移业务baseline/fresh与本批D闭合后只PG4一次，再继续真实devCI独测缺陷闭环、软件文档包安装使用升级恢复/customer12/全部74与Agent成熟链。原75/83fa/c3e8、3830/2dd及全部closed入口不重，原四incomplete和R6两false三个unknown永久保存。10分钟跟进不是通用全天无人controller完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-byte-actual-failed-partial-read-1791932377187-62169086-673e-4c02-a208-2c50f9bdd10e.json">实际失败报告</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-entry-byte-failed-partial-saved-evidence-independent-limited-audit-1791932711360-65c91100-6984-4a6a-bd3b-dca58040387c.json">13原件保存独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-pg-manifest-leaf-saved-source-failure-limited-analysis-1791932345165-6b30306d-d20f-4e12-bd70-5bd63f29f3f8.json">PG失败点分析</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-pg-manifest-leaf-metadata-only-root-selection-1791932812521-2a216d62-7351-4b37-8bf1-45136e7a09e6.json">最小属性诊断选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-pg-manifest-leaf-metadata-only-design-independent-local-review-1791932942644-8137d715-a5c5-49bf-8878-d0690fa0fcda.json">设计薄审</a>与<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-partial-read-plan60-decision10-sync-1791933077397.json">计划60同步</a>。</p>
 </section>
-<section class="doc-section" data-section="48"><h2 id="section-48" tabindex="-1">记录227快照：PG4局部源码已审，补齐实际必要来源</h2>
+<section class="doc-section" data-section="50"><h2 id="section-50" tabindex="-1">记录227快照：PG4局部源码已审，补齐实际必要来源</h2>
 <p><strong>实际计划59、建设记录227。</strong> 父端可选原件与晚绑定、D原报告元数据以及一次入口保存修正均已完成限定源码独审。完整家族的数据封装仍缺七个实际依赖入口和一个PG原manifest；已选有限补采并开始本机新源实施，未派发现场。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1237,7 +1258,7 @@
 <p><strong>下一步：</strong> 先读新collector实际最终head、作者必要新checks和独审，再封该来源读取具体once。取得真实必要入口后定点核Vite/config/plugin来源，完整PG4 family、actualcontext和外entry-review审齐后才能执行nonce/派发。真实Node/config/reporters、只读37B/effective625、空PG30迁移业务baseline、fresh与本批D闭合齐后只PG4一次，再推进真实devCI独测缺陷闭环、软件文档包安装使用升级恢复、客户12及全部74/Agent成熟链。原83fa/c3e8与3830/2dd只历史资格、全部closed入口不重；旧PG4四incomplete、R6两false及三个unknown永久保留。10分钟跟进不是通用全天无人controller完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-current-resource-scope-original-metadata-independent-local-review-1791928148185-9d50aed2-018a-4d26-805e-236824e2531a.json">D元数据限定源码审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-qa-startup-once-source-independent-local-review-1791928212866-b0df8bf8-8e3e-4a5d-ad63-0b086fcb10ff.json">一次入口源码审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-startup-source-family-local-data-facts-1791928780288-bf2fb8b5-b94d-412f-9a75-4d5b5be15963.json">缺件事实清单</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-entries-and-pg-manifest-root-selection-20261014.json">最小补采选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-entries-and-pg-manifest-design-independent-compatibility-review-1791929552706-7764e869-43ee-4081-8333-0d2d76515664.json">设计薄审</a>与<a href="../artifacts/software-factory/goals-r29/r33-pg4-essential-source-choice-plan59-decision9-sync-1791929613317.json">计划59同步</a>。</p>
 </section>
-<section class="doc-section" data-section="49"><h2 id="section-49" tabindex="-1">记录224快照：PG4四组件源码已审，继续完整入口与原件衔接</h2>
+<section class="doc-section" data-section="51"><h2 id="section-51" tabindex="-1">记录224快照：PG4四组件源码已审，继续完整入口与原件衔接</h2>
 <p><strong>实际计划58、建设记录224。</strong> 来源准入、分期父端、UID1000物理核验和四资源收尾已取得各自限定源码独审。完整执行家族及具体Rootonce入口仍未就绪；下一本机增量正在实施，不生成执行标识或派发PG4。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1278,7 +1299,7 @@
 <p><strong>下一步：</strong> 先完成可选原件、纯晚绑定与新Rootonce源码，独审完整family及实际context/entry后才任何新执行nonce或现场。必要Node/Vite/directessentials缺件保持拒，不盲抓全closure或改选B。真实只读37B/effective625、actualconfig/reporters、独立空PG30迁移及业务baseline、必要fresh和当前scope齐后只PG4一次；再推进真实devCI评审、独测缺陷闭环、软件文档包安装使用升级恢复及客户12/全部74/Agent成熟链。旧75/3830/2dd与全部closed入口不重，native1/HTTP SQL34只历史资格，PG4四incomplete、旧R6两整体false三个unknown永久保留。10分钟跟进不是通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-source-admission-independent-local-review-1791925947184-6f35879a-e8b7-4520-ac43-0428f01a7c7e.json">A来源限定审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-qa-startup-parent-independent-local-review-1791925947186-77a13056-7d99-46a9-9c58-30f352c7e504.json">分期父端限定审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-physical-admission-independent-local-review-1791926345341-2b196214-0c2c-4d33-8c4c-34e0eeaa87f7.json">物理模块限定审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-current-resource-scope-independent-local-review-1791926577241-c6b20a96-9c5a-4638-a4d4-f9baad9e5e9a.json">四资源源码限定审</a>及<a href="../artifacts/software-factory/goals-r29/r33-pg4-phase-source-plan58-decision8-sync-1791926932620.json">计划58同步</a>。</p>
 </section>
-<section class="doc-section" data-section="50"><h2 id="section-50" tabindex="-1">记录219快照：PG4局部源码独审完成，继续来源与范围准入</h2>
+<section class="doc-section" data-section="52"><h2 id="section-52" tabindex="-1">记录219快照：PG4局部源码独审完成，继续来源与范围准入</h2>
 <p><strong>实际计划57、建设记录219。</strong> 独立SQL消费者和有限启动父/驱动源码已准备并通过局部独审。完整家族还缺Root来源准入、UID1000物理准入和四资源独立收口，尚未生成执行标识或派发PG4。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1316,7 +1337,7 @@
 <p><strong>下一步：</strong> 先落实明确分阶段的Root纯字节source/runtime/625/37B overlay准入、UID1000 physical provider及独立current4 reader/observer；默认source/review/activation/actual refs为空先拒IO，提纲不是源码就绪。完成完整新family及具体once入口独审，取得真实Node/Vite/load/config/reporters、独立空PG30迁移/业务baseline、必要新fresh和当前scope证据后，才唯一PG4。原75来源读取、3830/2dd及全部closed入口不重；旧native34不作为新PG4，旧R6两失败和三个unknown永久保留。后续仍需真实开发CI评审、独立测试缺陷闭环、软件文档包安装使用升级恢复、客户12和全部74/Agent成熟链；10分钟跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-independent-sql-source-independent-local-review-1791921570622-a58ff1f0-dbdb-47ef-ba09-2cef7f35deee.json">SQL有限源码独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-qa-startup-parent-independent-local-review-1791923035050-f8be494f-cda3-46bc-be97-31ea220c45d5.json">启动父/驱动局部源码独审</a>及<a href="../artifacts/software-factory/goals-r29/r33-pg4-startup-local-source-plan57-decision7-v2-sync-1791923398599.json">计划57/局部实施7同步</a>。</p>
 </section>
-<section class="doc-section" data-section="51"><h2 id="section-51" tabindex="-1">记录214快照：PG4最小启动契约已选，实施有限执行家族</h2>
+<section class="doc-section" data-section="53"><h2 id="section-53" tabindex="-1">记录214快照：PG4最小启动契约已选，实施有限执行家族</h2>
 <p><strong>实际计划56、建设记录214。</strong> 实际框架来源和四角色有限源码分析已完成；新的最小QA启动与四用例设计经Root选择和独立薄审。下一步只在本机实施执行家族，再核实际配置、加载、钩子及数据库证据。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1354,7 +1375,7 @@
 <p><strong>下一步：</strong> 本机定点实施可信Root生命周期/来源控制、UID1000 startup driver和独立PG4范围/报告/SQL消费者；所有默认actual/review/activation refs为空先拒IO。完成完整新source独审和具体once入口后，必要fresh/source/overlay/DB实际门齐才唯一有限PG4。之后继续真实开发CI评审独立测试缺陷闭环、软件文档包安装使用升级恢复、客户12、全部74及Agent成熟链；10分钟跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-qa-startup-and-four-case-minimal-design-1791918972087-79c3e22f-839d-441f-9454-2a17f564b2a6.json">最小启动设计</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-startup-and-four-case-root-selection-20261014.json">Root选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-qa-startup-and-four-case-design-independent-local-review-1791919256474-30c9950d-d695-4579-b700-823371e58e8c.json">设计薄独审</a>及<a href="../artifacts/software-factory/goals-r29/r33-pg4-startup-design-plan56-decision6-sync-1791919313502.json">计划56与设计选择同步</a>。</p>
 </section>
-<section class="doc-section" data-section="52"><h2 id="section-52" tabindex="-1">记录212快照：实际框架字节独验通过，继续PG4行为资格</h2>
+<section class="doc-section" data-section="54"><h2 id="section-54" tabindex="-1">记录212快照：实际框架字节独验通过，继续PG4行为资格</h2>
 <p><strong>实际计划55、建设记录212。</strong> 已唯一读取应用实际依赖的三个测试框架包，75份文件共1,569,631字节；保存原响应独验通过。下一步是确认实际配置、钩子与报告器行为，再执行PG4四项业务验收。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1392,7 +1413,7 @@
 <p><strong>下一步：</strong> 收尾实际四角色compiled源的有限语义图，full708候选不得以512截断冒完整闭包；明确真实Node/Vite必要load、Task/reporter ABI、有效runner/config/reporter入口。按最小有界契约准备只读37B测试覆盖和virtual authored625/b3来源见证、独立PG30migration/业务row baseline及执行前必要fresh保护与PG4唯一有限入口，再真实开发CI评审独立测试缺陷闭环、软件文档包安装使用升级恢复、客户12、全部74和Agent成熟链。10分钟跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-runtime-framework-byte-actual-read-1791916234428-dba6d039-cc98-4a7f-ba49-387ef6c1bfe8.json">实际三包原字节读取</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-runtime-framework-byte-saved-evidence-independent-limited-audit-1791916650377-408f86fb-5f78-4fbf-8b2b-bfbd158054c1.json">保存原字节独验</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-runtime-framework-byte-entry-independent-local-review-1791916187307-923750fe-efa8-41f4-82d3-358c45380dda.json">实际入口独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-runtime-framework-byte-reader-independent-local-review-workspace-corrected-1791915926410-87094939-5165-42a6-878e-9cca994aad2b.json">三精确路径修复独审</a>及<a href="../artifacts/software-factory/goals-r29/r33-pg4-framework-selected-bytes-plan55-decision5-sync-1791916815528.json">计划55/PG4局部5同步</a>。</p>
 </section>
-<section class="doc-section" data-section="53"><h2 id="section-53" tabindex="-1">记录204快照：R6完整收尾独验通过，推进PG4实际来源</h2>
+<section class="doc-section" data-section="55"><h2 id="section-55" tabindex="-1">记录204快照：R6完整收尾独验通过，推进PG4实际来源</h2>
 <p><strong>实际计划54、建设记录204。</strong> 新R6前检、当前范围和后检九条Root路真实完成，保存原证据独验通过。八资源范围、旧库存、队列SQL、ACK、源包及原报告保持；PG4尚未执行，下一步是有限读取应用实际使用的测试框架来源。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1430,7 +1451,7 @@
 <p><strong>下一步：</strong> 完成新有限框架byteReader/caller、精确源和独审，再Root审具体一次性入口后唯一原byte来源采集；本机收缩四角色语义图并验实际ABI/config/reporter load、37B只读QA overlay/effective625 virtualunion、独立DB/30migration/业务baseline及PG4有限入口。继续真实开发CI评审、独立测试缺陷闭环、文档软件包安装使用升级恢复、客户12、全部74和Agent成熟自动链。10分钟跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-current-main-r6-scope-actual-read-1791912222149-5a007401-3410-48a9-a8d2-259e0acac3fc.json">新R6实际完整收尾</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main-r6-scope-saved-evidence-independent-limited-audit-1791913112083-2050fde5-3732-4035-b01b-f93c5f522fe7.json">保存原证据独验</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-runtime-framework-byte-acquisition-root-selection-20261014.json">框架有限读取选择</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-runtime-framework-byte-acquisition-selection-independent-local-review-1791913012560-ce4dc341-c886-4dcb-a9ee-47f2921fa84d.json">设计薄审</a>及<a href="../artifacts/software-factory/goals-r29/r33-current-r6-qualified-pg4-choice-plan54-environment23-pg4decision4-sync-1791913420693.json">计划54与局部实施同步</a>。</p>
 </section>
-<section class="doc-section" data-section="54"><h2 id="section-54" tabindex="-1">记录195快照：新完整保护通过，推进R6范围收尾</h2>
+<section class="doc-section" data-section="56"><h2 id="section-56" tabindex="-1">记录195快照：新完整保护通过，推进R6范围收尾</h2>
 <p><strong>实际计划53、建设记录195。</strong> 新currentMain合同的四路完整保护实际通过，来源及保存原证据已独验。原库存、队列SQL、ACK、模板配置和源码身份完整保持；当前R6范围另需新的完整收尾观测，PG4及客户全链仍待。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1467,7 +1488,7 @@
 <p><strong>下一步：</strong> 完成A的新current caller/sourcewrapper、精确原程序及载荷、外部来源和独审，再Root审唯一新完整收尾入口后真实读取当前R6。QA有效overlay与来源、实际框架/config/hooks、独立DB及有限入口就绪后PG4一次复验；继续真实开发CI评审、独立测试缺陷闭环、文档软件包安装使用升级恢复、客户12、全部74和Agent成熟自动链。10分钟跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-current-main-single-entry-protection-actual-read-1791907314196-2819523c-9e2c-45e8-bd28-ae8294b35283.json">实际完整保护</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main-single-entry-protection-saved-evidence-independent-limited-audit-1791907933231-3ef4873d-47ba-4a10-abb7-a81b0efbda0b.json">保存原证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main-r6-legacy-current-source-root-selection-20261014.json">R6选择A</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main-r6-option-a-interface-independent-local-review-1791907898596-a430c588-4fa9-4962-aae2-2947c48f98e8.json">A设计独审</a>及<a href="../artifacts/software-factory/goals-r29/r33-new-whole-qualified-and-r6-choice-plan53-environment22-sync-1791908241771.json">计划53和局部实施22</a>。</p>
 </section>
-<section class="doc-section" data-section="55"><h2 id="section-55" tabindex="-1">记录186快照：主源码内容保持，推进新库存合同</h2>
+<section class="doc-section" data-section="57"><h2 id="section-57" tabindex="-1">记录186快照：主源码内容保持，推进新库存合同</h2>
 <p><strong>实际计划52、建设记录186。</strong> 唯一主源码定点只读及保存证据独审完成。两份当前状态与原593项清单逐行一致，内容指纹、字节数和根目录身份保持，仅元数据摘要与原库存门不符。新严格库存合同已选，新的校验源码正在本机实现；完整保护、当前R6及产品验收仍待。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1503,7 +1524,7 @@
 <p><strong>下一步：</strong> 读取新家族真实最终源码、派生库存指纹和程序参数，完成完整来源独审及新的有限入口审，再唯一新四路完整保护读取；当前R6另需完整范围实证。QA有效源码、框架钩子、独立数据库和有限入口就绪后复验PG4；继续真实开发CI评审、独立测试缺陷闭环、文档软件包安装使用升级恢复、客户12及全部74和Agent成熟自动链。此跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-fixed-main-diagnostic-result-1791903076645-397c57d0-2eb6-4f22-8636-76293bfaca10.json">实际主源码诊断</a>、<a href="../artifacts/software-factory/goals-r29/r33-fixed-main-diagnostic-saved-evidence-independent-limited-audit-1791903450314-1d5b67fe-5e2e-4f56-a8e8-14feebcb4bb5.json">保存字节独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-fixed-main-saved-manifest-only-comparison-1791903363207-d2cdff9f-4075-4ce6-b4bb-0b1d8157e982.json">完整清单对比</a>、<a href="../artifacts/software-factory/goals-r29/r33-current-main-metadata-contract-root-selection-20261013.json">新合同选择</a>及<a href="../artifacts/software-factory/goals-r29/r33-main-diagnostic-and-new-contract-plan52-environment20-sync-1791904110012.json">计划52和局部实施20</a>。</p>
 </section>
-<section class="doc-section" data-section="56"><h2 id="section-56" tabindex="-1">记录179快照：新完整读取被库存门拒绝，定点诊断准备中</h2>
+<section class="doc-section" data-section="58"><h2 id="section-58" tabindex="-1">记录179快照：新完整读取被库存门拒绝，定点诊断准备中</h2>
 <p><strong>实际计划51、建设记录179。</strong> 有限新方法及四个已知进程范围的独验结果保持。新完整消费者和一次性入口已完成来源独审，唯一实际只读在101主源码库存门被拒绝，尚未进入两个新的中间观察程序。调用和全部原响应已封存，不重复派发。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1535,7 +1556,7 @@
 <p><strong>下一步：</strong> 完成精确主源码定点诊断的source、有限入口和独审，Root只执行一次新的有界只读；取得实际不符项后再核库存合同和变化来源，不能直接改旧指纹或回填失败。新的完整保护及当前R6、QA有效源码、实际框架钩子、独立数据库与有限入口就绪才复验PG4；继续真实开发CI评审、独立测试缺陷闭环、文档软件包安装使用升级恢复、客户12及全部74和Agent成熟自动链。此跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-full-protection-actual-read-1791900232788-a9e9b2c3-8956-439c-af84-20bfd35059e5.json">唯一实际失败结果</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-full-protection-failed-read-saved-evidence-independent-limited-audit-1791900640422-4391ad9c-71f2-4062-b995-7d6cc349d7a5.json">失败保存证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-r3-independent-observation-1791896751796-edc3c6d2-369d-4953-b163-a214a72b9224.json">有限方法历史独验</a>及<a href="../artifacts/software-factory/goals-r29/r33-full-read-inventory-main-failure-plan51-environment18-sync-1791900606187.json">计划51和局部实施18</a>。</p>
 </section>
-<section class="doc-section" data-section="57"><h2 id="section-57" tabindex="-1">记录176快照：新完整读取源码已核，有限入口待验</h2>
+<section class="doc-section" data-section="59"><h2 id="section-59" tabindex="-1">记录176快照：新完整读取源码已核，有限入口待验</h2>
 <p><strong>实际计划50、建设记录176。</strong> 有限新方法及四个已知进程范围已独验。新的完整保护消费者和四路适配程序完成本机实现及来源独审，一次性读取入口正在准备；尚无新完整保护或当前R6现场资格。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1567,7 +1588,7 @@
 <p><strong>下一步：</strong> 独审新的有限一次性读取入口与外部context，源与留证门齐后只执行一次新完整保护读取；其后当前R6独立完整范围、QA有效源码、实际框架钩子、独立数据库和有限入口就绪才复验PG4。继续真实开发CI评审、独立测试缺陷闭环、文档软件包安装使用升级恢复、客户12及全部74与Agent成熟自动链。此跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-protection-consumer-independent-local-review-1791899112295-a3561439-7a8c-4dbe-90c4-9f071bb4baa2.json">新消费者来源独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-protection-adapter-independent-local-review-1791898240303-b65e8f68-536e-4ad8-a2af-5f53a6ae4040.json">新适配器独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-r3-independent-observation-1791896751796-edc3c6d2-369d-4953-b163-a214a72b9224.json">实际有限方法与当前范围</a>及<a href="../artifacts/software-factory/goals-r29/r33-complete-protection-local-source-environment17-sync-1791899468581.json">环境局部实施17</a>。</p>
 </section>
-<section class="doc-section" data-section="58"><h2 id="section-58" tabindex="-1">记录174快照：有限方法已独验，推进完整保护</h2>
+<section class="doc-section" data-section="60"><h2 id="section-60" tabindex="-1">记录174快照：有限方法已独验，推进完整保护</h2>
 <p><strong>实际计划50、建设记录174。</strong> 新有限方法已取得独立资格，四个已绑定进程及声明范围的当前收尾已确认。新的完整保护读取程序开始本机实现，完整环境保护、当前R6收尾与4项并发复验仍待验。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1600,7 +1621,7 @@
 <p><strong>下一步：</strong> 完成新完整来源合同、消费者、原响应留证与独审，再唯一有改进的新完整保护读取及当前R6范围验收。真实QA有效源码、框架钩子、独立数据库与有限入口就绪后仅复验PG4；继续真实开发CI评审、独立测试缺陷闭环、文档软件包安装使用升级恢复、客户12、全部74与Agent成熟自动链。此跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-r3-independent-observation-1791896751796-edc3c6d2-369d-4953-b163-a214a72b9224.json">实际有限方法与当前范围独验</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-r3-independent-observation-saved-evidence-limited-audit-1791897181401-a1497f62-57cb-4392-92a0-2599fc658b31.json">保存原证据审计</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-protection-source-contract-design-selected-1791897742881-09112be8-b487-4b82-80c4-9a035c419459.json">新完整来源接口选择</a>及<a href="../artifacts/software-factory/goals-r29/r33-independent-method-current-four-scope-plan50-environment16-sync-1791897839226.json">计划50与局部实施16</a>。</p>
 </section>
-<section class="doc-section" data-section="59"><h2 id="section-59" tabindex="-1">记录166快照：新父源码已核，完整读取族待审</h2>
+<section class="doc-section" data-section="61"><h2 id="section-61" tabindex="-1">记录166快照：新父源码已核，完整读取族待审</h2>
 <p><strong>实际计划49、建设记录166。</strong> 新R3父执行源码完成局部实现和独立来源审查，现场方法资格仍未取得。独立收尾程序正在本机准备，完整家族与有限实际入口尚未就绪。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1632,7 +1653,7 @@
 <p><strong>下一步：</strong> 完成新14raw及第四停止身份的独立读取家族与完整来源审查，Root另审有限once入口后唯一新有限实测和独立当前范围收尾；再新完整消费者与当前R6保护。QA有效源码、框架和数据库就绪后仅复验PG4，继续真实开发CI评审测试缺陷闭环、文档软件包安装使用升级恢复、客户12、全部74与Agent成熟自动链。此跟进不代表通用全天无人控制器完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-bound-method-parent-independent-local-review-r3-1791892476584-08373fde-0676-4dc8-b577-f85e0f4c3a5a.json">父源码独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-parent-r3-delta-physical-fingerprint-correction-1791892279774-e90b19a5-ee5a-407a-9f44-ef35375ba713.json">磁盘指纹更正</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-r3-current-four-known-actor-source-scope-clarification-1791893083066-7fb13227-69c5-4a33-88af-28a70ad66778.json">当前四身份范围</a>及<a href="../artifacts/software-factory/goals-r29/r33-r3-parent-local-source-environment14-sync-1791893207450.json">环境局部实施14</a>。</p>
 </section>
-<section class="doc-section" data-section="60"><h2 id="section-60" tabindex="-1">记录164快照：定点缺口已确认，启动修正已选</h2>
+<section class="doc-section" data-section="62"><h2 id="section-62" tabindex="-1">记录164快照：定点缺口已确认，启动修正已选</h2>
 <p><strong>实际计划49、建设记录164。</strong> 新R2独立读取族完成局部状态门修正与独审，唯一有限运行的start和只读check均未获准入。一次新的定点只读已核清当前单位配置与两份早期错误；新R3最小启动方案已选，源码仍在本机准备，现场方法资格未取得。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1668,7 +1689,7 @@
 <p><strong>下一步：</strong> 完成新R3父执行和独立读取家族及来源独审，再唯一有限实际方法与独立当前范围验收。其后接新完整保护消费者及当前R6收尾，QA/框架/数据库来源就绪后仅复验PG4；继续真实开发CI评审、独立测试缺陷闭环、文档软件包、安装使用升级恢复、客户12及全部74和Agent成熟自动链。此跟进不代表通用全天无人控制器已完成。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-unit-config-diagnostic-result-r2-1791889627464-64e9f4f9-a42a-4325-8ccd-ecd4ea244441.json">实际定点诊断</a>、<a href="../artifacts/software-factory/goals-r29/r33-unit-config-diagnostic-saved-evidence-independent-limited-audit-r2-1791890015634-37020332-8a48-426c-9745-ef20df1e547e.json">保存字节独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-owned-scope-independent-local-review-r2-1791887268598-6c4a5a2c-decf-473c-9e4e-0560129dcf14.json">R2来源状态门独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-owned-method-r3-capability-stderr-minimal-proposal-1791890269571-129f2f84-dad2-4d29-b5e8-f5f032dbfa54.json">新R3小提案</a>和<a href="../artifacts/software-factory/goals-r29/r33-r3-minimum-root-bridge-fd2-design-selection-environment13-sync-1791890703962.json">局部实施13中的设计选择</a>。</p>
 </section>
-<section class="doc-section" data-section="61"><h2 id="section-61" tabindex="-1">记录160快照：失败单位范围已核，新方法待实测</h2>
+<section class="doc-section" data-section="63"><h2 id="section-63" tabindex="-1">记录160快照：失败单位范围已核，新方法待实测</h2>
 <p><strong>实际计划49、建设记录160。</strong> 已完成一次新的独立只读核验，失败单位和精确控制组的声明范围闭合。新早期留证父版本完成局部独审，独立方法读取族继续准备，尚未取得方法资格。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1699,7 +1720,7 @@
 <p><strong>下一步：</strong> 完成R2独立读取族与实际入口，唯一有限方法实测及当前范围独验；再接新完整保护消费者和当前R6完整收尾。QA、框架与数据库来源就绪后仅复验4项并发及完整前后钩子，继续真实开发CI/评审/独立测试缺陷闭环、文档软件包/安装使用/升级恢复、客户12原始需求与全部74及Agent成熟自动链。费用和Token只记录无上限，正式版本未发布。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-failure-unit-cgroup-independent-result-1791885449122-eb109bc2-226c-457b-8495-8e856f53ceb0.json">窄范围实际核验</a>、<a href="../artifacts/software-factory/goals-r29/r33-failed-unit-scope-saved-evidence-independent-limited-audit-1791885800799-6e69a065-be20-440c-8c55-4b3772f96b8c.json">保存证据审计</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-bound-method-parent-independent-local-review-r2-1791885333173-6d374857-b426-4a9b-acd7-ca89eefa0298.json">R2父来源独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-parent-r2-early-catch-scope-clarification-1791885498698-41ac879e-1060-45ca-b18c-cc2bb698e1ee.json">首异常留证限界</a>和<a href="../artifacts/software-factory/goals-r29/r33-failed-unit-closure-and-r2-preparation-environment11-sync-1791885884784.json">环境局部实施11</a>。</p>
 </section>
-<section class="doc-section" data-section="62"><h2 id="section-62" tabindex="-1">记录158快照：有限父运行失败，正在补早期留证</h2>
+<section class="doc-section" data-section="64"><h2 id="section-64" tabindex="-1">记录158快照：有限父运行失败，正在补早期留证</h2>
 <p><strong>实际计划49、建设记录158。</strong> 新父入口与限定收尾源码已独审，但唯一有限父运行在保存身份前失败，尚未取得方法资格。两个实际调用均已结束并封存，不重派发。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1730,7 +1751,7 @@
 <p><strong>下一步：</strong> 独核这次失败的限定单位范围，完成新早期错误留证来源与独审，再唯一有限实测。真实方法和完整当前保护就绪后，仅复验4项并发及完整前后钩子。随后继续真实开发、CI/评审、独立测试缺陷闭环、文档软件包/安装使用/升级恢复、客户12原始需求到交付和全部74及Agent成熟自动链。费用和Token只记录无上限，正式版本未发布。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-incomplete-saved-evidence-independent-limited-audit-1791883568394-c747cd12-8cbd-4f3b-a36a-96142e9d8c80.json">失败保存证据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-method-early-failure-local-analysis-1791883414787-a7569664-1bf6-4b21-a6a1-2fe251ad121a.json">早期缺证分析</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-source-witness-independent-local-review-1791883044706-4445e209-0286-4056-9c55-e5f88b5e7ef3.json">纯来源见证独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-method-parent-actual-failure-environment10-sync-1791883805658.json">环境实施10</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-source-witness-local-implementation-decision3-sync-1791883807264.json">PG4局部实施3</a>。</p>
 </section>
-<section class="doc-section" data-section="63"><h2 id="section-63" tabindex="-1">记录155快照：方法夹具与并发判据已作局部独审</h2>
+<section class="doc-section" data-section="65"><h2 id="section-65" tabindex="-1">记录155快照：方法夹具与并发判据已作局部独审</h2>
 <p><strong>实际计划49、建设记录155。</strong> 新观察来源、有限方法夹具和并发结果判据已完成本机修复与局部独审。正在接通90秒父入口及限定范围的独立收尾；现场方法、整机收尾和4项并发尚未执行。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1761,7 +1782,7 @@
 <p><strong>下一步：</strong> 完成父执行和独立读取家族，唯一有限实测并核当前范围；再接新完整保护消费者，核当前R6完整收尾。QA与数据库来源就绪后只复验4项并发及完整前后钩子，再继续真实开发、CI/评审、独立测试与缺陷闭环、文档软件包/安装使用/升级恢复、客户12原始需求和全部74及Agent优化。费用和Token只记录无上限，正式版本未发布。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-bound-method-fixture-independent-local-review-1791878146924-926cb873-d7ff-4e4e-8019-811297eff6fa.json">方法夹具独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-only-report-oracle-independent-local-review-1791877146435-3c982b69-87b4-4d06-8f1d-059a53fed3a9.json">并发判据独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-oracle-local-implementation-decision2-sync-1791877774419.json">PG4局部实施</a>和<a href="../artifacts/software-factory/goals-r29/r33-method-fixture-local-implementation-environment8-sync-1791879042413.json">环境局部实施8</a>。</p>
 </section>
-<section class="doc-section" data-section="64"><h2 id="section-64" tabindex="-1">记录153—154快照：新观察来源已独审，有限方法待实测</h2>
+<section class="doc-section" data-section="66"><h2 id="section-66" tabindex="-1">记录153—154快照：新观察来源已独审，有限方法待实测</h2>
 <p><strong>实际计划49、建设记录153。</strong> 新观察源码及本机独立审查已完成；已选一个受控子进程的有限验证，父入口和独立范围收尾待完成。整机收尾仍未通过，4项并发复验尚未启动。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1792,7 +1813,7 @@
 <p><strong>下一步：</strong> 完成有限方法和独审，取得新完整当前收尾；核定只读QA覆盖、有效625源码及数据库后，只运行4项并发和完整前后钩子。随后继续真实开发、CI/评审、测试、软件文档交付与安装使用、升级恢复变更、客户12原始需求和全部74目标及Agent优化。费用和Token只记录无上限，正式版本未发布。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-entry-generator-plan49-sync-1791876526552.json">计划49</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-entry-bound-census-independent-local-review-1791875012089-9af73851-9dd6-4a23-9a94-aef072eb38bc.json">新来源独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-owned-child-method-selected-addendum-1791876388418-d1cb0326-2870-42e7-bd1b-ac6d89b1f019.json">所选有限范围</a>和<a href="../artifacts/software-factory/goals-r29/r33-pg4-hook-completion-principles-20261013.md">钩子取证原理</a>。</p>
 </section>
-<section class="doc-section" data-section="65"><h2 id="section-65" tabindex="-1">记录152快照：有限实测通过，完整核验待接通</h2>
+<section class="doc-section" data-section="67"><h2 id="section-67" tabindex="-1">记录152快照：有限实测通过，完整核验待接通</h2>
 <p><strong>实际计划48、建设记录152。</strong> 新的单条目录读取方式已在101低权限进程中完成有限实测，并经保存证据独审。现在正在制作新观察器与完整消费接口；整机收尾尚未通过，剩余4项并发尚未启动。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1818,7 +1839,7 @@
 <p><strong>下一步：</strong> 接通并独审新的可逆观察来源，取得当前完整收尾证据；再核定QA文件覆盖与有效源码，只运行4项并发及完整前后钩子。随后继续真实开发、CI/评审、测试、交付使用、客户12原始需求和全部74目标及Agent优化。费用和Token只记录无上限。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-single-dirent-limited-result-plan48-sync-1791874473010.json">计划48</a>、<a href="../artifacts/software-factory/goals-r29/r33-single-dirent-self-saved-evidence-independent-limited-audit-1791874275689-cb9f6f68-2436-48c1-a25e-83eba50ae2b6.json">有限实测独审</a>与<a href="../artifacts/software-factory/goals-r29/r33-single-entry-bound-census-generation-spec-20261013T063403Z.json">新观察器规格</a>。</p>
 </section>
-<section class="doc-section" data-section="66"><h2 id="section-66" tabindex="-1">记录150—151快照：四项并发专门复验</h2>
+<section class="doc-section" data-section="68"><h2 id="section-68" tabindex="-1">记录150—151快照：四项并发专门复验</h2>
 <p><strong>计划47已同步，建设记录150—151。</strong> 已选择只复验剩下的4项并发：复用R32产品运行包，明确加载修正后的测试文件。原生1项和接口/SQL34项保留原通过结果；新的4项尚未运行，整批与全部目标仍未验收。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1848,7 +1869,7 @@
 <p>101的唯一自身特征验证已结束：有效自身PIDFD能确认主动关闭的管道槽位，原返回与来源经保存证据窄审；没有访问其他进程。它不能证明旧三个未知的具体原因，也不能给整机清场放行。正定点验证更小批次的目录取得方式；仍拒绝未知、身份漂移或不完整读取，不盲目第三次重复整体扫描。没有新模型调用或生产发布，费用和Token只记录无上限。</p>
 <p>见<a href="../artifacts/software-factory/goals-r29/r33-pg4-only-selection-plan47-sync-1791872043315.json">计划47与所选决策</a>、<a href="../artifacts/software-factory/goals-r29/r33-pg4-only-contract-design-independent-local-review-1791871903195-7366e72d-240a-40df-ae2c-e2dd378a856a.json">4项复验设计独审</a>、<a href="../artifacts/software-factory/goals-r29/r33-kernel-fd-self-feature-saved-evidence-limited-audit-20261013T061327Z.json">有限内核事实窄审</a>与<a href="../artifacts/software-factory/goals-r29/r33-kernel-feature-decision5-sync-1791872214745.json">环境决定追加</a>。</p>
 </section>
-<section class="doc-section" data-section="67"><h2 id="section-67" tabindex="-1">记录145—149快照：真实业务部分结果</h2>
+<section class="doc-section" data-section="69"><h2 id="section-69" tabindex="-1">记录145—149快照：真实业务部分结果</h2>
 <p><strong>当前：原生加载1项和真实性门接口/SQL34项独立通过；并发4项未执行，准备断言已在独立本机副本修正。</strong> 实际计划46、建设记录145—149。整批验收仍未通过。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -2266,7 +2287,7 @@
 <p>此前方向采用实际同步为通用计划14、决策<code>d49f8155-0814-47f3-a0bc-482d28781773</code>已选定修订1、软件工厂资料38/建设资料31；方向采用时未派发或调用模型，旧profile及全局监督未变。见<a href="../artifacts/software-factory/goals-r29/goal-adoption-1791815284882.json">方向采用回执</a>。该阶段与随后计划15的实际派发分开保留，不把选定或已实施当作验收。</p>
 <p>101新副本<code>msf-targets-r29/source</code>已实际准备并在项目登记，608公开文件及9b起点指纹保持，新副本元数据<code>c854465c…</code>与目录身份单独固定；<code>snapshot:9b07a511-r29</code>是快照标签，未复制Git历史/私有文件。准备与派发前独审确认原源码、profile、模板、节点及空闲队列保持；此边界不延伸为运行中或终态清场。见<a href="../artifacts/software-factory/goals-r29/target-copy-prepare-1791815500067.json">准备回执</a>、<a href="../artifacts/software-factory/goals-r29/copy-registration-1791815921851.json">副本登记</a>、<a href="../artifacts/software-factory/goals-r29/actual-target-copy-independent-readback-1791815974804-c3217994-0b00-43ba-b3eb-9ab39206c99e.json">派发前独立读回</a>。任务签名、实际源码变化、用量及独立复验后续分别追加。</p>
 </section>
-<section class="doc-section" data-section="68"><h2 id="section-68" tabindex="-1">记录放在哪里</h2>
+<section class="doc-section" data-section="70"><h2 id="section-70" tabindex="-1">记录放在哪里</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -2330,7 +2351,7 @@
 <p>详尽文档保存在当前仓库，平台保存摘要、关联和实际修订事件。当前机制由开发助手在完成工作时追加，不会自动理解全部外部开发日志或自动生成经验；其他机器的记录归集可在后续接入。</p>
 <p>平台已登记 <a href="https://cc-jarvis.ikvein.com/?mode=platform#theme=stark&view=projects/25dcc5cf-bdfe-43f8-bbff-e79e7190161f&board=all">贾维斯建设项目</a>。软件工厂资料已追加交付路线及真实测试结果；“经验技能”已有两份操作手册候选，尚未验证发布为 Skill。用户随后授权首次完整测试：已实际派发模型连接、暂停续做和隔离测试任务，没有因此启动源码功能修改或全局持续开发。详细结果见 <a href="101%E7%9B%91%E7%9D%A3%E7%8E%AF%E5%A2%83%E6%A3%80%E6%9F%A5%E4%B8%8E%E9%A6%96%E6%AC%A1%E5%AE%8C%E6%95%B4%E6%B5%8B%E8%AF%95.html">101 监督实测报告</a>。</p>
 </section>
-<section class="doc-section" data-section="69"><h2 id="section-69" tabindex="-1">贾维斯的长期目标</h2>
+<section class="doc-section" data-section="71"><h2 id="section-71" tabindex="-1">贾维斯的长期目标</h2>
 <ol>
 <li>家庭日常主要通过语音使用：成员有各自的声音、回复语言、习惯和记忆，公共房间入口能够稳定收听、回复和打断。</li>
 <li>管理所有已接入的机器、运行项目、资源和故障，并保留授权范围内的诊断、操作与恢复证据。</li>
@@ -2340,7 +2361,7 @@
 </ol>
 <p>长期目标不是当前全部已验收的能力。下面按已取得的证据记录现状。</p>
 </section>
-<section class="doc-section" data-section="70"><h2 id="section-70" tabindex="-1">历史状态：2026 年 10 月 12 日</h2>
+<section class="doc-section" data-section="72"><h2 id="section-72" tabindex="-1">历史状态：2026 年 10 月 12 日</h2>
 <p>以下内容保留各次记录当时状态；当前推进以文首R29及后续实际回执为准。</p>
 <p><strong>R28本轮复验及恢复已完成，剩余两项真实历史资料缺失。</strong> 签名nonlate failed：50检查48通过2失败，332测试全部通过，30原型28通过2失败；正常登录、业务写读和实际页面通过。syntax实证九个旧版本目录全缺、e129 Git对象缺失；design-boundary实际20/21，唯一失败是加载原V1.8时缺文件。实际15资源、两标签、进程/socket/ACK独立清理后才恢复9c。另已收窄112/101当前发布树权限，每节点24目录/207文件只移除写权限，独立读回0可写、817编译内容/主冷/私有配置/七工具/三源保持，无权限操作重启。计划13、软件资料37/建设30已同步；固定测试0 Token/0美元，旧未知费用保持。尚未合入main、发布产品或验收74目标。全过程已追加建设记录94，权限选择及实施已登记23532846修订1/2；未来发布逻辑独审通过，尚未实际stage。原Git来源为不存在的本地目录，本机相关路径也未找到九历史版本，需要真实备份位置。详见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82R28%E9%AA%8C%E8%AF%81%E5%A5%91%E7%BA%A6%E4%BF%AE%E5%A4%8D%E4%B8%8E%E5%A4%8D%E9%AA%8C.html">R28最终结果</a>。下面92/91/90保留为原时点快照。</p>
 <p><strong>R28已实际派发，阶段332项测试全部通过，完整复验继续。</strong> R28-2监管协议已在112正式平台与101冷备上线，101独立开发节点升级且私有配置保持；实际单次task bd55cfd8 / run08ce8722绑定固定898模板及计划12，决策00800219实施修订2。起动末尾观察冲突后仅只读核对，确认真实running，未重派。server317及shared15合计332全部通过，原型及正常登录/业务/前端继续；历史缺件仍如实失败。尚无签名终态、独立清理及模板恢复，用量保持未知。建设记录92；下面91/90保留为原时点快照。详见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82R28%E9%AA%8C%E8%AF%81%E5%A5%91%E7%BA%A6%E4%BF%AE%E5%A4%8D%E4%B8%8E%E5%A4%8D%E9%AA%8C.html">R28</a>。</p>
@@ -2432,7 +2453,7 @@
 </tr>
 </tbody></table></div>
 <p>当前全局持续监督关闭。这里不累计不同版本的测试数量，也不给尚无验收分母的软件工厂编造完成百分比。实时情况以平台和最新有范围的验证报告为准。</p>
-<h3 id="section-70-1" tabindex="-1">R22 当前推进与费用决定</h3>
+<h3 id="section-72-1" tabindex="-1">R22 当前推进与费用决定</h3>
 <ul>
 <li>用户决定<strong>费用只记录，不设限制</strong>，替代早期首轮金额和累计Token消费上限；旧决策仍保留在建设日志。实际已知金额、未知部分、Token和调用归属分别留账；金额未知不阻断正常推进。每轮技术Token、超时、取消、重复失败和无进展保护仍保留。</li>
 <li>已实现项目级持久监督、冻结目标与执行器、逐包依赖、真实验证回执和只读独立评审；全局关闭时仅授权项目可持续运行。管理入口为项目详情的“自治监督”，展示真实验证目标分母、累计用量、任务、证据与事件。</li>
@@ -2442,7 +2463,7 @@
 <p>决策台账已完成源码及页面接线，13项专项检查、全应用接口核对共14项通过；增加七个真实接口，现393操作均有具体路由。保存当时问题、真实方案、依据、动作与回退条件；旧版本不可覆盖，改选建立关联记录。R22-5已上线，三条真实管理决定分别保存选定和实施两个版本，历史及分页读回通过，既有FA-01继续运行。原生CLI自动采集、复杂Pi评估与实际服务器回退尚待接入。</p>
 <p>准确授权目录的R22-4修复已通过69项相关检查；固定文件、策略与27模板的远端核对通过。本轮本地完整后台回归530项中527通过、1项Windows原生运行时崩溃、2跳过；故障文件单独复验8项通过。只记账、总账及监督专项分别保留独立报告，不用定向复验替代整组通过。发布、失败、更正和待办见<a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.html">建设日志</a>。</p>
 </section>
-<section class="doc-section" data-section="71"><h2 id="section-71" tabindex="-1">第一项目怎样达成最终目标</h2>
+<section class="doc-section" data-section="73"><h2 id="section-73" tabindex="-1">第一项目怎样达成最终目标</h2>
 <p>软件工厂目标以既有 PRD 及用户新增目标为依据：资料到完整文档、原型、真实代码、独立测试/修复和软件实际使用可追溯；Agent/子 Agent 持续优化，流程成熟后常规全过程按质量门自动运行。贾维斯还核验工厂本身最新代码打包部署。当前默认人工和发布分期是实现事实，不否定新全自动最终目标，需补齐真实自动质量门和约定目标环境交付适配。</p>
 <p>本轮目标及十阶段出口见 <a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9B%AE%E6%A0%87%E4%B8%8E%E9%AA%8C%E6%94%B6%E6%A0%87%E5%87%86.md">端到端目标与验收标准</a>。推荐顺序：<strong>固定最新候选与完整包 → 隔离部署核验 → 范围及语义追溯 → 真实性门禁与真实生产能力 → 独立全量测试和示范贯通 → 发布维护及恢复演练</strong>。候选部署不替代产品正式放行，未运行的新测试不预写通过。</p>
 <p>R21 <a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82Agent%E8%BF%AD%E4%BB%A3%E4%B8%8E%E5%85%A8%E8%87%AA%E5%8A%A8%E4%BA%A4%E4%BB%98%E6%96%B9%E6%A1%88.md">深入方案</a>增加两条闭环：项目真实交付及 Agent 能力优化。阶段真实→能力版本/独立评估→示范贯通→正常全自动→异常变更恢复→稳定实际使用逐级验收。当前资料截断/OCR、提示词记录与实际注入、子 Agent 委派限制、原型占位、报告/备份与完整交付包的差别均需按当前源码处理，不能只靠多写提示词或开启 autopilot 认定完成。</p>
@@ -2453,7 +2474,7 @@
 <p>短 socket 工具已部署且实际 Linux bind 与精确清理通过；真实沙箱功能未运行。专项入口仅本机准备，当前测试镜像缺 Python3，依赖镜像未构建、专项未派发。R19 已补新的停止码、逐轮检查点与可靠递送基础，未追溯补造历史取消原因；下一轮仍须先固定源码内容及并发写者安排，再完成原生中断对账和受影响范围补测。</p>
 <p>每个任务至少写清：交付物、验收标准、前置条件、执行副本、验证方式、费用/Token/轮次/时限边界和停止条件。模型只承担已明确的任务；管理者保留方案取舍和验收决定。完整路线、七个关键放行点和首任务 FM-001 的建议见 <a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%A6%96%E9%A1%B9%E7%9B%AE%E4%BA%A4%E4%BB%98%E8%AE%A1%E5%88%92.md">首项目交付计划</a>。</p>
 </section>
-<section class="doc-section" data-section="72"><h2 id="section-72" tabindex="-1">每次记录哪些内容</h2>
+<section class="doc-section" data-section="74"><h2 id="section-74" tabindex="-1">每次记录哪些内容</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -2504,7 +2525,7 @@
 </tbody></table></div>
 <p>日志不保存密钥、口令、Cookie、私有配置、聊天原文或私人录音。计量记录、聊天与成员记忆仍遵守各自的权限和保留策略，不混入建设档案。</p>
 </section>
-<section class="doc-section" data-section="73"><h2 id="section-73" tabindex="-1">持续记录工作流</h2>
+<section class="doc-section" data-section="75"><h2 id="section-75" tabindex="-1">持续记录工作流</h2>
 <ol>
 <li>开始新工作前阅读本档案和最近日志，核对实际平台、源码与验收状态。</li>
 <li>工作完成到一个可验证阶段，准备显式事件 JSON；先预检，再追加。简短问答和无变化的轮询无需重复记。</li>
@@ -2513,7 +2534,7 @@
 <li>把摘要和经验候选关联到平台项目；经验经独立复验与正式发布后，任务才引用固定 Skill 版本。</li>
 </ol>
 <p><a href="../AGENTS.md">AGENTS.md</a> 和 <a href="../CLAUDE.md">CLAUDE.md</a> 已约定这套维护方式。它是本仓库后续协作的规则，不会自动修改外接项目或替用户决定新的项目范围。</p>
-<h3 id="section-73-1" tabindex="-1">事件输入示例</h3>
+<h3 id="section-75-1" tabindex="-1">事件输入示例</h3>
 <p>下面是格式示例，不是一次已发生的验证。实际填写时使用新的编号及真实报告路径；没有证据不能写验证通过。</p>
 <pre><code class="language-json">{
   &quot;id&quot;: &quot;JARVIS-CHANGE-YYYYMMDD-01&quot;,
@@ -2538,7 +2559,7 @@
 }
 </code></pre>
 <p>项目可填 <code>jarvis</code> 或 <code>software-factory</code>。事件类型为 <code>decision/change/validation/release/incident/retrospective</code>；历史回顾另设 <code>retrospective: true</code>。证据由工具检查本仓库路径并保存文件指纹。日期未知可填 <code>null</code>。</p>
-<h3 id="section-73-2" tabindex="-1">保存与生成</h3>
+<h3 id="section-75-2" tabindex="-1">保存与生成</h3>
 <pre><code class="language-powershell"># 预检：不写建设账本
 node scripts/construction-records.mjs --input artifacts/construction-history/本轮事件.json
 
@@ -2551,7 +2572,7 @@ node scripts/construction-records.mjs --render
 <p>工具阻止重复编号覆盖、损坏记录静默跳过、私密证据路径及明显凭据进入账本；写入有并发锁。它不是隐私识别模型，提交者仍需只使用经过确认的公开项目元数据。如果上次异常退出遗留锁，先核对进程及账本再处理，不能直接绕过锁重写历史。</p>
 <p>本轮复核修正了带引号/环境变量格式的凭据识别，以及日志自由文本的 Markdown 链接转义。当前记录工具 <a href="../artifacts/construction-history/record-tool-tests-r2.json">7 项专项验证</a> 全部通过；更早的 <a href="../artifacts/construction-history/record-tool-tests.json">5 项初版验证</a> 保留当时指纹。平台资料和文档同源检查见 <a href="../artifacts/construction-history/verification.json">验证报告</a>。这些仅验证记录机制，不等于软件工厂产品验收。</p>
 </section>
-<section class="doc-section" data-section="74"><h2 id="section-74" tabindex="-1">下一步建设队列</h2>
+<section class="doc-section" data-section="76"><h2 id="section-76" tabindex="-1">下一步建设队列</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -2588,10 +2609,10 @@ node scripts/construction-records.mjs --render
 </tbody></table></div>
 <p>这些是后续建设队列，详细范围可调整。R22的项目自治与只记账已上线，软件工厂完整目标仍依真实产物逐项验收。完整包、追溯、真实Agent优化、自动质量门、使用及恢复继续实施；全局自动派发保持关闭，专项监督单独授权。</p>
 </section>
-<section class="doc-section" data-section="75"><h2 id="section-75" tabindex="-1">R26 通用计划与实际测试</h2>
+<section class="doc-section" data-section="77"><h2 id="section-77" tabindex="-1">R26 通用计划与实际测试</h2>
 <p>2026-10-11：新增可复用的持续开发和测试验收计划，计划版本与实际运行分开记录。软件工厂新计划40066986，已开始当前main完整隔离测试e5ca06df；旧开发阻塞、原74目标、未知用量和失败历史保留。决策7e4dfbde记录当前main与旧候选推进方案、选择依据、行动及回退条件。详细见<a href="%E9%80%9A%E7%94%A8%E9%A1%B9%E7%9B%AE%E7%9B%91%E7%AE%A1%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C.html">通用监管与本轮执行</a>。</p>
 </section>
-<section class="doc-section" data-section="76"><h2 id="section-76" tabindex="-1">R26-3 汇报上线与 R26-4 报告复验</h2>
+<section class="doc-section" data-section="78"><h2 id="section-78" tabindex="-1">R26-3 汇报上线与 R26-4 报告复验</h2>
 <p>2026-10-12：项目级计划已区分持续开发和测试验收，软件工厂使用测试验收模式。R26-3已在112正式上线、101保持平台冷备；第一屏为计划、进度、结果、下一步，电脑和手机实页已核对。本轮不是恢复旧R22阻塞任务，原74目标及历史费用、失败证据继续保留。</p>
 <p>首轮签名执行e5ca06df失败：332项单元及集成测试中326通过、6失败；30组原型检查中20通过、10失败；打包检查通过。验收程序最终诊断误将47项清单当成Vitest对象，导致完整终态报告缺失。此外，原型测试在工作副本生成候选HTML，触发源码一致性失败，因此安装、启动与接口运行检查未执行。上述部分结果不能算完整交付验收。</p>
 <p>独立核对确认该运行的容器、网络、socket和相关进程全部回收，原main指纹151300cf、593文件及HEAD89e6af3不变；原Claude模板随后已恢复。</p>
@@ -2599,20 +2620,20 @@ node scripts/construction-records.mjs --render
 <p>通用计划目前负责版本化安排及真实结果汇总，automaticDispatch=false；不能把新计划或单轮测试宣称为所有阶段的24小时自动修复闭环。固定测试未调用模型，模型费用及Token为0；历史未知费用继续单列。</p>
 <p>证据：<a href="../artifacts/software-factory/acceptance-r26/main-terminal-protocol-diagnosis-r26-20261012.json">异常诊断</a>、<a href="../artifacts/software-factory/acceptance-r26/main-independent-cleanup-1791734821072-ce1c275f-4dc1-49f1-b45e-9318b0f59247.json">资源清理</a>、<a href="../artifacts/software-factory/acceptance-r26/wrapper-r26-4-local-verification-20261012.json">新版入口验证</a>、<a href="../artifacts/software-factory/acceptance-r26/main-baseline-r26-4-start-current-main-full-1791735198525.json">实际复验</a>。</p>
 </section>
-<section class="doc-section" data-section="77"><h2 id="section-77" tabindex="-1">R26-4 完整失败基线与定点修复</h2>
+<section class="doc-section" data-section="79"><h2 id="section-79" tabindex="-1">R26-4 完整失败基线与定点修复</h2>
 <p>2026-10-12：运行f4b26c4c已取得完整签名失败报告。47项检查32通过、12失败、3未执行；332项测试326通过、6失败；30组原型20通过、10失败，各类分母分别保留。构建、覆盖与打包通过；副本测试生成候选HTML触发源码一致性失败，隔离健康、前端及写入读回未执行，安装运行未验收。主线593文件、151300cf指纹和HEAD89e6af3不变，独立核对确认临时资源与相关进程清理完成，原执行模板恢复成功。</p>
 <p>已实际下发独立副本修复任务580888fe、运行5c803404，101已认领running，模型gpt-6.1-sol[1m]。范围是隔离镜像契约、MinIO签名断言、测试生成物污染、缺失历史资产和超时定位；不伪造历史资产或降低验收门槛。通用计划40066986 revision5进入修复复验，保留两轮测试。决策7bd2f617纠正未选备选的目标合规标记，原bc871412历史仍可追溯；派发与验收分别登记。</p>
 <p>当前只确认模型修复运行，独立validator尚未配置；结束后必须核对实际改动、恢复模板并固定新指纹全量复验，不能把模型结束当作验收。复验准备工具的真实协议修正后16项本地验证通过，尚未在服务器安装新候选入口。原74目标仍0/74，费用和Token只记录、未知部分单列；通用计划automaticDispatch=false，全天自动修复闭环仍待实现与验证。</p>
 <p>证据：<a href="../artifacts/software-factory/acceptance-r26/main-failures-readonly-diagnosis-r26-4-20261012.json">完整失败诊断</a>、<a href="../artifacts/software-factory/acceptance-r26/main-independent-cleanup-r26-4-1791736600910-6d87946a-5f81-47f5-be0d-0dafe8b39a5b.json">资源核对</a>、<a href="../artifacts/software-factory/acceptance-r26/main-repair-start-1791736667559-95279673-c86c-479c-b133-845626331f89.json">实际修复派发</a>。</p>
 </section>
-<section class="doc-section" data-section="78"><h2 id="section-78" tabindex="-1">部分修复结束与独立复验安排 · 2026-10-12</h2>
+<section class="doc-section" data-section="80"><h2 id="section-80" tabindex="-1">部分修复结束与独立复验安排 · 2026-10-12</h2>
 <p>原生修复运行5c803404已返回签名round-limit、exit0；它完成一轮并表示仍需后续工作，当前不作修复全部完成或产品验收。原执行模板恢复，ACK及队列空闲，原main的593个公开文件、内容指纹和元数据不变。独立候选为605个文件：新增12份修复记录，只修改原prototype-commands测试文件，没有删除原文件。原测试正文32,034字节独立比对一致；改动把测试生成页面放到临时目录并在finally清理。镜像契约、MinIO断言、历史资产缺失及原型超时仍待解决。</p>
 <p>决策b774f724选择先按相同完整标准独立测试这个部分候选，再按真实结果继续修复。显式部分候选测试资格只允许本次精确签名任务的round-limit、exit0结果；它不改写终态，不授予交付通过。候选以独立helper实际指纹66a56a19固定，原六工具、45必需文件、30组原型与90/80覆盖门槛保留。新的固定测试入口尚未实际安装或派发。</p>
 <p>该原生轮次累计1,021,308 Token，按目录估计费用2.513858美元；缓存读取954,752已包含于输入，不重复相加。这是执行器记录及估计，不是供应商账单。实际项目累计1,252,610 Token、估计2.555528美元，13次调用缺少可用价格，保留未知，不抹零。费用只记录，无消费上限。</p>
 <p>独立复验准备与安装器25项本地回归通过、静态复核无阻断。实际只读检查发现两份原历史测试包约133MB，超过64MiB文件读取门槛，当前正在修正流式哈希检查；未因此安装或下发测试，也不隐藏旧包。新通用计划的automaticDispatch=false，74目标仍未独立验收；接续修复必须向模型提供真正可读取的公开诊断、依赖和环境契约。</p>
 <p>证据：<a href="../artifacts/software-factory/acceptance-r26/native-repair-candidate-audit-1791737452480-24f08f01-fa08-46e0-9b13-27231cf64e91.json">实际修复候选审计</a>、<a href="../artifacts/software-factory/acceptance-r26/native-repair-assertion-preservation-independent-20261012.json">原测试正文独立比对</a>、<a href="../artifacts/software-factory/acceptance-r26/partial-verification-choice-1791737587600.json">部分复验选择</a>、<a href="../artifacts/software-factory/acceptance-r26/native-repair-usage-totals-1791737644033.json">实际用量统计</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-verifier-file-stat-diagnosis-r26-20261012.json">历史包文件状态诊断</a>。</p>
 </section>
-<section class="doc-section" data-section="79"><h2 id="section-79" tabindex="-1">固定候选完整复验已启动 · 2026-10-12</h2>
+<section class="doc-section" data-section="81"><h2 id="section-81" tabindex="-1">固定候选完整复验已启动 · 2026-10-12</h2>
 <p>新的固定复验入口已实际安装，安装前后三次来源与旧报告核对通过，保留原六工具及45必需文件、30原型、90/80覆盖门槛。安装过程中此前的连接收尾竞态及files字段覆盖冲突均已修正，并分别追加本地回归与真实失败诊断，不改写失败历史。28项准备/安装器本地回归通过。</p>
 <p>贾维斯已实际下发任务456b2038-a782-4da2-b2d8-d3b291aba8ed、运行a11ac3a06c0f14e9f85bc897c8a766d41e165f24，101确认running；快速API与SQL独立回读冻结模板一致。开始请求在最后观察时出现连接异常，但实际派发已成立，因此没有重复下发。随后只读check已取得真实running，原main及独立候选的内容、元数据、旧报告与其余模板保持，不能把此前观察失败误认为任务未启动。</p>
 <p>完整复验正在执行，尚无签名终态或完整结果，不预填测试通过、清理成功、模板恢复或实际费用为零。固定程序不调用模型，终态后再确认实际用量。原生部分修复的round-limit历史保留，74目标仍未独立验收。</p>
@@ -2620,11 +2641,11 @@ node scripts/construction-records.mjs --render
 <p>证据：<a href="../artifacts/software-factory/acceptance-r26/repair-fixed-verifier-installation-1bf188ba-dc01-4a5e-80df-23a2c62a89ef.json">实际安装</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-fixed-dispatch-reconciliation-1791739002994.json">派发独立回读</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-fixed-validation-check-1791739135149-8eb454b3-1cc6-4515-b3e8-caea51380a40.json">运行与来源核对</a>、<a href="../artifacts/software-factory/acceptance-r26/repair-this-round-followup-registration-20261012.json">本轮跟进登记</a>。</p>
 <p>计划40066986现为revision6，保留两轮测试与原生修复，追加本轮456b2038/a11ac3a0绑定；决策b774f724 revision2记为方案已实施，独立验收仍为false。软件工厂备注revision28、建设项目备注revision22保留旧条目、里程碑与状态。真实电脑及手机首屏已核对当前执行中、计划、进度、结果、下一步和本次任务导航。建设记录已追加至78条，终态结果尚待后续追加。</p>
 </section>
-<section class="doc-section" data-section="80"><h2 id="section-80" tabindex="-1">部分候选完整复验终态与实际恢复 · 2026-10-12</h2>
+<section class="doc-section" data-section="82"><h2 id="section-82" tabindex="-1">部分候选完整复验终态与实际恢复 · 2026-10-12</h2>
 <p>运行a11ac3a0已取得签名failed，独立报告49项检查36通过13失败、332测试326通过6失败、30原型20通过10失败。候选生成物污染已修复，原main和605文件候选内容/元数据不变，隔离健康检查通过；登录拒绝校验及前端准备实际失败，需继续定位，不能算页面和写入读回验收成功。</p>
 <p>本attempt e81a1a71的15个精确资源、两类Docker标签范围、真实进程身份、socket和运行目录、创建意图、ACK与队列均独立确认清理完成，之后实际恢复中央及101原模板。固定程序本轮签名与平台账本确认0 Token/0美元，项目未知价格13次调用继续单列。没有重复下发，没有改旧R22监督或降低原验收门槛，没有派发下一轮修复、发布产品或验收全部74目标。详见<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%83%A8%E5%88%86%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E5%A4%8D%E9%AA%8C%E6%8A%A5%E5%91%8A.html">完整复验报告</a>。</p>
 </section>
-<section class="doc-section" data-section="81"><h2 id="section-81" tabindex="-1">本轮归档与后续交接完成 · 2026-10-12</h2>
+<section class="doc-section" data-section="83"><h2 id="section-83" tabindex="-1">本轮归档与后续交接完成 · 2026-10-12</h2>
 <p>完整复验a11ac3a0的签名失败、15资源独立清理及原模板恢复已收尾，原74目标仍0/74。实际版本保护同步：计划修订7、决策b774f724修订3追加实施证据；结果资料29/23后又追加公开诊断和经验候选索引，软件工厂资料现修订30、建设项目资料24，全部旧备注、状态、里程碑和费用保持。实际电脑/手机汇报显示本轮49检查36通过13失败、332测试326通过6失败和继续修复，无活动执行冒充新任务。</p>
 <p>下轮可读包逐项记录5沙箱镜像身份不一致、1MinIO签名断言、syntax历史资产缺失、design-boundary版本保留断言、workflow S4交接摘要及7个真实120秒超时。后两类断言不能归为历史资产缺失；登录响应状态未留证，前端浏览器止于认证前置，根因仍需定位，不能直接宣称认证漏洞或UI渲染错误。包包含实际离线镜像、源码指纹与环境约束，尚未派发下一轮或安装新的验证器。</p>
 <p>收尾同步首次在计划已经提交后因POST原始版本和GET汇报投影差异拒绝，只读确认原意图后修正契约，用原commandId/CAS版本恢复，实际只产生计划修订7；失败历史保留，真实控制器/SQLite重放回归等11项本地工具检查通过。没有重跑产品测试、重启业务或重新部署来补记录。经验候选已随资料索引保存，未发布Skill。</p>

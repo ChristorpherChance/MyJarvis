@@ -36,6 +36,9 @@ model = WhisperModel(args.model, device="cpu", compute_type="int8", cpu_threads=
 segments, info = model.transcribe(audio, language=None if args.language in ["", "auto"] else args.language,
                                   beam_size=3, vad_filter=True,
                                   condition_on_previous_text=False)
-text = "".join(segment.text for segment in segments).strip()
-Path(args.output).write_text(json.dumps({"text": text, "language": info.language, "duration": duration},
+transcript_segments = [{"start": segment.start, "end": segment.end, "text": segment.text}
+                       for segment in segments]
+text = "".join(segment["text"] for segment in transcript_segments).strip()
+Path(args.output).write_text(json.dumps({"text": text, "language": info.language, "duration": duration,
+                                       "segments": transcript_segments},
                                       ensure_ascii=False), encoding="utf-8")

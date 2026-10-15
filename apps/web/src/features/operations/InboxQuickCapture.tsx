@@ -6,7 +6,10 @@ import { createInboxDraft, getInboxDraft, saveInboxDraft, removeInboxDraft, clea
 import './inbox-capture.css';
 import { CaptureMaterials, type CaptureMaterialsHandle, type MaterialCaptureState } from './CaptureMaterials';
 import { safeSourceUrl } from './inbox-material-client';
-import { removeInboxMaterialDraft } from './inbox-material-store';
+import { removeInboxMaterialDraft,materialSessionGeneration } from './inbox-material-store';
+import {OfflineDraftImport} from '../offline/OfflineDraftImport';
+import {importOfflineInboxDraft} from '../offline/offline-import';
+import type {OfflineVaultDraft} from '../offline/offline-vault';
 import { getMaterialIntent, removeMaterialIntent } from './inbox-material-intents';
 
 const kinds = [['idea','灵感想法'],['experience','问题经验'],['lesson','经验教训'],['skill','通用技能'],['book','资料书籍'],['memory','记忆候选']];
@@ -132,6 +135,14 @@ export function InboxQuickCapture({ data, act, onClose, onSaved }: Pick<Props,'d
       }
     } finally { submitting.current=false; if (alive.current) setBusy(false); }
   };
+  const importOffline=async(value:OfflineVaultDraft,ready:()=>boolean)=>{
+    const original=current.current.id,epoch=materialSessionGeneration();
+    const stillCurrent=()=>ready()&&alive.current&&!blocked.current&&current.current.id===original&&materialSessionGeneration()===epoch;
+    if(submitting.current||!stillCurrent()||current.current.revision!==0||current.current.rawText||current.current.title||current.current.sourceUrl||materialState.count||materialState.loading||materialState.working||materialState.recording)throw new Error('请先保存或清除当前草稿，再导入。');
+    submitting.current=true;setBusy(true);setError('');
+    try{const imported=await importOfflineInboxDraft(actorId,value,stillCurrent);if(!stillCurrent())return;current.current=imported;setDraft(imported);setStorageIssue('');setClearing(false);}
+    finally{submitting.current=false;if(alive.current&&materialSessionGeneration()===epoch)setBusy(false);}
+  };
   const locked=busy||draft.status==='pending';
   const materialTouch=(ids?:string[])=>!!persist({...current.current,materialRevision:(current.current.materialRevision||0)+1,...(ids?{attachmentIds:ids}:{})},true);
   const hasContent=!!draft.rawText.trim()||!!safeSourceUrl(draft.sourceUrl)||materialState.count>0||!!draft.attachmentIds?.length;
@@ -141,6 +152,7 @@ export function InboxQuickCapture({ data, act, onClose, onSaved }: Pick<Props,'d
         <div className="op-actions"><Button onClick={()=>onSaved(saved.id)}>查看记录</Button><Button kind="ghost" onClick={()=>{const next=fresh();setSaved(null);setDraft(next);current.current=next;setError('');}}>再记一条</Button><Button kind="ghost" onClick={onClose}>关闭</Button></div></div> :
       <form className="inbox-capture-form" onSubmit={event=>void submit(event)} aria-busy={busy}>
         <p className="inbox-capture-intro">写几句、贴链接、丢文档或录一段。标题与分类可以之后再整理。</p>
+        <OfflineDraftImport enabled={!!actorId&&draft.revision===0&&!hasContent&&!draft.title&&!materialState.loading&&!materialState.working&&!materialState.recording&&!materialState.pendingLink} onImport={importOffline}/>
         <label className="inbox-capture-text"><span>原始内容（可选）</span><textarea aria-label="原始内容" rows={5} maxLength={INBOX_DRAFT_MAX_TEXT} disabled={locked||!actorId} value={draft.rawText} placeholder="刚想到什么？也可以只保存下面的链接或原件…" onChange={e=>update({rawText:e.target.value})}/></label>
         <label className="inbox-capture-link"><span>来源链接（可选）</span><input aria-label="来源链接" type="url" maxLength={2048} disabled={locked||!actorId||materialState.working||materialState.pendingLink} value={draft.sourceUrl||''} placeholder="https://…" onChange={e=>update({sourceUrl:e.target.value})}/><small>仅保存 http / https 链接；点击下方“提取链接正文”才访问网页。</small></label>
         <CaptureMaterials key={draft.id} ref={materials} actorId={actorId} draftId={draft.id} scope={draft.scope} sourceUrl={draft.sourceUrl} attachmentIds={draft.attachmentIds||[]} locked={locked||!actorId} onTouch={materialTouch} onState={setMaterialState}/>

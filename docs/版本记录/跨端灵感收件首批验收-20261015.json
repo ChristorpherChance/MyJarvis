@@ -1,0 +1,218 @@
+{
+  "kind": "cross-terminal-inbox-first-delivery-validation",
+  "observedAt": "2026-10-15T06:05:25.372857Z",
+  "scope": "首批快速记录、浏览器草稿、幂等确认和整理检索；未包含知识/记忆检索后续实施",
+  "implementation": {
+    "sourceFiles": [
+      {
+        "path": "apps/web/src/demo/context.tsx",
+        "beforeSHA256": "f2ef204ff4563ec3d7f80c61855a930bde213df070ba537d6884fac02dcf3368",
+        "sha256": "caa3f5450420579dd4ec3fc0ad0bd08b90eeebd6a7a91c31f5c9b44cb55e74b8",
+        "bytes": 15292
+      },
+      {
+        "path": "apps/web/src/demo/live-operation-commands.ts",
+        "beforeSHA256": "cd53dd87ec9d42d595b8253b649b6bac57a166977f3df41603478466751913b5",
+        "sha256": "b152504b37ca53224191404c8d60170a6e9a5625caa0adbe791d3af14ad4f7c0",
+        "bytes": 15700
+      },
+      {
+        "path": "apps/web/src/features/operations/research.tsx",
+        "beforeSHA256": "59347a42a8aacb6d9bf54c0390975ce98b1586a64a4b855c048fec4eb2f4761e",
+        "sha256": "c91096219177429d9b73000148bfdfb319ed373a42164ab3d14225d12fb8ec50",
+        "bytes": 32452
+      },
+      {
+        "path": "apps/api/test/inbox-capture-recovery.test.ts",
+        "beforeSHA256": null,
+        "sha256": "7ef8b0be5adf75d9215a7581847b3b81edd47b05f15957d01bbf38d3ce5cf3aa",
+        "bytes": 6952
+      },
+      {
+        "path": "apps/web/src/features/operations/InboxQuickCapture.tsx",
+        "beforeSHA256": null,
+        "sha256": "20cb367a02813879a5c02a2b630e77a716fd6202b5ab3376da083d0bfcfb549a",
+        "bytes": 11198
+      },
+      {
+        "path": "apps/web/src/features/operations/inbox-capture.css",
+        "beforeSHA256": null,
+        "sha256": "892c0b211f5081da39383be62d84f96b51a05db8147c9ef2fdc0691337c94826",
+        "bytes": 1488
+      },
+      {
+        "path": "apps/web/src/features/operations/inbox-draft.ts",
+        "beforeSHA256": null,
+        "sha256": "37d10dcbe6887afa1b34a139e044f796741bbe345c5d61d07fc71c588e5ea4a3",
+        "bytes": 6823
+      },
+      {
+        "path": "apps/web/src/features/operations/inbox-search.ts",
+        "beforeSHA256": null,
+        "sha256": "8b47e41240256542c9c9e9aabfa36816022efcf270965621b9193e4747374ca2",
+        "bytes": 816
+      },
+      {
+        "path": "scripts/qa-inbox-capture-recovery.ts",
+        "beforeSHA256": null,
+        "sha256": "c90d9dfeb9e3b1aee40625cc6075d9bb5b2f5fc3f8ba105b76909fa870226d6a",
+        "bytes": 23123
+      },
+      {
+        "path": "scripts/test-inbox-draft.cjs",
+        "beforeSHA256": null,
+        "sha256": "189b3a625b1834732a17731ef0063dca599eede5d964c9e2c739bf77f6147d96",
+        "bytes": 12277
+      }
+    ],
+    "independentWorktree": ".jarvis-dev/capture-r34",
+    "originalSourceApplied": true,
+    "databaseSchemaChanged": false
+  },
+  "review": {
+    "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+    "state": "draft",
+    "branch": "feat/inbox-capture-recovery",
+    "codeCommit": "af8de863c6b3dde09bf4b6094f812d6851c32543",
+    "merged": false
+  },
+  "validation": {
+    "dedicatedDraftChecks": {
+      "passed": 9,
+      "execution": "once"
+    },
+    "existingCommandChecks": {
+      "passed": 18,
+      "execution": "once"
+    },
+    "realHttpChecks": {
+      "passed": 2,
+      "temporaryDatabase": true,
+      "randomLoopbackPorts": true
+    },
+    "builds": {
+      "frontendAndBackendExitCode": 0,
+      "finalFrontendExitCode": 0,
+      "cleanDependencyInstall": false
+    },
+    "browser": {
+      "at": "2026-10-15T06:02:16.770Z",
+      "resumedAfterPreSend": true,
+      "realHttp": true,
+      "temporarySqlite": true,
+      "randomLoopbackPorts": true,
+      "productionAccess": false,
+      "remoteExecution": false,
+      "modelCalls": 0,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0,
+      "cleanupVerified": true,
+      "captureHttpFailure": null,
+      "scope": {
+        "offline": "Already loaded page accepts a local draft; reconnect is required to reopen the platform.",
+        "privacy": "Two isolated browser contexts and two independent disposable applications; same-instance family-only access is covered by the API test."
+      },
+      "results": [
+        {
+          "name": "mobile original-only capture and close/reopen retain local draft",
+          "status": "passed",
+          "source": "attempt-1-failure.json"
+        },
+        {
+          "name": "offline edits never auto-submit and reconnect reopen restores draft",
+          "status": "passed",
+          "source": "attempt-1-failure.json"
+        },
+        {
+          "name": "unavailable durable storage prevents sending and keeps original exportable",
+          "status": "passed",
+          "source": "attempt-1-failure.json"
+        },
+        {
+          "name": "lost committed response freezes original and refresh retry uses one command ID",
+          "status": "passed"
+        },
+        {
+          "name": "another browser on same real server sees record and organizes searchable tags",
+          "status": "passed"
+        },
+        {
+          "name": "merged original and terminal are searchable and archive opens linked research",
+          "status": "passed"
+        },
+        {
+          "name": "isolated browser contexts and separate temporary apps do not exchange private records or drafts",
+          "status": "passed"
+        },
+        {
+          "name": "logout clears this browser draft and subsequent login opens empty capture",
+          "status": "passed"
+        },
+        {
+          "name": "draft removal in a sibling tab invalidates the open editor",
+          "status": "passed"
+        },
+        {
+          "name": "same-revision replacement in a sibling tab invalidates stale content",
+          "status": "passed"
+        },
+        {
+          "name": "no model calls, external browser network, or browser runtime exceptions",
+          "status": "passed"
+        }
+      ]
+    },
+    "independentReadOnlyReview": {
+      "identityPartition": true,
+      "immutablePendingRetry": true,
+      "sessionAndCrossTabCleanup": true,
+      "finalKnownP0P1": 0,
+      "storageWriteFailureBeforeSendCorrected": true,
+      "refresh401CleanupNoticeCorrected": true
+    }
+  },
+  "retainedFailure": {
+    "firstBrowserAttempt": "artifacts/inbox-capture-recovery-qa/attempt-1-failure.json",
+    "preSendChecksPassed": 3,
+    "firstCaptureNon2xx": true,
+    "exactStatusNotRetained": true,
+    "harnessAsyncAssertionEscaped": true,
+    "followup": "Omit blank optional titles; catch route failures; only resume unpassed browser checks. Original first attempt remains unchanged.",
+    "successfulLaterAttempt": "artifacts/inbox-capture-recovery-qa/attempt-2.json"
+  },
+  "screenshots": [
+    {
+      "path": "docs/版本记录/灵感收件-20261015/phone-draft.png",
+      "sha256": "7a3f41e692198033c33dae0734833cfdcedaa7f23b83369cda6eb3a5bd351a3d",
+      "bytes": 55178,
+      "syntheticFixtureOnly": true
+    },
+    {
+      "path": "docs/版本记录/灵感收件-20261015/phone-save-unconfirmed.png",
+      "sha256": "ff5ba8dfeb1c1ac0d750c51394dfb27703fddb565ead12cb0e53f9d0e770b061",
+      "bytes": 57875,
+      "syntheticFixtureOnly": true
+    },
+    {
+      "path": "docs/版本记录/灵感收件-20261015/desktop-linked-research.png",
+      "sha256": "12db37e6456a232e6fd37f3c792c07169fa5f06ff51958c883f57b2a6b5bdad3",
+      "bytes": 127879,
+      "syntheticFixtureOnly": true
+    }
+  ],
+  "limits": [
+    "手机尺寸与Mobile UA浏览器测试，不等于实体手机或房间语音终端现场验收。",
+    "断网时已加载页面可存草稿；重新打开整个平台需先联网，未实现离线站点缓存。",
+    "本机草稿不跨浏览器同步；明确提交成功的记录才可在同服务其他已登录终端读取。",
+    "localStorage采用乐观版本检查及storage事件失效，不声称跨标签原子数据库事务。",
+    "浏览器禁止持久保存时不发送，保留原文与导出选项。"
+  ],
+  "productionDeploymentPerformed": false,
+  "productionAccess": false,
+  "formalRelease": "20261012-supervision-r28-2",
+  "factoryFollowupResumed": false,
+  "cost": {
+    "projectModelCalls": 0,
+    "internalUsageAndPrice": "unknown"
+  }
+}

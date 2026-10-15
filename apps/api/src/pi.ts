@@ -43,6 +43,9 @@ export interface PiCallbacks {
   listReleases?: () => unknown[];
   listKnowledge?: () => unknown[];
   listMemory?: () => unknown[];
+  /** Return all current authorized matches; the tool applies its limit only after retrieval. */
+  searchKnowledge?: (query: string) => unknown[];
+  searchMemory?: (query: string) => unknown[];
   listFamily?: () => unknown[];
   listServices?: () => unknown[];
   /** Trusted server-provided read-only capabilities; never accepted from an HTTP payload. */
@@ -354,6 +357,26 @@ export class PiService {
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], details: { total: records.length } };
       },
     });
+    const retrieval = (name:string,label:string,description:string,read:()=>unknown[],search?: (query:string)=>unknown[]) => defineTool({
+      name,label,description,
+      annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false},
+      parameters:Type.Object({query:Type.Optional(Type.String({minLength:1,maxLength:1000})),limit:Type.Optional(Type.Integer({minimum:1,maximum:50}))}),
+      execute:async(_id,parameters,signal)=>{
+        signal?.throwIfAborted();
+        const querying=parameters.query!==undefined,query=parameters.query?.trim()??'';
+        const records=querying?(query&&search?search(query):[]):read();
+        const selected=records.slice(0,parameters.limit??20),visible=safeData(selected) as Record<string,unknown>[];
+        if(querying)for(let i=0;i<selected.length;i++){
+          const original=selected[i] as Record<string,unknown>|null,row=visible[i];
+          if(!original||typeof original!=='object'||!row||typeof row!=='object')continue;
+          if(typeof row.sha256==='string'&&/^[a-f0-9]{64}$/i.test(row.sha256)){row.sourceSha256=row.sha256;row.sha256Scope='complete-source-text';}
+          if(typeof original.quote==='string'){row.quoteRedacted=row.quote!==original.quote;row.exactQuote=row.quote===original.quote;}
+          if(typeof original.originalQuote==='string'){row.originalQuoteRedacted=row.originalQuote!==original.originalQuote;row.originalExactQuote=row.originalQuote===original.originalQuote;}
+        }
+        const result={total:records.length,records:visible,...(querying?{query,notice:search?'按当前授权全文逐字与中文词片段检索；摘录保留安全脱敏，exactQuote=false或originalExactQuote=false时不能按展示长度逐字定位。sourceSha256为完整来源正文指纹；已审解读另有标注，未实现同义语义检索。':'当前入口尚未配置按问题检索。'}:{})};
+        return {content:[{type:'text' as const,text:JSON.stringify(result)}],details:{total:records.length}};
+      },
+    });
     return [
       make('jarvis_projects', '项目查询', '查询平台已登记的真实项目；不会启动开发或发布。', callbacks.listProjects),
       make('jarvis_devices', '设备查询', '查询已登记设备及最近上报状态；离线或过期数据不代表当前在线。', callbacks.listDevices),
@@ -362,8 +385,8 @@ export class PiService {
       ...(callbacks.listInbox?[make('jarvis_inbox','收件查询','查询管理员已记录的原话、批注与归档状态；只查询，不自动归档。',callbacks.listInbox)]:[]),
       ...(callbacks.listResearch?[make('jarvis_research','研究查询','查询真实研究的问题、人工证据、方案和决策；不把人工声明当成自动核验。',callbacks.listResearch)]:[]),
       ...(callbacks.listReleases?[make('jarvis_releases','交付查询','查询固定交付版本及人工验收记录；交付包存在不代表已部署。',callbacks.listReleases)]:[]),
-      ...(callbacks.listKnowledge?[make('jarvis_knowledge','知识查询','查询已人工校对发布的原文与已审核故事，保留版本和页码；不自动发布。',callbacks.listKnowledge)]:[]),
-      ...(callbacks.listMemory?[make('jarvis_memory','本人记忆','仅查询当前会话身份允许的有效长期记忆。',callbacks.listMemory)]:[]),
+      ...(callbacks.listKnowledge?[retrieval('jarvis_knowledge','知识查询','提供 query 按问题中的字词检索当前授权的已发布原文、已审核故事与外部资料，保留原文引用、位置、版本与指纹；省略 query 列出记录。无匹配即为空，不自动发布。',callbacks.listKnowledge,callbacks.searchKnowledge)]:[]),
+      ...(callbacks.listMemory?[retrieval('jarvis_memory','本人记忆','提供 query 按问题中的字词检索当前身份有效长期记忆的现行内容和来源；省略 query 列出记录。返回原文、修订与定位，不读取候选、已遗忘或其他成员记忆。',callbacks.listMemory,callbacks.searchMemory)]:[]),
       ...(callbacks.listFamily?[make('jarvis_family','家庭安排','查询已登记的家庭共享待办，不读取健康备忘或其他成员私有聊天。',callbacks.listFamily)]:[]),
       ...(callbacks.listServices?[make('jarvis_services','服务查询','查询实际服务台账与运行证据。',callbacks.listServices)]:[]),
       ...(callbacks.readOnlyTools?.()??[]),

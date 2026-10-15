@@ -471,11 +471,10 @@
         ],
         "x-implementation-status": "implemented",
         "operationId": "inboxCapture",
-        "summary": "收集终端原话",
-        "description": "保留原话范围；附件说明不能冒充扫描识别",
+        "summary": "保存文字、链接、录音或文档收件",
+        "description": "至少包含非空原话、HTTP(S)来源链接或已上传原件。链接只保存，不自动抓取；录音原件不等于已转写。",
         "x-command": "inbox.capture",
         "x-required-payload-fields": [
-          "rawText",
           "kind",
           "terminalId",
           "origin"
@@ -29610,6 +29609,266 @@
           }
         ]
       }
+    },
+    "/api/v1/inbox-materials/uploads": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "prepareInboxMaterial",
+        "summary": "准备原件上传并固定编号",
+        "description": "个人管理员登录后保存音频、PDF、DOCX、UTF-8文字或图片。每个原件1字节至32MiB，网页入口限25MiB。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialPrepare"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "已持久保存的原件状态",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}": {
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "readInboxMaterial",
+        "summary": "读取当前身份原件的保存与解析状态",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已持久保存的原件状态",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/file": {
+      "put": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "storeInboxMaterial",
+        "summary": "保存不可覆盖的原件字节",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "maxLength": 33554432
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "已持久保存的原件状态",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "downloadInboxMaterial",
+        "summary": "核对指纹后读取原件",
+        "description": "录音和图片可回听或预览，文档以附件下载；private no-store、nosniff与sandbox响应头。",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "原件完整字节",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -29775,7 +30034,8 @@
               "settings",
               "releases",
               "capture-policies",
-              "jobs"
+              "jobs",
+              "inbox-assets"
             ]
           },
           "objectId": {
@@ -32007,7 +32267,7 @@
           "rawText": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1
+            "minLength": 0
           },
           "kind": {
             "type": "string",
@@ -32100,6 +32360,27 @@
           "independenceDecision": {
             "type": "object",
             "additionalProperties": true
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialReference"
+            },
+            "maxItems": 5
+          },
+          "materialText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "materialTextTruncated": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -32344,6 +32625,34 @@
               "null"
             ],
             "additionalProperties": true
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialReference"
+            },
+            "maxItems": 5
+          },
+          "materialText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "materialTextTruncated": {
+            "type": "boolean"
+          },
+          "inboxOrigins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "required": [
@@ -32691,6 +33000,34 @@
               "string",
               "null"
             ]
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialReference"
+            },
+            "maxItems": 5
+          },
+          "materialText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "materialTextTruncated": {
+            "type": "boolean"
+          },
+          "inboxOrigins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "required": [
@@ -33806,7 +34143,7 @@
           "rawText": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1
+            "minLength": 0
           },
           "kind": {
             "type": "string",
@@ -33841,10 +34178,23 @@
             "type": "string",
             "maxLength": 200,
             "minLength": 1
+          },
+          "sourceUrl": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "attachmentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "maxItems": 5,
+            "uniqueItems": true
           }
         },
         "required": [
-          "rawText",
           "kind",
           "terminalId",
           "origin"
@@ -69544,6 +69894,200 @@
         "required": [
           "data"
         ]
+      },
+      "InboxMaterialReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaKind": {
+            "enum": [
+              "audio",
+              "document",
+              "image",
+              "text"
+            ]
+          },
+          "textStatus": {
+            "enum": [
+              "extracted",
+              "unsupported",
+              "not-applicable"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "sha256",
+          "mediaKind",
+          "textStatus"
+        ]
+      },
+      "InboxMaterialPrepare": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          }
+        }
+      },
+      "InboxMaterialUpload": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "status",
+          "scope",
+          "ownerId",
+          "revision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaKind": {
+            "enum": [
+              "audio",
+              "document",
+              "image",
+              "text"
+            ]
+          },
+          "textStatus": {
+            "enum": [
+              "extracted",
+              "unsupported",
+              "not-applicable"
+            ]
+          },
+          "status": {
+            "enum": [
+              "awaiting-file",
+              "stored"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "extractedText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "textTruncated": {
+            "type": "boolean"
+          }
+        }
+      },
+      "InboxMaterialReceipt": {
+        "type": "object",
+        "required": [
+          "requestId",
+          "version",
+          "data",
+          "events"
+        ],
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "data": {
+            "$ref": "#/components/schemas/InboxMaterialUpload"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainEvent"
+            }
+          }
+        }
       }
     },
     "responses": {

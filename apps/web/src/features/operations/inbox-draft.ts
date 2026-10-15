@@ -19,6 +19,9 @@ export interface InboxDraft {
   status: 'editing' | 'pending';
   revision: number;
   updatedAt: number;
+  sourceUrl?: string;
+  attachmentIds?: string[];
+  materialRevision?: number;
 }
 export class InboxDraftError extends Error {
   constructor(message: string, public code: 'UNAVAILABLE' | 'INVALID' | 'CONFLICT') { super(message); this.name = 'InboxDraftError'; }
@@ -50,11 +53,15 @@ function cleanDraft(value: unknown): InboxDraft {
       typeof draft.terminalId !== 'string' || draft.terminalId.length > 200 || typeof draft.projectId !== 'string' || draft.projectId.length > 200 ||
       !['editing', 'pending'].includes(draft.status) || !Number.isSafeInteger(draft.revision) || draft.revision < 0 ||
       !Number.isSafeInteger(draft.updatedAt) || draft.updatedAt < 0) return invalid();
+  if (draft.sourceUrl !== undefined && (typeof draft.sourceUrl !== 'string' || draft.sourceUrl.length > 2048)) return invalid();
+  if (draft.attachmentIds !== undefined && (!Array.isArray(draft.attachmentIds) || draft.attachmentIds.length > 5 || draft.attachmentIds.some(id => typeof id !== 'string' || !UUID.test(id)) || new Set(draft.attachmentIds).size !== draft.attachmentIds.length)) return invalid();
+  if (draft.materialRevision !== undefined && (!Number.isSafeInteger(draft.materialRevision) || draft.materialRevision < 0)) return invalid();
   // Do not round-trip arbitrary fields, credentials, UI state, or server records.
-  return { id: draft.id, rawText: draft.rawText, title: draft.title, kind: draft.kind, scope: draft.scope, terminalId: draft.terminalId, projectId: draft.projectId, status: draft.status, revision: draft.revision, updatedAt: draft.updatedAt };
+  return { id: draft.id, rawText: draft.rawText, title: draft.title, kind: draft.kind, scope: draft.scope, terminalId: draft.terminalId, projectId: draft.projectId, status: draft.status, revision: draft.revision, updatedAt: draft.updatedAt,
+    ...(draft.sourceUrl !== undefined ? {sourceUrl:draft.sourceUrl} : {}), ...(draft.attachmentIds !== undefined ? {attachmentIds:[...draft.attachmentIds]} : {}), ...(draft.materialRevision !== undefined ? {materialRevision:draft.materialRevision} : {}) };
 }
 function content(draft: InboxDraft): string {
-  return JSON.stringify([draft.id, draft.rawText, draft.title, draft.kind, draft.scope, draft.terminalId, draft.projectId]);
+  return JSON.stringify([draft.id, draft.rawText, draft.title, draft.kind, draft.scope, draft.terminalId, draft.projectId,draft.sourceUrl||'',draft.attachmentIds||[],draft.materialRevision||0]);
 }
 function read(store: Storage, key: string, actorId: string): InboxDraft | null {
   const raw = callStorage(() => store.getItem(key));
@@ -68,7 +75,7 @@ function read(store: Storage, key: string, actorId: string): InboxDraft | null {
   return draft;
 }
 
-export function createInboxDraft(fields: Pick<InboxDraft, 'rawText' | 'title' | 'kind' | 'scope' | 'terminalId' | 'projectId'>): InboxDraft {
+export function createInboxDraft(fields: Pick<InboxDraft, 'rawText' | 'title' | 'kind' | 'scope' | 'terminalId' | 'projectId'> & Partial<Pick<InboxDraft,'sourceUrl'|'attachmentIds'|'materialRevision'>>): InboxDraft {
   return cleanDraft({ ...fields, id: crypto.randomUUID(), status: 'editing', revision: 0, updatedAt: 0 });
 }
 

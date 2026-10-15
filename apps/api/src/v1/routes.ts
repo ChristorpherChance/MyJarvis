@@ -11,6 +11,7 @@ import { workHandlers } from './work-domains.js';
 import { familyHandlers, familyDtoNames } from './family-domains.js';
 import { knowledgeHandlers } from './knowledge-domains.js';
 import { registerKnowledgeFiles } from './knowledge-files.js';
+import { registerInboxMaterials } from './inbox-materials.js';
 import { infrastructureHandlers, infrastructureDtoNames } from './infrastructure-domains.js';
 import { jobHandler } from './job-domains.js';
 import { voiceHandler } from './voice-domains.js';
@@ -63,6 +64,7 @@ export function registerV1(app:FastifyInstance,store:Store,pi:PiService,hooks:V1
   const poll=setInterval(send,500),heartbeat=setInterval(()=>{if(!closed)reply.raw.write(': heartbeat\n\n')},15000);poll.unref();heartbeat.unref();streams.add(close);reply.raw.on('close',close);send();
  });
  registerKnowledgeFiles(app,repository,{directory:join(dirname(store.databasePath),'knowledge-uploads'),authenticated:cookie=>store.validateLogin(cookie)});
+ registerInboxMaterials(app,repository,{directory:join(dirname(store.databasePath),'inbox-materials'),authenticated:cookie=>store.validateLogin(cookie)});
  app.addHook('preClose',async()=>{for(const close of [...streams])close();await jobs.close()});
  app.addHook('onClose',async()=>repository.close());
  return repository;

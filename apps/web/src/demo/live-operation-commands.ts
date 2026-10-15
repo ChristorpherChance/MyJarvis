@@ -44,7 +44,7 @@ function translate(action: string, payload: Values, data: DemoData, records: Rec
   if (domain === 'inbox') {
     if (command === 'capture') {
       if (p.origin && p.origin !== 'manual') notConfigured('语音与设备自动收件');
-      body = { rawText: p.rawText ?? p.text, ...(optional(p.title) ? { title: p.title } : {}), kind: p.kind, terminalId: p.terminalId ?? p.terminal, origin: 'manual', ...(optional(p.projectId ?? p.project) ? { projectId: p.projectId ?? p.project } : {}) };
+      body = { rawText: p.rawText ?? p.text ?? '', ...(optional(p.title) ? { title: p.title } : {}), kind: p.kind, terminalId: p.terminalId ?? p.terminal, origin: 'manual', ...(optional(p.projectId ?? p.project) ? { projectId: p.projectId ?? p.project } : {}), ...(optional(p.sourceUrl)?{sourceUrl:p.sourceUrl}:{}), ...(p.attachmentIds!==undefined?{attachmentIds:p.attachmentIds}:{}) };
     } else if (command === 'update' || command === 'annotate') {
       command = 'annotate'; body = { inboxId: id, note: p.note ?? p.annotation, ...(p.title !== undefined ? { title: p.title } : {}), ...(p.kind !== undefined ? { kind: p.kind } : {}), ...(p.tags !== undefined ? { tags: textList(p.tags) } : {}) };
     } else if (command === 'route') body = { inboxId: id, target: payload.target, ...(payload.kind ? { kind: payload.kind } : {}) };

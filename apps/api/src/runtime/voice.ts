@@ -8,7 +8,7 @@ import type { Store } from '../store.js';
 import type { PiService } from '../pi.js';
 import { z } from 'zod';
 import { IdentityRuntime, RuntimeAccessError, runtimeHandler, type RuntimePrincipal } from './identity.js';
-import { VoiceAdapter, engineSchema, audioExtension, type VoiceEngineConfig } from './voice-adapter.js';
+import { VoiceAdapter, engineSchema, audioExtension, type VoiceEngineConfig, type VoiceTranscription } from './voice-adapter.js';
 import {measureAudioSeconds} from './voice-duration.js';
 import {cloudGate,isLocalEndpoint} from './voice-policy.js';
 import {voiceCatalog,catalogVoice} from './voice-catalog.js';
@@ -39,6 +39,7 @@ export interface VoiceRuntimeOptions {pi?:PiService;store?:Store;governance?:Gov
 /** Audio jobs are asynchronous and cancellable. Input audio is retained only after member opt-in. */
 export class VoiceRuntime {
  private controllers=new Map<string,AbortController>();private pending=new Set<Promise<void>>();private key:Buffer;private stopped=false;
+ private materialActors=new Map<string,string>();
  private outputDir:string;private cleanupTimer:ReturnType<typeof setInterval>;
  private async metered<T>(p:RuntimePrincipal,jobId:string,kind:'asr'|'tts',config:VoiceEngineConfig,seconds:number|undefined,work:(adapter:VoiceAdapter)=>Promise<T>):Promise<T>{
   const local=config.adapter==='command'||(['sensevoice-resident','whisper-small-resident','matcha-resident','kokoro-resident','piper-resident'].includes(config.model)&&isLocalEndpoint(config.baseUrl)),provider=config.adapter==='http'?new URL(config.baseUrl).hostname:'local-command';let reported=false;
@@ -152,7 +153,7 @@ export class VoiceRuntime {
  private jobRow(r:any):VoiceJob{return {id:String(r.id),sessionId:String(r.session_id),kind:r.kind,turn:Number(r.turn),status:String(r.status),result:JSON.parse(String(r.result)),createdAt:String(r.created_at),updatedAt:String(r.updated_at)};}
  job(id:string,p:RuntimePrincipal){const r=this.identity.db.prepare('SELECT * FROM runtime_voice_jobs WHERE id=? AND actor_id=?').get(id,p.actorId);if(!r)throw new RuntimeAccessError('NOT_FOUND','语音任务不存在或不可访问',404);return this.jobRow(r);}
  private createJob(session:VoiceSession,kind:'asr'|'tts',turn:number){const id=randomUUID(),time=at();this.identity.db.prepare('INSERT INTO runtime_voice_jobs(id,session_id,actor_id,kind,turn,status,result,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?)').run(id,session.id,session.actorId,kind,turn,'queued','{}',time,time);return id;}
- private capacity(actorId:string){if(this.controllers.size>=4)throw new RuntimeAccessError('VOICE_BUSY','中央语音正在处理其他请求，请稍后重试',429);const count=Number(this.identity.db.prepare("SELECT COUNT(*) AS n FROM runtime_voice_jobs WHERE actor_id=? AND status IN('queued','running')").get(actorId)?.n??0);if(count>=2)throw new RuntimeAccessError('VOICE_BUSY','当前成员已有语音任务在处理，请先打断',409);}
+ private capacity(actorId:string){if(this.controllers.size>=4)throw new RuntimeAccessError('VOICE_BUSY','中央语音正在处理其他请求，请稍后重试',429);const count=Number(this.identity.db.prepare("SELECT COUNT(*) AS n FROM runtime_voice_jobs WHERE actor_id=? AND status IN('queued','running')").get(actorId)?.n??0)+[...this.materialActors.values()].filter(actor=>actor===actorId).length;if(count>=2)throw new RuntimeAccessError('VOICE_BUSY','当前成员已有语音任务在处理，请先打断',409);}
  private settle(id:string,status:string,result:unknown){this.identity.db.prepare('UPDATE runtime_voice_jobs SET status=?,result=?,updated_at=? WHERE id=?').run(status,JSON.stringify(result),at(),id);}
  private async runJob(id:string,session:VoiceSession,action:(signal:AbortSignal)=>Promise<any>,principal:RuntimePrincipal){
   const control=new AbortController();this.controllers.set(id,control);this.settle(id,'running',{});
@@ -162,6 +163,33 @@ export class VoiceRuntime {
   finally{clearInterval(authorizationMonitor);this.controllers.delete(id);}
  }
  private launch(id:string,session:VoiceSession,action:(signal:AbortSignal)=>Promise<any>,principal:RuntimePrincipal){const promise=this.runJob(id,session,action,principal);this.pending.add(promise);void promise.finally(()=>this.pending.delete(promise));}
+ /** Transcribe a supplied original only. No room, conversation, playback or memory is created. */
+ async transcribeMaterial(p:RuntimePrincipal,audio:Buffer,mime:string,options:{cloudConsent?:boolean;language?:VoicePlaybackOverrides['language'];signal?:AbortSignal}={}):Promise<VoiceTranscription>{
+  const current=()=>{if(!this.identity.isPrincipalCurrent(p))throw new RuntimeAccessError('IDENTITY_CHANGED','当前身份已失效，录音转写已停止',401);};
+  current();if(this.stopped)throw new RuntimeAccessError('SHUTTING_DOWN','语音服务正在关闭',503);
+  const config=this.getConfig('asr');if(!config)throw new RuntimeAccessError('ASR_NOT_CONFIGURED','请配置本地或HTTP语音识别引擎',503);
+  const language=options.language===undefined?undefined:voiceLanguage.parse(options.language);
+  this.allowEngine(p,config,options.cloudConsent===true);this.allowVoice(p);
+  if(!Buffer.isBuffer(audio)||audio.length>25*1024*1024)throw new RuntimeAccessError('AUDIO_TOO_LARGE','转写原件须为不超过25MiB的音频',413);
+  audioExtension(mime,audio);this.capacity(p.actorId);
+  const id=randomUUID(),controller=new AbortController(),signal=options.signal?AbortSignal.any([controller.signal,options.signal]):controller.signal;
+  let release!:()=>void;const finished=new Promise<void>(resolve=>{release=resolve});
+  this.controllers.set(id,controller);this.materialActors.set(id,p.actorId);this.pending.add(finished);
+  const monitor=setInterval(()=>{if(!this.identity.isPrincipalCurrent(p))controller.abort();},500);monitor.unref();
+  const live=()=>{current();if(signal.aborted)throw new RuntimeAccessError('CANCELLED','录音转写已取消',409);};
+  try{
+   live();const seconds=await measureAudioSeconds(audio,mime,signal,this.options.audioProbeExecutable);live();
+   if(seconds>600)throw new RuntimeAccessError('AUDIO_TOO_LONG','单份转写原件最长10分钟',413);
+   this.allowEngine(p,config,options.cloudConsent===true);
+   if(seconds>this.allowVoice(p).remainingSeconds)throw new RuntimeAccessError('DAILY_VOICE_LIMIT','本份录音超过本人今日剩余语音分钟',429);
+   const result=await this.metered(p,id,'asr',this.personalConfig(config,p,false,language),seconds,adapter=>{live();this.chargeVoice(p,id,'asr',seconds);return adapter.transcribe(audio,mime,signal);});
+   live();if(!result.text.trim())throw new RuntimeAccessError('NO_SPEECH','原件未识别到可保存的文字，请核对录音后重试',422);
+   // Allow only a small decoder/alignment tolerance. Never clamp or invent a provider timestamp.
+   if(result.segments?.some(segment=>segment.start>seconds+0.25||segment.end>seconds+0.25))throw new RuntimeAccessError('ENGINE_RESPONSE','识别引擎的时间分段超出原件实际时长，未保存为可回听定位',502);
+   return result;
+  }catch(error){current();if(signal.aborted)throw new RuntimeAccessError('CANCELLED','录音转写已取消',409);throw error;}
+  finally{clearInterval(monitor);this.controllers.delete(id);this.materialActors.delete(id);this.pending.delete(finished);release();}
+ }
  submitAudio(p:RuntimePrincipal,id:string,audio:Buffer,mime:string,cloudConsent=false,language?:VoicePlaybackOverrides['language'],wakeCheck=false){
   if(this.stopped)throw new RuntimeAccessError('SHUTTING_DOWN','语音服务正在关闭',503);const c=this.getConfig('asr');if(!c)throw new RuntimeAccessError('ASR_NOT_CONFIGURED','请配置本地或HTTP语音识别引擎',503);
   this.allowEngine(p,c,cloudConsent);

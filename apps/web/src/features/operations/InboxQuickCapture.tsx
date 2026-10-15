@@ -7,6 +7,7 @@ import './inbox-capture.css';
 import { CaptureMaterials, type CaptureMaterialsHandle, type MaterialCaptureState } from './CaptureMaterials';
 import { safeSourceUrl } from './inbox-material-client';
 import { removeInboxMaterialDraft } from './inbox-material-store';
+import { getMaterialIntent, removeMaterialIntent } from './inbox-material-intents';
 
 const kinds = [['idea','灵感想法'],['experience','问题经验'],['lesson','经验教训'],['skill','通用技能'],['book','资料书籍'],['memory','记忆候选']];
 const fields = (d: InboxDraft) => ({rawText:d.rawText,title:d.title,kind:d.kind,scope:d.scope,terminalId:d.terminalId,projectId:d.projectId,...(d.sourceUrl?{sourceUrl:d.sourceUrl}:{}),...(d.attachmentIds?.length?{attachmentIds:d.attachmentIds}:{})});
@@ -80,6 +81,7 @@ export function InboxQuickCapture({ data, act, onClose, onSaved }: Pick<Props,'d
     try {
       await materials.current?.finishRecording();
       await removeInboxMaterialDraft(actorId,current.current.id);
+      for(const name of ['link:'+current.current.id,...(current.current.attachmentIds||[]).map(id=>'asset:'+id)]){const intent=getMaterialIntent(actorId,name);if(intent)removeMaterialIntent(actorId,name,intent)}
       if (storageIssue) clearInboxDrafts();
       else if (current.current.revision > 0 && !removeInboxDraft(actorId,current.current.id)) {
         blocked.current=true; setDraft(fresh()); setInvalidated(true); return;
@@ -90,7 +92,7 @@ export function InboxQuickCapture({ data, act, onClose, onSaved }: Pick<Props,'d
   const submit = async (event: FormEvent) => {
     event.preventDefault();
     if (submitting.current || blocked.current || !actorId) return;
-    if(materialState.recording||materialState.working||materialState.loading){setError('请先停止录音，等待原件保存完成。');return;}
+    if(materialState.recording||materialState.working||materialState.loading||materialState.pendingLink){setError('请先停止录音，确认网页提取并等待材料保存完成。');return;}
     if(current.current.sourceUrl?.trim()&&!safeSourceUrl(current.current.sourceUrl)){setError('请填写完整的 http 或 https 链接，链接中不能包含账号或密码。');return;}
     if (!current.current.rawText.trim()&&!safeSourceUrl(current.current.sourceUrl)&&!materialState.count&&!current.current.attachmentIds?.length) { setError('写下内容、贴入链接，或添加文档和录音后保存。'); return; }
     if (!navigator.onLine) {
@@ -140,13 +142,13 @@ export function InboxQuickCapture({ data, act, onClose, onSaved }: Pick<Props,'d
       <form className="inbox-capture-form" onSubmit={event=>void submit(event)} aria-busy={busy}>
         <p className="inbox-capture-intro">写几句、贴链接、丢文档或录一段。标题与分类可以之后再整理。</p>
         <label className="inbox-capture-text"><span>原始内容（可选）</span><textarea aria-label="原始内容" rows={5} maxLength={INBOX_DRAFT_MAX_TEXT} disabled={locked||!actorId} value={draft.rawText} placeholder="刚想到什么？也可以只保存下面的链接或原件…" onChange={e=>update({rawText:e.target.value})}/></label>
-        <label className="inbox-capture-link"><span>来源链接（可选）</span><input aria-label="来源链接" type="url" maxLength={2048} disabled={locked||!actorId} value={draft.sourceUrl||''} placeholder="https://…" onChange={e=>update({sourceUrl:e.target.value})}/><small>仅保存 http / https 链接，不会自动访问或抓取网页。</small></label>
-        <CaptureMaterials key={draft.id} ref={materials} actorId={actorId} draftId={draft.id} scope={draft.scope} attachmentIds={draft.attachmentIds||[]} locked={locked||!actorId} onTouch={materialTouch} onState={setMaterialState}/>
+        <label className="inbox-capture-link"><span>来源链接（可选）</span><input aria-label="来源链接" type="url" maxLength={2048} disabled={locked||!actorId||materialState.working||materialState.pendingLink} value={draft.sourceUrl||''} placeholder="https://…" onChange={e=>update({sourceUrl:e.target.value})}/><small>仅保存 http / https 链接；点击下方“提取链接正文”才访问网页。</small></label>
+        <CaptureMaterials key={draft.id} ref={materials} actorId={actorId} draftId={draft.id} scope={draft.scope} sourceUrl={draft.sourceUrl} attachmentIds={draft.attachmentIds||[]} locked={locked||!actorId} onTouch={materialTouch} onState={setMaterialState}/>
         <div className="inbox-capture-status" role="status">{draft.status==='pending'?'上次保存结果待确认 · 原内容已锁定':draft.revision>0?'文字与链接草稿已保存在此浏览器':'尚未保存'}<small>附件本机保存和上传状态见上方。来源：{draft.terminalId}</small></div>
         <details className="inbox-capture-options"><summary>更多整理选项</summary><fieldset disabled={locked} className="op-form">
           <label><span>标题（可选）</span><input aria-label="标题（可选）" maxLength={300} value={draft.title} onChange={e=>update({title:e.target.value})} placeholder="留空时根据原话生成"/></label>
           <label><span>记录分类</span><select aria-label="记录分类" value={draft.kind} onChange={e=>update({kind:e.target.value})}>{kinds.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
-          <label><span>可见范围</span><select aria-label="可见范围" disabled={materialState.loading||materialState.working||materialState.recording||materialState.count>0||!!draft.attachmentIds?.length} value={draft.scope} onChange={e=>update({scope:e.target.value as InboxDraft['scope'],projectId:''})}>{scopes.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
+          <label><span>可见范围</span><select aria-label="可见范围" disabled={materialState.loading||materialState.working||materialState.recording||materialState.pendingLink||materialState.count>0||!!draft.attachmentIds?.length} value={draft.scope} onChange={e=>update({scope:e.target.value as InboxDraft['scope'],projectId:''})}>{scopes.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
           <label><span>来源终端</span><input aria-label="来源终端" maxLength={200} value={draft.terminalId} onChange={e=>update({terminalId:e.target.value})}/></label>
           <label className="op-full"><span>关联项目</span><select aria-label="关联项目" value={draft.projectId} onChange={e=>update({projectId:e.target.value})}><option value="">暂不关联</option>{data.projects.filter(p=>p.scope===draft.scope).map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
         </fieldset></details>
@@ -154,7 +156,7 @@ export function InboxQuickCapture({ data, act, onClose, onSaved }: Pick<Props,'d
         {storageIssue&&<Note tone="warn">{storageIssue}</Note>}
         {error&&<p className="error" role="alert">{error}</p>}
         {clearing&&<Note tone="warn">这会清除此浏览器的文字、链接和附件草稿；已经送达服务器的记录及原件不会撤回。{storageIssue?'其他账号在此浏览器的文字草稿也会清理。':''}<div className="op-actions"><Button kind="danger" onClick={()=>void discard()}>确认清除本机草稿</Button><Button kind="ghost" onClick={()=>setClearing(false)}>保留</Button></div></Note>}
-        <div className="op-form-footer inbox-capture-footer"><div className="op-actions">{(hasContent||storageIssue)&&<Button kind="ghost" disabled={busy||materialState.working||materialState.recording} onClick={()=>setClearing(true)}>清除草稿</Button>}{(storageIssue||draft.status==='pending')&&<Button kind="ghost" disabled={busy} onClick={exportDraft}>导出文字 / 链接</Button>}</div><div className="op-actions"><Button kind="ghost" disabled={busy||materialState.working} onClick={()=>void close()}>稍后整理</Button><Button type="submit" disabled={busy||!actorId||!hasContent||materialState.working||materialState.recording||materialState.loading}>{busy?'正在确认…':draft.status==='pending'?'重试确认':'保存记录'}</Button></div></div>
+        <div className="op-form-footer inbox-capture-footer"><div className="op-actions">{(hasContent||storageIssue)&&<Button kind="ghost" disabled={busy||materialState.working||materialState.recording} onClick={()=>setClearing(true)}>清除草稿</Button>}{(storageIssue||draft.status==='pending')&&<Button kind="ghost" disabled={busy} onClick={exportDraft}>导出文字 / 链接</Button>}</div><div className="op-actions"><Button kind="ghost" disabled={busy||materialState.working} onClick={()=>void close()}>稍后整理</Button><Button type="submit" disabled={busy||!actorId||!hasContent||materialState.working||materialState.recording||materialState.loading||materialState.pendingLink}>{busy?'正在确认…':draft.status==='pending'?'重试确认':'保存记录'}</Button></div></div>
       </form>}
   </Dialog>;
 }

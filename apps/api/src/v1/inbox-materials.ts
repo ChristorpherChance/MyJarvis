@@ -6,6 +6,7 @@ import { inflateRawSync } from 'node:zlib';
 import { z } from 'zod';
 import { BusinessError, type BusinessRecord, type CommandContext, type DomainHandler } from './types.js';
 import type { V1Repository } from './repository.js';
+import {registerInboxMaterialProcessing,type InboxMaterialRuntime} from './inbox-material-processing.js';
 
 export const MAX_INBOX_MATERIAL_BYTES=32*1024*1024;
 export const MAX_INBOX_MATERIAL_TEXT=120000;
@@ -140,13 +141,21 @@ export function materialReference(ctx:CommandContext,id:string):{metadata:InboxM
  return {metadata:{id:record.id,filename:record.filename,mime:record.mime,size:record.size,sha256:record.sha256,mediaKind:record.mediaKind,textStatus:record.textStatus},extractedText:record.extractedText??'',textTruncated:record.textTruncated===true};
 }
 /** Save and expose original bytes locally. Never fetch an URL or interpret a client pathname. */
-export function registerInboxMaterials(app:FastifyInstance,repository:V1Repository,options:{directory:string;actorId?:string;authenticated:(cookie:string)=>boolean}):void {
+export function registerInboxMaterials(app:FastifyInstance,repository:V1Repository,options:{directory:string;actorId?:string;authenticated:(cookie:string)=>boolean;runtime?:InboxMaterialRuntime}):void {
  const actorId=options.actorId??'server-admin',root=resolve(options.directory),prefix='/api/v1/inbox-materials/uploads';
  if(!app.hasContentTypeParser('application/octet-stream'))app.addContentTypeParser('application/octet-stream',{parseAs:'buffer',bodyLimit:MAX_INBOX_MATERIAL_BYTES},(_req,body,done)=>done(null,body));
  const authenticate=async(req:any)=>{if(!options.authenticated(req.cookies.jarvis_session??''))throw new BusinessError('FORBIDDEN','请登录后访问收件原件',401);};
  const response=(record:BusinessRecord)=>({requestId:randomUUID(),version:record.revision,data:record,events:[]});
  const readTicket=(id:string)=>{const parsed=uuid.parse(id).toLowerCase(),record=repository.read('inbox-assets',parsed,actorId);if(!record||record.kind!=='upload')throw new BusinessError('VALIDATION','原件上传不存在或不可访问',404);return record;};
  const readVerified=async(record:BusinessRecord)=>{let bytes:Buffer;try{bytes=await readFile(ownedPath(root,record.id))}catch{throw new BusinessError('NOT_CONFIGURED','原件暂不可用，请核查存储',503)}if(bytes.length!==record.size||hash(bytes)!==record.sha256)fail('原件指纹异常，请核查存储',409);return bytes;};
+ const saveOriginal=async(id:string,bytes:Buffer)=>{
+  await mkdir(root,{recursive:true,mode:0o700});
+  const target=ownedPath(root,id),temporary=resolve(root,`.pending-${randomUUID()}`);
+  try{
+   const file=await open(temporary,'wx',0o600);try{await file.writeFile(bytes);await file.sync()}finally{await file.close()}
+   try{await link(temporary,target)}catch(error){if((error as NodeJS.ErrnoException).code!=='EEXIST')throw error;const previous=await readFile(target);if(previous.length!==bytes.length||hash(previous)!==hash(bytes))fail('此上传编号已有不同原件，不能覆盖',409);}
+  }finally{await unlink(temporary).catch(()=>{});}
+ };
  app.post(prefix,{onRequest:authenticate},async req=>{
   const input=checkedPreparation(req.body),existing=repository.read('inbox-assets',input.id,actorId);
   if(existing){if(existing.kind!=='upload'||existing.scope!==input.scope||existing.filename!==input.filename||existing.mime!==input.mime||existing.size!==input.size)fail('同一上传编号不能用于不同原件或范围',409);return response(existing);}
@@ -160,13 +169,8 @@ export function registerInboxMaterials(app:FastifyInstance,repository:V1Reposito
   const extracted=inspect(bytes,record),sha256=hash(bytes);
   if(record.status==='stored'){if(record.sha256!==sha256)fail('同一上传编号已有不同原件，不能覆盖',409);await readVerified(record);return response(record);}
   if(record.status!=='awaiting-file')fail('上传状态不可用',409);
-  await mkdir(root,{recursive:true,mode:0o700});
-  const target=ownedPath(root,record.id),temporary=resolve(root,`.pending-${randomUUID()}`);
   // Link a fully synced temporary file into place atomically. Parallel writes cannot see a partial original.
-  try{
-   const file=await open(temporary,'wx',0o600);try{await file.writeFile(bytes);await file.sync()}finally{await file.close()}
-   try{await link(temporary,target)}catch(error){if((error as NodeJS.ErrnoException).code!=='EEXIST')throw error;const previous=await readFile(target);if(previous.length!==bytes.length||hash(previous)!==sha256)fail('此上传编号已有不同原件，不能覆盖',409);}
-  }finally{await unlink(temporary).catch(()=>{});}
+  await saveOriginal(record.id,bytes);
   // A metadata failure leaves the immutable original recoverable by retrying this same id and bytes.
   return repository.execute(handler,'store',{commandId:`inbox-material-store:${record.id}:${sha256}`,expectedVersion:record.revision,scope:record.scope,payload:{id:record.id,sha256,...extracted}},actorId,()=>undefined);
  });
@@ -177,4 +181,5 @@ export function registerInboxMaterials(app:FastifyInstance,repository:V1Reposito
   reply.header('Cache-Control','private, no-store').header('X-Content-Type-Options','nosniff').header('Content-Security-Policy',"default-src 'none'; sandbox").header('Content-Disposition',`${disposition}; filename="original.${extension}"; filename*=UTF-8''${encoded}`);
   return reply.type(record.mime).send(bytes);
  });
+ registerInboxMaterialProcessing(app,repository,{read:readTicket,bytes:readVerified,write:saveOriginal},authenticate,options.runtime,actorId);
 }

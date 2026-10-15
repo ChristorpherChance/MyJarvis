@@ -29869,6 +29869,224 @@
           }
         }
       }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/process": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "processInboxMaterial",
+        "summary": "显式处理原件文字",
+        "description": "持久化不可变处理编号后才调用引擎；重试同编号只确认原结果，不自动重派。录音最多10分钟；文档最多20页。机器结果待人工核对。",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialProcessInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "持久化的原件及文字处理状态；processing.failed不等于正文成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/text-review": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "reviewInboxMaterialText",
+        "summary": "保存人工校正文",
+        "description": "保留机器候选与原件，按当前revision保存人工校正，仅刷新未发布资料的派生检索字段。",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialTextReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "持久化的原件及文字处理状态；processing.failed不等于正文成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/links/extract": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "extractInboxLink",
+        "summary": "显式提取已授权网页正文",
+        "description": "仅访问管理员已配置的精确origin，拒绝重定向，限4MiB/30秒。先保存HTML/纯文本原件，再提取静态正文；解析失败原件仍可下载。",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxLinkExtractInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "持久化的原件及文字处理状态；processing.failed不等于正文成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -70013,7 +70231,7 @@
           },
           "size": {
             "type": "integer",
-            "minimum": 1,
+            "minimum": 0,
             "maximum": 33554432
           },
           "sha256": {
@@ -70041,7 +70259,9 @@
           "status": {
             "enum": [
               "awaiting-file",
-              "stored"
+              "stored",
+              "fetching",
+              "failed"
             ]
           },
           "scope": {
@@ -70060,6 +70280,45 @@
           },
           "textTruncated": {
             "type": "boolean"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "processing": {
+            "$ref": "#/components/schemas/InboxMaterialProcessing"
+          },
+          "extraction": {
+            "$ref": "#/components/schemas/InboxMaterialExtraction"
+          },
+          "textReview": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "sourceTextSha256",
+              "reviewedAt",
+              "reviewedBy"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "maxLength": 120000
+              },
+              "sourceTextSha256": {
+                "type": "string"
+              },
+              "reviewedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reviewedBy": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -70086,6 +70345,288 @@
             "items": {
               "$ref": "#/components/schemas/DomainEvent"
             }
+          }
+        }
+      },
+      "InboxMaterialProcessInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "operation"
+        ],
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "operation": {
+            "enum": [
+              "extract",
+              "transcribe"
+            ]
+          },
+          "cloudConsent": {
+            "type": "boolean",
+            "default": false
+          },
+          "language": {
+            "enum": [
+              "zh",
+              "en",
+              "ja",
+              "fr",
+              "de",
+              "es",
+              "auto"
+            ]
+          }
+        }
+      },
+      "InboxMaterialTextReviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "text"
+        ],
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120000
+          }
+        }
+      },
+      "InboxLinkExtractInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "url",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          }
+        }
+      },
+      "InboxMaterialProcessing": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "operation",
+          "cloudConsent",
+          "status",
+          "sourceSha256",
+          "startedAt",
+          "retryable"
+        ],
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "operation": {
+            "enum": [
+              "extract",
+              "transcribe"
+            ]
+          },
+          "cloudConsent": {
+            "type": "boolean"
+          },
+          "language": {
+            "enum": [
+              "zh",
+              "en",
+              "ja",
+              "fr",
+              "de",
+              "es",
+              "auto"
+            ]
+          },
+          "status": {
+            "enum": [
+              "running",
+              "complete",
+              "failed",
+              "interrupted"
+            ]
+          },
+          "sourceSha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          }
+        }
+      },
+      "InboxMaterialExtraction": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "sourceSha256",
+          "text",
+          "textSha256",
+          "engine",
+          "segments",
+          "warnings",
+          "textTruncated",
+          "reviewRequired",
+          "processedAt"
+        ],
+        "properties": {
+          "operation": {
+            "enum": [
+              "extract",
+              "transcribe"
+            ]
+          },
+          "sourceSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "textSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "engine": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "language": {
+            "type": "string"
+          },
+          "segments": {
+            "type": "array",
+            "maxItems": 2000,
+            "items": {
+              "type": "object",
+              "required": [
+                "text",
+                "location",
+                "sha256"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 120000
+                },
+                "location": {
+                  "type": "string",
+                  "maxLength": 4500
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "page": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "paragraph": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "start": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 600
+                },
+                "end": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 600
+                }
+              }
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string",
+              "maxLength": 1000
+            }
+          },
+          "textTruncated": {
+            "type": "boolean"
+          },
+          "reviewRequired": {
+            "const": true
+          },
+          "processedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

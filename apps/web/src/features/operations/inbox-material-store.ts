@@ -1,5 +1,6 @@
 import type { V1Scope } from '../../v1-client';
 import type { InboxMaterial } from './inbox-material-client';
+import { clearMaterialIntents } from './inbox-material-intents';
 
 export interface LocalInboxMaterial { id:string; filename:string; mime:string; size:number; scope:V1Scope; blob?:Blob; asset?:InboxMaterial }
 interface MaterialDraft { key:string; actorId:string; draftId:string; items:LocalInboxMaterial[] }
@@ -41,6 +42,7 @@ export async function removeInboxMaterialDraft(actorId:string,draftId:string):Pr
 export async function clearInboxMaterialDrafts():Promise<void> {
   let sharedEpochSaved=true;
   try{globalThis.localStorage.setItem(SESSION_KEY,crypto.randomUUID())}catch{sharedEpochSaved=false}
+  try{clearMaterialIntents()}catch{sharedEpochSaved=false}
   generation++;globalThis.window?.dispatchEvent(new Event('jarvis:inbox-materials-invalidated'));
   await transact('readwrite',store=>store.clear());
   if(!sharedEpochSaved)throw new Error('跨窗口附件清理状态未能保存，请清除本站数据');

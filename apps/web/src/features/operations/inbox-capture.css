@@ -1,0 +1,15 @@
+.inbox-capture-intro{color:var(--muted);line-height:1.7;margin:0 0 16px}
+.inbox-capture-text{display:grid;gap:9px;font-size:14px}
+.inbox-capture-text textarea{width:100%;min-height:180px;resize:vertical;line-height:1.8;box-sizing:border-box}
+.inbox-capture-status{display:flex;flex-direction:column;gap:5px;margin:10px 0 20px;font-size:13px;color:var(--accent)}
+.inbox-capture-status small{color:var(--muted);line-height:1.6}
+.inbox-capture-options{border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.inbox-capture-options summary{cursor:pointer;font-size:14px;color:var(--muted)}
+.inbox-capture-options fieldset{border:0;padding:0;min-width:0}
+.inbox-capture-options label input,.inbox-capture-options label select{width:100%;box-sizing:border-box}
+.inbox-capture-footer{justify-content:space-between;flex-wrap:wrap;gap:12px}
+.inbox-capture-saved h3{font-size:19px;color:var(--accent)}
+.inbox-capture-saved p{line-height:1.8;overflow-wrap:anywhere}
+.inbox-card-note{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.inbox-draft-reminder{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;font-size:14px;line-height:1.7;color:var(--muted)}
+@media(max-width:650px){.inbox-capture-footer{position:static}.inbox-capture-footer>.op-actions{width:100%}.inbox-capture-footer .button{flex:1}.inbox-draft-reminder{align-items:flex-start;flex-direction:column}.inbox-capture-text textarea{min-height:160px}}

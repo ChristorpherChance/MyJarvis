@@ -1,10 +1,17 @@
 import type { DemoData } from './types';
 import { V1Error, v1Command, type V1Domain, type V1Record, type V1Scope } from '../v1-client';
+import { clearInboxDrafts } from '../features/operations/inbox-draft';
 
 type Values = Record<string, any>;
 type Operation = { domain: V1Domain; command: string; body: Record<string, unknown>; scope: V1Scope; version: number };
 const pendingCommands = new Map<string, { id: string; promise?: Promise<unknown> }>();
-export const clearLiveOperationSession=()=>pendingCommands.clear();
+const explicitCaptureCommands = new Map<string, { fingerprint: string; operation: Operation; promise?: Promise<unknown>; completed?: boolean; result?: unknown }>();
+export const clearLiveOperationSession=()=>{
+  pendingCommands.clear();
+  explicitCaptureCommands.clear();
+  // Failure to access localStorage must never prevent the authentication state from being cleared.
+  try { clearInboxDrafts(); return true; } catch { return false; }
+};
 const stable = (value: unknown): string => JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item) ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a.localeCompare(b))) : item);
 const textList = (value: unknown): string[] => Array.isArray(value) ? value.map(String).filter(Boolean) : String(value || '').split(/[\n,，]/).map(s => s.trim()).filter(Boolean);
 const optional = (value: unknown): string | undefined => value === undefined || value === null || String(value).trim() === '' ? undefined : String(value);
@@ -37,7 +44,7 @@ function translate(action: string, payload: Values, data: DemoData, records: Rec
   if (domain === 'inbox') {
     if (command === 'capture') {
       if (p.origin && p.origin !== 'manual') notConfigured('语音与设备自动收件');
-      body = { rawText: p.rawText ?? p.text, title: p.title, kind: p.kind, terminalId: p.terminalId ?? p.terminal, origin: 'manual', ...(optional(p.projectId ?? p.project) ? { projectId: p.projectId ?? p.project } : {}) };
+      body = { rawText: p.rawText ?? p.text, ...(optional(p.title) ? { title: p.title } : {}), kind: p.kind, terminalId: p.terminalId ?? p.terminal, origin: 'manual', ...(optional(p.projectId ?? p.project) ? { projectId: p.projectId ?? p.project } : {}) };
     } else if (command === 'update' || command === 'annotate') {
       command = 'annotate'; body = { inboxId: id, note: p.note ?? p.annotation, ...(p.title !== undefined ? { title: p.title } : {}), ...(p.kind !== undefined ? { kind: p.kind } : {}), ...(p.tags !== undefined ? { tags: textList(p.tags) } : {}) };
     } else if (command === 'route') body = { inboxId: id, target: payload.target, ...(payload.kind ? { kind: payload.kind } : {}) };
@@ -102,6 +109,28 @@ function translate(action: string, payload: Values, data: DemoData, records: Rec
 export async function executeLiveOperation(action: string, payload: Record<string, unknown>, data: DemoData, records: Record<V1Domain, V1Record[]>): Promise<unknown> {
   const operation = translate(action, payload, data, records);
   const key = stable(operation);
+  if (payload.commandId !== undefined) {
+    if (action !== 'op.inbox' || operation.command !== 'capture' || typeof payload.commandId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(payload.commandId)) {
+      throw new V1Error('快速记录的命令编号无效，请重新打开草稿。', 400, 'INVALID_INPUT');
+    }
+    const actorId = data.runtime?.capabilities?.identity?.actorId;
+    if (typeof actorId !== 'string' || !actorId.trim()) throw new V1Error('登录身份尚未确认，请刷新后再保存草稿。', 400, 'INVALID_INPUT');
+    const explicitKey = stable([actorId, payload.commandId]);
+    let explicit = explicitCaptureCommands.get(explicitKey);
+    if (explicit && explicit.fingerprint !== key) throw new V1Error('同一草稿编号不能提交不同内容，请恢复原稿或另建新稿。', 409, 'COMMAND_ID_REUSED');
+    if (explicit?.completed) return explicit.result;
+    if (explicit?.promise) return explicit.promise;
+    if (!explicit) {
+      explicit = { fingerprint: key, operation: JSON.parse(key) as Operation };
+      explicitCaptureCommands.set(explicitKey, explicit);
+    }
+    const snapshot = explicit.operation, entry = explicit;
+    const promise = v1Command(snapshot.domain, snapshot.command, snapshot.body, snapshot.scope, snapshot.version, payload.commandId)
+      .then(result => { entry.completed = true; entry.result = result; entry.promise = undefined; return result; })
+      .catch(error => { entry.promise = undefined; throw error; });
+    entry.promise = promise;
+    return promise;
+  }
   let pending = pendingCommands.get(key);
   if (pending?.promise) return pending.promise;
   if (!pending) { pending = { id: crypto.randomUUID() }; pendingCommands.set(key, pending); }

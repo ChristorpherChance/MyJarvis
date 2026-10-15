@@ -31054,6 +31054,118 @@
           }
         }
       }
+    },
+    "/api/runtime/family/knowledge/query": {
+      "post": {
+        "operationId": "querySavedFamilyKnowledge",
+        "tags": [
+          "FamilyKnowledge"
+        ],
+        "summary": "成员显式查询已保存家庭知识",
+        "description": "固定家庭共享范围；先查全部已授权的已发布书页和已保存来源，再限制结果。当前为字词匹配，不含故事解释、实时抓取、Pi或语音。问题不持久保存；短期引用绑定真实成员及当前登录，5分钟有效，每会话最多10次查询、全局200次，每次最多50引用。",
+        "security": [
+          {
+            "MemberCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyKnowledgeQueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成员显式查询已保存家庭知识",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyKnowledgeQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入字段无效"
+          },
+          "401": {
+            "description": "须真实成员登录，管理员或终端凭据不代替成员"
+          },
+          "403": {
+            "description": "来源或原文已撤权或离开家庭共享范围"
+          },
+          "404": {
+            "description": "引用不属于当前查询或成员会话，或已淘汰"
+          },
+          "409": {
+            "description": "来源版本、书页版本、正文或摘录位置已变化"
+          },
+          "410": {
+            "description": "引用已过期，需要重新查询"
+          }
+        }
+      }
+    },
+    "/api/runtime/family/knowledge/references/resolve": {
+      "post": {
+        "operationId": "resolveSavedFamilyKnowledgeReference",
+        "tags": [
+          "FamilyKnowledge"
+        ],
+        "summary": "打开当前成员查询中的可信有限原文",
+        "description": "只接受服务器签发的查询与引用编号，不接受路径、地址、身份或管理员查询记录。重新核对当前成员、家庭范围、来源授权、发布版本和全文指纹；返回有限上下文与摘录位置，不重新抓取来源，不暴露本机路径。",
+        "security": [
+          {
+            "MemberCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyKnowledgeReferenceInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "打开当前成员查询中的可信有限原文",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyKnowledgeReferenceResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入字段无效"
+          },
+          "401": {
+            "description": "须真实成员登录，管理员或终端凭据不代替成员"
+          },
+          "403": {
+            "description": "来源或原文已撤权或离开家庭共享范围"
+          },
+          "404": {
+            "description": "引用不属于当前查询或成员会话，或已淘汰"
+          },
+          "409": {
+            "description": "来源版本、书页版本、正文或摘录位置已变化"
+          },
+          "410": {
+            "description": "引用已过期，需要重新查询"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -72750,6 +72862,271 @@
           }
         },
         "description": "列表只含原件元数据、处理状态摘要和引用摘要；不带处理正文、原提取或历史正文。"
+      },
+      "FamilyKnowledgeQueryInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "FamilyKnowledgeReferenceInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "refId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "queryId",
+          "refId"
+        ]
+      },
+      "FamilyKnowledgeMatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "enum": [
+              "book",
+              "external-document"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 2002
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "quoteKind": {
+            "enum": [
+              "published-original",
+              "external-source-unreviewed"
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refId",
+          "kind",
+          "title",
+          "quote",
+          "sourceName",
+          "quoteKind"
+        ]
+      },
+      "FamilyKnowledgeQueryResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "query": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "records": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/FamilyKnowledgeMatch"
+            }
+          },
+          "retrieval": {
+            "const": "literal-fragments"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "profileId",
+          "queryId",
+          "expiresAt",
+          "query",
+          "total",
+          "records",
+          "retrieval",
+          "notice"
+        ]
+      },
+      "FamilyKnowledgeReferenceResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "enum": [
+              "book-page",
+              "stored-document"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "sourceRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 2002
+          },
+          "quoteStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "contextStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hasEarlierText": {
+            "type": "boolean"
+          },
+          "hasLaterText": {
+            "type": "boolean"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "verifiedSourceText": {
+            "const": true
+          },
+          "quoteKind": {
+            "enum": [
+              "published-original",
+              "external-source-unreviewed"
+            ]
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "profileId",
+          "queryId",
+          "expiresAt",
+          "refId",
+          "kind",
+          "title",
+          "sourceName",
+          "sourceRevision",
+          "text",
+          "quote",
+          "quoteStart",
+          "contextStart",
+          "hasEarlierText",
+          "hasLaterText",
+          "sha256",
+          "verifiedSourceText",
+          "quoteKind",
+          "resolvedAt",
+          "notice"
+        ]
       }
     },
     "responses": {

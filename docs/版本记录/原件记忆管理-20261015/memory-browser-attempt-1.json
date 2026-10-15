@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-15T14:54:35.433Z",
+  "attempt": "1",
+  "realHttp": true,
+  "syntheticPrivateMemories": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalRequests": 0,
+  "pageErrors": 0,
+  "loadedBundles": [
+    "/assets/index-L76pDq3c.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/DemoApp-DKan4Dm5.js",
+    "/assets/NotificationPreferencesPanel-CtldU3b-.js",
+    "/assets/index-Cj3y-kKu.js",
+    "/assets/RoomVoice-Da_MGbZj.js",
+    "/themes/stark.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "compare-merge-forget-lineage",
+      "status": "passed",
+      "evidence": {
+        "explicitComparison": true,
+        "oldRecordsNotRecalled": true,
+        "forgottenLineageCount": 3,
+        "rawConversationSeparate": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "due-review-changed",
+      "status": "passed",
+      "evidence": {
+        "pastDueStillActiveBeforeReview": true,
+        "currentTextReplaced": true,
+        "historicalOldWordsNotRecalled": true,
+        "nextReviewExplicit": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "stale-comparison-refused",
+      "status": "passed",
+      "evidence": {
+        "secondRevisionChecked": true,
+        "atomicNoHalfMerge": true,
+        "noAutomaticResubmit": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "lost-receipt-same-command",
+      "status": "passed",
+      "evidence": {
+        "committedBeforeDroppedResponse": true,
+        "reloadedBeforeRetry": true,
+        "retriedSameEnvelope": true,
+        "currentMergedCount": 1,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "session-clears-workbench",
+      "status": "passed",
+      "evidence": {
+        "authenticatedSecondTabBeforeComparison": true,
+        "dialogVisibleUntilLogout": true,
+        "privateBodyAndUnsavedInputCleared": true,
+        "mobileOverflow": false
+      }
+    }
+  ]
+}

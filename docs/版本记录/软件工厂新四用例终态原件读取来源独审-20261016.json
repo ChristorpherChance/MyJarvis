@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-qa-main607-terminal5-independent-local-source-review",
+  "status": "passed-limited-terminal5-source-review",
+  "at": "2026-10-16T05:36:12.849333+00:00",
+  "operatorSHA256": "36a6d26337f51e2d77d6185ec0b6a87d69040f116b129ca68647a8f91bc5d195",
+  "programSHA256": "efbc0bade50b4bd45e21dc8b625097c07b1c36e6bfac56d68e6e2a90ad71b410",
+  "hostProgramSHA256": "b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66",
+  "workerSHA256": "51b056c63d761e17ef22d9204dfef0396b374bba8296683d6f62a4ad7babe438",
+  "starterSHA256": "87fe7474f2a9cad1dc702cbb337c692522bd6edd512721df1210888629d023e1",
+  "driverSHA256": "911aee0fbae9ea05963332a9f9e68fe5378ef75f95f8ef494f8945a4b504004a",
+  "mainEntrySHA256": "8bae2ed20157c31124266fa5cee5b3b1437a887ca44fe09ed8b1640eab165e99",
+  "executionContractSHA256": "344b5a6bb4fd15efea8b11b7f5cefe224c726749908cf51304269fc061bd85d2",
+  "staticPreparationReady": true,
+  "remainingP0P1": 0,
+  "findings": [],
+  "actualTerminalBindingBytesObserved": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "fullProtectionQualified": false,
+  "productAccepted": false,
+  "remoteOperationsPerformed": false,
+  "RootCalls": 0,
+  "modelsInvoked": false,
+  "actualContext": null,
+  "actualTerminal": null,
+  "actualFiveFilePins": null,
+  "actualAttempt": null,
+  "executionNonce": null,
+  "specificEntryQualified": false,
+  "reviewScope": "Non-author LOCAL narrow SOURCE review of the new terminal-five Python reader, thin once operator and saved host; no old600 graph or old21 method semantics rerun",
+  "checks": {
+    "independentLiteralInverse": [
+      {
+        "path": "scripts/factory-pg4-terminal-binding-bytes-r37-first-error-main607.py",
+        "literalSteps": 6,
+        "replacementOccurrences": 7,
+        "forwardByteExact": true,
+        "wholeByteInverseExact": true
+      },
+      {
+        "path": ".jarvis-dev/maintenance/read-r37-pg4-terminal-binding-bytes-first-error-main607-once.mjs",
+        "literalSteps": 18,
+        "replacementOccurrences": 24,
+        "forwardByteExact": true,
+        "wholeByteInverseExact": true
+      }
+    ],
+    "staticSavedHostLiteralBytesMatched": true,
+    "staticHostOriginalEmbeddedProgramWholeInverseMatched": true,
+    "subjectHostExportsCalled": 0,
+    "unchangedHolderFunctions": [
+      {
+        "function": "need",
+        "sha256": "705b66ae549a508a5e2c7a0e8d1645dff9ecdd9e25dc1a885b7be6c59f7acc37"
+      },
+      {
+        "function": "digest",
+        "sha256": "f0537d7ab584530b3b7842a09f8cd8d39a95bf2f9e70a0b82a54dd34a8684e52"
+      },
+      {
+        "function": "canonical",
+        "sha256": "7ae377d2ba051fa9c72148ac0bd96fa07b5bed661db25be3da79bd1cf6aea1ef"
+      },
+      {
+        "function": "stat_key",
+        "sha256": "5757fe47f96c2c6b0528bdcf7b3c612ad72784f8ff777074684423de167f8396"
+      },
+      {
+        "function": "decode",
+        "sha256": "1867482375dc277cea96ecefc17d3fd45ab7c6222d682c54124f7ce773a50561"
+      },
+      {
+        "function": "held",
+        "sha256": "e48a523f2a91522c6367e33ca040544d49cfa77ffb284b2d00a63026d9f236d0"
+      },
+      {
+        "function": "chain",
+        "sha256": "dbe6b6fb114756483ad0756bf33404fa03d9b196c2e193fad3baa4f30d9ef602"
+      },
+      {
+        "function": "file_row",
+        "sha256": "787f3a14e80c28c7557ae0bab22a9ce77dcb10c87dbfb6d04b707917152e943b"
+      },
+      {
+        "function": "closed",
+        "sha256": "cd07e67abfa3d05b152b41ccec26d0ed72baa4f46282b6e03b537f4b10b91698"
+      }
+    ],
+    "runFiveFileDescriptorAndReadAlgorithmUnchangedAfterKindOnlyNormalization": true,
+    "fixedExecutionContractDriverAndMainSourceProvenanceMatched": true,
+    "parentAndTerminal": {
+      "journalWorkerStarterDriverAndContractPinsRequired": true,
+      "originalSuccessfulCheckWireRequired": true,
+      "terminalBytesMustEqualOriginalCheckStdout": true,
+      "attemptAndStartupProtocolMustMatch": true,
+      "terminalMainPIDZeroRequired": true,
+      "unknownActorHistoryNotFabricated": true
+    },
+    "fileBoundary": {
+      "exactFiles": [
+        "state.json",
+        "work/postgres.created.json",
+        "work/pg4-runner.created.json",
+        "work/internal-network.created.json",
+        "work/postgres-data.created.json"
+      ],
+      "noOtherRemoteFileCensusOrSQL": true,
+      "stateMaximumBytes": 67108864,
+      "createdRecordMaximumBytes": 1048576,
+      "metadataOriginalIntegerFields": 9,
+      "twoHeldReadsPerPinnedFile": true,
+      "uidGidRootSingleLinkRegularFilesAndParentChainRequired": true,
+      "missingOrUnpinnedFileCannotBecomeSuccess": true,
+      "allReaderDescriptorsClosedAndFiveTwoReadPairsRequiredForSuccess": true
+    },
+    "capture": {
+      "originalWirePrivateBeforeDecodeParse": true,
+      "returnedBuffersBoundedAndOverflowPrefixMarkedPartial": true,
+      "privateBindingBytesSavedWXAndReadBack": true,
+      "partialCompletedFilesRetainedWithoutClaimingFiveSuccess": true,
+      "primaryAndSecondaryClosedErrorsPreserved": true,
+      "postSourceRecheckAndPrivateOutcomeRequired": true
+    },
+    "interface": {
+      "contextKeys": 8,
+      "limits": {
+        "maximumRootCalls": 1,
+        "automaticRetry": false,
+        "rootAlarmSeconds": 30,
+        "sshTimeoutMilliseconds": 45000,
+        "combinedWireMaxBytes": 134217728,
+        "privatePacketMaxBytes": 268435456
+      },
+      "exactContextPathFixed": true,
+      "defaultNullRefusalBeforeOperationalIO": true,
+      "sourceHeaderAndFutureEntryRequiredFieldsMatch": true,
+      "actualNonceTerminalPinsAndContextRemainNull": true,
+      "newLocalOpportunityPathsAbsent": [
+        ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-byte-entry-context.json",
+        ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-bytes-once.json",
+        ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-byte-operator-outcome.json"
+      ],
+      "actualRemoteNamespaceOrFreshnessObserved": false
+    },
+    "finitePhysicalRefs": {
+      "count": 16,
+      "initialFinalBytesHashAndSizeStable": true,
+      "resolution": {
+        ".jarvis-dev/maintenance/read-r33-pg4-terminal-binding-bytes-main602-pgready-r7-once.mjs": [
+          "work",
+          "Root"
+        ],
+        ".jarvis-dev/maintenance/read-r37-pg4-terminal-binding-bytes-first-error-main607-once.mjs": [
+          "work"
+        ],
+        ".jarvis-dev/maintenance/run-r37-pg4-qa-first-error-main607-corrected-r2-once.mjs": [
+          "work",
+          "Root"
+        ],
+        "artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-terminal-binding-byte-independent-local-source-review-1791984627353-b28b80e7-d0e0-4a01-8ccf-898c52ef4a7a.json": [
+          "work",
+          "Root"
+        ],
+        "artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-terminal-byte-null-interface-1791984342546.json": [
+          "work",
+          "Root"
+        ],
+        "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-execution-source-contract-57a9db69-48a3-411b-b321-0e59a6a80061.json": [
+          "work",
+          "Root"
+        ],
+        "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-complete-null-interface.json": [
+          "work"
+        ],
+        "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-host-source-b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66.py": [
+          "work"
+        ],
+        "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-local-source-author.json": [
+          "work"
+        ],
+        "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-source-whole-inverse.json": [
+          "work"
+        ],
+        "scripts/factory-pg4-qa-current-scope-observer-r37-first-error-main607.py": [
+          "work",
+          "Root"
+        ],
+        "scripts/factory-pg4-qa-startup-driver-r37-first-error.mjs": [
+          "work",
+          "Root"
+        ],
+        "scripts/factory-pg4-qa-startup-r37-first-error-main607-corrected-r2.mjs": [
+          "work",
+          "Root"
+        ],
+        "scripts/factory-pg4-qa-startup-worker-r37-first-error-main607.py": [
+          "work",
+          "Root"
+        ],
+        "scripts/factory-pg4-terminal-binding-bytes-r33-main602-pgready-r7.py": [
+          "work",
+          "Root"
+        ],
+        "scripts/factory-pg4-terminal-binding-bytes-r37-first-error-main607.py": [
+          "work"
+        ]
+      },
+      "selfReferenceIncluded": false
+    },
+    "inherited21MethodSemanticsReaudited": false,
+    "old600SourceGraphTraversed": false
+  },
+  "sourceRefsCount": 16,
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/read-r33-pg4-terminal-binding-bytes-main602-pgready-r7-once.mjs",
+      "sha256": "48030c46a55c3cc5a5b7fff1de500a08b57cf12fcdaad7a9f81e93dfb721a530",
+      "bytes": 16503
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-terminal-binding-bytes-first-error-main607-once.mjs",
+      "sha256": "36a6d26337f51e2d77d6185ec0b6a87d69040f116b129ca68647a8f91bc5d195",
+      "bytes": 17480
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-pg4-qa-first-error-main607-corrected-r2-once.mjs",
+      "sha256": "8bae2ed20157c31124266fa5cee5b3b1437a887ca44fe09ed8b1640eab165e99",
+      "bytes": 19187
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-terminal-binding-byte-independent-local-source-review-1791984627353-b28b80e7-d0e0-4a01-8ccf-898c52ef4a7a.json",
+      "sha256": "6e04569e60394548d776ec19b05063afbf5e13f7396d73aa6b26d8ba02a8e14a",
+      "bytes": 15386
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-main602-pgready-r7-terminal-byte-null-interface-1791984342546.json",
+      "sha256": "6ddacac080beb5f44d6940c6568d6208c72f5a73a3ee538cf4b67c429ebd2a73",
+      "bytes": 6398
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-execution-source-contract-57a9db69-48a3-411b-b321-0e59a6a80061.json",
+      "sha256": "344b5a6bb4fd15efea8b11b7f5cefe224c726749908cf51304269fc061bd85d2",
+      "bytes": 169564
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-complete-null-interface.json",
+      "sha256": "e65caff816c52246c3337405e09e4fa622aff62b8ec34951fee5265c14d94fa4",
+      "bytes": 8034
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-host-source-b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66.py",
+      "sha256": "b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66",
+      "bytes": 14369
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-local-source-author.json",
+      "sha256": "6eea8900f25288809d0c0c418504bc75b7997d4b4081d256d5307ffccb71e1cd",
+      "bytes": 12697
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-source-whole-inverse.json",
+      "sha256": "80ae3d86bc46f89486dbdd0b8d4b40d6a9f5daf7008c3848486f6a007fde1575",
+      "bytes": 9508
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-first-error-main607.py",
+      "sha256": "7972498a07f10a87e923446cd8ce0cd06f71c5918cbfcf1f70344edea681d84c",
+      "bytes": 33766
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-driver-r37-first-error.mjs",
+      "sha256": "911aee0fbae9ea05963332a9f9e68fe5378ef75f95f8ef494f8945a4b504004a",
+      "bytes": 34797
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-r37-first-error-main607-corrected-r2.mjs",
+      "sha256": "87fe7474f2a9cad1dc702cbb337c692522bd6edd512721df1210888629d023e1",
+      "bytes": 35640
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-worker-r37-first-error-main607.py",
+      "sha256": "51b056c63d761e17ef22d9204dfef0396b374bba8296683d6f62a4ad7babe438",
+      "bytes": 95656
+    },
+    {
+      "path": "scripts/factory-pg4-terminal-binding-bytes-r33-main602-pgready-r7.py",
+      "sha256": "e83ba3661e23a4b0011525aee2b2e1b22acc87aef8165558b6cdef6950f44fc6",
+      "bytes": 10018
+    },
+    {
+      "path": "scripts/factory-pg4-terminal-binding-bytes-r37-first-error-main607.py",
+      "sha256": "efbc0bade50b4bd45e21dc8b625097c07b1c36e6bfac56d68e6e2a90ad71b410",
+      "bytes": 10235
+    }
+  ],
+  "limitations": [
+    "This SOURCE head is usable for a future actual DATA and concrete ENTRY review, not permission for an unbound terminal read. Actual parent journal, original terminal/check wire, nonce/attempt and five pins remain unknown here.",
+    "Reading the five terminal bytes does not establish process/resource closure, full protection or PG4 product acceptance; every result keeps those qualifications false.",
+    "The selected execution contract was read only as fixed provenance bytes, without walking its600 graph. The old21 proof was read only as inherited header metadata.",
+    "No reviewed source functions, modules/exports, tests, Root/SSH/API calls, models or actual runtime journals were executed/read."
+  ],
+  "procedure": {
+    "sourceModified": false,
+    "subjectImportsOrFunctions": 0,
+    "subjectExports": 0,
+    "testsRun": 0,
+    "oldTestsRepeated": 0,
+    "remoteCalls": 0,
+    "apiCalls": 0,
+    "modelCalls": 0
+  },
+  "fees": {
+    "policy": "record-only-no-cap",
+    "supplierModelCalls": 0,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

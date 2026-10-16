@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-16T09:36:02.404Z",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 94,
+    "hash": "349f02b68e93edd3e3b6b28720b3d54d8681dbab3b9aabdc4f7ace3b7b8869c9",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "保留本轮错误并核对资源收尾，查清配置差异后实施最小修正，再重新验证四个用例。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 12,
+    "hash": "a30922edea673cce3ea9e6cb074d2f4d565ab7351688aba7c3bee9ab5a31d2b4",
+    "summary": "本轮验证在测试框架配置核对时中断，四个用例尚未完成。正在保留错误记录并核对具体配置差异。",
+    "nextAction": "保留本轮错误并核对资源收尾，查清配置差异后实施最小修正，再重新验证四个用例。",
+    "blocker": "实际测试配置与预期不一致；具体差异尚未核定。",
+    "validationScope": "唯一CHECK786ba851/3041在900+120边界之后执行，Node9.922秒exit0，原Root wire status0/stdout21424/stderr0；生产者真实failed，firstFailure framework-context-validation/R33_PG4_DRIVER_NORMALIZED_CONFIG_CHANGED/errnoNULL。SAVEDc5bbee7f/17019由Root核21refs，仅签CHECK保存、原payload/JP/MAIN与终态原wire绑定；保留driver错误报告9046B/Hb03b40d4的pin，正文与具体配置差异尚未读取。unitnotfound/inactive/dead/Main0、ownerstop历史对象和state+4created pins不等于当前资源闭合或5原byte资格。terminal5实际DATA已由保存wire封，但ENTRY/读取未做；D参数/ENTRY/现场仍待。四用例0通过0业务失败4未完成，74为0/74；原五步/25tasks/自治/global/R22/PG29Env23/notes保持，本轮没有新模型或生产发布。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 25,
+  "matchingPersistedNotifications": 1,
+  "actualCheck": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-main-actual-check-observation-1792142832453-d4c1672c-d284-4acd-920a-73bd8f7436d1.json",
+    "sha256": "786ba851457ededff795b8d89add7adcdeaf43b16bc02ec031afd8aed9d647c6",
+    "bytes": 3041
+  },
+  "checkSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-check-saved-evidence-independent-local-review-final.json",
+    "sha256": "c5bbee7f1986fb206e802de150361f62bcbfeea946920010d4ddcdd12a5fd613",
+    "bytes": 17019
+  },
+  "producerTerminalStatus": "failed",
+  "firstFailurePhase": "framework-context-validation",
+  "firstFailureCode": "R33_PG4_DRIVER_NORMALIZED_CONFIG_CHANGED",
+  "specificConfigDifferenceKnown": false,
+  "oldEvidenceIndex": {
+    "path": "docs/版本记录/软件工厂监督事项截至计划94完整证据索引-20261016.json",
+    "sha256": "0ceb96267837b8d44244cb2f84aafcd61b23143da8ebec68e1a10e9776a17680",
+    "bytes": 6939
+  },
+  "oldEvidenceIndexCount": 29,
+  "oldEvidencePreservedInHistoryAndIndex": true,
+  "originalFiveStepCriteriaBindingsAndTitlesGoalsPreserved": true,
+  "oldAutonomyGlobalAnd25TasksUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false
+}

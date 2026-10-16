@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-16T10:07:47.253Z",
+  "decision": {
+    "id": "d1a5d457-a8a9-4bc5-ba0e-533aae24f57e",
+    "revision": 1,
+    "hash": "eb43d5138482f9949d4a3a8137720c2b1f44ce171c5b493ec99d19bd36aef8ae",
+    "status": "selected",
+    "independentAcceptance": false
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 95,
+    "hash": "ab32c2fd048b910420bcd6c066654ce8d26483479a26e60745b3bcc99cdd72d4",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "先核同版框架启动过程与环境差异，完成只检查配置的有限诊断及独立入口；取得具体差异后实施最小修复，再验证四个用例。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 13,
+    "hash": "3972cae14b185091fcecb99b410f728c6892a1052ddf4f78aeeb07dc749f7dbf",
+    "summary": "本轮环境保护和资源收尾已核对通过。测试仍停在框架配置核对；已确认原错误报告缺少逐项差异，正准备补充诊断，四个用例待完成。",
+    "nextAction": "先核同版框架启动过程与环境差异，完成只检查配置的有限诊断及独立入口；取得具体差异后实施最小修复，再验证四个用例。",
+    "blocker": "具体配置差异仍未知；有限诊断尚未实现和执行。",
+    "validationScope": "本轮CHECK failed首错保持。terminal5实际3bcba143与SAVED4066b423核五原件；D actual8d977702和SAVED8b66f6ea经Root核72refs，09:48已保存时段前后完整保护及当前四资源、两标签、owner-stop/unit/CG/FD/socket/ACK闭合。中段两255全读、0未知；前后44捕获12raw/32parsed，after4绑定EXIT不可写全读或kernel trace。原9046报告只留40B消息、无stack/ctx/21条件快照；三阶段预期配置相同。新选择只限本机准备有限配置诊断，实施/SOURCE/DATA/ENTRY/实际未发生。四用例0通过0业务失败4未完成，74为0/74，本次收尾不是未来fresh。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 26,
+  "matchingPersistedNotifications": 1,
+  "evidenceCount": 8,
+  "oldEvidencePreserved": true,
+  "currentScopeSavedIndependentlyQualified": true,
+  "fullProtectionAtSavedEpochQualified": true,
+  "specificConfigDifferenceKnown": false,
+  "configDiagnosticSelectedLocalPreparationOnly": true,
+  "configDiagnosticImplemented": false,
+  "actualDiagnostic": false,
+  "originalFiveStepCriteriaBindingsAndTitlesGoalsPreserved": true,
+  "oldAutonomyGlobalAnd25TasksUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false
+}

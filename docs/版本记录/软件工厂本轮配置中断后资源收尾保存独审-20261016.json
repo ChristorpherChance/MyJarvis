@@ -1,0 +1,747 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-worker-context-main607-meta-r2-current-saved-evidence-independent-local-review",
+  "at": "2026-10-16T10:00:30.183455+00:00",
+  "independentNonAuthorReview": true,
+  "ready": true,
+  "remainingP0P1": 0,
+  "p1Findings": [],
+  "savedEvidenceIndependentlyAudited": true,
+  "savedEvidenceAuditPassed": true,
+  "actualCurrentScopeObserved": true,
+  "currentResourceScopeClosedVerified": true,
+  "boundedFullProtectionReadbacksVerified": true,
+  "originalWireBindingsVerified": true,
+  "original137CurrentRowsVerified": true,
+  "actualObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-current-actual-observation-1792144115303-baa08f2c-4d23-49a5-8dba-babd29c5d9f8.json",
+    "sha256": "8d977702ae54ae6ab1fd9f7e163857bab9a4ae856b5aca086f6d02a834422ed9",
+    "bytes": 2637
+  },
+  "originalActualSavedAuditValue": false,
+  "originalActualReportPreserved": true,
+  "rootDInvocationClosed": true,
+  "uniqueCurrentRead": true,
+  "executionNonceCreatedByThisCurrentRead": null,
+  "currentRawWireAndParsedBoundary": {
+    "stdoutBytes": 10671625,
+    "stdoutSHA256": "9e96592ce8298ab97940a6ab661093741bd9391a5996b95a6bc5c7ca24c4c800",
+    "stderrBytes": 0,
+    "originalBeforeParseRetention": true,
+    "parsedProjectionNumberDomainMatched": true
+  },
+  "currentOriginalFileRows": {
+    "observedRows": 137,
+    "originalPinnedRows": 136,
+    "sourceAliasRows": 1,
+    "decodedOriginalBodies": 134,
+    "withheldPrivateEnvironmentBodies": 3,
+    "nativeMetadata9Rows": 137,
+    "nativeIntegerValues": 1233,
+    "unsafeForJSIntegerValues": 274,
+    "parsedRoundedRows": 137,
+    "parsedChangedIntegerValues": 274,
+    "nativeMetadataHashesAllMatched": true,
+    "firstAndSecondRecordBytesEqualityIsSourceBoundNotIndependentTrace": true
+  },
+  "namespaceReadbacks": {
+    "frames": 2,
+    "directoriesPerFrame": 7,
+    "nativeMetadataIntegerValues": 126,
+    "unsafeForJSIntegerValues": 28,
+    "nativeCanonicalMetadataHashesMatched": true,
+    "sameDirectoriesBeforeAfter": true,
+    "socketCount": 0
+  },
+  "originalHistoryAndRetainedReport": {
+    "stateFailed": true,
+    "retainedDriverBytes": 9046,
+    "retainedDriverSHA256": "b03b40d48559186ee3cac5aa9928adcc4afd4e860043fd4527e4ee2b933358ac",
+    "retainedOriginalAndSourceBytesSame": true,
+    "retainedCount": 1,
+    "missingENOENTCount": 4,
+    "SQLPhaseNamesPresent": 2,
+    "SQLCaseSemanticsQualified": false,
+    "firstFailure": {
+      "phase": "framework-context-validation",
+      "errorCode": "R33_PG4_DRIVER_NORMALIZED_CONFIG_CHANGED",
+      "exceptionClass": "Error",
+      "errno": null,
+      "nodeCode": null,
+      "origin": "source-bound-driver",
+      "driverInputBindingVerified": true
+    },
+    "stateSecondaryFailureCount": 1,
+    "driverSecondaryFailureCount": 0,
+    "fixtureLaunchAttempted": false,
+    "startsAttempted": 0,
+    "candidateMayHaveExecuted": null,
+    "specificConfigCauseOrRepairSigned": false,
+    "fivePreviouslyWXOriginalsMatchCurrentRawBytes": true,
+    "optionalPhysicalErrorAbsentNotUnknown": true,
+    "stateSecondaryFailures": [
+      {
+        "canonicalFullRecordSHA256": "ca84080d28513b779a6d5aecb888beaa5eb33e21367e3b44e55a77ccbb992623",
+        "safeFields": {
+          "phase": "driver",
+          "errorCode": "PG4_R33_DRIVER_INCOMPLETE",
+          "errno": null,
+          "exceptionClass": "RuntimeError"
+        }
+      }
+    ]
+  },
+  "currentPhysicalResourceFrames": {
+    "frames": 2,
+    "resourceRoles": 4,
+    "currentActorsPerFrame": 2,
+    "ownerAndStopCurrentPathsAbsent": true,
+    "originalKernelExitProved": false,
+    "unitNotFoundInactiveDeadMain0": true,
+    "cgroupAbsentEmpty": true,
+    "labelSelectors": 2,
+    "resourceTypesPerSelector": 3,
+    "allLabelCounts": 0,
+    "cliPackets": 24,
+    "resourceAbsentStatus1Packets": 8,
+    "otherStatus0Packets": 16,
+    "opaqueNativeCLI106BytePackets": 2,
+    "opaquePacketsNotClaimedAsJSONOrSQLWire": true
+  },
+  "currentProcessScansAndACK": {
+    "frames": 2,
+    "each": {
+      "listed": 255,
+      "inspected": 255,
+      "boundEXIT": 0,
+      "incomplete": 0
+    },
+    "relatedAndDescendantAndCgroupOtherCount": 0,
+    "nodeAndACKSameAcrossScans": true,
+    "ACKCounts": {
+      "runs": 0,
+      "deliveries": 0,
+      "logs": 0
+    },
+    "namespaceSocketCount": 0,
+    "FDClaimsAreSourceBound": true
+  },
+  "currentSource625Revalidation": {
+    "scope625NotMain607": true,
+    "effectiveSourceFiles": 625,
+    "effectiveSourceBytes": 18413597,
+    "unchangedFiles": 624,
+    "overlayDeltaBytes": 37,
+    "twoReadbackAndCloseSourceBound": true,
+    "witnesses": [
+      {
+        "role": "runtimeWitness",
+        "sha256": "34e4c42d1f8b694df3b4af3df8ec1291f6e80db10e328392179379e9d0231455",
+        "bytes": 726
+      },
+      {
+        "role": "sourceWitness",
+        "sha256": "17b1303d989d02061161c07798ef02c6e2de6d2669e64dbe63801354fb71f05a",
+        "bytes": 234284
+      },
+      {
+        "role": "overlayVirtualWitness",
+        "sha256": "df0d1283f529a11a07fe743111b59b0fe1d39e306dd632bf6b1cffaee4d306a3",
+        "bytes": 245
+      },
+      {
+        "role": "pgRuntimeWitness",
+        "sha256": "444c088067537c7e42ded0173e66ce36cc0676c59905423925357a42c22ca2f3",
+        "bytes": 673
+      }
+    ],
+    "metadata9Rows": 16,
+    "nativeIntegerValues": 144,
+    "unsafeForJSIntegerValues": 32,
+    "internalPhaseALabelIsNotAdmissionOrClosure": true
+  },
+  "wholeBeforeAndAfter": {
+    "delegatedIndependentNonAuthorReviewer": "/root/offline_capture_shell",
+    "delegatedScope": "Exactly the before/after whole protection 44 captured raw files, their source/parameter bindings, precise census partitions, stock summary tuple, queue/ACK and bounded timing. No middle137 or driver body audit delegated.",
+    "delegatedNecessaryRefsSelector": "outcome.result.protectionBefore/After.transportEvidence.records[*].privateEvidence",
+    "capturedFiles": 44,
+    "capturedBytes": 1306046,
+    "captureDomains": {
+      "originalTransportStdout": 12,
+      "parsedJSONFrames": 32,
+      "rawStatus0": 12,
+      "rawSignalAndErrorNull": true,
+      "rawStderrBytes": 0,
+      "strictBase64AndRawHashesVerified": true,
+      "canonicalDecodedResponseBindingsVerified": true,
+      "parsedFramesAreNotHTTPOrSQLWire": true
+    },
+    "sourceReceipts": {
+      "perWhole": 4,
+      "stageOrder": [
+        "inventory-before",
+        "native-source",
+        "old-build",
+        "inventory-after"
+      ],
+      "fixedProgramParametersResponseHashesMatchSpec": true,
+      "canonicalActivation": "d308b6cefb860b30c1f2f6ba15a43c4acdec130413dfbf2dc42f1d1cbc3a560f",
+      "canonicalWholeContract": "de39f1fa5bbc9f596b7af154d985c3044664bfad228b5f173ed05a40c6f904d9",
+      "canonicalInventoryActivation": "5ca2f14c07345e6d7c49f9d2eead6a859d5dd56a10c4b120f9b38046a2592413",
+      "sourceMethod": "59f8d3f68938c39f1f969bf76956788754277910caa356ab19be82eb5d0df8ee",
+      "receiptMethod": "04dbdd7c07a18384ca3f0fefefba14bb5426d32810624770a996a0f9190a0bad"
+    },
+    "fixedMain": {
+      "files": 607,
+      "bytes": 18151378,
+      "contentSHA256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+      "metadataSHA256": "a952d757430ebd43fa943754e419209b0ab9d399551cb0436f622d47302f8200",
+      "rootIdentityMatched": true,
+      "stockTupleBeforeAfterSame": true,
+      "all607NativeMetadataRowsExported": false,
+      "independentWhole607MetadataRecalculationClaimed": false
+    },
+    "scans": {
+      "order": "listed/inspected/boundEXIT/incomplete",
+      "beforeNative": [
+        [
+          246,
+          246,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          0,
+          0
+        ]
+      ],
+      "beforeBuild": [
+        [
+          246,
+          246,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          0,
+          0
+        ]
+      ],
+      "afterNative": [
+        [
+          256,
+          256,
+          0,
+          0
+        ],
+        [
+          259,
+          256,
+          3,
+          0
+        ]
+      ],
+      "afterBuild": [
+        [
+          256,
+          256,
+          0,
+          0
+        ],
+        [
+          256,
+          255,
+          1,
+          0
+        ]
+      ],
+      "uniqueCompleteDisjointListedPartitions": true,
+      "relatedProcessAndWorkspaceSocketCounts": 0,
+      "rawNativeBuildUnsafeForJSIntegerValues": 0
+    },
+    "boundEXIT": {
+      "total": 4,
+      "type": "pidfd-POLLIN",
+      "pollEvents": 17,
+      "identityBound": true,
+      "attached": true,
+      "exitConfirmed": true,
+      "procPathAbsent": true,
+      "doesNotProveMiddleOwnerOriginalKernelExit": true,
+      "noNewMask16HUPWaitClaimed": true,
+      "laterScansDoNotRepairEarlierScans": true
+    },
+    "nodeAndACK": {
+      "nativeBuildAllScansBeforeAfterSame": true,
+      "queueStateParsedFrames": 4,
+      "queueStateReadOnly": true,
+      "queueStateFullTable": true,
+      "queueStateAllActive": 0,
+      "queueStateNotSQLWire": true
+    },
+    "timeBounds": {
+      "beforeStagesUTC": [
+        "2026-10-16T09:48:03.260601+00:00",
+        "2026-10-16T09:48:04.307376+00:00",
+        "2026-10-16T09:48:05.404587+00:00",
+        "2026-10-16T09:48:09.272928+00:00"
+      ],
+      "beforeProofAt": "2026-10-16T09:48:10.391Z",
+      "middleRawObservedAt": "2026-10-16T09:48:19.884523+00:00",
+      "afterStagesUTC": [
+        "2026-10-16T09:48:25.383794+00:00",
+        "2026-10-16T09:48:26.447126+00:00",
+        "2026-10-16T09:48:27.552667+00:00",
+        "2026-10-16T09:48:31.244034+00:00"
+      ],
+      "afterProofAt": "2026-10-16T09:48:32.439Z",
+      "publicAt": "2026-10-16T09:48:35.303663+00:00",
+      "strictOrderAndMiddleInWindowVerified": true
+    },
+    "sourceBoundNotIndependentKernelOrClockTrace": true,
+    "remainingP0P1": 0
+  },
+  "rawCaptureDomainCounts": {
+    "beforeAfterCapturedFiles": 44,
+    "beforeAfterOriginalSSHStdout": 12,
+    "beforeAfterParsedJSONFrames": 32,
+    "middleOriginalRootStdout": 1,
+    "localOuterNodeConsole": 1,
+    "middleCLIOriginalPacketsWithinRawFrame": 24,
+    "expectedRootRoutesOnly": 9,
+    "otherPrimaryCapturedRoutes": 4,
+    "parsedFramesNotClaimedAsSQLOrHTTPWire": true
+  },
+  "observedEpoch": {
+    "beforeWholeAt": "2026-10-16T09:48:10.391Z",
+    "middleRawObservedAt": "2026-10-16T09:48:19.884523+00:00",
+    "afterWholeAt": "2026-10-16T09:48:32.439Z",
+    "actualPublicAt": "2026-10-16T09:48:35.303663+00:00",
+    "appliesOnlyToTheseSavedReadbacks": true,
+    "futureFreshAdmissionSigned": false
+  },
+  "sourceReviewBoundary": {
+    "sourceRefsArraysNotReaudited": {
+      "result": 703,
+      "once": 707
+    },
+    "prior707SourceSemanticsNotRepeated": true,
+    "sourceBindingViaActualC_CTX_ENTRY_Once_ParametersAndOriginalWire": true,
+    "privateHeldReadAndCloseAreSourceBound": true,
+    "independentKernelTraceClaimed": false,
+    "all607NativeMetadataRowsExportedOrRecalculated": false
+  },
+  "localAuditPreparationBoundary": "Local audit preparation corrected three schema assumptions: two native CLI captures are opaque non-JSON; reviewed JS/Python sources require raw reading rather than JSON; public projection may synthesize null errorCode/evidence absent from the original success result. Five bindingRefs were enumerated as their actual map values in a separate finite byte comparison. Original tool refusals/tracebacks remain in session, with no separate raw stdout files claimed. No source change, reviewed function, reader, remote route or test was repeated.",
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-current-actual-observation-1792144115303-baa08f2c-4d23-49a5-8dba-babd29c5d9f8.json",
+      "sha256": "8d977702ae54ae6ab1fd9f7e163857bab9a4ae856b5aca086f6d02a834422ed9",
+      "bytes": 2637
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-outcome-1792144114659-b25fef19-f879-41c5-a170-734060ac835f.json",
+      "sha256": "a463404ace8ac9875a98f9ce24a74c76d66271285e454d1ecede29d1833f93fc",
+      "bytes": 12213280
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-read-once.json",
+      "sha256": "d61a1d90791192b604ffe537857aabfa6f74c153cbaa3994ee191a94f8326352",
+      "bytes": 154709
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-current-private-1792144100193-fa660154-c874-4d79-8ac2-d3c503704cde.json",
+      "sha256": "befd668349cbf24a8c62828d91db42076b460b90776890c99cc9f5a9c798f880",
+      "bytes": 14229377
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-operator-outcome.json",
+      "sha256": "9572e2a051a200d4c357521b70882e6d3b6cb50649d301cbf7f57d7bef85b064",
+      "bytes": 204824
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-entry-context.json",
+      "sha256": "f38eba6306c92ded2a2c7a137c9cb267e5b83cf546c392a9718f2fc4fb374b50",
+      "bytes": 2647
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-worker-context-meta-r2-current-specific-entry-independent-local-review-final.json",
+      "sha256": "4191400e24beb08a54dcbecdf2a1b5bccf14d27674b420b023e885a735772439",
+      "bytes": 360495
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-qa-worker-context-main607-meta-r2-current-once.mjs",
+      "sha256": "8c727208cb39593ed41f48a352fdf4320e61a940e9073121b6c10ede5248b64a",
+      "bytes": 15904
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-553bb40c754c687be8195cc4c027863c-source-contract.json",
+      "sha256": "2683ae71f13f9d83dc6e86ae716ed081063ce726a0aeda26c8bc6f07cde56660",
+      "bytes": 176452
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-553bb40c754c687be8195cc4c027863c-data-seal.json",
+      "sha256": "3440d6e23b03513e861f95106c16d8ac92be600a619b603eea205d2676d8cdd8",
+      "bytes": 182136
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-553bb40c754c687be8195cc4c027863c-parameters.json",
+      "sha256": "1afb15f14bfd578cdf8cbe2ef061d4bf8d33c6b5935d537df0ddc3f4cc9c2ab9",
+      "bytes": 389505
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-553bb40c754c687be8195cc4c027863c-fixed-bindings.json",
+      "sha256": "6db3f488ab4951f7a70436abe66d65f3b7040aaf19ee420d973adbb4d0ccd762",
+      "bytes": 389071
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-553bb40c754c687be8195cc4c027863c-run-context.json",
+      "sha256": "cdafdcfa6f0cb98c67a5330a30a4a48fbdefea22ee585a43deedbd3e59f7825a",
+      "bytes": 1033
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-original-check-parent-frame.json",
+      "sha256": "7632b7d3bba5205a4a2624c38d23e4a4cfaaf0d77734d8d9c3bb2aeaf782ace2",
+      "bytes": 21424
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-553bb40c754c687be8195cc4c027863c-original-start.json",
+      "sha256": "ba98282bb125a9f172cc59bc05185e0ee0f01a258140574c970865ce2be6e14c",
+      "bytes": 2456
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-actual-check-parent-journal-snapshot.json",
+      "sha256": "6bd61660b2055224b1b6c69f038cd56e1a28d38e02f1fa98b71ea4e87b9d3843",
+      "bytes": 5868157
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-entry-private-source-admission-1792141764915-604a5b60-5dae-4719-ba8e-b6532c8079ff.json",
+      "sha256": "eb92d8a3f6b09611ad26e48f299847a8d132d32cf8bc4e8ff892f0749d835c06",
+      "bytes": 456733
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-actual-whole-activation.json",
+      "sha256": "ff135f4a4cf47b95c01de01d69fd0fb5dec21a7d895dc5898b9c7103e1d40e18",
+      "bytes": 3166
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-source-admission-parameters-1792141757136-58a9efa0-9870-471a-86d0-44cff9aa2df6.json",
+      "sha256": "88012f61024723a6dad16be81ce7d9ccafb27e8faa205ddaf4c6bce26fe651c6",
+      "bytes": 363046
+    },
+    {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-worker-context-meta-r2.mjs",
+      "sha256": "6449658899d2781bf4271db3324d550480650df4656534ad57903ead34a5b872",
+      "bytes": 24054
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-worker-context-meta-r2.py",
+      "sha256": "a2a8f37ce98ed3dd4398719a1705cb0e82887748f63c972816dd09b13220434e",
+      "bytes": 33799
+    },
+    {
+      "path": "scripts/factory-pg4-source-admission-r33-main602-pgready-r7.py",
+      "sha256": "f9032754148f7eed1726676b32aa10af1d3feb238abfecb00905e8c8a82579ce",
+      "bytes": 27301
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-worker-context-meta-r2-terminal5-binding-bytes-independent-local-saved-review-final.json",
+      "sha256": "4066b4236cb1eb66971728d092134c04367bac22c92f134ce7f7950a42f4422d",
+      "bytes": 30442
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-terminal-binding-state.json-6e53a30579e3bea92bfa2878daf3880d64def3c59494be166d194f9597012b45.json",
+      "sha256": "6e53a30579e3bea92bfa2878daf3880d64def3c59494be166d194f9597012b45",
+      "bytes": 23521
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-terminal-binding-work-postgres.created.json-ff854387faa8c4be17d4127e05e2758fdb00d5435f1fb42992c2afad1414242f.json",
+      "sha256": "ff854387faa8c4be17d4127e05e2758fdb00d5435f1fb42992c2afad1414242f",
+      "bytes": 313
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-terminal-binding-work-pg4-runner.created.json-b79b0ee5cfbe83f7cfe453933a5a7415c8719c5ac4a86d40ad53b7d187fefe74.json",
+      "sha256": "b79b0ee5cfbe83f7cfe453933a5a7415c8719c5ac4a86d40ad53b7d187fefe74",
+      "bytes": 315
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-terminal-binding-work-internal-network.created.json-c6d3b045ed0ee42f813b087bdd8843428fa5a8e686f85312c9341a543482ca1e.json",
+      "sha256": "c6d3b045ed0ee42f813b087bdd8843428fa5a8e686f85312c9341a543482ca1e",
+      "bytes": 321
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-terminal-binding-work-postgres-data.created.json-ddb29e0d249b2eaee7dfb5a51516a01dddb55cc73f6575f983325b078d9a758e.json",
+      "sha256": "ddb29e0d249b2eaee7dfb5a51516a01dddb55cc73f6575f983325b078d9a758e",
+      "bytes": 340
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144078672-c7737f43-49f6-43c1-adf6-b46d1154300c.json",
+      "sha256": "63049e7055b6a4dbd35acec1b786a7d22e55bf09343744cdcaffa50b343d499d",
+      "bytes": 7032
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144078680-a244ace4-57ef-4d8e-a25f-64ccb9ab21eb.json",
+      "sha256": "a463fa8e676610f33365f944f5b2b7f60a890c5ea8d23e3a2495f9ff87b7df94",
+      "bytes": 12126
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144078694-f9efac1a-87a7-4396-bc32-c095e8e7bd2a.json",
+      "sha256": "b23dba7c470b444aa0e955ac4b079c1290f8f641c4be93cc012cb3a3e4598552",
+      "bytes": 113801
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144078745-277a29bc-1989-460a-992d-4ba18ddc14c2.json",
+      "sha256": "4d1f45f25ff149b8fa77890aeba45a428d3b62b7912442b0e47713a4eecb04e6",
+      "bytes": 18223
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144078752-8f970f0c-2326-4925-92ce-4e1b06924d74.json",
+      "sha256": "b25716ec62f6741cf1e3781df421e4e1b5f43b431853e4e42450de5f440ddd6b",
+      "bytes": 22055
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144079016-5c795477-9ef1-49a5-8c37-a96e01ea4b1c.json",
+      "sha256": "a8109a0904bcd49a309fb2ea6e3372a67b8e78973c1c45dd6c39a66b16d61f19",
+      "bytes": 1357
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144079247-c6751902-ab90-4c04-b624-e32542e90801.json",
+      "sha256": "63d190a3ed2033f3dd0212cea85a81c316d6d900662fd1da8d4450b83758043e",
+      "bytes": 541
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144079254-6489a9cb-50a5-4499-9d7b-cae85e4f6d74.json",
+      "sha256": "e8bdb3b003abb41fadc6c76dc0cf35b094a8b1614c26801fe12348a9d3f7801b",
+      "bytes": 43998
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144079488-e1d1303d-9fda-4762-9702-ca88ab4a0546.json",
+      "sha256": "087cffaf72d974f0aa73c2a763dd3aee34471cda60539048f61bc577c9afb68a",
+      "bytes": 5221
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144083254-7f83576b-1fcd-4760-a5ac-3dca99744e98.json",
+      "sha256": "a911ff019baddcd4c9ca7da33330c17b2f72ebbeb356e64861ec25273c7f29dc",
+      "bytes": 86253
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144084302-b1440b3e-5d7c-44dd-8bc1-0dae0a755efb.json",
+      "sha256": "455641177743a6a084de111f285753bc316a47f68bfe1ec0a9e42b268413d77a",
+      "bytes": 14106
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144085400-e927f389-c0bf-437b-a3a8-c73db768d469.json",
+      "sha256": "cc587dbd4c4c2ad0682549b9697830af8aa20afd8985adad5c22483457d02693",
+      "bytes": 16150
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089266-891c27b6-3957-42cd-b804-31892df1cd30.json",
+      "sha256": "0985536ebc3d1ab96f945b4627d23946a93e70b2004aa25be365ef2d496304fd",
+      "bytes": 86252
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089293-faf0e0df-1898-4b63-8aaa-b14608003be2.json",
+      "sha256": "a22f3db538e9993ed2a3ebcf0d032b92cea75ab7c70a0afe6b6063f6dbc6fbe9",
+      "bytes": 7032
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089300-0b22c42e-2d72-498d-aec6-416cd0163c0a.json",
+      "sha256": "74bc3c5764b38712762c908be671e03a6d2a3ff57489b2073b8d349f023de2aa",
+      "bytes": 12126
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089320-c7a53bdc-2b5f-4b41-ad92-3cdb6c0b6f73.json",
+      "sha256": "b23dba7c470b444aa0e955ac4b079c1290f8f641c4be93cc012cb3a3e4598552",
+      "bytes": 113801
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089363-7090300d-aedb-4b37-a2bb-0070afd44f5f.json",
+      "sha256": "20b2ed8af05021372753bd44f7e7359e209645615533d8b4dddf806e2a7c2a0f",
+      "bytes": 18223
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089368-dbe2e4d6-8e3e-4daf-9672-d4abe6fed434.json",
+      "sha256": "575b6ad793ab55704218709e3fd5c443c3789322b7f456807351ed4e5e1df894",
+      "bytes": 22055
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144089624-88bc241b-e4b6-4d8d-ae1c-c78b85993bf0.json",
+      "sha256": "a8109a0904bcd49a309fb2ea6e3372a67b8e78973c1c45dd6c39a66b16d61f19",
+      "bytes": 1357
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144090117-dc75e3e0-36ec-45a5-bfe7-9db7a4f50325.json",
+      "sha256": "4e6baa2197e03a168cf2af2fd6738283f390752b3f823f8877b0f780389ce629",
+      "bytes": 541
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144090127-69b44140-16ab-47f8-96ea-2ec5401aaf2a.json",
+      "sha256": "e0345fba89b3785d1dee33a5e840a5618092671aefe0e78d78191580c5e83adf",
+      "bytes": 43998
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144090372-7b202d03-3114-4d69-a1f4-e6b3117b17a6.json",
+      "sha256": "4df26212f672e905e1f36d2dbd3329b462e017b2968b2d9831c2163659fa5b38",
+      "bytes": 5221
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144100723-19ec8fdd-5e84-4994-87c5-707272ef1552.json",
+      "sha256": "22ccd753d7d5794e558bcef4247829d8948748afb9e4f57281e602b0c25318fd",
+      "bytes": 7032
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144100731-7543cc7d-4a6e-4e3d-827d-80fb108b06ce.json",
+      "sha256": "be67a7a85e31b4b86ba34b0b385a953aef733d7e9196e00b6065f1f4a99d2bb4",
+      "bytes": 12126
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144100744-abe2bfe7-e476-4790-896a-c51abdfee724.json",
+      "sha256": "b23dba7c470b444aa0e955ac4b079c1290f8f641c4be93cc012cb3a3e4598552",
+      "bytes": 113801
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144100786-c8b16f39-35f6-4898-ac62-63727459bd16.json",
+      "sha256": "f9a5b0fdc3e52d9ef3c5314d6f18e91c0004ea7ad8a8bca5380ea8348e9ae038",
+      "bytes": 18223
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144100792-a374a3ae-d2b8-4bb5-9d4c-bbe4b2ccc3f4.json",
+      "sha256": "85defed4f81b3884684bb841687a753b8805ac4278d4e546d83031df7bdcaeca",
+      "bytes": 22055
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144101056-8b1cdc0a-46c8-4139-a7c1-26a9de3511b6.json",
+      "sha256": "a8109a0904bcd49a309fb2ea6e3372a67b8e78973c1c45dd6c39a66b16d61f19",
+      "bytes": 1357
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144101291-67da0d9f-c473-4244-ab86-cde6143081fd.json",
+      "sha256": "e6454cb621b5cd957816074ef7dd969c48bcc5ef013621639425623f3b834f96",
+      "bytes": 541
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144101298-d6298df9-16ac-4057-8772-3ada247d574d.json",
+      "sha256": "7a5fe4a056f9b4e3f0448c442f92ed424f6a1d32df02418e4cd57cf43458b268",
+      "bytes": 43998
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144101551-0506a1af-dcbb-41b4-871b-efc8bf9bb0ac.json",
+      "sha256": "1ba40c0f650ea689fdf3b57ed0ee9489485901f53a7ee2d7513f0b1caf8f37a8",
+      "bytes": 5221
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144105378-0812868d-ac07-45a0-8eeb-215a1d57dfb3.json",
+      "sha256": "bbfeac1223a269b6245dcb85c0782308b132e496825abdbae795ad49215c22a7",
+      "bytes": 86253
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144106444-7d522104-7f71-4a2b-b5d3-f647b17bc0e2.json",
+      "sha256": "26eb9acc0e257d3fc3f8a5226b2ab511c57c1db558af211d66e7bc7236fef672",
+      "bytes": 16242
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144107550-84d9ff2d-128d-470c-8849-19dfb6c5665f.json",
+      "sha256": "2fe7e99279cb2244a0efdad29be58efeb63dc1e34df5627d8696ed7ac2430971",
+      "bytes": 17122
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111238-d9a1bce3-0cf9-44f2-9cc6-8638dec4950d.json",
+      "sha256": "6e2524761a4f9bf78d5e8a6b08e308a6d6febae9e7cec8bedd61cba6fea847d3",
+      "bytes": 86252
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111265-0020adcb-f1be-42b7-81b1-892b489791fc.json",
+      "sha256": "8b822ed18304bdba1d6d322d709dd8b39cee9f0bb49450513359f05aa330fc2f",
+      "bytes": 7032
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111272-666ba7e7-b271-4d7f-8bc8-d342617bb0e9.json",
+      "sha256": "e6abe1b4087bfa87bdb3e68e9135de9c289fa885400fc00ebfd19c8345ec0682",
+      "bytes": 12126
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111286-08b67928-6dd0-44eb-8cdf-ceb480c515a2.json",
+      "sha256": "b23dba7c470b444aa0e955ac4b079c1290f8f641c4be93cc012cb3a3e4598552",
+      "bytes": 113801
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111330-adc0b672-734f-4105-a7b0-6ee903dc69eb.json",
+      "sha256": "28c9d579f2c8adb1dff1f34e027be1fbd066f900d5dfb94b12a8afe4b141dfbc",
+      "bytes": 18223
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111341-d00e27a3-ab88-4cef-9239-bd3b124288c1.json",
+      "sha256": "532c9c4adf1a114e5809bbc388055ed437b47a298afb4885832de1940938c221",
+      "bytes": 22055
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144111609-6a2ec981-c6e1-4541-9df7-0ff2ad6bdbf5.json",
+      "sha256": "a8109a0904bcd49a309fb2ea6e3372a67b8e78973c1c45dd6c39a66b16d61f19",
+      "bytes": 1357
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144112154-5674cfbd-0912-4006-b05f-e053da6ddf08.json",
+      "sha256": "326e1f97e4f9a8eaba348add032d6c410df533c85be9455675cb39ed0a5cb728",
+      "bytes": 541
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144112161-b0fd9fd5-a5f1-4c65-8a3e-4ad8206342c8.json",
+      "sha256": "fa1afbdffd4fd16c2d74a9b60232e1aaedb52faa1bb857ecd303cd7e064b9032",
+      "bytes": 43998
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792144112421-35cdec1f-db0e-4144-8c1c-e194e0266f16.json",
+      "sha256": "81e9d0db8a76de6c0632128c4527789a774fcd96e86b9f14eebcad48ab7b3300",
+      "bytes": 5221
+    }
+  ],
+  "physicalRefsCount": 72,
+  "physicalRefsInitialAndFinalRawMatched": true,
+  "rootAndWorkSameBytes": true,
+  "mirror": {
+    "missingCreatedWX": 49,
+    "existingSameBytesSkipped": 23,
+    "existingChangedOverwritten": 0
+  },
+  "qualificationBoundary": [
+    "Only this saved before-whole/current/after-whole epoch and the exact resource scope are qualified. It does not replace any future fresh gate or repair verification.",
+    "137 final file rows include 136 original pins plus one retained-driver source alias; 134 bodies were independently decoded, three private environment bodies are deliberately withheld and their bytes remain source-bound claims.",
+    "Source-bound repeated reads/close and process census/FD/socket/ACK readbacks are not independent kernel syscall traces; current owner/stop path absence does not prove original kernel exit.",
+    "The retained9046 original and its copy plus four exact missing-report ENOENT histories are preserved. The primary normalized-config failure, state secondary driver-incomplete, and null candidate-execution state are not normalized into business success or failure.",
+    "Specific config difference, a repair, SQL case semantics, worker/module/framework ABI, four business-case pass and product acceptance are not signed.",
+    "Original actual savedfalse remains unchanged; no closed START/CHECK/D/reader opportunity was replayed."
+  ],
+  "candidateMayHaveExecuted": null,
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "caseCountsKept": {
+    "passed": 0,
+    "businessFailed": 0,
+    "incomplete": 4
+  },
+  "original74Kept": {
+    "passed": 0,
+    "total": 74
+  },
+  "reviewExecution": {
+    "sourceFunctions": 0,
+    "subjectModuleImports": 0,
+    "tests": 0,
+    "oldGroupsRepeated": 0,
+    "remoteCalls": 0,
+    "apiRequests": 0,
+    "modelCalls": 0,
+    "readerRepetitions": 0
+  },
+  "costs": {
+    "policy": "record-only-no-limit",
+    "knownAmount": null,
+    "internalTokens": null,
+    "internalCostUnknown": true,
+    "newSupplierModelCalls": 0
+  }
+}

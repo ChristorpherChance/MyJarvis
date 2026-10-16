@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-first-error-main607-terminal-five-binding-bytes-independent-local-saved-review",
+  "status": "passed-limited-five-binding-bytes-saved-review",
+  "at": "2026-10-16T06:02:29.856623+00:00",
+  "findings": [],
+  "remainingP0P1": 0,
+  "savedFiveBindingBytesQualified": true,
+  "terminalBindingBytesObserved": true,
+  "actualTerminalBindingBytesObserved": true,
+  "reviewRemoteCalls": 0,
+  "reviewSubjectFunctions": 0,
+  "reviewTests": 0,
+  "reviewModels": 0,
+  "RootReaderCallsRecorded": 1,
+  "automaticRetry": false,
+  "executionNonce": null,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "fullProtectionQualified": false,
+  "productAccepted": false,
+  "boundAttempt": "3164f5048c2562a9c29c915f73bfd124",
+  "actualObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-first-error-main607-terminal-binding-byte-actual-observation-1792130389116-e6b7a744-bcac-4289-ac2e-85454d63a0ef.json",
+    "sha256": "5ea51a2ac16fa2ecf06c065daa493e62e17d5e92d17237bf4bde52780a0e7bb7",
+    "bytes": 4062
+  },
+  "contextSHA256": "9e2b295ebbaf134d88d58c5f9ecc5f736a29432514666d21b23fddacd450ddf3",
+  "operatorSHA256": "36a6d26337f51e2d77d6185ec0b6a87d69040f116b129ca68647a8f91bc5d195",
+  "programSHA256": "efbc0bade50b4bd45e21dc8b625097c07b1c36e6bfac56d68e6e2a90ad71b410",
+  "hostProgramSHA256": "b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66",
+  "bindingRefs": {
+    "state.json": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-state.json-248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d.json",
+      "sha256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+      "bytes": 22603
+    },
+    "work/postgres.created.json": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-postgres.created.json-1fbf6aaf648a45d97374328a45d3622ba1639d232ce74a4c6de698c315cf690f.json",
+      "sha256": "1fbf6aaf648a45d97374328a45d3622ba1639d232ce74a4c6de698c315cf690f",
+      "bytes": 313
+    },
+    "work/pg4-runner.created.json": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-pg4-runner.created.json-5fc37387efd36032543806ea38071e929feed2e27e8a4444c26237d383b5e6e8.json",
+      "sha256": "5fc37387efd36032543806ea38071e929feed2e27e8a4444c26237d383b5e6e8",
+      "bytes": 315
+    },
+    "work/internal-network.created.json": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-internal-network.created.json-5eda528b469e961ee9cf52606edef54502ec9b3e374c2f52929184ae577576ef.json",
+      "sha256": "5eda528b469e961ee9cf52606edef54502ec9b3e374c2f52929184ae577576ef",
+      "bytes": 321
+    },
+    "work/postgres-data.created.json": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-postgres-data.created.json-a37c6455d704c29ca90630364eae2dfcfc4c4baca7081b262214ce976fbcf516.json",
+      "sha256": "a37c6455d704c29ca90630364eae2dfcfc4c4baca7081b262214ce976fbcf516",
+      "bytes": 329
+    }
+  },
+  "qualification": {
+    "files": 5,
+    "uniqueBytes": 23881,
+    "rawWireBase64EqualsSavedFiles": true,
+    "savedFilesEqualTerminalFivePins": true,
+    "metadataFieldsPerFile": 9,
+    "metadataDomain": [
+      "device",
+      "inode",
+      "uid",
+      "gid",
+      "mode",
+      "linkCount",
+      "size",
+      "mtimeNs",
+      "ctimeNs"
+    ],
+    "allMetadataOriginalIntegers": true,
+    "integerValuesBeyondJSSafeInteger": 10,
+    "metadataCanonicalHashesVerifiedWithIntegerParser": true,
+    "twoReadsStableReportedForAllFive": true,
+    "allReaderDescriptorsClosedReported": true,
+    "firstClosedError": null,
+    "secondaryClosedErrorsCount": 0,
+    "sourceBoundReaderAndHostRawHashesVerified": true,
+    "originalWireAndOutcomePacketEqual": true,
+    "operatorConsoleOriginalBytesVerified": true,
+    "stateAndCreatedHistoricalContextMatched": true
+  },
+  "checks": [
+    "Original private wire raw bytes, retained stdout/stderr byte counts and full packet closure were verified locally.",
+    "Strict base64 original wire payload equals each saved private binding byte-for-byte; each matches the preserved terminal pin H/size and actual DATA seal.",
+    "All five nine-field metadata lists remain exact integers, including values beyond JavaScript safe integer range; canonical metadata hashes were recomputed without Number conversion.",
+    "The source-bound reader reports two stable reads, all descriptors closed, five completed files and no primary/secondary closed error. This review did not independently observe live file descriptors.",
+    "The actual once intent, source pins, original private outcome packet, completed binding refs and operator console bytes bind to the same attempt and fixed input payload.",
+    "Saved state owner and failure context match the preserved CHECK terminal; four created-record historical role/attempt/protocol fields match. No current owner/stop exit or resource absence was independently checked."
+  ],
+  "sourceRefsCount": 19,
+  "sourceRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-first-error-main607-terminal-binding-byte-actual-observation-1792130389116-e6b7a744-bcac-4289-ac2e-85454d63a0ef.json",
+      "sha256": "5ea51a2ac16fa2ecf06c065daa493e62e17d5e92d17237bf4bde52780a0e7bb7",
+      "bytes": 4062
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-specific-entry-independent-local-review-final.json",
+      "sha256": "2c8c55deb13beb5acc5437082c3dd07f832b6d0b84d598f1d6031157595fca87",
+      "bytes": 13666
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-byte-entry-context.json",
+      "sha256": "9e2b295ebbaf134d88d58c5f9ecc5f736a29432514666d21b23fddacd450ddf3",
+      "bytes": 1028
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-qa-main607-original-check-parent-frame.json",
+      "sha256": "ee1afb49282dcadc03a3bad683d0a64c66baab04d39813686e8bd2f18533a22a",
+      "bytes": 21282
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-terminal5-actual-data-seal.json",
+      "sha256": "8f2e9580cec4b38b09c00f24c00e40e971f473817d619c90c1242e9fca4aaba6",
+      "bytes": 2861
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-byte-private-1792130388572-6b0f955c-4b4f-47b6-bda2-4212a1a79d56.json",
+      "sha256": "e8142ca0a358a7a963a0bacf5eaacc0e517ba7b4add9ac49d6297ab1928ac800",
+      "bytes": 48234
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-byte-private-1792130389016-fc83f844-f4a6-4d58-be51-3c592a197449.json",
+      "sha256": "8cb95ed9a62160a5290deb78a1c1bd055864a11b7ce8f834a239e3d63c7c1114",
+      "bytes": 58518
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-byte-operator-outcome.json",
+      "sha256": "e78d518f1a21fd3ccedc9afbe5906fb1fb39b20e0c0c62f198e0f52a4d9ee8bb",
+      "bytes": 3455
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-bytes-once.json",
+      "sha256": "cc221aa7b245322007ada33f6cbf853fb4df1a7a40d399eaaaf06c524670da1a",
+      "bytes": 7462
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-independent-local-source-review-final.json",
+      "sha256": "5f1ffc7b105a6a4ef638409a4d8f3d9a0b396d8e78c7ba44c31822d07d9e7437",
+      "bytes": 13393
+    },
+    {
+      "path": "scripts/factory-pg4-terminal-binding-bytes-r37-first-error-main607.py",
+      "sha256": "efbc0bade50b4bd45e21dc8b625097c07b1c36e6bfac56d68e6e2a90ad71b410",
+      "bytes": 10235
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-terminal-binding-bytes-first-error-main607-once.mjs",
+      "sha256": "36a6d26337f51e2d77d6185ec0b6a87d69040f116b129ca68647a8f91bc5d195",
+      "bytes": 17480
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-host-source-b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66.py",
+      "sha256": "b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66",
+      "bytes": 14369
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-qa-main607-reviewed-terminal-bytes-once.py",
+      "sha256": "cffbc5eb7ceadb33a2cc3bd4c58c96f97398207c7011240a77972eb6f1c709ef",
+      "bytes": 4288
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-state.json-248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d.json",
+      "sha256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+      "bytes": 22603
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-postgres.created.json-1fbf6aaf648a45d97374328a45d3622ba1639d232ce74a4c6de698c315cf690f.json",
+      "sha256": "1fbf6aaf648a45d97374328a45d3622ba1639d232ce74a4c6de698c315cf690f",
+      "bytes": 313
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-pg4-runner.created.json-5fc37387efd36032543806ea38071e929feed2e27e8a4444c26237d383b5e6e8.json",
+      "sha256": "5fc37387efd36032543806ea38071e929feed2e27e8a4444c26237d383b5e6e8",
+      "bytes": 315
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-internal-network.created.json-5eda528b469e961ee9cf52606edef54502ec9b3e374c2f52929184ae577576ef.json",
+      "sha256": "5eda528b469e961ee9cf52606edef54502ec9b3e374c2f52929184ae577576ef",
+      "bytes": 321
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-work-postgres-data.created.json-a37c6455d704c29ca90630364eae2dfcfc4c4baca7081b262214ce976fbcf516.json",
+      "sha256": "a37c6455d704c29ca90630364eae2dfcfc4c4baca7081b262214ce976fbcf516",
+      "bytes": 329
+    }
+  ],
+  "initialFinalRawReadback": true,
+  "privateDataHandling": {
+    "privateBodiesNotPublishedInReport": true,
+    "privateBindingFilesNotMirroredToWorktree": true,
+    "reportContainsOnlyCountsHashesSizesAndScope": true,
+    "processIncident": "One earlier local structure projection incorrectly treated a cleanupFacts list as object keys and emitted resource identity elements to tool output. No credentials, environment or commands were emitted by that projection. The projection was not saved to this report or public files; later projections were limited to types/counts/H/size.",
+    "existingFilesOverwritten": 0
+  },
+  "limitations": [
+    "Only the five saved binding bytes are qualified. Source/ENTRY semantics and their previous 31-reference graph were not repeated.",
+    "Historical owner/stop metadata and producer cleanup claims do not prove current process or resource closure.",
+    "This report does not qualify four QA cases, SQL results, protection, full current closure, PG4 product acceptance or a new execution opportunity."
+  ],
+  "fees": {
+    "policy": "record only; no spending cap",
+    "knownAmount": null,
+    "unknownInternalCost": true,
+    "newModelRequests": 0,
+    "tokens": null
+  }
+}

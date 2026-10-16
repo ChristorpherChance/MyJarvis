@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-first-error-main607-current-actual-observation",
+  "at": "2026-10-16T06:23:23.311967+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-pg4-qa-first-error-main607-current-once.mjs",
+    "sha256": "7547c644cbb56f74bcd389ca9ab47a0b936089e8748bc6fcaf5c707fdb035440"
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-current-entry-context.json",
+    "sha256": "cff5e5ffc31e33defdc0a82535c6e803a837c2fda7f68113e191d5bf371bce61"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-current-entry-independent-local-review-final.json",
+    "sha256": "60efd56e602012fc4c32be1d5ffc83e174d725784853ed13d11cd57067e59e3d"
+  },
+  "exitCode": 1,
+  "elapsedSeconds": 18.516000000061467,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-current-operator-outcome.json",
+    "sha256": "5a413a06602f451cfa88a06610d2bb0f89fd63f1cb9b899460de9bdcb653e7c6",
+    "bytes": 1462
+  },
+  "result": {
+    "kind": "r37-pg4-qa-first-error-main607-current-entry-failure",
+    "ready": false,
+    "errorCode": "R33_PROTECTION_CAPTURE_TRANSPORT_INCOMPLETE",
+    "actualCurrentScopeObserved": false,
+    "privateOutcome": null,
+    "once": null,
+    "rawCurrentTransport": null,
+    "sourceBytesStable": null,
+    "maximumReaderRuns": null,
+    "maximumScopeReads": null,
+    "maximumWholeReads": null,
+    "expectedRootRoutes": null,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "currentResourceScopeClosedVerified": false,
+    "actualPG4Qualified": false,
+    "evidence": {
+      "once": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-current-read-once.json",
+        "sha256": "855c5a462b80f30ce7643829a89e4f6bb45d9ca1b2ecb6e7383b020a301b5a53",
+        "bytes": 141474
+      },
+      "privateOutcome": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-current-outcome-1792131802871-f8822ad4-b5a5-460a-a44b-89c38d35171f.json",
+        "sha256": "1f5ca7c972c3f538fbb134a792ccdf7c00db222afcd9b2ff7ade2aa2cc0673d8",
+        "bytes": 138384
+      },
+      "rawCurrentTransport": null,
+      "protectionBeforeAvailable": false,
+      "protectionAfterAvailable": false,
+      "secondaryFailureCodes": []
+    }
+  },
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "savedEvidenceIndependentlyAudited": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

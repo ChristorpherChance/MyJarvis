@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-approved-unit-ci-attempt9-saved-independent-local-review",
+  "at": "2026-10-16T16:19:37.478794+00:00",
+  "status": "passed-bounded-approved-unit-ci-service-validation",
+  "ready": true,
+  "savedEvidenceIndependentlyAudited": true,
+  "limitedApprovedUnitCIServiceMechanismAccepted": true,
+  "allMandatorySavedAssertionsQualified": true,
+  "remainingP0P1": 0,
+  "actual": {
+    "path": "artifacts/factory-devci-r38/r38-approved-unit-ci-integration-actual-attempt-9.json",
+    "sha256": "612099d3be0f4cb0622af6779c2430744a84e8372a30b9c2f1fa46a1a42acdc2",
+    "bytes": 9404
+  },
+  "harnessSafeReport": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-89d1b4af-400e-45f4-838b-faed3ace2d16/safe-report/harness-safe.json",
+    "sha256": "73b53f0b2afcfa70f5d221f2fbad4af65f12f19d7d4c1663ee786c701160d2fd",
+    "bytes": 24759
+  },
+  "physicalReadback": {
+    "path": "artifacts/factory-devci-r38/approved-unit-ci-attempt9-saved-physical-readback.json",
+    "sha256": "f061af266d8c928e68b7f0fd6c347cd5058b5d34a310ad1d03d2770762af9f58",
+    "bytes": 49465
+  },
+  "physicalRefCount": 184,
+  "physicalBytes": 580366,
+  "observed": {
+    "mandatoryStepsPassed": 17,
+    "freshDatabaseMigrationsApplied": 32,
+    "migrationOriginalSourceAndApplicationReceiptsMatched": true,
+    "sourcePinsInitialAndFinalMatched": 17,
+    "directCompiledPinsInitialAndFinalMatched": 12,
+    "independentPreDispatchNoClaimCases": {
+      "lost-unit-ci-scope-no-dispatch": "OPERATION_STALE",
+      "revoked-authorization-no-dispatch": "OPERATION_STALE",
+      "rotated-token-no-dispatch": "OPERATION_STALE",
+      "changed-plan-no-dispatch": "OPERATION_STALE",
+      "changed-live-baseline-no-dispatch": "OPERATION_STALE",
+      "changed-task-revision-no-dispatch": "GATE_BLOCKED",
+      "newer-candidate-source-no-old-source-dispatch": "GATE_BLOCKED"
+    },
+    "missingSourceExplicitBlocker": "CI_SOURCE_OR_AUTH_REQUIRED",
+    "sourceSameIdOriginalProofReplayAndChangedCommitRefusal": true,
+    "manualAutopilotActorRefused": "FORBIDDEN",
+    "realNewCIRequests": 2,
+    "terminalReceipts": [
+      {
+        "label": "approved-positive",
+        "requestId": "1b9751a9-3e5b-42e9-aec8-20dcd9aed22c",
+        "receiptSHA256": "18b0e50de58ce666d562c88cf7ad63a42bbc0e1f611f00c8ec69fead2fda84b3",
+        "originalArtifacts": 8,
+        "collectorFrames": 2,
+        "tests": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "pending": 0
+        },
+        "coverage": {
+          "lines": 100,
+          "branches": 100
+        },
+        "processExitCode": 0,
+        "containerRemoved": true,
+        "sourceProofAndConfigurationBound": true
+      },
+      {
+        "label": "paused-late-original",
+        "requestId": "0c09419b-5e60-4b5e-aba0-fff96ea93c23",
+        "receiptSHA256": "f34a20ed9c08ccb11ab35d512dc2b04bf4680e3b0696eec9c53cb50f66dbdcb2",
+        "originalArtifacts": 8,
+        "collectorFrames": 2,
+        "tests": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "pending": 0
+        },
+        "coverage": {
+          "lines": 100,
+          "branches": 100
+        },
+        "processExitCode": 0,
+        "containerRemoved": true,
+        "sourceProofAndConfigurationBound": true
+      }
+    ],
+    "originalArtifactFiles": 16,
+    "collectorFrames": 4,
+    "collectorNativeIntegerStrings": 36,
+    "collectorIntegersBeyondJSSafe": 8,
+    "collectorOriginalBodyStrictBase64RoundTripHashAndSizeMatched": true,
+    "collectorReadCompleteAndAllDescriptorsClosed": true,
+    "collectorProgramHashBoundToPinnedCoreLiteral": "47bb702606952d65d3e793790d853d4f0ffb53ad78fcfc83f12c6d62da51bfa8",
+    "positive": {
+      "unitEvidence": 1,
+      "unfinishedClaimObservedBeforeReplay": true,
+      "replayReturnedStatus": "unknown",
+      "sameSourceRequestAndTerminalReplayDidNotReexecute": true,
+      "nextTickBlocker": "AI_REVIEW_EXECUTOR_REQUIRED",
+      "mockAIReviewsOrMerge": 0
+    },
+    "new32ImmutableUpdateDeleteRefusals": 4,
+    "late": {
+      "sourceTestsPassed": 1,
+      "sourceCoverageLinesAndBranches": 100,
+      "runStillPaused": true,
+      "operationStillCancelled": true,
+      "unitEvidence": 0,
+      "taskAndPRUnchanged": true,
+      "directQualityStaleRejectionAsserted": true,
+      "lateCode": null,
+      "doesNotClaimTickThrew": true
+    },
+    "sourceProofsSaved": 10,
+    "exactNewPostgresRemoved": true,
+    "candidateCIReceiptsBothRemoved": true,
+    "beforeAfterOriginalContainerIdSets": 13,
+    "beforeAfterContainerSetsExactlyEqual": true,
+    "newResidualContainerCount": 0,
+    "sourceAndCompiledFinalStable": true
+  },
+  "independentMethod": "Only saved raw bytes, strict JSON/base64 parsing, native-precision decimal metadata, hash/size closure, original step/application/process receipts and frozen harness/source bindings. No new runtime, test, database or daemon observation.",
+  "runtimeAssertionBoundary": "Authorization scope changes, current database counts, cancellation and unchanged task/PR comparisons are real queries/assertions executed by the pinned harness against its isolated PG. Their retained safe step receipts and guarded source are checked here; full before/after PostgreSQL row snapshots are not independently retained after database removal.",
+  "cleanupBoundary": "Exact PG create/remove original stdout and same13 CID sets are independently compared. Both candidate cleanup qualifiers are source-bound trusted runner receipt results plus the final no-new-CID set; no external kernel or separate per-CI post-remove trace is claimed. Existing13 containers are preserved as an ID set, not independently certified full container state.",
+  "approvalScope": "One existing CommandBus human approve-start per independent synthetic fixture creates a run. No public approveStart/kickRunner timer and no new human approval per CI. Real Board/RealCi/Autopilot/CommandBus/PG; only throwing build/selftest refusal sentinels, not successful executor substitutes.",
+  "raceBoundary": "Old approved-run to newer-manual nullable-run race remains controlled-file/source-tested, not an actual concurrent PG reproduction in this two-CI session.",
+  "notQualified": [
+    "HTTP or browser integration",
+    "real coding executor",
+    "AI review",
+    "actual Git merge/push",
+    "full target server suite",
+    "full autonomous factory",
+    "framework ABI",
+    "fullPG4",
+    "74 goals",
+    "customer delivery",
+    "production deployment"
+  ],
+  "reviewerNewFunctionsTestsDockerPGAPINetworkModels": 0,
+  "oldClosedActual7Or8Replayed": false,
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

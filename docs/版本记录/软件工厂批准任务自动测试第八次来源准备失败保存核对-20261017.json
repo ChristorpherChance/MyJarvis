@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-approved-unit-ci-attempt8-saved-independent-local-review",
+  "at": "2026-10-16T16:09:50.673747+00:00",
+  "status": "saved-failed-attempt-qualified-only",
+  "ready": true,
+  "savedEvidenceIndependentlyAudited": true,
+  "remainingP0P1": 0,
+  "actual": {
+    "path": "artifacts/factory-devci-r38/r38-approved-unit-ci-integration-actual-attempt-8.json",
+    "sha256": "3fe81c22bab0e49860152f71c4eb65916236387ca6e455c98450758372e55260",
+    "bytes": 8348
+  },
+  "harnessSafeReport": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-5ecde6d4-8b01-49e8-b142-6b159cab6223/safe-report/harness-safe.json",
+    "sha256": "54ee5490f85a8653946e4872161b5f051986212bd30ea3654cd85a64e41ed9d0",
+    "bytes": 12036
+  },
+  "physicalReadback": {
+    "path": "artifacts/factory-devci-r38/approved-unit-ci-attempt8-saved-physical-readback.json",
+    "sha256": "a6532f33caacf801be15b189731f23608ac10da95879cbb596a5f81d38a2d97a",
+    "bytes": 29081
+  },
+  "physicalRefCount": 109,
+  "physicalBytes": 196893,
+  "observed": {
+    "sourcePreflightPassed": 16,
+    "directCompiledPreflightPassed": 12,
+    "isolatedFreshPublicTables": 0,
+    "appliedMigrations": 32,
+    "migrationRawHashesAndApplicationReceiptsMatched": true,
+    "firstFailedStage": "lost-unit-ci-scope-no-dispatch",
+    "errorCode": "ENOENT",
+    "harnessExitCode": 1,
+    "harnessTimedOut": false,
+    "harnessSeconds": 1.641,
+    "originalHarnessStderrBytes": 0,
+    "requestedCIAdmissionBudgetUsed": 0,
+    "observedCIClaims": 0,
+    "terminalReceipts": 0,
+    "realCIContainerDispatchNotReached": true,
+    "qualityAndReplayAndRevokeAndLateChecksNotReached": true,
+    "exactNewPostgresRemoved": true,
+    "existingContainerIdsBeforeAfter": 13,
+    "beforeAfterContainerSetsIdentical": true,
+    "newResidualContainers": 0
+  },
+  "causeBoundary": {
+    "nativeErrorCodeRetained": "ENOENT",
+    "nativeNameErrnoSyscallPathMessageStack": "not serialized by this harness; exact failed native syscall and path are not directly observed in the saved report",
+    "sourceBoundInterpretation": "The failure occurs inside the first fixture setup/source registration before any CI admission. Source review of first-use source-root creation is a separate investigation and must be identified as source-supported inference, not recovered native error detail.",
+    "sourceAndCompiledPinsStableFalse": "The final pin recheck was not reached. This producer false value is not evidence of source drift.",
+    "databaseZeroClaimsBoundary": "Zero CI dispatch is supported by the unentered admission path, zero admission/claim/terminal fields and no new residual containers; not a surviving independent PG query after deletion."
+  },
+  "sourceAndInputBinding": {
+    "sourceManifest": "edd5176798f9996f770804bd4807e005d62f45d6362b1db390f8e73faccaa8be",
+    "compiledManifest": "703002fd4c05326a1b30649984234446c70678880b2c259c5b7812a55eb94846",
+    "harness": "483fd3150bf32b999b449d255768a2e9fd19f0664f008f643686ec777cdc512b",
+    "sourceAndCompiledArraysExactlyEqualPrivateInput": true,
+    "finalSourceRecheckObserved": false
+  },
+  "notQualified": [
+    "Approved automatic CI runtime",
+    "synthetic unit test execution",
+    "quality evidence",
+    "pause-late result handling",
+    "HTTP",
+    "AI review",
+    "real Git merge",
+    "full autonomous factory",
+    "fullPG4",
+    "74 goals",
+    "customer delivery",
+    "production deployment"
+  ],
+  "reviewerActions": {
+    "savedOriginalReadsAndLocalJSONAssertionsOnly": true,
+    "sourceFunctionsCandidateImportsTestsDockerPGAPIOrModelCalls": 0,
+    "closedAttemptReplayed": false,
+    "priorActual7Reaudited": false,
+    "dependency1810TreeReaudited": false
+  },
+  "preparationBoundary": "The original preparation argv omitted explicit --execute; Root correctly supplied the mandatory argparse flag before this unique execution. The original prep remains unchanged.",
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

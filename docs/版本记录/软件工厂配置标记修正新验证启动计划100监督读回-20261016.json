@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-16T12:32:05.596Z",
+  "driverDecision": {
+    "id": "9a5aac95-08cd-4db5-89b5-fd39554263c7",
+    "revision": 3,
+    "status": "implemented",
+    "hash": "9b21994615f640948e6503c0591670d003601df90ad3c523730875eef78a0f85",
+    "independentAcceptance": false
+  },
+  "driverNewActionState": "performed-start-only",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 100,
+    "hash": "9352724a35980f35368433e41d97c1404c3fcb0f7233f07b2648287a88a2539b",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "取得本轮实际结果后，核对四个用例、错误记录和资源收尾；将通过项与未完成项分别列明，再继续剩余交付验证。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 18,
+    "hash": "e1a9ebf7074cba420de3c73c345fd2fe127094103efba596737d37bb843c2365",
+    "summary": "修正后的验证入口已启动，正在等待本轮终态结果。四个用例是否通过仍待独立核对。",
+    "nextAction": "取得本轮实际结果后，核对四个用例、错误记录和资源收尾；将通过项与未完成项分别列明，再继续剩余交付验证。",
+    "blocker": "本轮验证尚无独立终态结果，四个用例暂不计为通过。",
+    "validationScope": "仅本次12:20启动保存：来源参数入口、A原字节及四见证、前保护四扫真实分母、唯一派发ACK；owner/stop/state与框架实际ctx尚未知，四用例、workerABI及本轮资源收尾待终态核对。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 31,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "sourceFamilyIntegrated": true,
+  "actualStart": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-main-actual-start-observation-1792153223628-dca7c6b7-20fc-49e9-9b79-2fa2f9431c89.json",
+    "sha256": "6513c13e88131c895e2cfb88bd45f74167cc099ece8d645c13e47b5b12a8b912",
+    "bytes": 2837
+  },
+  "actualStartSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-start-saved-evidence-independent-local-review-final.json",
+    "sha256": "2c6515688ed1fb19d1251174b92e3ccb386641effea9199cdc47c16e517a9812",
+    "bytes": 45808
+  },
+  "actualStartInvocations": 1,
+  "automaticRetry": false,
+  "checkNotBefore": "2026-10-16T12:37:23.628425+00:00",
+  "limitedActualStartIndependentlyQualified": true,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

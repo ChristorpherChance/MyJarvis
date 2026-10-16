@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-local-pg-service-ci-mechanism-saved-independent-review",
+  "status": "passed-limited-real-local-service-mechanism",
+  "savedEvidenceIndependentlyAudited": true,
+  "limitedRealLocalServiceValidationAccepted": true,
+  "allMandatorySavedAssertionsQualified": true,
+  "remainingP0P1InSavedScope": 0,
+  "actual": {
+    "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-7.json",
+    "sha256": "30a0c2b2fbb294b875be057e7595f5b62598089d40613071f47bd36b46c5fa78",
+    "bytes": 8319
+  },
+  "privateHarnessSafeResult": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-32b0ba2b-bc60-4206-86f8-27b11910e44e/safe-report/harness-safe.json",
+    "sha256": "fe0a43d385145c730b5129c90b570c0e67cbc8f2c14cbbc23dda8d41734d6a67",
+    "bytes": 26862
+  },
+  "physicalReadback": {
+    "path": "artifacts/factory-devci-r38/service-attempt7-saved-physical-readback.json",
+    "sha256": "0644996b020d4acdb9ead618d307d4ef6e346eb2b1b5d8ae7a2eda530fc66767",
+    "bytes": 44636
+  },
+  "cases": [
+    {
+      "label": "A",
+      "requestId": "ca79eae6-5e39-4112-b7d0-c2e63cdfb7f6",
+      "receiptSHA256": "229a88450fa0072dfa46557224fedd294790dc99ccddc1121aec17e4091dd4b5",
+      "conclusion": "pass",
+      "processExitCode": 0,
+      "actualContainerExecution": true,
+      "tests": {
+        "total": 1,
+        "failed": 0,
+        "passed": 1,
+        "pending": 0
+      },
+      "coverage": {
+        "lines": 100,
+        "branches": 100
+      },
+      "originalArtifactCount": 8,
+      "containerRemoved": true
+    },
+    {
+      "label": "B",
+      "requestId": "ed551b16-e790-40a4-b996-aec56f5d35e4",
+      "receiptSHA256": "f5bab1cb797f269476d6e4fafb6a5962b3ccf6ee1602dc96db3e5e739fe677c7",
+      "conclusion": "fail",
+      "processExitCode": 1,
+      "actualContainerExecution": true,
+      "tests": {
+        "total": 1,
+        "failed": 1,
+        "passed": 0,
+        "pending": 0
+      },
+      "coverage": {
+        "lines": 100,
+        "branches": 100
+      },
+      "originalArtifactCount": 8,
+      "containerRemoved": true
+    },
+    {
+      "label": "late-task-A",
+      "requestId": "6e0fc0dd-42e3-44b5-9db6-c764010f046f",
+      "receiptSHA256": "868eb5eacac2286721db0339bbae9d98cc5d0285c0f2723158676bd628b58417",
+      "conclusion": "pass",
+      "processExitCode": 0,
+      "actualContainerExecution": true,
+      "tests": {
+        "total": 1,
+        "failed": 0,
+        "passed": 1,
+        "pending": 0
+      },
+      "coverage": {
+        "lines": 100,
+        "branches": 100
+      },
+      "originalArtifactCount": 8,
+      "containerRemoved": true
+    }
+  ],
+  "originalCustody": {
+    "candidateReceipts": 3,
+    "originalArtifacts": 24,
+    "strictCollectorFrames": 6,
+    "allBodyBase64RoundtripHashesSizesAndNativeMetadata9Verified": true,
+    "allSixReadCompleteAndDescriptorCloseFlagsTrue": true,
+    "nativeIntegerStrings": 54,
+    "integersAboveJSSafeRange": 12,
+    "integerPrecisionLost": false,
+    "successfulAndFailedOriginalCoverageReportsAvailable": true,
+    "twoWithheldOrTamperedOriginalsRestoredByHash": true
+  },
+  "actualServiceAssertions": {
+    "ACompleteRealCIOriginalConsumption": true,
+    "AUnfinishedClaimObservedBeforeConcurrentReplay": true,
+    "ATerminalReplayReturnsOriginalNoNewAttempt": true,
+    "AQualityOriginalConsumptionAndOneUnitEvidence": true,
+    "AQualityDeduplication": true,
+    "missingOriginalRefused": "ENOENT",
+    "tamperedOriginalRefused": "GATE_BLOCKED",
+    "sameRequestChangedBindingRefused": "INVALID_STATE",
+    "staleInputRefused": "GATE_BLOCKED",
+    "BActualOneFailedTestExit1WithCompleteOriginals": true,
+    "BQualityAndPlatformMergeRefusedDespiteRealOldAUnit": "GATE_BLOCKED",
+    "unknownClaimRemainsUnknownNoRunnerOrTerminal": true,
+    "lateTaskStoredRevAndCodeRev": 1,
+    "lateTaskCurrentRevAndCodeRev": 2,
+    "lateResultCurrentQualificationRefused": "GATE_BLOCKED",
+    "attemptUpdateDeleteTriggerRefusals": 2,
+    "resultUpdateDeleteTriggerRefusals": 2,
+    "duplicateTerminalPrimaryKeyRefused": true,
+    "savedDatabaseAttemptCount": 4,
+    "savedDatabaseResultCount": 3,
+    "controlledFunctionalConcurrency": true,
+    "uniqueReviewedRunnerInvocations": 3,
+    "countMeaning": "Three distinct runOnce CI bindings, not the total number of replay/refusal ci.run method calls. Database mutations and rejection details are source-bound saved real-harness assertions; no new database queries by this reviewer."
+  },
+  "sourceAndMigrationBinding": {
+    "sourceManifest": {
+      "path": ".jarvis-dev/workspaces/msf-targets-r38-real-devci/artifacts/final-source-pins-r6.json",
+      "sha256": "58e75deff42cab9cbb73ef2dd4c7122436fdc88a43fa5e38cab054fed2b6a7d1",
+      "bytes": 2442
+    },
+    "compiledManifest": {
+      "path": "artifacts/factory-devci-r38/validation-input/root-actual-compiled-direct-pins-r6.json",
+      "sha256": "c388553528643cde3610a70d3908f28a6cc1dcb6b7b47c79a58f79eba9ea3fbc",
+      "bytes": 1505
+    },
+    "harness": {
+      "path": "artifacts/factory-devci-r38/validation-input/service-integration-r6.mjs",
+      "sha256": "a17a4334841ad219e6fe97fca396a65e8025952e1cb6e77eac531d4c7fb14814",
+      "bytes": 31027
+    },
+    "sameElevenSourceAndNineDirectEmitPins": true,
+    "all31OriginalMigrationPinsAndAppliedReceiptsVerified": true,
+    "originalOuterFinalStableFlag": true,
+    "currentSavedByteInitialFinalStable": true,
+    "allTransitiveImportedPackagesCertified": false
+  },
+  "savedCleanup": {
+    "allThreeCandidateReceiptsContainerRemoved": true,
+    "exactCreatedPostgresMatchesRemovedAndAbsentAfter": true,
+    "beforeContainerCount": 13,
+    "afterContainerCount": 13,
+    "newResidualCount": 0,
+    "beforeAndAfterCIDSetExactlyEqual": true,
+    "existingContainerPropertiesBeyondCIDSetIndependentlyTraced": false,
+    "newDaemonObservationPerformed": false
+  },
+  "qualificationBoundary": {
+    "directServiceSyntheticCIMechanismOnly": true,
+    "newRuntimeOrTestsByReviewer": false,
+    "HTTPQualified": false,
+    "targetServerSuiteQualified": false,
+    "actualGitBranchMergeQualified": false,
+    "positivePlatformMergeQualified": false,
+    "autopilotBridgeQualified": false,
+    "authenticatedAIReviewQualified": false,
+    "frameworkABIQualified": false,
+    "fullPG4Qualified": false,
+    "full74Qualified": false,
+    "customerDelivered": false,
+    "productionChanged": false,
+    "oldFailedAttemptsPreservedNoBackfill": true,
+    "noOldSourceSemanticOrTestReplay": true,
+    "no1810DependencyRevalidation": true,
+    "kernelTraceOrOSLevelNoNetworkProof": false
+  },
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "knownExternalModelCost": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

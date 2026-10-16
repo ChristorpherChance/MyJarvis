@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-service-attempt5-saved-safe-cause-independent-review",
+  "status": "saved-qualified-synthetic-test-report-pass-global-ci-fail",
+  "savedEvidenceIndependentlyAudited": true,
+  "remainingP0P1InSavedIntegrityScope": 0,
+  "actual": {
+    "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-5.json",
+    "sha256": "049c08adc272064ca0b47c6f86622ddf66a79204bff7f8e3cff23efe54c79902",
+    "bytes": 8348
+  },
+  "privateHarnessSafeResult": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-7130350f-ff4a-4cab-982a-11e138244510/safe-report/harness-safe.json",
+    "sha256": "e7ef968e306407a4429130dab726a7063caab1313d7d9f4f13e63f6832b0f362",
+    "bytes": 12972
+  },
+  "originalCandidateReceipt": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-7130350f-ff4a-4cab-982a-11e138244510/ci-artifacts/5afb2d17-6eca-4877-97c4-3d16449d52b6/receipt.json",
+    "sha256": "89c65d804411f4498a728db9502c5b673518552d6e9b83879212257aebcc3bf6",
+    "bytes": 2064
+  },
+  "physicalReadback": {
+    "path": "artifacts/factory-devci-r38/service-attempt5-saved-physical-readback.json",
+    "sha256": "88426b6d15e8cc921352a452666fcd0b6085ec66940216399196fc07e42a6f4c",
+    "bytes": 15528
+  },
+  "facts": {
+    "harnessFailed": true,
+    "firstHarnessCode": "A_REAL_CI_DID_NOT_QUALIFY",
+    "receiptConclusion": "fail",
+    "receiptErrorCode": null,
+    "actualContainerExecution": true,
+    "testDomain": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "pending": 0
+    },
+    "coverage": {
+      "lines": 100,
+      "branches": 100
+    },
+    "originalVitestSuccessBoolean": true,
+    "globalProcess": {
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false
+    },
+    "originalArtifactCount": 8,
+    "eightOriginalsAndExternalReceiptHashesVerified": true,
+    "twoOriginalCollectorFramesStrictBase64RoundtripHSizeAndClosedMetadata9Verified": true,
+    "all31SavedMigrationPinsEqualPriorSourceCheckedCut": true,
+    "AStoppedWithoutRetry": true,
+    "laterBOrLateTaskRun": false,
+    "actualQualityOrMergeMethodInvoked": false,
+    "zeroExitQualificationCorrectlyRejected": true
+  },
+  "closedCause": {
+    "code": "POST_TEST_VITEST_RESULTS_CACHE_MKDIR_ENOENT",
+    "actualPrivateStderrSHA256": "8564a208a255647b56112fdd6b7f4d54d76eb29253d8635eb107f953644d1bd7",
+    "actualPrivateStderrBytes": 1453,
+    "safeMatches": {
+      "ENOENT": true,
+      "mkdir": true,
+      "ResultsCacheWriteToCache": true,
+      "EROFS": false,
+      "EACCES": false
+    },
+    "frameScope": "ResultsCache.writeToCache after tests",
+    "supportingFrameworkSourceFiles": 6,
+    "allSixCurrentDependencyFilesMatchManifestPins": true,
+    "originalBodyOrPrivatePathPublished": false,
+    "notAnAssertionFailure": true,
+    "readOnlyMountsWereNotRelaxed": true,
+    "R5CacheFlagFixRuntimeNotYetObserved": true
+  },
+  "savedCleanup": {
+    "candidateContainerRemovedSourceBound": true,
+    "exactCreatedPGMatchesRemovedAndAbsentAfter": true,
+    "beforeCount": 13,
+    "afterCount": 13,
+    "newResidualCount": 0,
+    "beforeAfterSetsEqual": true,
+    "noNewDaemonRead": true
+  },
+  "boundary": {
+    "reportPassNotCompleteCIPass": true,
+    "syntheticMechanismNotTargetServerSuite": true,
+    "no1810WholeDependencyRevalidation": true,
+    "noOld67SourceSemanticsRepeated": true,
+    "newTestsFunctionsImportsDockerPGAPIorModelsExecuted": false,
+    "successfulCIQualified": false,
+    "qualityMergeQualified": false,
+    "HTTPQualified": false,
+    "autopilotQualified": false,
+    "frameworkABIQualified": false,
+    "fullPG4Qualified": false,
+    "full74Qualified": false,
+    "productionChanged": false
+  },
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

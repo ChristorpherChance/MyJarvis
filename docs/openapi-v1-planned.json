@@ -471,11 +471,10 @@
         ],
         "x-implementation-status": "implemented",
         "operationId": "inboxCapture",
-        "summary": "收集终端原话",
-        "description": "保留原话范围；附件说明不能冒充扫描识别",
+        "summary": "保存文字、链接、录音或文档收件",
+        "description": "至少包含非空原话、HTTP(S)来源链接或已上传原件。链接只保存，不自动抓取；录音原件不等于已转写。",
         "x-command": "inbox.capture",
         "x-required-payload-fields": [
-          "rawText",
           "kind",
           "terminalId",
           "origin"
@@ -29610,6 +29609,1563 @@
           }
         ]
       }
+    },
+    "/api/v1/inbox-materials/uploads": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "prepareInboxMaterial",
+        "summary": "准备原件上传并固定编号",
+        "description": "个人管理员登录后保存音频、PDF、DOCX、UTF-8文字或图片。每个原件1字节至32MiB，网页入口限25MiB。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialPrepare"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "已持久保存的原件状态",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "get": {
+        "operationId": "listInboxOriginals",
+        "summary": "查看本人原件及使用引用，不返回原始字节",
+        "tags": [
+          "inbox"
+        ],
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "查看本人原件及使用引用，不返回原始字节",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialListEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Scope"
+            }
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "enum": [
+                "active",
+                "trashed",
+                "all"
+              ],
+              "default": "active"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 240
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 500
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}": {
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "readInboxMaterial",
+        "summary": "读取当前身份原件的保存与解析状态",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已持久保存的原件状态",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/file": {
+      "put": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "storeInboxMaterial",
+        "summary": "保存不可覆盖的原件字节",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "maxLength": 33554432
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "已持久保存的原件状态",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "downloadInboxMaterial",
+        "summary": "核对指纹后读取原件",
+        "description": "录音和图片可回听或预览，文档以附件下载；private no-store、nosniff与sandbox响应头。",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "原件完整字节",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/process": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "processInboxMaterial",
+        "summary": "显式处理原件文字",
+        "description": "持久化不可变处理编号后才调用引擎；重试同编号只确认原结果，不自动重派。录音最多10分钟；文档最多20页。机器结果待人工核对。",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialProcessInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "持久化的原件及文字处理状态；processing.failed不等于正文成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/text-review": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "reviewInboxMaterialText",
+        "summary": "保存人工校正文",
+        "description": "保留机器候选与原件，按当前revision保存人工校正，仅刷新未发布资料的派生检索字段。",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialTextReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "持久化的原件及文字处理状态；processing.failed不等于正文成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/links/extract": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "x-implementation-status": "implemented",
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "operationId": "extractInboxLink",
+        "summary": "显式提取已授权网页正文",
+        "description": "仅访问管理员已配置的精确origin，拒绝重定向，限4MiB/30秒。先保存HTML/纯文本原件，再提取静态正文；解析失败原件仍可下载。",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxLinkExtractInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "持久化的原件及文字处理状态；processing.failed不等于正文成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/references/resolve": {
+      "post": {
+        "operationId": "KnowledgeReferenceResolve",
+        "summary": "只读打开已保存检索记录中的可信出处；重新核当前授权、版本与指纹，不访问传入位置。实时全文未保留时仅返回明确标注的当时摘录。",
+        "tags": [
+          "Knowledge"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeReferenceResolveInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "只读打开已保存检索记录中的可信出处；重新核当前授权、版本与指纹，不访问传入位置。实时全文未保留时仅返回明确标注的当时摘录。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReferenceContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "请求字段或范围无效"
+          },
+          "401": {
+            "description": "本人身份未认证或已失效"
+          },
+          "403": {
+            "description": "来源撤权、范围变化或跨身份访问"
+          },
+          "404": {
+            "description": "没有可信检索记录或匹配引用"
+          },
+          "409": {
+            "description": "版本、正文指纹或来源配置已变化"
+          }
+        }
+      }
+    },
+    "/api/runtime/memory/query": {
+      "post": {
+        "operationId": "MemoryQuestionQuery",
+        "summary": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryQuestionQueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryQuestionQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "请求字段或范围无效"
+          },
+          "401": {
+            "description": "本人身份未认证或已失效"
+          },
+          "403": {
+            "description": "来源撤权、范围变化或跨身份访问"
+          },
+          "404": {
+            "description": "没有可信检索记录或匹配引用"
+          },
+          "409": {
+            "description": "版本、正文指纹或来源配置已变化"
+          }
+        }
+      }
+    },
+    "/api/runtime/family/memory/query": {
+      "post": {
+        "operationId": "MemberMemoryQuestionQuery",
+        "summary": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "MemberCookie": []
+          },
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryQuestionQueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "只读按问题检索当前本人全部生效记忆后限制结果；不持久保存问题、不确认候选、不调用模型。问题放JSON正文而非URL。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryQuestionQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "请求字段或范围无效"
+          },
+          "401": {
+            "description": "本人身份未认证或已失效"
+          },
+          "403": {
+            "description": "来源撤权、范围变化或跨身份访问"
+          },
+          "404": {
+            "description": "没有可信检索记录或匹配引用"
+          },
+          "409": {
+            "description": "版本、正文指纹或来源配置已变化"
+          }
+        }
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/usage": {
+      "get": {
+        "operationId": "inboxOriginalUsage",
+        "summary": "查看当前业务及历史引用、处理和保留锁定条件",
+        "tags": [
+          "inbox"
+        ],
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "查看当前业务及历史引用、处理和保留锁定条件",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialUsageEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/lifecycle": {
+      "post": {
+        "operationId": "manageInboxOriginal",
+        "summary": "明确回收、恢复、保留或永久删除原件；删除只允许已回收、无引用且未处理的当前版本",
+        "tags": [
+          "inbox"
+        ],
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "明确回收、恢复、保留或永久删除原件；删除只允许已回收、无引用且未处理的当前版本",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialLifecycleInput"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/inbox-materials/uploads/{id}/reuse-book": {
+      "post": {
+        "operationId": "reuseInboxOriginalForBook",
+        "summary": "核验原件字节后复制到当前已授权书目上传票据；后续仍须登记、校对和发布",
+        "tags": [
+          "inbox"
+        ],
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "核验原件字节后复制到当前已授权书目上传票据；后续仍须登记、校对和发布",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialReuseBookInput"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/inbox-materials/cleanup/preview": {
+      "post": {
+        "operationId": "previewUnusedInboxOriginals",
+        "summary": "只预览未引用旧上传；不会自动回收或删除",
+        "tags": [
+          "inbox"
+        ],
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "只预览未引用旧上传；不会自动回收或删除",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InboxMaterialCleanupPreviewEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InboxMaterialCleanupPreviewInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/memory/workbench": {
+      "get": {
+        "operationId": "memoryWorkbench",
+        "summary": "本人到期复核及字词相似提示；日期只提醒，不自动失效或合并",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "本人到期复核及字词相似提示；日期只提醒，不自动失效或合并",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryWorkbenchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        }
+      }
+    },
+    "/api/runtime/memory/maintenance/merge": {
+      "post": {
+        "operationId": "memoryMerge",
+        "summary": "本人比较两条当前版本后明确合并，旧条停止召回",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "本人比较两条当前版本后明确合并，旧条停止召回",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMaintenanceReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryMergeInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/memory/maintenance/review": {
+      "post": {
+        "operationId": "memoryReview",
+        "summary": "本人确认仍准确或填写新表述，并明确下次复核日期",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "本人确认仍准确或填写新表述，并明确下次复核日期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMaintenanceReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryReviewInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/memory/maintenance/forget": {
+      "post": {
+        "operationId": "memoryLineageForget",
+        "summary": "核对当前关联组件指纹后遗忘合并前后正文及旧回执副本",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "核对当前关联组件指纹后遗忘合并前后正文及旧回执副本",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMaintenanceReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryLineageForgetInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/family/memory/workbench": {
+      "get": {
+        "operationId": "memoryWorkbenchFamily",
+        "summary": "本人到期复核及字词相似提示；日期只提醒，不自动失效或合并",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "MemberCookie": []
+          },
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "本人到期复核及字词相似提示；日期只提醒，不自动失效或合并",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryWorkbenchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        }
+      }
+    },
+    "/api/runtime/family/memory/maintenance/merge": {
+      "post": {
+        "operationId": "memoryMergeFamily",
+        "summary": "本人比较两条当前版本后明确合并，旧条停止召回",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "MemberCookie": []
+          },
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "本人比较两条当前版本后明确合并，旧条停止召回",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMaintenanceReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryMergeInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/family/memory/maintenance/review": {
+      "post": {
+        "operationId": "memoryReviewFamily",
+        "summary": "本人确认仍准确或填写新表述，并明确下次复核日期",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "MemberCookie": []
+          },
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "本人确认仍准确或填写新表述，并明确下次复核日期",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMaintenanceReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryReviewInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/family/memory/maintenance/forget": {
+      "post": {
+        "operationId": "memoryLineageForgetFamily",
+        "summary": "核对当前关联组件指纹后遗忘合并前后正文及旧回执副本",
+        "tags": [
+          "Memory"
+        ],
+        "security": [
+          {
+            "MemberCookie": []
+          },
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "核对当前关联组件指纹后遗忘合并前后正文及旧回执副本",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryMaintenanceReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入格式无效"
+          },
+          "401": {
+            "description": "当前身份未认证或已失效"
+          },
+          "403": {
+            "description": "本人权限或资料授权不允许"
+          },
+          "404": {
+            "description": "原件或关联记录不存在"
+          },
+          "409": {
+            "description": "版本、引用或固定提交编号已变化"
+          },
+          "422": {
+            "description": "操作条件未满足"
+          },
+          "503": {
+            "description": "当前无法完成，请查询原提交结果"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryLineageForgetInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runtime/family/knowledge/query": {
+      "post": {
+        "operationId": "querySavedFamilyKnowledge",
+        "tags": [
+          "FamilyKnowledge"
+        ],
+        "summary": "成员显式查询已保存家庭知识",
+        "description": "固定家庭共享范围；先查全部已授权的已发布书页和已保存来源，再限制结果。当前为字词匹配，不含故事解释、实时抓取、Pi或语音。问题不持久保存；短期引用绑定真实成员及当前登录，5分钟有效，每会话最多10次查询、全局200次，每次最多50引用。",
+        "security": [
+          {
+            "MemberCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyKnowledgeQueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成员显式查询已保存家庭知识",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyKnowledgeQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入字段无效"
+          },
+          "401": {
+            "description": "须真实成员登录，管理员或终端凭据不代替成员"
+          },
+          "403": {
+            "description": "来源或原文已撤权或离开家庭共享范围"
+          },
+          "404": {
+            "description": "引用不属于当前查询或成员会话，或已淘汰"
+          },
+          "409": {
+            "description": "来源版本、书页版本、正文或摘录位置已变化"
+          },
+          "410": {
+            "description": "引用已过期，需要重新查询"
+          }
+        }
+      }
+    },
+    "/api/runtime/family/knowledge/references/resolve": {
+      "post": {
+        "operationId": "resolveSavedFamilyKnowledgeReference",
+        "tags": [
+          "FamilyKnowledge"
+        ],
+        "summary": "打开当前成员查询中的可信有限原文",
+        "description": "只接受服务器签发的查询与引用编号，不接受路径、地址、身份或管理员查询记录。重新核对当前成员、家庭范围、来源授权、发布版本和全文指纹；返回有限上下文与摘录位置，不重新抓取来源，不暴露本机路径。",
+        "security": [
+          {
+            "MemberCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyKnowledgeReferenceInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "打开当前成员查询中的可信有限原文",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyKnowledgeReferenceResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入字段无效"
+          },
+          "401": {
+            "description": "须真实成员登录，管理员或终端凭据不代替成员"
+          },
+          "403": {
+            "description": "来源或原文已撤权或离开家庭共享范围"
+          },
+          "404": {
+            "description": "引用不属于当前查询或成员会话，或已淘汰"
+          },
+          "409": {
+            "description": "来源版本、书页版本、正文或摘录位置已变化"
+          },
+          "410": {
+            "description": "引用已过期，需要重新查询"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -29775,7 +31331,8 @@
               "settings",
               "releases",
               "capture-policies",
-              "jobs"
+              "jobs",
+              "inbox-assets"
             ]
           },
           "objectId": {
@@ -31263,7 +32820,8 @@
               "rejected",
               "forgotten",
               "policy",
-              "exported"
+              "exported",
+              "merged"
             ]
           },
           "source": {
@@ -31380,6 +32938,43 @@
           "count": {
             "type": "integer",
             "minimum": 0
+          },
+          "mergeSources": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "revision"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          "mergedInto": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 200
+          },
+          "lastReviewedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
           }
         },
         "required": [
@@ -31394,7 +32989,7 @@
           "createdAt",
           "updatedAt"
         ],
-        "description": "当前认证成员私有。候选不用于长期个性化；遗忘清除正文和旧正文副本，只留无敏感正文的审计。聊天与收件另行留存。",
+        "description": "当前认证成员私有。候选不用于长期个性化；明确合并后旧条停止召回，保留来源ID。复核日期只提醒。关联遗忘清正文、来源和旧回执副本；原聊天与独立收件另行留存。",
         "allOf": [
           {
             "if": {
@@ -32007,7 +33602,7 @@
           "rawText": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1
+            "minLength": 0
           },
           "kind": {
             "type": "string",
@@ -32100,6 +33695,27 @@
           "independenceDecision": {
             "type": "object",
             "additionalProperties": true
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialReference"
+            },
+            "maxItems": 5
+          },
+          "materialText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "materialTextTruncated": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -32344,6 +33960,34 @@
               "null"
             ],
             "additionalProperties": true
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialReference"
+            },
+            "maxItems": 5
+          },
+          "materialText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "materialTextTruncated": {
+            "type": "boolean"
+          },
+          "inboxOrigins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "required": [
@@ -32691,6 +34335,34 @@
               "string",
               "null"
             ]
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialReference"
+            },
+            "maxItems": 5
+          },
+          "materialText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "materialTextTruncated": {
+            "type": "boolean"
+          },
+          "inboxOrigins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
           }
         },
         "required": [
@@ -33806,7 +35478,7 @@
           "rawText": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1
+            "minLength": 0
           },
           "kind": {
             "type": "string",
@@ -33841,10 +35513,23 @@
             "type": "string",
             "maxLength": 200,
             "minLength": 1
+          },
+          "sourceUrl": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "attachmentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "maxItems": 5,
+            "uniqueItems": true
           }
         },
         "required": [
-          "rawText",
           "kind",
           "terminalId",
           "origin"
@@ -69543,6 +71228,1904 @@
         },
         "required": [
           "data"
+        ]
+      },
+      "InboxMaterialReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaKind": {
+            "enum": [
+              "audio",
+              "document",
+              "image",
+              "text"
+            ]
+          },
+          "textStatus": {
+            "enum": [
+              "extracted",
+              "unsupported",
+              "not-applicable"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "sha256",
+          "mediaKind",
+          "textStatus"
+        ]
+      },
+      "InboxMaterialPrepare": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          }
+        }
+      },
+      "InboxMaterialUpload": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "status",
+          "scope",
+          "ownerId",
+          "revision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 33554432
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaKind": {
+            "enum": [
+              "audio",
+              "document",
+              "image",
+              "text"
+            ]
+          },
+          "textStatus": {
+            "enum": [
+              "extracted",
+              "unsupported",
+              "not-applicable"
+            ]
+          },
+          "status": {
+            "enum": [
+              "awaiting-file",
+              "stored",
+              "fetching",
+              "failed",
+              "deleted"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "extractedText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "textTruncated": {
+            "type": "boolean"
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "processing": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InboxMaterialProcessing"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "extraction": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InboxMaterialExtraction"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "textReview": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "sourceTextSha256",
+              "reviewedAt",
+              "reviewedBy"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "maxLength": 120000
+              },
+              "sourceTextSha256": {
+                "type": "string"
+              },
+              "reviewedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reviewedBy": {
+                "type": "string"
+              }
+            }
+          },
+          "lifecycle": {
+            "enum": [
+              "active",
+              "trashed",
+              "deleted"
+            ]
+          },
+          "trashedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "deletedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "retainUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "InboxMaterialReceipt": {
+        "type": "object",
+        "required": [
+          "requestId",
+          "version",
+          "data",
+          "events"
+        ],
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "data": {
+            "$ref": "#/components/schemas/InboxMaterialUpload"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainEvent"
+            }
+          }
+        }
+      },
+      "InboxMaterialProcessInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "operation"
+        ],
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "operation": {
+            "enum": [
+              "extract",
+              "transcribe"
+            ]
+          },
+          "cloudConsent": {
+            "type": "boolean",
+            "default": false
+          },
+          "language": {
+            "enum": [
+              "zh",
+              "en",
+              "ja",
+              "fr",
+              "de",
+              "es",
+              "auto"
+            ]
+          }
+        }
+      },
+      "InboxMaterialTextReviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "text"
+        ],
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120000
+          }
+        }
+      },
+      "InboxLinkExtractInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "url",
+          "scope"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          }
+        }
+      },
+      "InboxMaterialProcessing": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "operation",
+          "cloudConsent",
+          "status",
+          "sourceSha256",
+          "startedAt",
+          "retryable"
+        ],
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "operation": {
+            "enum": [
+              "extract",
+              "transcribe"
+            ]
+          },
+          "cloudConsent": {
+            "type": "boolean"
+          },
+          "language": {
+            "enum": [
+              "zh",
+              "en",
+              "ja",
+              "fr",
+              "de",
+              "es",
+              "auto"
+            ]
+          },
+          "status": {
+            "enum": [
+              "running",
+              "complete",
+              "failed",
+              "interrupted"
+            ]
+          },
+          "sourceSha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          }
+        }
+      },
+      "InboxMaterialExtraction": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "sourceSha256",
+          "text",
+          "textSha256",
+          "engine",
+          "segments",
+          "warnings",
+          "textTruncated",
+          "reviewRequired",
+          "processedAt"
+        ],
+        "properties": {
+          "operation": {
+            "enum": [
+              "extract",
+              "transcribe"
+            ]
+          },
+          "sourceSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "textSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "engine": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "language": {
+            "type": "string"
+          },
+          "segments": {
+            "type": "array",
+            "maxItems": 2000,
+            "items": {
+              "type": "object",
+              "required": [
+                "text",
+                "location",
+                "sha256"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "maxLength": 120000
+                },
+                "location": {
+                  "type": "string",
+                  "maxLength": 4500
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "page": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "paragraph": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "start": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 600
+                },
+                "end": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 600
+                }
+              }
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string",
+              "maxLength": 1000
+            }
+          },
+          "textTruncated": {
+            "type": "boolean"
+          },
+          "reviewRequired": {
+            "const": true
+          },
+          "processedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "KnowledgeReferenceResolveInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "queryId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4500
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "queryId",
+          "source",
+          "location",
+          "sha256"
+        ]
+      },
+      "KnowledgeReferenceContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "sourceRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "book-page",
+              "stored-document",
+              "query-excerpt"
+            ]
+          },
+          "location": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bookId": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": [
+              "number",
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "contextStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "quoteOffset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quoteStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hasEarlierText": {
+            "type": "boolean"
+          },
+          "hasLaterText": {
+            "type": "boolean"
+          },
+          "verifiedSourceText": {
+            "type": "boolean"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notice": {
+            "type": "string"
+          },
+          "externalUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "sourceId",
+          "sourceName",
+          "sourceRevision",
+          "kind",
+          "location",
+          "sha256",
+          "text",
+          "contextStart",
+          "quote",
+          "quoteOffset",
+          "quoteStart",
+          "hasEarlierText",
+          "hasLaterText",
+          "verifiedSourceText",
+          "resolvedAt",
+          "notice"
+        ]
+      },
+      "MemoryQuestionQueryInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "MemoryQuestionQueryMatch": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "const": "memory"
+          },
+          "text": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sourceEvidenceStatus": {
+            "type": "string",
+            "enum": [
+              "current-confirmation",
+              "historical-before-edit"
+            ]
+          },
+          "sourceEvidenceNotice": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "score": {
+            "type": "number"
+          },
+          "matchedField": {
+            "type": "string"
+          },
+          "confirmedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "nextReviewAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "text",
+          "revision",
+          "sourceEvidenceStatus",
+          "quote",
+          "location",
+          "sha256",
+          "offset",
+          "score",
+          "matchedField"
+        ]
+      },
+      "MemoryQuestionQueryResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "records": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/MemoryQuestionQueryMatch"
+            }
+          },
+          "retrieval": {
+            "const": "literal-fragments"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "query",
+          "total",
+          "records",
+          "retrieval",
+          "notice"
+        ]
+      },
+      "InboxMaterialLifecycleInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "action": {
+            "enum": [
+              "trash",
+              "restore",
+              "retention",
+              "delete"
+            ]
+          },
+          "confirmed": {
+            "const": true
+          },
+          "retainUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "action",
+          "confirmed"
+        ]
+      },
+      "InboxMaterialReuseBookInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "uploadId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "uploadId"
+        ]
+      },
+      "InboxMaterialCleanupPreviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "olderThan": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 100
+          }
+        },
+        "required": [
+          "olderThan"
+        ]
+      },
+      "InboxMaterialUsageResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "lifecycle": {
+            "enum": [
+              "active",
+              "trashed",
+              "deleted"
+            ]
+          },
+          "references": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "title": {
+                  "type": "string",
+                  "maxLength": 240
+                },
+                "status": {
+                  "type": "string"
+                },
+                "scope": {
+                  "$ref": "#/components/schemas/Scope"
+                },
+                "historical": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "domain",
+                "id",
+                "title",
+                "status",
+                "scope",
+                "historical"
+              ]
+            }
+          },
+          "referenceCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "referencesTruncated": {
+            "type": "boolean"
+          },
+          "processing": {
+            "type": "boolean"
+          },
+          "deleteAllowed": {
+            "type": "boolean"
+          },
+          "deleteBlockedReasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "assetId",
+          "revision",
+          "lifecycle",
+          "references",
+          "referenceCount",
+          "referencesTruncated",
+          "processing",
+          "deleteAllowed",
+          "deleteBlockedReasons"
+        ]
+      },
+      "InboxMaterialListResult": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InboxMaterialInventoryItem"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      },
+      "InboxMaterialListEnvelope": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "data": {
+            "$ref": "#/components/schemas/InboxMaterialListResult"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainEvent"
+            }
+          }
+        },
+        "required": [
+          "requestId",
+          "version",
+          "data",
+          "events"
+        ]
+      },
+      "InboxMaterialUsageEnvelope": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/InboxMaterialUsageResult"
+          }
+        },
+        "additionalProperties": true
+      },
+      "InboxMaterialCleanupPreviewEnvelope": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "MemoryMergeInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scope": {
+            "const": "private"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "memoryId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "nextReviewAt": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "confirmed": {
+                "const": true
+              },
+              "otherMemoryId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "otherExpectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              },
+              "category": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+              }
+            },
+            "required": [
+              "memoryId",
+              "nextReviewAt",
+              "confirmed",
+              "otherMemoryId",
+              "otherExpectedVersion",
+              "text",
+              "category"
+            ]
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "scope",
+          "payload"
+        ]
+      },
+      "MemoryReviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scope": {
+            "const": "private"
+          },
+          "payload": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "memoryId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "nextReviewAt": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time"
+                  },
+                  "confirmed": {
+                    "const": true
+                  },
+                  "outcome": {
+                    "const": "accurate"
+                  }
+                },
+                "required": [
+                  "memoryId",
+                  "nextReviewAt",
+                  "confirmed",
+                  "outcome"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "memoryId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "nextReviewAt": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "date-time"
+                  },
+                  "confirmed": {
+                    "const": true
+                  },
+                  "outcome": {
+                    "const": "changed"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1200
+                  }
+                },
+                "required": [
+                  "memoryId",
+                  "nextReviewAt",
+                  "confirmed",
+                  "outcome",
+                  "text"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "scope",
+          "payload"
+        ]
+      },
+      "MemoryLineageForgetInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scope": {
+            "const": "private"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "memoryId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "lineageVersion": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "confirmed": {
+                "const": true
+              }
+            },
+            "required": [
+              "memoryId",
+              "lineageVersion",
+              "reason",
+              "confirmed"
+            ]
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "scope",
+          "payload"
+        ]
+      },
+      "MemoryMaintenanceReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "data": {
+            "$ref": "#/components/schemas/Memory"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainEvent"
+            }
+          }
+        },
+        "required": [
+          "requestId",
+          "version",
+          "data",
+          "events"
+        ]
+      },
+      "MemoryWorkbenchResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Memory"
+            }
+          },
+          "dueIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "lineages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "version": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "ids",
+                "version"
+              ]
+            }
+          },
+          "pairs": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "leftId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "rightId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "sharedFragments": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "leftId",
+                "rightId",
+                "reason",
+                "sharedFragments",
+                "score"
+              ]
+            }
+          },
+          "totalPairs": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "comparison": {
+            "const": "literal-fragments"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "checkedAt",
+          "records",
+          "dueIds",
+          "lineages",
+          "pairs",
+          "totalPairs",
+          "comparison",
+          "notice"
+        ]
+      },
+      "InboxMaterialInventoryItem": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "filename",
+          "mime",
+          "size",
+          "status",
+          "scope",
+          "ownerId",
+          "revision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "mime": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 33554432
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaKind": {
+            "enum": [
+              "audio",
+              "document",
+              "image",
+              "text"
+            ]
+          },
+          "textStatus": {
+            "enum": [
+              "extracted",
+              "unsupported",
+              "not-applicable"
+            ]
+          },
+          "status": {
+            "enum": [
+              "awaiting-file",
+              "stored",
+              "fetching",
+              "failed",
+              "deleted"
+            ]
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "extractedText": {
+            "type": "string",
+            "maxLength": 120000
+          },
+          "textTruncated": {
+            "type": "boolean"
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4000
+          },
+          "processing": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  },
+                  "operation": {
+                    "enum": [
+                      "extract",
+                      "transcribe"
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "operation"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "extraction": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InboxMaterialExtraction"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "textReview": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "sourceTextSha256",
+              "reviewedAt",
+              "reviewedBy"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "maxLength": 120000
+              },
+              "sourceTextSha256": {
+                "type": "string"
+              },
+              "reviewedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reviewedBy": {
+                "type": "string"
+              }
+            }
+          },
+          "lifecycle": {
+            "enum": [
+              "active",
+              "trashed",
+              "deleted"
+            ]
+          },
+          "trashedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "deletedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "retainUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/InboxMaterialUsageResult"
+          }
+        },
+        "description": "列表只含原件元数据、处理状态摘要和引用摘要；不带处理正文、原提取或历史正文。"
+      },
+      "FamilyKnowledgeQueryInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "FamilyKnowledgeReferenceInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "refId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "queryId",
+          "refId"
+        ]
+      },
+      "FamilyKnowledgeMatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "enum": [
+              "book",
+              "external-document"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 2002
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "quoteKind": {
+            "enum": [
+              "published-original",
+              "external-source-unreviewed"
+            ]
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refId",
+          "kind",
+          "title",
+          "quote",
+          "sourceName",
+          "quoteKind"
+        ]
+      },
+      "FamilyKnowledgeQueryResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "query": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "records": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/FamilyKnowledgeMatch"
+            }
+          },
+          "retrieval": {
+            "const": "literal-fragments"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "profileId",
+          "queryId",
+          "expiresAt",
+          "query",
+          "total",
+          "records",
+          "retrieval",
+          "notice"
+        ]
+      },
+      "FamilyKnowledgeReferenceResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "profileId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "enum": [
+              "book-page",
+              "stored-document"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "sourceRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 2002
+          },
+          "quoteStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "contextStart": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "hasEarlierText": {
+            "type": "boolean"
+          },
+          "hasLaterText": {
+            "type": "boolean"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "verifiedSourceText": {
+            "const": true
+          },
+          "quoteKind": {
+            "enum": [
+              "published-original",
+              "external-source-unreviewed"
+            ]
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actorId",
+          "profileId",
+          "queryId",
+          "expiresAt",
+          "refId",
+          "kind",
+          "title",
+          "sourceName",
+          "sourceRevision",
+          "text",
+          "quote",
+          "quoteStart",
+          "contextStart",
+          "hasEarlierText",
+          "hasLaterText",
+          "sha256",
+          "verifiedSourceText",
+          "quoteKind",
+          "resolvedAt",
+          "notice"
         ]
       }
     },

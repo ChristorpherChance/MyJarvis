@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-16",
+  "scope": "当前灵感收件、知识和记忆功能的纯本地候选交付包",
+  "codeCommit": "3c9cc7fef93608ea07d2b119e20682349b582d8b",
+  "state": {
+    "implementation": "complete",
+    "verification": "partial",
+    "localArchiveVerified": true,
+    "linuxInstalledOrStarted": false,
+    "productionDeployed": false,
+    "fieldAcceptance": false
+  },
+  "archive": {
+    "at": "2026-10-15T16:23:14.616117+00:00",
+    "archiveVersion": "20261016-capture-offline-asr-r34",
+    "runtimeBuildUnchanged": "20261012-supervision-r28-2",
+    "sourceCommit": "3c9cc7fef93608ea07d2b119e20682349b582d8b",
+    "archive": "20261016-capture-offline-asr-r34.zip",
+    "archiveSha256": "881deb945fcf63aeefe1a6a90950c365db2dbe2061d36648158efb9e5b420a4b",
+    "archiveBytes": 24837899,
+    "manifestSha256": "c20b4e420df915e9478a28ebbcdbb92f0083b5480f2410bf2cea3914fdb07e7c",
+    "payloadFiles": 2137,
+    "archiveEntries": 2138,
+    "allZipFileFingerprintsRecomputed": true,
+    "allZipRegularFilesAndUnixModesVerified": true,
+    "requiredSourceAndCompiledEntriesPresent": true,
+    "offlineAllowlistEntries": 5,
+    "offlineManifestVersion": "afa399ba0713263077dbe39bf963ab1262d34a2a5a9efccc89c8e1723614c4c0",
+    "workerActualSegmentsSourceMatched": true,
+    "excludedFileClassesVerified": true,
+    "privateContentSemanticScanPerformed": false,
+    "linuxInstallOrStartPerformed": false,
+    "productionAccess": false,
+    "fullProductAcceptance": false
+  },
+  "execution": {
+    "exitCode": 0,
+    "wallSeconds": 13.344000000040978,
+    "actualPackageCalls": 1,
+    "buildsDuringPackaging": 0,
+    "remoteOperationsPerformed": false
+  },
+  "included": [
+    "指定已提交公开源码与当前API/web构建，包含离线HTML、SW、当前5项缓存资源及保留真实时间段的ASR脚本。",
+    "逐文件SHA-256、字节数、Unix regular mode与整包SHA，另有候选使用说明；依赖、模型、私有配置与数据库不在包内。"
+  ],
+  "decisions": [
+    "旧打包脚本固定旧版本并只取过时.dist-next，遗漏新离线源码；另建纯本地工具，不触发会连接两服务器的旧stage，也不修改旧脚本。",
+    "候选包archiveVersion与源码/编译一致的原runtimeBuild分列，不伪称新正式发布；不能把新候选包名直接交给要求runtime身份一致的旧部署流程。",
+    "首独审发现类型限制及离线缓存依赖闭合缺口；在实际打包前收窄白名单，保留旧头和finding；只补两个相关反例，不重旧六例。"
+  ],
+  "validationCuts": [
+    "旧头合成Git仓库1组6唯一场景首过；明确Unix ZIP元信息后该受影响组再过；这两个旧cut保留。",
+    "独审问题修正后只运行新增2组反例，旧6未在最终头重跑，不合称最终整套8例一次通过。",
+    "非作者只读最终delta及新结果；Root在干净提交后实际打包一次，随后独立逐件读ZIP核字节、CRC、manifest及Unix mode。",
+    "API最后受影响构建和web离线最终构建先前通过；打包本身未构建、安装、启动服务或重新执行产品用例。"
+  ],
+  "associationBoundary": "Git全tracked原字节、source map路径与mtime、运行标识、当前web入口和离线资源H是来源关联检查，不是可复现构建或Linux二进制/现场认证。",
+  "privateBoundary": "文件类别及固定公开资产来源经明确策略核验；未做内容语义私密识别，不把过滤器称为能判断任意文本内容隐私。",
+  "costs": {
+    "packagingModelCalls": 0,
+    "packagingCloudInference": false,
+    "internalTokens": null,
+    "internalUnitPriceUSD": null,
+    "internalAmountUSD": null,
+    "spendingCap": null
+  },
+  "remaining": [
+    "PR评审合并、Linux依赖安装及启动、实际安装使用和升级恢复；本机ZIP未替代这些执行。",
+    "112正式发布、101冷备与真实手机、麦克风、房间终端现场验收；本轮无服务器现场操作。",
+    "后台跨浏览器自动同步与冲突合并、语义检索和真实模型问答引用质量。",
+    "在线项目资料与重要决定的版本同步本次未访问执行，原74及客户12未全部交付。"
+  ],
+  "preserved": {
+    "formalVersion": "20261012-supervision-r28-2",
+    "factoryTenMinuteFollowup": "paused",
+    "all74AndCustomer12Delivered": false
+  },
+  "evidence": [
+    {
+      "path": "independent-source-review.json",
+      "sha256": "96b48bbaa473926e124868cec5e684d97279c52b2d5cc3da5a80f4adbd703369",
+      "bytes": 6043
+    },
+    {
+      "path": "local-packager-corrections.json",
+      "sha256": "17c58677865bd43bfec1d3130ce1cefe277a75b1fa4d8050c3e1e612c167d662",
+      "bytes": 4147
+    },
+    {
+      "path": "independent-source-review-final.json",
+      "sha256": "ad681ed65f857f5a74f87796b671a6badfa42ee4009cae0f3e87b775a77393f8",
+      "bytes": 7227
+    },
+    {
+      "path": "root-independent-zip-readback.json",
+      "sha256": "f9d8fa1b2353c749663e4a54391e671c11e2128deeeab881b71cd238b133c7d4",
+      "bytes": 1037
+    },
+    {
+      "path": "original-fixture.json",
+      "sha256": "ca94b9645573472c37cb82436df0d47fde1955b4a16b04b54bf3cc798d6f82f4",
+      "bytes": 2309
+    },
+    {
+      "path": "release-manifest.json",
+      "sha256": "c20b4e420df915e9478a28ebbcdbb92f0083b5480f2410bf2cea3914fdb07e7c",
+      "bytes": 423168
+    }
+  ]
+}

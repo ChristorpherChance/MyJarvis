@@ -1,0 +1,257 @@
+{
+  "date": "2026-10-15",
+  "scope": "房间页真实成员显式家庭知识文字查询与出处、跨窗口身份清理",
+  "codeCommit": "98c6375aab1713c4768af7a17d5fc068210f0ea9",
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "state": {
+    "implementation": "complete",
+    "isolatedVerification": "passed-with-explicit-cutoffs",
+    "pushedAtRecordingCut": false,
+    "merged": false,
+    "deployed112": false,
+    "fieldAcceptance": false
+  },
+  "implemented": [
+    "真实成员本人Cookie查询固定家庭范围；纯管理员和终端不能替代，混合凭据仍固定真实成员，不接收客户端身份或来源路径。",
+    "仅当前授权的已发布书页和保存资料正文，全部检索后筛类型和限制结果；不包含故事解读、私人资料、实时抓取或模型回答。",
+    "打开出处重新核当前授权、来源及书页版本、全文指纹和摘录位置，返回有限上下文与页码；外部保存资料明确尚未人工复核。",
+    "短期引用绑定当前成员及登录，五分钟有效，每会话最多十次查询、全局二百次，每次五十引用；问题和全文不放缓存。",
+    "标题和来源名中的明确本机绝对路径只显示末名或通用名称；原文不被擅自改写。",
+    "成员登录、退出和失效同步推进随机共享轮次，清旧问题、结果与出处，并联动平台原件及本人记忆遮挡；共享存储不放问题、成员编号或凭据。",
+    "固定最初切换轮次贯穿旧会话关闭、退出和登录的每个等待，离开页面或旧回包不能影响另一个窗口的新登录；存储失败如实提示且提交前拒绝。"
+  ],
+  "verification": {
+    "http": {
+      "uniqueGroups": 5,
+      "initialPassed": 5,
+      "initialFailed": 0,
+      "affectedGroupRerunAfterTitleFix": 1,
+      "totalGroupOccurrences": 6,
+      "passedOccurrences": 6,
+      "finalWholeSuiteRerun": false,
+      "initialPassDidNotEstablishNoTitlePath": true,
+      "checked": [
+        "真实成员、管理员、终端及混合会话",
+        "全部正文后限结果、固定家庭与支持种类、9k深处命中和私人排除",
+        "跨成员和同成员新登录的旧引用拒绝、当前身份失效",
+        "当前撤权403、版本及全文变化409",
+        "五分钟、每会话十与全局二百缓存限制",
+        "真实目录读取保存后查询与出处，Windows/POSIX/UNC/file及根路径安全标题和来源名，正常书名自定义名保留"
+      ]
+    },
+    "client": {
+      "uniqueGroups": 5,
+      "eachPassedAtLeastOnce": true,
+      "groupOccurrences": 6,
+      "passedOccurrences": 5,
+      "fixtureFailures": 1,
+      "rawRunnerOutputPersisted": false,
+      "failure": "首组合成问题内URL被夹具误当额外字段；只修该断言补首组。新增跨等待固定轮次组单独通过，其余组未重。",
+      "checked": [
+        "只发问题与引用编号，无身份/路径字段",
+        "迟到旧401先核原轮次",
+        "身份与摘录不一致拒绝显示",
+        "跨窗口不重播且存储失败如实",
+        "延迟旧关闭或退出后不提交旧登录"
+      ]
+    },
+    "browser": {
+      "uniqueGroups": 5,
+      "eachPassedAtLeastOnce": true,
+      "groupOccurrences": 7,
+      "passedOccurrences": 6,
+      "fixtureFailures": 1,
+      "separateManualSourceFinding": 1,
+      "finalWholeSuiteRerun": false,
+      "passedCutoffs": {
+        "member-phone-current-reference": 3,
+        "member-revoked-and-version-changed": 1,
+        "member-cross-tab-switch-and-logout": 1,
+        "member-late-real-401": 1,
+        "member-platform-private-bridge": 2
+      },
+      "initialFailure": "平台记忆准备未等待管理登录表单，count竞态跳过验证，尚未进入隐私桥断言；只补桥组通过。",
+      "manualFinding": "自动首组只检无location字段，人工截图发现目录派生title带Windows绝对路径。首图及P1报告保留；新成员边界窄修后仅补首组，对query与reader完整DTO字符串及可见文字断言均无绝对路径。",
+      "checked": [
+        "手机真实成员、真实生成PDF上传与逐页人工发布，第二页出处可见",
+        "真实目录同步文本，已保存尚未人工审核标记与安全名称",
+        "授权撤回403、书页改版409，不保旧上下文",
+        "两真实成员跨窗口切换/退出清问题结果出处；旧引用新登录404及退出401",
+        "真实旧voice/catalog返回401被延迟交付，新成员问题及身份和共享轮次保持",
+        "成员登录/退出HTTP提交前平台旧私人详情已遮挡，管理登录仍有效，验证共享轮次桥因果"
+      ],
+      "actualMainBundle": "index-BgioMN34.js",
+      "roomBundle": "RoomVoice-D5YcehUx.js",
+      "rootViewedFinalScreenshots": true
+    },
+    "build": {
+      "apiFinal": "passed",
+      "apiBuilds": 2,
+      "apiRebuildReason": "首次通过后安全名称数据路径修复，只重建受影响API",
+      "webFinal": "passed",
+      "webBuilds": 1,
+      "modules": 179,
+      "webSourceUnchangedDuringPathFix": true,
+      "webTypecheck": "passed",
+      "whitespaceCheck": "passed",
+      "appOriginalLineEndingsRestored": "API注册仅两新增行，原行末保持；归一后与已构建TypeScript完全相同。"
+    },
+    "contract": {
+      "newPostOperations": 2,
+      "newSchemas": 5,
+      "oldOperationsAndSchemasUnchanged": true,
+      "operationIdsUnique": true,
+      "localReferencesClosed": 3284,
+      "lineEndings": "LF",
+      "localPreparationFailure": "首校验器将schema中名为operationId的属性字典当字符串，TypeError发生本机核对时；限定字符串后核对通过，未调用业务。"
+    },
+    "independentReview": "后端及前端由非作者复读；固定原身份轮次的跨等待P1与人工截图的绝对路径P1均已窄修和定点复验，原报告保留。",
+    "environment": {
+      "realLocalHttp": true,
+      "temporarySqlite": true,
+      "realGeneratedPdfAndDirectoryText": true,
+      "syntheticMembersOnly": true,
+      "physicalPhone": false,
+      "asrOrTtsVerified": false,
+      "projectModelCalls": 0,
+      "externalRequests": 0,
+      "productionAccess": false,
+      "oldMatricesRerun": false
+    }
+  },
+  "sourceSynchronization": {
+    "files": 12,
+    "previousRootBytesCheckedAgainstCommit": "74a13b801cfa3648743be865e3ddf1f09c320925",
+    "backupAndReadback": true
+  },
+  "costs": {
+    "policy": "只记录，不设消费上限",
+    "internalAiUsage": "unknown",
+    "internalUnitPrices": "unknown",
+    "internalAmount": "unknown",
+    "projectModelInvocations": 0
+  },
+  "cleanup": {
+    "newOwnedFixturesRemoved": true,
+    "oldPolicyDeniedThreeTemporaryDirectoriesUntouched": true
+  },
+  "remaining": [
+    "真实ASR准确率与时间定位，实体手机、麦克风和房间终端。",
+    "完整离线重开及未提交草稿跨浏览器同步。",
+    "同义语义检索、真实模型回答及引用质量。",
+    "PR评审合并、112发布和现场验收；在线项目资料及重要决定版本同步本次未执行。"
+  ],
+  "preserved": {
+    "construction265NotBackfilled": true,
+    "factoryTenMinuteFollowup": "paused",
+    "formalVersion": "20261012-supervision-r28-2",
+    "all74AndCustomer12Delivered": false
+  },
+  "publicEvidence": [
+    {
+      "path": "browser-attempt-1.json",
+      "sha256": "3acf09dc274f80e9195d8ee7cb0ad88245b49df848fabc535b7c93c9d4c7711e",
+      "bytes": 3171,
+      "origin": "artifacts\\family-knowledge-browser-qa\\attempt-1.json",
+      "kind": "safe-projection-with-original-hash"
+    },
+    {
+      "path": "browser-attempt-2.json",
+      "sha256": "f4b8d8ff6efe3feeb522f665ac6796b9be2fa4c431f1d223801e02471f0d0674",
+      "bytes": 1321,
+      "origin": "artifacts\\family-knowledge-browser-qa\\attempt-2.json",
+      "kind": "safe-projection-with-original-hash"
+    },
+    {
+      "path": "browser-attempt-3.json",
+      "sha256": "8f5a6e524a01c0ffe5753a35f17f644294c1cb73003a733c52cda7b0c83e5840",
+      "bytes": 1416,
+      "origin": "artifacts\\family-knowledge-browser-qa\\attempt-3.json",
+      "kind": "safe-projection-with-original-hash"
+    },
+    {
+      "path": "manual-path-finding.json",
+      "sha256": "f85591c5a99beff71875956d067f584ac31f74de1bebacdd0d5f419d63669e6c",
+      "bytes": 1094,
+      "origin": "artifacts\\family-knowledge-browser-qa\\manual-audit-1.json",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "http-attempt-1.tap",
+      "sha256": "11c0c9daf9a0c0fba7f9ffb186312ce9d56a859bc59ace3394c52bcc49dc4330",
+      "bytes": 1504,
+      "origin": "artifacts\\family-knowledge-http-qa\\attempt-1.tap",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "http-attempt-2-title-path-fix.tap",
+      "sha256": "12b806efe19ea4ef5b66b2dca09121a87a0f6974d5e7f3e4601ff506b77a9f83",
+      "bytes": 416,
+      "origin": "artifacts\\family-knowledge-http-qa\\attempt-2-title-path-fix.tap",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "contract-check.json",
+      "sha256": "98d41f762e847bffe88e0f19c4ecba8511d8a9c963242ca7393e914bdb1c670b",
+      "bytes": 621,
+      "origin": "artifacts\\member-knowledge-contract-check.json",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "phone-real-member-book-page-two-3.png",
+      "sha256": "d2d5f3e1fade219c49fa13b034a2cc83b37ca60c35d2a5a6605c099c86f8faf1",
+      "bytes": 275577,
+      "origin": "artifacts\\family-knowledge-browser-qa\\phone-real-member-book-page-two-3.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "phone-saved-family-document-3.png",
+      "sha256": "2bbd94a855845776d4879b4f878f6ed455b4b383da6a5acab4fdfc880d563f13",
+      "bytes": 283548,
+      "origin": "artifacts\\family-knowledge-browser-qa\\phone-saved-family-document-3.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "phone-member-revoked-reference-1.png",
+      "sha256": "8aa7426c078a5b142c10c9cb8d1b21168b4530d2b3ac2d2ae8fc29ed20a36cd1",
+      "bytes": 297480,
+      "origin": "artifacts\\family-knowledge-browser-qa\\phone-member-revoked-reference-1.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "phone-member-version-changed-1.png",
+      "sha256": "1b8e224bcb04366c847c98104de4a642a479a08286fc672692f5c650c123cdc0",
+      "bytes": 289092,
+      "origin": "artifacts\\family-knowledge-browser-qa\\phone-member-version-changed-1.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "member-switch-and-logout-cleared-1.png",
+      "sha256": "d49c3c53992ff9f76d445a674ca5e11833dfab16fefb28ce41fa6da21544200d",
+      "bytes": 530360,
+      "origin": "artifacts\\family-knowledge-browser-qa\\member-switch-and-logout-cleared-1.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "new-member-question-after-old-real401-1.png",
+      "sha256": "e54ac6f055b808add78c22a065cf4c001222e89bede7c00a02b5a0555ca3c1cf",
+      "bytes": 535762,
+      "origin": "artifacts\\family-knowledge-browser-qa\\new-member-question-after-old-real401-1.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "platform-private-hidden-before-member-login-2.png",
+      "sha256": "b6c3d920a84050d46ce0bff80495a39c8a218dea58888488454e97d92d7f2c98",
+      "bytes": 53372,
+      "origin": "artifacts\\family-knowledge-browser-qa\\platform-private-hidden-before-member-login-2.png",
+      "kind": "exact-safe-copy"
+    },
+    {
+      "path": "platform-private-hidden-before-member-logout-2.png",
+      "sha256": "b6c3d920a84050d46ce0bff80495a39c8a218dea58888488454e97d92d7f2c98",
+      "bytes": 53372,
+      "origin": "artifacts\\family-knowledge-browser-qa\\platform-private-hidden-before-member-logout-2.png",
+      "kind": "exact-safe-copy"
+    }
+  ]
+}

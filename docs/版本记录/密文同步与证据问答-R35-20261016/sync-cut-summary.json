@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "kind": "encrypted-draft-sync-local-delivery-cut",
+  "at": "2026-10-16T00:28:58.433881+00:00",
+  "status": "implemented-and-locally-verified; production-not-executed-by-this-agent",
+  "scope": "One current real administrator encrypted remote slot, explicit per-window opt in, saved ciphertext only; explicit conflicts and local retention",
+  "sourceFiles": [
+    {
+      "path": "apps/api/src/runtime/offline-draft-sync.ts",
+      "sha256": "a136eeaa39fea798b8a73bad61c501abbe9df741837675b378bbfbb8f3be0a96",
+      "bytes": 9066
+    },
+    {
+      "path": "apps/api/test/offline-draft-sync.test.ts",
+      "sha256": "e538ec0690a54983262f500ecb29197f6e88069b5993d128f75558d061064024",
+      "bytes": 13180
+    },
+    {
+      "path": "apps/web/src/features/offline/OfflineDraftSync.tsx",
+      "sha256": "d49364d75e22dc3f3a56b533714ccd5f79ff46e569c2f3ede73db1ef2917d49c",
+      "bytes": 14503
+    },
+    {
+      "path": "apps/web/src/features/offline/OfflineCapture.tsx",
+      "sha256": "d6d528d33f8fd7ed7efb70e3bb1bd039f786189dc8e988c30c33408e45da9a5f",
+      "bytes": 20950
+    },
+    {
+      "path": "apps/web/src/features/offline/offline-vault.ts",
+      "sha256": "3626fad58f6180d9bb9f8893e4d0c9ac2cc53447e6adcef2034c3349544baebe",
+      "bytes": 21315
+    },
+    {
+      "path": "scripts/qa-offline-draft-sync.ts",
+      "sha256": "9ff06bfeb97d470054a3286844d64df5e012d52fcad1a95c8a8479e919a10ea0",
+      "bytes": 26403
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+      "sha256": "a91cdee7bd5914556cecd3bd0184e2562f37a2eeebb92901a774cbf3c1559c56",
+      "bytes": 3778
+    },
+    {
+      "path": "artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+      "sha256": "163142346c66244903327e9e897695d6f0080b4ae1216d6cdb026949abc1308d",
+      "bytes": 1597
+    },
+    {
+      "path": "artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+      "sha256": "85bc186a35dac1d7e8e0a2b592a9709758bd04e4ed960c51de0845b318f318ec",
+      "bytes": 3039
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/attempt-1.json",
+      "sha256": "41cf1782f83896e4775b88a7265c48965fa9b0c7e970395c2762556d2e03dacd",
+      "bytes": 3283
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/attempt-2.json",
+      "sha256": "ea5f4b732ed5f8df59ebe873cc8fa9cb52089084d86680bc8193087fb0c4fbbf",
+      "bytes": 1249
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/attempt-3.json",
+      "sha256": "ea78e1ee577bb58201462bffda133dc84248caf53a9e44aed16f9ab32c7548e0",
+      "bytes": 1380
+    }
+  ],
+  "httpAndVault": {
+    "uniqueNewGroups": 6,
+    "passedSeparately": 6,
+    "failedGroups": 0,
+    "executionCuts": [
+      {
+        "report": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+        "groups": 4,
+        "passed": 4
+      },
+      {
+        "report": "artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+        "groups": 1,
+        "passed": 1,
+        "onlyAuthCookiePresenceCorrection": true
+      },
+      {
+        "report": "artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+        "groups": 1,
+        "passed": 1,
+        "onlyLocalCasAndStopCorrections": true
+      }
+    ],
+    "allSixRunTogetherOnFinalSource": false,
+    "oldSuitesNotRerun": true
+  },
+  "browser": {
+    "uniqueNewGroups": 5,
+    "passedSeparately": 5,
+    "groupExecutions": 6,
+    "passedExecutions": 5,
+    "failedExecutions": 1,
+    "failure": "First identity case stopped at a test harness TDZ shadowing the login helper; fixture variable renamed and only that case passed on attempt2. Original failed report and screenshot retained.",
+    "extraHarnessAuditFailure": "Attempt1 pass-count audit recorded 3 != 4 after the fixture failure; not a sixth product group",
+    "finalAffectedBundle": "offlineCapture-Dp37MnGd.js",
+    "finalAffectedVaultBundle": "offline-vault-g54LtOEF.js",
+    "finalBundleRunOnlyNewFifthGroup": true,
+    "allFiveRunTogetherOnFinalBundle": false,
+    "allAttemptsTemporaryCleanupVerified": true,
+    "allAttemptsModelCalls": 0,
+    "allAttemptsExternalRequests": 0,
+    "allAttemptsPageErrors": 0
+  },
+  "finalAffectedCompiledFiles": [
+    {
+      "path": "apps/web/dist/assets/offlineCapture-Dp37MnGd.js",
+      "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851",
+      "bytes": 26587
+    },
+    {
+      "path": "apps/web/dist/assets/offline-vault-g54LtOEF.js",
+      "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94",
+      "bytes": 10707
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/phone-explicit-local-conflict-choice-1.png",
+      "sha256": "9f19e06d12352d5c624e1e19d692cf5ea9a6187512a3ba4fa0f22528cb8a359b",
+      "bytes": 137400
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/desktop-remote-conflict-retains-local-1.png",
+      "sha256": "4f1ee607a129fcef6a616986e06fa63b28fff0379c8728700b17f2e810269062",
+      "bytes": 164311
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/phone-offline-reconnect-and-lock-stops-sync-1.png",
+      "sha256": "4b0002f00b3cd24b43fbf707361e12f77189aa71b4d31f108f942efed83b5a8e",
+      "bytes": 124476
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/desktop-remote-deleted-local-copy-retained-1.png",
+      "sha256": "d6ecc8c9018b7f95c7108ca5acaa0b1ada486020ca3d148f49dddc94d1f79ba2",
+      "bytes": 157232
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/desktop-late-sync-response-after-identity-cleared-2.png",
+      "sha256": "ca1f31bf357205dc89dbb629c0846543152a60ea9141920e6771798b03064256",
+      "bytes": 109557
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/desktop-stale-same-revision-fork-rejected-3.png",
+      "sha256": "fa321eca16962ce2bc50af9baeeb1314031371088b12b1ef24e0dc0a6f3fecf3",
+      "bytes": 136224
+    },
+    {
+      "path": "artifacts/offline-draft-sync-browser-qa/desktop-sync-stopped-before-idb-cas-3.png",
+      "sha256": "7c0cae148ace3bb5e7a2c7f1745be65854f8e4a80684b6714f7043094b3f57bb",
+      "bytes": 137539
+    }
+  ],
+  "visualInspection": {
+    "reviewer": "implementation agent",
+    "viewedFinalTwoScreenshots": true,
+    "observations": [
+      "Stale sibling draft remains visible with the precise conflict alert; it has not overwritten the selected remote package",
+      "After stopping while IndexedDB CAS open was held, prior local body remains and sync enable control is visible with stopped notice",
+      "Synthetic fixture content only; no credentials or personal source data"
+    ]
+  },
+  "productBoundaries": [
+    "No automatic submission to inbox",
+    "No automatic merge of two draft bodies",
+    "Only one remote encrypted slot for the actual current administrator",
+    "Passwords and decrypted bodies never enter sync requests; encrypted envelope metadata remains visible to authenticated administrator",
+    "Remote deletion leaves a tombstone and does not delete local or other browser copies or promise physical storage erasure",
+    "Forgetting the original password cannot recover the remote encrypted package",
+    "Opt in is not persisted across lock, page leave or identity/material epoch changes"
+  ],
+  "executionBoundaries": [
+    "This agent did not build, commit, push, package, edit construction records or touch production",
+    "Root performed the shared integration and affected builds separately",
+    "No old passed suite rerun; all listed cuts are preserved rather than represented as one final full-suite run",
+    "No field microphone, Linux deployment,112 or101 verification in this evidence",
+    "Agent token pricing is unknown and not represented as zero; fixture model calls are zero"
+  ]
+}

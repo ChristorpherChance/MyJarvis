@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-15",
+  "scope": "原件管理、知识原件复用、本人记忆比较合并与到期复核",
+  "codeCommit": "1a217d5bcb827f688147a4caf28212a3ccf738bc",
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "state": {"implementation": "complete", "isolatedVerification": "passed-with-explicit-boundaries", "deployed112": false, "fieldAcceptance": false},
+  "implemented": [
+    "原件库按名称、范围和回收状态筛选，详情查看原件、处理文字与当前及历史引用；列表只返回元数据和引用摘要。",
+    "明确回收、恢复和保留期限；未引用清理仅预览，不自动删除。永久删除只允许已回收、无业务或历史引用、不在处理或复用且保留期已到的当前原件。",
+    "永久删除保存固定意图，只移除本原件文件，核验指纹和当前文件身份并清除提取、校正及旧资产回执正文，留下无正文墓碑。失败不恢复为生效原件。",
+    "已存PDF或扫描图片可复制到现有已授权知识来源的独立上传票据，随后走书目登记、识别、逐页校对与发布；DOCX和音频仍为材料候选。",
+    "知识复用票据在复制期间禁止另传原件和提前登记或补扫；提交前保存三阶段固定编号，失回包刷新后沿原编号恢复。",
+    "本人可比较两条生效或候选记忆并自行填写最终表述，明确合并后旧条停止召回；保留来源编号、当时版本与审阅事件。",
+    "到期复核可确认仍准确或填写现行表述，并明确未来日期或暂不安排；日期只提醒，不自动停用记忆。",
+    "关联遗忘先确认合并前后整组的当前版本指纹，再清正文、来源及旧回执正文；原聊天与独立收件分别管理。",
+    "记忆维护未知结果以当前本人及登录会话保存固定提交，刷新后可确认；会话变化遮挡内容，迟到旧回包不影响新身份。"
+  ],
+  "verification": {
+    "originalApi": {
+      "uniqueGroups": 10,
+      "eachPassedAtLeastOnce": true,
+      "groupOccurrences": 15,
+      "passedOccurrences": 12,
+      "fixtureFailures": 3,
+      "finalWholeSuiteRerun": false,
+      "failuresRetained": ["引用摘要断言误把自动短标题当原文", "夹具错误地读取错误回执形状", "夹具局部变量遮蔽上传函数"],
+      "checked": ["真实HTTP与正式返回校验", "保留期限、回收恢复、真实未引用原件删除及旧回执清理", "已脱离当前记录但历史回执保留的引用仍阻删", "真实PNG并发复用和重启后同编号恢复", "处理及复制锁阻止旁路登记或补扫", "最终移除前真实退出保留文件并失败", "复制等待期间撤销来源不完成票据", "并发永久删除后迟到下载不返回旧原件字节"],
+      "rawReports": ["artifacts/inbox-material-lifecycle-qa/attempt-1.tap", "artifacts/inbox-material-lifecycle-qa/attempt-2.tap", "artifacts/inbox-material-lifecycle-qa/attempt-3.tap", "artifacts/inbox-material-lifecycle-qa/attempt-4.tap"]
+    },
+    "memoryApi": {
+      "uniqueGroups": 5,
+      "eachPassedAtLeastOnce": true,
+      "groupOccurrences": 8,
+      "passedOccurrences": 6,
+      "failures": 2,
+      "finalWholeSuiteRerun": false,
+      "failureBoundaries": ["相同通用词的前50条夹具合法占满提示排名，修夹具后只补失败组", "旧清理接口先校正文而返回400，改鉴权前置后仅补身份组；没有泄漏正文或发生写入"],
+      "checked": ["全量本人记忆后限提示", "两条当前版本原子合并与幂等", "复核新表述停止旧词召回", "整组遗忘和旧回执正文清除", "真实成员、混合会话、终端和旧记忆入口的身份边界"],
+      "rawRunnerOutputPersisted": false
+    },
+    "memoryClient": {"uniqueGroups": 4, "passed": 4, "oldGroupsRerun": false, "checked": ["丢回包保同编号和正文快照", "拒不同actor回包", "刷新恢复与会话清除", "存储失败提交前拒绝"]},
+    "memoryBrowser": {"uniqueGroups": 5, "attempt": 1, "passed": 5, "failed": 0, "report": "原件记忆管理-20261015/memory-browser-attempt-1.json", "sha256": "d64eb33d16a6cfb1d526783035cd75ea0ba333c24a261e7ea3925de4f3f945c9", "checked": ["手机比较合并及三条关联遗忘", "到期更正", "第二条旧版本409且无半合并", "服务端已提交但回包丢失，刷新后同编号仅一条结果", "第二标签真实退出后旧工作台、详情和未提交表述均隐藏"]},
+    "originalBrowser": {
+      "uniqueGroups": 4,
+      "eachPassedAtLeastOnce": true,
+      "successfulCutoffs": {"lifecycle-retention-preview-delete": 2, "manager-shared-session-late-401": 2, "referenced-original-delete-blocked": 4, "stored-pdf-book-reuse-recovery": 7},
+      "finalWholeSuiteRerun": false,
+      "failuresPreserved": ["Playwright模块定位预检失败，未进入业务", "首次Python路径缺失，未进入业务", "路由夹具字段名错误", "引用计数未包含历史提交", "原生表单或重复标题定位错误"],
+      "realSourceDefect": "新资料候选引用曾指向未挂载originals路由，已窄修为现有temple深链并选择原文基库。重新构建后仅补受影响复用组，实际引用导航、PDF和图片登记、刷新后原三编号恢复均通过。",
+      "bundleBoundary": {"firstPassedManager": "MaterialManager-DNUJimEu.js", "navigationDeltaPassedManager": "MaterialManager-DvFOf4Qp.js", "navigationDeltaMain": "index-CBVKrQiZ.js"},
+      "checked": ["真实保留、回收恢复、只预览和逐件永久删除", "真实业务及历史引用阻删", "真实PDF和PNG复用、图片严格一页、登记不冒发布", "跨标签失效与真实迟到401不清新会话"],
+      "summary": "原件记忆管理-20261015/original-browser-summary.json"
+    },
+    "build": {"apiFinal": "passed", "webFinal": "passed", "webBuiltTwice": "首次整合一次；发现资料引用导航缺陷后仅重建受影响web一次", "codeTypecheck": "passed", "whitespaceCheck": "passed"},
+    "contract": {"newOperations": 13, "newSchemas": 14, "changedExistingSchemas": ["Memory", "InboxMaterialUpload"], "oldOperationsUnchanged": true, "operationIdsUnique": true, "sourceLineEndingsPreserved": true, "reviewCorrection": "新增维护遗忘与旧命令的operationId重复在独审中发现，已改唯一名称；未改变旧操作"},
+    "independentReview": "原件、记忆分别由非作者复核；发现并修复下载与删除并发、未确认记忆操作被覆盖、成员混合身份及导航边界，未发现剩余阻断问题。",
+    "environment": {"realLocalHttp": true, "temporarySqlite": true, "syntheticMembersAndMaterialsOnly": true, "physicalPhone": false, "projectModelCalls": 0, "externalRequests": 0, "productionAccess": false, "oldMatricesRerun": false}
+  },
+  "sourceSynchronization": {"files": 30, "previousRootBytesCheckedAgainstCommit": "3f45bc32e176d40570b3ff243b240b8450401b7e", "backupAndReadback": true},
+  "cleanup": {"newOwnedFixturesRemoved": true, "oldPolicyDeniedThreeTemporaryDirectoriesUntouched": true},
+  "remaining": [
+    "真实家庭成员的直接知识查询及出处入口：已完成只读定位，本记录截止尚未实施，后续结果另记。",
+    "真实ASR准确率、录音时间定位、实体手机、麦克风和房间终端现场验收。",
+    "完整离线重新打开及未提交草稿跨浏览器同步。",
+    "同义语义检索、真实模型回答和引用质量验收。",
+    "草稿PR评审合并、112发布与现场验收，以及在线项目资料和重要决定的版本同步。"
+  ],
+  "formalVersion": "20261012-supervision-r28-2",
+  "factoryTenMinuteAutomation": "paused",
+  "original74AndCustomer12Delivered": false,
+  "costs": {"policy": "record-only-no-spending-cap", "newProjectModelCalls": 0, "internalAiUsage": "unknown", "internalAiUnitPrice": "unknown", "internalAiAmount": "unknown"}
+}

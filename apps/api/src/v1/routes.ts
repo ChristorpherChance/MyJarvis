@@ -11,6 +11,8 @@ import { workHandlers } from './work-domains.js';
 import { familyHandlers, familyDtoNames } from './family-domains.js';
 import { knowledgeHandlers } from './knowledge-domains.js';
 import { registerKnowledgeFiles } from './knowledge-files.js';
+import { registerInboxMaterials } from './inbox-materials.js';
+import type {InboxMaterialRuntime} from './inbox-material-processing.js';
 import { infrastructureHandlers, infrastructureDtoNames } from './infrastructure-domains.js';
 import { jobHandler } from './job-domains.js';
 import { voiceHandler } from './voice-domains.js';
@@ -26,6 +28,7 @@ const prefixes=(domain:string)=>`/api/v1/${['sources','books','stories'].include
 const dtoNames:Record<string,string>={inbox:'InboxItem',research:'Research',projects:'Project',tasks:'Task',experiences:'Experience',...familyDtoNames,...infrastructureDtoNames,sources:'KnowledgeSourcesRecordV2',books:'KnowledgeBooksRecordV2',stories:'KnowledgeStoriesRecordV2',learning:'KnowledgeLearningRecordV2',jobs:'PiJob',voice:'VoiceRecord',settings:'PlatformSettingsRecord'};
 const domainDescription:Record<string,string>={inbox:'原话收件、归档与授权；被动采集待接入',research:'人工讨论、证据、方案、决策及立项；Pi有限作业由jobs提供',projects:'项目副本、里程碑与任务计划',tasks:'任务台账、外部人工进度、独立验收和交付包；自动执行器待接入',experiences:'经验审阅、真实版本与固定技能引用',family:'家庭共同待办及本人健康备忘',memory:'本人候选、明确确认、修订与实际遗忘；聊天定期清理待接入',personas:'已登记成员的管家偏好；不是成员登录或唤醒执行',sources:'知识来源与授权、已发布资料本地查询；外部连接器待接入',books:'实际扫描件存储、人工页文与校对、疑点及版本发布',stories:'原文引用、审核、知识故事与进度',learning:'课程与实际人工练习记录；不伪造评分',machines:'设备登记与人工观察，远程Agent未连接',services:'服务台账与人工健康报告；远程部署未连接',operations:'预算规则及外部备份、账单和功耗证据；不伪造执行',approvals:'指定部署申请的人工审批，批准不会自行执行',jobs:'一次Pi提示轮次、待审核结果与取消；关闭工具和自动付费重试',voice:'管理员文字转录、Pi意图建议与明确确认；中央音频未接通',settings:'实际平台策略与房间登记；原生Pi认证沿用S0接口'};
 export interface V1RuntimeHooks {
+ inboxMaterials?: InboxMaterialRuntime;
  repository?: V1Repository;
  dispatchers?: {dispatch(domain:Domain,command:string,envelope:CommandEnvelope,actorId:string):Promise<CommandReceipt|undefined>}[];
  sanitizeRead?: (domain:Domain,record:BusinessRecord,actorId:string)=>BusinessRecord;
@@ -62,7 +65,9 @@ export function registerV1(app:FastifyInstance,store:Store,pi:PiService,hooks:V1
   const send=()=>{if(closed)return;if(!store.validateLogin(req.cookies.jarvis_session??'')){reply.raw.write('event: session-expired\ndata: {"code":"FORBIDDEN"}\n\n');close();return}if(reply.raw.writableLength>1024*1024){close();return}try{for(const event of repository.events(ACTOR,cursor,100,q.scope,q.domain,q.objectId,q.excludeObservations)){reply.raw.write(`id: ${event.id}\nevent: ${event.domain}.${event.type}\ndata: ${JSON.stringify(event)}\n\n`);cursor=event.sequence}}catch{close()}};
   const poll=setInterval(send,500),heartbeat=setInterval(()=>{if(!closed)reply.raw.write(': heartbeat\n\n')},15000);poll.unref();heartbeat.unref();streams.add(close);reply.raw.on('close',close);send();
  });
- registerKnowledgeFiles(app,repository,{directory:join(dirname(store.databasePath),'knowledge-uploads'),authenticated:cookie=>store.validateLogin(cookie)});
+ const authorizeOriginal=(req:any)=>{const principal=hooks.inboxMaterials?.principal(req);if(hooks.inboxMaterials&&(!principal||!principal.administrator||principal.actorId!==ACTOR||!hooks.inboxMaterials.current(principal)))throw new BusinessError('FORBIDDEN','请重新验证当前管理员身份后管理原件',403);};
+ registerKnowledgeFiles(app,repository,{directory:join(dirname(store.databasePath),'knowledge-uploads'),authenticated:cookie=>store.validateLogin(cookie),authorize:authorizeOriginal});
+ registerInboxMaterials(app,repository,{directory:join(dirname(store.databasePath),'inbox-materials'),authenticated:cookie=>store.validateLogin(cookie),authorize:authorizeOriginal,runtime:hooks.inboxMaterials});
  app.addHook('preClose',async()=>{for(const close of [...streams])close();await jobs.close()});
  app.addHook('onClose',async()=>repository.close());
  return repository;

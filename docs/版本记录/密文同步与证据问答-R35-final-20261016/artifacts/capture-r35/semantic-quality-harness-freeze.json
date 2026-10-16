@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-16T00:42:33.249388+00:00",
+  "status": "harness-only-frozen-contract5-prepared",
+  "changeScope": [
+    "exact named nonempty Set-Cookie parsing",
+    "actual setup/login JSON plus HTTP identity/state and current principal validation",
+    "optional absolute --release-root for all runtime imports and product source SHA",
+    "local harness import.meta SHA separate from product source hashes",
+    "new auth-check-only mode and one precise real loopback HTTP preparation test with no-model Pi fixture"
+  ],
+  "validation": {
+    "newAuthPreparationTest": {
+      "groups": 1,
+      "attempts": 1,
+      "passed": 1,
+      "failed": 0,
+      "actualModelCalls": 0,
+      "outsideRequests": 0,
+      "cleanupVerified": true
+    },
+    "singleHarnessStrictTypecheck": {
+      "exitCode": 0,
+      "runs": 1
+    },
+    "externalCopiedHarnessCompiledPrepare": {
+      "exitCode": 0,
+      "modelCalls": 0,
+      "contract": 5,
+      "cleanupVerified": true
+    },
+    "oldContract4Retained": true,
+    "oldBusinessHashesUnchanged": true,
+    "casesLimitsAndCriteriaUnchanged": true,
+    "businessSourceEdits": false,
+    "apiOrWebBuild": false,
+    "sshOrProduction": false,
+    "realQuality": "pending Root-only contract5; contract4 failed before any model call"
+  },
+  "cost": {
+    "spendCap": null,
+    "actualModelCalls": 0,
+    "internalAssistantTokens": null,
+    "internalAssistantCostUSD": null
+  },
+  "hashes": [
+    {
+      "path": "scripts/qa-evidence-assistant-quality.ts",
+      "sha256": "da1fe97d8029e84d582c4f577130634f7be4baa11c990cf37340e536dde11a1d"
+    },
+    {
+      "path": "scripts/test-evidence-quality-auth.mjs",
+      "sha256": "72670fa1c0048eb7d830f6a065ae9b0b070ec1e3c32cdd575bcc2c446974b3a4"
+    },
+    {
+      "path": "artifacts/evidence-assistant-quality-r35/auth-check-5.json",
+      "sha256": "9cda162d29fc7b26ee35c3c129ea476a41a90b23bad3e1f1133e2d427832c649"
+    },
+    {
+      "path": "artifacts/evidence-assistant-quality-r35/contract-5.json",
+      "sha256": "979d7a6ef577cd155edfc2f3ff2e20ae4151db3ca5f9737f4c69cff84cc93a8c"
+    },
+    {
+      "path": "artifacts/evidence-assistant-quality-r35/contract-4.json",
+      "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f"
+    },
+    {
+      "path": "artifacts/capture-r35/semantic-quality-auth-test-attempt-1.txt",
+      "sha256": "01b0996d51fe8d274f7b5f97e24b8881b6fbcfc8ceb987beb47a1126440d0705"
+    },
+    {
+      "path": "artifacts\\capture-r35\\semantic-quality-harness-typecheck.json",
+      "sha256": "da7c976f2ca5de63158cc1c9d30d88523e772fa93f9965c1bea21fce0cb95105"
+    },
+    {
+      "path": "artifacts/capture-r35/semantic-contract5-prepare.txt",
+      "sha256": "ef94c43195a59d7d499ecfaa77e290bf15b769e18991677ef125c3b59e85a171"
+    },
+    {
+      "path": "artifacts/capture-r35/semantic-contract5-preparation-cut.json",
+      "sha256": "745f61a78654aeaa2a2ca9fb67d57684a00a50b06c2f9e0adce32a1985621ea0"
+    },
+    {
+      "path": "artifacts\\capture-r35\\semantic-quality-freeze-report-cut.json",
+      "sha256": "9a9b06fce2b4804b804030e12021a6e5984eb88b3ae4006371da380df03dbc99"
+    }
+  ]
+}

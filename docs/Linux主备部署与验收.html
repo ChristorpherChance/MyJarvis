@@ -1,64 +1,292 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux主备部署与验收 · 贾维斯</title><style>body{margin:0;background:#09131d;color:#dbe8ee;font:15px/1.9 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1100px;margin:auto;padding:55px 38px}h1{font-size:32px;font-weight:600;color:#80dbea}h2{font-size:21px;margin-top:42px;border-bottom:1px solid #29414e;padding-bottom:9px;scroll-margin-top:20px}h3{font-size:17px;color:#80dbea}p,li{color:#b4c7d1}a{color:#80dbea}code{background:#182b36;padding:2px 6px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}pre{background:#10212d;border:1px solid #29414e;border-radius:10px;padding:18px 20px;overflow:auto;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font:13px/1.65 Consolas,monospace}.table-wrap{overflow:auto;margin:22px 0}table{border-collapse:collapse;min-width:600px;width:100%;font-size:13px}td{padding:12px 15px;border:1px solid #29414e;vertical-align:top}tr:first-child{color:#80dbea;background:#11212d}li{padding:5px 0}header{display:flex;gap:20px;align-items:center;font-size:12px}header strong{letter-spacing:.16em;color:#80dbea}header>a{margin-left:auto}.toc{display:flex;gap:8px;flex-wrap:wrap;padding:18px;border:1px solid #29414e;border-radius:10px;margin-top:25px;background:#10212d}.toc a{font-size:12px;border:1px solid #29414e;padding:5px 9px;border-radius:6px;text-decoration:none}.toc a:hover{background:#1b3544}@media(max-width:650px){main{padding:28px 20px}h1{font-size:25px}pre{padding:13px}}</style><main><header><strong>JARVIS / COMPLETE PLATFORM</strong><a href="https://192.168.10.112:3140/?mode=platform">打开完整平台 ↗</a></header><nav class="toc" aria-label="文档目录"><a href="#section-1">后续版本更新</a><a href="#section-2">1. 现在怎么访问</a><a href="#section-3">2. 机器与服务分工</a><a href="#section-4">3. 本轮新增后台</a><a href="#section-5">4. 数据迁移与恢复点</a><a href="#section-6">5. 语音和知识处理的实际状态</a><a href="#section-7">6. 验收记录</a><a href="#section-8">7. 下一批工作</a></nav><h1>贾维斯 · Linux主备部署与验收</h1>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="112 正式运行；101 保持冷备。完整批次、新鲜度、语音与人工接管分别核对，不提供自动切换。">
+  <meta name="jarvis-source-sha256" content="6466c6d46f10ffbce8008e0f201e08fd41e41bfe127664b6098985bbbf520d9b">
+  <title>贾维斯 · Linux主备部署与验收（R35）</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R35</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="Linux%E4%B8%BB%E5%A4%87%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E6%94%B6.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 11 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">R35 当前已核对的范围</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">人工接管与回切顺序</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">历史正文：2026-10-07 首轮迁移与当时验收</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">后续版本更新</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">1. 现在怎么访问</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">2. 机器与服务分工</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">3. 本轮新增后台</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">4. 数据迁移与恢复点</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">5. 语音和知识处理的实际状态</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">6. 验收记录</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">7. 下一批工作</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-16<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">主备部署 / 人工接管 / 阶段事实</p>
+        <h1 id="document-title">贾维斯 · Linux主备部署与验收（R35）</h1>
+        <p class="subtitle">112 正式运行；101 保持冷备。完整批次、新鲜度、语音与人工接管分别核对，不提供自动切换。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-16</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>R35</strong><span>112 已发布，结束时健康核对通过</span></div><div class="stat"><strong>900 秒</strong><span>原恢复材料新鲜度阈值保持</span></div><div class="stat"><strong>人工</strong><span>先隔离旧主，再确认唯一主</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>本文件记录R35的实际部署与人工恢复边界。下方原 2026-10-07 正文保留为历史证据，其中的恢复批次、依赖、180 文件及旧语音状态不是 R35 当前状态。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">R35 当前已核对的范围</h2>
+<p>2026-10-16，112 已从 <code>20261012-supervision-r28-2</code> 切换到 <code>20261016-capture-complete-r35</code>。本轮激活结束时，平台及 observer 均 active，业务健康和运行版本核对通过。整个激活步骤耗时约 230 秒，包含快照及隔离恢复；不能据此推算连续健康观察时长。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>当前事实与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发布文件</td>
+<td>R35 交付包 2179 份 payload；101、112 各自完成 Linux 依赖安装、编译应用临时启动及逐项离线静态指纹检查。</td>
+</tr>
+<tr>
+<td>完整运行树</td>
+<td>3650619894 字节、59 文件、56 目录、5 SQLite，快照与独立隔离恢复逐件通过；没有将备份覆盖当前生产数据。</td>
+</tr>
+<tr>
+<td>101 数据副本</td>
+<td>同批次已导出、下载、导入、隔离恢复并切入101实际冷备目录；完整树、角色及TLS observer回读通过，原101数据保留。</td>
+</tr>
+<tr>
+<td>101 业务与语音</td>
+<td>作为冷备时，<code>jarvis-platform.service</code> 与 <code>jarvis-voice.service</code> 实际保持 inactive / disabled。软件包、模型复制和observer运行不代表业务、语音已启用。</td>
+</tr>
+<tr>
+<td>正式域名离线入口</td>
+<td>新空白桌面浏览器使用真实 HTTPS 明确准备，5 项缓存逐指纹核对，真正断网后重开并使用空草稿控件通过。没有登录、私文、模型或麦克风调用。</td>
+</tr>
+<tr>
+<td>常驻语音</td>
+<td>专项私有导出、传输、安装、固定包及一次服务加载健康通过，随后停止并禁用；0次识别/合成推理，不能替代语音质量验收。实体麦克风、手机及房间终端仍须现场确认。</td>
+</tr>
+</tbody></table></div>
+<p>本批次快照时点为 <strong>2026-10-16 00:51:03.423620 UTC（北京时间 08:51:03）</strong>，清单 SHA-256 为 <code>5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9</code>。本轮最终核对时已经超过原 <strong>900 秒</strong> 新鲜度期限，应据实视为 stale。批次完整性通过只说明这个时点的副本完整，不表示现在的恢复材料仍然 fresh。</p>
+<p>新鲜度阈值、快照时间与观测时间保持原意；不能通过改时间、放宽 900 秒或只刷新观测来维持“就绪”。112 后续新增的数据没有持续自动复制到 101。接管前须生成并传送合适的新恢复点，再按真实时间、版本、依赖、完整清单和数据库状态重新核对。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">人工接管与回切顺序</h2>
+<ol>
+<li>先确认故障范围及旧主状态，并实际隔离旧主。网络失联本身不能证明旧主已停用；不能在旧主仍可能服务时启动另一主节点。</li>
+<li>核对待用副本的完整清单、SQLite、语音与凭据配套、发布版本及原 900 秒新鲜度。stale 或信息不明时保留阻断原因，不以完整传输记录替代当前就绪证据。</li>
+<li>按已有受保护角色流程处理节点配置：明确唯一主、节点身份、角色代次、发布版本、数据根及观测授权。新主仍为 standby 时不能启动业务；旧主恢复联网前须先按实际安排降为 standby 或保持隔离，避免两个 primary 同时服务。</li>
+<li>在唯一主条件成立后，由维护者明确启动业务，再核对该节点的实际角色、版本和业务健康。新主若要提供语音，须<strong>显式启用并启动 <code>jarvis-voice.service</code></strong>，再核对常驻服务及实际语音结果；冷备的 resident 不会因接管或复制而自动启用。</li>
+<li>回切同样先隔离当前主、核对最新数据及未完成任务和外部调用，再更新角色代次并确认唯一主。重新作为冷备的节点应停止并禁用业务与常驻语音，保留所用快照时点、配置绑定及结果。数据回退需另行确定实际范围，不能自动覆盖切换后新增的数据。</li>
+</ol>
+<p>本轮没有新增自动故障接管、自动回切或持续数据复制。只读 readiness、observer 健康、源码审查、依赖安装或一次隔离恢复都不授予自动切换能力。软件工厂十分钟自动跟进继续保持暂停，101 上的软件工厂开发节点与平台冷备分别管理。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">历史正文：2026-10-07 首轮迁移与当时验收</h2>
+<p>以下原文保留原字节，供核对首轮迁移。其版本、恢复点、服务状态与验收数字均按历史日期理解；R35 当前事实以上方及最终公开报告为准。</p>
+<hr>
+<h1>贾维斯 · Linux主备部署与验收</h1>
 <p>更新：2026-10-07。正式版本：20261007-linux-cluster。</p>
-<p><b>112已成为正式中心，101已部署同版本并恢复同批数据，业务保持停止。联想的旧生产服务已停止，开发使用独立数据目录。101目前是经过核验的冷备，持续同步和受控接管尚未完成。</b></p>
-<h2 id="section-1">后续版本更新</h2>
-<p>2026-10-07已切换到20261007-cloud-monitoring。112继续运行，101仍保持冷备；增加广州、日本两台云节点的签名监测。本文原恢复批次和验收数字保留为首轮迁移证据，不代表新增数据已复制到101。最新接入与验收见<a href="云服务器接入与验收.html">云服务器接入与验收</a>。</p>
-<h2 id="section-2">1. 现在怎么访问</h2>
-<div class="table-wrap"><table>
-<tr><td>用途</td><td>地址</td></tr>
-<tr><td>管理平台</td><td><a href="https://192.168.10.112:3140/?mode=platform">打开112管理平台</a></td></tr>
-<tr><td>房间语音入口</td><td><a href="https://192.168.10.112:3140/?mode=room">打开书房语音入口</a></td></tr>
-<tr><td>健康检查</td><td><a href="https://192.168.10.112:3140/api/health">112健康状态</a></td></tr>
-<tr><td>模型设置</td><td><a href="https://192.168.10.112:3140/?mode=platform#theme=stark&amp;view=settings">设置中心</a></td></tr>
-</table></div>
+<p><strong>112已成为正式中心，101已部署同版本并恢复同批数据，业务保持停止。联想的旧生产服务已停止，开发使用独立数据目录。101目前是经过核验的冷备，持续同步和受控接管尚未完成。</strong></p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">后续版本更新</h2>
+<p>2026-10-07已切换到20261007-cloud-monitoring。112继续运行，101仍保持冷备；增加广州、日本两台云节点的签名监测。本文原恢复批次和验收数字保留为首轮迁移证据，不代表新增数据已复制到101。最新接入与验收见<a href="%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A5%E5%85%A5%E4%B8%8E%E9%AA%8C%E6%94%B6.md">云服务器接入与验收</a>。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">1. 现在怎么访问</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>用途</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>管理平台</td>
+<td><a href="https://192.168.10.112:3140/?mode=platform">打开112管理平台</a></td>
+</tr>
+<tr>
+<td>房间语音入口</td>
+<td><a href="https://192.168.10.112:3140/?mode=room">打开书房语音入口</a></td>
+</tr>
+<tr>
+<td>健康检查</td>
+<td><a href="https://192.168.10.112:3140/api/health">112健康状态</a></td>
+</tr>
+<tr>
+<td>模型设置</td>
+<td><a href="https://192.168.10.112:3140/?mode=platform#theme=stark&view=settings">设置中心</a></td>
+</tr>
+</tbody></table></div>
 <p>使用原管理员密码登录。地址属于家庭局域网。当前联想用户已安装家庭HTTPS证书，实际浏览器检查通过，没有绕过证书校验。其他终端需要先信任<a href="../artifacts/linux-deployment/jarvis-lan-ca.crt">家庭公开CA证书</a>，再允许麦克风；每台机器的浏览器权限分别设置。证书私钥不提供给房间终端。</p>
 <p>原127.0.0.1:3140生产入口已经停止。开发运行npm run dev时使用.jarvis-dev，API3140、前端5173；开发库与112家庭数据独立。默认生产旧目录.jarvis已设启动保护，旧Windows登录启动任务已禁用并保留任务导出，原库保留作迁移前恢复材料。</p>
-<h2 id="section-3">2. 机器与服务分工</h2>
-<div class="table-wrap"><table>
-<tr><td>机器</td><td>实际部署</td><td>运行状态</td></tr>
-<tr><td>112／48GB</td><td>完整前端、全部业务接口、Pi SDK、SQLite、知识处理、CPU ASR、基础TTS、只读节点观测</td><td>正式业务和观测服务运行，开机启动</td></tr>
-<tr><td>101／32GB</td><td>相同发布文件、相同Linux依赖、同批完整恢复数据、只读节点观测</td><td>观测服务运行；业务停止且禁止开机启动</td></tr>
-<tr><td>联想／64GB</td><td>开发源码、独立开发库、历史完整备份</td><td>旧生产守护和登录启动任务已停止，保留开发和书房浏览器用途</td></tr>
-<tr><td>116</td><td>已有SSH授权</td><td>本轮未部署平台业务</td></tr>
-<tr><td>i3后备及房间入口</td><td>等机器准备与具体地址</td><td>本轮未加入；卧室仍不接入</td></tr>
-</table></div>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">2. 机器与服务分工</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>机器</th>
+<th>实际部署</th>
+<th>运行状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>112／48GB</td>
+<td>完整前端、全部业务接口、Pi SDK、SQLite、知识处理、CPU ASR、基础TTS、只读节点观测</td>
+<td>正式业务和观测服务运行，开机启动</td>
+</tr>
+<tr>
+<td>101／32GB</td>
+<td>相同发布文件、相同Linux依赖、同批完整恢复数据、只读节点观测</td>
+<td>观测服务运行；业务停止且禁止开机启动</td>
+</tr>
+<tr>
+<td>联想／64GB</td>
+<td>开发源码、独立开发库、历史完整备份</td>
+<td>旧生产守护和登录启动任务已停止，保留开发和书房浏览器用途</td>
+</tr>
+<tr>
+<td>116</td>
+<td>已有SSH授权</td>
+<td>本轮未部署平台业务</td>
+</tr>
+<tr>
+<td>i3后备及房间入口</td>
+<td>等机器准备与具体地址</td>
+<td>本轮未加入；卧室仍不接入</td>
+</tr>
+</tbody></table></div>
 <p>业务使用jarvis系统账号运行，管理账号superopen负责安装和维护。发布文件、角色配置和恢复记录由root保护；业务账号可以读配置和写自己的数据，不能修改主备角色或发布代码。</p>
 <p>采用原生HTTPS3140。独立的HTTPS3141只读观测服务需要节点专用凭据，备用观测不打开业务库、不调度任务。没有开放远程任意命令接口。</p>
-<h2 id="section-4">3. 本轮新增后台</h2>
-<div class="table-wrap"><table>
-<tr><td>接口</td><td>作用</td></tr>
-<tr><td>GET /api/runtime/cluster</td><td>当前中心、节点角色、版本、恢复材料与阻断原因</td></tr>
-<tr><td>GET /api/runtime/cluster/nodes</td><td>已登记节点及新鲜观测</td></tr>
-<tr><td>POST /api/runtime/cluster/check</td><td>对固定节点做TLS、身份、时间和响应校验</td></tr>
-<tr><td>GET /api/runtime/cluster/snapshot</td><td>本机核验的完整恢复点</td></tr>
-<tr><td>GET /api/runtime/cluster/nodes/{id}/readiness</td><td>判断恢复材料是否就绪，始终不授予接管权</td></tr>
-</table></div>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">3. 本轮新增后台</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>接口</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET /api/runtime/cluster</td>
+<td>当前中心、节点角色、版本、恢复材料与阻断原因</td>
+</tr>
+<tr>
+<td>GET /api/runtime/cluster/nodes</td>
+<td>已登记节点及新鲜观测</td>
+</tr>
+<tr>
+<td>POST /api/runtime/cluster/check</td>
+<td>对固定节点做TLS、身份、时间和响应校验</td>
+</tr>
+<tr>
+<td>GET /api/runtime/cluster/snapshot</td>
+<td>本机核验的完整恢复点</td>
+</tr>
+<tr>
+<td>GET /api/runtime/cluster/nodes/{id}/readiness</td>
+<td>判断恢复材料是否就绪，始终不授予接管权</td>
+</tr>
+</tbody></table></div>
 <p>以上接口仅管理者本人可访问。检查请求不接受临时URL，不修改角色，也不启动备用业务。后台每15秒检查已登记节点，机器中心同步刷新；过期或失效观测显示未知。Pi增加原生只读工具jarvis_platform_nodes，身份撤销后旧工具不能继续查询。</p>
 <p>角色配置为standby时，实际启动入口在打开业务库前拒绝启动。主节点运行中角色、代次、版本或授权目录变化时停止业务。旧生产目录的启动保护避免联想再次使用原家庭数据启动第二个中心。</p>
-<h2 id="section-5">4. 数据迁移与恢复点</h2>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">4. 数据迁移与恢复点</h2>
 <p>迁移先暂停原业务，生成完整一致备份，再恢复到两台服务器。逐文件SHA256、业务库和执行库完整性均核验通过，原语音密钥保留。迁移中暴露的Windows语音路径、服务账号目录权限和启动入口问题已修复并增加实际进程及恢复测试；不完整尝试均保留，未覆盖原库。</p>
 <p>最终恢复批次：migration-20261007043835235；恢复点为2026-10-07 12:38:38（北京时间）。两台核验相同完整清单的11个文件，包括业务库、执行库、Pi及运行资料和语音模型。11表示此时实际文件数，不表示业务功能数。</p>
 <p>Windows本地语音程序转换为Linux程序。系统内部拥有的文件路径按数据根转换；开发项目和外部知识目录的Windows路径不假装在Linux存在，后续需要在对应执行节点配置。</p>
 <p>两台前后端发布文件共180个，逐文件哈希一致。备份留在联想和两个节点的受保护目录；升级前另有112完整快照。角色、证书和观测凭据与业务库分开管理。</p>
-<p><b>目前没有持续复制器。</b> 101的数据不会自动跟随112变化。恢复点超过15分钟或版本、依赖核验失败时，管理页面会明确取消“恢复材料就绪”。这不影响112正常运行，也不能用修改阈值代替实际同步。</p>
-<h2 id="section-6">5. 语音和知识处理的实际状态</h2>
+<p><strong>目前没有持续复制器。</strong> 101的数据不会自动跟随112变化。恢复点超过15分钟或版本、依赖核验失败时，管理页面会明确取消“恢复材料就绪”。这不影响112正常运行，也不能用修改阈值代替实际同步。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">5. 语音和知识处理的实际状态</h2>
 <p>两台使用固定Node24.15.0、独立Python3.12.15和已记录的依赖版本。Ubuntu自带Python3.14保留，OCR运行在独立环境中。</p>
 <p>实际服务账号已执行本地语音合成、Whisper CPU识别及中英扫描OCR；原模型随完整备份迁移，运行时不下载。当前TTS是espeak-ng基础离线声音，自然度有限。Piper程序与适配器已准备，但自然语音模型下载未成功，尚未切换；也可配置真实HTTP语音引擎。</p>
 <p>语音识别和合成可运行，不等于真实麦克风、房间回声和免触碰唤醒已验收。专业中文唤醒与声纹仍待接入。Pi真实对话仍需配置实际模型账户或本地模型地址；语音会话、身份、预算和工具链继续使用已有Pi SDK。</p>
-<h2 id="section-7">6. 验收记录</h2>
-<div class="table-wrap"><table>
-<tr><td>检查</td><td>结果</td></tr>
-<tr><td>独立前后端构建</td><td>通过</td></tr>
-<tr><td>后台回归</td><td>250项：249通过、1跳过、0失败</td></tr>
-<tr><td>接口契约与实际路由</td><td>328个操作都有处理器；765个Schema</td></tr>
-<tr><td>真实HTTPS启动进程</td><td>两台通过；角色撤销后停止，备用启动不创建业务库</td></tr>
-<tr><td>完整恢复与Windows语音配置</td><td>两台使用服务账号通过；错误哈希和额外文件拒绝恢复，原密钥保留</td></tr>
-<tr><td>CPU ASR、离线TTS、中文OCR</td><td>两台实际执行通过</td></tr>
-<tr><td>未登录接口、节点观测身份</td><td>未登录不能读私有数据；节点凭据与TLS校验通过</td></tr>
-<tr><td>实际管理页面</td><td>主备面板、总览、大屏、对话、设置、手机布局和退出清理通过；另有119项全页面与主题回归通过</td></tr>
-<tr><td>服务账号和启动配置</td><td>112业务启用，101业务禁用；观测两台启用，均为非root账号</td></tr>
-<tr><td>两台发布文件</td><td>180个文件哈希一致</td></tr>
-</table></div>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">6. 验收记录</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>检查</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>独立前后端构建</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>后台回归</td>
+<td>250项：249通过、1跳过、0失败</td>
+</tr>
+<tr>
+<td>接口契约与实际路由</td>
+<td>328个操作都有处理器；765个Schema</td>
+</tr>
+<tr>
+<td>真实HTTPS启动进程</td>
+<td>两台通过；角色撤销后停止，备用启动不创建业务库</td>
+</tr>
+<tr>
+<td>完整恢复与Windows语音配置</td>
+<td>两台使用服务账号通过；错误哈希和额外文件拒绝恢复，原密钥保留</td>
+</tr>
+<tr>
+<td>CPU ASR、离线TTS、中文OCR</td>
+<td>两台实际执行通过</td>
+</tr>
+<tr>
+<td>未登录接口、节点观测身份</td>
+<td>未登录不能读私有数据；节点凭据与TLS校验通过</td>
+</tr>
+<tr>
+<td>实际管理页面</td>
+<td>主备面板、总览、大屏、对话、设置、手机布局和退出清理通过；另有119项全页面与主题回归通过</td>
+</tr>
+<tr>
+<td>服务账号和启动配置</td>
+<td>112业务启用，101业务禁用；观测两台启用，均为非root账号</td>
+</tr>
+<tr>
+<td>两台发布文件</td>
+<td>180个文件哈希一致</td>
+</tr>
+</tbody></table></div>
 <p>本次没有进行主机重启、网络分区、故障接管或真实房间麦克风实验，不能把服务重启和恢复测试当作这些实验的完成记录。</p>
 <ul>
 <li><a href="../artifacts/linux-deployment/report.json">完整部署核验报告</a></li>
@@ -67,7 +295,8 @@
 <li><a href="../artifacts/linux-platform-final-build-regression.txt">后台回归记录</a></li>
 <li><a href="../artifacts/v1-api-qa/contract.json">接口核对</a></li>
 </ul>
-<h2 id="section-8">7. 下一批工作</h2>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">7. 下一批工作</h2>
 <ol>
 <li>一致的持续恢复批次：业务库、执行库、Pi会话及文件协调，失败保留上一份成功数据，并显示真实滞后。</li>
 <li>受控接管与回切：旧主隔离证明、唯一主角色、任务与外部调用对账、角色代次和审计；先在隔离环境演练。</li>
@@ -75,4 +304,43 @@
 <li>实际模型与声音：配置Pi模型、自然TTS，先在书房验证收音、打断、持续对话和播报，再扩展客厅、厨房餐厅。</li>
 <li>真实执行节点：配对开发电脑和服务器，验证Claude Code/Codex实际项目的持续推进、预算、停止和交付验收。</li>
 </ol>
-<p>专业唤醒、声纹、离线通知、供应商账单API、实际GPU与电表采集以及i3后备仍按<a href="剩余开发与并行部署计划.html">剩余开发计划</a>继续。112已有历史磁盘错误记录，独立备份和巡检继续保留；备用副本与历史备份承担不同的恢复用途。</p></main></html>
+<p>专业唤醒、声纹、离线通知、供应商账单API、实际GPU与电表采集以及i3后备仍按<a href="%E5%89%A9%E4%BD%99%E5%BC%80%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C%E9%83%A8%E7%BD%B2%E8%AE%A1%E5%88%92.md">剩余开发计划</a>继续。112已有历史磁盘错误记录，独立备份和巡检继续保留；备用副本与历史备份承担不同的恢复用途。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="Linux%E4%B8%BB%E5%A4%87%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E6%94%B6.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

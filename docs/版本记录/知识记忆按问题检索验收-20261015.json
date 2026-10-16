@@ -1,0 +1,70 @@
+{
+  "observedAt": "2026-10-15T08:24:35.931526Z",
+  "codeCommit": "e3f38a7d4e6f53d75074654b3d736bbde73414a8",
+  "independentWorktree": ".jarvis-dev/capture-r34",
+  "originalSourceApplied": true,
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "merged": false,
+  "productionDeployed": false,
+  "productionVersion": "20261012-supervision-r28-2",
+  "factoryAutomation": "paused",
+  "projectModelCalls": 0,
+  "internalAiUsage": {
+    "tokens": null,
+    "price": null,
+    "amount": null,
+    "policy": "记录已知值，未知分列，不设消费上限"
+  },
+  "kind": "knowledge-memory-question-retrieval-validation",
+  "scope": "对话工具按问题检索已授权知识与本人有效记忆；确定性词语匹配，不是语义RAG或真实模型回答质量验收",
+  "sourceFiles": [
+    {
+      "path": "apps/api/src/app.ts",
+      "beforeSHA256": "881ddb106a6bc14c64e4bb146e07116afe3c5c6d79f5fb40dbebbfe17861a39a",
+      "sha256": "806339a553b19ea7d07909ab72161ea6dc7651449b8f9b082ace20e33aa885ad",
+      "bytes": 51020
+    },
+    {
+      "path": "apps/api/src/pi.ts",
+      "beforeSHA256": "ace34596f73fd49a657f05800ddca0fbafd9288e2c3ae20b1b61153376e21d2d",
+      "sha256": "6ff7faf245242946e60f54cb36588b348f7cadbf8bdf76714dabe3a8ffa83d4e",
+      "bytes": 47683
+    },
+    {
+      "path": "apps/api/src/runtime/personal-retrieval.ts",
+      "beforeSHA256": null,
+      "sha256": "d887e6adffcc48dc844f99cdd521a5d426fb6c212126afa900a10a86aba398b6",
+      "bytes": 5578
+    },
+    {
+      "path": "apps/api/test/personal-retrieval.test.ts",
+      "beforeSHA256": null,
+      "sha256": "0e766320f4e364e0d26fb3774dc609175713949945607165f47e993b96a51b8f",
+      "bytes": 15607
+    }
+  ],
+  "implementation": [
+    "仅知识/记忆工具增加可选query，旧list与limit兼容",
+    "先对全部当前授权记录检索再限制数量；第51项及8000字之后全文可命中",
+    "来源撤权、书页新版、记忆更正和遗忘立即按当前状态重新过滤",
+    "保留书页/来源版本、原文片段、位置、偏移及全文指纹",
+    "正式记忆edit保留旧证据但标记为历史，不用旧偏好召回",
+    "安全脱敏摘录明确quoteRedacted/exactQuote，全文指纹另标sourceSha256"
+  ],
+  "validation": {
+    "uniqueChecks": 8,
+    "initialNewChecks": 4,
+    "existingRelatedChecks": 2,
+    "newIndependentFindingsChecks": 2,
+    "firstPreparationFailure": "管理员对话fixture误用me，实际Store要求owner；只补失败项",
+    "realMemoryCommandChain": "candidate -> confirm -> edit，旧source保留而旧偏好检索为空",
+    "models": "Pi与网络零实际调用；使用隔离回调和临时数据库"
+  },
+  "independentReview": "独立审发现真实更正路径和脱敏引用边界，均已修并仅执行新增反例；权限、版本和空结果其它审查范围无已知阻断",
+  "remaining": [
+    "同义与语义召回、问答质量及引用打开体验",
+    "知识页与对话统一结果呈现",
+    "记忆冲突关系、合并与定期复核体验",
+    "实体家庭语音端和正式发布后的端到端验收"
+  ]
+}

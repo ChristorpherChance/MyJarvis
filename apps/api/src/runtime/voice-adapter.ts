@@ -12,6 +12,8 @@ export const engineSchema=z.discriminatedUnion('adapter',[
   z.object({adapter:z.literal('command'),executable:z.string().min(1).max(1000).refine(isAbsolute,'须为可执行文件绝对路径'),args:z.array(z.string().max(2000)).max(50),model:z.string().max(1000).default(''),voice:z.string().max(120).default(''),voiceMap:z.record(z.string().min(1).max(120),z.string().max(120)).optional(),language:z.string().max(20).default('zh'),format:z.enum(['wav','mp3']).default('wav'),timeoutMs:z.number().int().min(100).max(180000).default(120000)}).strict(),
 ]);
 export type VoiceEngineConfig=z.infer<typeof engineSchema>;
+export interface VoiceTranscriptSegment {start:number;end:number;text:string}
+export interface VoiceTranscription {text:string;language:string;engine:string;model?:string;languageProbability?:number;languageUncertain?:boolean;wakeDetected?:boolean;wakeWord?:string;noSpeech?:boolean;segments?:VoiceTranscriptSegment[]}
 export function audioExtension(mime:string,bytes:Uint8Array):string {
  const b=Buffer.from(bytes);const m=mime.split(';')[0].trim().toLowerCase();
  if(m==='audio/wav'||m==='audio/x-wav'){if(b.length>=44&&b.toString('ascii',0,4)==='RIFF'&&b.toString('ascii',8,12)==='WAVE')return 'wav';}
@@ -49,7 +51,7 @@ async function command(config:Extract<VoiceEngineConfig,{adapter:'command'}>,val
 }
 export class VoiceAdapter {
  constructor(readonly config:VoiceEngineConfig,private onUsage?:(usage:VoiceProviderUsage)=>void){}
- async transcribe(audio:Buffer,mime:string,signal:AbortSignal,wakeWord?:string):Promise<{text:string;language:string;engine:string;model?:string;languageProbability?:number;languageUncertain?:boolean;wakeDetected?:boolean;wakeWord?:string;noSpeech?:boolean}> {
+ async transcribe(audio:Buffer,mime:string,signal:AbortSignal,wakeWord?:string):Promise<VoiceTranscription> {
   const extension=audioExtension(mime,audio),c=this.config;const deadline=AbortSignal.timeout(c.timeoutMs),combined=AbortSignal.any([signal,deadline]);
   const resident=residentAsrModels.includes(c.model),model=c.model==='sensevoice-resident'&&['en','fr','de','auto'].includes(c.language)?'whisper-small-resident':c.model;
   if(resident&&!['auto','zh','en','fr','de','ja','ko','yue'].includes(c.language))throw new RuntimeAccessError('ASR_LANGUAGE_UNSUPPORTED','当前本地识别不支持所选语种；本轮新增英语、法语与德语',422);
@@ -57,7 +59,10 @@ export class VoiceAdapter {
    let result:unknown;
    if(c.adapter==='http'){
     const form=new FormData();form.append('file',new Blob([new Uint8Array(audio)],{type:mime.split(';')[0]}),`speech.${extension}`);form.append('model',model);form.append('response_format','json');if(c.language&&c.language!=='auto')form.append('language',c.language);if(wakeWord&&resident)form.append('wake_word',wakeWord);
-    const response=await fetch(`${c.baseUrl.replace(/\/$/,'')}/audio/transcriptions`,{method:'POST',headers:c.apiKey?{Authorization:`Bearer ${c.apiKey}`}:{},body:form,signal:combined,redirect:'error'});
+    // Encode the bounded form before attaching cancellation. Undici may otherwise
+    // enqueue multipart chunks after an early abort has already closed its stream.
+    const encoded=new Response(form),body=await encoded.arrayBuffer();combined.throwIfAborted();
+    const response=await fetch(`${c.baseUrl.replace(/\/$/,'')}/audio/transcriptions`,{method:'POST',headers:{'Content-Type':encoded.headers.get('content-type')!,...(c.apiKey?{Authorization:`Bearer ${c.apiKey}`}:{})},body,signal:combined,redirect:'error'});
     const meteredHeader=voiceProviderUsage(null,response.headers);if(meteredHeader)this.onUsage?.(meteredHeader);
     if(!response.ok)await engineFailure(response,combined,resident,meteredHeader?undefined:this.onUsage);
     const data=await limitedResponse(response,256*1024,combined);try{result=JSON.parse(data.toString('utf8'));}catch{throw new RuntimeAccessError('ENGINE_RESPONSE','识别引擎没有返回有效JSON',502);}if(!meteredHeader){const usage=voiceProviderUsage(result,response.headers);if(usage)this.onUsage?.(usage);}
@@ -73,7 +78,13 @@ export class VoiceAdapter {
    const parsed=z.object({text:z.string().trim().max(20000),language:z.string().max(30).optional(),model:z.string().max(120).optional(),languageProbability:z.number().finite().min(0).max(1).optional(),languageUncertain:z.boolean().optional(),wakeDetected:z.boolean().optional(),wakeWord:z.string().max(100).optional(),noSpeech:z.boolean().optional()}).passthrough().refine(d=>!!d.text||(localResident&&d.noSpeech===true)||(!!wakeWord&&resident&&d.wakeDetected===false&&d.wakeWord===wakeWord)).safeParse(result);
    if(!parsed.success)throw new RuntimeAccessError('NO_SPEECH','未识别到有效语句，请重试',422);
    if(localResident&&parsed.data.text&&(!parsed.data.language||parsed.data.language==='auto'))throw new RuntimeAccessError('ENGINE_RESPONSE','本地识别引擎未提供真实检测语种',502);
-   return {text:parsed.data.text,language:parsed.data.language??c.language,engine:c.adapter,...parsed.data.model?{model:parsed.data.model}:{},...parsed.data.languageProbability!==undefined?{languageProbability:parsed.data.languageProbability}:{},...parsed.data.languageUncertain!==undefined?{languageUncertain:parsed.data.languageUncertain}:!parsed.data.language&&c.language==='auto'?{languageUncertain:true}:{},...localResident&&parsed.data.noSpeech===true?{noSpeech:true}:{},...wakeWord&&resident&&parsed.data.wakeWord===wakeWord?{wakeDetected:parsed.data.wakeDetected===true,wakeWord}:{}};
+   let segments:VoiceTranscriptSegment[]|undefined;
+   if(Object.hasOwn(parsed.data,'segments')){
+    const supplied=z.array(z.object({start:z.number().finite().min(0),end:z.number().finite().min(0),text:z.string().max(20000)}).passthrough().refine(s=>s.end>=s.start)).max(2000).safeParse(parsed.data.segments);
+    if(!supplied.success)throw new RuntimeAccessError('ENGINE_RESPONSE','识别引擎返回的原始时间分段无效',502);
+    segments=supplied.data.map(s=>({start:s.start,end:s.end,text:s.text}));
+   }
+   return {text:parsed.data.text,language:parsed.data.language??c.language,engine:c.adapter,...parsed.data.model?{model:parsed.data.model}:{},...segments?{segments}:{},...parsed.data.languageProbability!==undefined?{languageProbability:parsed.data.languageProbability}:{},...parsed.data.languageUncertain!==undefined?{languageUncertain:parsed.data.languageUncertain}:!parsed.data.language&&c.language==='auto'?{languageUncertain:true}:{},...localResident&&parsed.data.noSpeech===true?{noSpeech:true}:{},...wakeWord&&resident&&parsed.data.wakeWord===wakeWord?{wakeDetected:parsed.data.wakeDetected===true,wakeWord}:{}};
   } catch(error){if(signal.aborted)throw new RuntimeAccessError('CANCELLED','语音任务已取消',409);if(deadline.aborted)throw new RuntimeAccessError('ENGINE_TIMEOUT','语音识别超时',504);if(error instanceof RuntimeAccessError)throw error;throw new RuntimeAccessError('ENGINE_UNAVAILABLE','语音识别引擎不可用',502);}
  }
  async synthesize(text:string,signal:AbortSignal,voice?:string,speed=1):Promise<{audio:Buffer;mime:string;engine:string}> {

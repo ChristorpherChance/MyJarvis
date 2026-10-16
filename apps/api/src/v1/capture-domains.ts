@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { BusinessError, type BusinessRecord, type CommandContext, type DomainHandler } from './types.js';
 import { familyHandlers } from './family-domains.js';
+import { captureContent, inboxContentKey, inboxTitle, materialProvenance, routedBody } from './inbox-capture-content.js';
 
 type Payload = Record<string, any>;
 const fail = (code:string, message:string, status=422):never => { throw new BusinessError(code,message,status); };
@@ -34,7 +35,6 @@ function primary(ctx:CommandContext,domain:DomainHandler['domain'],id:unknown):B
   const record=ctx.require(domain,text(id,'对象 ID',200),true);ctx.check(record);return record;
 }
 const owned = (ctx:CommandContext,r:BusinessRecord):boolean => r.ownerId===ctx.actorId && r.scope===ctx.scope;
-const normalize = (value:string):string => value.normalize('NFKC').toLocaleLowerCase().replace(/[\s，。！？、,.!?;；:："'“”‘’]/g,'');
 const mutableInbox = (r:BusinessRecord):void => ensure(r.status==='pending','收件已经处理，不能重复修改或分流');
 const mutableResearch = (r:BusinessRecord):void => ensure(r.status!=='converted','研究已转项目，历史研究不能覆盖');
 function machine(ctx:CommandContext,id:unknown,writable=true):Record<string,any> {
@@ -68,11 +68,11 @@ const inbox:DomainHandler = {
   execute(command,p,ctx) {
     if (command==='capture') {
       creating(ctx);
-      const rawText=text(p.rawText,'原话',20000,true),kind=choice(p.kind,['idea','experience','lesson','skill','memory','book'],'收件类型');
+      const content=captureContent(p,ctx),kind=choice(p.kind,['idea','experience','lesson','skill','memory','book'],'收件类型');
       const terminalId=text(p.terminalId,'来源终端',200),origin=choice(p.origin,['manual','voice','device'],'来源方式');
       if (p.projectId) ctx.require('projects',text(p.projectId,'关联项目',200));
-      const duplicate=ctx.list('inbox').find(item=>owned(ctx,item) && item.kind===kind && item.status==='pending' && !item.duplicateOf && normalize(String(item.rawText))===normalize(rawText));
-      const item=ctx.create('inbox',{title:p.title?text(p.title,'标题',300):rawText.trim().replace(/\s+/g,' ').slice(0,80),rawText,kind,terminalId,origin,status:'pending',projectId:p.projectId ?? null,target:null,annotation:'',tags:[],duplicateOf:duplicate?.id ?? null,origins:[],createdAt:ctx.now,updatedAt:ctx.now});
+      const duplicate=ctx.list('inbox').find(item=>owned(ctx,item) && item.kind===kind && item.status==='pending' && !item.duplicateOf && inboxContentKey(item)===inboxContentKey(content));
+      const item=ctx.create('inbox',{title:p.title?text(p.title,'标题',300):inboxTitle(content),...content,kind,terminalId,origin,status:'pending',projectId:p.projectId ?? null,target:null,annotation:'',tags:[],duplicateOf:duplicate?.id ?? null,origins:[],createdAt:ctx.now,updatedAt:ctx.now});
       ctx.emit('inbox',item.id,'captured',{kind,origin,terminalId,duplicateOf:item.duplicateOf});return item;
     }
     if (command==='capture-policy') {
@@ -103,7 +103,7 @@ const inbox:DomainHandler = {
       if (p.tags!==undefined) patch.tags=[...new Set(strings(p.tags,'标签'))];
       const kind=p.kind===undefined?source.kind:choice(p.kind,['idea','experience','lesson','skill','memory','book'],'收件类型');
       if(kind!==source.kind){
-        const duplicate=ctx.list('inbox').find(item=>owned(ctx,item)&&item.id!==source.id&&item.kind===kind&&item.status==='pending'&&!item.duplicateOf&&normalize(String(item.rawText))===normalize(source.rawText));
+        const duplicate=ctx.list('inbox').find(item=>owned(ctx,item)&&item.id!==source.id&&item.kind===kind&&item.status==='pending'&&!item.duplicateOf&&inboxContentKey(item)===inboxContentKey(source));
         Object.assign(patch,{kind,duplicateOf:duplicate?.id??null,independenceDecision:undefined});
         for(const item of ctx.list('inbox').filter(item=>owned(ctx,item)&&item.id!==source.id&&item.status==='pending'&&item.duplicateOf===source.id)){
           ctx.update('inbox',item.id,{duplicateOf:null,updatedAt:ctx.now});ctx.emit('inbox',item.id,'duplicate-reference-cleared',{previousDuplicateOf:source.id,reason:'referenced-record-reclassified'});
@@ -119,7 +119,7 @@ const inbox:DomainHandler = {
       const target=ctx.require('inbox',text(p.targetId,'主记录',200),true),reason=text(p.reason,'合并理由');mutableInbox(target);
       ensure(target.id!==source.id && target.ownerId===source.ownerId && target.scope===source.scope && target.kind===source.kind,'合并对象必须成员、范围和类型一致','VALIDATION',400);
       ensure(!target.duplicateOf,'主记录仍是重复候选，请先解决其重复关系');
-      const origin={id:source.id,rawText:source.rawText,terminalId:source.terminalId,origin:source.origin,createdAt:source.createdAt};
+      const origin={id:source.id,rawText:source.rawText,sourceUrl:source.sourceUrl??null,attachments:source.attachments??[],materialText:source.materialText??'',materialTextTruncated:source.materialTextTruncated===true,terminalId:source.terminalId,origin:source.origin,createdAt:source.createdAt};
       ctx.update('inbox',target.id,{origins:[...(target.origins ?? []),origin,...(source.origins ?? [])],updatedAt:ctx.now});
       const record=ctx.update('inbox',source.id,{status:'merged',duplicateOf:target.id,target:{domain:'inbox',id:target.id},reason,updatedAt:ctx.now});
       ctx.emit('inbox',record.id,'merged',{targetId:target.id});return record;
@@ -129,18 +129,19 @@ const inbox:DomainHandler = {
     let target:BusinessRecord;
     if(destination==='memory'){
       ensure(ctx.scope==='private','记忆候选须来自本人私有收件；共享原话不能直接转为个人记忆','FORBIDDEN',403);
+      ensure(typeof source.rawText==='string'&&!!source.rawText.trim(),'请先补充并核对文字，再创建记忆候选；录音或文件名不能代替个人记忆','VALIDATION',422);
       ensure(source.rawText.length<=1200,'原话超过1200字，请先在记忆页整理后创建候选；此处不截断原文','VALIDATION',422);
       target=familyHandlers.find(h=>h.domain==='memory')!.execute('candidate',{profileId:'me',text:source.rawText,category:'统一收件',source:'统一收件 '+source.id},{...ctx,expectedVersion:0,create:ctx.create.bind(ctx),emit:ctx.emit.bind(ctx)});
     }else if(destination==='material'){
-      target=ctx.create('books',{kind:'material',title:source.title,text:source.rawText,sourceInboxId:source.id,terminal:source.terminalId,at:ctx.now,status:'pending',metadata:{kind:'scan-description',origin:'inbox'},createdAt:ctx.now,updatedAt:ctx.now});
+      target=ctx.create('books',{kind:'material',title:source.title,text:routedBody(source),...materialProvenance(source),sourceInboxId:source.id,terminal:source.terminalId,at:ctx.now,status:'pending',metadata:{kind:'inbox-material',origin:'inbox',reviewed:false},createdAt:ctx.now,updatedAt:ctx.now});
       ctx.emit('books',target.id,'material-created',{sourceInboxId:source.id});
     }else if (destination==='research') {
-      target=ctx.create('research',{...researchBody(source.title,source.rawText,ctx.now,source.terminalId),sourceInboxId:source.id});
+      target=ctx.create('research',{...researchBody(source.title,routedBody(source),ctx.now,source.terminalId),...materialProvenance(source),sourceInboxId:source.id});
       ctx.emit('research',target.id,'created',{sourceInboxId:source.id});
     } else {
       const inferred=['experience','lesson','skill','runbook'].includes(source.kind)?source.kind:'experience';
       const kind=choice(p.kind ?? inferred,['experience','lesson','skill','runbook'],'经验类型');
-      target=ctx.create('experiences',{...experienceBody(source.title,source.rawText,kind,source.id,ctx.now),sourceInboxId:source.id,terminalId:source.terminalId});
+      target=ctx.create('experiences',{...experienceBody(source.title,routedBody(source),kind,source.id,ctx.now),...materialProvenance(source),sourceInboxId:source.id,terminalId:source.terminalId});
       ctx.emit('experiences',target.id,'captured',{sourceInboxId:source.id,kind});
     }
     const record=ctx.update('inbox',source.id,{status:'routed',target:{domain:destination==='experience'?'experiences':destination==='material'?'books':destination,id:target.id},updatedAt:ctx.now});
@@ -230,7 +231,7 @@ const experiences:DomainHandler = {
     }
     if(command==='archive'){
       ensure(ctx.scope==='private','清除正文只允许本人私有资料','FORBIDDEN',403);ensure(item.kind!=='skill','技能需停用版本，保留任务固定引用');text(p.reason,'移除理由');
-      const record=ctx.update('experiences',item.id,{title:'已移除私人资料',content:'',summary:'',conditions:'',source:'',evidence:'',history:[],mergedSources:[],references:[],tags:[],verified:false,verifiedContent:null,verifiedConditions:null,status:'archived',updatedAt:ctx.now});ctx.redactReceipts('experiences',item.id,record);ctx.emit('experiences',item.id,'private-record-removed');return record;
+      const record=ctx.update('experiences',item.id,{title:'已移除私人资料',content:'',summary:'',conditions:'',source:'',sourceUrl:null,attachments:[],materialText:'',materialTextTruncated:false,inboxOrigins:[],evidence:'',history:[],mergedSources:[],references:[],tags:[],verified:false,verifiedContent:null,verifiedConditions:null,status:'archived',updatedAt:ctx.now});ctx.redactReceipts('experiences',item.id,record);ctx.emit('experiences',item.id,'private-record-removed');return record;
     }
     if (command==='verify') {
       ensure(item.status==='inbox' || item.status==='verified','已发布版本不可覆盖验证记录，请先创建新版');
@@ -242,7 +243,7 @@ const experiences:DomainHandler = {
       const base=ctx.require('experiences',text(p.baseId,'主经验',200),true),reason=text(p.reason,'合并理由');
       ensure(base.id!==item.id && base.ownerId===item.ownerId && base.scope===item.scope && base.kind==='experience' && item.kind==='experience','合并对象必须是同成员同范围的独立经验','VALIDATION',400);
       ensure(['inbox','verified'].includes(base.status) && ['inbox','verified'].includes(item.status),'只有未发布且未归档经验可合并');
-      const source={id:item.id,title:item.title,content:item.content,source:item.source,scope:item.scope,at:ctx.now};
+      const source={id:item.id,title:item.title,content:item.content,source:item.source,...materialProvenance(item),scope:item.scope,at:ctx.now};
       ctx.update('experiences',base.id,{mergedSources:[...(base.mergedSources ?? []),source,...(item.mergedSources ?? [])],verified:false,status:'inbox',verifiedContent:null,verifiedConditions:null,history:[...(base.history ?? []),snapshot(base,ctx,`合并来源 ${item.id}：${reason}`)],updatedAt:ctx.now});
       const record=ctx.update('experiences',item.id,{status:'archived',mergedInto:base.id,history:[...(item.history ?? []),snapshot(item,ctx,`归档到 ${base.id}：${reason}`)],updatedAt:ctx.now});ctx.emit('experiences',record.id,'merged',{baseId:base.id});return record;
     }

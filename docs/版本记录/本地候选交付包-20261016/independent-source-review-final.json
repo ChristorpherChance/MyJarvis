@@ -1,0 +1,51 @@
+{
+  "scope": "Independent static delta review after the author's frozen corrections. The original finding report is preserved unchanged as pending-at-that-time history. Reviewer did not rerun author tests, build, produce a package or modify packager/test source.",
+  "status": "limited static pass for the corrected local candidate packager; no remaining blocking finding in this reviewed scope",
+  "reviewedFinalInputs": [
+    { "path": "scripts/package-capture-release.mjs", "sha256": "397dc74db32a8ff5a087c30a86a87786696290219f638fc0b6a54157502da0c7", "bytesReportedByAuthor": 22608, "sha256IndependentlyRead": true },
+    { "path": "scripts/test-package-capture-release.mjs", "sha256": "eaf2b6b72e7e47efe3f22a653799452db08f6815912c1de85d4f1430263afbbc", "bytesReportedByAuthor": 13569, "sha256IndependentlyRead": true },
+    { "path": "artifacts/capture-package-r34/local-packager-corrections.json", "sha256": "17c58677865bd43bfec1d3130ce1cefe277a75b1fa4d8050c3e1e612c167d662", "sha256IndependentlyRead": true }
+  ],
+  "originalSnapshotReadback": [
+    { "path": "artifacts/capture-package-r34/pre-review-package-capture-release.mjs.source", "sha256": "1e9f282c862b6c7378764276c901409f5bd7a34604b8e06611fc797e76ba39fb", "matchesOriginalReview": true },
+    { "path": "artifacts/capture-package-r34/pre-review-test-package-capture-release.mjs.source", "sha256": "e16e1d91f035ca35cd03d14cb07bf4bc3c0308b41ef995f60b4d62689f448cc7", "matchesOriginalReview": true }
+  ],
+  "findingResolutions": [
+    {
+      "id": "PACKAGE-001",
+      "status": "closed within the declared type/provenance scope by static review",
+      "finalCodeObserved": "Selected source files now require explicit text extensions, exact root metadata files, a constrained theme-preview JPG path or one exact public ZIP path. Other safe-named file types in source scope fail instead of entering the archive. Private path components compare lowercase. Compiled API accepts only JS/map; compiled web accepts JS/CSS/HTML/JSON plus admitted JPG/ZIP assets whose SHA-256 matches the byte-verified committed public source. The one public development-node ZIP also has a fixed reviewed SHA-256.",
+      "metadataObserved": "The unconditional privateDataIncluded:false field was removed. Admission now describes file type/source provenance and explicitly records contentPrivacyInspectionPerformed:false. README states that it does not identify private content inside admitted text or images.",
+      "remainingBoundary": "This is a file type and selected-source provenance gate. It does not prove semantic confidentiality of text/images, nor inspect arbitrary renamed payload content. The reviewer did not inspect the nested public ZIP contents; its precise path, fixed hash and source/dist hash tie were reviewed in code, and its content inventory is author-reported separate evidence."
+    },
+    {
+      "id": "PACKAGE-002",
+      "status": "closed for direct offline HTML dependencies and the declared finite current Vite output forms by static review",
+      "finalCodeObserved": "Every matched offline HTML asset reference must exist in web dist and the hash-verified manifest. Manifest JS static/literal-dynamic imports and CSS url/@import references are resolved as local assets and must be in that same manifest. Unsupported external, query/hash, escaped-path or nonliteral module dependency forms fail in the recognized graph checks. Worker entries/version remain tied exactly to the manifest.",
+      "remainingBoundary": "The checks recognize the current finite emitted Vite forms through regular expressions, not arbitrary JavaScript, arbitrary HTML serialization, computed asset URLs or a general module parser. A future bundler/output-form change needs a new scoped review and verification."
+    }
+  ],
+  "retainedStaticProperties": [
+    "archiveVersion and unchanged runtimeBuild remain separate. Candidate/readme language does not claim production deployment and warns that the archive version cannot be directly fed to the legacy runtime-identity stage.",
+    "The selected full source commit and complete tracked raw bytes/path set are checked before copying and again after ZIP verification; excluded tracked paths are still byte checked.",
+    "Symlink/unsupported tracked entries and compiled links are refused, existing output is refused, selected input overlaps are refused, and copy/write operations remain exclusive.",
+    "The delta adds no network, SSH, installation, service startup, deployment or build action. Executed subprocesses in the packager remain local Git reads and Python zipfile operations.",
+    "Per-payload size/SHA-256, copied-byte checks, ZIP inventory/CRC/per-entry size/hash/mode readback, embedded manifest equality and final whole-ZIP SHA-256 remain in place. No actual ZIP was independently produced or checked by this reviewer."
+  ],
+  "verificationEvidenceBoundary": {
+    "reviewerActions": ["read frozen source/test files", "read the correction summary", "compare source deltas against the preserved original byte snapshots", "independently compute SHA-256 of final files and original snapshots"],
+    "authorReportedNewExecution": { "selectedPattern": "^corrected ", "newGroups": 2, "passed": 2, "failed": 0, "typeVariants": ["wav", "webm", "mp3", "mp4", "bin", "onnx", "sqlite", "mixed-case Node_Modules"], "missingPrecacheVariants": 1, "rawStdoutPersisted": false },
+    "reviewedNewAssertions": "The two new fixture groups use self-created temporary Git repositories. Type cases require the type/private-path rejection reason. The precache case keeps the HTML module in dist, replaces its manifest entry with another valid JS, recomputes manifest and worker graph/version, then requires the missing-precache rejection reason.",
+    "newExecutionCoverageLimit": "The reported type counterexamples exercise compiled-input cases. Source file type rejection is statically present but was not independently executed in this review.",
+    "oldSixCasesRerunByReviewer": false,
+    "authorReportsOldSixNotRerunForCorrections": true,
+    "independentExecutionPassClaim": false
+  },
+  "actualDeliveryBoundaries": [
+    "Root still owns final commit binding, real archive creation and independent actual ZIP inspection; this static pass does not replace those steps.",
+    "API source-map source-path membership and mtime/runtime-identity association do not prove reproducible compilation or compiled byte equivalence; the implementation and README retain this limitation.",
+    "No dependency installation, Linux startup, live API/frontend health, production 112 deployment, 101 cold-standby check, physical microphone acceptance or rollback execution was performed by this review."
+  ],
+  "readOnlyInspectionFailure": "First delta read used abbreviated snapshot filenames without the .mjs segment and returned file-not-found. Corrected to the paths explicitly listed by the author; hashes then matched. No tests or package operations ran as a result of this read-only typo.",
+  "cost": { "projectModelCalls": 0, "projectModelTokens": 0, "projectModelCostUsd": 0, "internalAgentTokens": "not available to this subtask", "internalAgentPrice": "unknown; not represented as zero", "spendCap": "none; record only" }
+}

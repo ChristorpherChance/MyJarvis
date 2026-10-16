@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-15T12:19:01.302Z",
+  "attempt": "3",
+  "only": "explicit-web-extraction",
+  "realHttp": true,
+  "temporarySqlite": true,
+  "realDocxAndPdf": true,
+  "staticLoopbackHtml": true,
+  "actualAsr": false,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "webFixtureRequests": [
+    "/article"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "explicit-web-extraction",
+      "status": "passed",
+      "evidence": {
+        "configuredLoopbackOnly": true,
+        "requestsBeforeClick": 0,
+        "explicitFetches": 1,
+        "scriptResourceFetches": 0,
+        "staticBodyExtracted": true,
+        "htmlOriginalSha256Preserved": true,
+        "inboxSourceUrlPreserved": true
+      }
+    }
+  ]
+}

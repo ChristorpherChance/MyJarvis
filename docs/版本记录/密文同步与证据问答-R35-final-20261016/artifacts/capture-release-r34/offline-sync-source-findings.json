@@ -1,0 +1,32 @@
+{
+  "scope": "Independent static review of the new encrypted sync client, server and vault replacement integration. No old tests, browser run, build, package or production call was performed by this reviewer. Vault's original encrypted storage was authored by this reviewer; sync replacement delta and server/client were authored separately.",
+  "observedFrozenInputs": [
+    { "path": "apps/api/src/runtime/offline-draft-sync.ts", "sha256": "a136eeaa39fea798b8a73bad61c501abbe9df741837675b378bbfbb8f3be0a96" },
+    { "path": "apps/web/src/features/offline/OfflineDraftSync.tsx", "sha256": "971370f2a2cdd4888793dc8650bf25e4cd64ea79cd1cb057fc16c7e9888179ac" },
+    { "path": "apps/web/src/features/offline/offline-vault.ts", "sha256": "d2d95268b0a865dac5de98c1a6bc97410e19216860b2a6aedcd569f1f91cb7e1" }
+  ],
+  "status": "two P1 local replacement/CAS races reported to Root and sync author; correction review pending",
+  "findings": [
+    {
+      "id": "OFFLINE-SYNC-CAS-001",
+      "priority": "P1",
+      "fact": "replaceForSync stores the remote encrypted row without advancing an independent local generation. Local optimistic comparison uses only vaultId/revision. Two browsers forked from the same exported vault can legitimately produce the same vaultId/revision with different ciphertext.",
+      "causalCounterexample": "Local tab A holds encrypted state A at id X/revision 2. Another local tab explicitly restores remote fork B, also id X/revision 2 but different ciphertext. Tab A's later save/export still passes the ID/revision check against B and may silently overwrite/export a different state. A remote lower revision can similarly reuse an old local token.",
+      "requestedNarrowFix": "Bind local comparisons to an unambiguous exact observed ciphertext-state token, such as salt+IV or a full ciphertext/envelope digest, in addition to ID/revision. Carry that token through local read/replace and browser CAS/load/export. Keep the portable envelope schema unchanged. Add a targeted same-ID/same-revision/different-ciphertext replacement counterexample."
+    },
+    {
+      "id": "OFFLINE-SYNC-ABORT-002",
+      "priority": "P1",
+      "fact": "replaceForSync checks stillCurrent before awaiting storage.compareAndSwap, but the IndexedDB write listens only to the vault's own signal. Stopping sync aborts the sync controller without locking the vault.",
+      "causalCounterexample": "During explicit remote recovery, the final pre-write current check succeeds. While the async database open/get is pending the user stops this window's sync. The vault signal remains active, so CAS can write the remote row; only the post-write stillCurrent check notices the stopped turn. UI does not apply the remote draft although the local stored row has already changed. Identity/pagehide paths call vault.lock and are already protected; the isolated stop path is the gap.",
+      "requestedNarrowFix": "Pass the sync operation's abort signal into replacement and combine it with the vault signal for the IndexedDB CAS, while retaining the original vault session checks. Alternatively ensure a live cancellation guard can abort the actual transaction before commit. Add a targeted stop-during-delayed-local-CAS case asserting the original row remains."
+    }
+  ],
+  "positiveStaticObservations": [
+    "Server authorizes an existing member-cookie context before allowing administrator fallback, and requires current administrator identity for each request. The server's bounded single remote slot stores only the current encrypted envelope, version metadata and up to 128 metadata-only command receipts.",
+    "Remote writes require explicit confirmation, exact expected revision and stable command fingerprint; mismatched command reuse conflicts. Delete keeps a tombstone revision, drops the current ciphertext and old receipt metadata, and prevents late old-version writes from silently reuploading.",
+    "Client opt-in is per-window, default off. Requests and response-body awaits check the original turn/epoch; identity invalidation locks local state. Pending unknown writes retain their exact command ID/body and block new conflict choices/deletion until that operation is reconciled.",
+    "Only saved ciphertext is sent. Remote adoption decrypts/validates bounded package content and asks for the original local passphrase without sending it."
+  ],
+  "verificationByReviewer": "Static causal review only, not an executed reproduction or an acceptance of the whole sync feature. Original findings remain historical after any later correction; final delta should be recorded separately."
+}

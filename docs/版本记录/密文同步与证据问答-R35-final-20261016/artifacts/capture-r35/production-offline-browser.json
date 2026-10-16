@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "kind": "production-public-offline-new-browser-context",
+  "at": "2026-10-16T01:06:46.401Z",
+  "status": "passed",
+  "site": "https://cc-jarvis.ikvein.com",
+  "entry": "/offline-capture.html",
+  "expectedOfflineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+  "expectedPublicResources": 5,
+  "authenticated": false,
+  "privateDocumentsRead": false,
+  "modelsInvoked": false,
+  "microphoneInvoked": false,
+  "tlsValidation": "browser-default-required",
+  "ignoreCertificateErrors": false,
+  "physicalDeviceAcceptance": false,
+  "offlineManifestSha256": "281bd81bc4220ca5d1a50e33374f17dd11a722515ed69aa386a2ed9314c067b4",
+  "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+  "workerAndCache": {
+    "scope": "/offline-capture.html",
+    "worker": "/offline-capture-sw.js",
+    "version": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "ready": true,
+    "cacheCount": 1,
+    "cacheEntries": [
+      {
+        "path": "/assets/client-OI5hagxP.js",
+        "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6",
+        "bytes": 222585
+      },
+      {
+        "path": "/assets/offline-vault-g54LtOEF.js",
+        "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94",
+        "bytes": 10707
+      },
+      {
+        "path": "/assets/offlineCapture-CTF5MCW4.css",
+        "sha256": "81ca3809012e895c9c7ecbf96fa695ca1e0485e917be83737e3d0ef9fbe655a8",
+        "bytes": 4717
+      },
+      {
+        "path": "/assets/offlineCapture-Dp37MnGd.js",
+        "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851",
+        "bytes": 26587
+      },
+      {
+        "path": "/offline-capture.html",
+        "sha256": "d8bad6e8ab79f60fe4928e89adab1126a2bfaef9dae556cc2160bcecf1b10920",
+        "bytes": 658
+      }
+    ]
+  },
+  "emptyPublicUiScreenshot": true,
+  "checks": [
+    "fresh-context-real-https-without-tls-bypass",
+    "network-manifest-version-and-exact-five-build-resources",
+    "active-worker-ready-message-and-every-cached-resource-sha256",
+    "browser-offline-reload-served-by-service-worker",
+    "empty-new-local-vault-and-writing-controls-available-offline",
+    "online-restored-without-login-api-model-or-audio"
+  ],
+  "apiRequests": 0,
+  "blockedRequests": 0,
+  "unexpectedRequests": 0,
+  "pageErrors": 0,
+  "publicRequestCounts": [
+    {
+      "request": "online https://cc-jarvis.ikvein.com/offline-capture.html",
+      "count": 2
+    },
+    {
+      "request": "online https://cc-jarvis.ikvein.com/assets/offlineCapture-Dp37MnGd.js",
+      "count": 2
+    },
+    {
+      "request": "online https://cc-jarvis.ikvein.com/assets/client-OI5hagxP.js",
+      "count": 2
+    },
+    {
+      "request": "online https://cc-jarvis.ikvein.com/assets/offline-vault-g54LtOEF.js",
+      "count": 2
+    },
+    {
+      "request": "online https://cc-jarvis.ikvein.com/assets/offlineCapture-CTF5MCW4.css",
+      "count": 2
+    },
+    {
+      "request": "online https://cc-jarvis.ikvein.com/offline-capture-shell-manifest.json",
+      "count": 1
+    },
+    {
+      "request": "online https://cc-jarvis.ikvein.com/offline-capture-sw.js",
+      "count": 1
+    },
+    {
+      "request": "offline https://cc-jarvis.ikvein.com/offline-capture.html",
+      "count": 1
+    },
+    {
+      "request": "offline https://cc-jarvis.ikvein.com/assets/offlineCapture-CTF5MCW4.css",
+      "count": 1
+    },
+    {
+      "request": "offline https://cc-jarvis.ikvein.com/assets/offlineCapture-Dp37MnGd.js",
+      "count": 1
+    },
+    {
+      "request": "offline https://cc-jarvis.ikvein.com/assets/offline-vault-g54LtOEF.js",
+      "count": 1
+    },
+    {
+      "request": "offline https://cc-jarvis.ikvein.com/assets/client-OI5hagxP.js",
+      "count": 1
+    }
+  ],
+  "newContextAndBrowserClosed": true,
+  "emptyVaultCreated": true,
+  "emptyVaultOnly": true,
+  "ordinaryInboxSubmitted": false,
+  "syncEnabled": false,
+  "boundaries": [
+    "Real HTTPS public page only; no administrator/member login or existing private browser profile",
+    "A random local passphrase creates only a new empty encrypted vault in this disposable context; it is never logged or uploaded",
+    "No text/material entry, microphone, model, sync or business API action",
+    "Desktop browser offline shell acceptance only; not physical phone, microphone, room terminal or broad production acceptance"
+  ]
+}

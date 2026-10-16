@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "kind": "local-packager-review-corrections",
+  "at": "2026-10-15T16:21:48.593011+00:00",
+  "sourceFrozen": true,
+  "files": [
+    {
+      "path": "scripts/package-capture-release.mjs",
+      "sha256": "397dc74db32a8ff5a087c30a86a87786696290219f638fc0b6a54157502da0c7",
+      "bytes": 22608
+    },
+    {
+      "path": "scripts/test-package-capture-release.mjs",
+      "sha256": "eaf2b6b72e7e47efe3f22a653799452db08f6815912c1de85d4f1430263afbbc",
+      "bytes": 13569
+    }
+  ],
+  "originalCut": {
+    "path": "artifacts/capture-offline-r34/local-packager-fixture.json",
+    "sha256": "ca94b9645573472c37cb82436df0d47fde1955b4a16b04b54bf3cc798d6f82f4",
+    "oldSixCasesRerunAfterCorrections": false,
+    "unchanged": true
+  },
+  "preReviewSnapshots": [
+    {
+      "path": "artifacts/capture-package-r34/pre-review-package-capture-release.mjs.source",
+      "sha256": "1e9f282c862b6c7378764276c901409f5bd7a34604b8e06611fc797e76ba39fb",
+      "bytes": 18752
+    },
+    {
+      "path": "artifacts/capture-package-r34/pre-review-test-package-capture-release.mjs.source",
+      "sha256": "e16e1d91f035ca35cd03d14cb07bf4bc3c0308b41ef995f60b4d62689f448cc7",
+      "bytes": 7741
+    }
+  ],
+  "corrections": [
+    {
+      "finding": "PACKAGE-001",
+      "implemented": "Source text extension allowlist; API compiled JS/map and web JS/CSS/HTML/JSON only. The 30 existing theme-preview JPGs must match committed public-source bytes. One exact development-node ZIP path is admitted only at its reviewed fixed SHA-256 and must match source; no fonts are present in the current inventory. Other media/model/runtime-data/unknown file types are refused. Private directory components compare lowercase. Metadata now claims type/source admission and explicitly says contentPrivacyInspectionPerformed=false, rather than claiming private-data identification."
+    },
+    {
+      "finding": "PACKAGE-002",
+      "implemented": "All offline HTML JS/CSS asset references must be in the fingerprint-verified precache manifest. The finite current Vite graph additionally checks local static/literal-dynamic module and CSS url/@import dependencies against the same manifest; it is not an arbitrary JavaScript parser."
+    }
+  ],
+  "admittedCurrentPublicZip": {
+    "path": "apps/web/public/downloads/jarvis-development-node.zip",
+    "sha256": "cc59db4c958d805011d4e29e8c36b6e365b773ebc68fd06c64f69ef3a95f1c69",
+    "bytes": 153122,
+    "entries": 6,
+    "entryTypes": [
+      ".mjs",
+      ".js",
+      ".md",
+      ".json"
+    ],
+    "sourceAndDistMatchedAtReadOnlyInventory": true
+  },
+  "newVerification": {
+    "selectedByTestNamePattern": "^corrected ",
+    "newGroups": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "typeGroupRejectedVariants": 8,
+    "typeVariants": [
+      "wav",
+      "webm",
+      "mp3",
+      "mp4",
+      "bin",
+      "onnx",
+      "sqlite",
+      "mixed-case Node_Modules"
+    ],
+    "precacheGroupRejectedVariants": 1,
+    "precacheCounterexample": "HTML JS exists in dist but manifest lists a different valid JS; all manifest hashes and worker graph/version match. Rejected specifically for absent precache dependency.",
+    "rawStdoutPersisted": false,
+    "evidenceBoundary": "Actual tool result: node --test --test-name-pattern=^corrected; tests 2, pass 2, fail 0; no independent raw stdout file.",
+    "temporaryGitFixturesOnly": true,
+    "newTemporaryResourcesCleaned": true,
+    "realSourcePackageCreated": false,
+    "productBuilds": 0,
+    "externalRequests": 0,
+    "models": 0,
+    "productionAccess": false
+  },
+  "preserved": [
+    "Original six-case successful cuts retained without rerun",
+    "Old package/deployment scripts unchanged",
+    "archiveVersion separate from unchanged runtimeBuild",
+    "Source map/mtime association is not reproducible-build proof",
+    "Actual candidate archive remains reserved for Root after final commit"
+  ],
+  "publicSafety": "No private configuration, credentials, user audio, model bytes, or remote command parameters are included in this report."
+}

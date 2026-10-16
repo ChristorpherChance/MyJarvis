@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-16T00:56:47.984370+00:00",
+  "readOnly": true,
+  "correctHealthAuthorizationFromActualSource": true,
+  "inferenceCalls": 0,
+  "servers": [
+    {
+      "node": "101",
+      "basePython": {
+        "version": "3.12.15",
+        "baseUnderManagedPrefix": true
+      }
+    },
+    {
+      "node": "112",
+      "basePython": {
+        "version": "3.12.15",
+        "baseUnderManagedPrefix": true
+      },
+      "residentPins": {
+        "sherpa-onnx": "1.13.8",
+        "numpy": "2.2.6",
+        "av": "19.0.0",
+        "pypinyin": "0.55.0",
+        "sentencepiece": "0.2.1",
+        "faster-whisper": "1.2.1",
+        "ctranslate2": "4.6.0"
+      },
+      "resident": {
+        "ready": true,
+        "runtime": "1.13.8",
+        "asrRevision": "20261010-multilingual-r2",
+        "asr": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2025-09-09",
+        "fastTts": "matcha-icefall-zh-en",
+        "kws": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+        "multilingualAsr": "faster-whisper-small",
+        "asrLanguages": [
+          "zh",
+          "ja",
+          "ko",
+          "yue",
+          "en",
+          "fr",
+          "de",
+          "auto"
+        ],
+        "ttsLanguages": [
+          "zh",
+          "en",
+          "de",
+          "fr"
+        ],
+        "piperLanguages": [
+          "de",
+          "en",
+          "fr"
+        ]
+      }
+    }
+  ]
+}

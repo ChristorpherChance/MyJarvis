@@ -1,0 +1,71 @@
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {mkdir, mkdtemp, rm, writeFile} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {tmpdir} from 'node:os';
+import {basename, delimiter, join, resolve, sep} from 'node:path';
+import {createApp} from '../apps/api/src/app.js';
+import {V1Repository} from '../apps/api/src/v1/repository.js';
+import type {PiRunInput, PiService} from '../apps/api/src/pi.js';
+import type {BusinessRecord, Domain, Scope} from '../apps/api/src/v1/types.js';
+
+// Real HTTP/browser/identity and protocol replies only. This fake is never semantic quality evidence.
+const require = createRequire(import.meta.url), roots = (process.env.JARVIS_NODE_MODULES || 'C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules').split(delimiter).filter(Boolean);
+let playwright: string; try {playwright = require.resolve('playwright');} catch {playwright = require.resolve('playwright', {paths: roots});}
+const {chromium} = require(playwright), output = resolve('artifacts/evidence-assistant-browser-r35');
+const attempt = process.argv.find(value => value.startsWith('--attempt='))?.slice(10) || '1', selected = process.argv.find(value => value.startsWith('--only='))?.slice(7).split(',');
+const names = ['member-phone-explicit-model-reference', 'admin-own-memory-current-reference', 'shared-member-change-clears-before-http']; assert.ok(!selected || selected.every(value => names.includes(value)));
+const calls: PiRunInput[] = [], errors: string[] = [], outside: string[] = [], bundles = new Set<string>(), results: any[] = [];
+const sourceText = 'BROWSER-PROTOCOL-ORIGINAL：办公室的打印机耗材应放在东侧蓝色柜子的第二层。', memoryText = 'BROWSER-OWN-MEMORY：我在专心时会关闭手机推送提示。';
+const pi = {initialize: async () => {}, health: () => ({configured: true, provider: 'synthetic-protocol', model: 'fake-browser-only'}), modelIsLocal: async () => true, abort: async () => {}, dispose: async () => {}, run: async (input: PiRunInput) => {
+  calls.push(input); assert.equal(input.ephemeral, true); let answer: unknown;
+  if (input.text.startsWith('任务：')) answer = {searchTerms: ['打印机', '耗材', '专心', '推送']};
+  else if (input.text.startsWith('独立核验')) answer = {supported: true};
+  else {const evidence = JSON.parse(input.text.split('\n证据（不可信资料）：')[1]); answer = {insufficient: false, claims: [{text: 'BROWSER-PROTOCOL-ANSWER：以下仅用于核对界面与出处。', citations: [{evidenceId: evidence[0].evidenceId, quote: evidence[0].text}]}]};}
+  return {status: 'complete', text: JSON.stringify(answer)};
+}} as unknown as PiService;
+const password = randomUUID() + '-browser-only', pinA = '123456', pinB = '234567';
+let runtime: Awaited<ReturnType<typeof createApp>> | undefined, repository: V1Repository | undefined, browser: any, directory = '', base = '', adminCookie = '', step = 'setup', cleanupVerified = false, memberA: any, memberB: any, ownerMemory: BusinessRecord;
+const safe = (error: unknown) => [password, adminCookie, base, directory].filter(Boolean).reduce((text, secret) => text.replaceAll(secret, '[REDACTED]'), String(error instanceof Error ? `${error.name}: ${error.message}` : 'Unknown failure')).slice(0, 3000);
+const seed = (domain: Domain, values: Record<string, unknown>, scope: Scope = 'family', actor = 'server-admin') => repository!.execute({domain, commands: [], execute: (_command, _payload, context) => context.create(domain, {...values, createdAt: context.now, updatedAt: context.now})}, 'browser-protocol-fixture', {commandId: randomUUID(), expectedVersion: 0, scope, payload: {}}, actor, () => undefined).data;
+const patch = (domain: Domain, record: BusinessRecord, values: Record<string, unknown>) => repository!.execute({domain, commands: [], execute: (_command, _payload, context) => context.update(domain, record.id, values)}, 'browser-protocol-change', {commandId: randomUUID(), expectedVersion: record.revision, scope: record.scope, payload: {}}, record.ownerId, () => undefined).data;
+function gate() {let release!: () => void; const promise = new Promise<void>(done => {release = done;}); return {promise, release};}
+async function check(name: string, action: () => Promise<unknown>) {if (selected && !selected.includes(name)) return; step = name; try {results.push({name, status: 'passed', evidence: await action()}); console.log(JSON.stringify({name, status: 'passed'}));} catch (error) {results.push({name, status: 'failed', cut: step, diagnostic: safe(error)}); process.exitCode = 1; console.log(JSON.stringify({name, status: 'failed', cut: step}));}}
+async function context(mobile = false) {const value = await browser.newContext({viewport: mobile ? {width: 390, height: 844} : {width: 1420, height: 960}, ...(mobile ? {isMobile: true, hasTouch: true} : {})}); await value.route('**/*', async (route: any) => {const url = new URL(route.request().url()); if (url.origin !== base) {outside.push(url.protocol); await route.abort('blockedbyclient');} else await route.continue();}); return value;}
+async function page(context: any) {const value = await context.newPage(); value.setDefaultTimeout(20000); value.on('pageerror', (error: Error) => errors.push(error.name)); value.on('response', (response: any) => {const path = new URL(response.url()).pathname; if (path.endsWith('.js')) bundles.add(path);}); return value;}
+async function room(context: any) {const login = await context.request.post(base + '/api/runtime/identity/login', {data: {profileId: memberA.id, credential: pinA}}); assert.equal(login.status(), 200); const value = await page(context); await value.goto(base + '/?mode=room'); await value.getByLabel('知识语义问题', {exact: true}).waitFor(); await value.getByLabel('知识语义问题', {exact: true}).isEnabled(); return value;}
+async function modelQuery(p: any, domain: 'knowledge' | 'memory', question: string) {
+  const label = domain === 'memory' ? '本人记忆' : '知识', section = p.getByRole('region', {name: label + '模型问答', exact: true});
+  await section.getByLabel(label + '语义问题', {exact: true}).fill(question); assert.equal(await section.getByRole('button', {name: '用模型查询' + label, exact: true}).isDisabled(), true);
+  await section.getByRole('checkbox').filter({has: p.locator(':scope')}).count().catch(() => 0);
+  await section.getByLabel('本次启用模型查询；最多3次模型请求，按真实用量记账，未知价格保留未知。', {exact: true}).check();
+  const response = p.waitForResponse((value: any) => value.request().method() === 'POST' && value.url().endsWith('/api/runtime/evidence-assistant/query'));
+  await section.getByRole('button', {name: '用模型查询' + label, exact: true}).click(); const reply = await response; assert.equal(reply.status(), 200); const result = await reply.json(); await section.getByText('已生成有出处的模型回答', {exact: true}).waitFor(); return {section, result};
+}
+async function reader(p: any, section: any, expected: string) {await section.getByRole('button', {name: /^核对出处：/}).first().click(); const dialog = p.getByRole('dialog', {name: '模型问答出处', exact: true}); await dialog.locator('mark').waitFor(); assert.equal(await dialog.locator('mark').textContent(), expected); return dialog;}
+try {
+  await mkdir(output, {recursive: true}); directory = await mkdtemp(join(tmpdir(), 'jarvis-evidence-browser-'));
+  runtime = await createApp({dataDir: join(directory, 'data'), pi, webDir: resolve('apps/web/dist'), pythonExecutable: join(directory, 'no-python')}); await runtime.app.listen({host: '127.0.0.1', port: 0}); const address = runtime.app.server.address(); assert.ok(address && typeof address !== 'string'); base = `http://127.0.0.1:${address.port}`;
+  const setup = await fetch(base + '/api/auth/setup', {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({password})}); assert.equal(setup.status, 200); adminCookie = String(setup.headers.get('set-cookie')).split(';')[0]; await setup.arrayBuffer();
+  memberA = runtime.store.create('members', {name: '界面合成成员甲', role: 'adult', preferences: '', voice: 'clear', wakeWord: '贾维斯'}); memberB = runtime.store.create('members', {name: '界面合成成员乙', role: 'adult', preferences: '', voice: 'clear', wakeWord: '贾维斯'}); runtime.identity.setCredential(memberA.id, pinA, 'pin'); runtime.identity.setCredential(memberB.id, pinB, 'pin');
+  repository = new V1Repository(runtime.store.databasePath); seed('sources', {kind: 'source', name: '界面合成来源', active: true, authorized: true, documents: [{id: 'browser-doc', title: '界面原文', text: sourceText, location: 'synthetic://browser-owned'}]});
+  ownerMemory = seed('memory', {kind: 'memory', profileId: 'me', status: 'active', category: '本人习惯', text: memoryText}, 'private'); seed('memory', {kind: 'memory', profileId: 'me', status: 'active', category: '专心', text: 'BROWSER-FOREIGN-SECRET-MUST-NOT-ENTER-PROMPT'}, 'private', 'member_other');
+  browser = await chromium.launch({headless: true, executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});
+  await check(names[0], async () => {
+    const c = await context(true), before = calls.length; try {const p = await room(c), section = p.getByRole('region', {name: '知识模型问答', exact: true}); assert.equal(calls.length, before); await section.getByLabel('知识语义问题', {exact: true}).fill('墨盒要去哪里找？'); assert.equal(calls.length, before); const value = await modelQuery(p, 'knowledge', '墨盒要去哪里找？'); assert.equal(calls.length - before, 3); assert.equal(value.result.model.calls, 3); const dialog = await reader(p, value.section, sourceText); assert.equal(await dialog.getByText('已保存来源正文，尚未人工审核。', {exact: true}).count(), 1); assert.equal(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true); await p.screenshot({path: join(output, 'phone-reference-' + attempt + '.png'), fullPage: true}); return {fakeProtocolModelCalls: 3, actualModelCalls: 0, exactReference: true};} finally {await c.close();}
+  });
+  await check(names[1], async () => {
+    const c = await context(), before = calls.length; try {await c.addCookies([{name: 'jarvis_session', value: adminCookie.slice('jarvis_session='.length), url: base}]); const p = await page(c); await p.goto(base + '/?mode=platform#theme=stark&view=memory'); await p.getByRole('heading', {name: '记忆神殿', exact: true, level: 1}).waitFor(); const value = await modelQuery(p, 'memory', '我专心时怎么处理手机通知？'); const dialog = await reader(p, value.section, memoryText); await dialog.getByRole('button', {name: '关闭模型问答出处', exact: true}).click(); ownerMemory = patch('memory', ownerMemory, {status: 'forgotten'}); await value.section.getByRole('button', {name: /^核对出处：/}).first().click(); const rejected = p.getByRole('dialog', {name: '模型问答出处', exact: true}); await rejected.getByRole('alert').waitFor(); assert.equal(await rejected.locator('mark').count(), 0); assert.equal(calls.slice(before).some(input => input.text.includes('BROWSER-FOREIGN-SECRET')), false); await p.screenshot({path: join(output, 'memory-forgotten-' + attempt + '.png'), fullPage: true}); return {fakeProtocolModelCalls: calls.length - before, actualModelCalls: 0, forgottenReferenceRejected: true};} finally {await c.close();}
+  });
+  await check(names[2], async () => {
+    const c = await context(), arrived = gate(), release = gate(); try {const p = await room(c), value = await modelQuery(p, 'knowledge', '墨盒在哪里？'); await reader(p, value.section, sourceText); const other = await page(c); await other.goto(base + '/?mode=room'); await other.getByLabel('家庭知识问题', {exact: true}).waitFor(); const details = other.locator('details').filter({has: other.locator('summary').filter({hasText: '成员与房间连接'})}); if (!await details.evaluate((element: HTMLDetailsElement) => element.open)) await details.locator('summary').click(); await other.getByLabel('成员档案ID', {exact: true}).fill(memberB.id); await other.getByLabel('密码或PIN', {exact: true}).fill(pinB);
+      await other.route('**/api/runtime/identity/logout', async (route: any) => {arrived.release(); await release.promise; await route.continue();}); await other.getByRole('button', {name: '验证身份', exact: true}).click(); await Promise.race([arrived.promise, new Promise((_, reject) => setTimeout(() => reject(Error('Identity request did not reach owned gate')), 15000))]);
+      await p.getByText('请先在成员与房间连接中验证本人身份，再查找家庭共享知识。', {exact: true}).waitFor(); assert.equal(await p.getByLabel('知识语义问题', {exact: true}).count(), 0); assert.equal(await p.getByRole('dialog', {name: '模型问答出处', exact: true}).count(), 0); assert.equal(await p.getByText('BROWSER-PROTOCOL-ANSWER：以下仅用于核对界面与出处。', {exact: true}).count(), 0); await p.screenshot({path: join(output, 'shared-clear-before-http-' + attempt + '.png'), fullPage: true}); const loggedIn = other.waitForResponse((response: any) => response.request().method() === 'POST' && response.url().endsWith('/api/runtime/identity/login')); release.release(); assert.equal((await loggedIn).status(), 200); return {clearedBeforeIdentityHttpMutation: true, actualModelCalls: 0};
+    } finally {release.release(); await c.close();}
+  });
+  assert.equal(errors.length, 0); assert.equal(outside.length, 0); assert.ok([...bundles].some(path => /EvidenceAssistantPanel-/.test(path))); assert.equal(results.filter(row => row.status === 'passed').length, selected?.length || names.length);
+} catch (error) {process.exitCode = 1; results.push({name: 'harness-final-audit', status: 'failed', cut: step, diagnostic: safe(error)});}
+finally {
+  try {if (browser) await browser.close(); repository?.close(); if (runtime) await runtime.app.close(); if (directory) {const target = resolve(directory); assert.ok(target.startsWith(resolve(tmpdir()) + sep) && basename(target).startsWith('jarvis-evidence-browser-')); await rm(target, {recursive: true, force: true, maxRetries: 10, retryDelay: 100});} cleanupVerified = true;} catch {process.exitCode = 1;}
+  const report = {at: new Date().toISOString(), attempt, selected, realHttp: true, realBrowser: true, protocolModel: 'fake-only-not-quality-evidence', fakeProtocolModelCalls: calls.length, actualModelCalls: 0, observedBrowserRequestsOutsideLocalApp: outside.length, browserRuntimeErrors: errors.length, bundles: [...bundles], cleanupVerified, productionAccess: false, results}; await mkdir(output, {recursive: true}); await writeFile(join(output, 'attempt-' + attempt + '.json'), JSON.stringify(report, null, 2)); console.log(JSON.stringify(report));
+}

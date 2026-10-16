@@ -1,0 +1,120 @@
+{
+  "kind": "capture-knowledge-memory-priority-selection",
+  "observedAt": "2026-10-15T01:13:18.840795Z",
+  "scope": "本机当前源码核对及下一阶段范围选择，未作现场验收",
+  "priority": [
+    "各终端灵感创意收集整理",
+    "知识库",
+    "个人记忆"
+  ],
+  "existingCapabilities": [
+    "统一收件原话与来源、重复处理和四路归档",
+    "知识原件、OCR与校对、授权来源检索",
+    "本人候选记忆、确认、更正、遗忘及身份隔离"
+  ],
+  "sourceFindings": [
+    {
+      "area": "capture",
+      "finding": "快速记录标题必填；跨刷新待提交恢复缺少持久闭环；收件搜索未覆盖批注标签。",
+      "references": [
+        "apps/web/src/features/operations/research.tsx:23",
+        "apps/web/src/features/operations/research.tsx:25",
+        "apps/web/src/demo/live-operation-commands.ts:6"
+      ]
+    },
+    {
+      "area": "knowledge",
+      "finding": "日常资料入口偏书目校对；页面搜索未贯通对话按问题检索；搜索结果未直接跳到命中原文页段。",
+      "references": [
+        "apps/web/src/features/knowledge/forms.tsx:8",
+        "apps/api/src/runtime/knowledge-runtime.ts:99",
+        "apps/api/src/pi.ts:345",
+        "apps/web/src/features/knowledge/KnowledgePage.tsx:48"
+      ]
+    },
+    {
+      "area": "memory",
+      "finding": "对话工具仅按条数读取记忆；新旧偏好冲突关联不足；房间成员入口缺少主记忆页同等更正及溯源。",
+      "references": [
+        "apps/api/src/pi.ts:345",
+        "apps/api/src/runtime/memory.ts:78",
+        "apps/web/src/features/family/MemoryRuntimeTools.tsx:23"
+      ]
+    }
+  ],
+  "firstDelivery": {
+    "flow": "手机随手记→明确保存状态→电脑整理→按补充关键词找回并打开归档对象",
+    "acceptance": [
+      "只输入原话即可记录，标题和来源自动补齐，分类后补。",
+      "断网重开能恢复待提交内容，回包丢失重试只生成一条正式记录。",
+      "电脑找到同一条记录，批注和标签可用于找回，保留原话与来源，私人内容按身份隔离。"
+    ]
+  },
+  "followingDeliveries": [
+    {
+      "area": "knowledge",
+      "acceptance": [
+        "文字、网页、文件可方便收集和确认归属。",
+        "页面与对话对同一问题能找到同一授权来源。",
+        "点击引用回到具体原文页段并标出版本；改文、撤权后结果正确更新。"
+      ]
+    },
+    {
+      "area": "memory",
+      "acceptance": [
+        "跨端看见候选、确认后在新对话按问题准确召回。",
+        "超过默认列表条数的相关记忆也能找回。",
+        "新旧偏好先核对再替换，更正和遗忘后在新对话生效，成员切换不串内容。"
+      ]
+    }
+  ],
+  "sourceRefs": [
+    {
+      "path": "apps/web/src/features/operations/research.tsx",
+      "sha256": "59347a42a8aacb6d9bf54c0390975ce98b1586a64a4b855c048fec4eb2f4761e",
+      "bytes": 30540
+    },
+    {
+      "path": "apps/web/src/demo/live-operation-commands.ts",
+      "sha256": "cd53dd87ec9d42d595b8253b649b6bac57a166977f3df41603478466751913b5",
+      "bytes": 13632
+    },
+    {
+      "path": "apps/api/src/v1/capture-domains.ts",
+      "sha256": "bd63d01e201f42f14149a162ab9b1c4fa340618a555bac46bef33a7844952e6d",
+      "bytes": 29894
+    },
+    {
+      "path": "apps/api/src/runtime/knowledge-runtime.ts",
+      "sha256": "5a4178680942b08d2720b83f4bd0add49536c0988d233180531ed7f86011fb9d",
+      "bytes": 42538
+    },
+    {
+      "path": "apps/web/src/features/knowledge/KnowledgePage.tsx",
+      "sha256": "2fe0632bf899e749eb711c2df2e99f8c6f808040127ca3b88330f234ce3bba08",
+      "bytes": 61046
+    },
+    {
+      "path": "apps/api/src/pi.ts",
+      "sha256": "ace34596f73fd49a657f05800ddca0fbafd9288e2c3ae20b1b61153376e21d2d",
+      "bytes": 45116
+    },
+    {
+      "path": "apps/api/src/runtime/memory.ts",
+      "sha256": "0205bf1cae85edf1755d46ce6cb6f54e4909f6d6cc4bc5c3f78e25623491a232",
+      "bytes": 18900
+    },
+    {
+      "path": "apps/web/src/features/family/MemoryRuntimeTools.tsx",
+      "sha256": "25e69adcd0efe8c6388d1f7aa81fc7f99bc0eb925f9d09b2b7587817d3a4a74a",
+      "bytes": 7177
+    }
+  ],
+  "implementationPerformed": false,
+  "testsExecuted": false,
+  "servicesStarted": false,
+  "productionDeploymentPerformed": false,
+  "remoteOperationsPerformed": false,
+  "factoryFollowupResumed": false,
+  "userPreference": "可继续补充；未回复时以跨端快速记录闭环为默认首批，不影响其他两块纳入下一阶段。"
+}

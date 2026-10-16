@@ -1,0 +1,272 @@
+{
+  "observedAt": "2026-10-15T08:24:35.931526Z",
+  "codeCommit": "e3f38a7d4e6f53d75074654b3d736bbde73414a8",
+  "independentWorktree": ".jarvis-dev/capture-r34",
+  "originalSourceApplied": true,
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "merged": false,
+  "productionDeployed": false,
+  "productionVersion": "20261012-supervision-r28-2",
+  "factoryAutomation": "paused",
+  "projectModelCalls": 0,
+  "internalAiUsage": {
+    "tokens": null,
+    "price": null,
+    "amount": null,
+    "policy": "记录已知值，未知分列，不设消费上限"
+  },
+  "kind": "multimodal-inbox-delivery-validation",
+  "scope": "文字、链接、录音、文档与图片原件收集；保存、草稿恢复、回听、下载、分流和出处；不冒解析/转写完成",
+  "sourceFiles": [
+    {
+      "path": "apps/api/src/v1/capture-domains.ts",
+      "beforeSHA256": "bd63d01e201f42f14149a162ab9b1c4fa340618a555bac46bef33a7844952e6d",
+      "sha256": "b4905fa008dcdfd1d22b203139a72d847564d3de8332d7950f7f3f567293839c",
+      "bytes": 30398
+    },
+    {
+      "path": "apps/api/src/v1/inbox-capture-content.ts",
+      "beforeSHA256": null,
+      "sha256": "e5c54772ccc2d3a64f3fd638c54560964b6bbde4e2f4244e08c994fd1f1f3d26",
+      "bytes": 3759
+    },
+    {
+      "path": "apps/api/src/v1/inbox-materials.ts",
+      "beforeSHA256": null,
+      "sha256": "28e8c6d5d07b42bcba1fbe8873caa74981ee35e309e93cbcd3b1e0ab46605797",
+      "bytes": 16532
+    },
+    {
+      "path": "apps/api/src/v1/routes.ts",
+      "beforeSHA256": "5a0eb090fb903cc369943afba252c18b02a940eb686f80f503678b6d67323faa",
+      "sha256": "4c89e18f9961ee5a549ef3beaabfdfdd488934ffbb20cd03a10333dbd4e76f6e",
+      "bytes": 11787
+    },
+    {
+      "path": "apps/api/src/v1/types.ts",
+      "beforeSHA256": "b116df26782a964bdbd5e910dd449c12c828c052e6a3fc3bef098b2ef128bb47",
+      "sha256": "90b2aef27aed988e54a376c85dff80d885ef1948859aabcb395fb43dc2e068ea",
+      "bytes": 2121
+    },
+    {
+      "path": "apps/api/test/inbox-material-capture.test.ts",
+      "beforeSHA256": null,
+      "sha256": "ef914ec8dd68926d0ebe972c359404450a9dd7d328566d1c3fa2931a04661a52",
+      "bytes": 9633
+    },
+    {
+      "path": "apps/api/test/inbox-materials.test.ts",
+      "beforeSHA256": null,
+      "sha256": "9c2f3ffe6c987df42c6bfe846e87b6d3065f9621b3e8ee63a6935f40861b5571",
+      "bytes": 16042
+    },
+    {
+      "path": "apps/web/src/demo/context.tsx",
+      "beforeSHA256": "caa3f5450420579dd4ec3fc0ad0bd08b90eeebd6a7a91c31f5c9b44cb55e74b8",
+      "sha256": "6ac613527724949dd1bc74ce333e777a0f4b6e06a60ea64d2ea0aaa3b91e32dd",
+      "bytes": 16256
+    },
+    {
+      "path": "apps/web/src/demo/live-operation-commands.ts",
+      "beforeSHA256": "b152504b37ca53224191404c8d60170a6e9a5625caa0adbe791d3af14ad4f7c0",
+      "sha256": "7a9a06475815c7a07aa2201d8bffd5d46ca7aa88f0bf9c107203ec37ef5f61c7",
+      "bytes": 15829
+    },
+    {
+      "path": "apps/web/src/features/operations/CaptureMaterials.tsx",
+      "beforeSHA256": null,
+      "sha256": "fa3f57ebb4f3c526da47b549171078da8e2e4914cd95b37ef382b20915036a56",
+      "bytes": 15219
+    },
+    {
+      "path": "apps/web/src/features/operations/InboxQuickCapture.tsx",
+      "beforeSHA256": "20cb367a02813879a5c02a2b630e77a716fd6202b5ab3376da083d0bfcfb549a",
+      "sha256": "a362dfcb19ed6d3dbcce4720e0b0b7a57144257251e1256474b6d2d2c3cc36e6",
+      "bytes": 14840
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-capture.css",
+      "beforeSHA256": "892c0b211f5081da39383be62d84f96b51a05db8147c9ef2fdc0691337c94826",
+      "sha256": "c24700150fea068421e2ae96728e8b4fd8dc4fc705944d0ac35276ef8d69b96e",
+      "bytes": 2534
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-draft.ts",
+      "beforeSHA256": "37d10dcbe6887afa1b34a139e044f796741bbe345c5d61d07fc71c588e5ea4a3",
+      "sha256": "86e8f9f51f89645156da4baee657436cdc57a6773c8b20e2c4bb5e569f3cc93c",
+      "bytes": 7852
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-material-client.ts",
+      "beforeSHA256": null,
+      "sha256": "b9ef1ff8bead5ea24322a5a51ff51be3a49e8e79adc44ff11feb0be0520fe369",
+      "bytes": 2128
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-material-store.ts",
+      "beforeSHA256": null,
+      "sha256": "7fb4c8d93bf0f3bfdd15f07ddcdc755d858c90674b75183d1f28d1e8d5753a72",
+      "bytes": 3999
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-search.ts",
+      "beforeSHA256": "8b47e41240256542c9c9e9aabfa36816022efcf270965621b9193e4747374ca2",
+      "sha256": "79a319911dbfe99239b461def3d8d86d61e2ee689d8d46c8e8ee36d1ef2fbf1c",
+      "bytes": 1073
+    },
+    {
+      "path": "apps/web/src/features/operations/research.tsx",
+      "beforeSHA256": "c91096219177429d9b73000148bfdfb319ed373a42164ab3d14225d12fb8ec50",
+      "sha256": "cfd08f079a4e56a0c9aead748cfc25657227d2e8dc89de4d5658b2435887d309",
+      "bytes": 33522
+    },
+    {
+      "path": "docs/openapi-v1-planned.json",
+      "beforeSHA256": "3b793390df18f129104ab3c245aa2327f6d9dbb07af45700676b5902feeab24f",
+      "sha256": "6ed5374b497dadf67f5dfb1b04f66509e94f6a04c585988ce765cff76467bd00",
+      "bytes": 1913952
+    },
+    {
+      "path": "scripts/qa-inbox-material-session.ts",
+      "beforeSHA256": null,
+      "sha256": "f0211dc6d87b673df5518286ab759897b61f87b2e8da410f2b0c555c7539664f",
+      "bytes": 14601
+    },
+    {
+      "path": "scripts/qa-inbox-materials.ts",
+      "beforeSHA256": null,
+      "sha256": "54a796f7054c4e19956dccb0eaa3f346adc83796c38946da44cf45033cf3308d",
+      "bytes": 12052
+    },
+    {
+      "path": "scripts/test-inbox-material-client.cjs",
+      "beforeSHA256": null,
+      "sha256": "99d5d599d6e6c9bf0260f25819643e1820a4ebe8f8eb4dd85c42ddd0f071e72e",
+      "bytes": 6564
+    }
+  ],
+  "implementation": {
+    "inputs": [
+      "文字",
+      "HTTP(S)来源链接",
+      "显式麦克风录音或音频文件",
+      "拖放或选择文档/图片"
+    ],
+    "webLimits": {
+      "attachments": 5,
+      "fileMiB": 25,
+      "recordingMinutes": 10
+    },
+    "serverMaxFileMiB": 32,
+    "databaseSchemaChanged": false,
+    "plainTextSearch": true,
+    "automaticUrlFetch": false,
+    "automaticAsr": false,
+    "pdfDocxParsing": false,
+    "imageOcr": false
+  },
+  "validation": {
+    "newBackendHttpGroups": 4,
+    "newCaptureIntegrationGroups": 2,
+    "clientTargetedChecks": 6,
+    "regression": {
+      "draft": 9,
+      "command": 18,
+      "captureDomain": 15,
+      "captureHttp": 2
+    },
+    "browserPrimary": {
+      "at": "2026-10-15T08:16:43.241Z",
+      "attempt": "1",
+      "realHttp": true,
+      "temporarySqlite": true,
+      "syntheticMicrophone": true,
+      "actualMediaRecorder": true,
+      "physicalMicrophoneVerified": false,
+      "productionAccess": false,
+      "modelCalls": 0,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0,
+      "cleanupVerified": true,
+      "failedCode": null,
+      "results": [
+        {
+          "name": "link",
+          "status": "passed"
+        },
+        {
+          "name": "document",
+          "status": "passed"
+        },
+        {
+          "name": "recording",
+          "status": "passed"
+        }
+      ]
+    },
+    "browserSession": {
+      "passed": [
+        {
+          "name": "recorder-start-failure",
+          "status": "passed",
+          "evidence": {
+            "forcedStartExceptions": 1,
+            "realMicrophoneStreams": 2,
+            "firstFailureTracksEnded": true,
+            "failedStartTimerCleared": true,
+            "closeAfterFailureCompleted": true,
+            "retryReachedRecording": true,
+            "closeDuringRetryCompleted": true,
+            "allTracksEnded": true
+          }
+        },
+        {
+          "name": "cross-tab-clear",
+          "status": "passed",
+          "evidence": {
+            "actualRecordingBeforeLogout": true,
+            "queuedIdbOpenHeld": 1,
+            "releaseOccurredAfterClear": true,
+            "oldBlobReappeared": false,
+            "tracksStoppedOnOtherTab": true,
+            "reloginAttachmentCount": 0,
+            "secondaryReloadAttachmentCount": 0
+          }
+        }
+      ],
+      "failedAttemptsPreserved": [
+        "attempt-1.json",
+        "attempt-2.json"
+      ],
+      "probeFailures": "两次旧IDB事件拦截探针未触发超时；均未执行退出断言，不冒产品失败；修正为真实success事件捕获后仅补失败项",
+      "cleanupVerified": true
+    },
+    "builds": {
+      "frontendAndBackend": 0,
+      "finalFrontend": 0,
+      "finalBackend": 0,
+      "dependencies": "使用已有本机依赖，未做全新依赖安装"
+    }
+  },
+  "corrections": [
+    "经验再次合并保留inboxOrigins；新增真实数据库链例通过",
+    "纯空白附文与链接/附件一起提交归为空串，有实际文字时逐字保留",
+    "MP4品牌盒检查有界，文件名拒绝孤立代理字符",
+    "跨窗口共享失效epoch拒绝退出后迟到Blob写入",
+    "MediaRecorder.start异常清轨道、计时器与等待状态"
+  ],
+  "testPreparationFailures": [
+    "新增出处链测试首fixture缺audit表，改用真实Store初始化后只补该项",
+    "旧HTTP权限回归偶发本机fetch ENOBUFS，临时fixtures清理后串行只补该项通过；未归因为产品或变更OS状态",
+    "首轮超限HTTP发送收到连接重置，改真实Content-Length超限探针确认413；未重其它已过组"
+  ],
+  "remaining": [
+    "录音转写和时间定位",
+    "PDF/DOCX正文解析与图片OCR",
+    "网页正文提取与授权来源管理",
+    "服务器原件保留、删除和未引用上传清理",
+    "完整离线重新打开与跨浏览器未提交草稿同步",
+    "实体手机/真实麦克风/房间终端及112正式发布验收"
+  ],
+  "screenshotScope": "仅合成验收内容；真实浏览器录音使用合成麦克风，不声称实体设备通过"
+}

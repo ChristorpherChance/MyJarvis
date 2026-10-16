@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-16T01:28:16.370Z",
+  "scope": "Current primary protected read-only feature and peer observation; temporary maintenance login revoked by helper",
+  "businessRecordsCreated": false,
+  "modelCalls": 0,
+  "physicalDevicesTested": false,
+  "health": {
+    "build": "20261016-capture-complete-r35",
+    "status": "ok"
+  },
+  "offline": {
+    "available": true,
+    "revision": 0,
+    "encryptedPackageRead": false
+  },
+  "modelScenarios": [
+    {
+      "domain": "knowledge",
+      "available": true,
+      "configured": true,
+      "model": "CPA / gpt-6.1-sol",
+      "provider": "superopen"
+    },
+    {
+      "domain": "memory",
+      "available": true,
+      "configured": true,
+      "model": "CPA / gpt-6.1-sol",
+      "provider": "superopen"
+    }
+  ],
+  "peers": [
+    {
+      "nodeId": "101",
+      "status": "reachable",
+      "role": "standby",
+      "build": "20261016-capture-complete-r35",
+      "businessHealthy": false,
+      "dependenciesReady": true,
+      "snapshot": {
+        "build": "20261016-capture-complete-r35",
+        "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+        "snapshotAt": "2026-10-16T00:51:03.423Z"
+      },
+      "readiness": {
+        "nodeId": "101",
+        "recoveryMaterialsReady": false,
+        "snapshotLagSec": 2233,
+        "automaticTakeover": false,
+        "canTakeover": false,
+        "reasons": [
+          "SNAPSHOT_TOO_OLD_OR_FUTURE"
+        ],
+        "activationBlocker": "OLD_PRIMARY_MUST_BE_STOPPED_AND_FENCED",
+        "note": "已核验恢复材料不等于已隔离旧主。此接口不启动服务，不切换角色或入口。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-15T14:55:55.543Z",
+  "attempt": "2",
+  "expectedManagerBundle": "MaterialManager-DNUJimEu.js",
+  "realHttp": true,
+  "temporaryApp": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "loadedBundles": [
+    "/assets/index-L76pDq3c.js",
+    "/assets/DemoApp-DKan4Dm5.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/NotificationPreferencesPanel-CtldU3b-.js",
+    "/assets/MaterialManager-DNUJimEu.js",
+    "/assets/OperationsPage-Ce2IrBUa.js",
+    "/themes/stark.js"
+  ],
+  "cleanupVerified": true,
+  "rawSha256": "65ec17ff92132b424e9e29a546659c3865d33c7495607ae5df93269d783986fd",
+  "rawBytes": 3490,
+  "results": [
+    {
+      "name": "lifecycle-retention-preview-delete",
+      "status": "passed",
+      "evidence": {
+        "trashLostReceiptSameCommand": true,
+        "retentionLock": true,
+        "previewOnly": true,
+        "restore": true,
+        "explicitPermanentDelete": true,
+        "originalFileAbsent": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "stored-pdf-book-reuse-recovery",
+      "status": "failed",
+      "step": "reuse/real-pdf-and-material-candidate"
+    },
+    {
+      "name": "referenced-original-delete-blocked",
+      "status": "failed",
+      "step": "references/create-business-reference"
+    },
+    {
+      "name": "manager-shared-session-late-401",
+      "status": "passed",
+      "evidence": {
+        "sharedEpochHidesListAndDetail": true,
+        "actualOld401": true,
+        "newSessionStillAuthenticated": true,
+        "newDraftPreserved": true,
+        "spuriousAuthRequiredEvents": 0
+      }
+    },
+    {
+      "name": "setup-or-final-audit",
+      "status": "failed",
+      "step": "session/new-login-new-draft-and-old-401"
+    }
+  ],
+  "diagnosticBoundary": "原始失败输出在本机保留；公开只列阶段和结果，失败原因见总验收报告。"
+}

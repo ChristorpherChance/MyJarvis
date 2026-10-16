@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "kind": "evidence-assistant-independent-final-source-review",
+  "scope": "Nonauthor static review of the ephemeral Pi/evidence retrieval implementation and the two narrow corrections. Source assertions and author-executed safe artifacts were read. This reviewer did not run tests, typecheck/build, browser, model requests, SSH or production actions.",
+  "originalFindings": { "path": "artifacts/capture-release-r34/evidence-assistant-source-findings.json", "sha256": "2f16379c43a7916d2c25cdf17ff6e1be16264678216c94fac23a9df6e7acea17" },
+  "status": "limited static pass; both reported P1 findings closed; no remaining P1 found in reviewed source scope",
+  "reviewedFinalSources": [
+    { "path": "apps/api/src/pi.ts", "sha256": "1c386a77208249965e57f18a7b4bc5e5cfea82987baad99acae8e695b765c453" },
+    { "path": "apps/api/src/runtime/governance.ts", "sha256": "039b006e1274d3f15de3f8e347dc592ee95a755ea162b112ee1dba57141abbc4" },
+    { "path": "apps/api/src/runtime/pi-usage.ts", "sha256": "359d1b4cefd7822e8dd48a4978ccc6ea4a0a6545530be97104e24df479f23d24" },
+    { "path": "apps/api/src/runtime/usage-ledger.ts", "sha256": "ca504d091c3ebaa8868ad74e32914161d8a56465143c45c8c4063cc88a18501e" },
+    { "path": "apps/api/src/runtime/evidence-assistant.ts", "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d" },
+    { "path": "apps/api/src/runtime/evidence-corpus.ts", "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2" },
+    { "path": "apps/api/test/evidence-ephemeral-boundaries.test.ts", "sha256": "ee83c80396cb5ab60e0451791164c7ee366e44032542f7d6dd6e297cf4de60f5" }
+  ],
+  "closedFindings": [
+    {
+      "id": "EVIDENCE-RECORD-ONLY-001",
+      "sourceClosure": "recordUsage still inserts the native receipt and updates known/unknown totals, but only usage.recordOnly===true bypasses the post-usage financial exception. Existing pause/concurrency checks and ordinary-run preflight/post-usage budget behavior remain. NativeUsageCollector preserves trusted Pi metadata, so evidence-model usage reaches this guard with recordOnly=true.",
+      "testAssertionsRead": "The new real-Store fixture records null/unavailable price and cost above the configured daily amount without throwing, preserves known amount/unknown count/token totals, and separately asserts concurrency, pause, ordinary preflight and ordinary post-usage rejection. Actual receipts remain recorded even on ordinary rejection."
+    },
+    {
+      "id": "EVIDENCE-SINGLE-TURN-002",
+      "sourceClosure": "Only ephemeral sessions override the SDK's public agent.finishTurn to return action:end. The installed SDK checks that decision before selecting a next model turn. A final assistant containing any toolCall returns failed with empty text before response text can be used. Empty tools, cacheWarming off, retry/compaction off, 90-second deadline and 4096-token cap remain.",
+      "testAssertionsRead": "The new native-SDK fixture replaces fetch entirely with a synthetic protocol response containing both plausible JSON text and an unknown tool call. It asserts exactly one model-endpoint request, zero executable tools/business reads/session writes, failed empty output, one native usage receipt with unknown price, empty session directory and zero remaining active runs. No real provider request is made."
+    }
+  ],
+  "authorEvidenceRead": [
+    { "path": "artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt", "sha256": "45ba19bb708c4e5eef6f8d1c7c0ae3c6cb1ddea4519b7c70d389f48760f993f0", "result": "New two targeted groups passed 2/2 on first execution; no prior groups rerun." },
+    { "path": "artifacts/capture-r35/semantic-boundary-freeze.json", "sha256": "044211817689a24f345c63a8eca729e31aab99374c804c14ddca34fd3edc1a8d", "result": "Author reports API typecheck and API build each once, exit 0; compiled contract4 prepare once, zero model calls. Reviewed final source hashes match." },
+    { "path": "artifacts/evidence-assistant-quality-r35/contract-4.json", "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f", "result": "Prepared-not-executed contract binds final Pi/governance/usage/corpus/router sources. Three fixed synthetic queries, at most nine total model requests and three per query, no retries, bounded time/output and no spending cap; real semantic quality execution remains separate." }
+  ],
+  "otherReviewedBoundaries": [
+    "Present member-cookie contexts cannot downgrade to administrator fallback. Current identity authorization, privacy setting and frozen source references are checked across awaited work; local-only requirements are enforced again by Pi with the frozen selection.",
+    "Only the current actor's active private me-profile memories are retrieved. Knowledge documents remain bound to current authorized sources, exact book/source revisions, full-text hashes and literal quote offsets.",
+    "Prompts and model transcripts use memory-only sessions and no business tools/skills/context resources; usage metadata contains counts/identity/model references rather than prompt or evidence text.",
+    "Reference resolution uses opaque session-bound cached IDs with expiry, then reopens current authorized content. It does not accept arbitrary client filesystem paths or URL targets.",
+    "The separate model support check is a bounded interpretation guard, not independent proof of factual truth. Real-model quality and broader provider behavior are not established by the fake protocol fixture or this static review."
+  ],
+  "notClaimed": ["Real semantic quality passed", "Independent execution of author tests/build", "Deployment or production acceptance", "Broad ASR or room microphone acceptance"],
+  "cost": { "projectModelCallsByReviewer": 0, "knownAmountUSD": null, "internalModelAmountAndTokens": "unknown; recorded separately, no spending cap" }
+}

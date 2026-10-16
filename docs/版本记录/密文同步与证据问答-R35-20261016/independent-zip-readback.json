@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-local-release-zip-readback",
+  "at": "2026-10-16T00:35:49.765342+00:00",
+  "status": "passed",
+  "archiveVersion": "20261016-capture-complete-r35",
+  "sourceCommit": "f38416bddb476f9c01eec5ca87be3e8da74e94f4",
+  "productionAccess": false,
+  "buildPerformed": false,
+  "packagePerformed": false,
+  "testsRerun": false,
+  "remoteAccess": false,
+  "checks": [
+    "no-packaging-failure-marker",
+    "archive-sha-matches-completed-package",
+    "external-manifest-sha-matches-completed-package",
+    "adjacent-archive-sha-sidecar",
+    "manifest-release-build-source-identities",
+    "manifest-honest-candidate-dependency-boundaries",
+    "unique-expected-payload-count",
+    "exact-unique-zip-inventory",
+    "all-zip-crcs-valid",
+    "inside-manifest-identical-to-external",
+    "only-generated-release-readme-outside-source-and-dist",
+    "manifest-unix-mode",
+    "source-and-compiled-runtime-build-exact",
+    "offline-and-new-runtime-install-qa-recovery-deploy-sources-present",
+    "frozen-install-smoke-script-exact",
+    "offline-exact-five-public-resources",
+    "offline-version-binds-entry-hashes",
+    "offline-public-resource-hash",
+    "offline-public-resource-hash",
+    "offline-public-resource-hash",
+    "offline-public-resource-hash",
+    "offline-public-resource-hash",
+    "offline-worker-binds-exact-manifest",
+    "offline-html-asset-references-in-precache",
+    "release-readme-source-runtime-and-installation-boundaries-read-back"
+  ],
+  "archiveSha256": "df2ca1476a385c4dbb7a449452a3f2beb9f69912eea9c225f7d5a5405e8a65c6",
+  "manifestSha256": "72f97aee9a7d0f91b76ff439ff1d0c2d7b27587877ac5f00d6e384311c09bb39",
+  "runtimeBuild": "20261016-capture-complete-r35",
+  "payloadFiles": 2179,
+  "zipEntries": 2180,
+  "committedSourceFilesVerified": 1749,
+  "compiledFilesVerified": 429,
+  "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+  "offlineResources": [
+    {
+      "path": "/assets/client-OI5hagxP.js",
+      "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6"
+    },
+    {
+      "path": "/assets/offline-vault-g54LtOEF.js",
+      "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94"
+    },
+    {
+      "path": "/assets/offlineCapture-CTF5MCW4.css",
+      "sha256": "81ca3809012e895c9c7ecbf96fa695ca1e0485e917be83737e3d0ef9fbe655a8"
+    },
+    {
+      "path": "/assets/offlineCapture-Dp37MnGd.js",
+      "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851"
+    },
+    {
+      "path": "/offline-capture.html",
+      "sha256": "d8bad6e8ab79f60fe4928e89adab1126a2bfaef9dae556cc2160bcecf1b10920"
+    }
+  ],
+  "requiredSourceFingerprints": {
+    "apps/web/offline-capture.html": "93371974e6a547f276779f935c562e8043a199a21663ea10349349a393e2938b",
+    "apps/web/build/offline-shell.ts": "9aba555d84c38f59311c2ae38d7dd813200ed56f7317f0d589f030368da9f1ed",
+    "apps/web/src/features/offline/OfflineDraftSync.tsx": "d49364d75e22dc3f3a56b533714ccd5f79ff46e569c2f3ede73db1ef2917d49c",
+    "apps/api/src/runtime/offline-draft-sync.ts": "a136eeaa39fea798b8a73bad61c501abbe9df741837675b378bbfbb8f3be0a96",
+    "apps/api/src/runtime/evidence-assistant.ts": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d",
+    "apps/api/src/runtime/evidence-corpus.ts": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2",
+    "apps/api/dist/runtime/offline-draft-sync.js": "50fe765849ca5c15ebdc067a853337f9c4e68e494909423f5685465f13754581",
+    "apps/api/dist/runtime/evidence-assistant.js": "325fde4981f49aeda671e4f80cec16d5758830d3cb308d4a5040702a434f45ba",
+    "apps/api/dist/runtime/evidence-corpus.js": "931831fc7c9c84f334b3d9275400996e3946d9275943a5baaee296a6b947c57b",
+    "scripts/qa-capture-linux-install.ts": "7214192b6cce3354e0abc0f84d77c9f1b874021b8d428b279fac466dd830707b",
+    "scripts/capture-release-recovery.py": "1f74cb9fea17d5f3a964675fc2909e79bbf5d00b65a59146af9eb1e86d128179",
+    "scripts/capture-managed-release.py": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504",
+    "scripts/test-capture-release-recovery.py": "3cc2c31d9de425dbc3ccf4cd246c7bff1970aa550bef74c959662dc99eb181c3",
+    "scripts/qa-offline-draft-sync.ts": "9ff06bfeb97d470054a3286844d64df5e012d52fcad1a95c8a8479e919a10ea0",
+    "docs/灵感知识记忆使用说明.md": "c3df056afcfbcc208480265d6b73362e4133b88f3ce70f2cff6b92ec1cbabbbc"
+  },
+  "allPayloadSizesHashesAndUnixModesVerified": true,
+  "allPackagedTrackedSourceBytesMatchSelectedCommit": true,
+  "dependencyTreesIncluded": false,
+  "buildProvenanceBoundary": "Source bytes and declared runtime identities verified; this is not a reproducible build proof or new runtime test.",
+  "checksSummary": {
+    "assertions": 14420,
+    "pathByteModeAndSourceAssertions": "Every entry verified; repeated per-file labels omitted from public summary"
+  },
+  "boundaries": [
+    "ZIP read only; no extraction, product build, packaging, tests, service start or remote operation",
+    "Checks file admission and source identity, not private-content recognition inside admitted text/images",
+    "No Linux installation, ASR, model, browser or production acceptance is asserted"
+  ],
+  "releaseReadmeIdentityAndBoundaryVerified": true
+}

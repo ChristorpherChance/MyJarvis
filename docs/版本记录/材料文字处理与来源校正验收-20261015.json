@@ -1,0 +1,324 @@
+{
+  "kind": "inbox-material-text-processing-and-provenance-validation",
+  "observedAt": "2026-10-15T12:20:43.222465+00:00",
+  "codeCommit": "33f7eb8a09fd75f5b85fbf67118dfbcfbc010283",
+  "baselineCommit": "d6ea66e1f695ed559496a33634a1d088f5746dee",
+  "independentWorktree": ".jarvis-dev/capture-r34",
+  "originalSourceApplied": true,
+  "sourceFiles": [
+    {
+      "path": "apps/api/resources/inbox-runtime/docx_worker.py",
+      "beforeSHA256": null,
+      "sha256": "45b5aaa467155fa432c5f2073c9f9c9c8bea2f22db42bc8a8ae985f6730c25cc",
+      "bytes": 5828
+    },
+    {
+      "path": "apps/api/resources/inbox-runtime/html_worker.py",
+      "beforeSHA256": null,
+      "sha256": "b04b0435e5d7e43ab2e4fe5b7cb1fe02519627a9362a8047df38aacaa4c1a602",
+      "bytes": 5080
+    },
+    {
+      "path": "apps/api/src/app.ts",
+      "beforeSHA256": "806339a553b19ea7d07909ab72161ea6dc7651449b8f9b082ace20e33aa885ad",
+      "sha256": "9dda6e824ec14d8de072ba613f17b2d9884e1131bb3be14193f2b3d55a87dbd0",
+      "bytes": 51592
+    },
+    {
+      "path": "apps/api/src/runtime/inbox-document-parser.ts",
+      "beforeSHA256": null,
+      "sha256": "70357726a51e70b4a3add5b0f234c7656e6e6cfe8b8b32a44347751d1d542e41",
+      "bytes": 12394
+    },
+    {
+      "path": "apps/api/src/runtime/voice-adapter.ts",
+      "beforeSHA256": "3807c2cc144d7b6c9db712d08de10998d649a8cb6bcafc0debdea983128da185",
+      "sha256": "8f8ecbb4ab7c4f56004b91ed2870fe67b325723ceff0da7ecb5705d73df74c6f",
+      "bytes": 14159
+    },
+    {
+      "path": "apps/api/src/runtime/voice.ts",
+      "beforeSHA256": "0a9c9a374db9fff013f0cfe24e148666a1714ed62b2cbcf9c45d1a57f3cf3e37",
+      "sha256": "a96f1418cc859f12e1c1bd3d5a9542764030865c50fa0bd4bfae50cd9f71f91c",
+      "bytes": 53501
+    },
+    {
+      "path": "apps/api/src/v1/inbox-material-processing.ts",
+      "beforeSHA256": null,
+      "sha256": "80a3bf9d02db832b7ba6472f118cacfeaab52f316dd9a1c81a8b6eb100845698",
+      "bytes": 17565
+    },
+    {
+      "path": "apps/api/src/v1/inbox-materials.ts",
+      "beforeSHA256": "28e8c6d5d07b42bcba1fbe8873caa74981ee35e309e93cbcd3b1e0ab46605797",
+      "sha256": "900fea91967548c24a63c7fe1b6ac800519f460399f628887a0b4125e9f89707",
+      "bytes": 16905
+    },
+    {
+      "path": "apps/api/src/v1/routes.ts",
+      "beforeSHA256": "4c89e18f9961ee5a549ef3beaabfdfdd488934ffbb20cd03a10333dbd4e76f6e",
+      "sha256": "d0e1b192ad0b80f0c152b51b392a1d6f0fa6f4d6fd611400a2aa924c380c9c2c",
+      "bytes": 11930
+    },
+    {
+      "path": "apps/api/test/inbox-document-parser.test.ts",
+      "beforeSHA256": null,
+      "sha256": "c6f47554b91ffd7a93f7bbc484627546f2f72e95baecef93a6b8bac17679f279",
+      "bytes": 13483
+    },
+    {
+      "path": "apps/api/test/inbox-material-processing.test.ts",
+      "beforeSHA256": null,
+      "sha256": "8039413a491b292d2fd61e83e1890e01b32bf5517b87aef56050e69812927e55",
+      "bytes": 15448
+    },
+    {
+      "path": "apps/api/test/voice-material-transcription.test.ts",
+      "beforeSHA256": null,
+      "sha256": "3b7d4b31da763b758a02a68d539d831975f176ec489e782a161210c98dab7c08",
+      "bytes": 13172
+    },
+    {
+      "path": "apps/web/src/demo/context.tsx",
+      "beforeSHA256": "6ac613527724949dd1bc74ce333e777a0f4b6e06a60ea64d2ea0aaa3b91e32dd",
+      "sha256": "19b3ec179ee763d4db13dd76d6a64c51f7a356f04802879fdb7e0e98ddd7198c",
+      "bytes": 17244
+    },
+    {
+      "path": "apps/web/src/features/operations/CaptureMaterials.tsx",
+      "beforeSHA256": "fa3f57ebb4f3c526da47b549171078da8e2e4914cd95b37ef382b20915036a56",
+      "sha256": "554b806aec31f1b614c263e35a2e9ea69dfa07277883d3f6aa69d58982397db2",
+      "bytes": 20170
+    },
+    {
+      "path": "apps/web/src/features/operations/InboxQuickCapture.tsx",
+      "beforeSHA256": "a362dfcb19ed6d3dbcce4720e0b0b7a57144257251e1256474b6d2d2c3cc36e6",
+      "sha256": "abb4cf9e71a6d9b5159f113deb03586bb66b6e9646a511af36095da2575f13b8",
+      "bytes": 15334
+    },
+    {
+      "path": "apps/web/src/features/operations/MaterialProcessing.tsx",
+      "beforeSHA256": null,
+      "sha256": "92f0cae1300dbcde1c604e4caa9172a51ef2bb9d16968562bc27b61290971b98",
+      "bytes": 12018
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-capture.css",
+      "beforeSHA256": "c24700150fea068421e2ae96728e8b4fd8dc4fc705944d0ac35276ef8d69b96e",
+      "sha256": "60768ed1ff93b26283c425bff241b8112606a03a684b19ead0e04ecd21f9c0f8",
+      "bytes": 3386
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-material-client.ts",
+      "beforeSHA256": "b9ef1ff8bead5ea24322a5a51ff51be3a49e8e79adc44ff11feb0be0520fe369",
+      "sha256": "6b01e9208a2728009e2ac65b4edbeabd51356b7477b68497d3f7bbfff81fef55",
+      "bytes": 4218
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-material-intents.ts",
+      "beforeSHA256": null,
+      "sha256": "b54dd23ab42c68a313d674baa29e70420a7f43e0c7af93a3a53d9bf6d10b273d",
+      "bytes": 4183
+    },
+    {
+      "path": "apps/web/src/features/operations/inbox-material-store.ts",
+      "beforeSHA256": "7fb4c8d93bf0f3bfdd15f07ddcdc755d858c90674b75183d1f28d1e8d5753a72",
+      "sha256": "cde38e3b3a492b1f971f8f43b60eb7d6b88410e7636df8c63619b61619aa9353",
+      "bytes": 4123
+    },
+    {
+      "path": "apps/web/src/features/operations/research.tsx",
+      "beforeSHA256": "cfd08f079a4e56a0c9aead748cfc25657227d2e8dc89de4d5658b2435887d309",
+      "sha256": "dd5d9a5381e8659d9d667e0876f38cd6da0b9a35b5aecbde2e5f1d0f2a9d615a",
+      "bytes": 33886
+    },
+    {
+      "path": "docs/openapi-v1-planned.json",
+      "beforeSHA256": "6ed5374b497dadf67f5dfb1b04f66509e94f6a04c585988ce765cff76467bd00",
+      "sha256": "0daa6a072cd410bd4b08663f4a83011ede97857699f6fdbad6f349193f2d8cac",
+      "bytes": 1928151
+    },
+    {
+      "path": "scripts/qa-inbox-processing-browser.ts",
+      "beforeSHA256": null,
+      "sha256": "aa2d086d37e4146c3cf6ec03ac47660c327ae486ab3cbb7ed9dbbed624f767ab",
+      "bytes": 25743
+    },
+    {
+      "path": "scripts/test-inbox-material-processing-client.cjs",
+      "beforeSHA256": null,
+      "sha256": "2c362e99d4d8aa93bd6a538b6144a591801abccdadf59610684d244b91616793",
+      "bytes": 6757
+    }
+  ],
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "merged": false,
+  "productionDeployed": false,
+  "productionVersion": "20261012-supervision-r28-2",
+  "factoryAutomation": "paused",
+  "projectModelCalls": 0,
+  "internalAiUsage": {
+    "tokens": null,
+    "price": null,
+    "amount": null,
+    "policy": "已知记录，未知分列，不设消费上限；测试中的供应商用量及金额是夹具值，不作为真实费用"
+  },
+  "implementation": [
+    "新增显式文字提取、录音转写、网页正文提取和人工校正；保存、提取、核对、知识发布与记忆确认分别处理。",
+    "原件不可覆盖并按SHA校验；PDF页码、DOCX/网页段落与实际引擎分段保留来源；机器提取与人工校正文分别保存。",
+    "DOCX使用受限本机ZIP/XML解析；PDF/图片复用已有本地PyMuPDF/RapidOCR；静态HTML通过本机解析且不运行脚本或加载资源。",
+    "录音桥接复用当前ASR配置、隐私选择、身份、实际解码时长和用量记录；无引擎不编造转写，无真实分段不编造时间。",
+    "网页只在明确点击后读取既有连接器允许的来源；先保存HTML/纯文本原始字节，再提取正文，解析失败仍可下载原件。",
+    "处理前持久固定命令编号；相同编号只确认同一次结果；刷新不启动识别；失败或重启中断后须明确新一轮处理。",
+    "人工校正更新待整理记录的派生检索文字，保留原提取；已接受/已发布快照不自动改写，不自动加入知识库或长期记忆。",
+    "跨标签共享会话版本阻止旧成功或401清理新登录草稿；手机默认显示页/段/可读录音时间，技术来源折叠查看。"
+  ],
+  "validation": {
+    "documentParser": {
+      "uniqueGroupsPassed": 6,
+      "firstRun": {
+        "groups": 5,
+        "passed": 5,
+        "failed": 0,
+        "durationMs": 16236.1133
+      },
+      "newCancellationRunnerGroup": {
+        "groups": 1,
+        "passed": 1,
+        "durationMs": 7076.4545
+      },
+      "finalAllSixRun": false,
+      "actualLocalOcr": true,
+      "inputs": "自行生成的真实DOCX、2页PDF、PNG及扫描PDF；恶意ZIP/XML/非UTF8 HTML等反例",
+      "runtime": "本机既有PyMuPDF1.26.7、RapidOCR1.4.4和本地ONNX模型，CPU2线程",
+      "rawOutput": "仅当时工具stdout，没有独立raw报告或哈希"
+    },
+    "audioBridge": {
+      "uniqueGroupsPassed": 7,
+      "finalAllSevenRun": false,
+      "executedGroupOccurrences": 9,
+      "passedOccurrences": 8,
+      "failedOccurrences": 1,
+      "actualRecognition": false,
+      "method": "随机本机HTTP假引擎、自造PCM WAV、临时SQLite",
+      "failureAndRepair": "首轮3过1失败，早期关闭触发Undici流异常；同步夹具后只补失败项，随后预编码有界multipart并增加立即关闭反例，定向复核成功传输；新增空语音和实际时长边界通过。",
+      "rawOutput": "仅当时工具stdout，无独立raw/TAP/JSON报告；文本/分段/用量/金额均为夹具值"
+    },
+    "processingHttp": {
+      "uniqueGroupsPassed": 6,
+      "firstFivePassed": true,
+      "newSavedWebOriginalFailureCasePassed": true,
+      "affectedWebCaseRechecked": true,
+      "source": "真实随机本机HTTP、临时SQLite；文档及语音回调是受控替身，实际引擎另列验证",
+      "coverage": [
+        "原件提取、人工校正、派生检索更新、从原字节重提取",
+        "同编号并发只调一次、容量限制与持久命令一致",
+        "引擎失败和明确新一轮、重启中断不自动重试",
+        "网页允许来源、重定向/超限拒绝、大小写UUID统一、原件先保存、解析失败仍可下载"
+      ]
+    },
+    "newClientChecks": {
+      "uniqueCasesPassed": 5,
+      "unaffectedByFinalPresentationChange": true
+    },
+    "browser": {
+      "uniqueGroupsPassed": 5,
+      "firstAttempt": "docs/版本记录/材料文字处理-20261015/attempt-1.json",
+      "firstAttemptPassed": 5,
+      "finalPresentationAffectedOnly": [
+        "document-parse-review",
+        "explicit-web-extraction"
+      ],
+      "affectedRerunsPassed": 2,
+      "unaffectedThreeNotRerun": true,
+      "realDocxAndPdfAndHtml": true,
+      "actualAsr": false,
+      "old401BothPaths": "退出后真实取得401并扣住；另一标签重新登录并写新草稿后才放行，新会话/草稿保持",
+      "cleanupVerified": true,
+      "externalBrowserRequests": 0,
+      "browserRuntimeExceptions": 0,
+      "screenshots": "Root和作者均查看最终手机校正文/页码及桌面网页正文；只说明截图可见范围"
+    },
+    "affectedExistingRegression": "原件写入函数提取后，唯一受影响的既有HTTP不可变上传/同编号/重启持久/UTF8原件1项通过，其它旧组未为日志重跑。",
+    "build": "前后端完整build通过；最后仅手机呈现改变后再build前端通过。首次API类型检查3个implicit-any已修复。",
+    "contract": {
+      "localReferencesResolved": 3237,
+      "operations": 405,
+      "schemas": 922,
+      "newEndpoints": 3,
+      "allOperationIdsUnique": true
+    },
+    "constructionTool": "未修改，未重跑已闭合的记录工具测试。"
+  },
+  "independentReview": {
+    "mode": "非作者只读复核；不重复已过测试",
+    "fixedFindings": [
+      "await后容量及同命令复核",
+      "人工校正文不得冒原件提取",
+      "网页编号大小写与先保存原件",
+      "取消扫描需等自有进程close后清临时目录",
+      "旧401/旧成功跨标签共享会话门控",
+      "ASR分段绑定真实解码时长"
+    ],
+    "remainingBlockingFindings": 0,
+    "narrowBoundary": "语音桥允许250ms对齐容差，材料处理层仍要求分段结束不超过600秒；600秒原件尾段600.20秒会安全拒绝，未裁剪或伪造时间。"
+  },
+  "limits": {
+    "fileBytes": 26214400,
+    "audioSeconds": 600,
+    "documentPages": 20,
+    "candidateUtf16Characters": 120000,
+    "webBytes": 4194304,
+    "webTimeoutMsMax": 30000,
+    "activeProcessingJobs": 2,
+    "docx": "主文档正文、表格/文本框文字；不含页眉页脚、脚注尾注、批注、图片文字，按段定位不虚构页码。",
+    "web": "静态UTF8 HTML/纯文本，限既有允许来源；不运行JS，不提供动态页面、登录态或付费内容采集。",
+    "history": "机器提取历史最近5次，人工校正历史最近10次；原始文件保持。"
+  },
+  "remaining": [
+    "真实ASR服务配置、真实录音识别准确率及时间分段验收；本次仅桥接/隐私/计费/故障边界已验。",
+    "统一原件管理、引用使用情况、删除/保留及未引用上传清理；当前移除附件或草稿不删除服务器原件。",
+    "知识页面与对话统一检索结果、具体命中页/段打开及来源回跳；当前查询仍为确定性词语/中文片段匹配。",
+    "记忆冲突比较、合并与到期复核工作台；当前已有确认、更正和遗忘，未新增冲突合并命令。",
+    "完整离线重开站点、未提交草稿跨浏览器同步、实体手机/真实麦克风/房间终端。",
+    "草稿PR评审合并、正式112发布与现场验收；项目平台资料/决策的在线版本同步未在本次访问执行。"
+  ],
+  "evidence": [
+    {
+      "path": "docs/版本记录/材料文字处理-20261015/attempt-1.json",
+      "sha256": "34d344dbabf8a99f0bd239dd2406d0c01feaeb228efea7df41e06d235409a047",
+      "bytes": 2215,
+      "source": "owned synthetic browser fixture; no private user material"
+    },
+    {
+      "path": "docs/版本记录/材料文字处理-20261015/attempt-2.json",
+      "sha256": "e82f0d5f8181e4ccb23ccc3a63872a202af31074daf95a4f33ddf3d0230898a2",
+      "bytes": 829,
+      "source": "owned synthetic browser fixture; no private user material"
+    },
+    {
+      "path": "docs/版本记录/材料文字处理-20261015/attempt-3.json",
+      "sha256": "5fffc70ba288086c6ef838973e2a0b9032664fd97a11e2a88c3e138e92577d6d",
+      "bytes": 793,
+      "source": "owned synthetic browser fixture; no private user material"
+    },
+    {
+      "path": "docs/版本记录/材料文字处理-20261015/phone-docx-corrected-2.png",
+      "sha256": "b01f2648b03829bd11dc16106772a6a21af6eef575e4109a771ec47ac6af8bc3",
+      "bytes": 48988,
+      "source": "owned synthetic browser fixture; no private user material"
+    },
+    {
+      "path": "docs/版本记录/材料文字处理-20261015/phone-document-correction-pages-2.png",
+      "sha256": "f54b3c742e555b927092b3cf439a35f25cc463631dc7db7e1de8f59771fbac40",
+      "bytes": 35946,
+      "source": "owned synthetic browser fixture; no private user material"
+    },
+    {
+      "path": "docs/版本记录/材料文字处理-20261015/desktop-explicit-web-text-3.png",
+      "sha256": "d69f293667e764e4c7aa715cdc1e78411a4064ce20be9e0c77e3fc04a578fe04",
+      "bytes": 128774,
+      "source": "owned synthetic browser fixture; no private user material"
+    }
+  ]
+}

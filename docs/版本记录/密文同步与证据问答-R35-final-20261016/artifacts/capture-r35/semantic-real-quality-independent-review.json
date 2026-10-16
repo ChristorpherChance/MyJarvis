@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-16T00:49:53.861828+00:00",
+  "kind": "local-read-only-independent-result-arithmetic-and-source-review",
+  "decision": "supports only limited assistive quality release with explicitly retained conservative refusal uncertainty; no product change recommended from this diagnostic alone",
+  "evidence": [
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\capture-r35\\real-model-quality.json",
+      "wrapperFileSha256": "a9c6710fd24a0f98d68e6c514d7c9c14c5d582bf255f659e2f456cc0ba067b3a",
+      "reportedInnerReportSha256": "9a813eab4170ef054cbaeccf9337aed068f07bcc85206370ee62a8f007a268ce",
+      "exitCode": 1
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\capture-r35\\real-model-quality-r2.json",
+      "wrapperFileSha256": "01bf875a9322c3a48df287943e9d24e0908fa6ffd48431a196724e0b335bd52b",
+      "reportedInnerReportSha256": "e9d05f7cbc814bb2cda9c8949cee1ac258c56359447b839078061cf1a780668f",
+      "exitCode": 1
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\capture-r35\\real-model-quality-r3.json",
+      "wrapperFileSha256": "b480ba52dab3c07c092ae983cfb3bfa1043f71b81e5015947b7bed923980f410",
+      "reportedInnerReportSha256": "6b8ee7a15a2eaa5ba25c79cc3fbd7906c86a06d80e888ef1f0f756a33800fdbe",
+      "exitCode": 0
+    }
+  ],
+  "verification": {
+    "contractsAndHarnessHBound": true,
+    "eightProductSourceHUnchangedBetweenR2R3AndCurrent": true,
+    "diagnosticStagesComplete": 3,
+    "diagnosticVerifierSupported": true,
+    "diagnosticExactSourceQuoteAndReopenFullTextShaMatched": true,
+    "diagnosticAnswer": "按资料，打印机墨盒应到东侧蓝色柜子的第二层取。",
+    "diagnosticQuote": "办公室的打印机耗材应放在东侧蓝色柜子的第二层。",
+    "authSetupFailureBeforeModelRetained": true,
+    "caseExecutions": 4,
+    "passedExecutions": 3,
+    "notPassedExecutions": 1,
+    "uniqueCasesWithAtLeastOnePass": 3,
+    "oneAllPassingThreeCaseRun": false,
+    "oldFailedCandidateKnown": false,
+    "misrefusalFixedClaimSupported": false,
+    "actualProviderModelRequests": 11,
+    "ledgerReceipts": 11,
+    "observedUsageNumericMultisetMatchesLedger": true,
+    "tokenTotals": {
+      "inputTokens": 6463,
+      "outputTokens": 681,
+      "totalTokens": 7144
+    },
+    "feeUSD": null,
+    "allLedgerCostsIncomplete": true,
+    "historicalR2ObservedCostCompleteFlag": "legacy observer default true despite null price; canonical ledger false and diagnostic observer corrected; not a known fee",
+    "outsideDeclaredOriginAttempts": 0,
+    "observedToolEvents": 0,
+    "observedForeignSyntheticMemoryIncluded": false,
+    "allReportedTempCleanupVerified": true
+  },
+  "releaseBoundary": [
+    "Model-assisted expansion plus literal authorized evidence ranking, followed by cited synthesis and support checking; not an embedding system or live web search.",
+    "Only current authorized saved sources and current confirmed own memory; ordinary exact retrieval and source inspection remain useful when the model refuses.",
+    "User explicitly enables each model query and applicable cloud consent; outputs remain model interpretations and users open current sources for review.",
+    "Keep false verification as insufficient with empty claims and records; no retry, bypass, or lowered exact-citation/authorization/version checks.",
+    "These three synthetic cases are small bounded capability evidence; they do not estimate broad accuracy, reliability, prompt-injection coverage, or general private-data safety.",
+    "Known variability remains: the original knowledge case was refused, then its separate diagnostic passed with unchanged product source; cause of the first failure remains unknown.",
+    "Do not describe these cuts as one clean 3/3 run, a fixed false rejection, or all real-world quality acceptance.",
+    "No further model call or prompt change is justified solely to obtain another pass; retain all failed and passing cuts."
+  ],
+  "operationsThisReview": {
+    "newSource": 0,
+    "builds": 0,
+    "tests": 0,
+    "modelCalls": 0,
+    "ssh": 0,
+    "productionChange": false
+  },
+  "costPolicy": {
+    "spendCap": null,
+    "providerFeeUSD": null,
+    "internalAssistantCostUSD": null,
+    "internalAssistantTokens": null
+  }
+}

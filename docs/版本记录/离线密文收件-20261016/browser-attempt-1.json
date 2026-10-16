@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-15T15:59:04.769Z",
+  "attempt": "1",
+  "expectedOfflineBundle": "offlineCapture-gKTtUnTN.js",
+  "realHttp": true,
+  "syntheticOriginals": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "loadedBundles": [
+    "/assets/offlineCapture-gKTtUnTN.js",
+    "/assets/offline-vault-D3_LiM_i.js",
+    "/assets/client-OI5hagxP.js",
+    "/assets/index-DpS0b2Wt.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/DemoApp-Dbu5dI27.js",
+    "/assets/NotificationPreferencesPanel-C2B5Is_w.js",
+    "/assets/MaterialManager-Dq5UKNS2.js",
+    "/assets/OperationsPage-Lp9aJoIt.js",
+    "/themes/stark.js",
+    "/assets/RoomVoice-B6LsLuFz.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "prepared-real-offline-reopen",
+      "status": "passed",
+      "evidence": {
+        "explicitPreparation": true,
+        "verifiedManifestEntries": 5,
+        "trueOfflineNewPage": true,
+        "noApiDuringPreparation": true,
+        "noServerRequestsAfterOfflineNavigation": true,
+        "offlineApiUnavailable": true,
+        "privateEditorLocked": true,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "offline-originals-encrypted-and-locked",
+      "status": "failed",
+      "cut": "offline-originals/lock-reopen-and-original-byte-compare",
+      "failureBoundary": "恢复后的textarea原文混入包裹label的精确名称；已补aria-label。末汇总计数失败为同次失败的派生项。"
+    },
+    {
+      "name": "explicit-ciphertext-transfer-no-overwrite",
+      "status": "failed",
+      "cut": "offline-transfer/valid-original-package-imports-in-new-context",
+      "failureBoundary": "恢复后的textarea原文混入包裹label的精确名称；已补aria-label。末汇总计数失败为同次失败的派生项。"
+    },
+    {
+      "name": "real-admin-import-and-lost-reply",
+      "status": "passed",
+      "evidence": {
+        "pureLocalPreview": true,
+        "realAdministratorChecked": true,
+        "newBrowserDraftId": true,
+        "importDidNotUploadOrSubmit": true,
+        "onlyExplicitSaveUploadedPdf": true,
+        "pdfSha256": "7025f17a38c763003198592912f54854a79985464314e6712734255291b4d768",
+        "lostCommittedReply": true,
+        "refreshRetrySameExactCommand": true,
+        "storedRecords": 1
+      }
+    },
+    {
+      "name": "static-cache-and-shared-identity-clear",
+      "status": "passed",
+      "evidence": {
+        "sameOriginApiReachedServerTwice": true,
+        "apiUnavailableOffline": true,
+        "cacheOnlyStaticBuildManifest": true,
+        "cacheUnchangedByAuthAndPrivateInput": true,
+        "realMemberTransition": true,
+        "unlockedOfflineBodyHiddenBeforeLoginHttp": true,
+        "originalCiphertextPreserved": true
+      }
+    },
+    {
+      "name": "harness-or-final-audit",
+      "status": "failed",
+      "cut": "offline-cache/real-member-login-clears-before-request",
+      "failureBoundary": "恢复后的textarea原文混入包裹label的精确名称；已补aria-label。末汇总计数失败为同次失败的派生项。"
+    }
+  ],
+  "originalSha256": "e144a2bd32c4622fcae45391c700d60db74f45d872000fb6ff2385bde808ce6b"
+}

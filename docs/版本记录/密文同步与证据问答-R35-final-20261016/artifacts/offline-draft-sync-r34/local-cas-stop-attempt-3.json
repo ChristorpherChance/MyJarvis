@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "kind": "encrypted-draft-sync-local-cas-and-stop-correction",
+  "at": "2026-10-16T00:25:08.204650+00:00",
+  "priorCut": {
+    "path": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+    "sha256": "a91cdee7bd5914556cecd3bd0184e2562f37a2eeebb92901a774cbf3c1559c56",
+    "bytes": 3778
+  },
+  "findings": [
+    {
+      "id": "SYNC-LOCAL-CAS-001",
+      "severity": "P1",
+      "before": "A remote package fork can have the same vaultId/revision and different ciphertext; revision-only local CAS allowed a stale tab to overwrite it.",
+      "fix": "Local expected tokens compare vaultId, revision, salt, iv and ciphertext exactly across load/save/export/replace and the UI. Portable envelope schema unchanged."
+    },
+    {
+      "id": "SYNC-STOP-CAS-002",
+      "severity": "P1",
+      "before": "Stopping only the sync controller during pending storage CAS could still write because CAS listened only to the vault lock signal.",
+      "fix": "replaceForSync sends AbortSignal.any(vault lock signal, sync signal) into storage CAS while preserving vault-session and current-epoch checks."
+    }
+  ],
+  "newGroups": 1,
+  "passed": 1,
+  "failed": 0,
+  "name": "same-id same-revision ciphertext forks reject stale local writes and stopped sync cannot commit delayed CAS",
+  "evidence": [
+    "Real WebCrypto derives two valid different ciphertext forks from one identical initial package",
+    "Same vaultId and revision are asserted while ciphertext differs",
+    "After explicit remote replacement, stale instance save/load/export/replace all reject CONFLICT and selected ciphertext remains",
+    "Sync abort while custom storage CAS is deliberately delayed leaves prior encrypted row intact; local vault remains unlocked and loadable"
+  ],
+  "rawStdoutPersisted": false,
+  "verificationSource": "Actual filtered node test completion: tests1 pass1 fail0; no old4 sync or old8 vault groups rerun",
+  "webTypecheck": {
+    "status": "passed",
+    "exitCode": 0
+  },
+  "sources": [
+    {
+      "path": "apps/web/src/features/offline/offline-vault.ts",
+      "sha256": "3626fad58f6180d9bb9f8893e4d0c9ac2cc53447e6adcef2034c3349544baebe",
+      "bytes": 21315
+    },
+    {
+      "path": "apps/web/src/features/offline/OfflineDraftSync.tsx",
+      "sha256": "d49364d75e22dc3f3a56b533714ccd5f79ff46e569c2f3ede73db1ef2917d49c",
+      "bytes": 14503
+    },
+    {
+      "path": "apps/api/test/offline-draft-sync.test.ts",
+      "sha256": "e538ec0690a54983262f500ecb29197f6e88069b5993d128f75558d061064024",
+      "bytes": 13180
+    },
+    {
+      "path": "scripts/qa-offline-draft-sync.ts",
+      "sha256": "b31eb3cbc57f6746883a0697afeee5995fc24e70e9be5d8969413022cf6abbb6",
+      "bytes": 26405
+    }
+  ],
+  "boundaries": [
+    "This unit group uses controlled storage delay; actual IndexedDB and UI token browser regression is a separate pending cut",
+    "No product build performed by this agent",
+    "No Linux or production activity"
+  ]
+}

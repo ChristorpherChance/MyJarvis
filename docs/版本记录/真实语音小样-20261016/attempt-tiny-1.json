@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "completedAt": "2026-10-15T16:06:48.764Z",
+  "attempt": "1",
+  "model": "tiny",
+  "contractSha256": "f91b705a05dc7bb4f3006adb3a81e896265e4890842aca5fb5ef7d14412070a8",
+  "identities": {
+    "scriptSha256": "a11ae2d19aac5fea031ec3e22dadfd253279d9673f1a080383f464ce93559911",
+    "workerSha256": "016a8ec264a95cbd0cef757daafeaa749a6a7dffb2f38d5f5607ed6e00aca0f6",
+    "sapiSha256": "cee3b0a8e88e9b0fd80ebedf4d04a0528017086c592019751d4e8e0bef304638",
+    "model": "tiny",
+    "modelFiles": [
+      {
+        "file": "config.json",
+        "bytes": 2249,
+        "sha256": "a73a28cdfe1c43ccc7202fa333d1f89c202477271407ae9a7f19afa52039cac8"
+      },
+      {
+        "file": "jarvis-download-manifest.json",
+        "bytes": 746,
+        "sha256": "81c140a12316f89ef195b3a957ff3821ca9eba7b8c5f26d57c519b082057d60b"
+      },
+      {
+        "file": "model.bin",
+        "bytes": 75538270,
+        "sha256": "dcb76c6586fc06cbdac6dd21f14cfd129cc4cdd9dce19bf4ffa62e59cbe6e6d1"
+      },
+      {
+        "file": "tokenizer.json",
+        "bytes": 2203239,
+        "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab"
+      },
+      {
+        "file": "vocabulary.txt",
+        "bytes": 459861,
+        "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+      }
+    ]
+  },
+  "runtime": {
+    "python": "3.12.10",
+    "platform": "Windows",
+    "versions": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.8.2",
+      "numpy": "2.5.3",
+      "av": "19.0.1"
+    },
+    "cpuComputeTypes": [
+      "float32",
+      "int8",
+      "int8_float32"
+    ]
+  },
+  "status": "failed",
+  "realHttp": true,
+  "temporarySqlite": true,
+  "productionAccess": false,
+  "physicalMicrophoneVerified": false,
+  "realSpeakerVerified": false,
+  "sapiSyntheses": 2,
+  "httpTranscribeRequests": 2,
+  "localAsrCalls": 2,
+  "localWorkerLaunches": [
+    {
+      "language": "zh",
+      "model": "tiny",
+      "at": "2026-10-15T16:06:43.840Z"
+    },
+    {
+      "language": "en",
+      "model": "tiny",
+      "at": "2026-10-15T16:06:46.456Z"
+    }
+  ],
+  "piCalls": 0,
+  "observedExternalFetchAttempts": 0,
+  "networkPolicy": {
+    "nodeFetch": "same-process loopback only",
+    "huggingFaceOffline": true,
+    "localFilesOnly": true,
+    "cloudConsent": false,
+    "providerConfigurationCreated": false
+  },
+  "localUsage": [
+    {
+      "kind": "asr",
+      "source": "local-voice",
+      "provider": "local-command",
+      "model": "tiny",
+      "seconds": 5.87,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "costUSD": 0,
+      "costKind": "provider-reported",
+      "measurementStatus": "local"
+    },
+    {
+      "kind": "asr",
+      "source": "local-voice",
+      "provider": "local-command",
+      "model": "tiny",
+      "seconds": 7.365,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "totalTokens": 0,
+      "costUSD": 0,
+      "costKind": "provider-reported",
+      "measurementStatus": "local"
+    }
+  ],
+  "cost": {
+    "ledgerLocalEngineUSD": 0,
+    "localComputePriceUSD": null,
+    "internalAssistantTokens": null,
+    "internalAssistantCostUSD": null,
+    "spendingCap": null
+  },
+  "cleanupVerified": true,
+  "results": [
+    {
+      "language": "zh",
+      "metric": "CER",
+      "reference": "明天下午三点，我想整理今天的灵感，再把会议记录加入知识库。",
+      "normalizedReference": "明天下午三点我想整理今天的灵感再把会议记录加入知识库",
+      "model": "tiny",
+      "input": {
+        "schema": 1,
+        "generatedAt": "2026-10-15T16:06:42.396Z",
+        "sample": {
+          "language": "zh",
+          "voice": "Microsoft Huihui Desktop",
+          "reference": "明天下午三点，我想整理今天的灵感，再把会议记录加入知识库。",
+          "metric": "CER"
+        },
+        "sapiSha256": "cee3b0a8e88e9b0fd80ebedf4d04a0528017086c592019751d4e8e0bef304638",
+        "synthesisRate": 0,
+        "sha256": "3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510",
+        "bytes": 235726,
+        "seconds": 7.365,
+        "waveFacts": {
+          "seconds": 7.365,
+          "frames": 117840,
+          "sampleRate": 16000,
+          "channels": 1,
+          "sampleWidth": 2
+        }
+      },
+      "cloudConsent": false,
+      "retries": 0,
+      "httpElapsedMs": 2637,
+      "processingStatus": "complete",
+      "processingError": null,
+      "engine": "command",
+      "recognizedText": "明天下午三點我想整理今天的靈感再把會議紀錄加入支持庫",
+      "segments": [
+        {
+          "text": "明天下午三點",
+          "location": "inbox-original://3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510/seconds/0-1.8",
+          "sha256": "ae4d4263b5286d74f1bdb03d70dd977a1ca12fd112744f0cdba51d73e3b50428",
+          "start": 0,
+          "end": 1.8
+        },
+        {
+          "text": "我想整理今天的靈感",
+          "location": "inbox-original://3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510/seconds/1.8-4.1",
+          "sha256": "af05ddc4120c9c07e93d66f49bdee15d16d93e74400f89ed0334b6a873be2179",
+          "start": 1.8,
+          "end": 4.1
+        },
+        {
+          "text": "再把會議紀錄加入支持庫",
+          "location": "inbox-original://3f5eff870a4ea0e11c66ee271ec4332cf3419586d8d9b86d1cd86bef2f739510/seconds/4.1-6.9",
+          "sha256": "9e7514898f17776a5c7f9b841ab57e2e1935858ef9478e04dfd41c3818ce86b9",
+          "start": 4.1,
+          "end": 6.9
+        }
+      ],
+      "nativeWorkerLaunches": 1,
+      "localUsageEntries": 1,
+      "normalizedRecognized": "明天下午三點我想整理今天的靈感再把會議紀錄加入支持庫",
+      "referenceUnits": 26,
+      "editErrors": 9,
+      "errorRate": 0.34615384615384615,
+      "thresholdInclusive": 0.25,
+      "status": "failed",
+      "cut": "http-transcribe-zh",
+      "diagnostic": "AssertionError: CER exceeded preregistered 0.25 gate",
+      "totalElapsedMs": 2647
+    },
+    {
+      "language": "en",
+      "metric": "WER",
+      "reference": "Tomorrow at three in the afternoon I want to review my project ideas and collect the meeting notes.",
+      "normalizedReference": "tomorrow at three in the afternoon i want to review my project ideas and collect the meeting notes",
+      "model": "tiny",
+      "input": {
+        "schema": 1,
+        "generatedAt": "2026-10-15T16:06:43.231Z",
+        "sample": {
+          "language": "en",
+          "voice": "Microsoft Zira Desktop",
+          "reference": "Tomorrow at three in the afternoon I want to review my project ideas and collect the meeting notes.",
+          "metric": "WER"
+        },
+        "sapiSha256": "cee3b0a8e88e9b0fd80ebedf4d04a0528017086c592019751d4e8e0bef304638",
+        "synthesisRate": 0,
+        "sha256": "6c8caa798334b3a56e30d09c7de317e50e578a69dce7140d83b695ebbf3d6e79",
+        "bytes": 187886,
+        "seconds": 5.87,
+        "waveFacts": {
+          "seconds": 5.87,
+          "frames": 93920,
+          "sampleRate": 16000,
+          "channels": 1,
+          "sampleWidth": 2
+        }
+      },
+      "cloudConsent": false,
+      "retries": 0,
+      "httpElapsedMs": 2298,
+      "processingStatus": "complete",
+      "processingError": null,
+      "engine": "command",
+      "recognizedText": "Tomorrow at 3 in the afternoon I want to review my project ideas and collect the meeting notes.",
+      "segments": [
+        {
+          "text": " Tomorrow at 3 in the afternoon I want to review my project ideas and collect the meeting notes.",
+          "location": "inbox-original://6c8caa798334b3a56e30d09c7de317e50e578a69dce7140d83b695ebbf3d6e79/seconds/0-5",
+          "sha256": "2eda145bdd483bb2506b150eecbf288b0c65427cbaba20a42279fbbc7d562c40",
+          "start": 0,
+          "end": 5
+        }
+      ],
+      "nativeWorkerLaunches": 1,
+      "localUsageEntries": 1,
+      "normalizedRecognized": "tomorrow at 3 in the afternoon i want to review my project ideas and collect the meeting notes",
+      "referenceUnits": 18,
+      "editErrors": 1,
+      "errorRate": 0.05555555555555555,
+      "thresholdInclusive": 0.25,
+      "status": "passed",
+      "totalElapsedMs": 2303
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-15T12:18:40.047Z",
+  "attempt": "2",
+  "only": "document-parse-review",
+  "realHttp": true,
+  "temporarySqlite": true,
+  "realDocxAndPdf": true,
+  "staticLoopbackHtml": true,
+  "actualAsr": false,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "webFixtureRequests": [],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "document-parse-review",
+      "status": "passed",
+      "evidence": {
+        "realDocxParsed": true,
+        "realPdfParsed": true,
+        "pageLocations": [
+          1,
+          2
+        ],
+        "humanCorrectionSaved": true,
+        "originalExtractionRetained": true,
+        "originalBytesUnchanged": true,
+        "inboxUsesCorrectedText": true,
+        "mobileOverflow": false
+      }
+    }
+  ]
+}

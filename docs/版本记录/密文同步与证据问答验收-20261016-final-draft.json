@@ -1,0 +1,682 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "preparedAt": "2026-10-16T01:18:33.419230+00:00",
+  "documentState": "final-delivery-draft-awaiting-cold-voice-online-git",
+  "title": "密文同步与证据问答R35交付验收最终草稿",
+  "scope": "R35实现、双机Linux安装、112正式运行与恢复、正式HTTPS公共离线页及真实模型小样；cold、voice、online和Git终态待Root合并。",
+  "state": {
+    "implementation": "complete",
+    "verification": "partial",
+    "deployment": "live-on-112-in-bounded-scope",
+    "fieldAcceptance": null,
+    "realModelQuality": "bounded-small-fixture-evidence-with-retained-refusal",
+    "productionRelease": "112-active-and-health-verified",
+    "coldStandbyFinal": null
+  },
+  "release": {
+    "archiveVersion": "20261016-capture-complete-r35",
+    "runtimeBuild": "20261016-capture-complete-r35",
+    "sourceCommit": "f38416bddb476f9c01eec5ca87be3e8da74e94f4",
+    "archiveSha256": "df2ca1476a385c4dbb7a449452a3f2beb9f69912eea9c225f7d5a5405e8a65c6",
+    "manifestSha256": "72f97aee9a7d0f91b76ff439ff1d0c2d7b27587877ac5f00d6e384311c09bb39",
+    "payloadFiles": 2179,
+    "zipEntries": 2180,
+    "committedSourceFilesVerified": 1749,
+    "compiledFilesVerified": 429,
+    "offlineResources": 5,
+    "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "independentReadback": {
+      "path": "artifacts/capture-r35/independent-r35-zip-readback.json",
+      "sha256": "540b113a46e14d6ff914578a35ff6e34a5fe4ac40f66d550e66066b1b323e08f",
+      "bytes": 5282
+    },
+    "boundary": "源码字节、运行身份、每项产物H及Unix模式已核；不等于可复现构建、Linux运行或生产验收。"
+  },
+  "encryptedSync": {
+    "behavior": [
+      "当前真实本人管理员在本窗口明确启用；只同步已保存密文，不发送口令或解锁正文，不自动提交收件。",
+      "远端单草稿槽采用修订保护；不同副本先显示时间并由本人选择本机或远端，不自动合并。",
+      "回包丢失保留同一操作编号与内容；断网保留本机；锁定、身份或材料会话变化及离开时停止。",
+      "删除远端清当前密文并保留修订墓碑，不删除本机、其他浏览器或外部备份，不承诺介质擦除；忘记口令无法恢复。"
+    ],
+    "httpAndVault": {
+      "uniqueNewGroups": 6,
+      "passedSeparately": 6,
+      "failedGroups": 0,
+      "executionCuts": [
+        {
+          "report": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+          "groups": 4,
+          "passed": 4
+        },
+        {
+          "report": "artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+          "groups": 1,
+          "passed": 1,
+          "onlyAuthCookiePresenceCorrection": true
+        },
+        {
+          "report": "artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+          "groups": 1,
+          "passed": 1,
+          "onlyLocalCasAndStopCorrections": true
+        }
+      ],
+      "allSixRunTogetherOnFinalSource": false,
+      "oldSuitesNotRerun": true
+    },
+    "browser": {
+      "uniqueNewGroups": 5,
+      "passedSeparately": 5,
+      "groupExecutions": 6,
+      "passedExecutions": 5,
+      "failedExecutions": 1,
+      "failure": "First identity case stopped at a test harness TDZ shadowing the login helper; fixture variable renamed and only that case passed on attempt2. Original failed report and screenshot retained.",
+      "extraHarnessAuditFailure": "Attempt1 pass-count audit recorded 3 != 4 after the fixture failure; not a sixth product group",
+      "finalAffectedBundle": "offlineCapture-Dp37MnGd.js",
+      "finalAffectedVaultBundle": "offline-vault-g54LtOEF.js",
+      "finalBundleRunOnlyNewFifthGroup": true,
+      "allFiveRunTogetherOnFinalBundle": false,
+      "allAttemptsTemporaryCleanupVerified": true,
+      "allAttemptsModelCalls": 0,
+      "allAttemptsExternalRequests": 0,
+      "allAttemptsPageErrors": 0
+    },
+    "evidence": {
+      "path": "artifacts/offline-draft-sync-r34/cut-summary.json",
+      "sha256": "c9af33c0378ac1f774b01ff940e256f0deaea28ed85018a28b8cc9e8e7428317",
+      "bytes": 8022
+    },
+    "localP1Closures": [
+      {
+        "finding": "同编号同修订异密文可骗过旧本机保护",
+        "fix": "本机比较编号、修订、盐、IV和完整密文；旧标签的load/save/export/replace均拒绝。",
+        "test": "新增精确单元组及真实两context+sibling浏览器第5组分别通过。"
+      },
+      {
+        "finding": "停止同步未能取消正在等待的本机替换写入",
+        "fix": "同步中止与本机锁定信号共同进入原子写入；真实IndexedDB打开被暂停时停止，恢复后本机不变。",
+        "test": "同一新增精确单元组及真实浏览器第5组通过。"
+      },
+      {
+        "finding": "仍有无效成员会话时残留管理员身份可能回退",
+        "fix": "只要请求仍携带成员会话即禁止管理员回退。",
+        "test": "真实失效成员会话加独立仍有效管理员会话，元信息/包/写入均401；只补新增1组。"
+      }
+    ],
+    "independentReview": [
+      {
+        "path": "artifacts/capture-release-r34/offline-sync-source-review-final.json",
+        "sha256": "c8a7d5d88d7bfd97d4162768d31a8bbb3bad528238f78d39764195516d4ad368",
+        "bytes": 3342
+      },
+      {
+        "path": "artifacts/capture-release-r34/offline-sync-review-browser-addendum.json",
+        "sha256": "f15bd31eaef941acbe678ac1b507a16da70d028a8d7006439c13bac1a111621a",
+        "bytes": 2051
+      }
+    ],
+    "notOneFinalFullSuite": true
+  },
+  "evidenceAssistant": {
+    "behavior": [
+      "逐次显式开启模型查询；按当前本人授权取知识或当前生效本人记忆，云端遵守本人授权与本次同意。",
+      "先扩展提问再从已保存授权证据回答；每个结论需逐字引用并再次核验，证据不足时不补事实。",
+      "引用短时有效，打开时重新核对身份、授权、完整正文和版本；撤权、更正或遗忘令旧引用失效。",
+      "问题及提示使用内存会话，不保存为聊天或检索历史；无业务工具、自动重试、缓存预热及后台续轮。"
+    ],
+    "fakeProtocolCuts": {
+      "initialFiveGroups": {
+        "authorReportedPassed": 5,
+        "authorReportedFailed": 0,
+        "rawStdoutPersisted": false,
+        "verificationSource": "作者报告当时真实工具终态；没有独立留存stdout，不列为已保存8/8证据。"
+      },
+      "unknownPrivacyFollowup": {
+        "authorReportedPassed": 1,
+        "authorReportedFailed": 0,
+        "rawStdoutPersisted": false,
+        "oldFiveNotRerun": true
+      },
+      "newBoundaryGroups": {
+        "passed": 2,
+        "failed": 0,
+        "attempts": 1,
+        "realProviderCalls": 0,
+        "sdkMockRequests": 1,
+        "evidence": {
+          "path": "artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt",
+          "sha256": "45ba19bb708c4e5eef6f8d1c7c0ae3c6cb1ddea4519b7c70d389f48760f993f0",
+          "bytes": 387
+        }
+      },
+      "allEightRerunOnFinalSource": false
+    },
+    "browser": {
+      "uniqueGroups": 3,
+      "passedSeparately": 3,
+      "executions": 4,
+      "passedExecutions": 3,
+      "failedExecutions": 1,
+      "firstFailure": "首轮本人记忆场景在Cookie夹具格式停止；仅修夹具后该组通过，另两已过组未重跑；原计数audit失败不是额外产品组。",
+      "fakeProtocolCalls": 9,
+      "actualProviderCalls": 0,
+      "cleanupVerified": true,
+      "firstCut": {
+        "path": "artifacts/evidence-assistant-browser-r35/attempt-1.json",
+        "sha256": "cd7cd01ffc68a57e681e00b8ee1ea01e22e8686eec31afde9125bc8e6d89f58d",
+        "bytes": 1508
+      },
+      "followupCut": {
+        "path": "artifacts/evidence-assistant-browser-r35/attempt-2.json",
+        "sha256": "cb6586eb02f388ab9f426a429b9822759dfd9544c90484c8b60df19785a0f435",
+        "bytes": 1040
+      },
+      "notSemanticQualityEvidence": true
+    },
+    "newP1Closures": [
+      {
+        "id": "EVIDENCE-RECORD-ONLY-001",
+        "fix": "只记账模式保留真实用量及未知价格，不再被金额或缺价格的事后门槛中止；普通预算、暂停及并发限制仍保留。"
+      },
+      {
+        "id": "EVIDENCE-SINGLE-TURN-002",
+        "fix": "临时模型会话一轮即停，带工具请求的结果拒绝；确保每次有限问答最多3次实际模型请求。"
+      }
+    ],
+    "sourceAndBoundaryEvidence": {
+      "path": "artifacts/capture-r35/semantic-boundary-freeze.json",
+      "sha256": "044211817689a24f345c63a8eca729e31aab99374c804c14ddca34fd3edc1a8d",
+      "bytes": 6519
+    },
+    "independentFinalSourceReview": {
+      "path": "artifacts/capture-release-r34/evidence-assistant-source-review-final.json",
+      "sha256": "71918a1c423ed1eda9c30103e4e2b9ab517ea28c74efc71f1f32cc90474bfc0d",
+      "bytes": 5879
+    },
+    "realModel": {
+      "status": "limited-assistive-evidence",
+      "accepted": "limited-scope-only",
+      "observedAttempt4": {
+        "status": "failed",
+        "cut": "isolated-app-start",
+        "actualModelRequests": 0,
+        "usageReceipts": 0,
+        "temporaryCleanupVerified": true,
+        "evidence": {
+          "path": "artifacts/capture-r35/real-model-quality.json",
+          "sha256": "a9c6710fd24a0f98d68e6c514d7c9c14c5d582bf255f659e2f456cc0ba067b3a",
+          "bytes": 2732
+        },
+        "boundary": "这一尝试在隔离程序准备阶段失败，未产生模型质量结果；后续准备或执行不在本草稿填通过。"
+      },
+      "realCaseExecutions": 4,
+      "passedExecutions": 3,
+      "notPassedExecutions": 1,
+      "uniqueCases": 3,
+      "uniqueCasesWithAtLeastOnePass": 3,
+      "oneAllPassingThreeCaseRun": false,
+      "falseRejectionFixed": false,
+      "originalFailedCandidateKnown": false,
+      "productSourceChangedBetweenFailureAndDiagnostic": false,
+      "actualProviderModelRequests": 11,
+      "ledgerReceipts": 11,
+      "tokenTotals": {
+        "inputTokens": 6463,
+        "outputTokens": 681,
+        "totalTokens": 7144
+      },
+      "feeUSD": null,
+      "ledgerCostsIncomplete": 11,
+      "actualCuts": [
+        {
+          "path": "artifacts/capture-r35/real-model-quality-r2.json",
+          "sha256": "01bf875a9322c3a48df287943e9d24e0908fa6ffd48431a196724e0b335bd52b",
+          "bytes": 15410
+        },
+        {
+          "path": "artifacts/capture-r35/real-model-quality-r3.json",
+          "sha256": "b480ba52dab3c07c092ae983cfb3bfa1043f71b81e5015947b7bed923980f410",
+          "bytes": 8891
+        }
+      ],
+      "independentReview": {
+        "path": "artifacts/capture-r35/semantic-real-quality-independent-review.json",
+        "sha256": "a52b6e82db2ec0c0e1f60a9b339dad40b747227f8d31753051e2ae90f2d8d1df",
+        "bytes": 4345
+      },
+      "explanation": "知识首轮因支持核验未通过而返回证据不足，原失败保留；同产品源码的单独诊断后来通过。本人记忆和缺证据/注入用例首轮通过。三个固定合成用例跨cut各有通过，不是同一轮3/3，不证明误拒已修复或稳定准确率。",
+      "releaseBoundary": "支持有限辅助功能；保留保守拒答、不降引用或授权规则；用户可用原有逐字检索并打开当前出处。",
+      "preparationContract4": {
+        "path": "artifacts/evidence-assistant-quality-r35/contract-4.json",
+        "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f",
+        "bytes": 4030
+      },
+      "executedContracts": [
+        {
+          "path": "artifacts/evidence-assistant-quality-r35/contract-5.json",
+          "sha256": "979d7a6ef577cd155edfc2f3ff2e20ae4151db3ca5f9737f4c69cff84cc93a8c",
+          "bytes": 4242
+        },
+        {
+          "path": "artifacts/evidence-assistant-quality-r35/contract-6.json",
+          "sha256": "adf149d1555a5750f182f28e2a102abcc10f692cd8d0d7347fd54eabb1593bd6",
+          "bytes": 3531
+        }
+      ],
+      "harnessAuthCorrection": {
+        "path": "artifacts/capture-r35/semantic-quality-harness-freeze.json",
+        "sha256": "4b6396775c5fa521a7b1916baf76a8c9c842034143f125f4e9d8f39cd1f30a78",
+        "bytes": 3220
+      }
+    },
+    "notIndependentFactualProof": "假协议、结构和引用核验不能代替真实模型质量；额外模型复核也不是事实正确的独立证明。"
+  },
+  "deployment": {
+    "101": {
+      "stageInstallInspectAndSmoke": "passed-in-bounded-scope",
+      "phases": {
+        "stage": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:42.377952+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-stage.json",
+            "sha256": "3027e664d3c5cc1c380455ef739ccb8f90da941f7d75e07b0d0491a0ed850a06",
+            "bytes": 564
+          },
+          "businessServiceChanged": false
+        },
+        "install": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:53.057363+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-install.json",
+            "sha256": "0e8b120db95b3e9fe9d5faba651d24b327de02cbae4142c80f73e08e87c3715f",
+            "bytes": 552
+          },
+          "businessServiceChanged": false
+        },
+        "inspect": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:59.219033+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-inspect.json",
+            "sha256": "ecc86e65ca92d4060fafaab0d16a54c68c447dbc79c10ab980affea13e16d16c",
+            "bytes": 593
+          },
+          "businessServiceChanged": false
+        },
+        "linux-install-smoke": {
+          "status": "passed",
+          "at": "2026-10-16T00:36:05.252372+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-linux-install-smoke.json",
+            "sha256": "2bcc1d074fed3ddf408a93e704d70b42ebad64b43336c05b1076464d06ad0458",
+            "bytes": 6304
+          },
+          "nodeVersion": "24.15.0",
+          "build": "20261016-capture-complete-r35",
+          "httpRequests": 12,
+          "modelCalls": 0,
+          "outsideFetchAttempts": 0,
+          "temporaryCleanupVerified": true,
+          "scope": "this-staged-compiled-installation-only",
+          "underlyingReportSha256": "6b6a08264434e944b53d68c3bcefdff87c65ff02a2c9cad9381cebb998047254"
+        }
+      },
+      "coldBusinessFinalStatus": "pending",
+      "coldDataFinalStatus": "pending-final-swap",
+      "boundary": "101已取得并隔离核对该时点快照；将数据副本切为冷备实际目录及最终冷备健康尚待Root终态，不把导入直接当成可接替。",
+      "coldDataTransfer": "export-download-import-and-isolated-verify-passed",
+      "coldPhases": {
+        "export": {
+          "status": "passed",
+          "evidence": {
+            "path": "artifacts/capture-r35/cold-data/export.json",
+            "sha256": "68045149a0aea7a521e93969d073a05d66d893db4c77f3edd5c63a5d7d8eb714",
+            "bytes": 503
+          },
+          "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+          "archiveSha256": "1b2d3f14824ac25d0c7b4575dc5da4a698ec2882ee0322fb6e698529d8a9fe20",
+          "archiveBytes": 778359545
+        },
+        "download": {
+          "status": "passed",
+          "evidence": {
+            "path": "artifacts/capture-r35/cold-data/download.json",
+            "sha256": "c72e457882a66ebf671cf0b59fd66f85ac34cf1bde547eb2951c18b671620ec7",
+            "bytes": 364
+          },
+          "archiveSha256": "1b2d3f14824ac25d0c7b4575dc5da4a698ec2882ee0322fb6e698529d8a9fe20",
+          "archiveBytes": 778359545
+        },
+        "import": {
+          "status": "passed",
+          "evidence": {
+            "path": "artifacts/capture-r35/cold-data/import.json",
+            "sha256": "c48b6e90933fdbbfb2054b67fa78824e83d160c0064b372c5d2b0e2cee6edb84",
+            "bytes": 1093
+          },
+          "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+          "archiveSha256": "1b2d3f14824ac25d0c7b4575dc5da4a698ec2882ee0322fb6e698529d8a9fe20",
+          "archiveBytes": 778359545
+        }
+      },
+      "coldDataManifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+      "takeoverReady": null,
+      "snapshotFreshness": {
+        "snapshotAt": "2026-10-16T00:51:03.423620Z",
+        "thresholdSeconds": 900,
+        "statusAtObservation": "stale",
+        "observedAt": "2026-10-16T01:17:02.567139+00:00",
+        "ageAtObservationSeconds": 1559.144,
+        "timeOrThresholdChanged": false,
+        "automaticTakeoverReady": false,
+        "boundary": "批次完整不等当前fresh；人工接管前须按实际时点/角色/完整材料再核对，不能为保持绿更改时间或阈值。"
+      }
+    },
+    "112": {
+      "stageAndInstallFinal": "passed-in-bounded-scope",
+      "stage": {
+        "path": "artifacts/capture-r35/deployment/112-stage.json",
+        "sha256": "a5238500ac6b31ef9209d728fad01470f7687ae7915bdc552a837841717afdb2",
+        "bytes": 565
+      },
+      "install": {
+        "path": "artifacts/capture-r35/deployment/112-install.json",
+        "sha256": "1786205b6213972e65dc8dac7585e6f03ca0fe29e85e011ef7d9c41d58b21aa6",
+        "bytes": 552
+      },
+      "inspect": {
+        "path": "artifacts/capture-r35/deployment/112-inspect.json",
+        "sha256": "b09338176aa3de36110e51ab76b704a4229fd9d1ab39de2278b252bbc4d3d66d",
+        "bytes": 593
+      },
+      "linuxSmoke": {
+        "path": "artifacts/capture-r35/deployment/112-linux-install-smoke.json",
+        "sha256": "f61201224f4218b9e2a87b6a2b79193113e77487fc1f5614bb1e90dd417876dd",
+        "bytes": 6302
+      },
+      "productionActivation": "passed",
+      "productionHealth": {
+        "node": "112",
+        "release": "20261016-capture-complete-r35",
+        "role": "primary",
+        "currentRelease": "20261016-capture-complete-r35",
+        "platformService": "active",
+        "observerService": "active",
+        "observerBuild": "20261016-capture-complete-r35",
+        "businessHealthy": true,
+        "healthBuild": "20261016-capture-complete-r35",
+        "healthStatus": "ok"
+      },
+      "previousRelease": "20261012-supervision-r28-2",
+      "activationWallSeconds": 230.09400000004098,
+      "activationEvidence": {
+        "path": "artifacts/capture-r35/deployment/112-activate.json",
+        "sha256": "a2c156bc03e4a963b7dc5612299d1dc5576c7f0a8889b7207d7f634b0329f505",
+        "bytes": 1982
+      },
+      "boundary": "230.094秒是完整激活操作耗时，包含快照及隔离恢复；健康字段是该操作结束时的实际核对，不据此推算连续健康观察时长。"
+    },
+    "recovery": {
+      "actualLinuxExerciseFinal": "passed-in-bounded-scope",
+      "linuxFixtureEvidence": {
+        "path": "artifacts/capture-r35/recovery-linux-qualification.json",
+        "sha256": "a699971c6061ba3d983b71fa0510153683ca11bbe3c57d6d2393a542eefd4494",
+        "bytes": 1465
+      },
+      "snapshot": {
+        "status": "passed",
+        "operation": "snapshot-created",
+        "release": "20261016-capture-complete-r35",
+        "scope": "primary",
+        "files": 59,
+        "directories": 56,
+        "bytes": 3650619894,
+        "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+        "sqliteDatabasesChecked": 5,
+        "sqliteIntegrity": "ok",
+        "completeTreeVerified": true,
+        "liveDirectoryModified": false,
+        "automaticRollback": false
+      },
+      "isolatedRestore": {
+        "status": "passed",
+        "operation": "isolated-restore-verified",
+        "release": "20261016-capture-complete-r35",
+        "scope": "primary",
+        "files": 59,
+        "directories": 56,
+        "bytes": 3650619894,
+        "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+        "sqliteDatabasesChecked": 5,
+        "sqliteIntegrity": "ok",
+        "completeTreeVerified": true,
+        "liveDirectoryModified": false,
+        "automaticRollback": false
+      },
+      "productionDataRestored": false,
+      "automaticRollback": false,
+      "activationEvidence": {
+        "path": "artifacts/capture-r35/deployment/112-activate.json",
+        "sha256": "a2c156bc03e4a963b7dc5612299d1dc5576c7f0a8889b7207d7f634b0329f505",
+        "bytes": 1982
+      },
+      "boundary": "完整运行树3650619894字节、59文件、56目录、5SQLite，快照与独立新目录恢复逐件核对；未将备份恢复覆盖当前生产数据。"
+    },
+    "field": {
+      "microphone": null,
+      "physicalPhone": null,
+      "roomTerminal": null,
+      "status": "pending"
+    }
+  },
+  "usage": {
+    "policy": "只记录，不设消费上限；金额、用量与未知部分分列。",
+    "spendCap": null,
+    "fixedSyncAndInstallFixturesActualProviderCalls": 0,
+    "evidenceFakeProtocolActualProviderCalls": 0,
+    "observedRealModelAttempt4Requests": 0,
+    "knownProjectAmountUSD": null,
+    "nativeUsageTotals": {
+      "actualProviderModelRequests": 11,
+      "ledgerReceipts": 11,
+      "inputTokens": 6463,
+      "outputTokens": 681,
+      "totalTokens": 7144
+    },
+    "unknownPriceRequests": 11,
+    "internalAssistantAmountUSD": null,
+    "internalAssistantUsage": null,
+    "boundary": "真实11次模型请求与11份原生账本数值匹配；金额均未知且costComplete为false，旧观察器的不完整true标记不作为已知费用。内部AI金额和用量仍未知，费用只记录不设上限。",
+    "allProviderCostsComplete": false
+  },
+  "retainedFailures": [
+    "同步浏览器首轮TDZ夹具失败及仅补失败场景的通过结果。",
+    "证据问答浏览器Cookie夹具失败及单组修正结果。",
+    "本机安装smoke首轮合法JavaScript MIME别名误判及窄修后的单组通过。",
+    "真实模型尝试4准备阶段失败，实际模型请求为0；当时未取得质量结果，后继各cut另列。",
+    "真实contract5三用例轮次中知识支持核验拒答；后继contract6仅原知识单例通过，源码与提示不变，原因仍未知。",
+    "冷备常驻语音r1导出因历史文件owner/mode拒绝；只读元数据诊断后r2限定例外导出及整包传输过，原数据未改；安装/健康/实际语音仍待。"
+  ],
+  "pendingRootFinalization": [
+    "101冷备实际数据切换、当前运行配置/角色绑定和最终健康。",
+    "常驻语音实际调用、结果、费用与原配置恢复；实体手机/麦克风/房间验收仍单列。",
+    "在线项目资料与重要决定版本同步、最终GitHub提交/PR交付。",
+    "记录271及最终公开文档：Root依据以上终态封存后再append/render；当前不写archive/log。",
+    "更广语义质量及知识保守拒答的不确定性仍保留，不能用后一次单例通过抹去原失败。"
+  ],
+  "privacyBoundary": "本报告只含公开安全摘要、相对证据路径和指纹；未复制凭据、私有配置原文、原聊天或私人录音；未做文本内部的语义隐私扫描。",
+  "priorDraft": {
+    "path": "docs/版本记录/密文同步与证据问答验收-20261016-draft.json",
+    "sha256": "b10bd05e1241eab2b1123b7457331b79c7e94d4343f42a342d7acba0f82fef3b",
+    "bytes": 14452
+  },
+  "productionPublicOffline": {
+    "status": "passed",
+    "url": "https://cc-jarvis.ikvein.com/offline-capture.html",
+    "newEmptyBrowserContext": true,
+    "realTlsWithoutBypass": true,
+    "explicitPrepareAndActiveReady": true,
+    "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "offlineManifestSha256": "281bd81bc4220ca5d1a50e33374f17dd11a722515ed69aa386a2ed9314c067b4",
+    "cachedResourcesVerified": 5,
+    "actualNetworkOfflineReloadFromServiceWorker": true,
+    "emptyWritingControlsAvailable": true,
+    "apiRequests": 0,
+    "modelCalls": 0,
+    "microphoneCalls": 0,
+    "pageErrors": 0,
+    "contextAndBrowserClosed": true,
+    "evidence": {
+      "path": "artifacts/capture-r35/production-offline-browser.json",
+      "sha256": "847d3e0ff8e0be75f791d49b137e703be4a20ddbf6be9c5a686cd4b774b893b9",
+      "bytes": 4460
+    },
+    "publicEmptyScreenshot": {
+      "path": "artifacts/capture-r35/production-offline-empty.png",
+      "sha256": "6a00a5a66d06ffba08c1b647d68ad4b0db8487ba3f87582fd372f87092d0b02a"
+    },
+    "boundary": "正式域名空白桌面浏览器的公共离线壳验收；无登录、未读私文、无实体手机或麦克风验收。"
+  },
+  "automation": {
+    "observedStatus": "PAUSED",
+    "changed": false,
+    "scope": "原软件工厂十分钟自动跟进保持PAUSED，本轮未恢复",
+    "evidence": {
+      "path": "artifacts/capture-r35/automation-preserved.json",
+      "sha256": "ff0a8cb3d3b57342328b4c95083eea79cbb83b039b1eb5dedc04dd7683763329",
+      "bytes": 498
+    }
+  },
+  "voice": {
+    "finalActualResult": null,
+    "status": "transferred-pending-install-health-and-inference",
+    "residentPrerequisites": "read-only-ready-is-not-inference-acceptance",
+    "residentPrerequisiteEvidence": {
+      "path": "artifacts/capture-r35/resident-prerequisites-final.json",
+      "sha256": "5fdd0a2c967f0ae6ae897ec527b76e7cce5ed162bd0e8f8a49542e2a29da523e",
+      "bytes": 1452
+    },
+    "boundary": "常驻语音的实际请求、回执及恢复由专项后续结果填入；不复用合成ASR或模型结果冒充现场语音。",
+    "transferHistory": {
+      "originalFailure": {
+        "exitCode": 1,
+        "code": "UNTRUSTED_OWNER_OR_MODE",
+        "inferenceCalls": 0,
+        "evidence": {
+          "path": "artifacts/capture-r35/cold-voice/export.json",
+          "sha256": "0caff5da3eb2ab0ff7efeec9c9f5f9d6cafde0c4517c706247f10c337eec63b4",
+          "bytes": 414
+        }
+      },
+      "readOnlyMetadataInventory": {
+        "entriesChecked": 2075,
+        "outlierEntries": 5,
+        "modelDataRead": false,
+        "privateConfigurationRead": false,
+        "evidence": {
+          "path": "artifacts/capture-r35/cold-voice/model-mode-outliers.json",
+          "sha256": "0ab7345d4016f21d392f6b76f05cf41d91ae66c48c112a8cf39ae6540623bd06",
+          "bytes": 1719
+        }
+      },
+      "narrowCorrection": "仅导出所需固定资产接受当时精确旧UID/mode例外；源数据未改写，目标仍使用root/jarvis及受限权限。修正源码不代表安装或语音验收。",
+      "phases": {
+        "export": {
+          "status": "passed",
+          "sourceSha256": "8b183c7956781a92c6eae39b84f4ed963d74e50230b04e2a0c8202042dc24feb",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "inferenceCalls": 0,
+          "evidence": {
+            "path": "artifacts/capture-r35/cold-voice-r2/export.json",
+            "sha256": "6aeebefe91fdb86c44995042de320eacbf7b6015afabe11428a54f2c25166a40",
+            "bytes": 696
+          },
+          "files": 2075,
+          "manifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358"
+        },
+        "download": {
+          "status": "passed",
+          "sourceSha256": "8b183c7956781a92c6eae39b84f4ed963d74e50230b04e2a0c8202042dc24feb",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "inferenceCalls": 0,
+          "evidence": {
+            "path": "artifacts/capture-r35/cold-voice-r2/download.json",
+            "sha256": "a9e481eb67bbac0cc6913efc6bffe8ec7f75a02f4d504de72cf9990208f79f7f",
+            "bytes": 464
+          }
+        },
+        "upload": {
+          "status": "passed",
+          "sourceSha256": "8b183c7956781a92c6eae39b84f4ed963d74e50230b04e2a0c8202042dc24feb",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "inferenceCalls": 0,
+          "evidence": {
+            "path": "artifacts/capture-r35/cold-voice-r2/upload.json",
+            "sha256": "35eb77c9ae969bb0ffbfb99a0e0edc68ef2aedb07077f18339b6502e19f1fd27",
+            "bytes": 471
+          }
+        }
+      },
+      "install": "pending",
+      "health": "pending",
+      "inferenceAcceptance": "pending"
+    }
+  },
+  "onlineProjectAndDecisions": {
+    "status": "pending",
+    "versions": null,
+    "evidence": null
+  },
+  "gitDelivery": {
+    "status": "pending-root-final",
+    "pullRequest": null,
+    "pushedCommit": null,
+    "merge": null
+  },
+  "terminalGates": {
+    "codeAndPackageVerified": true,
+    "boundedVerificationComplete": true,
+    "primary112LiveHealthy": true,
+    "fullSnapshotAndRestoreVerified": true,
+    "standby101ColdDataBoundVerified": null,
+    "voiceBoundedVerificationComplete": null,
+    "productionHttpsOfflineVerified": true,
+    "factoryAutomationStillPaused": true,
+    "independentAcceptance": false,
+    "physicalDeviceAcceptance": false
+  },
+  "linuxOperationsGuideCandidate": {
+    "status": "candidate-not-merged",
+    "markdown": "artifacts/capture-r35/Linux主备部署与验收-r35-candidate.md",
+    "markdownSha256": "4b6cb623c7cec866cc9bfd925ddd0ddbbd5e889516ce42ffd09f1215b5d21ac4",
+    "html": "artifacts/capture-r35/Linux主备部署与验收-r35-candidate.html",
+    "htmlSha256": "ae6c3ebe6b4fbe93eb352e1850a9f548f4ca65107184c206356f1304eac4589a",
+    "historicalBodyExactSuffixPreserved": true,
+    "evidence": {
+      "path": "artifacts/capture-r35/linux-guide-candidate-preparation.json",
+      "sha256": "d8988f38488d189d9dfbfcf2b239ea9a4ccaf4610dd8948746a8510ac1e94eb7",
+      "bytes": 1148
+    }
+  },
+  "metadataSyncPreparation": {
+    "status": "prepared-not-executed",
+    "sourceName": "capture-r35-metadata-final.mjs",
+    "sourceSha256": "f464baf48470a978790e9fd47b2846f0d6153c1cb6ef1da34e2e4143f48d3d25",
+    "inputFinalReport": "docs/版本记录/密文同步与证据问答验收-20261016-final.json",
+    "terminalTrueGatesRequired": 8,
+    "terminalFalseGatesRequired": 2,
+    "independentReview": {
+      "path": "artifacts/capture-release-r34/metadata-final-source-review.json",
+      "sha256": "7fed849a1d89f3fb6df472d0506764e3c7abc0dc697629e05994f41dbc2455e2",
+      "bytes": 4243
+    },
+    "receipt": null
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-16T00:37:20.413421+00:00",
+  "exitCode": 1,
+  "wallSeconds": 1.7659999998286366,
+  "reportSha256": "9a813eab4170ef054cbaeccf9337aed068f07bcc85206370ee62a8f007a268ce",
+  "report": {
+    "schema": 1,
+    "at": "2026-10-16T00:37:20.378Z",
+    "attempt": "4",
+    "contractSha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f",
+    "sourceHashes": [
+      {
+        "path": "apps/api/src/pi.ts",
+        "sha256": "1c386a77208249965e57f18a7b4bc5e5cfea82987baad99acae8e695b765c453"
+      },
+      {
+        "path": "apps/api/src/runtime/governance.ts",
+        "sha256": "039b006e1274d3f15de3f8e347dc592ee95a755ea162b112ee1dba57141abbc4"
+      },
+      {
+        "path": "apps/api/src/runtime/pi-usage.ts",
+        "sha256": "359d1b4cefd7822e8dd48a4978ccc6ea4a0a6545530be97104e24df479f23d24"
+      },
+      {
+        "path": "apps/api/src/runtime/usage-ledger.ts",
+        "sha256": "ca504d091c3ebaa8868ad74e32914161d8a56465143c45c8c4063cc88a18501e"
+      },
+      {
+        "path": "apps/api/src/runtime/evidence-assistant.ts",
+        "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d"
+      },
+      {
+        "path": "apps/api/src/runtime/evidence-corpus.ts",
+        "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2"
+      },
+      {
+        "path": "scripts/qa-evidence-assistant-quality.ts",
+        "sha256": "82f393ed18a21ebc5f0e9a0135494b655465a2ad874a6bb788e243b4e4f2cefb"
+      }
+    ],
+    "selectedModels": [
+      {
+        "scenario": "knowledge",
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "configured": true
+      },
+      {
+        "scenario": "memory",
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "configured": true
+      }
+    ],
+    "realHttp": true,
+    "realProvider": true,
+    "onlyPublicSyntheticData": true,
+    "productionAccess": false,
+    "retries": 0,
+    "actualModelRequests": 0,
+    "observedCalls": [],
+    "observedUsage": [],
+    "ledger": [],
+    "observedRequestsOutsideDeclaredOrigins": 0,
+    "questionOrPromptHistoryExpected": 0,
+    "internalAssistantCostUSD": null,
+    "internalAssistantTokens": null,
+    "spendCap": null,
+    "cleanupVerified": true,
+    "status": "failed",
+    "results": [
+      {
+        "status": "failed",
+        "cut": "isolated-app-start",
+        "diagnostic": "TypeError: Cannot read properties of undefined (reading 'actorId')"
+      }
+    ]
+  },
+  "productionBusinessDataRead": false,
+  "existingPrivateProviderConfigRead": true,
+  "actualServer": "112",
+  "serviceChanged": false,
+  "factoryTouched": false
+}

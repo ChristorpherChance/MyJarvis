@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-16",
+  "scope": "独立离线密文收件、显式跨浏览器文件迁移与联网导入",
+  "codeCommit": "8d931a9ac35a27c380599d084dd4edfd157b8095",
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/1",
+  "state": {
+    "implementation": "complete",
+    "isolatedVerification": "passed-with-cutoffs",
+    "deployed112": false,
+    "fieldAcceptance": false
+  },
+  "implemented": [
+    "独立离线页面首次联网明确准备后可断网关闭再重开；静态白名单逐件核指纹，只缓存本页及构建依赖，不缓存身份、API、平台页或私文。",
+    "本机口令12至256字符，PBKDF2-SHA256固定600000及随机盐、AES-GCM-256随机IV与认证数据；IDB只保存密文，口令和密钥不持久保存。",
+    "文字、链接和最多5份原件，每件25MiB/合计64MiB；可录原声、回听下载，明确保存后重开恢复，不离线提取网页或转写。",
+    "导出密文文件后可在另一浏览器空库用原口令导入，错口令、损坏包或现有库均不覆盖；这是本人选择的文件迁移，不是后台同步。",
+    "锁定、离开页面或另一标签身份变化清除可显示的正文、口令、密钥及Blob链接并停止录音；不保证操作系统内存抹除。",
+    "当前真实管理员在空快速记录中解锁、预览并确认导入为普通草稿，原件进入现有本机存储；不自动上传或提交，每次导入创建新草稿。"
+  ],
+  "verification": {
+    "vault": {
+      "uniqueGroups": 8,
+      "firstGroupRun": 7,
+      "firstPassed": 7,
+      "additionalStaleExportGroup": 1,
+      "additionalPassed": 1,
+      "runtimeFailures": 0,
+      "oldGroupsRerun": false,
+      "realWebCrypto": true,
+      "browserIdbCoveredSeparately": true,
+      "typePreparation": "首strict tsc有4条TypedArray/BufferSource兼容错误；仅返回类型细化后通过，运行时不变不重跑原7。"
+    },
+    "serviceWorker": {
+      "newControlledGroups": 3,
+      "passed": 3,
+      "rawStdoutPersisted": false,
+      "checked": [
+        "白名单图和稳定版本",
+        "新安装哈希失败保旧cache、成功activate后换",
+        "API/未知/外域/query/非GET不拦截"
+      ]
+    },
+    "browser": {
+      "uniqueGroups": 5,
+      "eachPassedAtLeastOnce": true,
+      "groupOccurrences": 9,
+      "passedOccurrences": 7,
+      "failedOccurrences": 2,
+      "diagnosticOnlyPassedOccurrences": 2,
+      "finalWholeSuiteRerun": false,
+      "successfulCutoffs": {
+        "prepared-real-offline-reopen": 1,
+        "offline-originals-encrypted-and-locked": 3,
+        "explicit-ciphertext-transfer-no-overwrite": 3,
+        "real-admin-import-and-lost-reply": 1,
+        "static-cache-and-shared-identity-clear": 1
+      },
+      "failure": "恢复文字确已存在，但React初始textarea文本混入label，首2个精确定位失败；另2次DOM定位诊断证明原件恢复，随后仅补aria-label并重建，精确标签只补受影响2组。",
+      "firstBundle": "offlineCapture-gKTtUnTN.js",
+      "finalAffectedBundle": "offlineCapture-DS8hRncI.js",
+      "mainBundle": "index-DpS0b2Wt.js",
+      "checked": [
+        "浏览器真正offline关闭tab并新开页面，零服务器请求且API不可读",
+        "真实生成PDF与MediaRecorder合成设备原声11567字节，独立解密和重开后全部字节相同",
+        "独立存储context密文迁移，错口令和损坏包无写，现有库不覆盖",
+        "真实管理员明确导入不上传不提交，随后明确保存，丢已提交回包刷新同命令仅一条记录",
+        "缓存只有5静态项，真实成员登录HTTP之前离线已解锁正文清屏，密文保留"
+      ],
+      "rootViewedScreenshots": true
+    },
+    "build": {
+      "webBuilds": 2,
+      "finalPassed": true,
+      "modules": 187,
+      "reasonForSecond": "仅离线正文精确可访问名称修正",
+      "apiSourceChangedForOffline": false,
+      "apiOldMatricesRerun": false,
+      "whitespaceCheck": true
+    },
+    "environment": {
+      "localOnly": true,
+      "realHttp": true,
+      "temporarySqlite": true,
+      "syntheticMembersAndOriginals": true,
+      "physicalMicrophone": false,
+      "modelCalls": 0,
+      "externalRequests": 0,
+      "productionAccess": false
+    }
+  },
+  "sourceCopy": {
+    "baseline": "bbb9c9ffff030ea66022ad7eb9f6b4a6d02611e8",
+    "files": 15,
+    "rootOldBytesCheckedBackedUpAndReadBack": true,
+    "asrSuccessorExcluded": true
+  },
+  "designReferences": [
+    {
+      "title": "MDN Service Worker installation, scope and updates",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers"
+    },
+    {
+      "title": "MDN Web Crypto deriveKey",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey"
+    },
+    {
+      "title": "OWASP PBKDF2 parameters; used as KDF selection guidance, not a compliance certification",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#pbkdf2"
+    }
+  ],
+  "remaining": [
+    "后台跨浏览器自动同步及冲突合并尚未实现；本轮仅显式密文迁移。",
+    "真实ASR准确率、时间定位及实体终端：本记录截止只有后继worker纯协议准备，不含真实识别，另记录268。",
+    "语义检索与真实模型回答引用质量、PR合并、112发布和现场验收。",
+    "在线项目资料及重要决定版本同步本次未访问执行。"
+  ],
+  "costs": {
+    "policy": "只记无上限",
+    "internalUsage": "unknown",
+    "unitPrices": "unknown",
+    "internalAmount": "unknown",
+    "offlineProjectModelCalls": 0
+  },
+  "cleanup": {
+    "newOwnedFixturesRemoved": true,
+    "oldPolicyDeniedThreeDirectoriesUntouched": true
+  },
+  "preserved": {
+    "factoryFollowup": "paused",
+    "formalVersion": "20261012-supervision-r28-2",
+    "all74AndCustomer12Delivered": false
+  },
+  "evidence": [
+    {
+      "path": "browser-attempt-1.json",
+      "sha256": "d03372ec11befb64aed1d50dd5a058f3a3cc4e59509daa84bf12cc7c09b6ceac",
+      "bytes": 3254,
+      "origin": "artifacts\\offline-capture-browser-qa\\attempt-1.json",
+      "kind": "safe-projection"
+    },
+    {
+      "path": "browser-attempt-2.json",
+      "sha256": "2536640d5febc95b53e61513bd2b55137a1c8a7652de712bfa5377f5bf20ff36",
+      "bytes": 1992,
+      "origin": "artifacts\\offline-capture-browser-qa\\attempt-2.json",
+      "kind": "safe-projection"
+    },
+    {
+      "path": "browser-attempt-3.json",
+      "sha256": "18a3b89332abaf7524c5e9a2f643bfc543a191662047f557036dfcdbc6aae0b1",
+      "bytes": 1794,
+      "origin": "artifacts\\offline-capture-browser-qa\\attempt-3.json",
+      "kind": "safe-projection"
+    },
+    {
+      "path": "browser-cut-summary.json",
+      "sha256": "caa9734c5826b6e0c501db347daf99e3c5d08bab726a35daa2244a2479bfd5ce",
+      "bytes": 5706,
+      "origin": "artifacts\\offline-capture-browser-qa\\cut-summary.json",
+      "kind": "safe-projection"
+    },
+    {
+      "path": "phone-complete-offline-reopen-1.png",
+      "sha256": "7c47100929228987ae679b66aff75abcca7e45bd07997b15360c8cdae3835839",
+      "bytes": 71564,
+      "origin": "artifacts\\offline-capture-browser-qa\\phone-complete-offline-reopen-1.png",
+      "kind": "safe-copy"
+    },
+    {
+      "path": "phone-offline-restored-real-pdf-and-recording-3.png",
+      "sha256": "01636aea991b253bffbf3145947f38c38cbc93e660ddb71ef4c67bf589dd0cf6",
+      "bytes": 116353,
+      "origin": "artifacts\\offline-capture-browser-qa\\phone-offline-restored-real-pdf-and-recording-3.png",
+      "kind": "safe-copy"
+    },
+    {
+      "path": "desktop-explicit-ciphertext-transfer-3.png",
+      "sha256": "6c2129623dec0fcabda34eae0d5efa87207e007966e58cf1dc9c48b685fa9235",
+      "bytes": 116198,
+      "origin": "artifacts\\offline-capture-browser-qa\\desktop-explicit-ciphertext-transfer-3.png",
+      "kind": "safe-copy"
+    },
+    {
+      "path": "phone-real-admin-import-explicit-submit-1.png",
+      "sha256": "7c7c4a1686ccd8df0c96db01eac983b3b39f52c59d23e26760ea0024e7abdbe1",
+      "bytes": 95721,
+      "origin": "artifacts\\offline-capture-browser-qa\\phone-real-admin-import-explicit-submit-1.png",
+      "kind": "safe-copy"
+    },
+    {
+      "path": "desktop-locked-before-real-member-login-1.png",
+      "sha256": "5b695c89da63a9299fdc99b6b3b8546f6ff49c83ba83dd9988e0148126d8f1e4",
+      "bytes": 81449,
+      "origin": "artifacts\\offline-capture-browser-qa\\desktop-locked-before-real-member-login-1.png",
+      "kind": "safe-copy"
+    },
+    {
+      "path": "static-shell-manifest.json",
+      "sha256": "f6e92abf581e58f80d37c359e9e96d6fd64c4e1da758066072fce31823c4cc0e",
+      "bytes": 1135,
+      "origin": "local-built-static-shell",
+      "kind": "safe-copy"
+    }
+  ]
+}

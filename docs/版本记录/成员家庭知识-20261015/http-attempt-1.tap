@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: member-only HTTP knowledge preserves mixed-cookie identity and rejects admin or terminal fallback
+ok 1 - member-only HTTP knowledge preserves mixed-cookie identity and rejects admin or terminal fallback
+  ---
+  duration_ms: 1030.9733
+  type: 'test'
+  ...
+# Subtest: HTTP query searches all allowed saved text before kind filtering and limit, without fetching live sources
+ok 2 - HTTP query searches all allowed saved text before kind filtering and limit, without fetching live sources
+  ---
+  duration_ms: 971.9872
+  type: 'test'
+  ...
+# Subtest: HTTP references bind canonical IDs to the exact member session and reject revoked credentials
+ok 3 - HTTP references bind canonical IDs to the exact member session and reject revoked credentials
+  ---
+  duration_ms: 984.7852
+  type: 'test'
+  ...
+# Subtest: HTTP reader rechecks current source, published version and actual full-text hash before returning context
+ok 4 - HTTP reader rechecks current source, published version and actual full-text hash before returning context
+  ---
+  duration_ms: 756.3924
+  type: 'test'
+  ...
+# Subtest: HTTP ephemeral reference cache enforces five minutes, ten per session and two hundred globally
+ok 5 - HTTP ephemeral reference cache enforces five minutes, ten per session and two hundred globally
+  ---
+  duration_ms: 6060.1748
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13711.1867

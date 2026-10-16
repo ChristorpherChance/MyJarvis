@@ -1,6 +1,7 @@
 import type { DemoData } from './types';
 import { v1Command, V1Error, type V1CollectionDomain, type V1Record, type V1Scope } from '../v1-client';
 import type { KnowledgeData } from '../features/knowledge/domain';
+import {registerStoredMaterialBook} from '../features/operations/inbox-book-registration';
 
 type Values=Record<string,any>;
 type Records=Partial<Record<V1CollectionDomain,V1Record[]>>;
@@ -61,7 +62,7 @@ async function uploadBook(p:Values,records:Records):Promise<unknown>{
   const result=await submit(target?{domain:'books',command:'rescan',body:{uploadId:current.ticket.id,bookId:target.id,doubtId:p.doubtId,note:p.note},scope:target.scope,version:p.expectedVersion??target.revision}:{domain:'books',command:'create',body:{uploadId:current.ticket.id,...fields(p,['title','edition','author','pages','rights','layout','materialId'])},scope:source.scope,version:0});current.book=result;return result;
  })().finally(()=>{current.promise=undefined;});current.promise=promise;return promise;
 }
-export function executeLiveKnowledge(action:string,payload:Record<string,unknown>,_data:DemoData,records:Records):Promise<unknown>{return action==='knowledge.book.upload'||action==='knowledge.book.rescan'&&Array.isArray(payload.files)?uploadBook(payload,records):submit(operation(action,payload,records));}
+export function executeLiveKnowledge(action:string,payload:Record<string,unknown>,_data:DemoData,records:Records):Promise<unknown>{return action==='knowledge.book.reuse'?registerStoredMaterialBook(String(_data.runtime?.capabilities?.identity?.actorId||''),String(payload.assetId||''),payload,records.sources||[]):action==='knowledge.book.upload'||action==='knowledge.book.rescan'&&Array.isArray(payload.files)?uploadBook(payload,records):submit(operation(action,payload,records));}
 
 /** Project only persisted knowledge records. No demonstration seed or OCR substitute is read. */
 export function projectLiveKnowledge(records:Records):KnowledgeData {

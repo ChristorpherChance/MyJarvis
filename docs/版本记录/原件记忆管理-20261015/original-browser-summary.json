@@ -1,0 +1,131 @@
+{
+  "at": "2026-10-15T15:07:55.771825+00:00",
+  "status": "passed",
+  "uniqueNewBusinessCases": 4,
+  "results": [
+    {
+      "name": "lifecycle-retention-preview-delete",
+      "report": "artifacts/original-management-browser-qa/attempt-2.json",
+      "reportSha256": "65ec17ff92132b424e9e29a546659c3865d33c7495607ae5df93269d783986fd",
+      "loadedBundles": [
+        "/assets/index-L76pDq3c.js",
+        "/assets/DemoApp-DKan4Dm5.js",
+        "/assets/v1-client-CX0ITgRR.js",
+        "/assets/api-Chk_xhf3.js",
+        "/assets/NotificationPreferencesPanel-CtldU3b-.js",
+        "/assets/MaterialManager-DNUJimEu.js",
+        "/assets/OperationsPage-Ce2IrBUa.js",
+        "/themes/stark.js"
+      ],
+      "evidence": {
+        "trashLostReceiptSameCommand": true,
+        "retentionLock": true,
+        "previewOnly": true,
+        "restore": true,
+        "explicitPermanentDelete": true,
+        "originalFileAbsent": true,
+        "mobileOverflow": false
+      },
+      "cleanupVerified": true
+    },
+    {
+      "name": "manager-shared-session-late-401",
+      "report": "artifacts/original-management-browser-qa/attempt-2.json",
+      "reportSha256": "65ec17ff92132b424e9e29a546659c3865d33c7495607ae5df93269d783986fd",
+      "loadedBundles": [
+        "/assets/index-L76pDq3c.js",
+        "/assets/DemoApp-DKan4Dm5.js",
+        "/assets/v1-client-CX0ITgRR.js",
+        "/assets/api-Chk_xhf3.js",
+        "/assets/NotificationPreferencesPanel-CtldU3b-.js",
+        "/assets/MaterialManager-DNUJimEu.js",
+        "/assets/OperationsPage-Ce2IrBUa.js",
+        "/themes/stark.js"
+      ],
+      "evidence": {
+        "sharedEpochHidesListAndDetail": true,
+        "actualOld401": true,
+        "newSessionStillAuthenticated": true,
+        "newDraftPreserved": true,
+        "spuriousAuthRequiredEvents": 0
+      },
+      "cleanupVerified": true
+    },
+    {
+      "name": "referenced-original-delete-blocked",
+      "report": "artifacts/original-management-browser-qa/attempt-4.json",
+      "reportSha256": "7b7a7df651730f25d13cae64c87b73c5eecdcd975d09fd8a02703b7928c17877",
+      "loadedBundles": [
+        "/assets/index-L76pDq3c.js",
+        "/assets/v1-client-CX0ITgRR.js",
+        "/assets/api-Chk_xhf3.js",
+        "/assets/DemoApp-DKan4Dm5.js",
+        "/assets/NotificationPreferencesPanel-CtldU3b-.js",
+        "/assets/MaterialManager-DNUJimEu.js",
+        "/assets/OperationsPage-Ce2IrBUa.js",
+        "/themes/stark.js"
+      ],
+      "evidence": {
+        "realBusinessReference": true,
+        "currentUsageShown": true,
+        "uiDeleteBlocked": true,
+        "serverDeleteRejected": 409,
+        "mobileOverflow": false
+      },
+      "cleanupVerified": true
+    },
+    {
+      "name": "stored-pdf-book-reuse-recovery",
+      "report": "artifacts/original-management-browser-qa/attempt-7.json",
+      "reportSha256": "4dc345b6b250d2fab1da29ca62f53b73d49f962818fc5b8db9fd3b412d03f656",
+      "loadedBundles": [
+        "/assets/index-CBVKrQiZ.js",
+        "/assets/v1-client-CX0ITgRR.js",
+        "/assets/api-Chk_xhf3.js",
+        "/assets/DemoApp-C-fSHpeW.js",
+        "/assets/NotificationPreferencesPanel-Z57XwyH5.js",
+        "/assets/MaterialManager-DvFOf4Qp.js",
+        "/assets/OperationsPage-DufjSOiD.js",
+        "/themes/stark.js",
+        "/assets/KnowledgePage-BCBEMBlU.js"
+      ],
+      "evidence": {
+        "realPdfBytes": true,
+        "realImageBytes": true,
+        "imageExactlyOnePage": true,
+        "existingSource": true,
+        "existingMaterialCandidate": true,
+        "materialReferenceDeepLink": true,
+        "noLocalFileSelection": true,
+        "threeFixedCommandsAfterReload": true,
+        "oneRegisteredPdfBook": true,
+        "published": false,
+        "originalShaUnchanged": true
+      },
+      "cleanupVerified": true
+    }
+  ],
+  "navigationDelta": "Only reuse case was rerun after changing the new material-reference navigation from unmounted originals to existing temple deep link. Three previously passed cases were not rerun; their original bundle boundary is retained.",
+  "failedAttemptsRetained": [
+    "preflight-1.json",
+    "attempt-1.json",
+    "attempt-2.json",
+    "attempt-3.json",
+    "attempt-5.json",
+    "attempt-6.json"
+  ],
+  "failures": "Dependency paths and fixture/locator errors are retained. The new material-reference route was a real source defect, fixed and verified in attempt 7. The repeated final-audit count assertions are summaries, not additional business cases.",
+  "finalWebTypecheck": "passed after navigation delta",
+  "businessSourceFrozen": true,
+  "productionAccess": false,
+  "modelCalls": 0,
+  "externalBrowserRequests": 0,
+  "browserRuntimeExceptions": 0,
+  "oldMatricesRerun": false,
+  "screenshotsManuallyInspected": [
+    "phone-explicit-original-delete-2.png",
+    "phone-referenced-original-protected-4.png",
+    "stored-pdf-reused-not-published-7.png"
+  ],
+  "harnessFinalSelectorNote": "After attempt 7 passed, remaining top-level heading locators were constrained to their actual heading levels and node --check passed; no further browser rerun or business source change."
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "kind": "encrypted-draft-sync-new-http-and-vault-verification",
+  "at": "2026-10-16T00:17:14.054996+00:00",
+  "attempt": 1,
+  "scope": "New encrypted draft sync and explicit guarded vault replacement only; old suites not run",
+  "uniqueGroups": 4,
+  "passed": 4,
+  "failed": 0,
+  "groups": [
+    {
+      "name": "encrypted draft HTTP CAS, same-operation lost-reply retry and competing browser writes preserve one winner",
+      "status": "passed",
+      "evidence": [
+        "Actual loopback HTTP",
+        "One winning same-revision write; losing writer 409",
+        "Same exact command replay returns revision1 without another write",
+        "Same command id with changed encrypted payload 409",
+        "Metadata has no envelope; stale package revision rejected",
+        "Stored row has ciphertext only, no synthetic plaintext"
+      ]
+    },
+    {
+      "name": "encrypted draft HTTP uses effective real administrator, rejects mixed member cookies and non-encrypted fields",
+      "status": "passed",
+      "evidence": [
+        "No admin 401",
+        "Valid member plus independently still-valid admin cookie 403",
+        "Member-only 401",
+        "Additional plaintext field rejected400",
+        "Unsafe KDF parameter rejected400",
+        "Rejected inputs leave revision0"
+      ]
+    },
+    {
+      "name": "remote forgetting removes ciphertext and old receipts, keeps tombstone and bounded metadata receipts",
+      "status": "passed",
+      "evidence": [
+        "Actual HTTP put/delete/replay and old-operation rejection",
+        "130 direct synchronous module mutations verify receipt cap128 without bypassing HTTP rate limits in production",
+        "Deletion leaves current row envelope/hash null and bytes0",
+        "Old receipt metadata removed; only delete receipt remains",
+        "Deleted current package404 and stale old put409"
+      ]
+    },
+    {
+      "name": "explicit sync replacement decrypts before exact local CAS and lock/epoch guards block stale writes",
+      "status": "passed",
+      "evidence": [
+        "Real WebCrypto",
+        "Wrong original key preserves current encrypted row",
+        "False epoch guard and lock block delayed replacement",
+        "Old local CAS rejected",
+        "Explicit exact-row replacement restores remote content and remains editable",
+        "Ordinary portable import still cannot overwrite"
+      ]
+    }
+  ],
+  "rawStdoutPersisted": false,
+  "verificationSource": "Actual node --import tsx --test apps/api/test/offline-draft-sync.test.ts tool completion: tests4 pass4 fail0",
+  "sources": [
+    {
+      "path": "apps/api/src/runtime/offline-draft-sync.ts",
+      "sha256": "05816f1d0fc439174044e4d07602360978e1fda24fa04f542f1e9825cefbf159",
+      "bytes": 9006
+    },
+    {
+      "path": "apps/api/test/offline-draft-sync.test.ts",
+      "sha256": "06e2948346f927604c20e500783ff5536e81c36984bb41fa5e3049d09150bdb9",
+      "bytes": 9532
+    },
+    {
+      "path": "apps/web/src/features/offline/offline-vault.ts",
+      "sha256": "d2d95268b0a865dac5de98c1a6bc97410e19216860b2a6aedcd569f1f91cb7e1",
+      "bytes": 20924
+    }
+  ],
+  "environment": {
+    "temporarySqlite": true,
+    "realLoopbackHttp": true,
+    "models": 0,
+    "externalRequests": 0,
+    "productionAccess": false,
+    "newTemporaryResourcesCleaned": true
+  },
+  "boundaries": [
+    "No old API/vault/browser suite rerun",
+    "Browser integration is a separate later cut",
+    "No field microphone, Linux or production verification",
+    "Server validates bounded encrypted envelope format without decrypting it",
+    "Delete does not claim forensic storage erasure or deletion of other local copies"
+  ]
+}

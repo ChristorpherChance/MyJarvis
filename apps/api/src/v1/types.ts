@@ -1,5 +1,5 @@
 export type Scope = 'personal' | 'private' | 'family' | 'company';
-export type Domain = 'inbox' | 'research' | 'projects' | 'tasks' | 'experiences' | 'releases' | 'capture-policies'
+export type Domain = 'inbox' | 'inbox-assets' | 'research' | 'projects' | 'tasks' | 'experiences' | 'releases' | 'capture-policies'
  | 'sources' | 'books' | 'stories' | 'learning' | 'voice' | 'family' | 'memory' | 'personas'
  | 'machines' | 'services' | 'operations' | 'approvals' | 'settings' | 'jobs';
 export interface BusinessRecord { id:string; revision:number; scope:Scope; ownerId:string; [key:string]:any }

@@ -2,6 +2,7 @@ import {useCallback,useEffect,useMemo,useRef,useState} from 'react';
 import {Button,Dialog,Empty,Field,Panel,Tag} from '../../ui';
 import {useDemo} from '../../demo/context';
 import {MemoryRuntimeTools,memoryRuntimeApi,ownedMemoryConversations} from './MemoryRuntimeTools';
+import {EvidenceAssistantPanel} from '../evidence/EvidenceAssistantPanel';
 import {ErrorNotice,exportJson,Heading,Hint,Icon,PolicySummary,PrivateGate,ProfilePicker,SavePolicyFields,useFamily,type FamilyProps} from './shared';
 import {V1Error} from '../../v1-client';
 import {materialSessionGeneration} from '../operations/inbox-material-store';
@@ -51,6 +52,7 @@ export default function Memory({navigate}:FamilyProps){
   <div className="fa-memory-banner"><div className="fa-memory-emblem"><Icon name="lock" size={36}/><i/><i/></div><div><span className="eyebrow">YOUR MEMORY · YOUR CHOICE</span><h2>懂你，也尊重你的改变</h2><p>生效记忆用于个性化；待确认的推测不当作事实。</p></div><div className="fa-count-pair"><strong>{active}<small>已生效</small></strong><strong>{candidates}<small>待确认</small></strong></div></div>
   <PolicySummary policy={policy} onEdit={()=>{setDraftPolicy({...policy,...(policy.requested||{})});setRevision(policy.revision||0);setModal('policy')}}/>
   {live&&<MemoryRuntimeTools onChanged={refresh}/>}
+  {live&&<EvidenceAssistantPanel domain="memory"/>}
   {live&&<MemoryReviewWorkbench actorId={actorId} revisionKey={memorySignature} onChanged={async()=>{clearQueryResults('记忆已更新，请重新查询。');await refresh()}} onError={handleApiError} forgetId={maintenanceForgetId} onForgetClosed={()=>setMaintenanceForgetId('')}/>}
   <div className="fa-toolbar"><div className="fa-tabs" role="tablist" aria-label="记忆状态">{tabs.map(([id,label])=><button key={id} role="tab" aria-selected={tab===id} className={tab===id?'selected':''} onClick={()=>{setTab(id);setQuery('');clearQueryResults()}}>{label}<span>{all.filter(m=>id==='history'?['rejected','forgotten','merged'].includes(m.status):m.status===id).length}</span></button>)}</div>{live&&tab==='active'?<form className="fa-actions" style={{flexWrap:'wrap'}} onSubmit={event=>{event.preventDefault();void searchMemory()}}><input aria-label="按问题查找本人记忆" placeholder="例如：我喜欢怎样的学习安排？" maxLength={1000} value={query} onChange={event=>{setQuery(event.target.value);clearQueryResults()}}/><Button type="submit" disabled={queryBusy||!query.trim()}>{queryBusy?'正在查询…':'按问题查找'}</Button>{(query||queryResult)&&<Button kind="ghost" onClick={()=>{setQuery('');clearQueryResults()}}>清除查询</Button>}</form>:<input aria-label="搜索本人记忆" placeholder="筛选本页内容、类型或来源" value={query} onChange={e=>setQuery(e.target.value)}/>}</div>
   {live&&tab==='active'&&<Hint>按问题中的字词与中文片段查找当前本人的生效记忆；尚未使用同义或语义检索。候选和历史记录可在对应状态中管理。</Hint>}

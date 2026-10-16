@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { OfflineVault, createOfflineVaultDraft, OFFLINE_VAULT_MAX_FILE_SIZE, OFFLINE_VAULT_MAX_TOTAL_SIZE, OFFLINE_VAULT_MAX_FILES, type OfflineVaultDraft, type OfflineVaultMaterial } from './offline-vault';
 import { currentOfflineShell, prepareOfflineShell } from './offline-shell-client';
+import {OfflineDraftSync} from './OfflineDraftSync';
 
 const MAX_FILE = OFFLINE_VAULT_MAX_FILE_SIZE, MAX_TOTAL = OFFLINE_VAULT_MAX_TOTAL_SIZE;
 const kinds = [['idea', '灵感想法'], ['experience', '问题经验'], ['lesson', '经验教训'], ['skill', '通用技能'], ['book', '资料书籍'], ['memory', '记忆候选']] as const;
@@ -24,7 +25,9 @@ export function OfflineCapture() {
   const [confirmation, setConfirmation] = useState('');
   const [acknowledged, setAcknowledged] = useState(false);
   const [dirty, setDirty] = useState(false);
-  const [busy, setBusy] = useState(false);
+  const [busyState, setBusy] = useState(false);
+  const [syncWorking,setSyncWorking]=useState(false),[saveSerial,setSaveSerial]=useState(0);
+  const busy=busyState||syncWorking;
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [online, setOnline] = useState(navigator.onLine);
@@ -46,7 +49,7 @@ export function OfflineCapture() {
     const active = recorder.current; recorder.current = null;
     if (active && active.state !== 'inactive') active.stop();
     stream.current?.getTracks().forEach(track => track.stop()); stream.current = null;
-    draftRef.current = null; setDraft(null); setPassphrase(''); setConfirmation(''); setDirty(false); setBusy(false); setRecording('idle'); setError('');
+    draftRef.current = null; setDraft(null); setPassphrase(''); setConfirmation(''); setDirty(false); setBusy(false); setSyncWorking(false);setRecording('idle'); setError('');
     if (importing.current) importing.current.value = '';
     if (filesInput.current) filesInput.current.value = '';
     if (announce) setNotice('已锁定并清屏。未保存的改动已清除，解锁可恢复最近一次密文保存。');
@@ -73,7 +76,7 @@ export function OfflineCapture() {
     try {
       const saved = await action();
       if (epoch.current !== turn) return;
-      draftRef.current = saved; setDraft(saved); setDirty(false); setExists(true); setPassphrase(''); setConfirmation(''); setNotice(success);
+      draftRef.current = saved; setDraft(saved); setDirty(false); setExists(true); setPassphrase(''); setConfirmation('');setSaveSerial(value=>value+1);setNotice(success);
     } catch (e) { if (epoch.current === turn) setError(message(e)); }
     finally { if (epoch.current === turn) setBusy(false); }
   };
@@ -170,9 +173,10 @@ export function OfflineCapture() {
           <div className="offline-field-row"><label>收件类型<select value={draft.kind} onChange={event => update({ kind: event.target.value as OfflineVaultDraft['kind'] })} disabled={busy || recording !== 'idle'}>{kinds.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><label>整理范围<select value={draft.scope} onChange={event => update({ scope: event.target.value as OfflineVaultDraft['scope'] })} disabled={busy || recording !== 'idle'}>{scopes.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label></div>
           <div className="offline-materials-heading"><h3>文档、图片与原声</h3><p>最多5件，每件25 MiB，合计64 MiB。录音保留原声，不在离线页转写。</p></div><div className="offline-actions"><label className="offline-file-button">添加离线文件<input ref={filesInput} type="file" multiple aria-label="添加离线文件" disabled={busy || recording !== 'idle'} onChange={event => { addMaterials([...event.target.files || []].map(file => ({ id: crypto.randomUUID(), filename: file.name, mime: file.type || 'application/octet-stream', size: file.size, blob: file }))); event.target.value = ''; }} /></label><button type="button" onClick={() => void startRecording()} disabled={busy || recording !== 'idle'}>开始原声录音</button>{recording !== 'idle' && <button type="button" onClick={stopRecording} disabled={recording !== 'recording'}>{recording === 'requesting' ? '等待麦克风权限…' : recording === 'stopping' ? '正在收齐录音…' : '停止录音'}</button>}</div>
           {draft.materials.length > 0 && <ul className="offline-materials">{draft.materials.map(material => <Material key={material.id} material={material} disabled={busy || recording !== 'idle'} objectUrls={objectUrls.current} onRemove={() => update({ materials: draft.materials.filter(item => item.id !== material.id) })} />)}</ul>}
-          <div className="offline-actions offline-save"><button type="button" className="offline-primary" onClick={save} disabled={busy || recording !== 'idle'}>{busy ? '正在保存密文…' : '保存到本机密文'}</button><button type="button" onClick={() => void exportPackage()} disabled={busy || dirty || recording !== 'idle'}>导出密文备份</button><button type="button" onClick={() => clearSensitive()}>锁定并清屏</button></div><p className="offline-muted">保存后才可关闭恢复或导出。锁定会清除未保存改动；本页不会自动上传或提交。</p></div>}
+          <div className="offline-actions offline-save"><button type="button" className="offline-primary" onClick={save} disabled={busy || recording !== 'idle'}>{busy ? '正在保存密文…' : '保存到本机密文'}</button><button type="button" onClick={() => void exportPackage()} disabled={busy || dirty || recording !== 'idle'}>导出密文备份</button><button type="button" onClick={() => clearSensitive()}>锁定并清屏</button></div><p className="offline-muted">保存后才可关闭恢复或导出。锁定会清除未保存改动；只有明确启用下方同步才会上传密文，绝不自动提交到收件。</p></div>}
       {error && <p role="alert" className="offline-error">{error}</p>}{notice && <p role="status" className="offline-success">{notice}</p>}
     </section>
+    <OfflineDraftSync vault={vault} localReady={!!draft} dirty={dirty} disabled={busyState||recording!=='idle'} saveSerial={saveSerial} onLock={()=>clearSensitive()} onWorking={setSyncWorking} onRemote={value=>{draftRef.current=value;setDraft(value);setExists(true);setDirty(false);setPassphrase('');setConfirmation('');setSaveSerial(serial=>serial+1);setNotice('已选择远端密文并恢复本机。尚未提交到收件。')}}/>
     <footer className="offline-card offline-footer"><div><h2>联网后继续</h2><p>先保存并导出密文备份，再到平台的快速记录中选择密文包和原口令。核对当前登录身份与内容后，再由你提交。</p></div><a className="offline-link-button" href="/?mode=platform">到平台整理</a></footer>
   </main>;
 }

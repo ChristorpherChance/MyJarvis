@@ -103,7 +103,7 @@ export class GovernanceRuntime {
       this.db.exec('COMMIT');
     } catch (error) { this.db.exec('ROLLBACK'); throw error; }
     const p = this.policy().values, totals = this.totals();
-    if (p.dailyLimitUSD > 0 && (totals.estimatedUSD >= p.dailyLimitUSD || p.blockUnpriced && cost === null)) throw new BusinessError('BUDGET_EXHAUSTED', '本次用量已达到预算边界，停止继续调用', 409);
+    if (usage.recordOnly !== true && p.dailyLimitUSD > 0 && (totals.estimatedUSD >= p.dailyLimitUSD || p.blockUnpriced && cost === null)) throw new BusinessError('BUDGET_EXHAUSTED', '本次用量已达到预算边界，停止继续调用', 409);
   };
   recordUnknown(meta:PiRunMetadata,reason='ended-without-provider-usage',measuredAt=new Date().toISOString(),usageKind='missing-run-receipt'){
     const stamp=Number.isFinite(Date.parse(measuredAt))?new Date(measuredAt).toISOString():new Date().toISOString();

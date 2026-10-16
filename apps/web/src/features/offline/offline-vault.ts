@@ -18,11 +18,12 @@ export type OfflineVaultErrorCode = 'INVALID' | 'UNAVAILABLE' | 'CONFLICT' | 'LO
 export class OfflineVaultError extends Error {
   constructor(message: string, public code: OfflineVaultErrorCode) { super(message); this.name = 'OfflineVaultError'; }
 }
-export interface OfflineVaultRevision { vaultId: string; revision: number }
+/** Local CAS token: forked packages may share an id and revision, so compare their full encrypted state. */
+export interface OfflineVaultRevision { vaultId: string; revision: number; salt: string; iv: string; ciphertext: string }
 export interface OfflineVaultEnvelope extends OfflineVaultRevision {
   format: typeof FORMAT; version: 1; kdf: 'PBKDF2-SHA256'; iterations: number; salt: string; cipher: 'AES-GCM-256'; iv: string; ciphertext: string;
 }
-/** CAS must compare and write atomically; the optional signal cancels writes when the vault locks. */
+/** CAS must compare the full token and write atomically; the signal cancels locked or stopped writes. */
 export interface OfflineVaultStorage {
   read(): Promise<unknown | null>;
   compareAndSwap(expected: OfflineVaultRevision | null, next: OfflineVaultEnvelope, signal: AbortSignal): Promise<void>;
@@ -148,7 +149,7 @@ export async function decryptOfflinePackage(file: Blob, passphrase: string): Pro
   passphraseValid(passphrase); const row = await readPackage(file); return decrypt(row, await derive(passphrase, row));
 }
 function sameRevision(value: unknown, expected: OfflineVaultRevision | null): boolean {
-  return expected === null ? value === null || value === undefined : object(value) && value.vaultId === expected.vaultId && value.revision === expected.revision;
+  return expected === null ? value === null || value === undefined : object(value) && value.vaultId === expected.vaultId && value.revision === expected.revision && value.salt === expected.salt && value.iv === expected.iv && value.ciphertext === expected.ciphertext;
 }
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -235,5 +236,14 @@ export class OfflineVault {
     passphraseValid(passphrase); this.lock(); const signal = this.controller.signal, row = await readPackage(file); this.check(signal);
     const key = await derive(passphrase, row); this.check(signal); const draft = await decrypt(row, key); this.check(signal);
     await this.storage.compareAndSwap(null, row, signal); this.check(signal); this.key = key; this.current = row; return draft;
+  }
+  /** Explicit conflict choice only. Decrypt first, then atomically replace the exact observed local row. */
+  async replaceForSync(file: Blob, passphrase: string, expected: OfflineVaultRevision | null, stillCurrent: () => boolean = () => true, syncSignal?: AbortSignal): Promise<OfflineVaultDraft> {
+    passphraseValid(passphrase); const signal = this.controller.signal, writeSignal = syncSignal ? AbortSignal.any([signal, syncSignal]) : signal;
+    const check = () => { this.check(signal); if (writeSignal.aborted || !stillCurrent()) throw new DOMException('Aborted', 'AbortError'); };
+    const before = await this.storage.read(); check(); if (!sameRevision(before, expected)) return conflict();
+    const row = await readPackage(file); check(); const key = await derive(passphrase, row); check();
+    const draft = await decrypt(row, key); check();
+    await this.storage.compareAndSwap(expected, row, writeSignal); check(); this.key = key; this.current = row; return draft;
   }
 }

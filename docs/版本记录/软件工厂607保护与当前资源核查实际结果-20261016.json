@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-incomplete-driver-current-main607-actual-observation",
+  "at": "2026-10-16T04:48:40.107714+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-pg4-incomplete-driver-current-main607-once.mjs",
+    "sha256": "8618e306dc39ecd84c1e9f24ca0d4b43152ab089049f848d1b281cd286627067",
+    "bytes": 16045
+  },
+  "outer": {
+    "path": ".jarvis-dev/maintenance/run-r37-pg4-incomplete-driver-current-main607-reviewed-once.py",
+    "sha256": "af6e162dd7cddd60f92e1edbd611b0c47a8822631b3931ec6eb2b0d7b8658a27",
+    "bytes": 17426
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-incomplete-driver-current-main607-entry-context.json",
+    "sha256": "4c8340af743c556ffdf1ea2959a7564d4cddd2a8d1502c7a6d79076c833862a8"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-incomplete-driver-current-main607-entry-independent-local-review-final.json",
+    "sha256": "a79f685f9867f5c7926d8633997372e2cd3e68e53b4229802a7e39a2dbfa46bb"
+  },
+  "outerOnce": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-incomplete-driver-current-main607-outer-once.json",
+    "sha256": "9425c760407aa3552e24edded1890cfc5dcb73e97a4db4db35589757af4ae138",
+    "bytes": 857
+  },
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-incomplete-driver-current-main607-operator-console.json",
+    "sha256": "a8f2a425b58693c4f21a9bb1fd52eed6b4f80945545438b19bbdf6744cedd3c2",
+    "bytes": 167272
+  },
+  "exitCode": 0,
+  "timedOut": false,
+  "elapsedSeconds": 49.40599999995902,
+  "result": {
+    "wholeCaptureIndexes": [
+      {
+        "phase": "before",
+        "indexRef": {
+          "path": ".jarvis-dev/maintenance/pg4-r37-current-main607-private-1792126030841-31813b0e-e25f-4a04-ac03-03662ac5c2ed.json",
+          "sha256": "cfa75b1496a0f631f5b7d8b83718e092957f5fab1af93afe08932b353df464d3",
+          "bytes": 15767
+        },
+        "captureAvailable": true
+      },
+      {
+        "phase": "after",
+        "indexRef": {
+          "path": ".jarvis-dev/maintenance/pg4-r37-current-main607-private-1792126053036-87006653-1da4-4e9c-a6e9-1d352cf26cdf.json",
+          "sha256": "b9a26e2b6ef409a1bbaecf17364cc53ad8b775b89628ef1d72d3cd68d99f0d4a",
+          "bytes": 15766
+        },
+        "captureAvailable": true
+      }
+    ],
+    "kind": "r37-pg4-incomplete-driver-current-main607-entry-result",
+    "ready": true,
+    "errorCode": null,
+    "actualCurrentScopeObserved": true,
+    "currentResourceScopeClosedVerified": true,
+    "sourceBytesStable": true,
+    "callerSHA256": "84d2669e14660c1cd6f50d0edbd41c2ee1b4357af91430520f8307852abd7d34",
+    "privateOutcome": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-incomplete-driver-current-main607-outcome-1792126054943-f683cd5f-4f76-4cd2-805d-3591e8f02daf.json",
+      "sha256": "79a39c39590eeb1dfbbf47fb741158e6c29dc40d88211ec764e31ab4fb11a569",
+      "bytes": 10028067
+    },
+    "once": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-incomplete-driver-current-main607-read-once.json",
+      "sha256": "c68714e4f3b9817377e6df3af7ae569bf3bf95e4629cbe2bd934d97a5401b3af",
+      "bytes": 125771
+    },
+    "rawCurrentTransport": {
+      "path": ".jarvis-dev/maintenance/pg4-r37-current-main607-private-1792126040240-1b66d283-d7ea-4585-a75f-22e452a36719.json",
+      "sha256": "b8270e4d6d45d469cc764ce7ad9edb24cb7d6d29fde075b179f1dad40c165b04",
+      "bytes": 11329512
+    },
+    "resourceCount": 4,
+    "mandatoryReportCount": 5,
+    "retainedReportCount": 1,
+    "missingReportCount": 4,
+    "knownActorCount": 2,
+    "maximumReaderRuns": 1,
+    "maximumScopeReads": 1,
+    "maximumWholeReads": 2,
+    "expectedRootRoutes": 9,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "actualPG4Qualified": false,
+    "productAccepted": false,
+    "modelsInvoked": false
+  },
+  "errorCode": null,
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "executionNonce": null,
+  "ready": true,
+  "currentResourceScopeClosedVerified": true,
+  "actualPG4Qualified": false,
+  "normalQAQualified": false,
+  "currentBusinessQualified": false,
+  "productAccepted": false,
+  "modelsInvoked": false,
+  "savedEvidenceIndependentlyAudited": false
+}

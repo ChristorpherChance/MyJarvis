@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-main607-protection-current-source-data-entry-public-summary",
+  "at": "2026-10-16T04:50:04.630709+00:00",
+  "summary": "607现状不变保护及当前资源核查的新来源、参数、入口完成分层核对；初次相对导入缺陷和本机长路径拒绝均原件保留。",
+  "initialSource": {
+    "passed": false,
+    "remainingP1": 1,
+    "cause": "新adapter和whole的相对导入仍指向旧602模块；没有执行这些初稿。",
+    "preserved": true
+  },
+  "correction": {
+    "distinctSiblingFiles": 2,
+    "exactLiteralChanges": 5,
+    "physicalVerifierBytesUnchanged": true,
+    "sourceReviewsPassed": true,
+    "methodAndCurrentObserverBytesUnchanged": true
+  },
+  "verification": {
+    "newWiringGroups": 1,
+    "passed": 1,
+    "oldTestsRepeated": 0,
+    "nodeTestExitCode": 0,
+    "displayWrapperFailedAfterSavedPass": "UnicodeEncodeError in GBK display; raw Node success retained; no rerun",
+    "pureDataProtectionFiles": 3,
+    "pureDataCurrentFiles": 2,
+    "contractPhysicalReferences": 565,
+    "old529PrefixPreserved": true,
+    "entryPhysicalReferences": 567,
+    "rootEntryRefsVerified": 567,
+    "longPathMirrorFirstRefusedBeforeActualData": true,
+    "exactOperatingSystemCauseProved": false,
+    "distinctExtendedPathMirrorCompleted": true
+  },
+  "boundaries": {
+    "new607OnlyProtectsUnchangedObservedInventory": true,
+    "unknownChangeAuthorsPreserved": true,
+    "newWebFunctionalityAccepted": false,
+    "old602BaselineOverwritten": false,
+    "actualScopeOrPG4QualifiedBySource": false,
+    "sourceReviewPerformedRemoteOperations": false,
+    "old454OnceReplayed": false
+  },
+  "evidence": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-main607-initial-source-independent-local-review-1792124662958-784ef5db-84da-4196-84a5-13803e406ac0.json",
+      "sha256": "91eca931c5883647845d74299b4ba083049d73dc5df0ff8cbdc76a8d76cfd3b4",
+      "bytes": 7636
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-main607-protection-corrected-r2-independent-local-source-review-1792124933888-57c10792-815d-429b-b669-ab1a5e174230.json",
+      "sha256": "00903055ad7a3fca9b80b001bacc75e7ec182eaec77f925b268444b4b4226a5f",
+      "bytes": 19772
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-incomplete-driver-current-main607-independent-local-review-final.json",
+      "sha256": "e52d40daf77359afcd8e8d2b36efccf858a5e4cf7edf5d055fde666020e6e3a2",
+      "bytes": 24990
+    },
+    {
+      "path": "artifacts/factory-resume-r37/main607-protection-pure-data-seal.json",
+      "sha256": "68d898b2085b4f92c4de7340ad3dfc290d53b7883231c14c52da06b5ea42edd1",
+      "bytes": 2614
+    },
+    {
+      "path": "artifacts/factory-resume-r37/main607-current-pure-data-seal.json",
+      "sha256": "ada654f0ca9b8db0f17e343da31a656d7ac048a64dc79bcce9eb0c2eb197fde2",
+      "bytes": 143085
+    },
+    {
+      "path": "artifacts/factory-resume-r37/main607-current-pure-data-first-local-mirror-refusal.json",
+      "sha256": "981bc958b2f0076150bc506e378185a4eee0ed273f3081d594a55f9d14ec31b1",
+      "bytes": 475
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-incomplete-driver-current-main607-entry-independent-local-review-final.json",
+      "sha256": "a79f685f9867f5c7926d8633997372e2cd3e68e53b4229802a7e39a2dbfa46bb",
+      "bytes": 150611
+    }
+  ],
+  "costAccounting": {
+    "policy": "record-only-no-cap",
+    "supplierModelCalls": 0,
+    "internalTokenUsage": "unknown-separate",
+    "internalPrice": "unknown-separate"
+  }
+}

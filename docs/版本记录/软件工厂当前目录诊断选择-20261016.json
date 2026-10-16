@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "kind": "factory-r37-current-main-only-diagnostic-selection",
+  "at": "2026-10-16T03:41:17.600417+00:00",
+  "purpose": "new-current-main-four-conjunct-two-frame-diagnostic-only",
+  "basis": {
+    "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-actual-observation-1792121820397-4bdb9f4d-01f2-4b41-875b-c5083f7b61c3.json",
+    "sha256": "b5b86d46faa8dc1f22e817ea90a5fe975f90af086f1ea9b0cbc149e040b21167",
+    "bytes": 3794
+  },
+  "actualFailure": {
+    "operationClosed": true,
+    "nodeElapsedSeconds": 17.92200000002049,
+    "rootInventoryFrames": 2,
+    "rootStatus": 1,
+    "rootStdoutBytes": 0,
+    "rootStderrBytes": 182,
+    "rootStderrSHA256": "4c55f5de72dda422d589eb8b2c8586f423ede8f2438f0000b41e880ecbd8b2f0",
+    "originalCode": "R28_HOST_MAIN_CHANGED",
+    "exactConjunctUnknown": true,
+    "networkFailureProved": false,
+    "currentObserverEntered": false
+  },
+  "choice": "one-new-fixed-main-only-read",
+  "alternatives": [
+    {
+      "id": "await-external-facts",
+      "effect": "Keep the failed scope blocked pending an independently supplied current directory witness.",
+      "advantage": "No additional remote observation.",
+      "limitation": "No current tuple is available in the saved empty stdout."
+    },
+    {
+      "id": "one-new-fixed-main-only-read",
+      "effect": "Prepare one bounded trusted read of current main content/count/metadata/root identity, two stable frames.",
+      "advantage": "Directly observes the missing tuple without replaying the closed full scope.",
+      "limitation": "Needs a new narrow source, explicit input and independently reviewed entry; gives no protection or PG4 acceptance."
+    }
+  ],
+  "reason": "Saved raw rejection identifies the exact four-conjunct gate but exports no current tuple. A narrow current measurement is needed before choosing any new baseline.",
+  "fixedScope": {
+    "source": "/home/superopen/All-Projects/msf",
+    "helper": "/opt/jarvis-development/software-factory/project-autonomy-evidence.py",
+    "helperSHA256": "57aa1d8c49c189f0a9d2f4c1438ce154b556c263b907543462167b1faa673dd2",
+    "expected": {
+      "sha256": "11446020cbec373e92ab22293352bde874b18e82cca11f3a5757454dc9b9e212",
+      "files": 602,
+      "bytes": 18083755,
+      "metadataSHA": "7565aff1d4cf39ee3308001d5ef51479980e4c6949b8da0f00323e7bf52840f6",
+      "stable": true,
+      "identity": {
+        "device": 66306,
+        "inode": 14417953
+      }
+    },
+    "frames": 2,
+    "maximumRemoteReads": 1,
+    "maximumSeconds": 60,
+    "sshTimeoutSeconds": 75,
+    "automaticRetry": false
+  },
+  "excluded": [
+    "Old driver613/capture1316/454 terminal file rereads",
+    "Whole process census, SQL queue reads, environment configuration or candidate execution",
+    "Old once replay, signal, deletion, metadata pin replacement or new QA"
+  ],
+  "sourceImplemented": false,
+  "sourceReview": null,
+  "actualData": null,
+  "entryReview": null,
+  "remoteDiagnosticExecuted": false,
+  "mainBaselineQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "costPolicy": {
+    "limit": "none-record-only",
+    "newSupplierModelCalls": 0,
+    "internalUsageAndPrice": "unknown-separate"
+  }
+}

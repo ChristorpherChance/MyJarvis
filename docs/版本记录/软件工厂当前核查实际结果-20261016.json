@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "kind": "r33-pg4-incomplete-driver-current-r2-actual-observation",
+  "at": "2026-10-16T03:37:00.397794+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r33-pg4-incomplete-driver-current-r2-once.mjs",
+    "sha256": "a8a1e00bd55a81ddc26f5e5c919ff8921af993f6fac53257e4bda931403d509d",
+    "bytes": 16051
+  },
+  "outer": {
+    "path": ".jarvis-dev/maintenance/run-r33-pg4-incomplete-driver-current-r2-reviewed-once.py",
+    "sha256": "b8d00ea9cb406229f4e0f98aabf83ba02e3482de9392820f21d18d05ecd4b399",
+    "bytes": 17388
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r33-pg4-incomplete-driver-current-r2-entry-context.json",
+    "sha256": "1c649872ede84435fb349582895184bb96deddb125eead54c1820946fe9b52f3"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-entry-independent-local-review-1792121504999-15b116ec-9ee5-4b3c-8baf-b782e5052aff.json",
+    "sha256": "57470e52939daae0055c8748a00cf7d619f203dfa6ada76a09bc918a1d8bbac6"
+  },
+  "outerOnce": {
+    "path": ".jarvis-dev/maintenance/r33-pg4-incomplete-driver-current-r2-outer-once.json",
+    "sha256": "29652ee5b7f5987546eb9519e0f470de3254479ed51b048bc742a0010fd1ee0c",
+    "bytes": 882
+  },
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r33-pg4-incomplete-driver-current-r2-operator-console.json",
+    "sha256": "6f8fa1cd2c10eeab116140549d1989495734dd8281b644663987371bcb6762ae",
+    "bytes": 2445
+  },
+  "exitCode": 1,
+  "timedOut": false,
+  "elapsedSeconds": 17.92200000002049,
+  "result": {
+    "kind": "r33-pg4-incomplete-driver-current-r2-entry-failure",
+    "ready": false,
+    "errorCode": "R33_PROTECTION_CAPTURE_TRANSPORT_INCOMPLETE",
+    "actualCurrentScopeObserved": false,
+    "currentResourceScopeClosedVerified": false,
+    "evidence": {
+      "once": {
+        "path": ".jarvis-dev/maintenance/r33-pg4-incomplete-driver-current-r2-read-once.json",
+        "sha256": "cec2181969e2dc471c4680d32c963fab26ae403395928f6612177b244b65dded",
+        "bytes": 119295
+      },
+      "privateOutcome": {
+        "path": ".jarvis-dev/maintenance/r33-pg4-incomplete-driver-current-r2-outcome-1792121759684-d188a02e-1f65-4a06-8a4c-ff95a06689f5.json",
+        "sha256": "badeab7c9362b759b146f4ef42d1da9244651dda0f7113e3577ee72bcf09b0ca",
+        "bytes": 117366
+      },
+      "rawCurrentTransport": null,
+      "protectionBeforeAvailable": false,
+      "protectionAfterAvailable": false,
+      "wholeCaptureIndexes": [
+        {
+          "phase": "before",
+          "indexRef": {
+            "path": ".jarvis-dev/maintenance/pg4-r33-current-private-1792121755815-0ac4fbb6-d95b-4b9c-990d-e645ed367247.json",
+            "sha256": "1f2ddba57fd50c628b2d9f752b1c77cad601f2a6dc81f32fbd0834ff63a175c7",
+            "bytes": 8266
+          },
+          "captureAvailable": true
+        },
+        {
+          "phase": "after",
+          "indexRef": {
+            "path": ".jarvis-dev/maintenance/pg4-r33-current-private-1792121758187-9eeecddf-a111-4ca4-aa63-fbfa1528738e.json",
+            "sha256": "e931d80c369bccd25dcbebbdebfa374d786ce3d462e0540d575a76d2844b9dc7",
+            "bytes": 8265
+          },
+          "captureAvailable": true
+        }
+      ],
+      "secondaryFailureCodes": []
+    },
+    "automaticRetry": false,
+    "executionNonce": null,
+    "actualPG4Qualified": false,
+    "productAccepted": false,
+    "modelsInvoked": false
+  },
+  "errorCode": null,
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "executionNonce": null,
+  "ready": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "normalQAQualified": false,
+  "currentBusinessQualified": false,
+  "productAccepted": false,
+  "modelsInvoked": false,
+  "savedEvidenceIndependentlyAudited": false
+}

@@ -1,0 +1,626 @@
+{
+  "schemaVersion": 1,
+  "kind": "r33-pg4-current-resource-scope-independent-local-review",
+  "callerSHA256": "cf20ae11d48d930a1edb390d0529be418f02c8ddc442de36c475b21e58ad35dc",
+  "observerSHA256": "4e556204e692c2068a93051f9de1e7656c9358a0e81a3a777bb16a4882f2c95b",
+  "hostProgramSHA256": "56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b",
+  "staticPreparationReady": true,
+  "remainingP0P1": 0,
+  "resourceCount": 4,
+  "resourceRoles": [
+    "postgres",
+    "pg4-runner",
+    "internal-network",
+    "postgres-data"
+  ],
+  "mandatoryReportCount": 5,
+  "knownActorCount": 2,
+  "reportModes": [
+    "normal-five",
+    "incomplete-first-error"
+  ],
+  "actualPG4Qualified": false,
+  "sourceRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-final-local-source-handoff.json",
+      "sha256": "2e3fbaefdf09e65242b43826c62bc6e2aba657620b0a8f0cc29fea90f15dfe91",
+      "bytes": 14071
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-root-selection.json",
+      "sha256": "843ddf369dfd2d28cdb5e0ad13d232645e312a4daf800e532a36d1a5a444787f",
+      "bytes": 4741
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-complete-null-interface.json",
+      "sha256": "5333c15a6639fdba18ffd6e15159acc82d2911a0c22ec00cb936b1a66d0ebff9",
+      "bytes": 96585
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-current-resource-scope-independent-local-source-review-final.json",
+      "sha256": "6da2349ead3c2b5e56a401ca40ea17479e91d0e452a2b97634d99998f5349e94",
+      "bytes": 181382
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-complete-null-interface.json",
+      "sha256": "4fd19c7146d99c40c7dd6142eee2d2e15952116ffb17bc6bc41751511c0cd35e",
+      "bytes": 8460
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-whole-source-inverse.json",
+      "sha256": "922c7721b40bbdc3bd243de410913ed6f8e66e97b082fe310b54ffa9a9cb8186",
+      "bytes": 21109
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-outer-whole-inverse.json",
+      "sha256": "2e9c75ae7f98aff04119ffccab6e2a205f35c7ee9ca384e362903b63b44f7036",
+      "bytes": 1573
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-pure-data-null-interface.json",
+      "sha256": "782a66ef4e4d9d1d4d128d851a1153c9bcbfae843d782ec80a53ec5d279c388b",
+      "bytes": 4508
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-failed-five-r1.py",
+      "sha256": "4e556204e692c2068a93051f9de1e7656c9358a0e81a3a777bb16a4882f2c95b",
+      "bytes": 34047
+    },
+    {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-context-sentinel-failed-five-r1.mjs",
+      "sha256": "cf20ae11d48d930a1edb390d0529be418f02c8ddc442de36c475b21e58ad35dc",
+      "bytes": 24081
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-host-source-56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b.py",
+      "sha256": "56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b",
+      "bytes": 89976
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-context-sentinel-failed-five-current-r1-once.mjs",
+      "sha256": "fedbd632cb2166e8d04aa47bd3151353a91fdfbe6e856de7a046da22d43144f4",
+      "bytes": 15865
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-context-sentinel-failed-five-current-r1-reviewed-once.py",
+      "sha256": "0ada3d417bb48cb8dc19ee58242882bad6ada079206387a23ecfadd66629e610",
+      "bytes": 4618
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r37-context-sentinel-failed-five-current-r1-data-local.py",
+      "sha256": "3ee92f7905e243984e75c6574d10ded2e11df85b4a277aa06a8c3d4f9c5ffe6d",
+      "bytes": 42614
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-meta-r2.py",
+      "sha256": "9ce6c9704d025e5e1117a20e7a9e954f84e5e132dcbf688f91fcc951509b28cd",
+      "bytes": 33789
+    },
+    {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-context-sentinel-meta-r2.mjs",
+      "sha256": "572f2e89914e1fa5f6f9c4296126fcc90b83bbfac7d26271ca6c4de1ea2b47a9",
+      "bytes": 24064
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-qa-context-sentinel-main607-meta-r2-current-once.mjs",
+      "sha256": "23845514325ab31e735f67127f0b592049856dff352f2add27e07e3a87471fdd",
+      "bytes": 15932
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-qa-context-sentinel-meta-r2-reviewed-current-once.py",
+      "sha256": "fddc60dc8717db5ad4196777575e0b70d6f8955837e30e2d2e61d98b50491763",
+      "bytes": 4666
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r37-qa-context-sentinel-meta-r2-D-after-terminal-local.py",
+      "sha256": "e18e469a9d52a94742cb06cba5371c84a705bfa38586ed2ded06d67116c03c28",
+      "bytes": 41276
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-currentHost-source-185cf26552b49b31b49a281a8028a531e36d71254a245c362f7033af4b29d093.py",
+      "sha256": "185cf26552b49b31b49a281a8028a531e36d71254a245c362f7033af4b29d093",
+      "bytes": 89718
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.json",
+      "sha256": "2a4383e3dabaf224d812bc8e8128cb31804f938c664702d133b168d946e42958",
+      "bytes": 1276
+    },
+    {
+      "path": "scripts/test-r37-context-sentinel-failed-five-wiring.mjs",
+      "sha256": "1f47d2e203db5ae3ec43f64797d8a53b12fbfb7d1d70b627d3e2336a69dc5165",
+      "bytes": 7140
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.stdout.txt",
+      "sha256": "2180e33882c66d2827eb37b67bdfe3bf065b810c745ec4c4b6f5d27205c7e4f1",
+      "bytes": 1382
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.json",
+      "sha256": "e1465f9a6613709d657698abceb5ba38e863e9502762eb3a941d708820c751fb",
+      "bytes": 1513
+    },
+    {
+      "path": "scripts/test-r37-context-sentinel-failed-five-wiring-r2.mjs",
+      "sha256": "2ccb4c9b1c5c7e2ef9fa63320accaf1b12ec5948eeb629543eec2797c489b43c",
+      "bytes": 7167
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.stdout.txt",
+      "sha256": "16881f0eca1fdb858e4945c053ff7fcf408601d1dda04089d2032473beb70772",
+      "bytes": 410
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-all-five-retained-failed-D-local-compatibility-analysis.json",
+      "sha256": "070522d6981fe493152c0a31c5fef0352e1544a2f3c822f9c9fa43931a6a62f9",
+      "bytes": 10541
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-context-sentinel-meta-r2-terminal5-binding-bytes-independent-local-saved-review-final.json",
+      "sha256": "a81380c697dbebfdb1d37626ec2b45f6fb36128cc76ea3cb325f0dfee8a34db7",
+      "bytes": 26398
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-report-list-projection-correction.json",
+      "sha256": "84e198314d6d1d490a9c28c88955c67bf4936c37be1203189f3f89a7007732e2",
+      "bytes": 1797
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-harness-context-correction.json",
+      "sha256": "298269a197c1303f55b1296189d911f3b7d59e440ba441076fd5d91cfc7431ee",
+      "bytes": 1546
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-local-source-author.json",
+      "sha256": "df6c192d2bdf8f3203c3c1b4d1000e6ac814997fca10b403ceb86ae69a09444d",
+      "bytes": 14643
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-execution-source-contract.json",
+      "sha256": "d9c4075fa100de73def4ad69a9bd844fd4544c216a5cb53c327e2de9ad37178c",
+      "bytes": 184953
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-admission-source-contract.json",
+      "sha256": "e2dc2d0f3fd8b41b126cde01a22adbe3e0fe0188d054b38c05b930d132b7508a",
+      "bytes": 21643
+    }
+  ],
+  "at": "2026-10-16T13:05:02.131707+00:00",
+  "independentNonAuthorReview": true,
+  "status": "passed-bounded-D-only-SOURCE",
+  "operationPurpose": "r37-context-sentinel-failed-five-current-r1",
+  "resourcePurpose": "r37-pg4-qa-context-sentinel-main607-meta-r2",
+  "sourceHandoff": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-final-local-source-handoff.json",
+    "sha256": "2e3fbaefdf09e65242b43826c62bc6e2aba657620b0a8f0cc29fea90f15dfe91",
+    "bytes": 14071
+  },
+  "completeNullInterface": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-complete-null-interface.json",
+    "sha256": "4fd19c7146d99c40c7dd6142eee2d2e15952116ffb17bc6bc41751511c0cd35e",
+    "bytes": 8460
+  },
+  "pureDATAInterface": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-pure-data-null-interface.json",
+    "sha256": "782a66ef4e4d9d1d4d128d851a1153c9bcbfae843d782ec80a53ec5d279c388b",
+    "bytes": 4508
+  },
+  "wholeInverse": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-whole-source-inverse.json",
+    "sha256": "922c7721b40bbdc3bd243de410913ed6f8e66e97b082fe310b54ffa9a9cb8186",
+    "bytes": 21109
+  },
+  "selection": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-root-selection.json",
+    "sha256": "843ddf369dfd2d28cdb5e0ad13d232645e312a4daf800e532a36d1a5a444787f",
+    "bytes": 4741
+  },
+  "sources": {
+    "currentScopeObserver": {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-failed-five-r1.py",
+      "sha256": "4e556204e692c2068a93051f9de1e7656c9358a0e81a3a777bb16a4882f2c95b",
+      "bytes": 34047
+    },
+    "currentScopeCaller": {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-context-sentinel-failed-five-r1.mjs",
+      "sha256": "cf20ae11d48d930a1edb390d0529be418f02c8ddc442de36c475b21e58ad35dc",
+      "bytes": 24081
+    },
+    "currentHost": {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-host-source-56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b.py",
+      "sha256": "56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b",
+      "bytes": 89976
+    },
+    "currentEntry": {
+      "path": ".jarvis-dev/maintenance/read-r37-context-sentinel-failed-five-current-r1-once.mjs",
+      "sha256": "fedbd632cb2166e8d04aa47bd3151353a91fdfbe6e856de7a046da22d43144f4",
+      "bytes": 15865
+    },
+    "outer": {
+      "path": ".jarvis-dev/maintenance/run-r37-context-sentinel-failed-five-current-r1-reviewed-once.py",
+      "sha256": "0ada3d417bb48cb8dc19ee58242882bad6ada079206387a23ecfadd66629e610",
+      "bytes": 4618
+    },
+    "helper": {
+      "path": ".jarvis-dev/maintenance/seal-r37-context-sentinel-failed-five-current-r1-data-local.py",
+      "sha256": "3ee92f7905e243984e75c6574d10ded2e11df85b4a277aa06a8c3d4f9c5ffe6d",
+      "bytes": 42614
+    }
+  },
+  "originalDReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-current-resource-scope-independent-local-source-review-final.json",
+    "sha256": "6da2349ead3c2b5e56a401ca40ea17479e91d0e452a2b97634d99998f5349e94",
+    "bytes": 181382
+  },
+  "futureDReview": null,
+  "independentWholeByteInverses": [
+    {
+      "role": "currentScopeObserver",
+      "editGroups": 1,
+      "occurrences": 1,
+      "wholeForwardExact": true,
+      "wholeInverseExact": true
+    },
+    {
+      "role": "currentScopeCaller",
+      "editGroups": 3,
+      "occurrences": 3,
+      "wholeForwardExact": true,
+      "wholeInverseExact": true
+    },
+    {
+      "role": "currentEntry",
+      "editGroups": 6,
+      "occurrences": 17,
+      "wholeForwardExact": true,
+      "wholeInverseExact": true
+    },
+    {
+      "role": "outer",
+      "editGroups": 5,
+      "occurrences": 10,
+      "wholeForwardExact": true,
+      "wholeInverseExact": true
+    },
+    {
+      "role": "helper",
+      "editGroups": 19,
+      "occurrences": 19,
+      "wholeForwardExact": true,
+      "wholeInverseExact": true
+    }
+  ],
+  "staticHostObserverPayloadWholeByteInverse": true,
+  "predicateScope": {
+    "newCase": "normal-five + failed + non-null firstFailure + all5 retained twice, with all original pairs/pins/SQL/source/resource gates",
+    "completedNoFirstFailurePreserved": true,
+    "strictIncompleteFirstErrorPreserved": true,
+    "reportModes": [
+      "normal-five",
+      "incomplete-first-error"
+    ],
+    "thirdModeAdded": false,
+    "failureChangedToSuccess": false,
+    "reportBodiesOrBusinessCasesQualified": false
+  },
+  "reviewSeparation": {
+    "originalDReviewUsedOnlyForOriginalMAINAggregateAndParentActivation": true,
+    "futureDReviewSuppliedByRootCLIAfterThisSOURCE": true,
+    "newDContractAndActivationUseFutureReview": true,
+    "ownReviewHashBakedIntoHelper": false,
+    "sourceRefsIncludeSelfHash": false
+  },
+  "machineCompatibility": {
+    "SOURCEGenericKindActuallyConsumed": true,
+    "allRequiredSOURCEFieldsMatched": true,
+    "futureSpecificENTRYHeader": {
+      "kind": "r37-context-sentinel-failed-five-current-r1-entry-independent-local-review",
+      "operatorSHA256": "fedbd632cb2166e8d04aa47bd3151353a91fdfbe6e856de7a046da22d43144f4",
+      "contextSHA256": null,
+      "callerSHA256": "cf20ae11d48d930a1edb390d0529be418f02c8ddc442de36c475b21e58ad35dc",
+      "observerSHA256": "4e556204e692c2068a93051f9de1e7656c9358a0e81a3a777bb16a4882f2c95b",
+      "hostProgramSHA256": "56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b",
+      "sourceContractSHA256": null,
+      "scopeSHA256": "4117d1b1d30d517bfcdcc70a62ae7df28a3f02e32a1dc68cb06a910c33fbd8c3",
+      "sourceRefs": null,
+      "staticPreparationReady": null,
+      "remainingP0P1": null,
+      "remoteOperationsPerformed": false,
+      "actualCurrentScopeObserved": false
+    },
+    "newCallerObserverHostPinsBound": true,
+    "externalThinArgs": 5,
+    "outerArgs": 3,
+    "pureDATAArgs": 4,
+    "actualInputRefs": 11,
+    "actualInputAndContextDATAENTRYStillNull": true,
+    "resourceScopeUnchanged": true,
+    "fixedOriginalAttemptAndStateBound": true,
+    "newLocalOnceContextOutcomeAbsentBothRoots": true
+  },
+  "remainingP2": 1,
+  "p2Findings": [
+    {
+      "priority": "P2",
+      "file": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-complete-null-interface.json",
+      "line": 121,
+      "id": "stale-reader-in-descriptive-context-template",
+      "detail": "currentEntryContextTemplate.reader retains the old572 caller. The actual pure helper explicitly overrides reader with newCurrentSourceContractTemplate.caller cf20, and the new thin requires cf20, so no actual execution P1 is established. Later DATA/ENTRY comparison must use the filled caller instead of treating the stale descriptive field as final.",
+      "sourceUnchanged": true
+    }
+  ],
+  "auxiliaryReviewScope": "offline_capture_shell: helper actual constants/old-vs-new review separation/real frozen consumer values; no source invocation or new group",
+  "auxiliaryReview": {
+    "reviewer": "offline_capture_shell",
+    "boundedResult": "no established P1",
+    "helperWholeInverseGroups": 19,
+    "helperWholeInverseExact": true,
+    "actualPinnedRefsVerified": 15,
+    "fixedActualC708KeepsOld672OrderedPrefix": true,
+    "fixedActualA121KeepsOld83OrderedPrefix": true,
+    "reviewedSourceAndHeaderKeyCounts": {
+      "contract": 14,
+      "params": 13,
+      "activation": 8,
+      "context": 8
+    },
+    "auxiliaryPhysicalSelectors": 22,
+    "auxiliaryReadAndMirrorBoundary": "The helper contributor checked finite references in WORK and existing ROOT bytes, did not mirror or write another report; this principal review verifies and mirrors its own enumerated references.",
+    "preparationCorrection": "One auxiliary local interface lookup used a non-existent requiredSpecificENTRYHeader key, then used the real specificCurrentEntryRequiredHeader. No product source or actual operation changed."
+  },
+  "targetedEvidence": {
+    "newUniqueGroups": 1,
+    "firstFailure": {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.json",
+      "sha256": "2a4383e3dabaf224d812bc8e8128cb31804f938c664702d133b168d946e42958",
+      "bytes": 1276
+    },
+    "sameGroupSupplementPass": {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.json",
+      "sha256": "e1465f9a6613709d657698abceb5ba38e863e9502762eb3a941d708820c751fb",
+      "bytes": 1513
+    },
+    "firstFailureReason": "test harness extracted choose without its rows context; NameError preserved",
+    "supplement": "distinct harness rows context only; same failed group1/1 passed",
+    "oldGroupsRepeated": 0,
+    "repeatedByThisReview": 0
+  },
+  "preserved": [
+    "Byte-preserved native/HUP authority, getdents47 process/FD/socket/ACK relation and original before/after whole607/a952 gates.",
+    "All original file stat/nofollow/double-read/close, source/copy report pairs and five SHA/size/metadata bindings.",
+    "Both SQL originals, four created resource identities/labels and two historical owner-stop identities remain mandatory.",
+    "Current cleanup is computed from the real scans and source-bound unit/CG/resource absence; no product or historical kernel exit is inferred.",
+    "Private original transport is written before parsing, primary failures are retained and the after-whole route is still attempted once.",
+    "No old QA START/CHECK, worker, driver, MAIN, execution-C or private state is changed by the D-only source fork."
+  ],
+  "actualDataInput": null,
+  "actualDATA": null,
+  "actualENTRY": null,
+  "actualContext": null,
+  "executionNonce": null,
+  "actualCurrentScopeObserved": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "frameworkABIQualified": false,
+  "productAccepted": false,
+  "sourceRefsCount": 35,
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-final-local-source-handoff.json",
+      "sha256": "2e3fbaefdf09e65242b43826c62bc6e2aba657620b0a8f0cc29fea90f15dfe91",
+      "bytes": 14071
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-root-selection.json",
+      "sha256": "843ddf369dfd2d28cdb5e0ad13d232645e312a4daf800e532a36d1a5a444787f",
+      "bytes": 4741
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-complete-null-interface.json",
+      "sha256": "5333c15a6639fdba18ffd6e15159acc82d2911a0c22ec00cb936b1a66d0ebff9",
+      "bytes": 96585
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-current-resource-scope-independent-local-source-review-final.json",
+      "sha256": "6da2349ead3c2b5e56a401ca40ea17479e91d0e452a2b97634d99998f5349e94",
+      "bytes": 181382
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-complete-null-interface.json",
+      "sha256": "4fd19c7146d99c40c7dd6142eee2d2e15952116ffb17bc6bc41751511c0cd35e",
+      "bytes": 8460
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-whole-source-inverse.json",
+      "sha256": "922c7721b40bbdc3bd243de410913ed6f8e66e97b082fe310b54ffa9a9cb8186",
+      "bytes": 21109
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-outer-whole-inverse.json",
+      "sha256": "2e9c75ae7f98aff04119ffccab6e2a205f35c7ee9ca384e362903b63b44f7036",
+      "bytes": 1573
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-pure-data-null-interface.json",
+      "sha256": "782a66ef4e4d9d1d4d128d851a1153c9bcbfae843d782ec80a53ec5d279c388b",
+      "bytes": 4508
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-failed-five-r1.py",
+      "sha256": "4e556204e692c2068a93051f9de1e7656c9358a0e81a3a777bb16a4882f2c95b",
+      "bytes": 34047
+    },
+    {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-context-sentinel-failed-five-r1.mjs",
+      "sha256": "cf20ae11d48d930a1edb390d0529be418f02c8ddc442de36c475b21e58ad35dc",
+      "bytes": 24081
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-host-source-56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b.py",
+      "sha256": "56424a7557aad2194c3534d64fe5e15df9ba2482111d0bc16bede1b7ac3e6c5b",
+      "bytes": 89976
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-context-sentinel-failed-five-current-r1-once.mjs",
+      "sha256": "fedbd632cb2166e8d04aa47bd3151353a91fdfbe6e856de7a046da22d43144f4",
+      "bytes": 15865
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-context-sentinel-failed-five-current-r1-reviewed-once.py",
+      "sha256": "0ada3d417bb48cb8dc19ee58242882bad6ada079206387a23ecfadd66629e610",
+      "bytes": 4618
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r37-context-sentinel-failed-five-current-r1-data-local.py",
+      "sha256": "3ee92f7905e243984e75c6574d10ded2e11df85b4a277aa06a8c3d4f9c5ffe6d",
+      "bytes": 42614
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-meta-r2.py",
+      "sha256": "9ce6c9704d025e5e1117a20e7a9e954f84e5e132dcbf688f91fcc951509b28cd",
+      "bytes": 33789
+    },
+    {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-context-sentinel-meta-r2.mjs",
+      "sha256": "572f2e89914e1fa5f6f9c4296126fcc90b83bbfac7d26271ca6c4de1ea2b47a9",
+      "bytes": 24064
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-qa-context-sentinel-main607-meta-r2-current-once.mjs",
+      "sha256": "23845514325ab31e735f67127f0b592049856dff352f2add27e07e3a87471fdd",
+      "bytes": 15932
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-qa-context-sentinel-meta-r2-reviewed-current-once.py",
+      "sha256": "fddc60dc8717db5ad4196777575e0b70d6f8955837e30e2d2e61d98b50491763",
+      "bytes": 4666
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r37-qa-context-sentinel-meta-r2-D-after-terminal-local.py",
+      "sha256": "e18e469a9d52a94742cb06cba5371c84a705bfa38586ed2ded06d67116c03c28",
+      "bytes": 41276
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-currentHost-source-185cf26552b49b31b49a281a8028a531e36d71254a245c362f7033af4b29d093.py",
+      "sha256": "185cf26552b49b31b49a281a8028a531e36d71254a245c362f7033af4b29d093",
+      "bytes": 89718
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.json",
+      "sha256": "2a4383e3dabaf224d812bc8e8128cb31804f938c664702d133b168d946e42958",
+      "bytes": 1276
+    },
+    {
+      "path": "scripts/test-r37-context-sentinel-failed-five-wiring.mjs",
+      "sha256": "1f47d2e203db5ae3ec43f64797d8a53b12fbfb7d1d70b627d3e2336a69dc5165",
+      "bytes": 7140
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.stdout.txt",
+      "sha256": "2180e33882c66d2827eb37b67bdfe3bf065b810c745ec4c4b6f5d27205c7e4f1",
+      "bytes": 1382
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-1.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.json",
+      "sha256": "e1465f9a6613709d657698abceb5ba38e863e9502762eb3a941d708820c751fb",
+      "bytes": 1513
+    },
+    {
+      "path": "scripts/test-r37-context-sentinel-failed-five-wiring-r2.mjs",
+      "sha256": "2ccb4c9b1c5c7e2ef9fa63320accaf1b12ec5948eeb629543eec2797c489b43c",
+      "bytes": 7167
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.stdout.txt",
+      "sha256": "16881f0eca1fdb858e4945c053ff7fcf408601d1dda04089d2032473beb70772",
+      "bytes": 410
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-attempt-2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-all-five-retained-failed-D-local-compatibility-analysis.json",
+      "sha256": "070522d6981fe493152c0a31c5fef0352e1544a2f3c822f9c9fa43931a6a62f9",
+      "bytes": 10541
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-context-sentinel-meta-r2-terminal5-binding-bytes-independent-local-saved-review-final.json",
+      "sha256": "a81380c697dbebfdb1d37626ec2b45f6fb36128cc76ea3cb325f0dfee8a34db7",
+      "bytes": 26398
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-report-list-projection-correction.json",
+      "sha256": "84e198314d6d1d490a9c28c88955c67bf4936c37be1203189f3f89a7007732e2",
+      "bytes": 1797
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-targeted-harness-context-correction.json",
+      "sha256": "298269a197c1303f55b1296189d911f3b7d59e440ba441076fd5d91cfc7431ee",
+      "bytes": 1546
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-local-source-author.json",
+      "sha256": "df6c192d2bdf8f3203c3c1b4d1000e6ac814997fca10b403ceb86ae69a09444d",
+      "bytes": 14643
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-execution-source-contract.json",
+      "sha256": "d9c4075fa100de73def4ad69a9bd844fd4544c216a5cb53c327e2de9ad37178c",
+      "bytes": 184953
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-admission-source-contract.json",
+      "sha256": "e2dc2d0f3fd8b41b126cde01a22adbe3e0fe0188d054b38c05b930d132b7508a",
+      "bytes": 21643
+    }
+  ],
+  "physicalRefsCount": 35,
+  "physicalRefsInitialAndFinalEqual": true,
+  "rootAndWorkExact": true,
+  "mirror": {
+    "missingWX": 0,
+    "existingSame": 35,
+    "overwritten": 0
+  },
+  "performed": {
+    "sourceFunctions": 0,
+    "sourceImports": 0,
+    "hostExports": 0,
+    "ASTChecks": 0,
+    "syntaxChecks": 0,
+    "tests": 0,
+    "remoteCalls": 0,
+    "APIRequests": 0,
+    "models": 0
+  },
+  "limits": [
+    "SOURCE only. The future new review reference must be the actual final file, passed externally to pure DATA, with later actual DATA and independent specific ENTRY.",
+    "No708 graph semantics, old subject or saved-evidence algorithm was repeated. Stored raw targeted output was read, not rerun.",
+    "The failed-five path authorizes only bounded current-resource observation if every downstream gate passes; it does not accept reports, cases, ABI, old74 or product delivery.",
+    "A local patch-preparation context mismatch occurred before this audit script execution and changed no file; the audit wrapper was then corrected without changing reviewed sources."
+  ],
+  "costs": {
+    "newSupplierModelCalls": 0,
+    "internalTokens": "unknown",
+    "internalAmount": "unknown; not zero"
+  }
+}

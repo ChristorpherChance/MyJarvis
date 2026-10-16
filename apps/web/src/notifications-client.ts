@@ -1,4 +1,5 @@
 import {v1Request} from './v1-client';
+import {quietHours,quietHoursError} from './personal-settings-draft';
 export const notificationCategoryNames:Record<string,string>={tasks:'任务审批',services:'服务异常',research:'研究决策',knowledge:'知识校对',learning:'课程修订',backup:'备份恢复',reminders:'到期提醒',memory:'记忆确认'};
 export interface NotificationPreferences {enabled:boolean;categories:Record<string,boolean>;channels:{inApp:boolean;browser:boolean;roomVoice:boolean};quietStart:string;quietEnd:string;timezone:string;allowCloudAudio:boolean}
 export interface NotificationPreferenceState {profileId:string;revision:number;values:NotificationPreferences;capabilities:{inApp:string;browser:string;roomVoice:boolean;offlinePush:boolean;email:boolean;physicalSpeakerVerification:boolean}}
@@ -7,6 +8,13 @@ export interface NotificationSnapshot {items:ActualNotification[];nextCursor:num
 export const loadNotifications=()=>v1Request<NotificationSnapshot>('/api/runtime/notifications?limit=100');
 export const loadNotificationPreferences=()=>v1Request<NotificationPreferenceState>('/api/runtime/notifications/preferences');
 export const saveNotificationPreferences=(expectedVersion:number,values:NotificationPreferences)=>v1Request<NotificationPreferenceState>('/api/runtime/notifications/preferences',{method:'PUT',body:JSON.stringify({expectedVersion,values})});
+/** Native browser permission is deliberately independent of server preferences. */
+export function saveNotificationSettings(expectedVersion:number,draft:NotificationPreferences&{quietEnabled:boolean}) {
+ const {quietEnabled,...values}=draft;
+ const error=quietHoursError(quietEnabled,values.quietStart,values.quietEnd);
+ if(error)throw new Error(error);
+ return saveNotificationPreferences(expectedVersion,{...values,...quietHours(quietEnabled,values.quietStart,values.quietEnd)});
+}
 export const markNotification=(item:ActualNotification,state:'read'|'ack')=>v1Request<ActualNotification>(`/api/runtime/notifications/${encodeURIComponent(item.id)}/${state}`,{method:'POST',body:JSON.stringify({expectedVersion:item.revision})});
 export function notificationQuietNow(p:NotificationPreferences,now=new Date()){if(!p.quietStart)return false;const parts=new Intl.DateTimeFormat('en-GB',{timeZone:p.timezone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now),n=Number(parts.find(x=>x.type==='hour')?.value)*60+Number(parts.find(x=>x.type==='minute')?.value),at=(v:string)=>Number(v.slice(0,2))*60+Number(v.slice(3)),start=at(p.quietStart),end=at(p.quietEnd);return start<end?n>=start&&n<end:n>=start||n<end;}
 /** Foreground browser notification only, after the user separately grants native permission. */

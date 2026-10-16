@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "evidence-assistant-independent-static-findings",
+  "scope": "Nonauthor static review of frozen ephemeral Pi, evidence router/corpus, identity/privacy/source-version checks and usage accounting. No model request, test, browser, build, SSH or production operation was performed by this reviewer.",
+  "reviewedSources": [
+    { "path": "apps/api/src/pi.ts", "sha256": "ca9f486eab0cd6d552835e689ac1b28890abb978b13dd05455ed059b9c2e72ef" },
+    { "path": "apps/api/src/runtime/evidence-assistant.ts", "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d" },
+    { "path": "apps/api/src/runtime/evidence-corpus.ts", "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2" },
+    { "path": "apps/api/src/runtime/governance.ts", "sha256": "436a10178253014dadea73661b922e9ceba1f6e2498741209064f9c847e2f669" }
+  ],
+  "status": "two P1 gaps reported to Root and author; correction review pending",
+  "findings": [
+    {
+      "id": "EVIDENCE-RECORD-ONLY-001",
+      "priority": "P1",
+      "location": "apps/api/src/runtime/governance.ts:106; apps/api/src/pi.ts:495",
+      "fact": "Ephemeral metadata carries recordOnly=true, and app.beforeRun passes recordOnly into preflight. NativeUsageCollector preserves that metadata. However, recordUsage's post-insert budget check does not examine usage.recordOnly.",
+      "causalCounterexample": "With an existing positive dailyLimitUSD, either an already reached total or blockUnpriced plus a null current cost causes recordUsage to throw BUDGET_EXHAUSTED after recording the real response. Pi's onUsage subscriber catches it, marks the run cancelled and aborts. Thus a trusted evidence query configured for record-only/no spending cap can still be stopped by price or daily-budget policy after the first actual request.",
+      "requestedNarrowFix": "Bypass only the post-insert budget exception for usage.recordOnly===true; retain all accounting, unknown-price representation, pause/concurrency checks and ordinary-run behavior. Add one pure governance fixture for record-only unknown price and reached daily total."
+    },
+    {
+      "id": "EVIDENCE-SINGLE-TURN-002",
+      "priority": "P1",
+      "location": "apps/api/src/pi.ts:476-482; installed @earendil-works/pi-agent-core/dist/agent-loop.js:156-185,482-488",
+      "fact": "The ephemeral path disables retries, compaction and cache warming, and installs no executable tools. It does not install a one-turn stop hook. The locally installed SDK converts an unexpected provider toolCall into a tool-not-found result without terminate=true; its agent loop then selects another model request unless finishTurn returns action:end.",
+      "causalCounterexample": "If a provider returns a toolCall despite the empty tool list, one Pi.run can issue another real model request. The router counts at most three Pi.run calls, so the stated at-most-three actual requests per query is not enforced under that response. No extra real request was executed or observed during this review; this follows from the installed SDK branch.",
+      "requestedNarrowFix": "For ephemeral sessions only, use the SDK's public agent.finishTurn hook to end after one response, and reject an assistant result containing any toolCall. Preserve ordinary sessions. A fake-stream SDK fixture can assert one request without calling a model."
+    }
+  ],
+  "positiveStaticObservations": [
+    "Present member cookies prohibit administrator fallback, including invalid or expired member tokens. Principal binding includes identity/credential authorization state and is rechecked after awaited work.",
+    "Cloud privacy local/ask/allowed gates are enforced before model calls; explicit consent is required for ask-cloud. Selection is frozen, local requirements are checked by Pi, and current identity/privacy/source references are monitored and rechecked between stages.",
+    "Ephemeral sessions and settings are memory-only, with cacheWarming off, retries off, compaction off, no tools, extensions, skills or context files. The original ordinary-run defaults are unchanged.",
+    "Corpus access restricts memory to the current actor's active private me profile; knowledge references retain source/book revision and full-text hash. Resolution reopens authorized current content and verifies exact quote positions instead of trusting client paths.",
+    "Claims require bounded literal citations and an additional model support check. The UI presents interpretation and source quotes separately; this is not independent proof that a supported model interpretation is true.",
+    "Provider token counts are recorded from native usage; unavailable prices remain null/unavailable instead of being presented as zero. Prompt and evidence text are not fields of the usage ledger."
+  ],
+  "remainingBoundaries": [
+    "This is a source review, not a semantic quality measurement or a production privacy test.",
+    "The predeclared real-model contract and its future execution remain separately owned by Root/author.",
+    "Corrections and final source hashes should be recorded in a separate final report, preserving these pending-at-time findings."
+  ],
+  "cost": { "projectModelCallsByReviewer": 0, "knownAmountUSD": null, "internalModelAmountAndTokens": "unknown; recorded separately, no spending cap" }
+}

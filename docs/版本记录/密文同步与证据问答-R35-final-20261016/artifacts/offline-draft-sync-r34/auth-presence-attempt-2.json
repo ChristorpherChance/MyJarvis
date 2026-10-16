@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "kind": "encrypted-draft-sync-auth-presence-correction",
+  "at": "2026-10-16T00:25:08.204650+00:00",
+  "priorCut": {
+    "path": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+    "sha256": "a91cdee7bd5914556cecd3bd0184e2562f37a2eeebb92901a774cbf3c1559c56",
+    "bytes": 3778
+  },
+  "newGroups": 1,
+  "passed": 1,
+  "failed": 0,
+  "name": "expired present member cookie cannot fall back to an independently valid residual administrator",
+  "evidence": [
+    "Real temporary createApp and loopback HTTP",
+    "A real member session is created and explicitly invalidated through identity.logout; no wall-clock expiry was simulated",
+    "Still-present invalid member cookie plus an independently valid residual admin cookie returns401 for metadata, package and write",
+    "The same administrator alone remains200 and all rejected writes leave revision0"
+  ],
+  "rawStdoutPersisted": false,
+  "verificationSource": "Actual filtered node test completion: tests1 pass1 fail0; old4 groups not rerun",
+  "sources": [
+    {
+      "path": "apps/api/src/runtime/offline-draft-sync.ts",
+      "sha256": "a136eeaa39fea798b8a73bad61c501abbe9df741837675b378bbfbb8f3be0a96",
+      "bytes": 9066
+    }
+  ],
+  "environment": {
+    "models": 0,
+    "externalRequests": 0,
+    "productionAccess": false,
+    "newTemporaryResourcesCleaned": true
+  },
+  "boundaries": [
+    "This is invalidated-cookie presence verification, not elapsed wall-clock session expiry",
+    "API source change requires final affected build by Root"
+  ]
+}

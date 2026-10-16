@@ -1,0 +1,256 @@
+{
+  "at": "2026-10-16T00:48:28.462974+00:00",
+  "exitCode": 0,
+  "wallSeconds": 18.32799999997951,
+  "reportSha256": "6b8ee7a15a2eaa5ba25c79cc3fbd7906c86a06d80e888ef1f0f756a33800fdbe",
+  "report": {
+    "schema": 2,
+    "harnessSha256": "fb2376857890c512716010eacdc9d4f835050eec59a9793dfcc80edacf6ab786",
+    "at": "2026-10-16T00:48:28.417Z",
+    "attempt": "6",
+    "contractSha256": "adf149d1555a5750f182f28e2a102abcc10f692cd8d0d7347fd54eabb1593bd6",
+    "sourceHashes": [
+      {
+        "path": "apps/api/src/pi.ts",
+        "sha256": "1c386a77208249965e57f18a7b4bc5e5cfea82987baad99acae8e695b765c453"
+      },
+      {
+        "path": "apps/api/src/runtime/governance.ts",
+        "sha256": "039b006e1274d3f15de3f8e347dc592ee95a755ea162b112ee1dba57141abbc4"
+      },
+      {
+        "path": "apps/api/src/runtime/pi-usage.ts",
+        "sha256": "359d1b4cefd7822e8dd48a4978ccc6ea4a0a6545530be97104e24df479f23d24"
+      },
+      {
+        "path": "apps/api/src/runtime/usage-ledger.ts",
+        "sha256": "ca504d091c3ebaa8868ad74e32914161d8a56465143c45c8c4063cc88a18501e"
+      },
+      {
+        "path": "apps/api/src/runtime/evidence-assistant.ts",
+        "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d"
+      },
+      {
+        "path": "apps/api/src/runtime/evidence-corpus.ts",
+        "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2"
+      },
+      {
+        "path": "apps/api/src/app.ts",
+        "sha256": "c293e9671800d18f27e120f3fe1590ea509b06c263ab0055d87153b5040363cc"
+      },
+      {
+        "path": "apps/api/src/runtime/identity.ts",
+        "sha256": "c64416d74b1da1b607fd575a88973730285bd205d79a31b5895d3660d75fb713"
+      }
+    ],
+    "diagnostic": {
+      "stageResults": true,
+      "promptText": false,
+      "publicSyntheticCaseOnly": "knowledge-paraphrase"
+    },
+    "selectedModels": [
+      {
+        "scenario": "knowledge",
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "configured": true
+      }
+    ],
+    "realHttp": true,
+    "realProvider": true,
+    "onlyPublicSyntheticData": true,
+    "productionAccess": false,
+    "retries": 0,
+    "actualModelRequests": 3,
+    "observedCalls": [
+      {
+        "scenario": "knowledge",
+        "promptSha256": "0d249163baf49140e6bbbc3831da81ba9f220949c4d0b38684386eac1542b0eb",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:48:12.078Z",
+        "caseId": "knowledge-paraphrase",
+        "stage": "query-expansion",
+        "result": {
+          "status": "complete",
+          "text": "{\"searchTerms\":[\"打印机墨盒领取\",\"打印耗材存放位置\",\"办公墨盒领用\",\"硒鼓领取地点\"]}"
+        },
+        "elapsedMs": 4731
+      },
+      {
+        "scenario": "knowledge",
+        "promptSha256": "627d5a2a5eea7ab871bd57b6a4bbbd02225d136da14c37775e311e4fc35800f8",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:48:16.811Z",
+        "caseId": "knowledge-paraphrase",
+        "stage": "candidate-answer",
+        "result": {
+          "status": "complete",
+          "text": "{\"insufficient\":false,\"claims\":[{\"text\":\"按资料，打印机墨盒应到东侧蓝色柜子的第二层取。\",\"citations\":[{\"evidenceId\":\"E1\",\"quote\":\"办公室的打印机耗材应放在东侧蓝色柜子的第二层。\"}]}]}"
+        },
+        "elapsedMs": 5189
+      },
+      {
+        "scenario": "knowledge",
+        "promptSha256": "11504ebcfb2c8fd6da4f1daa9ca2714f12edd4454197f6d0afe3a436c737b30f",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:48:22.002Z",
+        "caseId": "knowledge-paraphrase",
+        "stage": "evidence-verification",
+        "result": {
+          "status": "complete",
+          "text": "{\"supported\":true}"
+        },
+        "elapsedMs": 6397
+      }
+    ],
+    "observedUsage": [
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 488,
+        "outputTokens": 34,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 522,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 661,
+        "outputTokens": 140,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 801,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 656,
+        "outputTokens": 121,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 777,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false
+      }
+    ],
+    "ledger": [
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 656,
+        "outputTokens": 121,
+        "totalTokens": 777,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 661,
+        "outputTokens": 140,
+        "totalTokens": 801,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 488,
+        "outputTokens": 34,
+        "totalTokens": 522,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      }
+    ],
+    "observedRequestsOutsideDeclaredOrigins": 0,
+    "questionOrPromptHistoryExpected": 0,
+    "internalAssistantCostUSD": null,
+    "internalAssistantTokens": null,
+    "spendCap": null,
+    "cleanupVerified": true,
+    "status": "passed",
+    "results": [
+      {
+        "id": "knowledge-paraphrase",
+        "domain": "knowledge",
+        "literalBaseline": 0,
+        "result": {
+          "actorId": "member_e802c68a-94b2-4d0d-8df8-fec5c876b6e2",
+          "profileId": "d5d9b1fb-cb2c-4908-a7df-608e657d40cb",
+          "domain": "knowledge",
+          "queryId": "d70f2dd7-6261-4546-8386-4a0a1cd8d6a4",
+          "expiresAt": "2026-10-16T00:53:28.400Z",
+          "retrieval": "model-query-expansion",
+          "status": "answered",
+          "claims": [
+            {
+              "text": "按资料，打印机墨盒应到东侧蓝色柜子的第二层取。",
+              "citations": [
+                {
+                  "refId": "547edc8f-8142-41de-902f-07af069515cd"
+                }
+              ]
+            }
+          ],
+          "records": [
+            {
+              "refId": "547edc8f-8142-41de-902f-07af069515cd",
+              "kind": "external-document",
+              "title": "合成耗材原文",
+              "sourceName": "合成库存说明",
+              "quote": "办公室的打印机耗材应放在东侧蓝色柜子的第二层。",
+              "quoteKind": "external-source-unreviewed"
+            }
+          ],
+          "searchTerms": [
+            "打印机墨盒领取",
+            "打印耗材存放位置",
+            "办公墨盒领用",
+            "硒鼓领取地点"
+          ],
+          "model": {
+            "provider": "superopen",
+            "name": "CPA / gpt-6.1-sol",
+            "local": false,
+            "calls": 3,
+            "usage": "recorded-by-existing-ledger",
+            "priceNotice": "按真实用量记账；未提供价格的部分保留未知，不设消费上限。"
+          },
+          "notice": "模型先扩展查询，再对检索摘录生成并核验回答；这不是原文或人工结论。请打开出处复核。未访问实时网页，问题和提示未写入聊天或检索历史。"
+        },
+        "resolved": [
+          {
+            "kind": "external-document",
+            "quote": "办公室的打印机耗材应放在东侧蓝色柜子的第二层。",
+            "sha256": "6fd27c5a7bde312246dad5348c232e345eb6eb10a099944f93eb56c433b16ba8"
+          }
+        ],
+        "status": "passed",
+        "actualModelRequests": 3,
+        "elapsedMs": 16330
+      }
+    ]
+  },
+  "productionBusinessDataRead": false,
+  "existingPrivateProviderConfigRead": true,
+  "actualServer": "112",
+  "serviceChanged": false,
+  "factoryTouched": false
+}

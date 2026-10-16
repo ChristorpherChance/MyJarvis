@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-16T00:20:47.479Z",
+  "attempt": "2",
+  "selected": [
+    "identity-change-aborts-late-pull"
+  ],
+  "expectedBundle": "offlineCapture-q1fGSs2t.js",
+  "realHttp": true,
+  "separateBrowserContexts": true,
+  "modelCalls": 0,
+  "externalRequests": 0,
+  "pageErrors": 0,
+  "loadedBundles": [
+    "/assets/index-nmkof623.js",
+    "/assets/client-OI5hagxP.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/DemoApp-Bolto6Q2.js",
+    "/assets/NotificationPreferencesPanel-C2B5Is_w.js",
+    "/assets/MaterialManager-BGAecbCN.js",
+    "/assets/offline-vault-JPld9G6i.js",
+    "/assets/OperationsPage-YWTJrwoR.js",
+    "/themes/stark.js",
+    "/assets/offlineCapture-q1fGSs2t.js",
+    "/assets/RoomVoice-Cae42vTv.js",
+    "/assets/EvidenceAssistantPanel-2292hf15.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "identity-change-aborts-late-pull",
+      "status": "passed",
+      "evidence": {
+        "actualRemotePackageFetchedAndHeld": true,
+        "realMemberLogin": true,
+        "offlineBodyAndSyncKeyUiClearedBeforeLoginHttp": true,
+        "lateResponseDidNotReplaceLocalCiphertext": true,
+        "pollingStopped": true,
+        "memberSyncApiDenied": 401
+      }
+    }
+  ]
+}

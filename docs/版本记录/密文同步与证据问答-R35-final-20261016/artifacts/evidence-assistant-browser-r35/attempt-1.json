@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-16T00:20:27.048Z",
+  "attempt": "1",
+  "realHttp": true,
+  "realBrowser": true,
+  "protocolModel": "fake-only-not-quality-evidence",
+  "fakeProtocolModelCalls": 6,
+  "actualModelCalls": 0,
+  "observedBrowserRequestsOutsideLocalApp": 0,
+  "browserRuntimeErrors": 0,
+  "bundles": [
+    "/assets/index-nmkof623.js",
+    "/assets/client-OI5hagxP.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/EvidenceAssistantPanel-2292hf15.js",
+    "/assets/RoomVoice-Cae42vTv.js",
+    "/assets/NotificationPreferencesPanel-C2B5Is_w.js"
+  ],
+  "cleanupVerified": true,
+  "productionAccess": false,
+  "results": [
+    {
+      "name": "member-phone-explicit-model-reference",
+      "status": "passed",
+      "evidence": {
+        "fakeProtocolModelCalls": 3,
+        "actualModelCalls": 0,
+        "exactReference": true
+      }
+    },
+    {
+      "name": "admin-own-memory-current-reference",
+      "status": "failed",
+      "cut": "admin-own-memory-current-reference",
+      "diagnostic": "Error: browserContext.addCookies: Cookie should have either url or path"
+    },
+    {
+      "name": "shared-member-change-clears-before-http",
+      "status": "passed",
+      "evidence": {
+        "clearedBeforeIdentityHttpMutation": true,
+        "actualModelCalls": 0
+      }
+    },
+    {
+      "name": "harness-final-audit",
+      "status": "failed",
+      "cut": "shared-member-change-clears-before-http",
+      "diagnostic": "AssertionError: Expected values to be strictly equal:\n\n2 !== 3\n"
+    }
+  ]
+}

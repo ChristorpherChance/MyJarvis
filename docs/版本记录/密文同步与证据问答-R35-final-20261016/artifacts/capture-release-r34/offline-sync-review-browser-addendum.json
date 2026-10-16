@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "kind": "encrypted-sync-independent-review-evidence-addendum",
+  "staticReview": { "path": "artifacts/capture-release-r34/offline-sync-source-review-final.json", "sha256": "c8a7d5d88d7bfd97d4162768d31a8bbb3bad528238f78d39764195516d4ad368" },
+  "authorBrowserEvidenceRead": {
+    "path": "artifacts/offline-draft-sync-browser-qa/attempt-3.json",
+    "sha256": "ea78e1ee577bb58201462bffda133dc84248caf53a9e44aed16f9ab32c7548e0",
+    "reportedResult": "One new same-revision-fork-and-stop-before-cas browser group passed on its first execution. Two independent contexts and a sibling tab used actual IndexedDB; stale save/export were rejected, and stopping while IDB open was held before CAS preserved prior row/body.",
+    "reportedLoadedBundles": ["offlineCapture-Dp37MnGd.js", "offline-vault-g54LtOEF.js"],
+    "reportedModelCalls": 0,
+    "reportedExternalRequests": 0,
+    "reportedPageErrors": 0,
+    "reportedCleanupVerified": true
+  },
+  "authorCutSummaryRead": {
+    "path": "artifacts/offline-draft-sync-r34/cut-summary.json",
+    "sha256": "c9af33c0378ac1f774b01ff940e256f0deaea28ed85018a28b8cc9e8e7428317",
+    "scope": "Six unique HTTP/vault groups and five unique browser groups passed in separate cuts. One earlier browser harness TDZ failure and subsequent targeted correction remain preserved. These were not all rerun on the final source/bundle."
+  },
+  "conclusion": "The two source-review findings remain closed. The previously pending actual IndexedDB/UI regression now has separate author-executed evidence. This reviewer read that evidence but did not execute or independently reproduce the browser scenario.",
+  "boundaries": ["No tests, browser, build, package, model, network or production operation by this reviewer", "No deployment or production sync acceptance is claimed", "Original pending findings and final static report remain unchanged"],
+  "cost": { "projectModelCallsByReviewer": 0, "knownAmountUSD": null, "internalModelAmountAndTokens": "unknown; recorded separately, no spending cap" }
+}

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "at": "2026-10-16T00:40:55.683Z",
+  "status": "passed",
+  "harnessSha256": "da1fe97d8029e84d582c4f577130634f7be4baa11c990cf37340e536dde11a1d",
+  "sourceHashes": [
+    {
+      "path": "apps/api/src/pi.ts",
+      "sha256": "1c386a77208249965e57f18a7b4bc5e5cfea82987baad99acae8e695b765c453"
+    },
+    {
+      "path": "apps/api/src/runtime/governance.ts",
+      "sha256": "039b006e1274d3f15de3f8e347dc592ee95a755ea162b112ee1dba57141abbc4"
+    },
+    {
+      "path": "apps/api/src/runtime/pi-usage.ts",
+      "sha256": "359d1b4cefd7822e8dd48a4978ccc6ea4a0a6545530be97104e24df479f23d24"
+    },
+    {
+      "path": "apps/api/src/runtime/usage-ledger.ts",
+      "sha256": "ca504d091c3ebaa8868ad74e32914161d8a56465143c45c8c4063cc88a18501e"
+    },
+    {
+      "path": "apps/api/src/runtime/evidence-assistant.ts",
+      "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d"
+    },
+    {
+      "path": "apps/api/src/runtime/evidence-corpus.ts",
+      "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2"
+    },
+    {
+      "path": "apps/api/src/app.ts",
+      "sha256": "c293e9671800d18f27e120f3fe1590ea509b06c263ab0055d87153b5040363cc"
+    },
+    {
+      "path": "apps/api/src/runtime/identity.ts",
+      "sha256": "c64416d74b1da1b607fd575a88973730285bd205d79a31b5895d3660d75fb713"
+    }
+  ],
+  "checks": {
+    "administratorSetupAndState": true,
+    "memberLoginAndState": true,
+    "namedMemberCookieResolvesCurrentPrincipal": true,
+    "clearAdministratorCookiePrecedesMember": true
+  },
+  "realLoopbackHttp": true,
+  "actualModelCalls": 0,
+  "outsideRequests": 0,
+  "cleanupVerified": true,
+  "productionAccess": false,
+  "internalAssistantCostUSD": null,
+  "internalAssistantTokens": null
+}

@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-16T00:19:38.127Z",
+  "attempt": "1",
+  "expectedBundle": "offlineCapture-q1fGSs2t.js",
+  "realHttp": true,
+  "separateBrowserContexts": true,
+  "modelCalls": 0,
+  "externalRequests": 0,
+  "pageErrors": 0,
+  "loadedBundles": [
+    "/assets/index-nmkof623.js",
+    "/assets/client-OI5hagxP.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/DemoApp-Bolto6Q2.js",
+    "/assets/NotificationPreferencesPanel-C2B5Is_w.js",
+    "/assets/MaterialManager-BGAecbCN.js",
+    "/assets/offline-vault-JPld9G6i.js",
+    "/assets/OperationsPage-YWTJrwoR.js",
+    "/themes/stark.js",
+    "/assets/offlineCapture-q1fGSs2t.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "two-context-encrypted-conflict-choice",
+      "status": "passed",
+      "evidence": {
+        "twoIndependentBrowserContexts": true,
+        "optInRequired": true,
+        "onlyCiphertextOnWire": true,
+        "wrongRemoteKeyPreservedLocal": true,
+        "remoteRestoreExplicit": true,
+        "backgroundSavedChange": true,
+        "conflictDidNotAutoOverwrite": true,
+        "explicitLocalCASChoice": true,
+        "lostConflictReplyLocksChoices": true,
+        "conflictRetrySameExactCommand": true,
+        "revision": 3,
+        "mobileOverflow": false
+      }
+    },
+    {
+      "name": "same-operation-retry-and-real-offline",
+      "status": "passed",
+      "evidence": {
+        "actualCommittedResponseLost": true,
+        "retryExactSameCommand": true,
+        "revisionAfterRetry": 1,
+        "trueBrowserOfflineEditsRetained": true,
+        "reconnectUploadedOnce": true,
+        "lockStoppedPollingAndPending": true,
+        "unlockDidNotReenable": true
+      }
+    },
+    {
+      "name": "remote-forgetting-preserves-local-copies",
+      "status": "passed",
+      "evidence": {
+        "singleEncryptedRemoteSlot": true,
+        "explicitDeletion": true,
+        "tombstoneRevision": 2,
+        "bothLocalCiphertextsAndBodiesPreserved": true,
+        "otherBrowserDidNotResurrectAutomatically": true,
+        "explicitRecreationRevision": 3
+      }
+    },
+    {
+      "name": "identity-change-aborts-late-pull",
+      "status": "failed",
+      "cut": "identity/hold-real-remote-package-before-local-replacement",
+      "diagnostic": "ReferenceError: Cannot access 'login2' before initialization\n    at <anonymous> (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-offline-draft-sync.ts:51:69)\n    at async server (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-offline-draft-sync.ts:20:1228)\n    at async check (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-offline-draft-sync.ts:19:149)\n    at async <anonymous> (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-offline-draft-sync.ts:50:2)"
+    },
+    {
+      "name": "harness-audit",
+      "status": "failed",
+      "cut": "identity/hold-real-remote-package-before-local-replacement",
+      "diagnostic": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n3 !== 4\n\n    at <anonymous> (D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\capture-r34\\scripts\\qa-offline-draft-sync.ts:55:185)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    }
+  ]
+}

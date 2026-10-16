@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "kind": "encrypted-draft-sync-independent-source-delta-review",
+  "scope": "Independent static review of the separately authored sync server/client and vault replacement delta. This reviewer authored the original encrypted vault, so this is not an independent authorship review of that original core.",
+  "priorFindings": {
+    "path": "artifacts/capture-release-r34/offline-sync-source-findings.json",
+    "sha256": "2cdc0a84af29bde40390e3658486c75742d36636c560aa9c69da4ddff4ff695a"
+  },
+  "reviewedSources": [
+    { "path": "apps/api/src/runtime/offline-draft-sync.ts", "sha256": "a136eeaa39fea798b8a73bad61c501abbe9df741837675b378bbfbb8f3be0a96" },
+    { "path": "apps/web/src/features/offline/OfflineDraftSync.tsx", "sha256": "d49364d75e22dc3f3a56b533714ccd5f79ff46e569c2f3ede73db1ef2917d49c" },
+    { "path": "apps/web/src/features/offline/offline-vault.ts", "sha256": "3626fad58f6180d9bb9f8893e4d0c9ac2cc53447e6adcef2034c3349544baebe" },
+    { "path": "apps/api/test/offline-draft-sync.test.ts", "sha256": "e538ec0690a54983262f500ecb29197f6e88069b5993d128f75558d061064024" }
+  ],
+  "status": "limited static pass for the two reported P1 corrections; no remaining P1 found in the reviewed sync delta",
+  "corrections": [
+    {
+      "id": "OFFLINE-SYNC-CAS-001",
+      "status": "closed by source inspection",
+      "evidence": "OfflineVaultRevision and sameRevision now compare vaultId, revision, salt, iv and ciphertext exactly. Browser CAS, load, unlocked export, save and replace use the exact observed state; UI localToken carries all five fields. Same-ID/same-revision remote forks cannot satisfy a stale local token. Portable package schema is unchanged."
+    },
+    {
+      "id": "OFFLINE-SYNC-ABORT-002",
+      "status": "closed by source inspection",
+      "evidence": "replaceForSync receives the sync AbortSignal, combines it with the original vault session signal, and passes that combined signal into storage.compareAndSwap. IndexedDB checks before transaction/open completion and aborts an active transaction on that signal. Original session/current checks remain before and after each awaited stage."
+    }
+  ],
+  "authorEvidenceInspected": {
+    "path": "artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+    "sha256": "85bc186a35dac1d7e8e0a2b592a9709758bd04e4ed960c51de0845b318f318ec",
+    "reportedResult": "One new targeted unit group passed 1/1. It uses real WebCrypto forks and controlled storage delay; web typecheck exit 0. No separate raw stdout was persisted. Prior four sync and eight vault groups were not rerun.",
+    "reviewerActivity": "Read source assertions and the safe result only; no test, browser, build, package, network or production operation was repeated."
+  },
+  "remainingBoundaries": [
+    "The new targeted unit group controls an in-memory storage delay; actual IndexedDB transaction timing and UI token behavior require the separately scheduled browser regression.",
+    "Static review does not claim deployment, remote synchronization acceptance or independent execution of the author's tests.",
+    "The original finding report remains unchanged as the pending-at-time historical record."
+  ],
+  "cost": { "projectModelCallsByReviewer": 0, "knownAmountUSD": null, "internalModelAmountAndTokens": "unknown; recorded separately, no spending cap" }
+}

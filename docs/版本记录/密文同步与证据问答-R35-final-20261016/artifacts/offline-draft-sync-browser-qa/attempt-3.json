@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-16T00:28:28.008Z",
+  "attempt": "3",
+  "selected": [
+    "same-revision-fork-and-stop-before-cas"
+  ],
+  "expectedBundle": "offlineCapture-Dp37MnGd.js",
+  "realHttp": true,
+  "separateBrowserContexts": true,
+  "modelCalls": 0,
+  "externalRequests": 0,
+  "pageErrors": 0,
+  "loadedBundles": [
+    "/assets/index-BwJHBkrD.js",
+    "/assets/client-OI5hagxP.js",
+    "/assets/v1-client-CX0ITgRR.js",
+    "/assets/api-Chk_xhf3.js",
+    "/assets/DemoApp-TFzoOENW.js",
+    "/assets/NotificationPreferencesPanel-C2B5Is_w.js",
+    "/assets/MaterialManager-BPpllb0R.js",
+    "/assets/offline-vault-g54LtOEF.js",
+    "/assets/OperationsPage-CNIklvTz.js",
+    "/themes/stark.js",
+    "/assets/offlineCapture-Dp37MnGd.js"
+  ],
+  "cleanupVerified": true,
+  "results": [
+    {
+      "name": "same-revision-fork-and-stop-before-cas",
+      "status": "passed",
+      "evidence": {
+        "twoIndependentContextsAndSiblingTab": true,
+        "identicalVaultIdAndRevisionDifferentCiphertext": true,
+        "explicitRemoteRestoreUsedFullLocalToken": true,
+        "staleSiblingSaveRejected": true,
+        "staleSiblingExportRejected": true,
+        "selectedRemoteCiphertextPreserved": true,
+        "trueIndexedDbOpenHeldBeforeCas": true,
+        "stopAbortedBeforeDiskWrite": true,
+        "localBodyPreserved": true,
+        "packageSchemaUnchanged": true
+      }
+    }
+  ]
+}

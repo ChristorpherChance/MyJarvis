@@ -1,0 +1,612 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-worker-context-main607-meta-r2-start-saved-evidence-independent-local-review",
+  "at": "2026-10-16T09:21:30.706175+00:00",
+  "independentNonAuthorReview": true,
+  "ready": true,
+  "remainingP0P1": 0,
+  "p1Findings": [],
+  "savedEvidenceAuditPassed": true,
+  "savedEvidenceIndependentlyAudited": true,
+  "startupSavedEvidenceQualified": true,
+  "actualStart": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-main-actual-start-observation-1792141785518-2d195392-2dcf-4aab-9786-2bf424daa669.json",
+    "sha256": "646e97f31948571cefbe246b29718ad5480988d79a24861383db98b2d7ed10f5",
+    "bytes": 2821
+  },
+  "actualPublicSavedAuditNullPreserved": true,
+  "rootSTARTInvocationClosed": true,
+  "startupScopeOnly": true,
+  "newQAExecutionTerminalObserved": false,
+  "workerModuleOrCaseOutcomeObserved": false,
+  "candidateMayHaveExecuted": null,
+  "actualResultReadyAtSTART": false,
+  "actualStatusAtSTART": "owner-state-unknown",
+  "ownerStopStateAndOriginalReportsAtSTART": null,
+  "sourceAdmissionA": {
+    "originalWireVerified": true,
+    "originalObservationBytes": 553756,
+    "originalObservationSHA256": "c37e14901877a93c2f22a46e9df1ef39b53290dca3ed217d8a241d4a69be9444",
+    "originalStderrBytes": 0,
+    "wireComplete": true,
+    "witnessOriginalBytes": [
+      {
+        "role": "runtimeWitness",
+        "sha256": "34e4c42d1f8b694df3b4af3df8ec1291f6e80db10e328392179379e9d0231455",
+        "bytes": 726
+      },
+      {
+        "role": "sourceWitness",
+        "sha256": "17b1303d989d02061161c07798ef02c6e2de6d2669e64dbe63801354fb71f05a",
+        "bytes": 234284
+      },
+      {
+        "role": "overlayVirtualWitness",
+        "sha256": "df0d1283f529a11a07fe743111b59b0fe1d39e306dd632bf6b1cffaee4d306a3",
+        "bytes": 245
+      },
+      {
+        "role": "pgRuntimeWitness",
+        "sha256": "444c088067537c7e42ded0173e66ce36cc0676c59905423925357a42c22ca2f3",
+        "bytes": 673
+      }
+    ],
+    "applicationRuntime": {
+      "entries": 47827,
+      "files": 39400,
+      "bytes": 498481064,
+      "sourceFilesVerified": 625
+    },
+    "pgRuntime": {
+      "entries": 232,
+      "files": 143,
+      "bytes": 472593
+    },
+    "effectiveSourceFiles": 625,
+    "unchangedFiles": 624,
+    "overlayDeltaBytes": 37,
+    "metadata9Rows": 16,
+    "nativeIntegerValues": 144,
+    "unsafeForJSValues": 32,
+    "metadataCanonicalDomain": "original Python integers in raw observation and witness bytes; no Node reconstruction",
+    "twoReadbacksAndCloseAreSourceBound": true
+  },
+  "originalPayloadAndLateSourceBinding": {
+    "controlFiles": 9,
+    "tools": 6,
+    "providedRolesIncludingFresh": 8,
+    "allBase64StrictRoundtripAndRawSHA256": true,
+    "parametersCanonicalSHA256Matched": true,
+    "AAndEntryLateBindingMatched": true
+  },
+  "dispatchACKAndFrozenParentJournal": {
+    "singleSTARTReceipt": true,
+    "parentJPDispatched": true,
+    "startUncertain": false,
+    "originalACKRawBytes": 2456,
+    "originalACKSHA256": "ba98282bb125a9f172cc59bc05185e0ee0f01a258140574c970865ce2be6e14c",
+    "unitACKLoadedActiveRunning": true,
+    "ownerStopStateAndOriginalReportsAtSTART": "unknown-null",
+    "status": "owner-state-unknown",
+    "workerExecutionOrModuleABISigned": false
+  },
+  "originalOuterConsole": {
+    "stdoutBytes": 144333,
+    "stdoutSHA256": "dde0acb6f62d045b718f736be72845ad01fd2a57c22455b1c299c4daed782413",
+    "stderrBytes": 0,
+    "privateSavedBeforeParseSourceBound": true
+  },
+  "freshPreSTARTProtection": {
+    "delegatedIndependentNonAuthorReviewer": "/root/offline_capture_shell",
+    "scope": "Only this START's fresh whole-protection captures/source/precision/time; main reviewer separately audited A/JP/payload/ACK.",
+    "remainingP0P1": 0,
+    "captureRecords": {
+      "total": 22,
+      "originalTransportStdout": 6,
+      "parsedJSONFrames": 16,
+      "parsedFramesAreWire": false,
+      "rawTransportStatus0": 6,
+      "rawTransportStderrBytes": 0,
+      "rawSignalAndErrorNull": true,
+      "strictBase64AndRawHashesVerified": true,
+      "canonicalParsedFrameBindingsVerified": true
+    },
+    "rootStageOrder": [
+      "inventory-before",
+      "native-source",
+      "old-build",
+      "inventory-after"
+    ],
+    "rootStageObservedAtUTC": [
+      "2026-10-16T09:09:34.337982+00:00",
+      "2026-10-16T09:09:35.425016+00:00",
+      "2026-10-16T09:09:36.523969+00:00",
+      "2026-10-16T09:09:40.323900+00:00"
+    ],
+    "sourceReceipts": {
+      "count": 4,
+      "originalProgramAndExecutedProgramParametersCanonicalResponseBound": true,
+      "activationContractInventoryAndSourceMethodCanonicalHashesMatchSpec": true
+    },
+    "fixedMain": {
+      "files": 607,
+      "bytes": 18151378,
+      "contentSHA256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+      "metadataSHA256": "a952d757430ebd43fa943754e419209b0ab9d399551cb0436f622d47302f8200",
+      "sourceAndCandidateBeforeAfterEqual": true,
+      "rootIdentityMatched": true,
+      "complete607MetadataRowsExported": false,
+      "independentRecalculationOfAll607NativeStatClaimed": false
+    },
+    "scans": {
+      "count": 4,
+      "native": [
+        {
+          "listed": 245,
+          "read": 245,
+          "boundEXIT": 0,
+          "incomplete": 0
+        },
+        {
+          "listed": 245,
+          "read": 245,
+          "boundEXIT": 0,
+          "incomplete": 0
+        }
+      ],
+      "oldBuild": [
+        {
+          "listed": 244,
+          "read": 244,
+          "boundEXIT": 0,
+          "incomplete": 0
+        },
+        {
+          "listed": 246,
+          "read": 245,
+          "boundEXIT": 1,
+          "incomplete": 0
+        }
+      ],
+      "laterScanDoesNotRepairEarlierScan": true,
+      "allListedClosedAsReadOrBoundExit": true,
+      "relatedCount": 0,
+      "filesystemSocketCount": 0,
+      "procNetUnixSocketCount": 0,
+      "rawNativeBuildUnsafeForJSNumberCount": 0
+    },
+    "boundEXIT": {
+      "count": 1,
+      "type": "pidfd-POLLIN",
+      "pollEvents": 17,
+      "attached": true,
+      "identityBound": true,
+      "exitConfirmed": true,
+      "procPathAbsent": true,
+      "listedIdentityBootAndProcessIdentityMatched": true,
+      "independentMask16HUPWaitClaimed": false
+    },
+    "ACKAndQueues": {
+      "nodeAndACKAcrossNativeBuildScansConsistent": true,
+      "queueStateCaptures": 2,
+      "fullTable": true,
+      "readOnly": true,
+      "allActive": 0,
+      "queueStateIsParsedProjectionNotSQLWire": true
+    },
+    "freshness": {
+      "proofAt": "2026-10-16T09:09:41.477Z",
+      "parentIntendedAt": "2026-10-16T09:09:42.218Z",
+      "milliseconds": 741,
+      "limitSeconds": 300,
+      "bothFreshGuardsSourceBound": true,
+      "secondFreshGuardHasNoAwaitBeforeNonce": true,
+      "independentSecondAssertionClockTrace": false
+    },
+    "limitation": "Only pre-START bounded protection and source-bound saved read/closure facts; does not qualify new QA current closure, owner exit, module ABI, any case, product, new HUP wait, or independent kernel trace.",
+    "physicalRefsCount": 35
+  },
+  "checkNotBefore": "2026-10-16T09:26:45.518550+00:00",
+  "checkPerformedByThisReview": false,
+  "STARTRepeatedByThisReview": false,
+  "rawEvidenceBoundary": {
+    "originalSSHStdoutStreams": 8,
+    "ofThoseFreshProtection": 6,
+    "ofThoseAAdmission": 1,
+    "ofThoseSTARTACK": 1,
+    "additionalLocalNodeConsoleStreams": 1,
+    "freshParsedJSONFrames": 16,
+    "parsedJSONFramesAreNotHTTPOrSQLWire": true,
+    "originalWireNativeIntegerBytesPreserved": true,
+    "independentKernelTraceClaimed": false,
+    "complete607NativeMetadataExportedOrRecomputed": false,
+    "applicationAndPGFullTreeReadbackClaimsAreSourceBound": true
+  },
+  "sourceReviewBoundary": {
+    "priorSpecificENTRY": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-specific-main-entry-independent-local-review-final.json",
+      "sha256": "914721ba8fdd01dd0dd7da6e181551e7069a8b96241d5c2602c3f20e4f441de0",
+      "bytes": 339150
+    },
+    "prior663PhysicalGraphNotReaudited": true,
+    "observedSourceRefsArrays": {
+      "main": 671,
+      "parent": 661
+    },
+    "sourcesBoundThroughExactC_ENTRY_Program_PayloadAndRawWire": true,
+    "oldSemanticOrPassedGroupsRepeated": false
+  },
+  "localAuditPreparationFailure": "Initial ast.literal_eval rejected SCOPE Name/Add literals before saved audit completion; corrected finite literal-only AST grammar, no reviewed code execution/source change/re-dispatch. Original tool traceback retained in session, no separate raw stdout file.",
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-main-actual-start-observation-1792141785518-2d195392-2dcf-4aab-9786-2bf424daa669.json",
+      "sha256": "646e97f31948571cefbe246b29718ad5480988d79a24861383db98b2d7ed10f5",
+      "bytes": 2821
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-actual-start-safe-facts.json",
+      "sha256": "5ae9b93309985abb9af9ee9a0e215f066446d818084c53fd94882662e23ccd6c",
+      "bytes": 1996
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-entry-private-start-outcome-1792141785239-0c20aceb-86a7-4e1d-8a5f-4ed76eb91130.json",
+      "sha256": "c03c597833ca3af021228992b3c635b4676f3e7c1a6ff1fb9828d925a4558bb4",
+      "bytes": 291939
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-actual-start-parent-journal-snapshot-bb4ff18b-65df-4cbe-a8ed-ebe5565d04be.json",
+      "sha256": "01451ba3bf63018a9135eabcab6e5dfc3999e01bfe83d017207721cdbe214684",
+      "bytes": 5867867
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-start-root-outer-console.json",
+      "sha256": "9f53c45c26de66864c52cafcb7d038cd402b9b5e7a9d3d570588cc1064a38182",
+      "bytes": 192788
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-start-root-outer-intent.json",
+      "sha256": "702bcbed40d01800b98f2ac0f59c1c498d862585d432ce5978f547488a160b11",
+      "bytes": 1158
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-context.json",
+      "sha256": "d917360ce8ec4e850de9ff6270156e00540b799381f58be5d83562d7617675c2",
+      "bytes": 1001
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-specific-main-entry-independent-local-review-final.json",
+      "sha256": "914721ba8fdd01dd0dd7da6e181551e7069a8b96241d5c2602c3f20e4f441de0",
+      "bytes": 339150
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-qa-worker-context-meta-r2-reviewed-main.py",
+      "sha256": "2773afdcc713df7360bda6e7faf22cc54845420b7006c83231041ae2a80d104c",
+      "bytes": 13766
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-pg4-qa-worker-context-main607-meta-r2-once.mjs",
+      "sha256": "66984418bb8796d85fd0e23d9f7d2a426b4daf458e70880f206e782e90c450dc",
+      "bytes": 19207
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-parent-private-1792141784279-129d5f1a-8394-4af5-bc15-9a8d2edf5252.json",
+      "sha256": "8aa7a87d071be803a1dba955dbda89a8970f85272d56e8101a78ae38c094537d",
+      "bytes": 3597
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-execution-source-contract.json",
+      "sha256": "4bba7be8b0a8afd858ba3efb1001095394fabbeadb4c50996d58edb3c4d74113",
+      "bytes": 177877
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-family-independent-local-source-review-final.json",
+      "sha256": "d71ce224cd1a0dd52b19609228a018af8c6dd45c7e9a594d9a8f4af6ba1f5f72",
+      "bytes": 327769
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-qualified-source-admission-activation.json",
+      "sha256": "acad3298671f52d9ed3abda768487b28914c2eff779a6b5cab1597b7f0dce2c5",
+      "bytes": 1047
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-admission-source-contract.json",
+      "sha256": "9d56ef1fe0638a7c6432e7cf78e64ab7917eb9a2bac73c4b3c566f06440abf54",
+      "bytes": 14567
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-complete-null-interface-r3.json",
+      "sha256": "f5d9888dfd8ec0bedf3e0cd438782782b6e2138aa45947d77385d4c11cbc0ce4",
+      "bytes": 90834
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-source-read-outcome.json",
+      "sha256": "f429f62bab1eeae32cf34e8d3bee06cd9255a1055ad4f532d26a49e8c9cc7bbb",
+      "bytes": 456927
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-source-admission-parameters-1792141757136-58a9efa0-9870-471a-86d0-44cff9aa2df6.json",
+      "sha256": "88012f61024723a6dad16be81ce7d9ccafb27e8faa205ddaf4c6bce26fe651c6",
+      "bytes": 363046
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-source-admission-wire-1792141763976-80048f23-245f-4766-b01c-5ca8627dc2db.json",
+      "sha256": "20e5a910f1602d691248a3172ffac939083097d753c75909b186abde4516b38f",
+      "bytes": 738683
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-source-admission-host-1792141763983-0a1deb5d-99d6-451e-a53f-120c4a269398.json",
+      "sha256": "c37e14901877a93c2f22a46e9df1ef39b53290dca3ed217d8a241d4a69be9444",
+      "bytes": 553756
+    },
+    {
+      "path": "scripts/factory-pg4-source-admission-r33-main602-pgready-r7.py",
+      "sha256": "f9032754148f7eed1726676b32aa10af1d3feb238abfecb00905e8c8a82579ce",
+      "bytes": 27301
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-entry-private-source-admission-1792141764915-604a5b60-5dae-4719-ba8e-b6532c8079ff.json",
+      "sha256": "eb92d8a3f6b09611ad26e48f299847a8d132d32cf8bc4e8ff892f0749d835c06",
+      "bytes": 456733
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-driver-input-template.json",
+      "sha256": "9ac28b2ea334494a3e1d87f745940dcbbb506016032f7fbec02720ea79e9cc3d",
+      "bytes": 10585
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-sql-bootstrap-request.json",
+      "sha256": "ccf0469a93c4c070ac5f52753eccfd6f9da280b52daad52480798f2abcf1d3a8",
+      "bytes": 6628
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-sql-after-request.json",
+      "sha256": "245a5e144bf124bd580238fe655d47d360b85cf7f68052424b02ad6ff8f37a87",
+      "bytes": 6630
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-parent-private-1792141781838-ddbe485e-3810-4f96-8ca9-2e32ce4199e2.json",
+      "sha256": "e6d99b2efd1d5293adc798d02499c6e8835613bec0c5d2802b72fd93f403b96c",
+      "bytes": 345348
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-qualified-prior-scope-admission.json",
+      "sha256": "551e9c372e30084a545581c0be3205f75e1f5ea3da712f7a75997e0069729310",
+      "bytes": 726
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-physical-independent-local-source-review-final.json",
+      "sha256": "496f27dcf6ec678a0c670962e59188c7942eb5aa847e110ca892ba02406ac839",
+      "bytes": 326683
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-start-outcome.json",
+      "sha256": "dde0acb6f62d045b718f736be72845ad01fd2a57c22455b1c299c4daed782413",
+      "bytes": 144333
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-start-once.json",
+      "sha256": "46d06e6532365fb5615d4421707d65fd2f49363a0bb79c78310a9f49f3ff1980",
+      "bytes": 626
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-source-read-once.json",
+      "sha256": "d5ff2f7c8a4bdd3bc599d9d61f472868d6b15c8411c78710cfe52c3ea992e6a8",
+      "bytes": 142526
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-parent-activation.json",
+      "sha256": "11dd873ca01b9501bc3bc4ccb0df30a1461cc75ef29b66f9d1988f83e03947cc",
+      "bytes": 3509
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141769734-6137878a-45a0-4200-aa26-ee2db1b3d6be.json",
+      "sha256": "100455be69a3904a6768d8f9ef500cfab20f53acf41dc36de830b5a55e3fb179",
+      "bytes": 7032
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141769741-e5e72364-101b-434c-b797-8c58301e0e95.json",
+      "sha256": "9f00dc8d2eada155b28a00deba5f7b273d4ab20da20a265711b85bf46080d9c5",
+      "bytes": 12126
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141769755-0eb6cfb9-7a1d-42a9-b60b-ca78faa3c8d6.json",
+      "sha256": "b23dba7c470b444aa0e955ac4b079c1290f8f641c4be93cc012cb3a3e4598552",
+      "bytes": 113801
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141769801-3692f3d8-fffd-4939-ab8c-d7201921ce12.json",
+      "sha256": "74ca49f66fef507f5507f885f91ca544b31fa873829584b8464ea23edb9d79f1",
+      "bytes": 18223
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141769809-d83947c0-efca-4257-939b-e0a0efc39b3c.json",
+      "sha256": "c4baef2a28c56a83f4492051c4f9f94509e6bdc385168b156c3f83adec2706dd",
+      "bytes": 22055
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141770086-b2edfb7a-a2be-4498-9893-e4bdc62a1b42.json",
+      "sha256": "a8109a0904bcd49a309fb2ea6e3372a67b8e78973c1c45dd6c39a66b16d61f19",
+      "bytes": 1357
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141770328-590abe73-413e-4223-9cc3-d6f3d72a63f7.json",
+      "sha256": "0141f9de78986bc98418c6e4fc542b0c0ad05bb2507c1b584c922b38e47830ae",
+      "bytes": 541
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141770336-ca0d99f4-fd6a-4043-9319-29d14cf6bbeb.json",
+      "sha256": "7747ea7f417689a417ad93d7c8c4d49d4a6c575107da00f5af36b67f02f69608",
+      "bytes": 43998
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141770629-03c118c3-f785-42e7-90c6-8b051a24860d.json",
+      "sha256": "9ebcc060f78b7879ffcaec7a4e468aef97cdb0ed13245aa39f634fc259692580",
+      "bytes": 5221
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141774332-c95ff07c-51a2-48d6-82c1-f071b229f337.json",
+      "sha256": "999720adf1d9e5dd10ee7440ab7f0bbd4843b4461ea39ebe93739bb2eea4d37e",
+      "bytes": 86253
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141775421-0fa720b2-ca78-4a5c-ae9a-30b5d4c63b23.json",
+      "sha256": "2a54821c1d747cd067d26fb55277d2e916b27b6b7613dc8f3d0fe9ae111a440b",
+      "bytes": 14062
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141776521-b95fa977-8d05-4a9a-953b-84dfab9bb30d.json",
+      "sha256": "ea0ef183632088f804f7314fb8c599a35f100921cb4e7ab534cd217362ae035d",
+      "bytes": 16654
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780320-6aa07873-ad90-4447-9da4-a28508213fc1.json",
+      "sha256": "35e0311179f71d39a7a1c35dbfed77b2aa5d47c0d65bf1d5d10827ccb1246f87",
+      "bytes": 86252
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780350-e6c5e4f6-67ea-4dc7-b0de-431afff6ea3d.json",
+      "sha256": "ac61410332b99115374b8ae2d64dea4ad3dd379af8eaad766381c2da2df8ea66",
+      "bytes": 7032
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780356-88ee61a6-0b70-43bf-8de5-cef6749c5703.json",
+      "sha256": "f6e06b74389deb2d9aef38c5bf13959023bebf025f017fcfeb948ccde82c4a3d",
+      "bytes": 12126
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780369-1e045ea7-f86c-44cc-8bae-4e797d04a79b.json",
+      "sha256": "b23dba7c470b444aa0e955ac4b079c1290f8f641c4be93cc012cb3a3e4598552",
+      "bytes": 113801
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780416-6b8c6400-405a-4049-ac5a-c9f71bc2d330.json",
+      "sha256": "bdd72417b227d8180265b6371de0ec07a8a6243267753962a58665a1b0259e48",
+      "bytes": 18223
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780421-c4a6cfff-6abf-4ad3-b33e-251997622a04.json",
+      "sha256": "d0e0fc9d77a35004b1c58be6c11720a205bb0b52dd4a24715c6c0f107d2e5561",
+      "bytes": 22055
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141780685-8973dc3f-89e2-4a8d-bc8a-71811b2ddf11.json",
+      "sha256": "a8109a0904bcd49a309fb2ea6e3372a67b8e78973c1c45dd6c39a66b16d61f19",
+      "bytes": 1357
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141781220-8839ed33-08d2-4451-8ccd-d6a17a1c4a85.json",
+      "sha256": "2c9ded554b4830b9ac507840c2a52d7fbe156b6dd5e0b6a7bb56ad3ff79d5c25",
+      "bytes": 541
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141781228-c51f3ec6-16e8-40f7-b1cb-2cfa4fe2b72f.json",
+      "sha256": "9fca2fef08be566037b01f4ee6f60791b7681fa2619c7437958452e80a3913e0",
+      "bytes": 43998
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main607-fixed-metadata-r2-single-entry-protection-capture-1792141781463-9ec21a41-b16f-4d02-9bf9-236a1c5e8aa7.json",
+      "sha256": "5c84d95ab3a5bc930e50580e284c81e34bc7342b3b2c0516be217dc0e937124a",
+      "bytes": 5221
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-single-entry-bound-census-native-source-2d05cf4bd18f10e0044981168b2bbad78957a07cbb5f89dab3eea3c972f37b73.py",
+      "sha256": "2d05cf4bd18f10e0044981168b2bbad78957a07cbb5f89dab3eea3c972f37b73",
+      "bytes": 28366
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-single-entry-bound-census-build-source-909f014941f1adbe3adf62a1dcd8d783c48f292c41f936c339cb293a2d0f7188.py",
+      "sha256": "909f014941f1adbe3adf62a1dcd8d783c48f292c41f936c339cb293a2d0f7188",
+      "bytes": 37064
+    },
+    {
+      "path": "scripts/factory-single-dirent-r33.py",
+      "sha256": "ab981cf22e75c75946a85150bffbd051ece574143446fd6b22f6a383bc44c6d8",
+      "bytes": 3637
+    },
+    {
+      "path": "scripts/factory-single-entry-bound-census-r33.mjs",
+      "sha256": "7f10715ae744a24117edc34a5d44d2478400a878b77044be289aa616f406ead5",
+      "bytes": 5849
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-bounded-hup-census-native-source-549c8b8e4711492c75d3b9fccad592a3977f02f556ce15a558a2751a81ba3165.py",
+      "sha256": "549c8b8e4711492c75d3b9fccad592a3977f02f556ce15a558a2751a81ba3165",
+      "bytes": 39436
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-bounded-hup-census-build-source-1d4548a82fa40499aca346875c3d9f762967c45c40a1b782c4cc4f8832a9dcdf.py",
+      "sha256": "1d4548a82fa40499aca346875c3d9f762967c45c40a1b782c4cc4f8832a9dcdf",
+      "bytes": 48134
+    },
+    {
+      "path": "scripts/factory-bounded-hup-census-r33.mjs",
+      "sha256": "57d207f9e173f07891acb9ab050a0e818840dd87d30c9a150c4b88ec2aa53a13",
+      "bytes": 8016
+    },
+    {
+      "path": "scripts/factory-bounded-pidfd-hup-wait-r33.py",
+      "sha256": "c743dcb7c14dd245074c903757747f55721cfe3b164be2af5b4e553898de3a3b",
+      "bytes": 8437
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-single-entry-method-r3-independent-observation-1791896751796-edc3c6d2-369d-4953-b163-a214a72b9224.json",
+      "sha256": "3f37f556d1ec228804c999fd3af2e93beca7219a6f4d3f479a93353fd9990d7d",
+      "bytes": 17643
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-bounded-hup-method-actual-result-1791972621857-c8d855cd-46fb-47ad-97b8-35d01bd97a55.json",
+      "sha256": "85ec33d74bfa46d5ab729e88fb1e0abbed2e5ffcf05b775ae8a5bb7a7a1f5436",
+      "bytes": 2011
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-bounded-hup-method-saved-evidence-independent-local-review-1791973060024-d2530690-3c83-4ee5-8205-b5bb4daa7580.json",
+      "sha256": "5535e18972feba0fc92ae2e619b76118268bcc0c1b9c42a4542b60503acb3dff",
+      "bytes": 36775
+    }
+  ],
+  "physicalRefsCount": 65,
+  "physicalRefsInitialAndFinalRawMatched": true,
+  "rootAndWorkSameBytes": true,
+  "rootWorkMirror": {
+    "missingFilesWrittenWX": 42,
+    "existingSameBytesSkipped": 23,
+    "existingDifferentBytesOverwritten": 0,
+    "privateBodiesCopiedOnlyToPrivateMaintenancePaths": true
+  },
+  "qualificationBoundary": [
+    "This qualifies only saved original A/source-witness, pre-START fresh protection, payload and the START dispatch ACK as observed.",
+    "The ACK reports loaded/active/running only at START; owner, stop identity, original reports and state were null. No later state, owner exit, new current closure or QA terminal was read.",
+    "Read/close and bound EXIT evidence is source-bound, not an independent kernel trace; the one poll17 EXIT is not a newly executed HUP wait test.",
+    "No source-only module, package import/export, worker execution, fixture, case, framework ABI or product acceptance is signed.",
+    "Original actual START/safe-facts saved-audit null values and every old candidate/failure/closed opportunity remain unchanged."
+  ],
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "productAccepted": false,
+  "testCaseCountsKept": {
+    "passed": 0,
+    "businessFailed": 0,
+    "incomplete": 4
+  },
+  "originalAcceptanceCountsKept": {
+    "passed": 0,
+    "total": 74
+  },
+  "reviewExecution": {
+    "sourceFunctions": 0,
+    "actualManifestModuleImports": 0,
+    "remoteCalls": 0,
+    "apiRequests": 0,
+    "modelCalls": 0,
+    "tests": 0,
+    "oldReadersRepeated": 0
+  },
+  "costs": {
+    "policy": "record-only-no-limit",
+    "knownAmount": null,
+    "internalTokens": null,
+    "internalCostUnknown": true,
+    "newSupplierModelCalls": 0
+  }
+}

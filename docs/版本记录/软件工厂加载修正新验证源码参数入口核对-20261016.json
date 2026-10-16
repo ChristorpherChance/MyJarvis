@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-worker-context-main607-meta-r2-source-data-entry-root-readback",
+  "at": "2026-10-16T09:11:43.460552+00:00",
+  "newSourcesCount": 7,
+  "necessaryStaticHosts": 2,
+  "completeSourceAggregate": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-complete-family-source-review-aggregate-final.json",
+    "sha256": "bc377ef81f3f7c932edaea38cc8cc1b414f4cbf764110fb5343ee2d8d07f750e",
+    "bytes": 165636
+  },
+  "familyAndConsumerSources": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-family-independent-local-source-review-final.json",
+      "sha256": "d71ce224cd1a0dd52b19609228a018af8c6dd45c7e9a594d9a8f4af6ba1f5f72",
+      "bytes": 327769
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-phase-A-independent-local-source-review-final.json",
+      "sha256": "1c5dfe226c39b90dc66cca65bddccf8057b135078b35da7fe55dd15feb6806c0",
+      "bytes": 326932
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-current-scope-independent-local-source-review-final.json",
+      "sha256": "6c5b461e0309a650744e43d99dede4d62045f42d22900b3affb7be8e8847466b",
+      "bytes": 327021
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-physical-independent-local-source-review-final.json",
+      "sha256": "496f27dcf6ec678a0c670962e59188c7942eb5aa847e110ca892ba02406ac839",
+      "bytes": 326683
+    }
+  ],
+  "sourceDataSeal": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-source-data-seal.json",
+    "sha256": "7dab5e57d3d9e99a59d044ab1f5c497be11204bb81fc1f3be02e42387c512584",
+    "bytes": 162442
+  },
+  "lateDataSeal": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-late-entry-data-seal.json",
+    "sha256": "1e24039a34817470c07e8de1bd7d6e4c8b43c6f75f5565781373862489fa31b2",
+    "bytes": 171508
+  },
+  "actualContext": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-context.json",
+    "sha256": "d917360ce8ec4e850de9ff6270156e00540b799381f58be5d83562d7617675c2",
+    "bytes": 1001
+  },
+  "specificENTRY": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-specific-main-entry-independent-local-review-final.json",
+    "sha256": "914721ba8fdd01dd0dd7da6e181551e7069a8b96241d5c2602c3f20e4f441de0",
+    "bytes": 339150
+  },
+  "reviewedOuter": {
+    "path": ".jarvis-dev/maintenance/run-r37-qa-worker-context-meta-r2-reviewed-main.py",
+    "sha256": "2773afdcc713df7360bda6e7faf22cc54845420b7006c83231041ae2a80d104c",
+    "bytes": 13766
+  },
+  "RootENTRYPhysicalRefsHSizeVerified": 663,
+  "machineSourceRefs": 661,
+  "RootWorkMirrorsVerified": true,
+  "executionContractRefs": 639,
+  "old600OrderedPrefixPreserved": true,
+  "lateShapes": {
+    "context": 8,
+    "sourceAdmissionActivation": 6,
+    "parent": 12,
+    "providedKeys": 7,
+    "driver": 12,
+    "sqlBootstrap": 12,
+    "sqlAfterHooks": 12
+  },
+  "sourceDataHelperExecutedOnce": true,
+  "lateDataHelperExecutedOnce": true,
+  "helperRootCalls": 0,
+  "boundary": "Static SOURCE/DATA/ENTRY qualification only. The subsequent START is a separate observation; this report does not qualify runtime imports, worker ABI, cases or product.",
+  "correctionsPreserved": {
+    "nullCandidateTwoSQLDriverLeavesCorrected": true,
+    "physicalPathP1": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-physical-path-p1-source-finding.json",
+      "sha256": "f982f562913734e861e2da23eae4de112d4a445819b43e3abe300582b0960beb",
+      "bytes": 2849
+    },
+    "oldP0b7SnapshotPreserved": true,
+    "onlyPhysicalCanonicalSelfPathLiteralChanged": true,
+    "correctedP_SHA256": "d676e15f1553823dc8824f522930b97f0154517e32522707345468f11fa95ce3",
+    "onlyNewPinpointPhysicalPathGroupPassed": true,
+    "oldWiringHarnessFailureAndCorrectedSameGroupPassedPreserved": true,
+    "auditComparatorLocalAssumptionsCorrectedWithoutSourceChange": true,
+    "oldPassedGroupsNotRepeated": true
+  },
+  "workerContextPolicy": {
+    "fixedModuleCount": 13,
+    "sourceOnlyDeferredExactIndex": 2,
+    "remainingHostImports": 12,
+    "actualModuleOrWorkerExecutionQualified": false,
+    "frameworkABIQualified": false,
+    "actualWorkerTestRunnerInstance": null,
+    "callbacksHooksSQLFixtureUnchanged": true
+  },
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "newProductionRelease": false,
+  "newSupplierModelCalls": 0
+}

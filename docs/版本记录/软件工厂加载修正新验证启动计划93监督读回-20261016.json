@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-16T09:22:45.958Z",
+  "driverDecision": {
+    "id": "5d37103d-eee0-4805-92fe-81513a53e209",
+    "revision": 4,
+    "status": "implemented",
+    "hash": "189ebd785f8207891497f0d386d5e83fad4482cf0b0794ab7a096dd78f9e3400",
+    "independentAcceptance": false
+  },
+  "driverNewActionState": "performed-start-only",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 93,
+    "hash": "9a474d05ddb0cd2c7c61be3ea9fc60977b708183649c10f8ce176c3b77be1b18",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "取得本轮实际结果后，核对四个用例、错误记录和资源收尾；将通过项与未完成项分别列明，再继续剩余交付验证。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 11,
+    "hash": "f700e15d29ec0b2837516d24e04bba23d6ed006d4b6c6c3a89f5ce1ced8a4578",
+    "summary": "已接入加载修正，新一轮四个关键用例验证已启动，正在等待实际结果。用例是否通过仍待独立核对。",
+    "nextAction": "取得本轮实际结果后，核对四个用例、错误记录和资源收尾；将通过项与未完成项分别列明，再继续剩余交付验证。",
+    "blocker": "本轮验证尚无独立终态结果，四个用例暂不计为通过。",
+    "validationScope": "SOURCE aggregate bc377ef8、ENTRY914721ba经Root核663物理引用；实际SOURCE-DATA7dab与late DATA1e24各唯一一次。START646e97f3为34.172秒exit0，attempt553bb40c754c687be8195cc4c027863c，09:09:45.518550Z的unit ACK loaded/active/running；owner/stop/state/originalRecords仍未知。SAVED5190859b经Root核65引用，仅A原wire与4witness、原payload、START ACK及新鲜保护保存资格；22capture=6raw+16parsed，native两245全读，build244全读及246=245read+1绑定EXIT/poll17、0unknown，proof至JPintended741ms。原整数与source-bound范围保留，不冒kerneltrace/HUP实际等待/模块或worker ABI/四用例/当前资源收尾。CHECK未执行，不早于09:26:45.518550Z；四用例0通过0业务失败4未完成、74为0/74，原自治/25tasks/五步标准/global/R22/PG29/Env23/notes保留，未发布。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 24,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "sourceFamilyIntegrated": true,
+  "actualStart": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-main-actual-start-observation-1792141785518-2d195392-2dcf-4aab-9786-2bf424daa669.json",
+    "sha256": "646e97f31948571cefbe246b29718ad5480988d79a24861383db98b2d7ed10f5",
+    "bytes": 2821
+  },
+  "actualStartSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-start-saved-evidence-independent-local-review-final.json",
+    "sha256": "5190859ba1483445ee455d1a925eccd3aa2c04c9dd21a2d0d08b56b9b17e911a",
+    "bytes": 26977
+  },
+  "actualStartInvocations": 1,
+  "automaticRetry": false,
+  "checkNotBefore": "2026-10-16T09:26:45.518550+00:00",
+  "limitedActualStartIndependentlyQualified": true,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

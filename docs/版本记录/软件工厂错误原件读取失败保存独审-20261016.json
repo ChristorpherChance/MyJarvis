@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-one-driver-report-diagnostic-r1-failed-saved-independent-local-review",
+  "status": "failed-read-evidence-verified-source-p1-open",
+  "at": "2026-10-16T06:48:16.270281+00:00",
+  "savedFailedObservationQualified": true,
+  "savedReportBytesQualified": false,
+  "actualObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-actual-observation-1792133093809-b54b7dae-0328-4c6d-bd35-5b5678340b87.json",
+    "sha256": "a3d8cfccbc972e2c78ed7c7ed00ed8a1642fc65aa9c11962b3e666c785cbeb22",
+    "bytes": 10095
+  },
+  "remainingP0P1": 2,
+  "findings": [
+    {
+      "severity": "P1",
+      "title": "Reader permission contract rejects the producer retained report",
+      "file": "scripts/factory-pg4-one-driver-report-diagnostic-r37.py",
+      "line": 76,
+      "producerFile": "scripts/factory-pg4-qa-startup-worker-r37-first-error-main607.py",
+      "producerLines": [
+        183,
+        593
+      ],
+      "evidence": "The retained-report producer explicitly stores and fchmods its immutable copy0444; the fixed one-report reader requires exact0600 before reading. This is a proven source compatibility defect. The actual frame reports PG4_D_RECORD_UNTRUSTED with no file row; its unexposed individual stat predicate was not separately observed.",
+      "effect": "The authorized fixed report cannot be read under the documented producer contract; the2066-byte report body was not obtained.",
+      "status": "open-in-r1; distinct-r2 pending independent qualification"
+    },
+    {
+      "severity": "P1",
+      "title": "Success-only file-set guard masks a bound reader failure",
+      "file": ".jarvis-dev/maintenance/read-r37-pg4-one-driver-report-diagnostic-corrected-once.mjs",
+      "line": 65,
+      "laterFailureHandlerLine": 67,
+      "evidence": "The original same-source failure frame matches the context and contains files{}, readCompletefalse and PG4_D_RECORD_UNTRUSTED. The keys(files,[REPORT]) condition runs before the explicit failed-frame handler and returns PG4_OR_RETURN_CONTEXT_CHANGED. The private outcome retains the original firstReaderError, but the returned public code masks it.",
+      "effect": "Reported context failure hides the actual retained reader error; preserve the valid failed frame primary code before applying success-only file completeness.",
+      "status": "open-in-r1; distinct-r2 pending independent qualification"
+    }
+  ],
+  "originalClosedOpportunityPreserved": true,
+  "readerOpportunityClosed": true,
+  "actualOneReportBytesObserved": false,
+  "actualReportBodyReadOrInterpreted": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "fullProtectionQualified": false,
+  "productAccepted": false,
+  "reviewRemoteCalls": 0,
+  "reviewAPI": 0,
+  "reviewFunctions": 0,
+  "reviewTests": 0,
+  "reviewModels": 0,
+  "RootCallsRecorded": 1,
+  "executionNonce": null,
+  "actualFacts": {
+    "exitCode": 1,
+    "nodeElapsedSeconds": 0.7190000000409782,
+    "entryInvocations": 1,
+    "wireStatus": 0,
+    "wireComplete": true,
+    "originalStdoutBytes": 1181,
+    "originalStderrBytes": 0,
+    "firstReaderFailure": {
+      "phase": "DIRECTORY",
+      "errorCode": "PG4_D_RECORD_UNTRUSTED",
+      "errno": null,
+      "secondaryFailures": []
+    },
+    "returnedErrorCode": "PG4_OR_RETURN_CONTEXT_CHANGED",
+    "filesObserved": 0,
+    "completedFiles": 0,
+    "readComplete": false,
+    "readerClosureSigned": false,
+    "actualFDLeakInferred": false,
+    "privateOriginalReportRef": null,
+    "intendedReportPin": {
+      "sha256": "2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a",
+      "bytes": 2066
+    }
+  },
+  "checks": [
+    "Original bounded private wire H/size, strict base64 and returned stdout/stderr counts are verified; no rawBase64/body or identities are reproduced in this report.",
+    "The private outcome originalReturnedTransportPacket equals the wire, preserves the original firstReaderError and has no completed reportRef/result.",
+    "Original operator console bytes/H/size bind to the public failed result, and the durable once intent binds the fixed sources/context/ENTRY to the same single attempt.",
+    "Reader file_row exact0600 and producer retain_reports0444 plus store.fchmod are physically verified in the frozen r1 source.",
+    "The valid failed frame has files{}; the success-only exact file-set guard precedes explicit readCompletefalse error preservation and demonstrably masks the primary code.",
+    "No2066-byte target raw body was returned or saved. Historical pin/state/SAVED evidence remains history only.",
+    "allReaderDescriptorsClosedfalse is an unsigned failure result and is not treated as proof of an actual descriptor leak.",
+    "Only the finite necessary actual/new-source graph is read; no prior30/600 source graph semantics or tests were repeated."
+  ],
+  "priorPositiveReviewGap": {
+    "sourceReview": {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-independent-local-source-review-final.json",
+      "sha256": "63245f268f4f91b74ea8871091a0a54b5b6be8606c25300ff9a12ed65e12644f",
+      "bytes": 17563
+    },
+    "entryReview": {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-specific-entry-independent-local-review-final.json",
+      "sha256": "a7c5f8a08ba10a9bd16bedcb8a9a71f5049285986c09f003ac3ddb232606bc88",
+      "bytes": 19172
+    },
+    "originalBytesPreserved": true,
+    "newReadinessMayNotRelyOnTheirZeroP1Conclusion": true,
+    "missedCheck": "The prior source and entry reviews verified the new0600 predicate and fixed history pins but missed the producer retained-copy0444 contract. The real failed run exposes that source compatibility gap and a failed-frame code-preservation gap.",
+    "correctionPolicy": "Preserve original positive reports and failed actual bytes; record these new findings. Do not replay the closed r1 opportunity or claim distinct r2 ready."
+  },
+  "sourceRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-actual-observation-1792133093809-b54b7dae-0328-4c6d-bd35-5b5678340b87.json",
+      "sha256": "a3d8cfccbc972e2c78ed7c7ed00ed8a1642fc65aa9c11962b3e666c785cbeb22",
+      "bytes": 10095
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-private-1792133093603-30cb96f5-a80c-4879-adbc-a830dc769b6d.json",
+      "sha256": "c2d6b47321897feabad432a07f529312d7e30d04f24717cc1cd5b258777bfba7",
+      "bytes": 2009
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-private-1792133093697-0c49fdc6-4105-410a-89fa-3e907965723f.json",
+      "sha256": "3f2f74b0d6a9917e8bcde31e195afb12d701858bf15024b1d099d7c3cb4a355f",
+      "bytes": 8545
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-diagnostic-operator-outcome.json",
+      "sha256": "45a8d10b890788c40aa12694c5ba62ee145e976fbffaa644f86c551f7b177645",
+      "bytes": 9367
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-independent-local-source-review-final.json",
+      "sha256": "63245f268f4f91b74ea8871091a0a54b5b6be8606c25300ff9a12ed65e12644f",
+      "bytes": 17563
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-specific-entry-independent-local-review-final.json",
+      "sha256": "a7c5f8a08ba10a9bd16bedcb8a9a71f5049285986c09f003ac3ddb232606bc88",
+      "bytes": 19172
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-one-driver-report-diagnostic-entry-context.json",
+      "sha256": "0f69e46145cf094d1ea7589e1d8f873f371b1e510df235c32bc83895aab901c6",
+      "bytes": 1708
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-complete-null-interface.json",
+      "sha256": "1865fc640adac8a8c442add04fa3133269798aad91547e25fa2fb9f7f8aa5bcb",
+      "bytes": 7935
+    },
+    {
+      "path": "scripts/factory-pg4-one-driver-report-diagnostic-r37.py",
+      "sha256": "2434c91ca310d720916e1c53555f0b840e3f38edd4597ce5079e5f80428c2f87",
+      "bytes": 7707
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-one-driver-report-diagnostic-corrected-once.mjs",
+      "sha256": "14ad60f9a7becd7545e7a5c3b6ade683abd194b500d1b7b49e61713aeeb23dd0",
+      "bytes": 18692
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-host-source-6e86db7e40003acc54fce580b833fe23cc78ac6a7d77b668068b51dc3a3fe3a4.py",
+      "sha256": "6e86db7e40003acc54fce580b833fe23cc78ac6a7d77b668068b51dc3a3fe3a4",
+      "bytes": 10983
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-worker-r37-first-error-main607.py",
+      "sha256": "51b056c63d761e17ef22d9204dfef0396b374bba8296683d6f62a4ad7babe438",
+      "bytes": 95656
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-one-driver-report-reviewed-v2-once.py",
+      "sha256": "d66c0ee4042425ea3427312785483ac20dc64f5e78331232338d65d2109f81d8",
+      "bytes": 4343
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-one-driver-report-diagnostic-read-once.json",
+      "sha256": "f605cf4f1e189a4981c597d6dc3262a632e31f82b0e281c712f66bf016193a28",
+      "bytes": 7823
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-qa-main607-original-check-parent-frame.json",
+      "sha256": "ee1afb49282dcadc03a3bad683d0a64c66baab04d39813686e8bd2f18533a22a",
+      "bytes": 21282
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-state.json-248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d.json",
+      "sha256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+      "bytes": 22603
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-binding-bytes-independent-local-saved-review-final.json",
+      "sha256": "6efaa3373869bf650ee1a202261fae3db986057df4ef9a0922f5ecc743f59fb8",
+      "bytes": 11149
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-root-actual-data-seal.json",
+      "sha256": "9fd79a4e3ba10e0e0ab81027a99f327a40c69d96e049a7f7950d10c99e5277f1",
+      "bytes": 6584
+    }
+  ],
+  "sourceRefsCount": 18,
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-actual-observation-1792133093809-b54b7dae-0328-4c6d-bd35-5b5678340b87.json",
+      "sha256": "a3d8cfccbc972e2c78ed7c7ed00ed8a1642fc65aa9c11962b3e666c785cbeb22",
+      "bytes": 10095
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-private-1792133093603-30cb96f5-a80c-4879-adbc-a830dc769b6d.json",
+      "sha256": "c2d6b47321897feabad432a07f529312d7e30d04f24717cc1cd5b258777bfba7",
+      "bytes": 2009
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-private-1792133093697-0c49fdc6-4105-410a-89fa-3e907965723f.json",
+      "sha256": "3f2f74b0d6a9917e8bcde31e195afb12d701858bf15024b1d099d7c3cb4a355f",
+      "bytes": 8545
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-diagnostic-operator-outcome.json",
+      "sha256": "45a8d10b890788c40aa12694c5ba62ee145e976fbffaa644f86c551f7b177645",
+      "bytes": 9367
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-independent-local-source-review-final.json",
+      "sha256": "63245f268f4f91b74ea8871091a0a54b5b6be8606c25300ff9a12ed65e12644f",
+      "bytes": 17563
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-specific-entry-independent-local-review-final.json",
+      "sha256": "a7c5f8a08ba10a9bd16bedcb8a9a71f5049285986c09f003ac3ddb232606bc88",
+      "bytes": 19172
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-one-driver-report-diagnostic-entry-context.json",
+      "sha256": "0f69e46145cf094d1ea7589e1d8f873f371b1e510df235c32bc83895aab901c6",
+      "bytes": 1708
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-complete-null-interface.json",
+      "sha256": "1865fc640adac8a8c442add04fa3133269798aad91547e25fa2fb9f7f8aa5bcb",
+      "bytes": 7935
+    },
+    {
+      "path": "scripts/factory-pg4-one-driver-report-diagnostic-r37.py",
+      "sha256": "2434c91ca310d720916e1c53555f0b840e3f38edd4597ce5079e5f80428c2f87",
+      "bytes": 7707
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-one-driver-report-diagnostic-corrected-once.mjs",
+      "sha256": "14ad60f9a7becd7545e7a5c3b6ade683abd194b500d1b7b49e61713aeeb23dd0",
+      "bytes": 18692
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-host-source-6e86db7e40003acc54fce580b833fe23cc78ac6a7d77b668068b51dc3a3fe3a4.py",
+      "sha256": "6e86db7e40003acc54fce580b833fe23cc78ac6a7d77b668068b51dc3a3fe3a4",
+      "bytes": 10983
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-worker-r37-first-error-main607.py",
+      "sha256": "51b056c63d761e17ef22d9204dfef0396b374bba8296683d6f62a4ad7babe438",
+      "bytes": 95656
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-one-driver-report-reviewed-v2-once.py",
+      "sha256": "d66c0ee4042425ea3427312785483ac20dc64f5e78331232338d65d2109f81d8",
+      "bytes": 4343
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-one-driver-report-diagnostic-read-once.json",
+      "sha256": "f605cf4f1e189a4981c597d6dc3262a632e31f82b0e281c712f66bf016193a28",
+      "bytes": 7823
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-qa-main607-original-check-parent-frame.json",
+      "sha256": "ee1afb49282dcadc03a3bad683d0a64c66baab04d39813686e8bd2f18533a22a",
+      "bytes": 21282
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-first-error-main607-terminal-binding-state.json-248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d.json",
+      "sha256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+      "bytes": 22603
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-binding-bytes-independent-local-saved-review-final.json",
+      "sha256": "6efaa3373869bf650ee1a202261fae3db986057df4ef9a0922f5ecc743f59fb8",
+      "bytes": 11149
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-root-actual-data-seal.json",
+      "sha256": "9fd79a4e3ba10e0e0ab81027a99f327a40c69d96e049a7f7950d10c99e5277f1",
+      "bytes": 6584
+    }
+  ],
+  "physicalRefsCount": 18,
+  "mirrorReadback": {
+    "RootWorkExact": true,
+    "initialFinalRawHashesStable": true,
+    "newMissingCopiesWX": 5,
+    "existingFilesOverwritten": 0,
+    "privateCopiesRemainUnderMaintenance": true
+  },
+  "limitations": [
+    "Failed evidence preservation is qualified; source readiness and target report bytes are not.",
+    "This does not establish a business failure, current resource closure, FD leakage, four-case QA result or PG4 qualification.",
+    "No reader, source function, test, remote/API, candidate or model execution was performed by this review.",
+    "Any distinct r2 protocol/purpose/once and failure handling must receive its own SOURCE/DATA/ENTRY qualification; none is provided here."
+  ],
+  "fees": {
+    "policy": "record only; no spending cap",
+    "knownAmount": null,
+    "unknownInternalCost": true,
+    "newModelRequests": 0,
+    "tokens": null
+  }
+}

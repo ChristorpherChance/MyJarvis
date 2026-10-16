@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-one-driver-report-r2-diagnostic-actual-observation",
+  "at": "2026-10-16T06:55:26.063780+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-pg4-one-driver-report-diagnostic-r2-once.mjs",
+    "sha256": "0f88724615d906f7746d1a4c1375192d49d67c7d316c2b65bb782694f325f99d"
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-one-driver-report-diagnostic-r2-entry-context.json",
+    "sha256": "8b7264089e6d3a3040d5586f0fdeb68836b75931253b7ace8201e2207ed41473"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-r2-specific-entry-independent-local-review-final.json",
+    "sha256": "ffcfd2c07a9607af408d8a065366e58285d10a97ef5fc081ed3c9b790fe3d6ca"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 0.8130000000819564,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-one-driver-report-r2-diagnostic-operator-outcome.json",
+    "sha256": "a6f2bc8c0ea13bf03fed556517313dbc84c0e7befef08355fc27885c481d4b7b",
+    "bytes": 1751
+  },
+  "result": {
+    "kind": "r37-one-driver-report-diagnostic-r2-read-result",
+    "ready": true,
+    "errorCode": null,
+    "oneReportBytesObserved": true,
+    "reportRef": {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-r2-original-2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a.json",
+      "sha256": "2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a",
+      "bytes": 2066
+    },
+    "privateOriginalTransport": {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-r2-private-1792133725786-cea30f74-c325-41fe-859c-736fc5d5e6ae.json",
+      "sha256": "1eabddf2327c8b4114ac2a0895b5effffff41c3f7bd3c06b26306e6817651be1",
+      "bytes": 6040
+    },
+    "privateOutcome": {
+      "path": ".jarvis-dev/maintenance/r37-one-driver-report-r2-private-1792133725960-8fad1f4e-aaec-48dc-8b1b-479d28b91441.json",
+      "sha256": "62865c601f25c15ae08d153ce8079a78acf0d6ed35cd5205fe3e80f9b2dff249",
+      "bytes": 14038
+    },
+    "sourceBytesStable": true,
+    "RootCalls": 1,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "currentResourceScopeClosedVerified": false,
+    "actualPG4Qualified": false,
+    "fullProtectionQualified": false,
+    "productAccepted": false,
+    "unsafeMetadataOnlyInOriginalPrivateWire": true,
+    "evidence": null
+  },
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-one-driver-report-r1-failed-safe-facts",
+  "actual": {
+    "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-actual-observation-1792133093809-b54b7dae-0328-4c6d-bd35-5b5678340b87.json",
+    "sha256": "a3d8cfccbc972e2c78ed7c7ed00ed8a1642fc65aa9c11962b3e666c785cbeb22",
+    "bytes": 10095
+  },
+  "savedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-diagnostic-r1-failed-saved-independent-local-review-final.json",
+    "sha256": "8d634f1cc27deb7d4bfdc96fe23e8a365d16e8ff3e3cb4a4f37d7eecd71c0299",
+    "bytes": 15383
+  },
+  "physicalRefsVerified": 18,
+  "entryClosed": true,
+  "singleRootCall": true,
+  "elapsedSeconds": 0.7190000000409782,
+  "exitCode": 1,
+  "wire": {
+    "status": 0,
+    "stdoutBytes": 1181,
+    "stderrBytes": 0,
+    "complete": true
+  },
+  "readerFirstClosedError": "PG4_D_RECORD_UNTRUSTED",
+  "readerPhase": "DIRECTORY",
+  "outerError": "PG4_OR_RETURN_CONTEXT_CHANGED",
+  "report2066BytesRead": false,
+  "sourceFindings": [
+    {
+      "priority": "P1",
+      "scope": "producer-reader-mode-contract",
+      "producerSourceMode": "0444",
+      "readerRequiredMode": "0600",
+      "actualRemoteModeIndependentlyObserved": false
+    },
+    {
+      "priority": "P1",
+      "scope": "failed-frame-error-preservation",
+      "successFileSetCheckPrecededFailedFrameHandling": true
+    }
+  ],
+  "priorPassedReviewsPreserved": true,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "newSupplierModelCalls": 0,
+  "next": "Distinct minimal r2 sources and entry required; no replay of r1."
+}

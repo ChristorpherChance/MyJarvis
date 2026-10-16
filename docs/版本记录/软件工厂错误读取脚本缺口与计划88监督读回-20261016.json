@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-16T06:49:42.724Z",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 88,
+    "hash": "354129a905862469ff26a44466af2a753e8e8200d0dfaaa26f626e355cc72d81",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "修正封存权限匹配和原始失败码保留，经独立来源及入口核对后，以新目的只读本次错误原件；旧读取机会关闭，资源与产品验收要求保持。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 6,
+    "hash": "f3fe300f15f76c039e277ddffcf2372e5508a49002eb21957018d54edc17e0cc",
+    "summary": "已定位错误读取脚本的两处兼容缺口，正在做最小修正；测试错误正文和环境收尾仍未核清，四用例仍未完成。",
+    "nextAction": "修正封存权限匹配和原始失败码保留，经独立来源及入口核对后，以新目的只读本次错误原件；旧读取机会关闭，资源与产品验收要求保持。",
+    "blocker": "测试模块错误正文仍未取得；完整资源核查被主目录变化保护拒绝。",
+    "validationScope": "单报告r1实际失败及18项保存证据已核。读取器要求0600与生产者封存0444合同不符，且成功文件集合门遮住原失败码；两项为验证脚本缺口，修正尚未取得实际报告，不计用例或原74通过。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 19,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "oneReportR1FailedClosed": true,
+  "report2066BytesRead": false,
+  "priorGreenSourceReviewsAndFailurePreserved": true,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-current-change14-saved-evidence-independent-local-review",
+  "at": "2026-10-16T04:10:16.357554+00:00",
+  "reviewerRole": "independent-non-author-local-saved-evidence-review",
+  "savedEvidenceAuditPassed": true,
+  "remainingP0P1InSavedEvidenceIntegrity": 0,
+  "findings": [],
+  "sourceRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-change14-actual-observation-1792123746017-fc789c37-6666-4208-9fc1-7a9cbf53d723.json",
+      "sha256": "bc1934b8899039e6acb3dceb76a29c4390b3f44ed22675dd2e75b3bcbfdf968b",
+      "bytes": 8632
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-change14-once.json",
+      "sha256": "e495295bff48b323394532a16b02c64e1b32d30563cc621fc4ecb2df92777b43",
+      "bytes": 3387
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-change14-transport-1792123745769-35f1f8bc-c90a-4102-b21a-cd58a21a2fe3.json",
+      "sha256": "b4d1c855a7fa089ad96a2bc5c8342f48ef32925e406ba7b9817e1ee7d314018e",
+      "bytes": 948141
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-change14-host-original-1792123745848-80540ba6-ee69-4cc0-b95f-7f27ed3405da.json",
+      "sha256": "a7a1d0a53766a8016b2206490d29a30131fa9de9b8359dabdbdc304ec61a2dc9",
+      "bytes": 710027
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-change14-outcome.json",
+      "sha256": "0066f2d230f0e3768cea4d7d1c428156332e02a5d5a9ac242bd8464edf73d4e3",
+      "bytes": 8464
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-change14-actual-data.json",
+      "sha256": "164d9e8ac337157d1c99b6108b19b64689e2d4fc1a4a9fde275dd9f79754d841",
+      "bytes": 3153
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-change14-specific-entry-independent-local-review-1792123726936-fd94a918-f99d-45d1-85f1-c244378ccb46.json",
+      "sha256": "88f01a043a4cb5dfedc41ed9bfc8801621cf10490d9b12f727879f7130d5cb8e",
+      "bytes": 11065
+    },
+    {
+      "path": "scripts/factory-current-change14-r37.py",
+      "sha256": "63faae286fb97574a3dee0b8d05c7f438ea9975fb63e971dbd04a941a44415e2",
+      "bytes": 12966
+    },
+    {
+      "path": "scripts/read-factory-current-change14-r37.mjs",
+      "sha256": "4ba20a8c6dd363654df64daae45960aab4e2ae7305fd9701ef566ac1681ec0fe",
+      "bytes": 24266
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-change14-host.py",
+      "sha256": "633e41cad75ab0e03ec5320ce4b023ffa00a2056ec17d7f45c4d6a5c07483388",
+      "bytes": 18544
+    },
+    {
+      "path": "scripts/project-autonomy-evidence.py",
+      "sha256": "57aa1d8c49c189f0a9d2f4c1438ce154b556c263b907543462167b1faa673dd2",
+      "bytes": 11026
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-change14-manifest-delta.json",
+      "sha256": "dca76a491664d9ff39500ea7339680c752501f8bb160e730479b1cbbb46101d3",
+      "bytes": 8042
+    }
+  ],
+  "finiteSavedRefCount": 12,
+  "initialAndFinalRawBytesMatched": true,
+  "remoteOperationsPerformed": false,
+  "apiRequests": 0,
+  "subjectExecutedByReviewer": false,
+  "subjectFunctionsInvokedByReviewer": false,
+  "testsExecuted": false,
+  "exportsInvoked": false,
+  "newModelRequests": 0,
+  "privateFilesCopied": false,
+  "rawSourcePubliclyExposed": false,
+  "base64PubliclyExposed": false,
+  "privateMetadataPubliclyExposed": false,
+  "sourceSemanticsRepeated": false,
+  "entry14ReferenceSemanticReviewRepeated": false,
+  "savedActualExecution": {
+    "rootCalls": 1,
+    "maximumRootCalls": 1,
+    "automaticRetry": false,
+    "opportunityClosed": true,
+    "transportStatus": 0,
+    "transportSignal": null,
+    "transportErrorCode": null,
+    "stdoutBytes": 710027,
+    "stderrBytes": 0,
+    "stdoutSHA256": "a7a1d0a53766a8016b2206490d29a30131fa9de9b8359dabdbdc304ec61a2dc9",
+    "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "originalTransportEqualsOriginalHostBytes": true,
+    "publicOutcomeExactMatched": true,
+    "dataEntryOnceTransportAndSourceBindingsMatched": true,
+    "newProgramCallerHostAndHelperSourceHashesMatched": true,
+    "sourceBytesStableRecorded": true,
+    "sourceStabilityEvidenceScope": "The hash-bound caller reports its before/after source rechecks successful. This SAVED review checked retained bindings and current frozen source hashes; it did not observe those historical reads independently.",
+    "maximumHostSeconds": 45,
+    "sshTimeoutSeconds": 60,
+    "boundScope": "Only14 fixed source files with two reads each plus pinned trusted helper; no full main scan, proc, SQL, Git or old run data represented."
+  },
+  "files": {
+    "expectedCount": 14,
+    "completedCount": 14,
+    "twoReadsPerFile": 2,
+    "totalUniqueBytes": 261295,
+    "originalReadBytesRehashed": 522590,
+    "metadataRowsRehashed": 28,
+    "metadataNativeIntegersRehashed": 252,
+    "metadataIntegersAboveJavaScriptSafeRange": 56,
+    "nativeIntegerHashDomainPreserved": true,
+    "items": [
+      {
+        "path": "apps/web/src/ui/TemplateRefreshModal.test.ts",
+        "sha256": "cabd210de0181de76b58f7f4f4661833a7832b9d9237f557b9686a62105ae889",
+        "bytes": 1388,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "doc/dev-plan/模板重排规则核对报告-实施计划.md",
+        "sha256": "aa04e530275dd2ef18657fbc13ea3b32379ee34615462c34c50690eb4577e680",
+        "bytes": 13368,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "doc/dev-plan/模板重排规则核对报告-设计.md",
+        "sha256": "14750b6484a4b26f8cf1056146997d58ee1a93bea267875cd2f14c7c3a8b4c28",
+        "bytes": 5336,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "doc/dev-plan/设计覆盖检测与可交互原型-实施计划.md",
+        "sha256": "d40d5506769bbac65d4925c064790ae65e013fd8b7330873a17ca290ec5aa375",
+        "bytes": 16652,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "doc/dev-plan/设计覆盖检测与可交互原型-设计.md",
+        "sha256": "d54c01da4dddc4610df1d1218b1f76be008560272baecd39a503ed46b858b64b",
+        "bytes": 8788,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/api.ts",
+        "sha256": "eed3c14ec22002222a75f181fcd94bbf22b53cc28334143dff48e2a33d9f372f",
+        "bytes": 7011,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+        "sha256": "760cfda8703b5d4c81c011f480240a0f13fc48cebf9e1ffa70530438f7e61179",
+        "bytes": 45562,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+        "sha256": "8da88bb25ff6c82ca8e5a9442fc87f27af3394dacc01cded5d6ca0f57b6a92bf",
+        "bytes": 10574,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/pages/design/api.ts",
+        "sha256": "2ad4c74cf790893cbbfe010a5ea44ab0c097f78815d30762b6b1a330e36e8db2",
+        "bytes": 13330,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/pages/req/RtmPanel.tsx",
+        "sha256": "8d5f494e386ede40609bc101ab1ec9d1b0d4ff70628e7684f146939caf5531e6",
+        "bytes": 25495,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/pages/req/api.ts",
+        "sha256": "a8e84b5eee7dba67f6d98e91556e2a8c7ea54cfb0bb5ef98b970b769c4510ec1",
+        "bytes": 8751,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+        "sha256": "129fef2bbcc9066337a221af2fe0af2c6fce328c2ba6ac67e225a0ddc3d2a2b8",
+        "bytes": 16029,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "apps/web/src/ui/ui.css",
+        "sha256": "8b97f4a26177e9cb580647cb3b6d7f4a24db222d9bb8d3782e8198bde4d621dd",
+        "bytes": 6007,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      },
+      {
+        "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+        "sha256": "0af80720391eb3c0d3567e9074e429f5a93b903b592a4952cf0b72b4524644df",
+        "bytes": 83004,
+        "bothOriginalBytesRehashed": true,
+        "twoReadRowsIdentical": true,
+        "bothMetadataDigestsRecomputed": true,
+        "regularSingleLinkAndSizeMatched": true
+      }
+    ]
+  },
+  "rootIdentity": {
+    "device": 66306,
+    "inode": 14417953
+  },
+  "rootIdentityVerified": true,
+  "rootMetadataBeforeAfterExact": true,
+  "rootMetadataNativeIntegerDomainPreserved": true,
+  "publicSafeSummaryIndependentlyRecomputed": true,
+  "descriptorClosureEvidence": {
+    "savedAllReaderDescriptorsClosed": true,
+    "savedErrors": [],
+    "savedFirstClosedError": null,
+    "scope": "Source-bound normal-return close claim for this finite reader; no independent OS-wide descriptor inventory was performed."
+  },
+  "interpretation": "The private saved originals for exactly14 fixed files each match their pinned SHA and length in two identical reads, with both metadata digests preserved in the original integer domain. This is a finite source-byte observation and saved evidence integrity result; it does not establish functional correctness, authorship, change purpose, or authorization to replace the607-file main baseline.",
+  "thisOpportunityClosed": true,
+  "functionalCorrectnessAssessed": false,
+  "changeProvenanceAssessed": false,
+  "newBaselineSelected": false,
+  "mainBaselineQualified": false,
+  "fullProtectionQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "costs": {
+    "spendCap": null,
+    "supplierModelRequests": 0,
+    "internalUsageKnown": false,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-16T04:07:58.337Z",
+  "decision": {
+    "id": "de8754ee-9965-40a0-b1ff-24ff1f5101bc",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "1a10b267623ebce4a5ae8ff808084383840c6058dda30d0d288cfabebe1634ce",
+    "independentAcceptance": false
+  },
+  "change14Decision": {
+    "at": "2026-10-16T04:07:16.650Z",
+    "id": "08a56fc9-d742-4927-b337-151c85f81478",
+    "revision": 1,
+    "status": "selected",
+    "hash": "61420a13949e33400f713d3c303abc1cc4d2c3c269793e0e978696350739ad91",
+    "independentAcceptance": false,
+    "evidence": [
+      {
+        "reference": "docs/版本记录/软件工厂当前目录诊断实际结果-20261016.json",
+        "sha256": "cd547dc82fadd98f4e5d948c35c45f2541ac361d09ae2318e0bddf3088f37bca",
+        "kind": "observation"
+      },
+      {
+        "reference": "docs/版本记录/软件工厂当前目录诊断保存独审-20261016.json",
+        "sha256": "45e6649dbb20741a5a084b536180854e63b1a9bf4adc9917f27c57cb43a7437e",
+        "kind": "observation"
+      },
+      {
+        "reference": "docs/版本记录/软件工厂当前目录差异-20261016.json",
+        "sha256": "dca76a491664d9ff39500ea7339680c752501f8bb160e730479b1cbbb46101d3",
+        "kind": "observation"
+      }
+    ]
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 83,
+    "hash": "026e9fd64e2015b94c2faf11e2a321c9cdbaa75519807b6db1e3939dff269d7f",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "主目录诊断已完成：607文件两帧一致，5新增9修改0删除；先核实14处源码和文档变化的来源与影响，再决定后继保护基准，保留原冻结验收源和所有关闭机会。完整保护和454当前资源收口通过后才安排新四用例。"
+  },
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "actualNewMainDiagnosticExecuted": true,
+  "actualNewMainDiagnosticReadComplete": true,
+  "newMainBaselineSelected": false,
+  "actualPG4Qualified": false,
+  "supervision": {
+    "repairRevision": 4,
+    "diagnosticRevision": 2,
+    "latestSequence": 11,
+    "matchingPersistedNotifications": 2
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "at": "2026-10-16T00:32:09.759864+00:00",
+  "status": "source-frozen-compiled-prepare-only",
+  "changes": [
+    "ephemeral public finishTurn ends one SDK turn and any returned toolCall fails with empty text",
+    "recordUsage trusts recordOnly solely to bypass post-usage amount/unknown-price gate; ledger/pause/concurrency/ordinary-run behavior retained",
+    "contract4 includes actual governance and native usage collector/ledger source hashes"
+  ],
+  "validation": {
+    "newFakeProtocolTests": {
+      "passed": 2,
+      "failed": 0,
+      "attempts": 1,
+      "sdkModelRequestCount": 1,
+      "actualProviderModelCalls": 0
+    },
+    "apiTypecheck": {
+      "runs": 1,
+      "exitCode": 0
+    },
+    "apiBuild": {
+      "runs": 1,
+      "exitCode": 0
+    },
+    "compiledContract4Prepare": {
+      "runs": 1,
+      "exitCode": 0,
+      "modelCalls": 0,
+      "literalBaseline": [
+        0,
+        0,
+        1
+      ]
+    },
+    "priorContractsRetained": true,
+    "priorProtocolOrBrowserTestsRerun": false,
+    "webRebuild": false,
+    "sshOrProduction": false,
+    "realSemanticQuality": "not executed by this agent; Root-only later under contract4"
+  },
+  "cost": {
+    "spendCap": null,
+    "actualProviderModelCalls": 0,
+    "internalAssistantCostUSD": null,
+    "internalAssistantTokens": null
+  },
+  "sourceHashes": [
+    {
+      "path": "apps/api/src/pi.ts",
+      "sha256": "1c386a77208249965e57f18a7b4bc5e5cfea82987baad99acae8e695b765c453",
+      "bytes": 49443
+    },
+    {
+      "path": "apps/api/src/runtime/governance.ts",
+      "sha256": "039b006e1274d3f15de3f8e347dc592ee95a755ea162b112ee1dba57141abbc4",
+      "bytes": 19451
+    },
+    {
+      "path": "apps/api/src/runtime/pi-usage.ts",
+      "sha256": "359d1b4cefd7822e8dd48a4978ccc6ea4a0a6545530be97104e24df479f23d24",
+      "bytes": 2305
+    },
+    {
+      "path": "apps/api/src/runtime/usage-ledger.ts",
+      "sha256": "ca504d091c3ebaa8868ad74e32914161d8a56465143c45c8c4063cc88a18501e",
+      "bytes": 11617
+    },
+    {
+      "path": "apps/api/src/runtime/evidence-assistant.ts",
+      "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d",
+      "bytes": 16656
+    },
+    {
+      "path": "apps/api/src/runtime/evidence-corpus.ts",
+      "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2",
+      "bytes": 8006
+    },
+    {
+      "path": "apps/api/src/app.ts",
+      "sha256": "c293e9671800d18f27e120f3fe1590ea509b06c263ab0055d87153b5040363cc",
+      "bytes": 52295
+    },
+    {
+      "path": "apps/api/test/evidence-ephemeral-boundaries.test.ts",
+      "sha256": "ee83c80396cb5ab60e0451791164c7ee366e44032542f7d6dd6e297cf4de60f5",
+      "bytes": 7047
+    },
+    {
+      "path": "apps/api/test/evidence-assistant.test.ts",
+      "sha256": "d60fd4317ec25a65c9a106e04840c24532038866ee45f2ab16008acba7f22ce6",
+      "bytes": 13139
+    },
+    {
+      "path": "apps/web/src/features/evidence/EvidenceAssistantPanel.tsx",
+      "sha256": "7eecf17b9a45bca6efe27f6670dcbe1ff617ce4253d9d5ebdd67c2f8be1bef60",
+      "bytes": 8956
+    },
+    {
+      "path": "apps/web/src/features/evidence/evidence-client.ts",
+      "sha256": "9313c490708142d912251b5a3df37699f0f71ff6bb4b9b524f513f67c5d7d8a8",
+      "bytes": 4634
+    },
+    {
+      "path": "apps/web/src/features/evidence/evidence-assistant.css",
+      "sha256": "ce29fab4b0c33a8ddb1b9f296a20e9a57b486265d013d634285341fb845e492c",
+      "bytes": 1671
+    },
+    {
+      "path": "apps/web/src/features/family/FamilyKnowledgePanel.tsx",
+      "sha256": "fc370315400c4952bf4c848c0ef8422e6350b6766c2f5354676e5c68279ee8ae",
+      "bytes": 8021
+    },
+    {
+      "path": "scripts/qa-evidence-assistant-quality.ts",
+      "sha256": "82f393ed18a21ebc5f0e9a0135494b655465a2ad874a6bb788e243b4e4f2cefb",
+      "bytes": 19486
+    },
+    {
+      "path": "scripts/qa-evidence-assistant-browser.ts",
+      "sha256": "f3bae6aaa87b97e8790b43aeceb48a6301ea5fa8fcd17f69f9b80d3d348143e6",
+      "bytes": 14983
+    }
+  ],
+  "compiledHashes": [
+    {
+      "path": "apps/api/dist/pi.js",
+      "sha256": "3e5bd2b7aa6c8287fb379897fc100e5cfbec18c00b29d0d17dbacf110a45d574",
+      "bytes": 53006
+    },
+    {
+      "path": "apps/api/dist/runtime/governance.js",
+      "sha256": "62cffc90a3a8eccca768432fc7f260b65a43b832f1f8a869920254e3388b5574",
+      "bytes": 20105
+    },
+    {
+      "path": "apps/api/dist/runtime/pi-usage.js",
+      "sha256": "42d659d85fc7e9a73babe13bf7376da2fd5f334dea335e2bc1cb775bef1f6c05",
+      "bytes": 2704
+    },
+    {
+      "path": "apps/api/dist/runtime/usage-ledger.js",
+      "sha256": "8be00e7d8e1c30a0849d22844db99586b2fd5ddd1b5bafa28267d45a8b5c4556",
+      "bytes": 12361
+    },
+    {
+      "path": "apps/api/dist/runtime/evidence-assistant.js",
+      "sha256": "325fde4981f49aeda671e4f80cec16d5758830d3cb308d4a5040702a434f45ba",
+      "bytes": 17228
+    },
+    {
+      "path": "apps/api/dist/runtime/evidence-corpus.js",
+      "sha256": "931831fc7c9c84f334b3d9275400996e3946d9275943a5baaee296a6b947c57b",
+      "bytes": 7548
+    },
+    {
+      "path": "apps/api/dist/app.js",
+      "sha256": "b6e56fd33c0b40b0d5172155ed3c0ab8856b3b96f2524918ba9c6b9a9f5c16d7",
+      "bytes": 59172
+    }
+  ],
+  "evidenceHashes": [
+    {
+      "path": "artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt",
+      "sha256": "45ba19bb708c4e5eef6f8d1c7c0ae3c6cb1ddea4519b7c70d389f48760f993f0",
+      "bytes": 387
+    },
+    {
+      "path": "artifacts/capture-r35/api-boundary-typecheck.txt",
+      "sha256": "4313dbd9d7fc1474c2a46cc9c4891cab3745b9794c2f066a3a44156c73f80698",
+      "bytes": 68
+    },
+    {
+      "path": "artifacts/capture-r35/api-boundary-build.txt",
+      "sha256": "c9852943210e9c55954be6196e4e7e47c3da1d1a0e03c0ea4c8e12929405653c",
+      "bytes": 55
+    },
+    {
+      "path": "artifacts/capture-r35/semantic-contract4-prepare.txt",
+      "sha256": "10b4a291a58f70395de4d3bde3b7f8fa72932a4e3adc2b0a4aa8506e83897702",
+      "bytes": 371
+    },
+    {
+      "path": "artifacts/evidence-assistant-quality-r35/contract-3.json",
+      "sha256": "85a3fda425dbb2cb6d3042c1324730937b9f042bf2e14b57a118468f5f430f87",
+      "bytes": 3586
+    },
+    {
+      "path": "artifacts/evidence-assistant-quality-r35/contract-4.json",
+      "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f",
+      "bytes": 4030
+    }
+  ]
+}

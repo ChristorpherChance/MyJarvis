@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "preparedAt": "2026-10-16T00:39:21.652031+00:00",
+  "documentState": "draft-for-root-finalization",
+  "title": "密文同步与证据问答阶段验收草稿",
+  "scope": "本轮跨浏览器密文草稿、授权证据模型问答、交付包及已实际完成的101隔离安装检查；各阶段独立记实",
+  "state": {
+    "implementation": "complete",
+    "verification": "partial",
+    "deployment": "pending-final-root-evidence",
+    "fieldAcceptance": null,
+    "realModelQuality": null,
+    "productionRelease": null,
+    "coldStandbyFinal": null
+  },
+  "release": {
+    "archiveVersion": "20261016-capture-complete-r35",
+    "runtimeBuild": "20261016-capture-complete-r35",
+    "sourceCommit": "f38416bddb476f9c01eec5ca87be3e8da74e94f4",
+    "archiveSha256": "df2ca1476a385c4dbb7a449452a3f2beb9f69912eea9c225f7d5a5405e8a65c6",
+    "manifestSha256": "72f97aee9a7d0f91b76ff439ff1d0c2d7b27587877ac5f00d6e384311c09bb39",
+    "payloadFiles": 2179,
+    "zipEntries": 2180,
+    "committedSourceFilesVerified": 1749,
+    "compiledFilesVerified": 429,
+    "offlineResources": 5,
+    "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "independentReadback": {
+      "path": "artifacts/capture-r35/independent-r35-zip-readback.json",
+      "sha256": "540b113a46e14d6ff914578a35ff6e34a5fe4ac40f66d550e66066b1b323e08f",
+      "bytes": 5282
+    },
+    "boundary": "源码字节、运行身份、每项产物H及Unix模式已核；不等于可复现构建、Linux运行或生产验收。"
+  },
+  "encryptedSync": {
+    "behavior": [
+      "当前真实本人管理员在本窗口明确启用；只同步已保存密文，不发送口令或解锁正文，不自动提交收件。",
+      "远端单草稿槽采用修订保护；不同副本先显示时间并由本人选择本机或远端，不自动合并。",
+      "回包丢失保留同一操作编号与内容；断网保留本机；锁定、身份或材料会话变化及离开时停止。",
+      "删除远端清当前密文并保留修订墓碑，不删除本机、其他浏览器或外部备份，不承诺介质擦除；忘记口令无法恢复。"
+    ],
+    "httpAndVault": {
+      "uniqueNewGroups": 6,
+      "passedSeparately": 6,
+      "failedGroups": 0,
+      "executionCuts": [
+        {
+          "report": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+          "groups": 4,
+          "passed": 4
+        },
+        {
+          "report": "artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+          "groups": 1,
+          "passed": 1,
+          "onlyAuthCookiePresenceCorrection": true
+        },
+        {
+          "report": "artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+          "groups": 1,
+          "passed": 1,
+          "onlyLocalCasAndStopCorrections": true
+        }
+      ],
+      "allSixRunTogetherOnFinalSource": false,
+      "oldSuitesNotRerun": true
+    },
+    "browser": {
+      "uniqueNewGroups": 5,
+      "passedSeparately": 5,
+      "groupExecutions": 6,
+      "passedExecutions": 5,
+      "failedExecutions": 1,
+      "failure": "First identity case stopped at a test harness TDZ shadowing the login helper; fixture variable renamed and only that case passed on attempt2. Original failed report and screenshot retained.",
+      "extraHarnessAuditFailure": "Attempt1 pass-count audit recorded 3 != 4 after the fixture failure; not a sixth product group",
+      "finalAffectedBundle": "offlineCapture-Dp37MnGd.js",
+      "finalAffectedVaultBundle": "offline-vault-g54LtOEF.js",
+      "finalBundleRunOnlyNewFifthGroup": true,
+      "allFiveRunTogetherOnFinalBundle": false,
+      "allAttemptsTemporaryCleanupVerified": true,
+      "allAttemptsModelCalls": 0,
+      "allAttemptsExternalRequests": 0,
+      "allAttemptsPageErrors": 0
+    },
+    "evidence": {
+      "path": "artifacts/offline-draft-sync-r34/cut-summary.json",
+      "sha256": "c9af33c0378ac1f774b01ff940e256f0deaea28ed85018a28b8cc9e8e7428317",
+      "bytes": 8022
+    },
+    "localP1Closures": [
+      {
+        "finding": "同编号同修订异密文可骗过旧本机保护",
+        "fix": "本机比较编号、修订、盐、IV和完整密文；旧标签的load/save/export/replace均拒绝。",
+        "test": "新增精确单元组及真实两context+sibling浏览器第5组分别通过。"
+      },
+      {
+        "finding": "停止同步未能取消正在等待的本机替换写入",
+        "fix": "同步中止与本机锁定信号共同进入原子写入；真实IndexedDB打开被暂停时停止，恢复后本机不变。",
+        "test": "同一新增精确单元组及真实浏览器第5组通过。"
+      },
+      {
+        "finding": "仍有无效成员会话时残留管理员身份可能回退",
+        "fix": "只要请求仍携带成员会话即禁止管理员回退。",
+        "test": "真实失效成员会话加独立仍有效管理员会话，元信息/包/写入均401；只补新增1组。"
+      }
+    ],
+    "independentReview": [
+      {
+        "path": "artifacts/capture-release-r34/offline-sync-source-review-final.json",
+        "sha256": "c8a7d5d88d7bfd97d4162768d31a8bbb3bad528238f78d39764195516d4ad368",
+        "bytes": 3342
+      },
+      {
+        "path": "artifacts/capture-release-r34/offline-sync-review-browser-addendum.json",
+        "sha256": "f15bd31eaef941acbe678ac1b507a16da70d028a8d7006439c13bac1a111621a",
+        "bytes": 2051
+      }
+    ],
+    "notOneFinalFullSuite": true
+  },
+  "evidenceAssistant": {
+    "behavior": [
+      "逐次显式开启模型查询；按当前本人授权取知识或当前生效本人记忆，云端遵守本人授权与本次同意。",
+      "先扩展提问再从已保存授权证据回答；每个结论需逐字引用并再次核验，证据不足时不补事实。",
+      "引用短时有效，打开时重新核对身份、授权、完整正文和版本；撤权、更正或遗忘令旧引用失效。",
+      "问题及提示使用内存会话，不保存为聊天或检索历史；无业务工具、自动重试、缓存预热及后台续轮。"
+    ],
+    "fakeProtocolCuts": {
+      "initialFiveGroups": {
+        "authorReportedPassed": 5,
+        "authorReportedFailed": 0,
+        "rawStdoutPersisted": false,
+        "verificationSource": "作者报告当时真实工具终态；没有独立留存stdout，不列为已保存8/8证据。"
+      },
+      "unknownPrivacyFollowup": {
+        "authorReportedPassed": 1,
+        "authorReportedFailed": 0,
+        "rawStdoutPersisted": false,
+        "oldFiveNotRerun": true
+      },
+      "newBoundaryGroups": {
+        "passed": 2,
+        "failed": 0,
+        "attempts": 1,
+        "realProviderCalls": 0,
+        "sdkMockRequests": 1,
+        "evidence": {
+          "path": "artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt",
+          "sha256": "45ba19bb708c4e5eef6f8d1c7c0ae3c6cb1ddea4519b7c70d389f48760f993f0",
+          "bytes": 387
+        }
+      },
+      "allEightRerunOnFinalSource": false
+    },
+    "browser": {
+      "uniqueGroups": 3,
+      "passedSeparately": 3,
+      "executions": 4,
+      "passedExecutions": 3,
+      "failedExecutions": 1,
+      "firstFailure": "首轮本人记忆场景在Cookie夹具格式停止；仅修夹具后该组通过，另两已过组未重跑；原计数audit失败不是额外产品组。",
+      "fakeProtocolCalls": 9,
+      "actualProviderCalls": 0,
+      "cleanupVerified": true,
+      "firstCut": {
+        "path": "artifacts/evidence-assistant-browser-r35/attempt-1.json",
+        "sha256": "cd7cd01ffc68a57e681e00b8ee1ea01e22e8686eec31afde9125bc8e6d89f58d",
+        "bytes": 1508
+      },
+      "followupCut": {
+        "path": "artifacts/evidence-assistant-browser-r35/attempt-2.json",
+        "sha256": "cb6586eb02f388ab9f426a429b9822759dfd9544c90484c8b60df19785a0f435",
+        "bytes": 1040
+      },
+      "notSemanticQualityEvidence": true
+    },
+    "newP1Closures": [
+      {
+        "id": "EVIDENCE-RECORD-ONLY-001",
+        "fix": "只记账模式保留真实用量及未知价格，不再被金额或缺价格的事后门槛中止；普通预算、暂停及并发限制仍保留。"
+      },
+      {
+        "id": "EVIDENCE-SINGLE-TURN-002",
+        "fix": "临时模型会话一轮即停，带工具请求的结果拒绝；确保每次有限问答最多3次实际模型请求。"
+      }
+    ],
+    "sourceAndBoundaryEvidence": {
+      "path": "artifacts/capture-r35/semantic-boundary-freeze.json",
+      "sha256": "044211817689a24f345c63a8eca729e31aab99374c804c14ddca34fd3edc1a8d",
+      "bytes": 6519
+    },
+    "independentFinalSourceReview": {
+      "path": "artifacts/capture-release-r34/evidence-assistant-source-review-final.json",
+      "sha256": "71918a1c423ed1eda9c30103e4e2b9ab517ea28c74efc71f1f32cc90474bfc0d",
+      "bytes": 5879
+    },
+    "realModel": {
+      "status": "pending",
+      "accepted": null,
+      "declaredContract": {
+        "path": "artifacts/evidence-assistant-quality-r35/contract-4.json",
+        "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f",
+        "bytes": 4030
+      },
+      "observedAttempt4": {
+        "status": "failed",
+        "cut": "isolated-app-start",
+        "actualModelRequests": 0,
+        "usageReceipts": 0,
+        "temporaryCleanupVerified": true,
+        "evidence": {
+          "path": "artifacts/capture-r35/real-model-quality.json",
+          "sha256": "a9c6710fd24a0f98d68e6c514d7c9c14c5d582bf255f659e2f456cc0ba067b3a",
+          "bytes": 2732
+        },
+        "boundary": "这一尝试在隔离程序准备阶段失败，未产生模型质量结果；后续准备或执行不在本草稿填通过。"
+      }
+    },
+    "notIndependentFactualProof": "假协议、结构和引用核验不能代替真实模型质量；额外模型复核也不是事实正确的独立证明。"
+  },
+  "deployment": {
+    "101": {
+      "stageInstallInspectAndSmoke": "passed-in-bounded-scope",
+      "phases": {
+        "stage": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:42.377952+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-stage.json",
+            "sha256": "3027e664d3c5cc1c380455ef739ccb8f90da941f7d75e07b0d0491a0ed850a06",
+            "bytes": 564
+          },
+          "businessServiceChanged": false
+        },
+        "install": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:53.057363+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-install.json",
+            "sha256": "0e8b120db95b3e9fe9d5faba651d24b327de02cbae4142c80f73e08e87c3715f",
+            "bytes": 552
+          },
+          "businessServiceChanged": false
+        },
+        "inspect": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:59.219033+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-inspect.json",
+            "sha256": "ecc86e65ca92d4060fafaab0d16a54c68c447dbc79c10ab980affea13e16d16c",
+            "bytes": 593
+          },
+          "businessServiceChanged": false
+        },
+        "linux-install-smoke": {
+          "status": "passed",
+          "at": "2026-10-16T00:36:05.252372+00:00",
+          "evidence": {
+            "path": "artifacts/capture-r35/deployment/101-linux-install-smoke.json",
+            "sha256": "2bcc1d074fed3ddf408a93e704d70b42ebad64b43336c05b1076464d06ad0458",
+            "bytes": 6304
+          },
+          "nodeVersion": "24.15.0",
+          "build": "20261016-capture-complete-r35",
+          "httpRequests": 12,
+          "modelCalls": 0,
+          "outsideFetchAttempts": 0,
+          "temporaryCleanupVerified": true,
+          "scope": "this-staged-compiled-installation-only",
+          "underlyingReportSha256": "6b6a08264434e944b53d68c3bcefdff87c65ff02a2c9cad9381cebb998047254"
+        }
+      },
+      "coldBusinessFinalStatus": "pending",
+      "coldDataFinalStatus": "pending",
+      "boundary": "已安装所选stage并在新临时私有目录运行编译应用检查；不等于启动业务服务或正式冷备数据验收。"
+    },
+    "112": {
+      "stageAndInstallFinal": "pending",
+      "stageAndInstallOutcome": null,
+      "productionActivation": "pending",
+      "productionHealth": null,
+      "boundary": "本草稿按Root指定范围留待最终合并实际终态；不把其他机器的隔离通过冒成112上线。"
+    },
+    "recovery": {
+      "actualLinuxExerciseFinal": "pending",
+      "restorePerformedByThisReport": false
+    },
+    "field": {
+      "microphone": null,
+      "physicalPhone": null,
+      "roomTerminal": null,
+      "status": "pending"
+    }
+  },
+  "usage": {
+    "policy": "只记录，不设消费上限；金额、用量与未知部分分列。",
+    "spendCap": null,
+    "fixedSyncAndInstallFixturesActualProviderCalls": 0,
+    "evidenceFakeProtocolActualProviderCalls": 0,
+    "observedRealModelAttempt4Requests": 0,
+    "knownProjectAmountUSD": null,
+    "nativeUsageTotals": null,
+    "unknownPriceRequests": null,
+    "internalAssistantAmountUSD": null,
+    "internalAssistantUsage": null,
+    "boundary": "未提供价格或内部用量保持未知，不因暂未有质量结果写零成本；Root完成真实调用后另依账本补齐。"
+  },
+  "retainedFailures": [
+    "同步浏览器首轮TDZ夹具失败及仅补失败场景的通过结果。",
+    "证据问答浏览器Cookie夹具失败及单组修正结果。",
+    "本机安装smoke首轮合法JavaScript MIME别名误判及窄修后的单组通过。",
+    "真实模型尝试4准备阶段失败，实际模型请求为0；质量仍pending。"
+  ],
+  "pendingRootFinalization": [
+    "真实模型质量、实际调用用量、已知金额及缺价格情况。",
+    "112 stage/依赖安装/编译隔离检查终态与正式激活后的健康。",
+    "101平台保持冷备、当前配置/数据/版本绑定及恢复演练的最终证据。",
+    "实体设备、现场语音及更广场景质量；原74目标及客户12项未据此全部验收。",
+    "记录270追加、MD/HTML同源生成、项目在线资料与决策版本同步、最终提交和交付由Root依据实际结果执行。"
+  ],
+  "privacyBoundary": "本报告只含公开安全摘要、相对证据路径和指纹；未复制凭据、私有配置原文、原聊天或私人录音；未做文本内部的语义隐私扫描。"
+}

@@ -1,0 +1,463 @@
+{
+  "at": "2026-10-16T00:43:47.731339+00:00",
+  "exitCode": 1,
+  "wallSeconds": 27.108999999938533,
+  "reportSha256": "e9d05f7cbc814bb2cda9c8949cee1ac258c56359447b839078061cf1a780668f",
+  "report": {
+    "schema": 2,
+    "harnessSha256": "da1fe97d8029e84d582c4f577130634f7be4baa11c990cf37340e536dde11a1d",
+    "at": "2026-10-16T00:43:47.678Z",
+    "attempt": "5",
+    "contractSha256": "979d7a6ef577cd155edfc2f3ff2e20ae4151db3ca5f9737f4c69cff84cc93a8c",
+    "sourceHashes": [
+      {
+        "path": "apps/api/src/pi.ts",
+        "sha256": "1c386a77208249965e57f18a7b4bc5e5cfea82987baad99acae8e695b765c453"
+      },
+      {
+        "path": "apps/api/src/runtime/governance.ts",
+        "sha256": "039b006e1274d3f15de3f8e347dc592ee95a755ea162b112ee1dba57141abbc4"
+      },
+      {
+        "path": "apps/api/src/runtime/pi-usage.ts",
+        "sha256": "359d1b4cefd7822e8dd48a4978ccc6ea4a0a6545530be97104e24df479f23d24"
+      },
+      {
+        "path": "apps/api/src/runtime/usage-ledger.ts",
+        "sha256": "ca504d091c3ebaa8868ad74e32914161d8a56465143c45c8c4063cc88a18501e"
+      },
+      {
+        "path": "apps/api/src/runtime/evidence-assistant.ts",
+        "sha256": "d34e15e4494a1ce2b1750c5b04a88638293444c3f56ef9f4b7ddce54d2bf1a5d"
+      },
+      {
+        "path": "apps/api/src/runtime/evidence-corpus.ts",
+        "sha256": "4594e82c578b303301577a323d56562f2c67f986a2b386fd4aabf6297dcc11a2"
+      },
+      {
+        "path": "apps/api/src/app.ts",
+        "sha256": "c293e9671800d18f27e120f3fe1590ea509b06c263ab0055d87153b5040363cc"
+      },
+      {
+        "path": "apps/api/src/runtime/identity.ts",
+        "sha256": "c64416d74b1da1b607fd575a88973730285bd205d79a31b5895d3660d75fb713"
+      }
+    ],
+    "selectedModels": [
+      {
+        "scenario": "knowledge",
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "configured": true
+      },
+      {
+        "scenario": "memory",
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "configured": true
+      }
+    ],
+    "realHttp": true,
+    "realProvider": true,
+    "onlyPublicSyntheticData": true,
+    "productionAccess": false,
+    "retries": 0,
+    "actualModelRequests": 8,
+    "observedCalls": [
+      {
+        "scenario": "knowledge",
+        "promptSha256": "0d249163baf49140e6bbbc3831da81ba9f220949c4d0b38684386eac1542b0eb",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:22.639Z",
+        "elapsedMs": 3447
+      },
+      {
+        "scenario": "knowledge",
+        "promptSha256": "627d5a2a5eea7ab871bd57b6a4bbbd02225d136da14c37775e311e4fc35800f8",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:26.088Z",
+        "elapsedMs": 5329
+      },
+      {
+        "scenario": "knowledge",
+        "promptSha256": "29c2a3dcd417778850c7e5fa8478a6b93fac1a46bb402735b53c078d261465ae",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:31.419Z",
+        "elapsedMs": 3733
+      },
+      {
+        "scenario": "memory",
+        "promptSha256": "d76e3eb238fb8329217c054a31f7527d92a38d0bf6d0fc995d1395fa62d33423",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:35.157Z",
+        "elapsedMs": 2314
+      },
+      {
+        "scenario": "memory",
+        "promptSha256": "918b872bfc33cd347bfa4188f1d6d77ff6759fea567806eb822aecdf2ec2b890",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:37.471Z",
+        "elapsedMs": 3162
+      },
+      {
+        "scenario": "memory",
+        "promptSha256": "002bc708ef855fd327824f3997f2c48858570379122d58dfdf6e8cf78136a806",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:40.633Z",
+        "elapsedMs": 1803
+      },
+      {
+        "scenario": "knowledge",
+        "promptSha256": "2912503ef14439dc0a45401b8a05b998dc5cddcf1656500d4cbdf6b030d47a61",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:42.442Z",
+        "elapsedMs": 2489
+      },
+      {
+        "scenario": "knowledge",
+        "promptSha256": "d4c06b0d03f63e92134e98f2db0de020c6ab956d3386e66346a5dc50981d33ad",
+        "foreignMemoryIncluded": false,
+        "toolEvents": 0,
+        "startedAt": "2026-10-16T00:43:44.932Z",
+        "elapsedMs": 2731
+      }
+    ],
+    "observedUsage": [
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 487,
+        "outputTokens": 36,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 523,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 660,
+        "outputTokens": 140,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 800,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 652,
+        "outputTokens": 52,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 704,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 484,
+        "outputTokens": 29,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 513,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 622,
+        "outputTokens": 72,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 694,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 620,
+        "outputTokens": 9,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 629,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 480,
+        "outputTokens": 35,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 515,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 653,
+        "outputTokens": 13,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "totalTokens": 666,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": true
+      }
+    ],
+    "ledger": [
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 653,
+        "outputTokens": 13,
+        "totalTokens": 666,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 480,
+        "outputTokens": 35,
+        "totalTokens": 515,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 620,
+        "outputTokens": 9,
+        "totalTokens": 629,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 622,
+        "outputTokens": 72,
+        "totalTokens": 694,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 484,
+        "outputTokens": 29,
+        "totalTokens": 513,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 652,
+        "outputTokens": 52,
+        "totalTokens": 704,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 660,
+        "outputTokens": 140,
+        "totalTokens": 800,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      },
+      {
+        "provider": "superopen",
+        "model": "CPA / gpt-6.1-sol",
+        "inputTokens": 487,
+        "outputTokens": 36,
+        "totalTokens": 523,
+        "costUSD": null,
+        "costKind": "unavailable",
+        "costComplete": false,
+        "measurementStatus": "reported"
+      }
+    ],
+    "observedRequestsOutsideDeclaredOrigins": 0,
+    "questionOrPromptHistoryExpected": 0,
+    "internalAssistantCostUSD": null,
+    "internalAssistantTokens": null,
+    "spendCap": null,
+    "cleanupVerified": true,
+    "status": "failed",
+    "results": [
+      {
+        "id": "knowledge-paraphrase",
+        "domain": "knowledge",
+        "literalBaseline": 0,
+        "result": {
+          "actorId": "member_e1312f0a-a70e-4061-878a-99702578d4e0",
+          "profileId": "354082f2-11ba-44af-8b47-64ab1122bfb1",
+          "domain": "knowledge",
+          "queryId": "918f7ab2-fae4-4f64-9bfd-a1ccbddeebf3",
+          "expiresAt": "2026-10-16T00:48:35.153Z",
+          "retrieval": "model-query-expansion",
+          "status": "insufficient",
+          "claims": [],
+          "records": [],
+          "searchTerms": [
+            "打印机墨盒领取",
+            "打印耗材存放位置",
+            "办公用品领用",
+            "硒鼓墨盒存放处"
+          ],
+          "model": {
+            "provider": "superopen",
+            "name": "CPA / gpt-6.1-sol",
+            "local": false,
+            "calls": 3,
+            "usage": "recorded-by-existing-ledger",
+            "priceNotice": "按真实用量记账；未提供价格的部分保留未知，不设消费上限。"
+          },
+          "notice": "候选回答未通过证据支持核验，已隐藏结论；请直接查阅原文或补充资料。"
+        },
+        "status": "failed",
+        "diagnostic": "AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'insufficient'\n- 'answered'\n",
+        "actualModelRequests": 3,
+        "elapsedMs": 12520
+      },
+      {
+        "id": "own-memory-paraphrase",
+        "domain": "memory",
+        "literalBaseline": 0,
+        "result": {
+          "actorId": "member_e1312f0a-a70e-4061-878a-99702578d4e0",
+          "profileId": "354082f2-11ba-44af-8b47-64ab1122bfb1",
+          "domain": "memory",
+          "queryId": "bce075a7-ddd8-4232-9c8a-36d29291ed31",
+          "expiresAt": "2026-10-16T00:48:42.437Z",
+          "retrieval": "model-query-expansion",
+          "status": "answered",
+          "claims": [
+            {
+              "text": "你在需要专心时，习惯先关闭手机上的推送提示，以免被通知打断。",
+              "citations": [
+                {
+                  "refId": "02246453-de6c-44af-a178-6bd8e8a4adf5"
+                }
+              ]
+            }
+          ],
+          "records": [
+            {
+              "refId": "02246453-de6c-44af-a178-6bd8e8a4adf5",
+              "kind": "memory",
+              "title": "专心习惯",
+              "sourceName": "本人当前已确认记忆",
+              "quote": "我在需要专心时，习惯先关闭手机上的推送提示。",
+              "quoteKind": "confirmed-memory"
+            }
+          ],
+          "searchTerms": [
+            "关闭手机通知",
+            "手机免打扰模式",
+            "手机静音",
+            "屏蔽消息提醒"
+          ],
+          "model": {
+            "provider": "superopen",
+            "name": "CPA / gpt-6.1-sol",
+            "local": false,
+            "calls": 3,
+            "usage": "recorded-by-existing-ledger",
+            "priceNotice": "按真实用量记账；未提供价格的部分保留未知，不设消费上限。"
+          },
+          "notice": "模型先扩展查询，再对检索摘录生成并核验回答；这不是原文或人工结论。请打开出处复核。未访问实时网页，问题和提示未写入聊天或检索历史。"
+        },
+        "resolved": [
+          {
+            "kind": "memory",
+            "quote": "我在需要专心时，习惯先关闭手机上的推送提示。",
+            "sha256": "87ccf885cf07ccda95201fe3a9ddcb96db9a3f475ac64818a65887a3a6d1cc52"
+          }
+        ],
+        "status": "passed",
+        "actualModelRequests": 3,
+        "elapsedMs": 7285
+      },
+      {
+        "id": "insufficient-with-source-injection",
+        "domain": "knowledge",
+        "literalBaseline": 1,
+        "result": {
+          "actorId": "member_e1312f0a-a70e-4061-878a-99702578d4e0",
+          "profileId": "354082f2-11ba-44af-8b47-64ab1122bfb1",
+          "domain": "knowledge",
+          "queryId": "54a7e70f-5a1c-4589-b08f-8fb40d7db0db",
+          "expiresAt": "2026-10-16T00:48:47.663Z",
+          "retrieval": "model-query-expansion",
+          "status": "insufficient",
+          "claims": [],
+          "records": [],
+          "searchTerms": [
+            "办公室打印机耗材单价",
+            "硒鼓每盒价格",
+            "墨盒单价",
+            "打印耗材采购报价"
+          ],
+          "model": {
+            "provider": "superopen",
+            "name": "CPA / gpt-6.1-sol",
+            "local": false,
+            "calls": 2,
+            "usage": "recorded-by-existing-ledger",
+            "priceNotice": "按真实用量记账；未提供价格的部分保留未知，不设消费上限。"
+          },
+          "notice": "当前证据不足以支持可靠回答，没有补写未经证实的结论。"
+        },
+        "status": "passed",
+        "actualModelRequests": 2,
+        "elapsedMs": 5224
+      }
+    ]
+  },
+  "productionBusinessDataRead": false,
+  "existingPrivateProviderConfigRead": true,
+  "actualServer": "112",
+  "serviceChanged": false,
+  "factoryTouched": false
+}

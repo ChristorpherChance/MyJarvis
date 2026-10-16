@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-16T00:37:57.794073+00:00",
+  "node": "101",
+  "phase": "activate",
+  "exitCode": 0,
+  "wallSeconds": 5.141000000061467,
+  "operatorSha256": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504",
+  "result": {
+    "node": "101",
+    "release": "20261016-capture-complete-r35",
+    "previousRelease": "20261012-supervision-r28-2",
+    "active": true,
+    "activationLockHeld": true,
+    "dataSnapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261016-capture-complete-r35",
+      "scope": "standby",
+      "files": 13,
+      "directories": 10,
+      "bytes": 80474118,
+      "manifestSha256": "78bd5fff12a7faf5a60caa7d328f91ad9413b460505384a33f2e92bc1c48fc85",
+      "sqliteDatabasesChecked": 2,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "isolatedRestore": {
+      "status": "passed",
+      "operation": "isolated-restore-verified",
+      "release": "20261016-capture-complete-r35",
+      "scope": "standby",
+      "files": 13,
+      "directories": 10,
+      "bytes": 80474118,
+      "manifestSha256": "78bd5fff12a7faf5a60caa7d328f91ad9413b460505384a33f2e92bc1c48fc85",
+      "sqliteDatabasesChecked": 2,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "health": {
+      "node": "101",
+      "release": "20261016-capture-complete-r35",
+      "role": "standby",
+      "currentRelease": "20261016-capture-complete-r35",
+      "platformService": "inactive",
+      "observerService": "active",
+      "observerBuild": "20261016-capture-complete-r35",
+      "businessHealthy": false
+    },
+    "productionDataRestored": false,
+    "factoryResumed": false
+  }
+}

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向全家的日常服务，连接机器、项目、经验与技能，持续跟踪开发工作的进展。">
+  <meta name="jarvis-source-sha256" content="c2e7417f6603f3557db6ed5352f76ad5949cab521b6792e0463be66b355e39c2">
+  <title>灵感、知识与记忆使用说明</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">V4.0</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E7%81%B5%E6%84%9F%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BF%86%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 9 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">随手收集</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">断网后重新打开与迁移草稿</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">本窗口开启跨浏览器密文同步</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">管理原件</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">复用为知识</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">成员在房间页查家庭知识</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">比较和复核本人记忆</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">用模型查询知识和本人记忆</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">发布状态与使用范围</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-02<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">总体设计 / 设备规划 / V4.0</p>
+        <h1 id="document-title">灵感、知识与记忆使用说明</h1>
+        <p class="subtitle">面向全家的日常服务，连接机器、项目、经验与技能，持续跟踪开发工作的进展。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-02</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>18 台</strong><span>电脑 · 另有 NAS 与两台云服务器</span></div><div class="stat"><strong>10 台</strong><span>i3 小机 · 每台 16G / 256G</span></div><div class="stat"><strong>5 项</strong><span>核心职责 · 家庭与开发服务</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>本说明对应 MyJarvis 本轮新增功能。使用步骤、隔离验证、正式发布和现场验收分别记录；具体可用版本以实际发布记录为准。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">随手收集</h2>
+<p>在“统一收件”中保存原话、粘贴链接、添加文档或图片，也可明确开始录音。录音停止后可回听、下载再决定是否保存。附件与录音先保存原件，原话、机器处理文字和人工校正分别留存。</p>
+<ul>
+<li>Word、PDF、图片可点击处理文字；扫描页依赖已配置的本机 OCR。</li>
+<li>链接只有在明确点击处理后才会访问已允许的来源。网页保存为原件，动态页面或访问限制可能导致无法提取正文。</li>
+<li>录音转写依赖真实 ASR 服务。没有配置时仍能保存、回听和下载。现已保留本地识别模型实际返回的时间分段，可在“对照来源定位”中回听；没有分段时不会编造时间。</li>
+<li>提取文字需要本人核对，不会直接作为已发布知识或长期记忆。</li>
+</ul>
+<p>本机已用固定中英文合成音频做真实 Whisper 小样验证：tiny 英文通过；tiny 中文未达到事先的逐字标准，同一音频换已有 small 模型后通过。没有自动更改当前设备或正式平台的默认引擎。这不等于真实麦克风、口音、噪声和长录音准确率已验收。</p>
+<p>平台的普通草稿仍按当前浏览器及登录范围保留。需要断网后重新打开时，请提前准备下方独立的“离线收件”。普通草稿不会自行跨浏览器同步；下方密文同步只处理独立离线页中已保存的草稿，需要本人在当前窗口明确开启。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">断网后重新打开与迁移草稿</h2>
+<p>在“快速记录”展开“离线收件与密文草稿导入”，打开独立离线收件页。首次联网点击“准备离线收件”，等页面明确显示准备完成，再保存这个地址。它只保留本页的程序文件，不保留平台身份、知识、记忆或服务器接口响应。</p>
+<p>为本机离线草稿设置单独口令，之后断网重新打开仍可解锁并继续写文字、留链接、加文档图片或录音。最多 5 份原件，单件 25 MiB、合计 64 MiB。录音停止后可回听、下载；离线不转写或提取链接。输入后明确点击保存，未保存修改仍可能丢失。</p>
+<p>口令不等于平台登录密码，至少 12 个字符，请使用自己记得住的长口令。草稿以密文保存在此浏览器，锁定、关闭页面或其它标签切换身份会隐藏已解锁内容。忘记本机口令无法恢复；浏览器清理本站数据也会移除本机副本，请保留密文备份。</p>
+<p>迁移到另一浏览器时，先导出密文文件，再在目标浏览器的空离线草稿库中导入并输入同一口令。已有离线草稿不会被导入覆盖，错误口令或损坏文件也不会覆盖。这个过程是本人选择文件的迁移，不是自动同步或冲突合并。</p>
+<p>联网后以当前管理员登录，在空的“快速记录”中选择密文文件、解锁并核对预览，再点击“确认导入当前草稿”。这会复制为当前浏览器的普通草稿；没有自动上传或提交。核对范围和原件后，再点击“保存记录”走原有收件流程。原密文备份保留。每次明确导入会创建一份新草稿，已送达或待确认的记录请沿原编号确认，避免重复导入。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">本窗口开启跨浏览器密文同步</h2>
+<p>需要另一浏览器接着写时，可选择密文文件迁移，也可联网后开启“跨浏览器同步这份草稿”。远端只保留一个当前草稿副本，不会自动合并多份草稿，也不会替你提交到统一收件。</p>
+<ol>
+<li>以当前本人管理员身份登录。打开独立离线收件页，解锁本机草稿并保存，再点“启用本窗口密文同步”。单有旧管理员登录、当前却已切换成员时，不能开启。</li>
+<li>到另一浏览器，以本人管理员身份登录，打开同一离线页并明确启用同步。远端已有草稿时，输入“远端草稿原口令”，再点“选择远端并恢复本机”；已有本机草稿时，先导出备份，保留两份再选择。</li>
+<li>出现不同副本时，先比较页面显示的本机核对时间与远端更新时间。点“保留本机并更新远端”会把当前已保存的本机版本送到远端；点“选择远端并恢复本机”会用远端版本替换本机已保存副本。未保存输入要先处理；不要把时间较新当成内容一定正确。</li>
+<li>开启后，本窗口会在联网时同步后续已保存的密文。未保存输入、解锁后的正文和口令不会作为同步内容上传。断网时先保存到本机；如果页面提示结果尚未确认，点“重试同一次同步”，避免另外发起一次选择。</li>
+<li>点“停止本窗口同步”即可停止。锁定、离开页面、切换身份或材料会话变化也会停止并清除同步解锁输入；重新打开或解锁后，需要再次明确开启。</li>
+<li>如需移除远端，先点“删除远端密文副本”，再点“确认删除远端副本”。这不会删除本机或其他浏览器的副本；其他窗口发现删除后会要求本人选择，不会静默重新上传。它不等于底层介质擦除，也不清除自己另存的备份。</li>
+</ol>
+<p>原口令只在本浏览器解锁，不上传服务器。忘记口令仍无法恢复远端密文；开启同步不能代替保管口令和密文备份。联网后要进入正式收件，仍须按上一节导入普通草稿、核对并点击“保存记录”。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">管理原件</h2>
+<p>“统一收件”和知识资料候选均提供“原件管理”。可按文件名、访问范围及原件库/回收站筛选，查看原件、处理文字及业务和历史引用。</p>
+<ol>
+<li>移入回收站后仍可下载、回听；恢复后才可继续处理文字或新建关联。</li>
+<li>保留期限只锁定提前删除。期限到达也不会自动回收或删除。</li>
+<li>未引用清理只提供预览，每份原件仍要单独核对。</li>
+<li>永久删除只允许已回收、无业务或历史引用、不在处理或复用中且保留期已到的原件。确认前会列出当前条件，提交时再次核验。</li>
+</ol>
+<p>永久删除会清除原件文件及保存的提取、校正文字，不能恢复。无正文的操作墓碑与指纹保留。当前业务记录已移除附件但历史提交仍引用时，也会阻止永久删除；本轮没有自动清除这些历史引用。</p>
+<p>如果操作回包丢失，使用“确认上次操作”。不要换编号重新提交；当前版本或引用变化后，先重新读取并核对。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">复用为知识</h2>
+<p>已存 PDF 或扫描图片可直接登记书目，无需再次选择本机文件。选择与原件范围相同、仍有使用授权的知识来源，再填写书目、页数、版本和使用范围。</p>
+<p>平台核验原件字节后，复制到独立的书目原件存储，再走既有登记、识别、逐页校对及发布流程。登记书目不等于完成 OCR、校对或发布。DOCX、录音及其他材料继续作为资料候选，不被假装成已校对书页。</p>
+<p>检索已发布知识后，可“打开命中内容”查看对应页码、版本、摘录和有限上下文。来源撤权或正文变化时，需要重新检索；实时全文没有保存时，只展示明确标注的当时摘录。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">成员在房间页查家庭知识</h2>
+<p>在房间页展开“成员与房间连接”，用本人的成员档案 ID 和密码或 PIN“验证身份”。管理员登录不能代替成员验证。验证后，在“家庭知识”输入问题，明确点击“查找家庭知识”；输入文字本身不会自动查询。</p>
+<p>这里只查当前成员获授权的家庭共享资料，包括已发布书页和已保存的来源正文。个人私有资料不会加入结果。“查找家庭知识”按字词与中文片段匹配；这个按钮不会启动模型问答、录音、转写或语音播放，也不实时抓取网页。需要换一种说法提问时，使用下方另行开启的“知识模型问答”。</p>
+<p>点击“打开家庭知识出处”查看摘录、页码、版本及有限原文上下文。已保存来源会明确提示尚不等于人工审核通过。查询引用最多 5 分钟有效；打开出处时仍会重新核对当前授权和正文版本，过期、撤权或版本变化后需重新查询。</p>
+<p>切换或退出成员时，同一浏览器标签中的旧问题、结果和出处会清除，录音会停止；其他已打开标签也会收到身份变化通知并遮挡旧内容，需要重新验证。若浏览器存储或跨标签清理无法确认，页面会明确提示，不能据此认为其他标签已清理。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">比较和复核本人记忆</h2>
+<p>在“记忆神殿”点击“读取比较与到期复核”。系统只按相同字词或同类片段提示“可能重复”，不会判断语义冲突或自动合并。</p>
+<ul>
+<li>比较两条：逐条查看内容和来源，自己填写最终表述，再明确确认合并。两条旧记忆停止召回，来源及审阅记录保留。</li>
+<li>到期复核：选择“仍准确”或“已变化，我要更正”，再明确下次日期或留空暂不安排。日期到达不会自动停用记忆。</li>
+<li>关联遗忘：合并前后的相关条目会一并列出，核对后再确认。正文、来源及相关旧回执正文一并清除，避免从旧提交恢复已遗忘内容。原聊天与独立收件需要分别管理。</li>
+<li>提交结果未知：页面锁定原编号；刷新后可以继续确认同一操作。本标签待确认内容保存在当前登录范围的会话存储中，退出或登录身份变化后清除。</li>
+</ul>
+<p>“按问题查找”只检索本人当前生效内容。候选、已合并或已遗忘的旧条目不会参与现行召回。“按问题查找”仍按字词与中文片段匹配；需要模型帮助理解不同说法时，使用单独的“本人记忆模型问答”。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">用模型查询知识和本人记忆</h2>
+<p>“知识模型问答”可在知识页、知识来源页及已验证成员的家庭知识区域使用；“本人记忆模型问答”可在记忆神殿及本人房间记忆区域使用。先确认当前本人身份；管理员选择学习档案不能代替成员登录，也不能因此读取别人的私有记忆。</p>
+<ol>
+<li>查看面板显示的当前模型和本地或云端状态。尚未配置模型时，可继续使用原有的逐字查询。</li>
+<li>输入“知识语义问题”或“本人记忆语义问题”，勾选“本次启用模型查询”，再点“用模型查询知识”或“用模型查询本人记忆”。只输入问题不会自动调用模型。</li>
+<li>使用云端模型时，先核对本人的云端授权设置。尚未授权时，需按提示同意本次发送问题和当前授权摘录；只允许本地模型的设置不能靠勾选本次同意绕过。不愿发送时保留原设置，使用逐字查询或已配置的本地模型。</li>
+<li>回答出现后，逐项点“核对出处”，查看原句、上下文、页码和版本，再决定是否采用。已保存来源会标明尚未人工审核。模型回答不等于原文或人工结论；证据不足或核验未通过时，页面会说明，不能据此补写事实。</li>
+<li>需要结束时点“清除模型查询”。切换身份会清除当前问题、回答与出处并停止显示迟到结果；重新验证本人身份后再问。</li>
+</ol>
+<p>知识只从当前授权的已保存资料中查找；本人记忆只使用当前已确认、生效的内容，不会把候选、已合并或已遗忘的旧条目重新当作现行记忆。这里不实时抓取网页。问题和提示不写入聊天或检索历史；选择云端时仍会发送本次已授权的问题和摘录。</p>
+<p>出处短时有效，最多五分钟。每次打开都会重新核对授权和正文；来源撤权、版本变化、本人记忆更正或遗忘后，旧出处失效，应重新查询。正在生成的回答也会核对这些变化。已经看过或另存的文字不会因此从人的记忆或外部文件中消失，作决定前仍要打开当前出处。</p>
+<p>每次模型查询最多三次模型请求，用于理解问题、回答及复核。按真实用量记账，不设消费上限；已知金额与用量分别记录，未提供价格的部分保留“未知”，不写成零费用。重新发起查询可能产生新用量，先查看页面的失败或证据不足提示，再决定是否重试。</p>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">发布状态与使用范围</h2>
+<p>R35已在112正式运行，可从<a href="https://cc-jarvis.ikvein.com/?mode=platform">贾维斯平台</a>使用。每个要离线使用的浏览器，须先联网打开<a href="https://cc-jarvis.ikvein.com/offline-capture.html">独立离线收件</a>并点击“准备离线收件”。正式HTTPS新空桌面浏览器的准备、断网重开及空草稿控件已经核对。</p>
+<p>知识换种说法、本人记忆和缺证据拒答均有少量真实用例通过。同一个知识问题也曾被保守拒答，后在单独诊断中通过，产品源码未变；不能视为原问题已修复或稳定准确率通过。遇到“证据不足”，可使用原话关键词查询并打开当前出处。真实用量记账，价格缺失的部分仍为未知。</p>
+<p>101已安装同版本代码、该批完整数据和语音环境，并完成一次常驻服务加载检查；业务和语音均留在停用状态。快照原时点与900秒新鲜度规则保持；超过期限会显示旧批次，不代表持续同步或自动接管。人工恢复顺序及语音启用条件见<a href="Linux%E4%B8%BB%E5%A4%87%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E6%94%B6.md">主备部署说明</a>。本次没有执行故障接管或生产数据回退。</p>
+<p>仍需现场核对真实麦克风、不同口音、噪声、长录音、实体手机和房间终端；更广资料及提问下的模型回答与引用表现需持续复核。源代码见<a href="https://github.com/ChristorpherChance/MyJarvis">MyJarvis</a>，本轮详细范围见<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E5%AF%86%E6%96%87%E5%90%8C%E6%AD%A5%E4%B8%8E%E8%AF%81%E6%8D%AE%E9%97%AE%E7%AD%94%E9%AA%8C%E6%94%B6-20261016-final.json">最终验收记录</a>。</p>
+<p>软件工厂每十分钟目标修复与验收跟进保持暂停。三大板块的局部交付不改变原74项与客户12项尚未全部交付的事实。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E7%81%B5%E6%84%9F%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BF%86%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

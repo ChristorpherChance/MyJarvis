@@ -1,0 +1,1338 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "preparedAt": "2026-10-16T01:31:00.226666+00:00",
+  "documentState": "final",
+  "title": "R35密文同步与证据问答：实现、分cut验证与实际主备交付",
+  "scope": "R35代码与交付包、分cut限定验证、112实际发布及完整快照/隔离恢复、冷备数据目录绑定、101语音依赖与一次加载健康、正式HTTPS离线壳和保护接口只读核对的实际终态cut。项目元数据与Git交付仍后继；实体设备和更广质量未验收。",
+  "state": {
+    "implementation": "complete",
+    "verification": "complete-in-declared-bounded-scope",
+    "deployment": "live-on-112-in-bounded-scope",
+    "fieldAcceptance": null,
+    "realModelQuality": "bounded-small-fixture-evidence-with-retained-refusal",
+    "productionRelease": "112-active-and-health-verified",
+    "coldStandbyFinal": "bound-inactive-snapshot-freshness-separate"
+  },
+  "release": {
+    "archiveVersion": "20261016-capture-complete-r35",
+    "runtimeBuild": "20261016-capture-complete-r35",
+    "sourceCommit": "f38416bddb476f9c01eec5ca87be3e8da74e94f4",
+    "archiveSha256": "df2ca1476a385c4dbb7a449452a3f2beb9f69912eea9c225f7d5a5405e8a65c6",
+    "manifestSha256": "72f97aee9a7d0f91b76ff439ff1d0c2d7b27587877ac5f00d6e384311c09bb39",
+    "payloadFiles": 2179,
+    "zipEntries": 2180,
+    "committedSourceFilesVerified": 1749,
+    "compiledFilesVerified": 429,
+    "offlineResources": 5,
+    "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "independentReadback": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/independent-r35-zip-readback.json",
+      "sha256": "540b113a46e14d6ff914578a35ff6e34a5fe4ac40f66d550e66066b1b323e08f",
+      "bytes": 5282
+    },
+    "boundary": "源码字节、运行身份、每项产物H及Unix模式已核；不等于可复现构建、Linux运行或生产验收。"
+  },
+  "encryptedSync": {
+    "behavior": [
+      "当前真实本人管理员在本窗口明确启用；只同步已保存密文，不发送口令或解锁正文，不自动提交收件。",
+      "远端单草稿槽采用修订保护；不同副本先显示时间并由本人选择本机或远端，不自动合并。",
+      "回包丢失保留同一操作编号与内容；断网保留本机；锁定、身份或材料会话变化及离开时停止。",
+      "删除远端清当前密文并保留修订墓碑，不删除本机、其他浏览器或外部备份，不承诺介质擦除；忘记口令无法恢复。"
+    ],
+    "httpAndVault": {
+      "uniqueNewGroups": 6,
+      "passedSeparately": 6,
+      "failedGroups": 0,
+      "executionCuts": [
+        {
+          "report": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+          "groups": 4,
+          "passed": 4
+        },
+        {
+          "report": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+          "groups": 1,
+          "passed": 1,
+          "onlyAuthCookiePresenceCorrection": true
+        },
+        {
+          "report": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+          "groups": 1,
+          "passed": 1,
+          "onlyLocalCasAndStopCorrections": true
+        }
+      ],
+      "allSixRunTogetherOnFinalSource": false,
+      "oldSuitesNotRerun": true
+    },
+    "browser": {
+      "uniqueNewGroups": 5,
+      "passedSeparately": 5,
+      "groupExecutions": 6,
+      "passedExecutions": 5,
+      "failedExecutions": 1,
+      "failure": "First identity case stopped at a test harness TDZ shadowing the login helper; fixture variable renamed and only that case passed on attempt2. Original failed report and screenshot retained.",
+      "extraHarnessAuditFailure": "Attempt1 pass-count audit recorded 3 != 4 after the fixture failure; not a sixth product group",
+      "finalAffectedBundle": "offlineCapture-Dp37MnGd.js",
+      "finalAffectedVaultBundle": "offline-vault-g54LtOEF.js",
+      "finalBundleRunOnlyNewFifthGroup": true,
+      "allFiveRunTogetherOnFinalBundle": false,
+      "allAttemptsTemporaryCleanupVerified": true,
+      "allAttemptsModelCalls": 0,
+      "allAttemptsExternalRequests": 0,
+      "allAttemptsPageErrors": 0
+    },
+    "evidence": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/cut-summary.json",
+      "sha256": "c9af33c0378ac1f774b01ff940e256f0deaea28ed85018a28b8cc9e8e7428317",
+      "bytes": 8022
+    },
+    "localP1Closures": [
+      {
+        "finding": "同编号同修订异密文可骗过旧本机保护",
+        "fix": "本机比较编号、修订、盐、IV和完整密文；旧标签的load/save/export/replace均拒绝。",
+        "test": "新增精确单元组及真实两context+sibling浏览器第5组分别通过。"
+      },
+      {
+        "finding": "停止同步未能取消正在等待的本机替换写入",
+        "fix": "同步中止与本机锁定信号共同进入原子写入；真实IndexedDB打开被暂停时停止，恢复后本机不变。",
+        "test": "同一新增精确单元组及真实浏览器第5组通过。"
+      },
+      {
+        "finding": "仍有无效成员会话时残留管理员身份可能回退",
+        "fix": "只要请求仍携带成员会话即禁止管理员回退。",
+        "test": "真实失效成员会话加独立仍有效管理员会话，元信息/包/写入均401；只补新增1组。"
+      }
+    ],
+    "independentReview": [
+      {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/offline-sync-source-review-final.json",
+        "sha256": "c8a7d5d88d7bfd97d4162768d31a8bbb3bad528238f78d39764195516d4ad368",
+        "bytes": 3342
+      },
+      {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/offline-sync-review-browser-addendum.json",
+        "sha256": "f15bd31eaef941acbe678ac1b507a16da70d028a8d7006439c13bac1a111621a",
+        "bytes": 2051
+      }
+    ],
+    "notOneFinalFullSuite": true
+  },
+  "evidenceAssistant": {
+    "behavior": [
+      "逐次显式开启模型查询；按当前本人授权取知识或当前生效本人记忆，云端遵守本人授权与本次同意。",
+      "先扩展提问再从已保存授权证据回答；每个结论需逐字引用并再次核验，证据不足时不补事实。",
+      "引用短时有效，打开时重新核对身份、授权、完整正文和版本；撤权、更正或遗忘令旧引用失效。",
+      "问题及提示使用内存会话，不保存为聊天或检索历史；无业务工具、自动重试、缓存预热及后台续轮。"
+    ],
+    "fakeProtocolCuts": {
+      "initialFiveGroups": {
+        "authorReportedPassed": 5,
+        "authorReportedFailed": 0,
+        "rawStdoutPersisted": false,
+        "verificationSource": "作者报告当时真实工具终态；没有独立留存stdout，不列为已保存8/8证据。"
+      },
+      "unknownPrivacyFollowup": {
+        "authorReportedPassed": 1,
+        "authorReportedFailed": 0,
+        "rawStdoutPersisted": false,
+        "oldFiveNotRerun": true
+      },
+      "newBoundaryGroups": {
+        "passed": 2,
+        "failed": 0,
+        "attempts": 1,
+        "realProviderCalls": 0,
+        "sdkMockRequests": 1,
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt",
+          "sha256": "45ba19bb708c4e5eef6f8d1c7c0ae3c6cb1ddea4519b7c70d389f48760f993f0",
+          "bytes": 387
+        }
+      },
+      "allEightRerunOnFinalSource": false
+    },
+    "browser": {
+      "uniqueGroups": 3,
+      "passedSeparately": 3,
+      "executions": 4,
+      "passedExecutions": 3,
+      "failedExecutions": 1,
+      "firstFailure": "首轮本人记忆场景在Cookie夹具格式停止；仅修夹具后该组通过，另两已过组未重跑；原计数audit失败不是额外产品组。",
+      "fakeProtocolCalls": 9,
+      "actualProviderCalls": 0,
+      "cleanupVerified": true,
+      "firstCut": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-browser-r35/attempt-1.json",
+        "sha256": "cd7cd01ffc68a57e681e00b8ee1ea01e22e8686eec31afde9125bc8e6d89f58d",
+        "bytes": 1508
+      },
+      "followupCut": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-browser-r35/attempt-2.json",
+        "sha256": "cb6586eb02f388ab9f426a429b9822759dfd9544c90484c8b60df19785a0f435",
+        "bytes": 1040
+      },
+      "notSemanticQualityEvidence": true
+    },
+    "newP1Closures": [
+      {
+        "id": "EVIDENCE-RECORD-ONLY-001",
+        "fix": "只记账模式保留真实用量及未知价格，不再被金额或缺价格的事后门槛中止；普通预算、暂停及并发限制仍保留。"
+      },
+      {
+        "id": "EVIDENCE-SINGLE-TURN-002",
+        "fix": "临时模型会话一轮即停，带工具请求的结果拒绝；确保每次有限问答最多3次实际模型请求。"
+      }
+    ],
+    "sourceAndBoundaryEvidence": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-boundary-freeze.json",
+      "sha256": "044211817689a24f345c63a8eca729e31aab99374c804c14ddca34fd3edc1a8d",
+      "bytes": 6519
+    },
+    "independentFinalSourceReview": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/evidence-assistant-source-review-final.json",
+      "sha256": "71918a1c423ed1eda9c30103e4e2b9ab517ea28c74efc71f1f32cc90474bfc0d",
+      "bytes": 5879
+    },
+    "realModel": {
+      "status": "limited-assistive-evidence",
+      "accepted": "limited-scope-only",
+      "observedAttempt4": {
+        "status": "failed",
+        "cut": "isolated-app-start",
+        "actualModelRequests": 0,
+        "usageReceipts": 0,
+        "temporaryCleanupVerified": true,
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/real-model-quality.json",
+          "sha256": "a9c6710fd24a0f98d68e6c514d7c9c14c5d582bf255f659e2f456cc0ba067b3a",
+          "bytes": 2732
+        },
+        "boundary": "这一尝试在隔离程序准备阶段失败，未产生模型质量结果；后续准备或执行不在本草稿填通过。"
+      },
+      "realCaseExecutions": 4,
+      "passedExecutions": 3,
+      "notPassedExecutions": 1,
+      "uniqueCases": 3,
+      "uniqueCasesWithAtLeastOnePass": 3,
+      "oneAllPassingThreeCaseRun": false,
+      "falseRejectionFixed": false,
+      "originalFailedCandidateKnown": false,
+      "productSourceChangedBetweenFailureAndDiagnostic": false,
+      "actualProviderModelRequests": 11,
+      "ledgerReceipts": 11,
+      "tokenTotals": {
+        "inputTokens": 6463,
+        "outputTokens": 681,
+        "totalTokens": 7144
+      },
+      "feeUSD": null,
+      "ledgerCostsIncomplete": 11,
+      "actualCuts": [
+        {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/real-model-quality-r2.json",
+          "sha256": "01bf875a9322c3a48df287943e9d24e0908fa6ffd48431a196724e0b335bd52b",
+          "bytes": 15410
+        },
+        {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/real-model-quality-r3.json",
+          "sha256": "b480ba52dab3c07c092ae983cfb3bfa1043f71b81e5015947b7bed923980f410",
+          "bytes": 8891
+        }
+      ],
+      "independentReview": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-real-quality-independent-review.json",
+        "sha256": "a52b6e82db2ec0c0e1f60a9b339dad40b747227f8d31753051e2ae90f2d8d1df",
+        "bytes": 4345
+      },
+      "explanation": "知识首轮因支持核验未通过而返回证据不足，原失败保留；同产品源码的单独诊断后来通过。本人记忆和缺证据/注入用例首轮通过。三个固定合成用例跨cut各有通过，不是同一轮3/3，不证明误拒已修复或稳定准确率。",
+      "releaseBoundary": "支持有限辅助功能；保留保守拒答、不降引用或授权规则；用户可用原有逐字检索并打开当前出处。",
+      "preparationContract4": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-4.json",
+        "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f",
+        "bytes": 4030
+      },
+      "executedContracts": [
+        {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-5.json",
+          "sha256": "979d7a6ef577cd155edfc2f3ff2e20ae4151db3ca5f9737f4c69cff84cc93a8c",
+          "bytes": 4242
+        },
+        {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-6.json",
+          "sha256": "adf149d1555a5750f182f28e2a102abcc10f692cd8d0d7347fd54eabb1593bd6",
+          "bytes": 3531
+        }
+      ],
+      "harnessAuthCorrection": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-quality-harness-freeze.json",
+        "sha256": "4b6396775c5fa521a7b1916baf76a8c9c842034143f125f4e9d8f39cd1f30a78",
+        "bytes": 3220
+      }
+    },
+    "notIndependentFactualProof": "假协议、结构和引用核验不能代替真实模型质量；额外模型复核也不是事实正确的独立证明。"
+  },
+  "deployment": {
+    "101": {
+      "stageInstallInspectAndSmoke": "passed-in-bounded-scope",
+      "phases": {
+        "stage": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:42.377952+00:00",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-stage.json",
+            "sha256": "3027e664d3c5cc1c380455ef739ccb8f90da941f7d75e07b0d0491a0ed850a06",
+            "bytes": 564
+          },
+          "businessServiceChanged": false
+        },
+        "install": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:53.057363+00:00",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-install.json",
+            "sha256": "0e8b120db95b3e9fe9d5faba651d24b327de02cbae4142c80f73e08e87c3715f",
+            "bytes": 552
+          },
+          "businessServiceChanged": false
+        },
+        "inspect": {
+          "status": "passed",
+          "at": "2026-10-16T00:35:59.219033+00:00",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-inspect.json",
+            "sha256": "ecc86e65ca92d4060fafaab0d16a54c68c447dbc79c10ab980affea13e16d16c",
+            "bytes": 593
+          },
+          "businessServiceChanged": false
+        },
+        "linux-install-smoke": {
+          "status": "passed",
+          "at": "2026-10-16T00:36:05.252372+00:00",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-linux-install-smoke.json",
+            "sha256": "2bcc1d074fed3ddf408a93e704d70b42ebad64b43336c05b1076464d06ad0458",
+            "bytes": 6304
+          },
+          "nodeVersion": "24.15.0",
+          "build": "20261016-capture-complete-r35",
+          "httpRequests": 12,
+          "modelCalls": 0,
+          "outsideFetchAttempts": 0,
+          "temporaryCleanupVerified": true,
+          "scope": "this-staged-compiled-installation-only",
+          "underlyingReportSha256": "6b6a08264434e944b53d68c3bcefdff87c65ff02a2c9cad9381cebb998047254"
+        }
+      },
+      "coldBusinessFinalStatus": "inactive",
+      "coldDataFinalStatus": "bound-and-byte-verified",
+      "boundary": "101实际数据目录绑定和原角色配置核对通过；业务停止且禁用。该批次完整，不代表当前恢复材料fresh或自动可接管。",
+      "coldDataTransfer": "export-download-import-and-isolated-verify-passed",
+      "coldPhases": {
+        "export": {
+          "status": "passed",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/export.json",
+            "sha256": "68045149a0aea7a521e93969d073a05d66d893db4c77f3edd5c63a5d7d8eb714",
+            "bytes": 503
+          },
+          "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+          "archiveSha256": "1b2d3f14824ac25d0c7b4575dc5da4a698ec2882ee0322fb6e698529d8a9fe20",
+          "archiveBytes": 778359545
+        },
+        "download": {
+          "status": "passed",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/download.json",
+            "sha256": "c72e457882a66ebf671cf0b59fd66f85ac34cf1bde547eb2951c18b671620ec7",
+            "bytes": 364
+          },
+          "archiveSha256": "1b2d3f14824ac25d0c7b4575dc5da4a698ec2882ee0322fb6e698529d8a9fe20",
+          "archiveBytes": 778359545
+        },
+        "import": {
+          "status": "passed",
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/import.json",
+            "sha256": "c48b6e90933fdbbfb2054b67fa78824e83d160c0064b372c5d2b0e2cee6edb84",
+            "bytes": 1093
+          },
+          "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+          "archiveSha256": "1b2d3f14824ac25d0c7b4575dc5da4a698ec2882ee0322fb6e698529d8a9fe20",
+          "archiveBytes": 778359545
+        }
+      },
+      "coldDataManifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+      "takeoverReady": false,
+      "snapshotFreshness": {
+        "snapshotAt": "2026-10-16T00:51:03.423Z",
+        "originalSourceSnapshotAt": "2026-10-16T00:51:03.423620+00:00",
+        "canonicalSourceMilliseconds": "2026-10-16T00:51:03.423+00:00",
+        "thresholdSeconds": 900,
+        "observedAt": "2026-10-16T01:31:00.226666+00:00",
+        "ageAtObservationSeconds": 2396.803,
+        "statusAtObservation": "stale",
+        "timeOrThresholdChanged": false,
+        "automaticTakeoverReady": false,
+        "boundary": "原900秒阈值保持；完整批次、安装验证与当前新鲜度分别判断。112后续数据没有持续自动复制。"
+      },
+      "coldDataInstall": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/install.json",
+        "sha256": "7b709366115a302f1dc63fffdb53b733aaa7ae30f29af87d015009d1741bd2f6",
+        "bytes": 1576
+      },
+      "coldDataActual": {
+        "installed": true,
+        "release": "20261016-capture-complete-r35",
+        "sourceManifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+        "wholeTreeMatched": true,
+        "sqliteDatabasesChecked": 5,
+        "voiceKeyPreserved": true,
+        "voiceDependencies": {
+          "status": "passed",
+          "expectedRelease": "20261016-capture-complete-r35",
+          "verificationSha256": "af59e1aa309cdba935050aef49822189f3323bf05061cf281648bc73d40939c5",
+          "installationSha256": "fa59f0d9a8b86c638e8be29ba615726b92b7d7c00d7be599dad36b9fb27df701",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "manifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358",
+          "installedBytesVerified": true,
+          "pinnedPackagesVerified": true,
+          "pythonVersion": "3.12.15",
+          "residentLoadHealthVerified": true,
+          "singleLoadAttempts": 1,
+          "residentInactive": true,
+          "inferenceCalls": 0
+        },
+        "old101DataRetained": true,
+        "platformService": "inactive",
+        "platformEnabledBefore": "disabled",
+        "platformEnabledAfter": "disabled",
+        "observerRestarted": true,
+        "observerTlsReadbackMatched": true,
+        "nodeRoleAndConfigPreserved": true,
+        "factoryTouched": false,
+        "snapshotAt": "2026-10-16T00:51:03.423Z",
+        "automaticTakeover": false,
+        "realDeviceAcceptance": false
+      }
+    },
+    "112": {
+      "stageAndInstallFinal": "passed-in-bounded-scope",
+      "stage": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-stage.json",
+        "sha256": "a5238500ac6b31ef9209d728fad01470f7687ae7915bdc552a837841717afdb2",
+        "bytes": 565
+      },
+      "install": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-install.json",
+        "sha256": "1786205b6213972e65dc8dac7585e6f03ca0fe29e85e011ef7d9c41d58b21aa6",
+        "bytes": 552
+      },
+      "inspect": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-inspect.json",
+        "sha256": "b09338176aa3de36110e51ab76b704a4229fd9d1ab39de2278b252bbc4d3d66d",
+        "bytes": 593
+      },
+      "linuxSmoke": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-linux-install-smoke.json",
+        "sha256": "f61201224f4218b9e2a87b6a2b79193113e77487fc1f5614bb1e90dd417876dd",
+        "bytes": 6302
+      },
+      "productionActivation": "passed",
+      "productionHealth": {
+        "node": "112",
+        "release": "20261016-capture-complete-r35",
+        "role": "primary",
+        "currentRelease": "20261016-capture-complete-r35",
+        "platformService": "active",
+        "observerService": "active",
+        "observerBuild": "20261016-capture-complete-r35",
+        "businessHealthy": true,
+        "healthBuild": "20261016-capture-complete-r35",
+        "healthStatus": "ok"
+      },
+      "previousRelease": "20261012-supervision-r28-2",
+      "activationWallSeconds": 230.09400000004098,
+      "activationEvidence": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-activate.json",
+        "sha256": "a2c156bc03e4a963b7dc5612299d1dc5576c7f0a8889b7207d7f634b0329f505",
+        "bytes": 1982
+      },
+      "boundary": "230.094秒是完整激活操作耗时，包含快照及隔离恢复；健康字段是该操作结束时的实际核对，不据此推算连续健康观察时长。"
+    },
+    "recovery": {
+      "actualLinuxExerciseFinal": "passed-in-bounded-scope",
+      "linuxFixtureEvidence": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/recovery-linux-qualification.json",
+        "sha256": "a699971c6061ba3d983b71fa0510153683ca11bbe3c57d6d2393a542eefd4494",
+        "bytes": 1465
+      },
+      "snapshot": {
+        "status": "passed",
+        "operation": "snapshot-created",
+        "release": "20261016-capture-complete-r35",
+        "scope": "primary",
+        "files": 59,
+        "directories": 56,
+        "bytes": 3650619894,
+        "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+        "sqliteDatabasesChecked": 5,
+        "sqliteIntegrity": "ok",
+        "completeTreeVerified": true,
+        "liveDirectoryModified": false,
+        "automaticRollback": false
+      },
+      "isolatedRestore": {
+        "status": "passed",
+        "operation": "isolated-restore-verified",
+        "release": "20261016-capture-complete-r35",
+        "scope": "primary",
+        "files": 59,
+        "directories": 56,
+        "bytes": 3650619894,
+        "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+        "sqliteDatabasesChecked": 5,
+        "sqliteIntegrity": "ok",
+        "completeTreeVerified": true,
+        "liveDirectoryModified": false,
+        "automaticRollback": false
+      },
+      "productionDataRestored": false,
+      "automaticRollback": false,
+      "activationEvidence": {
+        "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-activate.json",
+        "sha256": "a2c156bc03e4a963b7dc5612299d1dc5576c7f0a8889b7207d7f634b0329f505",
+        "bytes": 1982
+      },
+      "boundary": "完整运行树3650619894字节、59文件、56目录、5SQLite，快照与独立新目录恢复逐件核对；未将备份恢复覆盖当前生产数据。"
+    },
+    "field": {
+      "microphone": null,
+      "physicalPhone": null,
+      "roomTerminal": null,
+      "status": "pending"
+    }
+  },
+  "usage": {
+    "policy": "只记录，不设消费上限；金额、用量与未知部分分列。",
+    "spendCap": null,
+    "fixedSyncAndInstallFixturesActualProviderCalls": 0,
+    "evidenceFakeProtocolActualProviderCalls": 0,
+    "observedRealModelAttempt4Requests": 0,
+    "knownProjectAmountUSD": null,
+    "nativeUsageTotals": {
+      "actualProviderModelRequests": 11,
+      "ledgerReceipts": 11,
+      "inputTokens": 6463,
+      "outputTokens": 681,
+      "totalTokens": 7144
+    },
+    "unknownPriceRequests": 11,
+    "internalAssistantAmountUSD": null,
+    "internalAssistantUsage": null,
+    "boundary": "真实11次模型请求与11份原生账本数值匹配；金额均未知且costComplete为false，旧观察器的不完整true标记不作为已知费用。内部AI金额和用量仍未知，费用只记录不设上限。",
+    "allProviderCostsComplete": false
+  },
+  "retainedFailures": [
+    "同步浏览器首轮TDZ夹具失败及仅补失败场景的通过结果。",
+    "证据问答浏览器Cookie夹具失败及单组修正结果。",
+    "本机安装smoke首轮合法JavaScript MIME别名误判及窄修后的单组通过。",
+    "真实模型尝试4准备阶段失败，实际模型请求为0；当时未取得质量结果，后继各cut另列。",
+    "真实contract5三用例轮次中知识支持核验拒答；后继contract6仅原知识单例通过，源码与提示不变，原因仍未知。",
+    "冷备常驻语音r1导出因历史文件owner/mode拒绝；只读元数据诊断后r2限定例外导出及整包传输过，原数据未改；安装/健康/实际语音仍待。"
+  ],
+  "pendingRootFinalization": [
+    "项目资料与决策元数据同步、GitHub提交/PR/合并尚未包含于本cut；后续独立回执不改写本报告指纹。",
+    "实体设备与更广语义质量未验收；原知识误拒失败保留，不能以单例后过宣称已修复。"
+  ],
+  "privacyBoundary": "本报告只含公开安全摘要、相对证据路径和指纹；未复制凭据、私有配置原文、原聊天或私人录音；未做文本内部的语义隐私扫描。",
+  "productionPublicOffline": {
+    "status": "passed",
+    "url": "https://cc-jarvis.ikvein.com/offline-capture.html",
+    "newEmptyBrowserContext": true,
+    "realTlsWithoutBypass": true,
+    "explicitPrepareAndActiveReady": true,
+    "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "offlineManifestSha256": "281bd81bc4220ca5d1a50e33374f17dd11a722515ed69aa386a2ed9314c067b4",
+    "cachedResourcesVerified": 5,
+    "actualNetworkOfflineReloadFromServiceWorker": true,
+    "emptyWritingControlsAvailable": true,
+    "apiRequests": 0,
+    "modelCalls": 0,
+    "microphoneCalls": 0,
+    "pageErrors": 0,
+    "contextAndBrowserClosed": true,
+    "evidence": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/production-offline-browser.json",
+      "sha256": "847d3e0ff8e0be75f791d49b137e703be4a20ddbf6be9c5a686cd4b774b893b9",
+      "bytes": 4460
+    },
+    "publicEmptyScreenshot": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/production-offline-empty.png",
+      "sha256": "6a00a5a66d06ffba08c1b647d68ad4b0db8487ba3f87582fd372f87092d0b02a",
+      "bytes": 132839
+    },
+    "boundary": "正式域名空白桌面浏览器的公共离线壳验收；无登录、未读私文、无实体手机或麦克风验收。"
+  },
+  "automation": {
+    "observedStatus": "PAUSED",
+    "changed": false,
+    "scope": "原软件工厂十分钟自动跟进保持PAUSED，本轮未恢复",
+    "evidence": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/automation-preserved.json",
+      "sha256": "ff0a8cb3d3b57342328b4c95083eea79cbb83b039b1eb5dedc04dd7683763329",
+      "bytes": 498
+    }
+  },
+  "voice": {
+    "finalActualResult": "passed-in-bounded-scope",
+    "status": "standby-dependencies-and-single-resident-load-health-verified",
+    "residentPrerequisites": "read-only-ready-is-not-inference-acceptance",
+    "residentPrerequisiteEvidence": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/resident-prerequisites-final.json",
+      "sha256": "5fdd0a2c967f0ae6ae897ec527b76e7cce5ed162bd0e8f8a49542e2a29da523e",
+      "bytes": 1452
+    },
+    "boundary": "101安装依赖、逐件原字节核验、一次常驻加载健康及停止通过；最终inactive/disabled。未做识别/合成推理或实体收音验收；未来接管须维护者显式启用resident。",
+    "transferHistory": {
+      "originalFailure": {
+        "exitCode": 1,
+        "code": "UNTRUSTED_OWNER_OR_MODE",
+        "inferenceCalls": 0,
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice/export.json",
+          "sha256": "0caff5da3eb2ab0ff7efeec9c9f5f9d6cafde0c4517c706247f10c337eec63b4",
+          "bytes": 414
+        }
+      },
+      "readOnlyMetadataInventory": {
+        "entriesChecked": 2075,
+        "outlierEntries": 5,
+        "modelDataRead": false,
+        "privateConfigurationRead": false,
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice/model-mode-outliers.json",
+          "sha256": "0ab7345d4016f21d392f6b76f05cf41d91ae66c48c112a8cf39ae6540623bd06",
+          "bytes": 1719
+        }
+      },
+      "narrowCorrection": "仅导出所需固定资产接受当时精确旧UID/mode例外；源数据未改写，目标仍使用root/jarvis及受限权限。修正源码不代表安装或语音验收。",
+      "phases": {
+        "export": {
+          "status": "passed",
+          "sourceSha256": "8b183c7956781a92c6eae39b84f4ed963d74e50230b04e2a0c8202042dc24feb",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "inferenceCalls": 0,
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/export.json",
+            "sha256": "6aeebefe91fdb86c44995042de320eacbf7b6015afabe11428a54f2c25166a40",
+            "bytes": 696
+          },
+          "files": 2075,
+          "manifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358"
+        },
+        "download": {
+          "status": "passed",
+          "sourceSha256": "8b183c7956781a92c6eae39b84f4ed963d74e50230b04e2a0c8202042dc24feb",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "inferenceCalls": 0,
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/download.json",
+            "sha256": "a9e481eb67bbac0cc6913efc6bffe8ec7f75a02f4d504de72cf9990208f79f7f",
+            "bytes": 464
+          }
+        },
+        "upload": {
+          "status": "passed",
+          "sourceSha256": "8b183c7956781a92c6eae39b84f4ed963d74e50230b04e2a0c8202042dc24feb",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "inferenceCalls": 0,
+          "evidence": {
+            "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/upload.json",
+            "sha256": "35eb77c9ae969bb0ffbfb99a0e0edc68ef2aedb07077f18339b6502e19f1fd27",
+            "bytes": 471
+          }
+        }
+      },
+      "install": "passed",
+      "health": "passed-single-load-left-inactive",
+      "inferenceAcceptance": "not-executed"
+    },
+    "actualPhases": {
+      "export": {
+        "status": "passed",
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/export.json",
+          "sha256": "6aeebefe91fdb86c44995042de320eacbf7b6015afabe11428a54f2c25166a40",
+          "bytes": 696
+        },
+        "actual": {
+          "phase": "export",
+          "node": "112",
+          "exported": true,
+          "files": 2075,
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "archiveBytes": 1382871040,
+          "manifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358",
+          "tokenIndividualHashRecorded": false,
+          "venvOrLogsExported": false,
+          "inferenceCalls": 0
+        }
+      },
+      "download": {
+        "status": "passed",
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/download.json",
+          "sha256": "a9e481eb67bbac0cc6913efc6bffe8ec7f75a02f4d504de72cf9990208f79f7f",
+          "bytes": 464
+        },
+        "actual": {
+          "downloaded": true,
+          "archiveBytes": 1382871040,
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "privateArchiveOnly": true
+        }
+      },
+      "upload": {
+        "status": "passed",
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/upload.json",
+          "sha256": "35eb77c9ae969bb0ffbfb99a0e0edc68ef2aedb07077f18339b6502e19f1fd27",
+          "bytes": 471
+        },
+        "actual": {
+          "uploaded": true,
+          "archiveBytes": 1382871040,
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "privateArchiveOnly": true
+        }
+      },
+      "install": {
+        "status": "passed",
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/install.json",
+          "sha256": "2582de860d4e5c68411066c96043a88b7c7085829f5cbe4e2d9b8bba472ce589",
+          "bytes": 1273
+        },
+        "actual": {
+          "schema": 1,
+          "status": "installed-inactive",
+          "node": "101",
+          "role": "standby",
+          "expectedRelease": "20261016-capture-complete-r35",
+          "release": "20261016-capture-complete-r35",
+          "installed": true,
+          "pipCheck": true,
+          "pipCheckPassed": true,
+          "venv": "/var/lib/jarvis/voice-staging-20261010-multilingual/venv",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "manifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358",
+          "healthLoadAttempted": false,
+          "packages": {
+            "sherpa-onnx": "1.13.8",
+            "numpy": "2.2.6",
+            "av": "19.0.0",
+            "pypinyin": "0.55.0",
+            "sentencepiece": "0.2.1",
+            "faster-whisper": "1.2.1",
+            "ctranslate2": "4.6.0"
+          },
+          "inferenceCalls": 0,
+          "pythonVersion": "3.12.15",
+          "pythonCopied": false,
+          "venvCopied": false,
+          "serviceEnabled": false,
+          "unitFileState": "disabled"
+        }
+      },
+      "verify": {
+        "status": "passed",
+        "evidence": {
+          "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/verify.json",
+          "sha256": "ecb6d69346131efaa97a0a16370e4c66197611f6ac643ed5bb883eef20572ee4",
+          "bytes": 2168
+        },
+        "actual": {
+          "schema": 1,
+          "phase": "verify",
+          "node": "101",
+          "role": "standby",
+          "expectedRelease": "20261016-capture-complete-r35",
+          "release": "20261016-capture-complete-r35",
+          "installed": true,
+          "pipCheck": true,
+          "pipCheckPassed": true,
+          "venv": "/var/lib/jarvis/voice-staging-20261010-multilingual/venv",
+          "pythonVersion": "3.12.15",
+          "archiveSha256": "8956f135f6cd568230613d45d51c47bef75306c1c4dfa05951ba53b9c16b76b9",
+          "manifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358",
+          "installedBytesVerified": true,
+          "packages": {
+            "sherpa-onnx": "1.13.8",
+            "numpy": "2.2.6",
+            "av": "19.0.0",
+            "pypinyin": "0.55.0",
+            "sentencepiece": "0.2.1",
+            "faster-whisper": "1.2.1",
+            "ctranslate2": "4.6.0"
+          },
+          "residentLoadHealthVerified": true,
+          "singleLoadAttempts": 1,
+          "inferenceCalls": 0,
+          "resident": {
+            "ready": true,
+            "runtime": "1.13.8",
+            "asrRevision": "20261010-multilingual-r2",
+            "asr": "sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2025-09-09",
+            "fastTts": "matcha-icefall-zh-en",
+            "tts": "kokoro-int8-multi-lang-v1_1",
+            "kws": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+            "multilingualAsr": "faster-whisper-small",
+            "asrLanguages": [
+              "zh",
+              "ja",
+              "ko",
+              "yue",
+              "en",
+              "fr",
+              "de",
+              "auto"
+            ],
+            "ttsLanguages": [
+              "zh",
+              "en",
+              "de",
+              "fr"
+            ],
+            "piperLanguages": [
+              "de",
+              "en",
+              "fr"
+            ],
+            "speechDetection": "silero-local",
+            "recognizerCacheLimit": 3
+          },
+          "leftInactive": true,
+          "serviceEnabled": false,
+          "unitFileState": "disabled",
+          "status": "passed",
+          "businessInactive": true
+        }
+      }
+    },
+    "inferenceCalls": 0,
+    "physicalMicrophoneAcceptance": false
+  },
+  "onlineProjectAndDecisions": {
+    "status": "pending-separate-receipt",
+    "includedInThisEvidenceCut": false
+  },
+  "gitDelivery": {
+    "status": "pending-separate-receipt",
+    "pullRequest": null,
+    "pushedCommit": null,
+    "merge": null
+  },
+  "terminalGates": {
+    "codeAndPackageVerified": true,
+    "boundedVerificationComplete": true,
+    "primary112LiveHealthy": true,
+    "fullSnapshotAndRestoreVerified": true,
+    "standby101ColdDataBoundVerified": true,
+    "voiceBoundedVerificationComplete": true,
+    "productionHttpsOfflineVerified": true,
+    "factoryAutomationStillPaused": true,
+    "independentAcceptance": false,
+    "physicalDeviceAcceptance": false
+  },
+  "onlineFeatureAcceptance": {
+    "status": "passed-in-read-only-scope",
+    "evidence": {
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/online-feature-acceptance.json",
+      "sha256": "2f7121cd1a6506c8e89b81f0f442424ebea0b6337688ca8415a73329c55e942d",
+      "bytes": 1672
+    },
+    "actual": {
+      "at": "2026-10-16T01:28:16.370Z",
+      "scope": "Current primary protected read-only feature and peer observation; temporary maintenance login revoked by helper",
+      "businessRecordsCreated": false,
+      "modelCalls": 0,
+      "physicalDevicesTested": false,
+      "health": {
+        "build": "20261016-capture-complete-r35",
+        "status": "ok"
+      },
+      "offline": {
+        "available": true,
+        "revision": 0,
+        "encryptedPackageRead": false
+      },
+      "modelScenarios": [
+        {
+          "domain": "knowledge",
+          "available": true,
+          "configured": true,
+          "model": "CPA / gpt-6.1-sol",
+          "provider": "superopen"
+        },
+        {
+          "domain": "memory",
+          "available": true,
+          "configured": true,
+          "model": "CPA / gpt-6.1-sol",
+          "provider": "superopen"
+        }
+      ],
+      "peers": [
+        {
+          "nodeId": "101",
+          "status": "reachable",
+          "role": "standby",
+          "build": "20261016-capture-complete-r35",
+          "businessHealthy": false,
+          "dependenciesReady": true,
+          "snapshot": {
+            "build": "20261016-capture-complete-r35",
+            "manifestSha256": "5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9",
+            "snapshotAt": "2026-10-16T00:51:03.423Z"
+          },
+          "readiness": {
+            "nodeId": "101",
+            "recoveryMaterialsReady": false,
+            "snapshotLagSec": 2233,
+            "automaticTakeover": false,
+            "canTakeover": false,
+            "reasons": [
+              "SNAPSHOT_TOO_OLD_OR_FUTURE"
+            ],
+            "activationBlocker": "OLD_PRIMARY_MUST_BE_STOPPED_AND_FENCED",
+            "note": "已核验恢复材料不等于已隔离旧主。此接口不启动服务，不切换角色或入口。"
+          }
+        }
+      ]
+    },
+    "rawSchemaHasStatusOrExitCode": false,
+    "boundary": "实际保护接口只读与观测通过；未创建业务记录、未发模型请求，不代表实体或更广质量。"
+  },
+  "finalization": {
+    "kind": "local-actual-evidence-publication",
+    "draftSha256": "8f69e890f7a921dc9245596f948a44ee944c7754fa3c2ca646de44aef7f84b55",
+    "sourceDraftPreserved": true,
+    "noOperationsPerformedByBuilder": true
+  },
+  "closureBoundary": "本报告的公开证据路径及清单逐件核H，原始安全报告按原字节复制。复制件内部的历史源码指纹、旧工件路径或归档摘要保留当时语义；不把历史来源关联冒成当前源码重建证明。无私有TAR、token文件、配置、pip日志或业务原文被读取或复制。",
+  "publicEvidenceFiles": [
+    {
+      "originalEvidencePath": "artifacts/capture-r35/api-boundary-build.txt",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/api-boundary-build.txt",
+      "sha256": "c9852943210e9c55954be6196e4e7e47c3da1d1a0e03c0ea4c8e12929405653c",
+      "bytes": 55
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/api-boundary-typecheck.txt",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/api-boundary-typecheck.txt",
+      "sha256": "4313dbd9d7fc1474c2a46cc9c4891cab3745b9794c2f066a3a44156c73f80698",
+      "bytes": 68
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/automation-preserved.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/automation-preserved.json",
+      "sha256": "ff0a8cb3d3b57342328b4c95083eea79cbb83b039b1eb5dedc04dd7683763329",
+      "bytes": 498
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-data/download.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/download.json",
+      "sha256": "c72e457882a66ebf671cf0b59fd66f85ac34cf1bde547eb2951c18b671620ec7",
+      "bytes": 364
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-data/export.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/export.json",
+      "sha256": "68045149a0aea7a521e93969d073a05d66d893db4c77f3edd5c63a5d7d8eb714",
+      "bytes": 503
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-data/import.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/import.json",
+      "sha256": "c48b6e90933fdbbfb2054b67fa78824e83d160c0064b372c5d2b0e2cee6edb84",
+      "bytes": 1093
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-data/install.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-data/install.json",
+      "sha256": "7b709366115a302f1dc63fffdb53b733aaa7ae30f29af87d015009d1741bd2f6",
+      "bytes": 1576
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice-r2/download.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/download.json",
+      "sha256": "a9e481eb67bbac0cc6913efc6bffe8ec7f75a02f4d504de72cf9990208f79f7f",
+      "bytes": 464
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice-r2/export.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/export.json",
+      "sha256": "6aeebefe91fdb86c44995042de320eacbf7b6015afabe11428a54f2c25166a40",
+      "bytes": 696
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice-r2/install.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/install.json",
+      "sha256": "2582de860d4e5c68411066c96043a88b7c7085829f5cbe4e2d9b8bba472ce589",
+      "bytes": 1273
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice-r2/upload.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/upload.json",
+      "sha256": "35eb77c9ae969bb0ffbfb99a0e0edc68ef2aedb07077f18339b6502e19f1fd27",
+      "bytes": 471
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice-r2/verify.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice-r2/verify.json",
+      "sha256": "ecb6d69346131efaa97a0a16370e4c66197611f6ac643ed5bb883eef20572ee4",
+      "bytes": 2168
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice/export.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice/export.json",
+      "sha256": "0caff5da3eb2ab0ff7efeec9c9f5f9d6cafde0c4517c706247f10c337eec63b4",
+      "bytes": 414
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/cold-voice/model-mode-outliers.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/cold-voice/model-mode-outliers.json",
+      "sha256": "0ab7345d4016f21d392f6b76f05cf41d91ae66c48c112a8cf39ae6540623bd06",
+      "bytes": 1719
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/101-inspect.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-inspect.json",
+      "sha256": "ecc86e65ca92d4060fafaab0d16a54c68c447dbc79c10ab980affea13e16d16c",
+      "bytes": 593
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/101-install.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-install.json",
+      "sha256": "0e8b120db95b3e9fe9d5faba651d24b327de02cbae4142c80f73e08e87c3715f",
+      "bytes": 552
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/101-linux-install-smoke.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-linux-install-smoke.json",
+      "sha256": "2bcc1d074fed3ddf408a93e704d70b42ebad64b43336c05b1076464d06ad0458",
+      "bytes": 6304
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/101-stage.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/101-stage.json",
+      "sha256": "3027e664d3c5cc1c380455ef739ccb8f90da941f7d75e07b0d0491a0ed850a06",
+      "bytes": 564
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/112-activate.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-activate.json",
+      "sha256": "a2c156bc03e4a963b7dc5612299d1dc5576c7f0a8889b7207d7f634b0329f505",
+      "bytes": 1982
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/112-inspect.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-inspect.json",
+      "sha256": "b09338176aa3de36110e51ab76b704a4229fd9d1ab39de2278b252bbc4d3d66d",
+      "bytes": 593
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/112-install.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-install.json",
+      "sha256": "1786205b6213972e65dc8dac7585e6f03ca0fe29e85e011ef7d9c41d58b21aa6",
+      "bytes": 552
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/112-linux-install-smoke.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-linux-install-smoke.json",
+      "sha256": "f61201224f4218b9e2a87b6a2b79193113e77487fc1f5614bb1e90dd417876dd",
+      "bytes": 6302
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/deployment/112-stage.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/deployment/112-stage.json",
+      "sha256": "a5238500ac6b31ef9209d728fad01470f7687ae7915bdc552a837841717afdb2",
+      "bytes": 565
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/independent-r35-zip-readback.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/independent-r35-zip-readback.json",
+      "sha256": "540b113a46e14d6ff914578a35ff6e34a5fe4ac40f66d550e66066b1b323e08f",
+      "bytes": 5282
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/online-feature-acceptance.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/online-feature-acceptance.json",
+      "sha256": "2f7121cd1a6506c8e89b81f0f442424ebea0b6337688ca8415a73329c55e942d",
+      "bytes": 1672
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/production-offline-browser.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/production-offline-browser.json",
+      "sha256": "847d3e0ff8e0be75f791d49b137e703be4a20ddbf6be9c5a686cd4b774b893b9",
+      "bytes": 4460
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/production-offline-empty.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/production-offline-empty.png",
+      "sha256": "6a00a5a66d06ffba08c1b647d68ad4b0db8487ba3f87582fd372f87092d0b02a",
+      "bytes": 132839
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/real-model-quality-r2.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/real-model-quality-r2.json",
+      "sha256": "01bf875a9322c3a48df287943e9d24e0908fa6ffd48431a196724e0b335bd52b",
+      "bytes": 15410
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/real-model-quality-r3.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/real-model-quality-r3.json",
+      "sha256": "b480ba52dab3c07c092ae983cfb3bfa1043f71b81e5015947b7bed923980f410",
+      "bytes": 8891
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/real-model-quality.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/real-model-quality.json",
+      "sha256": "a9c6710fd24a0f98d68e6c514d7c9c14c5d582bf255f659e2f456cc0ba067b3a",
+      "bytes": 2732
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/recovery-linux-qualification.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/recovery-linux-qualification.json",
+      "sha256": "a699971c6061ba3d983b71fa0510153683ca11bbe3c57d6d2393a542eefd4494",
+      "bytes": 1465
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/resident-prerequisites-final.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/resident-prerequisites-final.json",
+      "sha256": "5fdd0a2c967f0ae6ae897ec527b76e7cce5ed162bd0e8f8a49542e2a29da523e",
+      "bytes": 1452
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-boundary-freeze.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-boundary-freeze.json",
+      "sha256": "044211817689a24f345c63a8eca729e31aab99374c804c14ddca34fd3edc1a8d",
+      "bytes": 6519
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-boundary-tests-attempt-1.txt",
+      "sha256": "45ba19bb708c4e5eef6f8d1c7c0ae3c6cb1ddea4519b7c70d389f48760f993f0",
+      "bytes": 387
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-contract4-prepare.txt",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-contract4-prepare.txt",
+      "sha256": "10b4a291a58f70395de4d3bde3b7f8fa72932a4e3adc2b0a4aa8506e83897702",
+      "bytes": 371
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-contract5-preparation-cut.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-contract5-preparation-cut.json",
+      "sha256": "745f61a78654aeaa2a2ca9fb67d57684a00a50b06c2f9e0adce32a1985621ea0",
+      "bytes": 316
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-contract5-prepare.txt",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-contract5-prepare.txt",
+      "sha256": "ef94c43195a59d7d499ecfaa77e290bf15b769e18991677ef125c3b59e85a171",
+      "bytes": 371
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-quality-auth-test-attempt-1.txt",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-quality-auth-test-attempt-1.txt",
+      "sha256": "01b0996d51fe8d274f7b5f97e24b8881b6fbcfc8ceb987beb47a1126440d0705",
+      "bytes": 263
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-quality-freeze-report-cut.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-quality-freeze-report-cut.json",
+      "sha256": "9a9b06fce2b4804b804030e12021a6e5984eb88b3ae4006371da380df03dbc99",
+      "bytes": 407
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-quality-harness-freeze.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-quality-harness-freeze.json",
+      "sha256": "4b6396775c5fa521a7b1916baf76a8c9c842034143f125f4e9d8f39cd1f30a78",
+      "bytes": 3220
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-quality-harness-typecheck.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-quality-harness-typecheck.json",
+      "sha256": "da7c976f2ca5de63158cc1c9d30d88523e772fa93f9965c1bea21fce0cb95105",
+      "bytes": 162
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-r35/semantic-real-quality-independent-review.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-r35/semantic-real-quality-independent-review.json",
+      "sha256": "a52b6e82db2ec0c0e1f60a9b339dad40b747227f8d31753051e2ae90f2d8d1df",
+      "bytes": 4345
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-release-r34/evidence-assistant-source-findings.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/evidence-assistant-source-findings.json",
+      "sha256": "2f16379c43a7916d2c25cdf17ff6e1be16264678216c94fac23a9df6e7acea17",
+      "bytes": 5337
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-release-r34/evidence-assistant-source-review-final.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/evidence-assistant-source-review-final.json",
+      "sha256": "71918a1c423ed1eda9c30103e4e2b9ab517ea28c74efc71f1f32cc90474bfc0d",
+      "bytes": 5879
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-release-r34/offline-sync-review-browser-addendum.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/offline-sync-review-browser-addendum.json",
+      "sha256": "f15bd31eaef941acbe678ac1b507a16da70d028a8d7006439c13bac1a111621a",
+      "bytes": 2051
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-release-r34/offline-sync-source-findings.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/offline-sync-source-findings.json",
+      "sha256": "2cdc0a84af29bde40390e3658486c75742d36636c560aa9c69da4ddff4ff695a",
+      "bytes": 4600
+    },
+    {
+      "originalEvidencePath": "artifacts/capture-release-r34/offline-sync-source-review-final.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/capture-release-r34/offline-sync-source-review-final.json",
+      "sha256": "c8a7d5d88d7bfd97d4162768d31a8bbb3bad528238f78d39764195516d4ad368",
+      "bytes": 3342
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-browser-r35/attempt-1.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-browser-r35/attempt-1.json",
+      "sha256": "cd7cd01ffc68a57e681e00b8ee1ea01e22e8686eec31afde9125bc8e6d89f58d",
+      "bytes": 1508
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-browser-r35/attempt-2.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-browser-r35/attempt-2.json",
+      "sha256": "cb6586eb02f388ab9f426a429b9822759dfd9544c90484c8b60df19785a0f435",
+      "bytes": 1040
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-quality-r35/auth-check-5.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/auth-check-5.json",
+      "sha256": "9cda162d29fc7b26ee35c3c129ea476a41a90b23bad3e1f1133e2d427832c649",
+      "bytes": 1753
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-quality-r35/contract-3.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-3.json",
+      "sha256": "85a3fda425dbb2cb6d3042c1324730937b9f042bf2e14b57a118468f5f430f87",
+      "bytes": 3586
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-quality-r35/contract-4.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-4.json",
+      "sha256": "78ea689e444b357c909688bd257c1b86f1f8d606780772f78d9b680bab53f38f",
+      "bytes": 4030
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-quality-r35/contract-5.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-5.json",
+      "sha256": "979d7a6ef577cd155edfc2f3ff2e20ae4151db3ca5f9737f4c69cff84cc93a8c",
+      "bytes": 4242
+    },
+    {
+      "originalEvidencePath": "artifacts/evidence-assistant-quality-r35/contract-6.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/evidence-assistant-quality-r35/contract-6.json",
+      "sha256": "adf149d1555a5750f182f28e2a102abcc10f692cd8d0d7347fd54eabb1593bd6",
+      "bytes": 3531
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/attempt-1.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/attempt-1.json",
+      "sha256": "41cf1782f83896e4775b88a7265c48965fa9b0c7e970395c2762556d2e03dacd",
+      "bytes": 3283
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/attempt-2.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/attempt-2.json",
+      "sha256": "ea5f4b732ed5f8df59ebe873cc8fa9cb52089084d86680bc8193087fb0c4fbbf",
+      "bytes": 1249
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/attempt-3.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/attempt-3.json",
+      "sha256": "ea78e1ee577bb58201462bffda133dc84248caf53a9e44aed16f9ab32c7548e0",
+      "bytes": 1380
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/desktop-late-sync-response-after-identity-cleared-2.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/desktop-late-sync-response-after-identity-cleared-2.png",
+      "sha256": "ca1f31bf357205dc89dbb629c0846543152a60ea9141920e6771798b03064256",
+      "bytes": 109557
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/desktop-remote-conflict-retains-local-1.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/desktop-remote-conflict-retains-local-1.png",
+      "sha256": "4f1ee607a129fcef6a616986e06fa63b28fff0379c8728700b17f2e810269062",
+      "bytes": 164311
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/desktop-remote-deleted-local-copy-retained-1.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/desktop-remote-deleted-local-copy-retained-1.png",
+      "sha256": "d6ecc8c9018b7f95c7108ca5acaa0b1ada486020ca3d148f49dddc94d1f79ba2",
+      "bytes": 157232
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/desktop-stale-same-revision-fork-rejected-3.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/desktop-stale-same-revision-fork-rejected-3.png",
+      "sha256": "fa321eca16962ce2bc50af9baeeb1314031371088b12b1ef24e0dc0a6f3fecf3",
+      "bytes": 136224
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/desktop-sync-stopped-before-idb-cas-3.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/desktop-sync-stopped-before-idb-cas-3.png",
+      "sha256": "7c0cae148ace3bb5e7a2c7f1745be65854f8e4a80684b6714f7043094b3f57bb",
+      "bytes": 137539
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/phone-explicit-local-conflict-choice-1.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/phone-explicit-local-conflict-choice-1.png",
+      "sha256": "9f19e06d12352d5c624e1e19d692cf5ea9a6187512a3ba4fa0f22528cb8a359b",
+      "bytes": 137400
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-browser-qa/phone-offline-reconnect-and-lock-stops-sync-1.png",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-browser-qa/phone-offline-reconnect-and-lock-stops-sync-1.png",
+      "sha256": "4b0002f00b3cd24b43fbf707361e12f77189aa71b4d31f108f942efed83b5a8e",
+      "bytes": 124476
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/auth-presence-attempt-2.json",
+      "sha256": "163142346c66244903327e9e897695d6f0080b4ae1216d6cdb026949abc1308d",
+      "bytes": 1597
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-r34/cut-summary.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/cut-summary.json",
+      "sha256": "c9af33c0378ac1f774b01ff940e256f0deaea28ed85018a28b8cc9e8e7428317",
+      "bytes": 8022
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/http-and-vault-attempt-1.json",
+      "sha256": "a91cdee7bd5914556cecd3bd0184e2562f37a2eeebb92901a774cbf3c1559c56",
+      "bytes": 3778
+    },
+    {
+      "originalEvidencePath": "artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+      "path": "docs/版本记录/密文同步与证据问答-R35-final-20261016/artifacts/offline-draft-sync-r34/local-cas-stop-attempt-3.json",
+      "sha256": "85bc186a35dac1d7e8e0a2b592a9709758bd04e4ed960c51de0845b318f318ec",
+      "bytes": 3039
+    }
+  ]
+}

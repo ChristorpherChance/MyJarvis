@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-normalized-api-main607-meta-r2-current-actual-observation",
+  "at": "2026-10-16T11:31:23.090248+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-pg4-qa-normalized-api-main607-meta-r2-current-once.mjs",
+    "sha256": "301af7ca77183dca3e78ffb9e1ba0541472a568c8f1da561a0eae4e98df75128"
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-current-entry-context.json",
+    "sha256": "447699b324310ce88072a63ee6fbc365818b7e892c3142324e7bb5ad4c5d3803"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-current-entry-independent-local-review-final.json",
+    "sha256": "0031208c337ddcbafcd2f2ec912d708734f6ff219da26d56f25cc34ff1d49bcf"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 55.64100000006147,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-current-operator-outcome.json",
+    "sha256": "2c8bdd53403cf2e23eb8ef45cebf4ce58db2e57d73cf259a248397e5269f7fe9",
+    "bytes": 216060
+  },
+  "result": {
+    "kind": "r37-pg4-qa-normalized-api-main607-meta-r2-current-entry-result",
+    "ready": true,
+    "errorCode": null,
+    "actualCurrentScopeObserved": true,
+    "privateOutcome": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-current-outcome-1792150282406-e65c4e80-6039-43f6-9c92-ddab159291b2.json",
+      "sha256": "eb3381c1d2c561cbab5d8b373850fc0b889ac7bff5ea7cb54f2c2471bcaae33c",
+      "bytes": 12392392
+    },
+    "once": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-current-read-once.json",
+      "sha256": "5322765a4b73d24a7e88dc7a6dd66121d952c6d7f68b912adb1d5fe7b153d525",
+      "bytes": 163211
+    },
+    "rawCurrentTransport": {
+      "path": ".jarvis-dev/maintenance/pg4-r37-normalized-api-meta-r2-current-private-1792150267715-c86ad07f-dd00-4afc-966c-272451cad19e.json",
+      "sha256": "9a8443e1e8281f5975aaf9c9c808a925918f553d5f7fda6ac64e9bd95a740b70",
+      "bytes": 14461825
+    },
+    "sourceBytesStable": true,
+    "maximumReaderRuns": 1,
+    "maximumScopeReads": 1,
+    "maximumWholeReads": 2,
+    "expectedRootRoutes": 9,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "currentResourceScopeClosedVerified": true,
+    "actualPG4Qualified": false,
+    "evidence": null
+  },
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": true,
+  "savedEvidenceIndependentlyAudited": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-normalized-api-context-reporter-guard-independent-local-analysis",
+  "at": "2026-10-16T11:13:38.404158+00:00",
+  "scope": "Only the nine conjuncts in normalized-api driver line 113 against exact already-saved same-version source bytes and current frozen module contract; no full family/source graph re-review.",
+  "driverSHA256": "0fd0414f84fd7c34135c01b61b9c0e0c6756de616d38ffdc88c3e5f52dc8bb05",
+  "executionContractSHA256": "d9c4075fa100de73def4ad69a9bd844fd4544c216a5cb53c327e2de9ad37178c",
+  "moduleCount": 13,
+  "moduleManifestCanonicalSHA256": "e714debb38cd2b8d04f234ada9058e2acb557e72dc7b4e1902d9251232ac1e20",
+  "moduleContractPinsVerified": true,
+  "guardLine": 113,
+  "guardErrorCode": "R33_PG4_DRIVER_CONTEXT_OR_REPORTER_CHANGED",
+  "predicateCount": 9,
+  "sourceIncompatibilityCount": 1,
+  "otherCompatibleSourcePaths": 8,
+  "actualContextRecovered": false,
+  "actualSubpredicateValuesKnown": false,
+  "actualShortCircuitPredicateKnown": false,
+  "observedFailureScope": "The actual CHECK public report indicates a failed producer; the saved failure code was independently preserved in the CHECK saved audit. This static result does not replace or alter that cut.",
+  "findings": [
+    {
+      "id": "config-file-disabled-input-versus-resolved-sentinel",
+      "priority": "P1",
+      "status": "proven-source-incompatibility",
+      "affectedDriverLine": 113,
+      "actualSpecificCauseClaimed": false,
+      "minimalFutureCandidate": "A separately selected successor may require the pinned resolved undefined sentinel together with evidence that inline file loading remains explicitly disabled and configuration dependencies remain empty. Keep the other eight predicates and all prior gates. This report neither selects nor implements that change."
+    }
+  ],
+  "predicates": [
+    {
+      "ordinal": 1,
+      "predicate": "server.config.configFile strictly false",
+      "classification": "proven-same-version-source-incompatibility",
+      "sourceChain": [
+        "driver:188 supplies disabled inline config",
+        "creator46b:11450-11463 passes false through configuration construction",
+        "Vitebfa:66414-66427 skips file loading for false",
+        "Vitebfa:66609-66610 normalizes falsy input to undefined",
+        "Vitebfa:66677-66680 resolved fields override original input",
+        "Vitebfa:63014-63015,63083-63084 uses resolved configuration as server.config",
+        "creator46b:10454-10456 installs that server on context"
+      ],
+      "conclusion": "The normal pinned disabled-file-loading path produces undefined, while the first conjunct requires false. This is sufficient to reject that source path; the actual saved context and its concrete short-circuit value were not captured by this analysis."
+    },
+    {
+      "ordinal": 2,
+      "predicate": "server.config.cacheDir equals fixed absolute cache path",
+      "classification": "source-path-compatible-not-runtime-certified",
+      "sourceChain": [
+        "driver:188 fixed absolute override",
+        "creator46b:9480-9486 disabled optimizer has no replacement directory",
+        "creator46b:9595 retains existing cache directory when both optimizer overrides are absent",
+        "Vitebfa:66507-66509 resolves and slash-normalizes the absolute input",
+        "Vitebfa:66621 retains normalized cache directory"
+      ],
+      "conclusion": "No conflicting normalization was found for the fixed absolute Linux input."
+    },
+    {
+      "ordinal": 3,
+      "predicate": "context workspace configuration path undefined",
+      "classification": "source-path-compatible-with-frozen-absence-precondition",
+      "sourceChain": [
+        "driver:183 checks all 14 workspace basenames absent",
+        "constants93bf:11-20 generates those same 14 basenames",
+        "creator46b:10547-10565 searches the root and returns undefined when none exist"
+      ],
+      "conclusion": "Compatible with the exact absence contract and no explicitly configured workspace. This is a source condition, not a new filesystem observation."
+    },
+    {
+      "ordinal": 4,
+      "predicate": "context projects length one",
+      "classification": "source-path-compatible-with-frozen-absence-precondition",
+      "sourceChain": [
+        "creator46b:10561-10565 creates one core project when workspace is absent",
+        "creator46b:10500-10507 assigns projects and only filters with a nonempty project selector",
+        "resolve2021:7790-7795 fixed options and defaults; driver has no project selector"
+      ],
+      "conclusion": "The fixed no-workspace and no-project-filter path yields one core project."
+    },
+    {
+      "ordinal": 5,
+      "predicate": "first project config root equals fixed root",
+      "classification": "source-path-compatible-not-runtime-certified",
+      "sourceChain": [
+        "Vitebfa:66450-66452 normalizes the fixed absolute root",
+        "resolve2021:7790-7795 takes root from Vite resolved root",
+        "creator46b:10088-10096 basic project uses the same context config"
+      ],
+      "conclusion": "No extra root transformation conflict was found for the fixed Linux root."
+    },
+    {
+      "ordinal": 6,
+      "predicate": "context reporters length two",
+      "classification": "source-path-compatible-not-runtime-certified",
+      "sourceChain": [
+        "driver:186-188 supplies two reporter instances in order",
+        "utils0300:194-221 arrays are assigned rather than recursively merged",
+        "resolve2021:8158-8175 keeps object reporter instances in order",
+        "creator46b:5162-5189 Promise.all preserves two non-array instances",
+        "creator46b:10494 chooses ordinary test-mode reporters"
+      ],
+      "conclusion": "The fixed object-instance input retains two reporters; fallback default and environment reporter branches require an empty reporter list and are not selected on this path."
+    },
+    {
+      "ordinal": 7,
+      "predicate": "reporter at index zero is the original JSON reporter instance",
+      "classification": "source-path-compatible-not-runtime-certified",
+      "sourceChain": [
+        "utils0300:194-221 array assignment retains elements",
+        "resolve2021:8166-8175 pushes original object instances",
+        "creator46b:5186 returns each non-array reporter reference",
+        "creator46b:5189 Promise.all retains order"
+      ],
+      "conclusion": "The cited path does not reconstruct or clone the first reporter object."
+    },
+    {
+      "ordinal": 8,
+      "predicate": "reporter at index one is the original hook reporter instance",
+      "classification": "source-path-compatible-not-runtime-certified",
+      "sourceChain": [
+        "same instance-preserving array and reporter creation path as ordinal seven"
+      ],
+      "conclusion": "The cited path does not reconstruct or clone the second reporter object. Hook execution and lifecycle completion are outside this analysis."
+    },
+    {
+      "ordinal": 9,
+      "predicate": "JSON reporter options outputFile equals fixed evidence filename",
+      "classification": "source-path-compatible-not-runtime-certified",
+      "sourceChain": [
+        "driver:186 creates JSON reporter with the fixed option",
+        "reporter848:1 re-exports alias J from the same-version reporter chunk",
+        "reporter9719:4303-4309 constructor stores supplied options directly",
+        "reporter9719:5233 exports JsonReporter under alias J"
+      ],
+      "conclusion": "The exact saved implementation supports the options field used by this guard. No new reporter execution or report file creation occurred."
+    }
+  ],
+  "embeddedSavedSources": [
+    {
+      "role": "JsonReporter implementation",
+      "container": {
+        "path": ".jarvis-dev/maintenance/r33-pg4-framework-byte-inline-capture-1791916233585-239a9d16-0006-478e-a479-43ee00ff029b.json",
+        "sha256": "59bc28bb00ccf2482bde27cca8e62785a39d7f56621bea63ea39dc3df9ad7e78",
+        "bytes": 35219054
+      },
+      "selector": "decoded stdout.files[sha256='971965449b97a95d173adc12dce70b2395f850c197e8fa33cc91df412c835e24'].base64",
+      "sha256": "971965449b97a95d173adc12dce70b2395f850c197e8fa33cc91df412c835e24",
+      "bytes": 182895,
+      "byteHashAndSizeVerified": true,
+      "actualRuntimeSelectionVerified": false
+    },
+    {
+      "role": "workspace constants",
+      "container": {
+        "path": ".jarvis-dev/maintenance/r33-pg4-framework-byte-inline-capture-1791916233585-239a9d16-0006-478e-a479-43ee00ff029b.json",
+        "sha256": "59bc28bb00ccf2482bde27cca8e62785a39d7f56621bea63ea39dc3df9ad7e78",
+        "bytes": 35219054
+      },
+      "selector": "decoded stdout.files[sha256='93bfaed0171ad17adb185647d4bc35ae97617b74788c3b6bdc2dcce0d69f9bc4'].base64",
+      "sha256": "93bfaed0171ad17adb185647d4bc35ae97617b74788c3b6bdc2dcce0d69f9bc4",
+      "bytes": 1235,
+      "byteHashAndSizeVerified": true,
+      "actualRuntimeSelectionVerified": false
+    },
+    {
+      "role": "utility entry",
+      "container": {
+        "path": ".jarvis-dev/maintenance/r33-pg4-framework-byte-inline-capture-1791916233585-239a9d16-0006-478e-a479-43ee00ff029b.json",
+        "sha256": "59bc28bb00ccf2482bde27cca8e62785a39d7f56621bea63ea39dc3df9ad7e78",
+        "bytes": 35219054
+      },
+      "selector": "decoded stdout.files[sha256='05b0858fd2727d2243b8853df89fff8efb24005dbaac86484f2af6b93ddc27ff'].base64",
+      "sha256": "05b0858fd2727d2243b8853df89fff8efb24005dbaac86484f2af6b93ddc27ff",
+      "bytes": 21099,
+      "byteHashAndSizeVerified": true,
+      "actualRuntimeSelectionVerified": false
+    },
+    {
+      "role": "deepMerge helper",
+      "container": {
+        "path": ".jarvis-dev/maintenance/r33-pg4-framework-byte-inline-capture-1791916233585-239a9d16-0006-478e-a479-43ee00ff029b.json",
+        "sha256": "59bc28bb00ccf2482bde27cca8e62785a39d7f56621bea63ea39dc3df9ad7e78",
+        "bytes": 35219054
+      },
+      "selector": "decoded stdout.files[sha256='03002d0c7a5a24c9b23f9fc07e9708d93e47347b4b4f4b92296783483016df40'].base64",
+      "sha256": "03002d0c7a5a24c9b23f9fc07e9708d93e47347b4b4f4b92296783483016df40",
+      "bytes": 6257,
+      "byteHashAndSizeVerified": true,
+      "actualRuntimeSelectionVerified": false
+    }
+  ],
+  "proofBoundary": [
+    "Exact decoded bytes and container integrity are verified; same-version package-relative re-exports are traced statically. No claim is made that these saved historical bytes were freshly read from a running container in this audit.",
+    "No actual context snapshot or nine predicate values were recovered. Other environment, plugin, filesystem, and project effects remain runtime questions.",
+    "No new diagnosis or automatic retry is authorized by this analysis. New implementation/controlled validation and any later fresh execution require their own explicit scope.",
+    "The source guard incompatibility does not establish business-case failure, framework ABI qualification, worker execution, or product acceptance."
+  ],
+  "implementationPerformed": false,
+  "sourceFilesModified": false,
+  "sourceFunctionCalls": 0,
+  "modulesImported": 0,
+  "testsExecuted": 0,
+  "remoteOperationsPerformed": false,
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "modelCalls": 0,
+  "actualDiagnosticPerformed": false,
+  "actualQAExecuted": false,
+  "actualCurrentScopeObserved": false,
+  "frameworkABIQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "cases": {
+    "passed": 0,
+    "failed": 0,
+    "notIndependentlyVerified": 4
+  },
+  "preparationCorrections": [
+    {
+      "stage": "read-only text inspection",
+      "code": "LOCAL_DEFAULT_TEXT_ENCODING",
+      "effect": "An initial read used the host default encoding and failed; the same saved source was then decoded explicitly as UTF-8. No source execution or write occurred."
+    },
+    {
+      "stage": "bounded source line display",
+      "code": "LOCAL_LAST_LINE_RANGE",
+      "effect": "One requested display endpoint exceeded the reporter chunk line count after the required lines had been printed. The requested class and export bytes were already hash-bound; no functional test or source change occurred."
+    },
+    {
+      "stage": "source availability projection",
+      "code": "LOCAL_NARROW_FILENAME_SEARCH",
+      "effect": "The reporter implementation was initially absent from standalone original-body filenames; an existing saved selected-byte container supplied its exact hash-bound bytes. No new collection occurred."
+    }
+  ],
+  "physicalRefs": [
+    {
+      "path": "scripts/factory-pg4-qa-startup-driver-r37-normalized-api.mjs",
+      "sha256": "0fd0414f84fd7c34135c01b61b9c0e0c6756de616d38ffdc88c3e5f52dc8bb05",
+      "bytes": 37845
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-execution-source-contract.json",
+      "sha256": "d9c4075fa100de73def4ad69a9bd844fd4544c216a5cb53c327e2de9ad37178c",
+      "bytes": 184953
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-needed-export-binding-original-99a767d7e1a4c8c0a524b48ce64b8536f4bad62baf65f1fe723f19c16f87cd98.bin",
+      "sha256": "99a767d7e1a4c8c0a524b48ce64b8536f4bad62baf65f1fe723f19c16f87cd98",
+      "bytes": 2474
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-needed-export-binding-original-848b4bcf29d271663a9cd277428e29e11fc02ad3f38cbbe129037617bc696737.bin",
+      "sha256": "848b4bcf29d271663a9cd277428e29e11fc02ad3f38cbbe129037617bc696737",
+      "bytes": 1016
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-necessary-vitest-creator-original-46b1b0faedd7050c3e3132eae84f1803f05a046fe1aecf7a6d09f0ab86f11d5b.bin",
+      "sha256": "46b1b0faedd7050c3e3132eae84f1803f05a046fe1aecf7a6d09f0ab86f11d5b",
+      "bytes": 358970
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-needed-export-binding-original-2021c4cb5a3bce03fc9ef17a95740db7287f20d863bed8b24f3589b71f26ace3.bin",
+      "sha256": "2021c4cb5a3bce03fc9ef17a95740db7287f20d863bed8b24f3589b71f26ace3",
+      "bytes": 231473
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-vite-creator-original-bfa94186daff535fefdf286088c1588fad6b02c01ef11cd3b42a6cb3e4c90767.bin",
+      "sha256": "bfa94186daff535fefdf286088c1588fad6b02c01ef11cd3b42a6cb3e4c90767",
+      "bytes": 2086035
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-vite-single-creator-original-manifest-rows-1791933926557-a6b55cda-f05f-4ebe-9406-6f01ac0ca08d.json",
+      "sha256": "76e0163d46273625424a67b7a873cfc1b616ffbf6a98e3d4d4534a45283b0079",
+      "bytes": 1395
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-actual-framework-static-byte-index-1791916488460-a57dcaf7-1650-413d-9330-577f5bc2825d.json",
+      "sha256": "2a1ad5a09f7d63f39ec19f973e5e2461e23616cf038aff8ffaf1bb24b3ad3d9a",
+      "bytes": 481897
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-framework-byte-inline-capture-1791916233585-239a9d16-0006-478e-a479-43ee00ff029b.json",
+      "sha256": "59bc28bb00ccf2482bde27cca8e62785a39d7f56621bea63ea39dc3df9ad7e78",
+      "bytes": 35219054
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-main-actual-check-observation-1792148605232-a84d0905-07f6-4168-ba84-db3ed5324e74.json",
+      "sha256": "b816e3682492c516b5c22598036c80e19e4ca97dda8a1fe6ab3ad15bfcfb0f73",
+      "bytes": 3041
+    }
+  ],
+  "physicalRefCount": 11,
+  "refsStableInitialAndFinal": true,
+  "rootWorkBytesEqual": true,
+  "costs": {
+    "newModelCalls": 0,
+    "knownExternalCharge": null,
+    "internalComputePriceKnown": false,
+    "internalCost": null
+  },
+  "mirror": {
+    "same": 6,
+    "written": 5
+  }
+}

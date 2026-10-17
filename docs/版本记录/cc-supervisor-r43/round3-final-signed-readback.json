@@ -1,0 +1,75 @@
+{
+  "kind": "r43-third-turn-final-signed-readback",
+  "at": "2026-10-17T08:18:05.321Z",
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "runId": "ab0f0356cbd906bbbc9a1f1de7366d56408213b0",
+  "terminal": true,
+  "status": "round-limit",
+  "taskStatus": "blocked",
+  "taskRevision": 12,
+  "result": {
+    "source": "signed-agent",
+    "outcome": "round-limit",
+    "exitCode": 0,
+    "rounds": 1,
+    "at": "2026-10-17T08:12:23.502Z",
+    "usage": {
+      "inputTokens": 10949165,
+      "outputTokens": 11189,
+      "cacheReadTokens": 10903168,
+      "cacheWriteTokens": 0,
+      "totalTokens": 10960354,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol",
+      "usageComplete": true,
+      "costComplete": false
+    }
+  },
+  "native": {
+    "logId": 9496,
+    "eventCanonicalSHA256": "2f4fe672a23a390fc5fbaabb49779639c5d496d66e5ea9e126dd94e91ac405e8",
+    "eventBytes": 3592,
+    "sessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+    "numTurns": 54,
+    "durationMs": 624909,
+    "needsMoreWork": true,
+    "parentTokens": 10960354,
+    "reportedCumulativeEstimateUSD": 58.403230999999934,
+    "estimateNotInvoice": true,
+    "costAttributionComplete": false,
+    "run2CostUSD": null,
+    "rawSubagentScopeNotAddedToParent": true
+  },
+  "nodeJournal": {
+    "unresolvedRuns": 0,
+    "unconfirmedDeliveries": 0,
+    "pendingLogs": 0,
+    "ownerMatches": true,
+    "childProcesses": 0,
+    "otherCgroupProcesses": 0,
+    "fixedRunAcknowledged": true,
+    "idle": true
+  },
+  "remainingDispatchBoundary": {
+    "observedTaskTokens": 10960354,
+    "configuredMaxTokens": 10000000,
+    "accountedTaskTokensAtOrOverThreshold": true,
+    "recordOnly": true,
+    "notDollarSpendCap": true,
+    "cumulativeMissingHistoryStillUnknown": true,
+    "nextDispatchAttempted": false,
+    "historyReset": false,
+    "newTaskToBypass": false
+  },
+  "sourceCommit": "d5d418b7e9dc0c638c9c914b3a9a5913523e9633",
+  "permissionApprovalReceived": false,
+  "formal112": "20261017-project-oversight-r41",
+  "R43Deployed": false,
+  "heartbeat": "PAUSED",
+  "privateSourceLocatorOmitted": true,
+  "originalObservation": {
+    "reference": "artifacts/cc-supervisor-r43/round3-final-signed-readback.json",
+    "sha256": "19625a5673cb471dc6931dd9bb7ac6a39533a96601d837c98aff005cff7a8aa5",
+    "bytes": 2145
+  }
+}

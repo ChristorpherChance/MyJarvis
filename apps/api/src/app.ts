@@ -204,7 +204,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   startupCleanup.push(()=>supervisionWork.close());
   const projectSupervisor=new ProjectSupervisorRuntime(v1,execution,{directory:join(options.dataDir,'project-supervisor'),identity,stopped,modelReady:()=>pi.health('project-supervisor').configured,model:createProjectSupervisorModel(pi),decisions:projectDecisions,notifications});
   startupCleanup.push(()=>projectSupervisor.close());
-  const projectWorkbench=new ProjectWorkbenchRuntime(v1,projectSupervisor,execution,identity,join(options.dataDir,'project-workbench'));
+  const projectWorkbench=new ProjectWorkbenchRuntime(v1,projectSupervisor,execution,identity,join(options.dataDir,'project-workbench'),{brief:(projectId,p)=>supervisionWork.brief(projectId,p)});
   startupCleanup.push(()=>projectWorkbench.close());
   app.addHook('onClose',async()=>projectWorkbench.close());
   const learningSummary:DomainHandler={domain:'learning',commands:['companion-summary'],execute:(_command,p,ctx)=>{const record=ctx.create('learning',{kind:'practice',profile:'me',memberProfileId:p.profileId,type:'language',title:p.title,minutes:Math.floor(p.activeSeconds/60),activeSeconds:p.activeSeconds,rounds:p.rounds,answers:p.rounds.map((r:any)=>r.answer),corrections:p.rounds.filter((r:any)=>r.correction).map((r:any)=>r.correction),score:null,source:'pi-text-companion',assessmentStatus:'text-feedback',lessonId:p.id,time:ctx.now,status:'recorded',createdAt:ctx.now,updatedAt:ctx.now});ctx.emit('learning',record.id,'practice-recorded',{source:'pi-text-companion',rounds:p.rounds.length});return record;}};

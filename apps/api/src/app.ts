@@ -51,6 +51,9 @@ import {ProjectSupervisionPlanRuntime} from './runtime/project-supervision-plan-
 import {registerProjectSupervisionPlanRoutes} from './runtime/project-supervision-plan-routes.js';
 import {SupervisionWorkRuntime} from './runtime/supervision-work-runtime.js';
 import {registerSupervisionWorkRoutes} from './runtime/supervision-work-routes.js';
+import {ProjectSupervisorRuntime} from './runtime/project-supervisor-runtime.js';
+import {registerProjectSupervisorRoutes} from './runtime/project-supervisor-routes.js';
+import {createProjectSupervisorModel} from './runtime/project-supervisor-model.js';
 import {registerProjectAutonomyRoutes} from './runtime/project-autonomy-routes.js';
 import {ProjectDecisionRuntime} from './runtime/project-decision-runtime.js';
 import {registerProjectDecisionRoutes} from './runtime/project-decision-routes.js';
@@ -196,6 +199,8 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   startupCleanup.push(()=>notifications?.close());
   const supervisionWork=new SupervisionWorkRuntime(v1,execution,{directory:join(options.dataDir,'project-supervision-work'),identity,notifications,plans:supervisionPlans,autonomy:projectId=>autonomy?.get(projectId)});
   startupCleanup.push(()=>supervisionWork.close());
+  const projectSupervisor=new ProjectSupervisorRuntime(v1,execution,{directory:join(options.dataDir,'project-supervisor'),identity,stopped,modelReady:()=>pi.health('project-supervisor').configured,model:createProjectSupervisorModel(pi)});
+  startupCleanup.push(()=>projectSupervisor.close());
   const learningSummary:DomainHandler={domain:'learning',commands:['companion-summary'],execute:(_command,p,ctx)=>{const record=ctx.create('learning',{kind:'practice',profile:'me',memberProfileId:p.profileId,type:'language',title:p.title,minutes:Math.floor(p.activeSeconds/60),activeSeconds:p.activeSeconds,rounds:p.rounds,answers:p.rounds.map((r:any)=>r.answer),corrections:p.rounds.filter((r:any)=>r.correction).map((r:any)=>r.correction),score:null,source:'pi-text-companion',assessmentStatus:'text-feedback',lessonId:p.id,time:ctx.now,status:'recorded',createdAt:ctx.now,updatedAt:ctx.now});ctx.emit('learning',record.id,'practice-recorded',{source:'pi-text-companion',rounds:p.rounds.length});return record;}};
   companion=new CompanionRuntime(identity,pi,notifications,{onLearning:(p,s)=>v1!.execute(learningSummary,'companion-summary',{commandId:'companion_'+s.id,expectedVersion:0,scope:'private',payload:{id:s.id,profileId:p.profileId,title:s.title,rounds:s.rounds,activeSeconds:s.activeSeconds}},p.actorId,()=>undefined).data.id});
   startupCleanup.push(()=>companion?.close());
@@ -403,6 +408,9 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   registerProjectDecisionRoutes(app,projectDecisions,identity);
   registerProjectSupervisionPlanRoutes(app,supervisionPlans,identity);
   registerSupervisionWorkRoutes(app,supervisionWork,identity);
+  registerProjectSupervisorRoutes(app,projectSupervisor,identity);
+  app.addHook('preClose',async()=>projectSupervisor.close());
+  projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
   knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');

@@ -48,6 +48,19 @@ export interface ExecutionNodeConfig {
  serviceLogs?:{sourceId:string;path:string;fromStart?:boolean;offset?:number;streamId?:string;fileIdentity?:string;discarding?:boolean}[];
  hardwareReadings?:{sourceId:string;field:'gpuPercent'|'powerWatts';path:string}[];
 }
+export interface ProjectSupervisorController {
+ /** Current authorization for this task; when supplied, runId must match the active run. */
+ allows:(taskId:string,runId?:string)=>boolean;
+ /** Whether this task is bound to a supervisor session, including when paused. */
+ owns?:(taskId:string)=>boolean;
+ /** Notify the supervisor that a signed terminal result was committed. */
+ terminal:(runId:string)=>void;
+}
+export interface ProjectSupervisorDispatchInput {
+ sessionId:string;goalRevision:number;supervisorRevision:number;taskId:string;expectedTaskRevision:number;
+ consumedRunId?:string|null;resultHash?:string|null;directive:string;goal:string;criteria:string;
+ machineId:string;executorId:string;workspace:string;ownerId:string;
+}
 export interface ExecutionRuntimeOptions {
  powerReading?:(agent:{machineId:string;capabilities?:string[]},raw:unknown)=>import('./power-runtime.js').CpuPowerSample|undefined;
  directory:string; machine:(id:string)=>Record<string,any>|undefined; stopped:()=>boolean;
@@ -69,6 +82,7 @@ export interface ClaimedRun {
  binding?:Record<string,any>; validation?:ExecutionTemplate['validation'];
  skillSnapshots?:ExecutionSkillSnapshot[];skillSnapshotsHash?:string;
  sessionBilling?:CliBillingCheckpoint;remainingTokens?:number;handoff?:{executorId:string;summary:string};
+ supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null};
  purpose?:FixedValidationPurpose;
 }
 export type ExecutionDispatcher=(domain:Domain,command:string,envelope:CommandEnvelope,actorId:string)=>Promise<CommandReceipt|undefined>;

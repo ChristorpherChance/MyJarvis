@@ -88,7 +88,13 @@ export class SupervisionWorkRuntime {
   // Only bound persisted execution receipts count as dispatched work, across all tasks.
   const runs=new Map<string,any>();for(const task of tasks){const run=task.executionRequest?.id?this.execution.getRun(task.executionRequest.id):null;if(run&&run.domain==='tasks'&&run.projectId===projectId&&(run.taskId??run.objectId)===task.id&&(!task.machineId||run.machineId===task.machineId)&&(!task.worktree||run.workspace===task.worktree))runs.set(run.id,run);}
   const running=[...runs.values()].filter(r=>r.status==='running').length,queued=[...runs.values()].filter(r=>r.status==='queued').length;
-  const approvals=this.repository.list('approvals',p.actorId).filter(a=>{if(a.status!=='pending'||a.scope!==project.scope)return false;return a.projectId===projectId||!!a.deploymentId&&this.repository.read('operations',a.deploymentId,p.actorId)?.projectId===projectId;});
+  const approvals=this.repository.list('approvals',p.actorId).filter(a=>{
+   if(a.status!=='pending'||a.scope!==project.scope)return false;if(a.projectId===projectId)return true;
+   if(a.deploymentId){const d=this.repository.read('operations',a.deploymentId,p.actorId);if(d?.projectId===projectId&&d.scope===project.scope)return true;}
+   const b=a.authorizationBinding;if(!b||a.targetId&&a.targetId!==b.targetId)return false;
+   if(b.domain==='tasks'){const t=this.repository.read('tasks',b.targetId,p.actorId);return b.projectId===projectId&&t?.projectId===projectId&&t.scope===project.scope;}
+   return b.domain==='projects'&&b.targetId===projectId;
+  });
   const decisions=[...approvals.map(a=>({id:a.id,kind:'approval' as const,title:safeSummary(a.title??a.name??'待审批申请'),reason:'需要本人作出审批决定',route:'approvals/'+encodeURIComponent(a.id)})),...tasks.filter(t=>['waitingUser','approval'].includes(t.status)).map(t=>({id:t.id,kind:'task' as const,title:safeSummary(t.title),reason:safeSummary(t.blockReason)||'任务等待本人处理',route:'tasks/'+encodeURIComponent(t.id)}))];
   const objectives=profile?.spec?.objectives?.filter((x:any)=>x.required!==false&&typeof x.id==='string'),ids=objectives?new Set(objectives.map((x:any)=>x.id)):null;
   const total=Number.isSafeInteger(profile?.totalObjectives)?profile.totalObjectives:ids?.size??null;

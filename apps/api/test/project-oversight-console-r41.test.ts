@@ -14,6 +14,7 @@ import {SupervisionWorkRuntime} from '../src/runtime/supervision-work-runtime.js
 import {registerSupervisionWorkRoutes} from '../src/runtime/supervision-work-routes.js';
 import type {Domain,DomainHandler} from '../src/v1/types.js';
 import {supervisionConsoleView} from '../../web/src/features/operations/supervision-console-view.js';
+import {infrastructureHandlers} from '../src/v1/infrastructure-domains.js';
 const admin={actorId:'server-admin',profileId:'me',administrator:true} as RuntimePrincipal;
 const body=(extra:any={})=>({commandId:randomUUID(),expectedVersion:0,title:'真实监管事项',status:'running',summary:'已完成来源检查，等待实际验证',nextAction:'核对模型实际运行条件',blocker:'实际验证条件尚未齐',...extra});
 async function fixture(){
@@ -66,5 +67,22 @@ test('R41 adjustment preserves original evidence and versions, replay stays sing
   const changed=f.runtime.revise('p',id,input,admin);assert.equal(changed.nextAction,input.nextAction);assert.deepEqual(changed.evidenceRefs,item.evidenceRefs);assert.equal(changed.stepId,'dev');assert.deepEqual(f.runtime.revise('p',id,input,admin),changed);
   assert.throws(()=>f.runtime.revise('p',id,{...input,commandId:randomUUID()},admin),/已更新/);assert.equal(f.runtime.detail('p',id,admin).history.length,2);assert.equal(f.notifications.list(admin).items.length,2);assert(f.notifications.list(admin).items.every(x=>x.route==='supervision/p'));
   assert.equal(f.runtime.console('p',admin).runtime.running,0);assert.equal(f.runtime.console('p',admin).acceptance.accepted,0);
+ }finally{await f.close()}
+});
+
+test('R41 authorization-bound budget and project approvals appear only for their current owned project',async()=>{
+ const f=await fixture();try{
+  f.seed('machines','m',{name:'隔离节点',status:'online'});
+  f.seed('tasks','budget-task',{projectId:'p',machineId:'m',mode:'managed',title:'申请预算的任务',status:'blocked',budget:10,cost:2});
+  f.seed('tasks','foreign-task',{projectId:'other',machineId:'m',mode:'managed',title:'另一项目任务',status:'blocked',budget:10,cost:2});
+  const handler=infrastructureHandlers.find(x=>x.domain==='approvals')!;
+  const request=(kind:string,targetId:string)=>f.repo.execute(handler,'request',{commandId:randomUUID(),expectedVersion:0,scope:'personal',payload:{kind,targetId,reason:'隔离审批验证',rollbackPlan:'保留原配置',...(kind==='budget'?{amount:20}:{})}},admin.actorId,id=>f.repo.read('machines',id,admin.actorId)).data;
+  const budget=request('budget','budget-task'),project=request('other','p');request('budget','foreign-task');request('other','other');
+  assert.equal(budget.projectId,undefined);assert.equal(project.projectId,undefined);assert.equal(project.authorizationBinding.projectId,null);
+  f.seed('approvals','false-project-metadata',{status:'pending',title:'不能只信声明项目',authorizationBinding:{domain:'tasks',targetId:'foreign-task',projectId:'p'}});
+  f.seed('approvals','missing-target',{status:'pending',title:'目标已不存在',authorizationBinding:{domain:'tasks',targetId:'missing',projectId:'p'}});
+  const value=f.runtime.console('p',admin);assert.equal(value.attention.total,2);assert.deepEqual(new Set(value.attention.items.map(x=>x.id)),new Set([budget.id,project.id]));
+  const other=f.runtime.console('other',admin);assert.equal(other.attention.total,2);assert(!other.attention.items.some(x=>x.id===budget.id||x.id===project.id));
+  assert.equal(value.runtime.running,0);assert.equal(value.acceptance.accepted,0);
  }finally{await f.close()}
 });

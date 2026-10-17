@@ -1,0 +1,10 @@
+{
+  "kind": "r43-root-received-package-verifier-first-refusal",
+  "code": "DUAL_PACKAGE_WORKER_CHANGED",
+  "source": ".jarvis-dev/maintenance/r43-round9-received-package-verification.py",
+  "sourceSHA256": "a2aa51e220b898230a6d94ffeba4aabd4c41c6736dc4479771967bfdee257db4",
+  "sourceRetained": true,
+  "productBytesChanged": false,
+  "priorChecksReached": "All 9 report file H/bytes, 2163 ZIP payload H/bytes and node 5 manifest H/bytes had matched; refusal preceded any provenance or result write.",
+  "correctedContract": "Different original packagers produce tsc per-module vs esbuild standalone worker; compare each report and exact source entry, no claim byte equality/reproducibility."
+}

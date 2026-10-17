@@ -1,0 +1,53 @@
+{
+  "kind": "r41-existing-supervision-item-and-design-decision-readback",
+  "at": "2026-10-17T05:10:20.782Z",
+  "release": "20261017-project-oversight-r41",
+  "checks": {
+    "planUnchanged": true,
+    "autonomyUnchanged": true,
+    "otherFiveItemsUnchanged": true,
+    "oldDecisionsUnchanged": true,
+    "exactlyOneDecisionAdded": true,
+    "oneItemRevisionAdded": true,
+    "oldItemHistoryPrefixPreserved": true,
+    "countsUnchanged": true,
+    "oneProgressEventAdded": true,
+    "acceptanceUnchanged": true,
+    "noTaskDispatched": true,
+    "oneMatchingPersistedNotification": true,
+    "decisionHashReadbackMatched": true
+  },
+  "planRevision": 108,
+  "autonomyRevision": 20,
+  "autonomyStatus": "blocked",
+  "counts": {
+    "total": 6,
+    "planned": 1,
+    "running": 1,
+    "blocked": 0,
+    "completed": 4
+  },
+  "latestSequence": 42,
+  "decision": {
+    "id": "221ba3c4-e9c6-4730-8318-c8bd44116c1f",
+    "revision": 1,
+    "status": "implemented",
+    "hash": "c6f159ae342e2f2ff048c1f878dbaf40b620201e722fad3fc76c87062d240918",
+    "independentAcceptance": false
+  },
+  "updatedItem": {
+    "id": "ef385d9f-2eaa-4691-8898-fd5572df6342",
+    "revision": 3,
+    "hash": "d4a05650356411b88113ec29d0491d218d6f5d2ab9852d5146ad5ff0d0e33694",
+    "title": "上线简明监督与主动简报",
+    "completionSummary": "项目监管现为一级入口，远程可直接打开。首屏分别展示真正执行状态、需要本人处理的事项、当前重点和下一步；阶段筛选、完成简报、时间线与真实安排保存已接通。",
+    "validationScope": "5个独立定向用例分切片通过，保留最初fixture与审批遗漏失败；隔离真实服务浏览器验证保存/展开/手机与退出清除，112现场接口与发布字节通过核对。不代表软件工厂整体交付，74签收保持0；关闭页面后的离线推送未开通。"
+  },
+  "matchingPersistedNotifications": 1,
+  "oldDecisionCount": 53,
+  "newDecisionCount": 54,
+  "original74Accepted": 0,
+  "tenMinuteFollowup": "PAUSED",
+  "onlyTwoWriteCommands": true,
+  "supplierModelCalls": 0
+}

@@ -1,0 +1,29 @@
+✖ kickoff rejects duplicate criteria and task-ineligible project/machine before any durable side effect, then reuses corrected command (740.471035ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2489.525386
+
+✖ failing tests:
+
+test at apps/api/test/project-workbench-r15.test.ts:1:455
+✖ kickoff rejects duplicate criteria and task-ineligible project/machine before any durable side effect, then reuses corrected command (740.471035ms)
+  AssertionError [ERR_ASSERTION]: {"data":{"taskId":"34729f99-c8b0-4c86-abb6-bb2a262e49b7","sessionId":"92b2201f-4a07-40f7-8b4c-3282d848ba12","stage":"start-request-recorded","session":{"id":"92b2201f-4a07-40f7-8b4c-3282d848ba12","projectId":"4e94f690-b871-4b58-bf5e-c9a51d84e9b3","ownerId":"server-admin","scope":"personal","revision":2,"goalRevision":1,"goal":"bounded objective","criteria":["one"],"machineId":"6f446b93-996e-44ca-9e70-e14cf80b4746","executor":"claude-code","workspace":"/tmp/r45-r15-wLJv0k/work/p","taskId":"34729f99-c8b0-4c86-abb6-bb2a262e49b7","runId":null,"status":"dispatching","summary":"目标已保存，尚未启用","blocker":"","nextAction":"主管按当前授权派发单轮CC","enabled":true,"consumedRunId":null,"resultHash":null,"directive":"bounded objective","rounds":0},"notice":"已提交目标内持续推进授权；排队不代表AI已运行"}}
+  
+  200 !== 403
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-workbench-r15.test.ts:5:363)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

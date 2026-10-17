@@ -72,6 +72,10 @@ function requireMachine(ctx: CommandContext, machineId: string) {
   if (!machine) fail('NOT_FOUND', '指定设备尚未登记。', 404);
   return machine;
 }
+export function assertTaskCreationEligibility(project:Record<string,any>,machine:Record<string,any>,scope:string,mode:string){
+  if(['archived','delivered'].includes(project.status))fail('INVALID_STATE','该项目已交付或归档，不能继续创建或执行任务。');
+  if(mode==='managed'&&(scope==='company'||observationOnly(machine)))fail('OBSERVE_ONLY','公司范围或只读设备只能登记观察任务。',403);
+}
 function observationOnly(machine: Record<string, any>) {
   return machine.readOnly === true || machine.readonly === true || machine.company === true || machine.scope === 'company'
     || /公司|企业|company/i.test(String(machine.role ?? ''));
@@ -126,9 +130,9 @@ function fixedSkills(ctx: CommandContext, ids: string[]) {
   });
 }
 function taskBody(ctx: CommandContext, p: Record<string, any>) {
-  const project = requireProject(ctx, p.projectId);
+  const project = requireProject(ctx, p.projectId, false);
   const machine = requireMachine(ctx, p.machineId);
-  if (p.mode === 'managed' && (ctx.scope === 'company' || observationOnly(machine))) fail('OBSERVE_ONLY', '公司范围或只读设备只能登记观察任务。', 403);
+  assertTaskCreationEligibility(project,machine,ctx.scope,p.mode);
   if (p.dependsOn) {
     const dependency = ctx.require('tasks', p.dependsOn);
     if (dependency.projectId !== project.id) fail('INVALID_DEPENDENCY', '前置任务必须属于同一项目。', 400);

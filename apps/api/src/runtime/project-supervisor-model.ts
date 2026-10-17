@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import type { PiRunInput, PiService } from '../pi.js';
+import {PROJECT_SUPERVISOR_CONTRACT} from './project-supervisor-contract.js';
 
 const MAX_RESPONSE_BYTES = 16_000;
 const MAX_DIRECTIVE = 4_000;
@@ -34,7 +35,7 @@ function parseResponse(text: string): Record<string, unknown> {
 }
 
 function validate(parsed: Record<string, unknown>, input: any): Record<string, unknown> {
-  const allowed = ['action', 'directive', 'reason', 'selectedOption', 'criteria', ...(input.experienceReferences!==undefined?['experienceReferences']:[])];
+  const allowed = ['action', 'directive', 'reason', 'selectedOption', 'criteria', 'experienceReferences'];
   if(input.experienceReferences!==undefined){if(!Array.isArray(parsed.experienceReferences))throw error(INVALID);const given=new Map(input.experienceReferences.map((r:any)=>[r.experienceId,r]));if(parsed.experienceReferences.length!==given.size)throw error(INVALID);const seen=new Set();for(const ref of parsed.experienceReferences as any[]){if(!ownRecord(ref)||!given.has(ref.experienceId)||seen.has(ref.experienceId)||!['adopted','not_adopted'].includes(ref.disposition as string)||typeof ref.reason!=='string'||!ref.reason||ref.reason.length>1000)throw error(INVALID);seen.add(ref.experienceId);if(ref.disposition==='adopted'&&!(given.get(ref.experienceId) as any).verified)throw error(INVALID);}}
   if (Object.keys(parsed).length !== allowed.length || allowed.some(key => !Object.hasOwn(parsed, key))) throw error(INVALID);
   if (!['continue', 'wait_user', 'review', 'stop'].includes(parsed.action as string)) throw error(INVALID);
@@ -80,6 +81,7 @@ function validate(parsed: Record<string, unknown>, input: any): Record<string, u
 
 export function createProjectSupervisorModel(pi: PiService): (input: any) => Promise<any> {
   return async (input: any): Promise<any> => {
+    input={...input,experienceReferences:input.experienceReferences??[]};
     const health = pi.health('project-supervisor');
     if (!health.configured) throw error(NOT_CONFIGURED);
     if (utf8Bytes(JSON.stringify(input)) > 30_000) throw error('MODEL_CONTEXT_INCOMPLETE');
@@ -88,7 +90,7 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
       actorId: input?.binding?.ownerId ?? 'server-admin',
       member: { name: 'project-supervisor', preferences: '' },
       sessionPath: null,
-      text: `${systemContract}${input.experienceReferences!==undefined?' Also return experienceReferences, exactly one {experienceId,disposition:adopted|not_adopted,reason} for each supplied experience reference. Unverified reminders must not be adopted. Missing evidence, unknown conditions, changed versions or counterexamples cannot be used as authority.':''}\n\nUntrusted supervisor input JSON:\n${JSON.stringify(input)}`,
+      text: `${PROJECT_SUPERVISOR_CONTRACT}\n\nUntrusted supervisor input JSON:\n${JSON.stringify(input)}`,
       onEvent: () => {},
       onSessionPath: () => {},
       boundedJob: true,

@@ -9,6 +9,7 @@ export function registerProjectSupervisorRoutes(app:FastifyInstance,runtime:Proj
  const id=(req:any)=>z.string().min(1).max(200).parse(req.params.id),base='/api/v1/projects/:id/supervisor';
  app.get(base,handle(req=>runtime.view(id(req),principal(req))));
  app.get(base+'/events/:eventId',handle(req=>runtime.eventDetail(id(req),z.string().uuid().parse(req.params.eventId),principal(req))));
+ app.get(base+'/event-history',handle(req=>{const query=z.object({before:z.coerce.number().int().positive().optional(),limit:z.coerce.number().int().min(1).max(100).default(50)}).strict().parse(req.query);return runtime.eventPage(id(req),query.before,query.limit,principal(req));}));
  app.post(base,handle(req=>runtime.create(id(req),req.body,principal(req))));
  app.post(base+'/commands',handle(req=>runtime.command(id(req),req.body,principal(req))));
  app.post(base+'/corrections',handle(req=>runtime.correct(id(req),req.body,principal(req))));

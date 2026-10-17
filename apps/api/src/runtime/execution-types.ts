@@ -3,6 +3,7 @@ import type { CommandReceipt } from '../v1/repository.js';
 
 export interface ActualUsage { inputTokens?:number; outputTokens?:number; cacheReadTokens?:number;cacheWriteTokens?:number;totalTokens?:number;provider?:string;model?:string; /** True only when every round has a native final usage receipt; false retains partial observations. */ usageComplete?:boolean; costUSD?:number; /** Known observed fee lower bound, even when other rounds are unpriced; never fabricated zero. */ knownCostUSD?:number; /** False means costUSD is unknown; knownCostUSD may retain a partial observation. */ costComplete?:boolean; costKind?:'provider-reported'|'catalog-estimate';measurementStatus?:'reported'|'partial'|'unknown'; /** Internal SDK result only; node protocol cannot assert this flag. */ ledgerRecorded?:boolean }
 export interface ExecutionMetadata {nativeCliVersion?:string;agentBuild:string;programSha256:string;invocationId:string}
+export interface ExecutionTerminationProof {invocationId:string;supervisorPid:number;childPid:number;processGroupId:number;childExitObserved:boolean;stdioClosed:boolean;groupEmpty:boolean;observedAt:string;platform:'linux'|'win32';method:'process-group-probe'}
 export interface NativePhase {index:number;usageComplete:boolean;summarySha256:string;outcome:'success'|'failed'|'cancelled'|'budget-exhausted'|'timeout'|'awaiting-cost'|'round-limit'}
 
 export interface ContinuationGrantInput {commandId:string;expectedVersion:number;taskId:string;ownerId:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;sourceRunId?:string;acknowledgeUnknownHistory?:boolean;policyId?:string;policyGeneration?:number;policyWindowId?:string}
@@ -72,7 +73,7 @@ export interface ProjectSupervisorController {
 export interface SupervisorAdoptionBinding {sessionId:string;ownerId:string;taskId:string;sourceRunId:string;sourceResultHash:string;projectId:string;machineId:string;workspace:string;nativeSessionId?:string|null;expectedTaskRevision:number}
 export interface ProjectSupervisorDispatchInput {
  sessionId:string;goalRevision:number;supervisorRevision:number;taskId:string;expectedTaskRevision:number;
- consumedRunId?:string|null;resultHash?:string|null;grantId?:string;resumeStopped?:boolean;adoptionBinding?:SupervisorAdoptionBinding;directive:string;goal:string;criteria:string;
+ consumedRunId?:string|null;resultHash?:string|null;grantId?:string;resumeStopped?:boolean;newSession?:boolean;handoffSummary?:string;adoptionBinding?:SupervisorAdoptionBinding;directive:string;goal:string;criteria:string;
  machineId:string;executorId:string;workspace:string;ownerId:string;
 }
 export interface ExecutionRuntimeOptions {
@@ -97,6 +98,6 @@ export interface ClaimedRun {
  skillSnapshots?:ExecutionSkillSnapshot[];skillSnapshotsHash?:string;
  sessionBilling?:CliBillingCheckpoint;remainingTokens?:number;handoff?:{executorId:string;summary:string};
  supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null;fingerprint?:string;policyWindowId?:string};
- purpose?:ExecutionPurpose;
+ purpose?:ExecutionPurpose;terminationProof?:ExecutionTerminationProof;
 }
 export type ExecutionDispatcher=(domain:Domain,command:string,envelope:CommandEnvelope,actorId:string)=>Promise<CommandReceipt|undefined>;

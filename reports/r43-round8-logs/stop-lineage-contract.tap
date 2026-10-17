@@ -1,0 +1,35 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+Error: Transform failed with 1 error:
+/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/src/runtime/execution-runtime.ts:200:77: ERROR: The symbol "source" has already been declared
+    at failureErrorWithLog (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1752:15)
+    at /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1019:50
+    at responseCallbacks.<computed> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:886:9)
+    at handleIncomingPacket (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:941:12)
+    at Socket.readFromStdout (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:864:7)
+    at Socket.emit (node:events:509:28)
+    at addChunk (node:internal/streams/readable:563:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+    at Readable.push (node:internal/streams/readable:394:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  name: 'TransformError'
+}
+
+Node.js v24.15.0
+✖ apps/api/test/execution-stop-lineage-r43.test.ts (1052.418924ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1061.333275
+
+✖ failing tests:
+
+test at apps/api/test/execution-stop-lineage-r43.test.ts:1:1
+✖ apps/api/test/execution-stop-lineage-r43.test.ts (1052.418924ms)
+  'test failed'

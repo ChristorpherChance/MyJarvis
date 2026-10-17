@@ -1,0 +1,31 @@
+STOP_FIXTURE_REPO_ERROR {"fields":[{"path":"/executionResult","rule":"additionalProperties"},{"path":"/executionResult","rule":"additionalProperties"}]}
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (1799.722082ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3579.273931
+
+✖ failing tests:
+
+test at apps/api/test/execution-stop-lineage-r43.test.ts:1:436
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (1799.722082ms)
+  AssertionError [ERR_ASSERTION]: {"id":"645e6b73e4f342158b7165a8898d260e2f28f673","purpose":"project-supervisor","domain":"tasks","objectId":"003534f4-8dca-4538-9f2e-43918e881e8f","taskId":"003534f4-8dca-4538-9f2e-43918e881e8f","kind":"development","machineId":"7519ff24-749a-410c-b6d5-eebb43dd2f8f","executorId":"stop-cc","projectId":"c2e7766d-8d05-4599-be93-27ae28d12026","workspace":"/tmp/r43-stop-chain-0LQicz/work/project","goal":"bounded stop\n\n主管反馈协议：本轮只输出一个严格 JSON 对象，不得 Markdown 或额外文本，字段必须为 state(progress|needs_decision|blocked|ready_for_review)、summary、question、options、recommendedOption、evidence(path,sha256)、nextSuggestion。证据只写本轮实际核验文件的相对路径及 SHA-256；不得声称独立验收或人工签收。","criteria":"stop proof","maxRounds":1,"timeoutSec":20,"budgetUSD":0,"remainingTokens":1000,"supervisor":{"sessionId":"47e8507c-b7eb-4a80-a1a5-f3f4a8a340bb","goalRevision":1,"supervisorRevision":2,"expectedTaskRevision":1,"consumedRunId":null,"resultHash":null,"fingerprint":"0f8f52ac58aa7ab69d178db8c5c7315b88875c87014c3edd2bc4754c1a3a3578"},"scope":"personal","stopRequested":true,"stopReason":"项目主管已撤销本轮授权","status":"cancelled","agentId":"557f9516-ae5a-437c-a925-31d440fefd5b","leaseExpiresAt":"2026-10-17T11:35:01.469Z","createdAt":"2026-10-17T11:34:01.301Z","updatedAt":"2026-10-17T11:34:01.469Z"}
+  + actual - expected
+  
+  + undefined
+  - true
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/execution-stop-lineage-r43.test.ts:3:4638)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

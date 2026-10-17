@@ -1,0 +1,35 @@
+✔ real HTTP adoption is idempotent, owner-bound and preserves existing signed run before authorized reconcile (253.751182ms)
+✔ adoption rejects unowned, changed, nonterminal, mismatched and stop-only sources without task creation (70.579171ms)
+✔ public supervisor content guard blocks credentials, private paths and URL access parameters before event or decision persistence (55.749ms)
+✔ real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections (266.875164ms)
+✔ experience enters actual model input and is rechecked at real dispatch boundary (81.211592ms)
+✖ real HTTP history cursor pages all events beyond the top 100 (460.094896ms)
+✔ model wait correction invalidates old return: zero follow-up dispatch and one model call (76.313943ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1367.494859
+
+✖ failing tests:
+
+test at apps/api/test/project-supervisor-r43.test.ts:1:8459
+✖ real HTTP history cursor pages all events beyond the top 100 (460.094896ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(total>100)
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:30:1104)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

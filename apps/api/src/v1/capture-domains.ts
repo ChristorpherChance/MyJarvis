@@ -210,7 +210,7 @@ const research:DomainHandler = {
 };
 
 const experiences:DomainHandler = {
-  domain:'experiences',commands:['capture','update','archive','verify','merge','skill-publish','version','reuse','deprecate'],
+  domain:'experiences',commands:['capture','update','archive','verify','merge','skill-publish','version','reuse','deprecate','counterexample','revoke-verification','supersede'],
   execute(command,p,ctx) {
     if (command==='capture') {
       creating(ctx);const kind=choice(p.kind,['experience','lesson','skill','runbook','family','health'],'记录类型');
@@ -224,6 +224,29 @@ const experiences:DomainHandler = {
     if (!this.commands.includes(command)) fail('VALIDATION','经验命令不存在',400);
     const item=primary(ctx,'experiences',p.experienceId);
     ensure(item.status!=='archived','此经验已归档，历史记录只读');
+    if(command==='counterexample'){
+      ensure(['experience','lesson'].includes(item.kind)&&!['superseded','deprecated'].includes(item.status),'仅未停用经验或教训可记录反例');
+      const reason=text(p.reason,'反例说明',4000),evidence=text(p.evidence,'反例证据',20000),entry={id:randomUUID(),reason,evidence,source:optional(p.source,4000),actorId:ctx.actorId,at:ctx.now,revision:item.revision+1};
+      const currentLearning=item.supervisorLearning??{projectId:item.projectId??'',sourceRefs:[],conditions:{},unknownConditions:['machineId','executor','version'],counterexamples:[]};
+      const metadata={...currentLearning,counterexamples:[...(currentLearning.counterexamples??[]),entry]};
+      const patch={supervisorLearning:metadata,verified:false,verifiedContent:null,verifiedConditions:null,verifiedAt:null,verifiedBy:null,status:'inbox',history:[...(item.history??[]),snapshot(item,ctx,`记录反例：${reason}`)],updatedAt:ctx.now};
+      const record=ctx.update('experiences',item.id,patch);ctx.emit('experiences',record.id,'counterexample',{entryId:entry.id,reason,revision:record.revision});return record;
+    }
+    if(command==='revoke-verification'){
+      ensure(['experience','lesson'].includes(item.kind)&&item.verified===true&&item.status==='verified','当前经验没有有效验证可撤销');const reason=text(p.reason,'撤销验证理由',4000),evidence=text(p.evidence,'撤销证据',20000);
+      const patch={verified:false,verifiedContent:null,verifiedConditions:null,verifiedAt:null,verifiedBy:null,status:'inbox',history:[...(item.history??[]),snapshot(item,ctx,`撤销验证：${reason}`),{version:item.version,at:ctx.now,reason:`撤销验证证据：${evidence}`,content:item.content,conditions:item.conditions,evidence:item.evidence,verified:false,status:'inbox',reviewerId:ctx.actorId}],updatedAt:ctx.now};
+      const record=ctx.update('experiences',item.id,patch);ctx.emit('experiences',record.id,'verification-revoked',{reason,evidence,revision:record.revision});return record;
+    }
+    if(command==='supersede'){
+      ensure(['experience','lesson'].includes(item.kind),'仅经验或教训可建立替代关系');ensure(item.status!=='superseded','记录已被替代');
+      const replacement=ctx.require('experiences',text(p.replacementId,'替代经验',200),true);ensure(replacement.id!==item.id,'不能以自身替代自身','VALIDATION',400);ensure(['experience','lesson'].includes(replacement.kind)&&!['archived','deprecated','superseded'].includes(replacement.status),'替代目标必须是可用经验候选');
+      ensure(!item.supervisorLearning?.supersededBy,'原经验已存在替代记录');const reason=text(p.reason,'替代理由',4000),evidence=text(p.evidence,'替代证据',20000);
+      const replacementLink={experienceId:item.id,revision:item.revision+1,reason,evidence,actorId:ctx.actorId,at:ctx.now};
+      const supersededLearning={...(item.supervisorLearning??{}),supersededBy:{experienceId:replacement.id,reason,evidence,actorId:ctx.actorId,at:ctx.now}};
+      const record=ctx.update('experiences',item.id,{supervisorLearning:supersededLearning,verified:false,verifiedContent:null,verifiedConditions:null,verifiedAt:null,verifiedBy:null,status:'superseded',history:[...(item.history??[]),snapshot(item,ctx,`由 ${replacement.id} 替代：${reason}`),{version:item.version,at:ctx.now,reason,evidence,content:item.content,conditions:item.conditions,verified:false,status:'superseded',reviewerId:ctx.actorId}],updatedAt:ctx.now});
+      const updatedReplacement=ctx.update('experiences',replacement.id,{supervisorLearning:{...(replacement.supervisorLearning??{}),supersedes:[...(replacement.supervisorLearning?.supersedes??[]),replacementLink]},history:[...(replacement.history??[]),snapshot(replacement,ctx,`替代来源 ${item.id}：${reason}`)],updatedAt:ctx.now});
+      ctx.emit('experiences',record.id,'superseded',{replacementId:updatedReplacement.id,reason,evidence,revision:record.revision});return record;
+    }
     if(command==='update'){
       ensure(['inbox','verified'].includes(item.status),'已发布技能需通过新版流程修订');
       const kind=choice(p.kind??item.kind,['experience','lesson','runbook','family','health'],'资料类型');ensure(kind!=='health'||ctx.scope==='private','健康资料仅允许本人私有空间','FORBIDDEN',403);ensure(kind!=='family'||ctx.scope==='family','家庭资料需要共享范围','FORBIDDEN',403);
@@ -237,7 +260,12 @@ const experiences:DomainHandler = {
     if (command==='verify') {
       ensure(item.status==='inbox' || item.status==='verified','已发布版本不可覆盖验证记录，请先创建新版');
       const evidence=text(p.evidence,'验证证据',20000),conditions=text(p.conditions,'适用条件');text(item.content,'当前正文',20000,true);
-      const patch={evidence,conditions,verified:true,status:'verified',verifiedContent:item.content,verifiedConditions:conditions,verifiedBy:ctx.actorId,verifiedAt:ctx.now,updatedAt:ctx.now};
+      let supervisorLearning=item.supervisorLearning;
+      if(supervisorLearning){
+        const machineId=text(p.machineId,'已验证设备',200),executor=text(p.executor,'已验证执行器',200),version=text(p.nativeVersion,'已验证版本',200);
+        supervisorLearning={...supervisorLearning,conditions:{machineId,executor,version},unknownConditions:[],verifiedAt:ctx.now,verifiedBy:ctx.actorId};
+      }
+      const patch={...(supervisorLearning?{supervisorLearning}:{}),evidence,conditions,verified:true,status:'verified',verifiedContent:item.content,verifiedConditions:conditions,verifiedBy:ctx.actorId,verifiedAt:ctx.now,updatedAt:ctx.now};
       const record=ctx.update('experiences',item.id,{...patch,history:[...(item.history ?? []),snapshot({...item,...patch},ctx,'明确证据验证当前内容')]});ctx.emit('experiences',record.id,'verified',{version:record.version});return record;
     }
     if (command==='merge') {

@@ -48,8 +48,8 @@ function acceptedResearch(ctx:FakeContext){
  return ctx.call('research','decide',{researchId:r.id,choice:'accepted',optionId:r.options[0].id,reason:'已有证据与具体方案。'});
 }
 
-test('三领域25个命令包含人工保留独立的明确决定与版本保护编辑',()=>{
- assert.deepEqual(captureHandlers.map(h=>[h.domain,h.commands.length]),[['inbox',7],['research',9],['experiences',9]]);
+test('三领域28个命令包含经验反例撤证与替代的正式handler入口',()=>{
+ assert.deepEqual(captureHandlers.map(h=>[h.domain,h.commands.length]),[['inbox',7],['research',9],['experiences',12]]);
  const ctx=new FakeContext();ctx.denied('inbox','fake-success',{},'VALIDATION');
 });
 

@@ -54,6 +54,7 @@ import {registerSupervisionWorkRoutes} from './runtime/supervision-work-routes.j
 import {ProjectSupervisorRuntime} from './runtime/project-supervisor-runtime.js';
 import {registerProjectSupervisorRoutes} from './runtime/project-supervisor-routes.js';
 import {createProjectSupervisorModel} from './runtime/project-supervisor-model.js';
+import {registerExperienceSupervisorRoutes} from './runtime/experience-supervisor-routes.js';
 import {registerProjectAutonomyRoutes} from './runtime/project-autonomy-routes.js';
 import {ProjectDecisionRuntime} from './runtime/project-decision-runtime.js';
 import {registerProjectDecisionRoutes} from './runtime/project-decision-routes.js';
@@ -409,6 +410,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   registerProjectSupervisionPlanRoutes(app,supervisionPlans,identity);
   registerSupervisionWorkRoutes(app,supervisionWork,identity);
   registerProjectSupervisorRoutes(app,projectSupervisor,identity);
+  registerExperienceSupervisorRoutes(app,v1,identity);
   app.addHook('preClose',async()=>projectSupervisor.close());
   projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
@@ -421,7 +423,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   // Stop SDK streams before Fastify waits for existing SSE connections to close.
   app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();supervisionWork.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
   app.addHook('onClose',async()=>{supervisionPlans.close();projectDecisions.close();web?.close();identity.close();billing.close();governance.close();store.close();});
-  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy};
+  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy,projectSupervisor};
   }catch(error){
     try{await startupApp?.close();}catch{/* Preserve the initialization error. */}
     for(const close of startupCleanup.reverse())try{await close();}catch{/* Other handles must still be released. */}

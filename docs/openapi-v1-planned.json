@@ -34232,7 +34232,8 @@
               "verified",
               "published",
               "deprecated",
-              "archived"
+              "archived",
+              "superseded"
             ]
           },
           "history": {
@@ -34293,6 +34294,12 @@
             "type": [
               "string",
               "null"
+            ]
+          },
+          "supervisorLearning": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/SupervisorLearning" },
+              { "type": "null" }
             ]
           },
           "publishedSkillId": {
@@ -34379,6 +34386,36 @@
           "status"
         ],
         "description": "验证、发布技能和复用是不同状态，历史引用固定版本。"
+      },
+      "SupervisorLearning": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["projectId", "sourceRefs", "conditions", "unknownConditions", "counterexamples"],
+        "properties": {
+          "projectId": { "type": "string", "maxLength": 200 },
+          "sourceRefs": { "type": "array", "maxItems": 50, "items": { "type": "object", "additionalProperties": false, "required": ["eventId", "hash"], "properties": { "eventId": { "type": "string", "maxLength": 200 }, "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" } } } },
+          "conditions": { "type": "object", "additionalProperties": false, "properties": { "machineId": { "type": ["string", "null"], "maxLength": 200 }, "executor": { "type": ["string", "null"], "maxLength": 200 }, "version": { "type": ["string", "null"], "maxLength": 200 } } },
+          "unknownConditions": { "type": "array", "maxItems": 20, "uniqueItems": true, "items": { "enum": ["machineId", "executor", "version", "projectId"] } },
+          "result": { "type": "string", "maxLength": 1000 },
+          "verifiedAt": { "type": "string", "format": "date-time" },
+          "verifiedBy": { "type": "string", "maxLength": 200 },
+          "counterexamples": { "type": "array", "maxItems": 100, "items": { "$ref": "#/components/schemas/SupervisorExperienceCounterexample" } },
+          "supersededBy": { "$ref": "#/components/schemas/SupervisorExperienceSupersededBy" },
+          "supersedes": { "type": "array", "maxItems": 100, "items": { "$ref": "#/components/schemas/SupervisorExperienceSupersedes" } },
+          "unmatched": { "type": "boolean" }
+        }
+      },
+      "SupervisorExperienceCounterexample": {
+        "type": "object", "additionalProperties": false, "required": ["id", "reason", "evidence", "actorId", "at", "revision"],
+        "properties": { "id": { "type": "string", "maxLength": 200 }, "reason": { "type": "string", "maxLength": 4000 }, "evidence": { "type": "string", "maxLength": 20000 }, "source": { "type": "string", "maxLength": 4000 }, "actorId": { "type": "string", "maxLength": 200 }, "at": { "type": "string", "format": "date-time" }, "revision": { "type": "integer", "minimum": 1 } }
+      },
+      "SupervisorExperienceSupersededBy": {
+        "type": "object", "additionalProperties": false, "required": ["experienceId", "reason", "evidence", "actorId", "at"],
+        "properties": { "experienceId": { "type": "string", "maxLength": 200 }, "reason": { "type": "string", "maxLength": 4000 }, "evidence": { "type": "string", "maxLength": 20000 }, "actorId": { "type": "string", "maxLength": 200 }, "at": { "type": "string", "format": "date-time" } }
+      },
+      "SupervisorExperienceSupersedes": {
+        "type": "object", "additionalProperties": false, "required": ["experienceId", "revision", "reason", "evidence", "actorId", "at"],
+        "properties": { "experienceId": { "type": "string", "maxLength": 200 }, "revision": { "type": "integer", "minimum": 1 }, "reason": { "type": "string", "maxLength": 4000 }, "evidence": { "type": "string", "maxLength": 20000 }, "actorId": { "type": "string", "maxLength": 200 }, "at": { "type": "string", "format": "date-time" } }
       },
       "SpeechSession": {
         "type": "object",
@@ -37679,7 +37716,10 @@
             "type": "string",
             "maxLength": 4000,
             "minLength": 1
-          }
+          },
+          "machineId": { "type": "string", "maxLength": 200, "minLength": 1 },
+          "executor": { "type": "string", "maxLength": 200, "minLength": 1 },
+          "nativeVersion": { "type": "string", "maxLength": 200, "minLength": 1 }
         },
         "required": [
           "experienceId",
@@ -52773,27 +52813,93 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "sessionId": {"type":"string","minLength":1,"maxLength":200},
-              "goalRevision": {"type":"integer","minimum":1},
-              "supervisorRevision": {"type":"integer","minimum":1},
-              "expectedTaskRevision": {"type":"integer","minimum":1},
-              "consumedRunId": {"type":["string","null"],"maxLength":200},
-              "resultHash": {"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},
-              "fingerprint": {"type":"string","pattern":"^[a-f0-9]{64}$"}
+              "sessionId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "goalRevision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "supervisorRevision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "expectedTaskRevision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "consumedRunId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 200
+              },
+              "resultHash": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "fingerprint": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "policyWindowId": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
             },
-            "required": ["sessionId","goalRevision","supervisorRevision","expectedTaskRevision","consumedRunId","resultHash","fingerprint"]
+            "required": [
+              "sessionId",
+              "goalRevision",
+              "supervisorRevision",
+              "expectedTaskRevision",
+              "consumedRunId",
+              "resultHash",
+              "fingerprint"
+            ]
           },
           "continuationGrant": {
-            "type":"object",
-            "additionalProperties":false,
+            "type": "object",
+            "additionalProperties": false,
             "properties": {
-              "grantId":{"type":"string","minLength":1,"maxLength":200},
-              "maxParentTokens":{"type":"integer","minimum":1,"maximum":10000000},
-              "sourceRunId":{"type":"string","minLength":1,"maxLength":200},
-              "sourceResultHash":{"type":"string","pattern":"^[a-f0-9]{64}$"},
-              "historyAcknowledgedUnknown":{"type":"boolean"}
+              "grantId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "maxParentTokens": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000000
+              },
+              "sourceRunId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "sourceResultHash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "historyAcknowledgedUnknown": {
+                "type": "boolean"
+              },
+              "policyWindowId": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
             },
-            "required":["grantId","maxParentTokens","sourceRunId","sourceResultHash"]
+            "required": [
+              "grantId",
+              "maxParentTokens",
+              "sourceRunId",
+              "sourceResultHash"
+            ]
           },
           "template": {
             "$ref": "#/components/schemas/ExecutionTemplate"
@@ -53067,7 +53173,9 @@
             "items": {
               "$ref": "#/components/schemas/ExecutionNativePhase"
             }
-          }
+          },
+          "sessionId": {"type":"string","maxLength":200},
+          "evidenceReceipts": {"type":"array","maxItems":30,"items":{"type":"object","additionalProperties":false,"properties":{"path":{"type":"string","minLength":1,"maxLength":1000},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"size":{"type":"integer","minimum":1,"maximum":32768},"contentBase64":{"type":"string","maxLength":43692}},"required":["path","sha256","size","contentBase64"]}}
         },
         "required": [
           "outcome",
@@ -53610,12 +53718,10 @@
         "additionalProperties": false,
         "properties": {
           "inputTokens": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
           },
           "outputTokens": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
           },
           "costUSD": {
             "type": "number",
@@ -53629,11 +53735,11 @@
             "type": "boolean"
           },
           "costKind": {
+            "type": "string",
             "enum": [
               "provider-reported",
               "catalog-estimate"
-            ],
-            "type": "string"
+            ]
           },
           "cacheReadTokens": {
             "type": "integer",
@@ -53664,17 +53770,16 @@
             "type": "boolean",
             "description": "true表示每轮均有原生最终用量回执，false为取消/失败等部分已观察用量；旧节点省略时保持历史兼容，不声称已恢复缺失数据。"
           },
-          "measurementStatus": {"type":"string","enum":["reported","partial","unknown"]},
-          "costUSD": {"type":"number","minimum":0},
-          "knownCostUSD": {"type":"number","minimum":0},
-          "costComplete": {"type":"boolean"},
-          "costKind": {"type":"string","enum":["provider-reported","catalog-estimate"]}
+          "measurementStatus": {
+            "type": "string",
+            "enum": [
+              "reported",
+              "partial",
+              "unknown"
+            ]
+          }
         },
-        "required": [
-          "inputTokens",
-          "outputTokens"
-        ],
-        "description": "所有已发生轮次累计的真实用量，失败或取消时保留已报告部分；缓存为明细，totalTokens优先，不再叠加缓存。没有供应商usage不伪造0。partial回执与后续稳定message证据以非负余量调和，原始签名回执保留在执行记录。"
+        "description": "真实用量可以完整、部分或未知；inputTokens/outputTokens 可分别省略以保留未知或部分观察，不以缺失字段补零。失败或取消时保留已报告部分；缓存为明细，totalTokens优先，不再叠加缓存。partial回执与后续稳定message证据以非负余量调和，原始签名回执保留在执行记录。"
       },
       "ExecutionResultInput": {
         "type": "object",
@@ -53737,8 +53842,16 @@
           "sessionBilling": {
             "$ref": "#/components/schemas/CliBillingCheckpoint"
           },
-          "executionMetadata": {"$ref":"#/components/schemas/ExecutionMetadata"},
-          "nativePhases": {"type":"array","maxItems":50,"items":{"$ref":"#/components/schemas/ExecutionNativePhase"}},
+          "executionMetadata": {
+            "$ref": "#/components/schemas/ExecutionMetadata"
+          },
+          "nativePhases": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/ExecutionNativePhase"
+            }
+          },
           "failureKind": {
             "type": "string",
             "enum": [
@@ -64206,8 +64319,15 @@
             "type": "number",
             "minimum": 0
           },
-          "nativeCliVersion": {"type":"string","minLength":1,"maxLength":200},
-          "costScope": {"type":"string","const":"session-cumulative"}
+          "nativeCliVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "costScope": {
+            "type": "string",
+            "const": "session-cumulative"
+          }
         },
         "required": [
           "engine",

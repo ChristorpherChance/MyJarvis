@@ -5,8 +5,8 @@ export interface ActualUsage { inputTokens?:number; outputTokens?:number; cacheR
 export interface ExecutionMetadata {nativeCliVersion?:string;agentBuild:string;programSha256:string;invocationId:string}
 export interface NativePhase {index:number;usageComplete:boolean;summarySha256:string;outcome:'success'|'failed'|'cancelled'|'budget-exhausted'|'timeout'|'awaiting-cost'|'round-limit'}
 
-export interface ContinuationGrantInput {commandId:string;expectedVersion:number;taskId:string;ownerId:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;sourceRunId?:string;acknowledgeUnknownHistory?:boolean}
-export interface ContinuationGrant {grantId:string;commandId:string;ownerId:string;taskId:string;projectId:string;machineId:string;workspace:string;sourceRunId:string;sourceResultHash:string;expectedTaskVersion:number;historyAcknowledgedUnknown?:boolean;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;createdAt:string;status:'pending'|'consumed';consumedRunId?:string}
+export interface ContinuationGrantInput {commandId:string;expectedVersion:number;taskId:string;ownerId:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;sourceRunId?:string;acknowledgeUnknownHistory?:boolean;policyId?:string;policyGeneration?:number;policyWindowId?:string}
+export interface ContinuationGrant {grantId:string;commandId:string;ownerId:string;taskId:string;projectId:string;machineId:string;workspace:string;sourceRunId:string;sourceResultHash:string;expectedTaskVersion:number;historyAcknowledgedUnknown?:boolean;policyId?:string;policyGeneration?:number;policyWindowId?:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;createdAt:string;status:'pending'|'consumed';consumedRunId?:string}
 export type FixedValidationPurpose='project-autonomy-validation'|'project-candidate-validation';
 export type ExecutionPurpose=FixedValidationPurpose|'project-supervisor';
 export function isFixedValidationPurpose(value:unknown):value is FixedValidationPurpose{return value==='project-autonomy-validation'||value==='project-candidate-validation';}
@@ -54,11 +54,18 @@ export interface ExecutionNodeConfig {
  serviceLogs?:{sourceId:string;path:string;fromStart?:boolean;offset?:number;streamId?:string;fileIdentity?:string;discarding?:boolean}[];
  hardwareReadings?:{sourceId:string;field:'gpuPercent'|'powerWatts';path:string}[];
 }
+export interface PolicyWindow {windowId:string;policyId:string;generation:number;maxParentTokens:number;timeoutSec:number;acknowledgeUnknownHistory:boolean}
 export interface ProjectSupervisorController {
  /** Current authorization for this task; when supplied, runId must match the active run. */
  allows:(taskId:string,runId?:string)=>boolean;
  /** Whether this task is bound to a supervisor session, including when paused. */
  owns?:(taskId:string)=>boolean;
+ /** Derive one finite server-registered child window only at an actual boundary. */
+ authorizeWindow?:(input:ProjectSupervisorDispatchInput)=>PolicyWindow|undefined;
+ /** Bind a derived window before a queued request can be claimed. Must be idempotent for the same pair. */
+ bindWindow?:(windowId:string,runId:string)=>void;
+ /** Revalidate window ownership against the current policy before any claim or lease renewal. */
+ validateWindow?:(taskId:string,runId:string,windowId:string)=>boolean;
  /** Notify the supervisor that a signed terminal result was committed. */
  terminal:(runId:string)=>void;
 }
@@ -89,7 +96,7 @@ export interface ClaimedRun {
  binding?:Record<string,any>; validation?:ExecutionTemplate['validation'];
  skillSnapshots?:ExecutionSkillSnapshot[];skillSnapshotsHash?:string;
  sessionBilling?:CliBillingCheckpoint;remainingTokens?:number;handoff?:{executorId:string;summary:string};
- supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null;fingerprint?:string};
+ supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null;fingerprint?:string;policyWindowId?:string};
  purpose?:ExecutionPurpose;
 }
 export type ExecutionDispatcher=(domain:Domain,command:string,envelope:CommandEnvelope,actorId:string)=>Promise<CommandReceipt|undefined>;

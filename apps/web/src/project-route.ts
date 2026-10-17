@@ -2,6 +2,7 @@ export interface ProjectRouteTask {id:string;projectId?:string;project?:string;}
 /** Shared by initial hash, in-app navigation and browser history. Unresolved task links stay explicit. */
 export function resolveProjectRoute(value:string,tasks:ProjectRouteTask[]=[]):string{
  const [path,query='']=value.split('?'),parts=path.split('/'),params=new URLSearchParams(query);
+ if(path==='projects'&&params.has('unresolvedTask')){const taskId=params.get('unresolvedTask')!,task=tasks.find(t=>t.id===taskId),projectId=task?.projectId??task?.project;if(projectId){params.delete('unresolvedTask');params.set('task',taskId);return `projects/${encodeURIComponent(projectId)}?${params}`;}}
  if(parts[0]==='supervision')return parts[1]?`projects/${encodeURIComponent(decodeURIComponent(parts[1]))}${query?'?'+query:''}`:'projects';
  if(parts[0]!=='tasks')return value;
  if(parts[1]==='project'&&parts[2])return `projects/${parts[2]}${query?'?'+query:''}`;

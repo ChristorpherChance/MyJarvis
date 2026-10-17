@@ -18,7 +18,7 @@ type WorkBody=z.infer<typeof body>;
 export interface SupervisionWorkItem extends WorkBody {id:string;projectId:string;ownerId:string;revision:number;createdAt:string;updatedAt:string;previousHash:string;hash:string}
 export interface SupervisionWorkEvent {projectId:string;sequence:number;itemId:string|null;revision:number;kind:'work-item'|'execution';status:string;at:string}
 interface StoredEvent extends SupervisionWorkEvent {id:string;ownerId:string;title:string;body:string}
-interface Options {directory:string;identity:IdentityRuntime;notifications:NotificationRuntime;plans?:{get:(projectId:string,actorId:string)=>any};actorId?:string}
+interface Options {directory:string;identity:IdentityRuntime;notifications:NotificationRuntime;plans?:{get:(projectId:string,actorId:string)=>any};autonomy?:(projectId:string,actorId:string)=>any;actorId?:string}
 const canonical=(v:any):string=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(canonical).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';
 const sha=(v:unknown)=>createHash('sha256').update(canonical(v)).digest('hex');
 function fail(message:string,code='SUPERVISION_WORK_INVALID',status=400):never{throw new BusinessError(code,message,status);}
@@ -72,6 +72,32 @@ export class SupervisionWorkRuntime {
  overview(projectId:string,p:RuntimePrincipal){const project=this.assertAccess(projectId,p);this.pump();const rows=this.db.prepare('SELECT r.json FROM supervision_work_items i JOIN supervision_work_revisions r ON r.item_id=i.id AND r.revision=i.revision WHERE i.project_id=? AND i.owner_id=? ORDER BY r.sequence DESC').all(projectId,p.actorId),all=rows.map(r=>JSON.parse(String(r.json)) as SupervisionWorkItem),counts={total:all.length,planned:0,running:0,blocked:0,completed:0};for(const item of all)counts[item.status]++;
   const tasks=this.repository.list('tasks',p.actorId).filter(t=>t.projectId===projectId&&t.scope===project.scope),executionFacts=tasks.slice(-200).reverse().map(task=>{const runId=task.executionRequest?.id??null,run=runId?this.execution.getRun(runId):null,valid=run&&run.domain==='tasks'&&run.projectId===projectId&&(run.taskId??run.objectId)===task.id&&(!task.machineId||run.machineId===task.machineId)&&(!task.worktree||run.workspace===task.worktree);return {taskId:task.id,title:safeSummary(task.title),status:String(task.status??'unknown'),executionStatus:String(task.executionStatus??'unstarted'),runId:valid?runId:null,runStatus:valid?String(run.status):null,summary:safeSummary(task.executionResult?.summary??task.blockReason),lastActivityAt:valid?run.updatedAt??task.updatedAt??null:task.updatedAt??null,source:'persisted-task-and-run',independentAcceptance:false};});
   const latestSequence=this.latest(projectId,p.actorId);return {projectId,revision:latestSequence,latestSequence,items:all.slice(0,500),itemsTruncated:all.length>500,counts,executionFacts,executionFactsTruncated:tasks.length>200,independentProgress:{automaticAcceptance:false,statement:'原监督计划与独立验收另行核对；工作项完成不代表产品验收'}};
+ }
+ activity(projectId:string,p:RuntimePrincipal,before=0){
+  this.assertAccess(projectId,p);this.pump();
+  if(before&&!this.db.prepare('SELECT sequence FROM supervision_work_events WHERE sequence=? AND project_id=? AND owner_id=?').get(before,projectId,p.actorId))fail('进展记录位置无效，请刷新后重试','CURSOR_INVALID',409);
+  const rows=this.db.prepare('SELECT sequence,json FROM supervision_work_events WHERE project_id=? AND owner_id=? AND (?=0 OR sequence<?) ORDER BY sequence DESC LIMIT 21').all(projectId,p.actorId,before,before);
+  const items=rows.slice(0,20).map(row=>{const event=JSON.parse(String(row.json)) as StoredEvent;return {...this.publicEvent({...event,sequence:Number(row.sequence)}),title:safeSummary(event.title),summary:safeSummary(event.body)};});
+  return {items,hasMore:rows.length>20,nextBefore:rows.length>20?items.at(-1)!.sequence:null};
+ }
+ console(projectId:string,p:RuntimePrincipal){
+  const project=this.assertAccess(projectId,p),overview=this.overview(projectId,p);
+  let plan:any=null,planUnavailable=false;try{plan=this.options.plans?.get(projectId,p.actorId)??null;}catch{planUnavailable=true;}
+  let profile:any=plan?.independentProgress??null;if(!profile)try{profile=this.options.autonomy?.(projectId,p.actorId)??null;}catch{planUnavailable=true;}
+  const tasks=this.repository.list('tasks',p.actorId).filter(t=>t.projectId===projectId&&t.scope===project.scope);
+  // Only bound persisted execution receipts count as dispatched work, across all tasks.
+  const runs=new Map<string,any>();for(const task of tasks){const run=task.executionRequest?.id?this.execution.getRun(task.executionRequest.id):null;if(run&&run.domain==='tasks'&&run.projectId===projectId&&(run.taskId??run.objectId)===task.id&&(!task.machineId||run.machineId===task.machineId)&&(!task.worktree||run.workspace===task.worktree))runs.set(run.id,run);}
+  const running=[...runs.values()].filter(r=>r.status==='running').length,queued=[...runs.values()].filter(r=>r.status==='queued').length;
+  const approvals=this.repository.list('approvals',p.actorId).filter(a=>{if(a.status!=='pending'||a.scope!==project.scope)return false;return a.projectId===projectId||!!a.deploymentId&&this.repository.read('operations',a.deploymentId,p.actorId)?.projectId===projectId;});
+  const decisions=[...approvals.map(a=>({id:a.id,kind:'approval' as const,title:safeSummary(a.title??a.name??'待审批申请'),reason:'需要本人作出审批决定',route:'approvals/'+encodeURIComponent(a.id)})),...tasks.filter(t=>['waitingUser','approval'].includes(t.status)).map(t=>({id:t.id,kind:'task' as const,title:safeSummary(t.title),reason:safeSummary(t.blockReason)||'任务等待本人处理',route:'tasks/'+encodeURIComponent(t.id)}))];
+  const objectives=profile?.spec?.objectives?.filter((x:any)=>x.required!==false&&typeof x.id==='string'),ids=objectives?new Set(objectives.map((x:any)=>x.id)):null;
+  const total=Number.isSafeInteger(profile?.totalObjectives)?profile.totalObjectives:ids?.size??null;
+  const accepted=Number.isSafeInteger(profile?.verifiedObjectives)?profile.verifiedObjectives:ids&&Array.isArray(profile?.verifiedObjectiveIds)?new Set(profile.verifiedObjectiveIds.filter((id:any)=>ids.has(id))).size:null;
+  return {...overview,reportedAt:new Date().toISOString(),project:{id:projectId,name:safeSummary(project.name??project.title),goal:safeSummary(project.goal)},
+   runtime:{running,queued,runningRunIds:[...runs.values()].filter(r=>r.status==='running').map(r=>String(r.id)),scope:'bound-persisted-task-runs' as const,unavailable:planUnavailable,autonomyStatus:typeof profile?.status==='string'?profile.status:null,reason:safeSummary(profile?.reason),revision:profile?.revision??null},
+   acceptance:{available:total!==null&&accepted!==null,total,accepted,source:'independent-objectives' as const},
+   plan:plan?{revision:plan.revision,currentStepId:plan.currentStepId,steps:plan.steps.map((s:any)=>({id:s.id,title:safeSummary(s.title),state:s.state,goal:safeSummary(s.goal),nextAction:safeSummary(s.nextAction)}))}:null,
+   attention:{total:decisions.length,items:decisions.slice(0,30),truncated:decisions.length>30},activity:this.activity(projectId,p)};
  }
  latest(projectId:string,actor:string){return Number(this.db.prepare('SELECT COALESCE(MAX(sequence),0) AS n FROM supervision_work_events WHERE owner_id=? AND project_id=?').get(actor,projectId)?.n??0);}
  events(projectId:string,p:RuntimePrincipal,after:number){this.assertAccess(projectId,p);if(after>0&&!this.db.prepare('SELECT sequence FROM supervision_work_events WHERE sequence=? AND project_id=? AND owner_id=?').get(after,projectId,p.actorId))fail('事件位置不可用，请重新读取概览','CURSOR_INVALID',409);return this.db.prepare('SELECT sequence,json FROM supervision_work_events WHERE owner_id=? AND project_id=? AND sequence>? ORDER BY sequence LIMIT 100').all(p.actorId,projectId,after).map(r=>this.publicEvent({...JSON.parse(String(r.json)),sequence:Number(r.sequence)}));}

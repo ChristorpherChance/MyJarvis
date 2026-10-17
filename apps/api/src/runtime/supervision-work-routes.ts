@@ -10,6 +10,8 @@ export function registerSupervisionWorkRoutes(app:FastifyInstance,runtime:Superv
  const handle=(fn:(req:any,reply:any)=>unknown)=>async(req:any,reply:any)=>{try{reply.header('Cache-Control','private, no-store');return await fn(req,reply);}catch(e){if(e instanceof BusinessError)return reply.code(e.status).send({error:{code:e.code,message:e.message}});if(e instanceof RuntimeAccessError)return reply.code(e.statusCode).send({error:{code:e.code,message:e.message}});if(e instanceof z.ZodError)return reply.code(400).send({error:{code:'INVALID_INPUT',message:'工作项或事件位置格式不正确'}});throw e;}};
  const base='/api/v1/projects/:id/supervision-work';
  app.get(base+'/overview',handle(req=>({data:runtime.overview(identifier.parse(req.params.id),principal(req))})));
+ app.get(base+'/console',handle(req=>({data:runtime.console(identifier.parse(req.params.id),principal(req))})));
+ app.get(base+'/activity',handle(req=>{const q=z.object({before:z.coerce.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).default(0)}).strict().parse(req.query);return {data:runtime.activity(identifier.parse(req.params.id),principal(req),q.before)};}));
  app.get(base+'/items/:itemId',handle(req=>({data:runtime.detail(identifier.parse(req.params.id),identifier.parse(req.params.itemId),principal(req))})));
  app.post(base+'/items',handle(req=>({data:runtime.create(identifier.parse(req.params.id),req.body,principal(req))})));
  app.post(base+'/items/:itemId/revisions',handle(req=>({data:runtime.revise(identifier.parse(req.params.id),identifier.parse(req.params.itemId),req.body,principal(req))})));

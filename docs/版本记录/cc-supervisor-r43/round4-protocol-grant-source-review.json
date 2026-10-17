@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "kind": "r43-round4-protocol-grant-non-author-source-review",
+  "status": "source-reviewed-blockers-remain",
+  "cut": {
+    "reportedCCHead": "607f4a62387311276dc214999c82850acf1a1139",
+    "localImportRoot": ".jarvis-dev/cc-supervisor-r43-round4",
+    "localImportGitHEAD": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+    "importMethod": "Root imported exact CC patch into baseline index; local Git HEAD is the baseline, not a new CC commit",
+    "patchPath": "artifacts/cc-supervisor-r43/cc-maintenance-round4-1792228917412.patch",
+    "patchSHA256": "c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e",
+    "patchBytes": 498404,
+    "reviewerChangedApplicationSource": false,
+    "reviewerRanTestsOrApplicationCode": false,
+    "reviewerNetworkOrModelCalls": 0,
+    "reviewArtifactOnly": true
+  },
+  "executionEvidenceBoundary": {
+    "maintenanceOperationId": "c56f3899-4404-4567-982c-ad10c8f2d3eb",
+    "centralDispatched": false,
+    "publicCollection": "artifacts/cc-supervisor-r43/maintenance-round4-collection-1792228918383.json",
+    "terminalObservation": "artifacts/cc-supervisor-r43/maintenance-round4-terminal-native-observation-r3.json",
+    "nativeFactsProvidedByRoot": {
+      "singleChildPID": 3617932,
+      "singleChildStartTicks": "68039991",
+      "nativeExitCode": 0,
+      "elapsedSec": 1093.218,
+      "timedOut": false,
+      "cgroupEmpty": true,
+      "nativeSessionPreserved": true,
+      "nativePermissionMode": "bypassPermissions",
+      "nativeVersion": "2.1.296",
+      "initAndSuccessResultPhases": 3,
+      "phaseTurns": [92, 1, 1],
+      "stdoutBytes": 2760206,
+      "stdoutSHA256": "d0ff18564f010ee71bdeb8b1780121b75e4d982c4070add09d389b3a7702fc46",
+      "parentTokensAllPhases": 23791456,
+      "inputIncludingCachesAllPhases": 23775634,
+      "outputAllPhases": 15822,
+      "nativeCumulativeEstimateUSD": 84.177032,
+      "priorNativeEstimateBaselineUSD": 58.403231,
+      "nativeEstimateDeltaUSD": 25.773801,
+      "providerInvoice": false,
+      "needsMoreWork": true
+    },
+    "interpretation": "The current same-child multi-phase stdout is new evidence. It does not retroactively establish the R3 selected log excerpt belonged to one invocation, and the currently installed old agent is not proved to have executed the new consumer.",
+    "privateBodiesOrPrivatePathsExportedInThisReport": false,
+    "reviewerReproducedNativeConsumerAgainstRaw": false
+  },
+  "findings": [
+    {
+      "id": "R4-PG-F01",
+      "priority": "P1",
+      "title": "One consumer rejects the observed later complete native phases and stops observing usage",
+      "sourceRefs": ["apps/api/src/runtime/agent-protocol.ts:26", "apps/api/src/runtime/agent-protocol.ts:73", "apps/api/src/runtime/agent-protocol.ts:85", "apps/api/src/runtime/agent-protocol.ts:108", "apps/api/src/runtime/agent-runner.ts:145"],
+      "trigger": "A substantive first final is followed by the same bound child's next init/activity/substantive final, as in this actual 92-turn plus two 1-turn output.",
+      "staticCause": "The consumer has only one finalCanonical. Only a provisional empty zero-cost final can be replaced. The second substantive final sets FINAL_CONFLICT; finish returns retained non-final records only, and every subsequent consume returns immediately once protocolError is set. Thus the third phase's usage is not even retained as partial observations.",
+      "impact": "The standard runner reports protocol failure, drops final receipts/cumulative cost checkpoints and can undercount actual later phases. Reading only the last final would also undercount this run, and is not an acceptable repair.",
+      "minimumFix": "Bind protocol phases to the actual single spawned invocation and its stdout/close identity, retain each phase final and partial observations, accumulate per-phase parent usage exactly once, and treat whole-session cumulative cost separately. Keep rejection of conflicting finals within the same phase. Do not infer a new invocation from session equality alone.",
+      "verificationRequiredFromCC": "A finite single child emits three init/result phases and real bounded assistant usage; test through executeAgentRounds plus signed HTTP/journal/ledger. Assert all three phase usage contributions, one cumulative cost delta, source provenance, and preserved rejection of genuine same-phase conflicts.",
+      "independentlyExecuted": false
+    },
+    {
+      "id": "R4-PG-F02",
+      "priority": "P1",
+      "title": "Provisional empty final still overwrites later partial activity when no replacement final arrives",
+      "sourceRefs": ["apps/api/src/runtime/agent-protocol.ts:73", "apps/api/src/runtime/agent-protocol.ts:91", "apps/api/src/runtime/agent-protocol.ts:108", "apps/api/src/runtime/agent-runner.ts:70", "apps/api/src/runtime/agent-runner.ts:71"],
+      "trigger": "Empty zero final, later init/assistant usage, then close or interruption with no later complete final.",
+      "staticCause": "Non-final activity does not invalidate finalLine. finish appends the old zero final after retained partial usage; parseAgentOutput then overwrites the partial usage with the zero final and marks completed/usageComplete true. The provisional predicate also requires total_cost_usd===0, whereas the historical R3 empty final had a nonzero cumulative session estimate.",
+      "impact": "R3 F01 remains open in this branch; the new successful replacement fixture does not cover truncation after subsequent activity or nonzero cumulative-cost empty phases.",
+      "minimumFix": "Track final-after-activity and phase completeness explicitly. A provisional final cannot complete later activity. Preserve partial known tokens and unknown remainder/cost; never force the cumulative estimate to zero to fit a fixture.",
+      "verificationRequiredFromCC": "Bound finite child variants: empty-final then reinit/activity and close without final; interrupted activity; empty phase carrying a nonzero cumulative cost; substantive conflicting finals still rejected.",
+      "independentlyExecuted": false
+    },
+    {
+      "id": "R4-PG-F03",
+      "priority": "P1",
+      "title": "Unknown usage reaches the node result route but the real Task DTO still rejects it",
+      "sourceRefs": ["apps/api/src/runtime/agent-terminal-observation.ts:2", "apps/api/src/runtime/agent-runner.ts:171", "apps/api/src/runtime/execution-routes.ts:48", "apps/api/src/runtime/execution-runtime.ts:290", "apps/api/src/v1/routes.ts:42", "apps/api/src/v1/contract.ts:17", "docs/openapi-v1-planned.json:52315", "docs/openapi-v1-planned.json:52378", "apps/api/test/execution-runtime.test.ts:17", "apps/api/test/execution-runtime.test.ts:29"],
+      "trigger": "The first native recovery fixture emits Codex thread.started plus quota error and exits without a usage final. The actual runner now produces usageComplete:false/costComplete:false without token fields. The test enables the production Task DTO validator.",
+      "staticCause": "Runtime and input Zod allow missing counts/unknown, but ExecutionActualUsage still requires inputTokens and outputTokens with additionalProperties:false and no measurementStatus. The Task commit validator therefore raises CONTRACT_INVALID/500 before the result is accepted; legacy agent reports its generic AGENT_RESULT_REJECTED. A supervisor-normalized unknown receipt additionally has the undeclared measurementStatus key.",
+      "impact": "This is the narrow static explanation of the reported quota-recovery regression, not an independently reproduced failure. On a durable node the rejected result cannot ACK; accepted unknown/partial receipts and stop/resume remain unreachable through the full production contract.",
+      "minimumFix": "Update the authoritative/generator-backed usage and Task/result schemas with explicit complete/partial/unknown semantics and compatible input/output optionality. Preserve known partial counts; do not invent zero counts. Keep the production DTO validator enabled and verify the actual response reason.",
+      "verificationRequiredFromCC": "Re-run the existing execution-runtime quota-recovery test with original fixture and DTO enabled, retain its raw HTTP status/error and test log, then signed HTTP/journal restart coverage for complete, partial and unknown usage with one ledger receipt each.",
+      "independentlyExecuted": false,
+      "reportedRegressionLogWasNotAvailable": true
+    },
+    {
+      "id": "R4-PG-F04",
+      "priority": "P1",
+      "title": "Pre-start failure and no-checkpoint reboot still omit mandatory supervisor usage",
+      "sourceRefs": ["apps/api/src/runtime/agent-runner.ts:225", "apps/api/src/runtime/agent-runner.ts:226", "apps/api/src/runtime/agent-delivery-journal.ts:64", "apps/api/src/runtime/execution-runtime.ts:302", "apps/api/src/runtime/agent-delivery-journal.ts:62"],
+      "trigger": "Template hash/local workspace failure before executeAgentRounds, or supervisor node restart before its first checkpoint.",
+      "staticCause": "The outer execute catch and legacy mismatch body still omit usage; recoverInterrupted likewise omits usage if no checkpoint exists. Central supervisor result handling requires usage!==undefined before unknown normalization and stop confirmation. Its 400 rejection is permanent in the durable journal.",
+      "impact": "R3 F02 remains open. The result blocks ACK and future claims despite no trustworthy complete usage being available.",
+      "minimumFix": "Emit an explicit unknown/incomplete observation from every pre-start/reboot terminal branch, or normalize only a well-defined trusted failure contract before requiring usage. Preserve node/process provenance; unknown is not zero.",
+      "verificationRequiredFromCC": "Actual ExecutionAgent plus signed HTTP plus durable journal/reopened databases for template mismatch, rejected workspace and no-checkpoint restart; assert exactly one accepted result, ACK and no duplicate model or ledger activity.",
+      "independentlyExecuted": false
+    },
+    {
+      "id": "R4-PG-F05",
+      "priority": "P1",
+      "title": "The new continuation grant cannot reach the intended existing task through the real runtime",
+      "sourceRefs": ["apps/api/src/runtime/execution-runtime.ts:168", "apps/api/src/runtime/execution-runtime.ts:186", "apps/api/src/runtime/execution-runtime.ts:200", "apps/api/src/runtime/execution-runtime.ts:201", "apps/api/src/runtime/execution-runtime.ts:206", "apps/api/src/runtime/project-supervisor-runtime.ts:20"],
+      "staticCauses": [
+        "Grant sourceResultHash is SHA256(canonicalExecution(result)); the supervisor and source checks use SHA256(JSON.stringify(result)). The runtime report has outcome-first insertion order, while canonical execution sorts keys, so the normal current source hash cannot match the grant hash.",
+        "Even after hash unification, supervisorDispatch rejects historicalTokens===undefined with USAGE_UNKNOWN. An owner-authorized fresh bounded window cannot currently coexist with the preserved incomplete historical observations.",
+        "Even for fully known history and a valid grant, pump/claim preflight still unconditionally compares the entire task's used tokens against template.supervision.maxTokens and does not validate/use the new continuationGrant window. Existing history above 10M remains blocked before a native child starts."
+      ],
+      "impact": "The API can persist a grant but the claimed automatic continuation is not usable for the user's current exhausted/incomplete task. Increasing one number, discarding old unknown observations or creating a replacement task would not repair the authorized lineage contract.",
+      "minimumFix": "Use one canonical source-result hash definition throughout. Preserve historical known/incomplete records and create an explicitly authorized new invocation/window with its own consumed grant bound to task/source/session/workspace. Validate the same consumed grant and fresh remaining window at business dispatch, outbox recovery, preflight, claim and node start; never reset total historical usage.",
+      "verificationRequiredFromCC": "Real runtime/SQLite/HTTP grant issuance and replay, wrong owner/version/hash/source rejection, consumed-once restart recovery, above-10M known history, history with unknown observations, same task/session new run, real node claim/start, and bounded-window exhaustion. Preserve old results and all historical counts/unknowns byte-for-byte.",
+      "independentlyExecuted": false
+    }
+  ],
+  "additionalBoundaries": [
+    {
+      "priority": "P2",
+      "item": "A signed stop receipt is not yet a measured child-zero receipt",
+      "sourceRefs": ["apps/api/src/runtime/execution-runtime.ts:305", "apps/api/src/runtime/agent-supervisor.ts:7", "apps/api/src/runtime/agent-delivery-journal.ts:64"],
+      "assessment": "Central stopConfirmation is synthesized from the bound signed cancelled delivery/stopReason. The agent supervisor sends group signals and exits; it does not retain a process-group-zero identity observation. Reboot reconciliation can precede completion of the old supervisor parent-watch teardown. Actual maintenance cgroup-zero evidence does not establish this distinct standard-agent path.",
+      "requiredVerification": "Real standard-agent cancellation/ACK/native subtree-zero and restart/resume identity ordering; do not report cancelled alone as physical teardown."
+    },
+    {
+      "priority": "P2",
+      "item": "Permission capability remains an external profile fact rather than an explicit matched product capability",
+      "sourceRefs": ["apps/api/src/runtime/execution-runtime.ts:53", "apps/api/src/runtime/agent-runner.ts:177"],
+      "assessment": "R4's actual maintenance native mode is evidenced by Root, while the template schema still rejects explicit permission-mode argv and contains no matched owner/node permission capability field. Do not claim the standard supervisor product has completed permission-policy integration."
+    }
+  ],
+  "r3FindingDisposition": {
+    "F01": "open: successful provisional replacement added, but later activity without replacement final and actual multi-complete-phase handling remain unsafe",
+    "F02": "open: pre-start and no-checkpoint branches still omit usage before supervisor central mandatory check",
+    "F03": "partial: optional-count TypeScript call boundary now guarded and CC actual type/build logs report success; production DTO still rejects unknown counts/state as detailed in R4-PG-F03",
+    "F04": "partial: source terminal allowlist now includes timeout/budget, but new grant hashes, unknown-history policy and unchanged preflight gate prevent the required real continuation"
+  },
+  "reportedValidationBoundary": {
+    "typecheckAndBuild": "CC raw captured logs report exit 0; not rerun by reviewer",
+    "httpSQLiteTests": "3/3 with explicit model/executor fixtures, not actual112/101 product execution",
+    "combinedCandidate": "9/10 failed, followed by protocol-only 5/5; original failure preserved",
+    "lateProtocolAndBilling": "8/8 and 4/4 reported/captured by Root; do not cover actual three substantive phases end-to-end",
+    "executionRuntimeRegression": "39 total:37 pass/1 skip/1 fail reported by subagent message; original log absent and not independently reproduced here",
+    "sourceReviewIsNotAcceptance": true,
+    "productionDeployed": false
+  },
+  "nextCCInstruction": "Continue only in the same isolated source/task lineage. First obtain and retain the existing quota-regression raw log and real error body, then fix usage semantics through the authoritative DTO/generator plus signed route/Task commit/journal/ledger; do not remove assertDto or fabricate zero. Close no-checkpoint/pre-start unknown receipts. Implement invocation-bound multi-phase receipt/usage accumulation covering the observed 92+1+1 single-child sequence, provisional-empty then activity-without-final, nonzero cumulative cost and same-phase conflict negatives. Repair grant result-hash consistency and its actual preflight/claim/restart path; preserve all known/incomplete historical usage while authorizing a separate consumed-once bounded window on the same task/session. Add actual runtime/HTTP/SQLite/node tests and logs for those paths, then repeat full type/build and the original regression. Real standard-agent physical stop/ACK and paired evidence transfer remain separate acceptance; no112 release or live-agent upgrade is authorized by this source review.",
+  "sourceFingerprints": [
+    {"path":"apps/api/src/runtime/agent-protocol.ts","sha256":"c6da8e357dd97e25ac0e78d3f34fd2daf697e0c47e37baf96b9bd0979972e478","bytes":7715},
+    {"path":"apps/api/src/runtime/agent-terminal-observation.ts","sha256":"2fe0fb611c422e95801608a79fe091170b731185db79cc15f0ce88fe77cb8984","bytes":632},
+    {"path":"apps/api/src/runtime/agent-runner.ts","sha256":"ebb5188fc300520ab433e930fdd76e9ad1983dfce00e0d88b87d995911302c4d","bytes":49455},
+    {"path":"apps/api/src/runtime/cli-supervision.ts","sha256":"5dd7785b7b1552fceebba8e4e6891c8e93f9edd4deaf27cbbff71e518844847c","bytes":6355},
+    {"path":"apps/api/src/runtime/execution-runtime.ts","sha256":"e67e936167c5a003146863ccfb135884583ecf292773be40f335e82f346c1f28","bytes":122689},
+    {"path":"apps/api/src/runtime/execution-routes.ts","sha256":"e8eca4687321b1064f4e4df91dabfa90389b3b458fbe88efd292628ce9819a75","bytes":13330},
+    {"path":"apps/api/src/runtime/execution-types.ts","sha256":"6cac5c5deaf58eb0e57a9a35b6c3374989c817ce8a0148628e686a4bc0ceb0c9","bytes":9296},
+    {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","sha256":"bccce1334c84e244817b626ef243cde1cdebc3dbe7b12ff31987f44f9e20efd4","bytes":26267},
+    {"path":"apps/api/src/app.ts","sha256":"9b96613a6b8a7b676ba38793cb2fca3c2db332fc0bbc2087fff4ea8d785b17c5","bytes":53784},
+    {"path":"apps/api/src/v1/contract.ts","sha256":"4d6884f40ecd56a35be20847955dd40afad85414b04e9efb785ff97b3ebc7f3a","bytes":2757},
+    {"path":"apps/api/src/v1/routes.ts","sha256":"c5e8f56099a47b8573408b4f2ca70ca5ff0ddd362489ec36e6d49182cf9f875b","bytes":12307},
+    {"path":"docs/openapi-v1-planned.json","sha256":"8c73606c2655bb52dae83bd7f2ebef106094dbb29a2606bf5f72b0e029bf348b","bytes":1998203},
+    {"path":"apps/api/test/execution-runtime.test.ts","sha256":"115d69716f57cc2e485f6e97290519917f723579951f42d3cea3d6ab623544e6","bytes":79038}
+  ],
+  "implementationAccepted": false,
+  "allR3BlockersClosed": false,
+  "currentTaskStandardAgentContinuationProved": false
+}

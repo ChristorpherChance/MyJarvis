@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "kind": "r43-round6-goal-learning-source-review",
+  "status": "source-only-remaining-work-not-release-acceptance",
+  "source": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round6",
+    "head": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+    "applicationCut": "91fdeb1ab35d53c8f846f8bf82843649bd397cc1",
+    "comparedR5": "8d73dc87f7224b3a730d709fdfd408fb4bf80e23",
+    "requirements": "artifacts/cc-supervisor-r43/post-r6-goal-autonomy-and-learning-requirements-checklist.json"
+  },
+  "boundary": {
+    "localSourceOnly": true,
+    "applicationEdits": 0,
+    "testsOrModelsRun": 0,
+    "networkRemoteApiOperations": 0,
+    "constructionRecordsChanged": false,
+    "AProtocolGrantReviewDelegatedToIndependentLocalSubagent": true,
+    "AReport": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+    "realTwoSuccessorGrantRestartOrBrowserAcceptance": false,
+    "deploymentAccepted": false
+  },
+  "r5CorrectionP1Delta": [
+    {
+      "id": "R5-ADOPTION-STALE-BINDING",
+      "status": "source-fixed-real-two-successors-not-verified",
+      "evidence": "apps/api/src/runtime/project-supervisor-runtime.ts:65 deletes adoptionBinding after a successful/replayed dispatch receipt, saves adoption-handoff-consumed with the original source hash and next run ID, then advances runId/revision. Later dispatch input can use current consumedRunId/resultHash/task revision rather than forever preferring the original adoption source.",
+      "limit": "This removes the identified source-level stale proof. The author explicitly lists adopt proof two real subsequent runs as not verified in reports/r43-implementation-round6.json. No claim that real runtime two-successor acceptance passed."
+    },
+    {
+      "id": "R5-CONSUMED-RECONCILE",
+      "status": "remaining-confirmed-P1",
+      "evidence": "apps/api/src/runtime/project-supervisor-runtime.ts:53 unconditionally sets enabled=true/status=running after validating the terminal source. Line 66 first handles judging, but the reconcile route has just overwritten that phase. Its normal running branch returns immediately when supervisor_consumed already contains the source run. Model preparation/consumption happens at lines 68-69 before finishJudgment. Therefore a source consumed before a model complete/uncertain recovery can be changed by reconcile into a live running state that never processes the durable model intent or dispatches.",
+      "narrowFix": "Make this existing reconcile entry phase-aware: locate and validate the exact existing consumed/model intent and immutable source/context binding. Resume finishJudgment for a recoverable complete result; preserve uncertain with an explicit bounded owner resolution path when no trusted model result exists. Do not mark consumed intent recovery as running, reinsert consumption, or call the model again blindly. Keep original uncertain/cost history.",
+      "partialFixPresent": "Line 66 now resumes finishJudgment when the stored session actually remains judging; this does not repair reconcile's running overwrite. Line 58 permits an explicit owner reply for an uncertain model, but it does not turn reconcile into a valid completed-intent recovery."
+    },
+    {
+      "id": "R5-PI-FIVE-SIX-KEYS",
+      "status": "source-fixed-real-model-not-verified",
+      "evidence": "apps/api/src/runtime/project-supervisor-contract.ts:2 supplies one trusted six-key contract including experienceReferences and empty []; apps/api/src/pi.ts:19,476 uses it as the system prompt, and project-supervisor-model.ts:3,37-40,84,93 uses the same contract and six-key validator.",
+      "limit": "The conflicting system instruction is removed. Existing adapter/HTTP fixture evidence does not establish a genuine model plus 101 CC continuous chain."
+    }
+  ],
+  "goalAuthorizationChecklist": [
+    {
+      "id": "AUTH-01",
+      "status": "missing-versioned-continuation-policy",
+      "evidence": "project-supervisor-runtime.ts:19-25,51,56-59 stores a goal/session revision and start command, with optional external one-use grantId. It has no goal-scoped policy/reference hash, continuation generation or policy-bound next-window receipt authority.",
+      "impact": "Existing enabled=true authorizes ordinary operation but does not carry a versioned goal authorization across the technical boundaries enforced by ExecutionRuntime."
+    },
+    {
+      "id": "AUTH-02",
+      "status": "partial-durable-intents-no-policy-backed-boundary-successors",
+      "evidence": "project-supervisor-runtime.ts:65 and supervisor-intents.ts:10-14 preserve dispatch intent/replay. execution-runtime.ts:194-210 binds source/CAS and a one-use grant. There is no service derivation of the next bounded window from a lasting goal policy. Real createApp dispatch/claim/signed ACK with two subsequent runs is explicitly not verified by the author.",
+      "acceptance": "not-run-by-reviewer"
+    },
+    {
+      "id": "AUTH-03",
+      "status": "partial-explicit-owner-grant-still-required",
+      "evidence": "execution-runtime.ts:186 now permits unknown history only when the owner request explicitly supplies acknowledgeUnknownHistory=true; :206 still requires grant for historical unknown, cumulative tokens beyond template maximum, or listed terminal boundaries. project-supervisor-runtime.ts:65 deletes continuationGrantId after each dispatch. ProjectSupervisorPanel.tsx:38,61 offers one owner click per grant; it does not send acknowledgeUnknownHistory, so an unknown-history grant request from that UI still receives USAGE_UNKNOWN even though the API can express the acknowledgement.",
+      "impact": "The user's continuous original-goal authorization requirement remains unreachable after recurring cumulative/unknown boundaries. Record-only money semantics and preserved history are present; a new finite window is not an erased or known-zero past.",
+      "narrowDirectionNotImplemented": "Implement only an explicitly versioned goal-scoped policy within the already authorized owner/project/task/session/goal/criteria/machine/workspace/executor lineage. Server-derived single-use bounded-window receipts must retain source hashes, task CAS, current decision/context, idempotency, unknown-history acknowledgement semantics, timeout/one round/zero retry and stop revocation. Keep the full historical ledger and all guards outside this scoped authority; do not reset counts, replace tasks/sessions or add a monetary cap. This review does not select or implement a new policy."
+    },
+    {
+      "id": "AUTH-04",
+      "status": "partial-session-revocation-no-policy-generation",
+      "evidence": "project-supervisor-runtime.ts:57 revokes enabled state and requests cancel; goal revision increments for revise. :62 checks live revision/enabled/stopped around model/dispatch; ExecutionRuntime rechecks supervisor authorization. No continuation-policy generation exists to revoke. The R6 stop view at :50 and UI :46,57 now distinguish requested and confirmed, but child0/new-lineage acceptance remains explicitly unverified.",
+      "limit": "No claim of a true stopped child subtree merely from disabled session state."
+    },
+    {
+      "id": "AUTH-05",
+      "status": "partial-fixed-checkpoint-only",
+      "evidence": "project-supervisor-runtime.ts:65 requires another grant at rounds>=20; :71 rejects an identical continue directive as STALLED and requires originals for achieved. No goal-policy checkpoint/progress comparison based on changed artifacts or repeated failure evidence exists. A new text directive alone can pass this specific stalled check.",
+      "impact": "The 20-round gate is still a technical escalation needing owner action, rather than a recorded review within the original continuous-goal policy. Do not remove it without scoped policy and objective evidence handling."
+    }
+  ],
+  "learningChecklist": [
+    {
+      "id": "LEARN-01",
+      "status": "partial-source-stored-chain-not-operable-in-ui",
+      "evidence": "project-supervisor-runtime.ts:73 captures sourceEventId/hash and source supervisor-event reference. apps/web/src/features/operations/experience.tsx:33 renders content as preformatted text and source as a value; it does not resolve the event hash into original decision/options/outcome/correction/metadata. ProjectSupervisorPanel.tsx:12,63 renders historical events via top-level eventText without nested judgment expansion; runtime.view():50 returns the latest 100 events only.",
+      "narrowFix": "Resolve the existing immutable source reference under owner access and add expandable historical chain details using existing event hashes; provide reachability beyond the last 100 where required. Preserve raw private content restrictions."
+    },
+    {
+      "id": "LEARN-02",
+      "status": "partial-verified-flag-works-structured-conditions-not-editable",
+      "evidence": "v1/capture-domains.ts:237-241 really sets top-level verified=true/status=verified with current content/conditions/evidence. The selector supervisor-review.ts:10 reads that top-level verified flag; no second truth is introduced by verification. But verify updates only textual conditions and leaves supervisorLearning.conditions unchanged. Selector matches machineId/executor/version from that structured metadata; experience.tsx:28 only edits text conditions. Candidate capture at runtime:73 records null native version for events lacking executionMetadata, including correction events, and there is no condition/source-verification command to resolve this metadata.",
+      "narrowFix": "Extend the existing CAS lesson/experience flow with trusted structured condition/source verification and readback, keeping unknown until verified; do not infer a version from free text or model self-report. Preserve top-level verified as the qualification flag."
+    },
+    {
+      "id": "LEARN-03",
+      "status": "missing-lesson-counterexample-invalidation-supersession-operations",
+      "evidence": "capture-domains.ts:213 exposes capture/update/archive/verify/merge/skill-publish/version/reuse/deprecate. update at :231 revokes verification but cannot change supervisorLearning; version is skill-only at :265 and deprecate is published-skill-only at :283. There is no lesson/experience reason+evidence operation to set the selector's counterexamples or supersededBy, revoke without editing body, or create a replacement relation. Private archive removes content/history and is not a preserved learning invalidation operation. The UI experience.tsx:28-33 reflects these limits.",
+      "narrowFix": "Add only the required version-protected lesson/experience operations and UI controls, keeping source/revisions and selector-readable counterexample/invalid/superseded state. Replacements begin unverified. Do not require Skill publication as a workaround."
+    },
+    {
+      "id": "LEARN-04",
+      "status": "partial-ref-binding-and-model-disposition-present-exclusions-and-chain-ui-missing",
+      "evidence": "supervisor-review.ts:10 freezes selected experience revision/hash and marks verified reference versus reminder; model validator project-supervisor-model.ts:37-40 requires adopted/not_adopted with a reason for every supplied ref, forbids adoption of unverified refs. runtime:71 and :65 recheck selected refs before accepting/dispatching. However selector silently discards mismatched/unknown/counterexample/superseded refs without a stored exclusion reason; runtime decision event stores nested model dispositions but ProjectSupervisorPanel.tsx:12,63 and experience.tsx:33 do not expose these by candidate or decision.",
+      "limit": "This is source support for real model input, not observed genuine model adoption. No extra model call was made to manufacture evidence."
+    },
+    {
+      "id": "LEARN-05",
+      "status": "partial-fact-correction-works-ui-type-and-chain-gaps",
+      "evidence": "runtime:60 validates owner/revision/target hash, appends immutable correction, retains both future_reference and current_followup contexts and invalidates current followup. supervisor-review.ts:4-5 allows fact/preference but correctionType is optional. ProjectSupervisorPanel.tsx:35-36,63 submits correctedFact/applyTo without correctionType or a preference type/option. Candidate runtime:73 adds fact counterexamples only when e.correctionType==='fact'; therefore a normal UI fact correction cannot reach that fact-counterexample branch. Goal/criteria revision has a distinct route at runtime:57.",
+      "narrowFix": "Send and validate the real correction type from UI and preserve original source/target hash. Keep fact correction, preference and goal/criteria revision distinct; bind resulting learning candidate to existing source context without changing past execution results."
+    }
+  ],
+  "projectDecisionLifecycle": {
+    "status": "still-record-only-projection-no-implementation-or-change-linkage",
+    "evidence": [
+      "project-supervisor-runtime.ts:72 only calls decisions.record with expectedVersion:0/changeOf:null and maps event ID to decision ID. It does not invoke select/implementation/change for actual supervisor actions or changed decisions.",
+      "supervisor-review.ts:14-24 derives actions:[] and an observed/proposed or selected snapshot. Ordinary decision events saved at runtime:71 contain decision/resultHash but no feedback options, while projection reads event.feedback.options. Therefore normal projections use the unverified-source fallback rather than the actual feedback options.",
+      "project-decision-runtime.ts:150-153 record deliberately creates a new root; its separate select/implementation/change APIs retain versions and actual action evidence. Those lifecycle APIs are not used by the supervisor projection.",
+      "runtime:69 retains a model intent ID as sourceDecisionId for an outcome. It does not resolve the event-to-ProjectDecision mapping and append actual action/outcome evidence to that ProjectDecision revision."
+    ],
+    "narrowFix": "Carry the already frozen feedback/options/source linkage into the decision projection, then append actual dispatch/result action evidence through the existing versioned ProjectDecision lifecycle and relate changed decisions using changeOf. Do not label selected snapshots as implemented or fabricate option evidence."
+  },
+  "nextCcScope": [
+    "Repair the confirmed consumed-run reconcile phase hole and prove the exact complete/uncertain recovery semantics without a blind provider retry.",
+    "Preserve the R6 adoption one-use proof and shared six-key prompt fixes; verify the already declared missing real same-task two-successor/ACK/restart acceptance rather than rewriting them speculatively.",
+    "Implement the original-goal continuation authority and scoped receipt design only if Root selects the bounded proposal against the user's existing authorization; maintain technical guards, stop revocation, unknown history and record-only costs.",
+    "Close the specific lesson condition/counterexample/invalidation/supersession operations, typed owner correction, adoption/exclusion reasons and source/decision chain UI using current versioned domains.",
+    "Close ProjectDecision actual action/change linkage with objective evidence; keep independent acceptance separate."
+  ],
+  "authorEvidenceBoundary": {
+    "report": "reports/r43-implementation-round6.json",
+    "authorClaims": "Node24 typecheck/build exit0; targeted10/10 and signed-partial strict DTO1/1",
+    "reviewerDidNotRerun": true,
+    "authorExplicitlyIncomplete": [
+      "real createApp ExecutionRuntime two successors/claim/signed result ACK",
+      "unknown/over10M grant replay/concurrency/owner/CAS/source/restart matrix",
+      "adoption two real subsequent runs and consumed-intent recovery",
+      "ProjectDecision actual actions/changeOf lifecycle",
+      "browser/mobile, genuine112model/101CC, child0/new lineage"
+    ],
+    "releaseReady": false,
+    "newPackages": "not generated according to the report; source/package identity verification belongs to the separate A report"
+  }
+}

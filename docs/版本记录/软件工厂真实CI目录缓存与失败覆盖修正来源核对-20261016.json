@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-ci-r4-r5-r6-source-bounded-public-projection",
+  "staticSourceQualified": true,
+  "remainingP0P1": 0,
+  "originalSourceReports": {
+    "R4": {
+      "path": "artifacts/factory-devci-r38/r4-dependency-slot-independent-local-source-review-final.json",
+      "sha256": "d35f1187a0a717a6f195747736f35e146547f313ea710f29336c7ca517581ad4",
+      "bytes": 15950
+    },
+    "R5": {
+      "path": "artifacts/factory-devci-r38/r5-result-cache-independent-local-source-review-final.json",
+      "sha256": "9896acd37e1e21738054aad2642b9850db331ac972c32480841f23c7f68eea3d",
+      "bytes": 18862
+    },
+    "R6": {
+      "path": "artifacts/factory-devci-r38/r6-failed-coverage-independent-local-source-review-final.json",
+      "sha256": "5ac9781bb3b8cb02b8d41eadd1a4a74ce2fdfd88b1e89470f2d9c0aed9fe119b",
+      "bytes": 21381
+    }
+  },
+  "changes": {
+    "R4": "Create one fixed empty node_modules mount target before checkout sealing; source and dependencies stay read-only.",
+    "R5": "Disable Vitest result cache with the one fixed CLI flag.",
+    "R6": "Enable original coverage report on test failure with the one fixed CLI flag."
+  },
+  "sourceOnlyQualification": true,
+  "runtimeQualifiedByThisSourceProjection": false,
+  "actualRuntimeQualificationMustUseSeparateSavedEvidence": true,
+  "noOldTestsReplayedForRecord": true,
+  "qualification": {
+    "HTTP": false,
+    "targetServerFullSuite": false,
+    "realGitMerge": false,
+    "autopilot": false,
+    "AIReview": false,
+    "OBJ035Complete": false,
+    "frameworkABI": false,
+    "fullPG4": false,
+    "full74": false,
+    "customerDelivery": false,
+    "productionRelease": false
+  },
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

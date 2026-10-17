@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-16T05:58:35.787Z",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 86,
+    "hash": "574844cdfbc4c1120b556f8e5f26393cd86102e314045c0ba2ae10f80a3bb530",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "启动和终态检查均已完成且禁止重放；读取保留的原始错误与状态，独立核对本次资源收口，再按真实原因修复新入口。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 4,
+    "hash": "7e10a8ef33d4a5e3d3557d42895c5f406d51a27f53fe4cc3379e832aca67c1d7",
+    "summary": "本次验证在测试模块加载阶段中断，已保留错误并正在定位；仍为0通过、0业务失败、4未完成。",
+    "nextAction": "启动和终态检查均已完成且禁止重放；读取保留的原始错误与状态，独立核对本次资源收口，再按真实原因修复新入口。",
+    "completionSummary": "",
+    "validationScope": "本次只确认终态failed及首错阶段module-import，具体模块原因和当前资源闭合仍待独立核对；未把transport exit0当用例通过，不增加原74签收。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 17,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "actualCheckObserved": true,
+  "checkClosed": true,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

@@ -1,0 +1,190 @@
+{
+  "kind": "independent-r43-round10-final-delta-source-review",
+  "version": 1,
+  "scope": {
+    "base": "a09cd24997b793d70cbfdacc7b831d2d20cd1373",
+    "head": "3c047fc203d8fc2e4aa16a13bedd317450175b5c",
+    "appCommit": "2bd2e27b97b44f76567ccf6c6b90cfd9a8dc618b",
+    "mode": "Only exact final delta and relevant saved original evidence; reuse exact unchanged production file hashes.",
+    "applicationControlOrTestsExecuted": false,
+    "networkOrRemoteUsed": false,
+    "productionSourceEdited": false
+  },
+  "conclusion": {
+    "singleAssignedLabelAuthorityP1Closed": true,
+    "newConfirmedP1InAssignedDelta": [],
+    "r5CompatibilityNewDeltaFound": false,
+    "meaning": "The label-only audit certification defect is closed by removing its authority production and consumption. No new definite P1 was found in this bounded final delta. The author flag blockingReleaseIssueRemaining=false is corroborated only for that assigned issue; global needs_more_work and unverified field/matrix work remain truthful separate scope."
+  },
+  "closureProof": {
+    "references": [
+      "apps/api/src/runtime/project-supervisor-runtime.ts:87",
+      "apps/api/src/runtime/supervisor-review.ts:44",
+      "apps/api/src/runtime/supervisor-review.ts:47",
+      "apps/api/src/runtime/supervisor-review.ts:48",
+      "apps/api/src/runtime/supervisor-projection-runtime.ts:20",
+      "apps/api/src/runtime/supervisor-projection-runtime.ts:24",
+      "apps/api/test/execution-createapp-chain.test.ts:17",
+      "apps/api/test/execution-createapp-chain.test.ts:38",
+      "apps/api/test/supervisor-projection-round9.test.ts"
+    ],
+    "productionChange": "boundedEvidenceChoice and the projectionAuthority event producer are deleted. deriveDecisionProjection no longer consumes even a historical projectionAuthority label to set yes/available, clear missingEvidence or declare bounded objectives. Existing option text, source choice/reason and unresolved qualifications remain.",
+    "actualEligibility": "String options remain unknown/unverified. Existing ProjectDecision selection eligibility rejects unavailable authority/evidence; the unchanged projector catches DECISION_EVIDENCE_REQUIRED and retains proposed status.",
+    "actualFacts": "The unchanged action stage uses observeActions for unqualified proposed decisions, preserving actual dispatched/signed-result performed/failed facts without falsely changing their eligibility to implemented. Existing explicit owner correction/change and durable distinct stage IDs/receipts remain.",
+    "oldHistory": "No old event/action/decision history is rewritten or retroactively relabeled; this source correction governs new projection processing.",
+    "regressionEvidence": "Saved pre-fix production-chain regression failed 0/1 with actual implemented versus expected proposed. Saved final r7 directly affected tests pass 2/2: actual createApp Task DTO/ExecutionRuntime/TCP signed paired agent/three finite native-format children/journal ACK with mismatched label/directive, while all audit projections stay proposed/chosenId null/unknown qualifications/nonempty missing evidence and real actions remain. Deterministic model/native fixtures are not real supplier/site acceptance."
+  },
+  "reuseAndR5Compatibility": {
+    "unchangedProductionFiles": [
+      {
+        "path": "apps/api/src/runtime/supervisor-goal-policy.ts",
+        "bytes": 6310,
+        "sha256": "d5ae5f13444ceddb906850e170486ab9139baaddf47a0febafb447fb620f64fa",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/execution-runtime.ts",
+        "bytes": 129697,
+        "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/execution-types.ts",
+        "bytes": 11170,
+        "sha256": "4e9059d1c8dac7b333a0af0925fac7de81b9bf155fc6eed036590f81c028e8de",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/execution-routes.ts",
+        "bytes": 14568,
+        "sha256": "a5027305858a46ae873801facd4206f2c1ec9109557d5b89b6a370c6c78f2b1b",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/agent-supervisor.ts",
+        "bytes": 2773,
+        "sha256": "bcd78ab8213884dd6d4998ea605b5f326a1ea665a823c65ed2a7a3c9f42215c9",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-intents.ts",
+        "bytes": 2819,
+        "sha256": "26865ed66027076d72c8f61f7c516a807248f7cad3513fb454975f982ab737fe",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-projection.ts",
+        "bytes": 388,
+        "sha256": "2f0e9c0d500d48d45a79428863eefaff6aeece0f4ddac0c42d0480622e021043",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/project-decision-runtime.ts",
+        "bytes": 19122,
+        "sha256": "0ced7b3c26212cacecb240a09a9252b4fa89e863da946f070efb36a297c3173a",
+        "exactR9R10BytesEqual": true
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+        "bytes": 6856,
+        "sha256": "f8957185c2cb2e47f2d340e9d4b3ecf671904318086edfed3f092afa9512af4a",
+        "exactR9R10BytesEqual": true
+      }
+    ],
+    "otherProductionChanges": "agent-runner and cluster-runtime each only change build string r6 to r7. project-supervisor-runtime changes only final judgment label authority generation/removes its helper; constructor schema, owner new_session command, pendingNativeHandoff, reconcileNativeHandoff, event producer shape used by r5, window authorization and policy/source hash logic are unchanged.",
+    "r5Control": {
+      "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r5.mjs",
+      "sha256": "a5d05f6842ca1bdade31c489b1db1e7861c5f13e8219dbf5740d58e21be8c09f"
+    },
+    "r5Assessment": "No new R10 schema/status/lease/delivery/hash/native-history reason or owner-lineage field change affects r5 typed proof consumption. Reuse the fixed R9 compatibility basis; original r5 authoring is not independent r5 approval. Reviewer B/Root owns that separate review and actual execution gate.",
+    "buildLabel": "PLATFORM_BUILD/agentBuild reported and source-diffed as 20261017-cc-supervisor-r43-r7; package bytes and loaded-service checks remain Root responsibility."
+  },
+  "remainingAcceptanceNotProvenBugs": [
+    "Persistent pending-grant/business-before-runtime crash/replay/concurrent cut matrices remain untested, not newly reproduced bugs.",
+    "Independent awaiting-cost waitingUser successor and broader goalRevision/restart matrix remain distinct uncovered branches.",
+    "Real 112 supplier model/101 fixed CC, browser/mobile and original product/customer acceptance remain unperformed here."
+  ],
+  "evidence": {
+    "localHashReuseAndSevenOriginals": {
+      "path": "artifacts/cc-supervisor-r43/round10-final-local-delta-evidence.json",
+      "bytes": 4972,
+      "sha256": "fb68bf51380a2cf53ffd2d26e6ddcbcb97156775411acced73965af06d3e086e"
+    },
+    "sevenOriginals": [
+      {
+        "path": "reports/r43-implementation-round10.json",
+        "bytes": 3383,
+        "sha256": "91beed02dbbb099d935c1b048d1b137b1e42c37cb2240d07e6ac0afc0d0add66",
+        "treePrivateAndReceiptMatch": true
+      },
+      {
+        "path": "reports/r43-implementation-round10.md",
+        "bytes": 5244,
+        "sha256": "aa0441d0404c19d456930a8198cb504ff3dfaa08e132e4776b3d0102262d0e3b",
+        "treePrivateAndReceiptMatch": true
+      },
+      {
+        "path": "reports/r43-round10-packages.json",
+        "bytes": 3907,
+        "sha256": "80d4420f7bb45a83f1dac57f056b6a2bdbdaa13608e81488a86c99646fceda7d",
+        "treePrivateAndReceiptMatch": true
+      },
+      {
+        "path": "reports/r43-round10-logs/label-authority-before.tap",
+        "bytes": 1128,
+        "sha256": "2111baf9759dd4d4a3b101fb04695ddf92f5908e949e1d3ff6a6ed11925e877c",
+        "treePrivateAndReceiptMatch": true
+      },
+      {
+        "path": "reports/r43-round10-logs/final-r7-affected.tap",
+        "bytes": 10883,
+        "sha256": "6adf43f94785d2629beb3eb493e81cd3ef760068b4d58ae2497aa2a21767383d",
+        "treePrivateAndReceiptMatch": true
+      },
+      {
+        "path": "reports/r43-round10-logs/typecheck-final.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+        "treePrivateAndReceiptMatch": true
+      },
+      {
+        "path": "reports/r43-round10-logs/build-final.txt",
+        "bytes": 3400,
+        "sha256": "ac67f4adfe53eb0cb19d7d284b1a617a8228c8be37bc677315696e8b0d405c19",
+        "treePrivateAndReceiptMatch": true
+      }
+    ],
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round10-collection-1792242679191.json",
+      "bytes": 18253,
+      "sha256": "a0b7088d6770cd815a8f612a053d6d2659961761737b0ffde93309065f9d8e52"
+    },
+    "rootTerminalObservation": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round10-terminal-native-observation.json",
+      "bytes": 7704,
+      "sha256": "7f15d99b7fcd30d4b273ca254e4b3539fd122375b700bd09014e8d938c7eeed7"
+    },
+    "privacy": {
+      "path": "artifacts/cc-supervisor-r43/round10-specified-history-publication-preflight.json",
+      "bytes": 9204,
+      "sha256": "68b36d3d0da117ab9bb297c5bd4bf3d65c9913f671d4704806a0a526ca3c7afc"
+    },
+    "logCounting": "Before failure and affected passes are retained as separate evidence; no old groups rerun or overlapped totals added."
+  },
+  "finalState": {
+    "sourceOnlyReviewComplete": true,
+    "privacyDeltaComplete": true,
+    "actualIdleProven": false,
+    "packageOrDeploymentApproved": false,
+    "R11Reviewed": false
+  },
+  "publicProjection": {
+    "sourceSHA256": "333e16a1148f5f6632dfa9b0973b8f9c3384a2b605045affb506dbc46b5b3356",
+    "sourceBytes": 10052,
+    "removedFields": [
+      "scope.tree"
+    ],
+    "originalPreserved": true,
+    "scope": "Only private authority/workspace/absolute local locator fields removed. Factual fixed cut and original fingerprint retained."
+  }
+}

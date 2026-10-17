@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T02:56:48.584717+00:00",
+  "scope": "only unknown HTTP5xx submission receipt correction",
+  "status": "passed-in-bounded-scope",
+  "originalCut": {
+    "path": "artifacts/supervision-r36/frontend-cut-attempt-1.json",
+    "sha256": "f245949bc662dea2c29acc4baf261569e15ef43113a00e626c97d2741aa6d7c3"
+  },
+  "finding": "HTTP500/502/503 can follow committed write; treating numeric status as definite rejection allowed a new command and duplicate create",
+  "fix": "Keep original body and command for 5xx/no status/invalid-success reply; only explicit known input/auth/CAS rejections release the attempt",
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+      "sha256": "b7aed2fd0b02d5443632b2cbbca2eeeb1504275c64a848bab7d502914b975052",
+      "bytes": 13861
+    },
+    {
+      "path": "apps/web/src/features/operations/supervision-work-view.ts",
+      "sha256": "f70afc09771d6bc0bfb70616e024eafaa23b04ec76cef1fd51a7dc6e5273e74d",
+      "bytes": 2825
+    },
+    {
+      "path": "apps/web/src/features/operations/supervision-work-view.test.ts",
+      "sha256": "4168748b889756790aea84c0c4e6dde4e7c65e596227333c11182bde9e70360a",
+      "bytes": 6248
+    }
+  ],
+  "validation": {
+    "newTargetedGroups": 1,
+    "passed": 1,
+    "failed": 0,
+    "executions": 1,
+    "oldTwoGroupsRerun": false,
+    "testToolChunk": "1db97d",
+    "testExitCode": 0,
+    "webTypecheckExitCode": 0,
+    "typecheckSession": 28593,
+    "typecheckCompletionChunk": "f54fed",
+    "kind": "pure frontend submission lifecycle; no HTTP server or browser in this cut"
+  },
+  "productionOrRemoteOrModelCalls": 0,
+  "sourceFrozen": true,
+  "broaderBrowserVerification": "Root pending after affected final build"
+}

@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-change14-actual-byte-local-static-impact-analysis",
+  "at": "2026-10-16T04:12:36.015265+00:00",
+  "status": "static-analysis-only-not-product-acceptance",
+  "evidence": {
+    "currentFileObservation": {
+      "path": "artifacts/software-factory/goals-r29/r37-current-change14-actual-observation-1792123746017-fc789c37-6666-4208-9fc1-7a9cbf53d723.json",
+      "sha256": "bc1934b8899039e6acb3dceb76a29c4390b3f44ed22675dd2e75b3bcbfdf968b",
+      "bytes": 8632
+    },
+    "privateWire": {
+      "sha256": "a7a1d0a53766a8016b2206490d29a30131fa9de9b8359dabdbdc304ec61a2dc9",
+      "bytes": 710027,
+      "originalSourceBytesPubliclyExposed": false,
+      "metadataPubliclyExposed": false
+    },
+    "manifestDelta": {
+      "path": "docs/版本记录/软件工厂当前目录差异-20261016.json",
+      "sha256": "dca76a491664d9ff39500ea7339680c752501f8bb160e730479b1cbbb46101d3",
+      "bytes": 8042
+    },
+    "originCandidateSearch": {
+      "path": "artifacts/factory-resume-r37/change14-local-origin-candidates.json",
+      "sha256": "77651c4b2c89aaa4da345491a8617527b749d9b3c3bb2192ef5fe4a7ae436107",
+      "bytes": 106627
+    }
+  },
+  "byteQualification": {
+    "files": 14,
+    "currentPinsMatched": 14,
+    "twoReadsStable": 14,
+    "modifiedWebFilesComparedAgainstExactOld602LocalBytes": 8,
+    "changelogOld602ExactPrefixMatched": true,
+    "newFiles": 5,
+    "modifiedFiles": 9,
+    "sourceFromDifferentOldLocalDocUsed": false
+  },
+  "items": [
+    {
+      "path": "apps/web/src/ui/TemplateRefreshModal.test.ts",
+      "sha256": "cabd210de0181de76b58f7f4f4661833a7832b9d9237f557b9686a62105ae889",
+      "bytes": 1388,
+      "twoReadsStable": true,
+      "intent": "新增 structuralIssueCount 的三个静态测试用例：混合问题、无滞后、只有滞后；本次未执行。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "absent-in-old602-manifest",
+        "added": true
+      }
+    },
+    {
+      "path": "doc/dev-plan/模板重排规则核对报告-实施计划.md",
+      "sha256": "aa04e530275dd2ef18657fbc13ea3b32379ee34615462c34c50690eb4577e680",
+      "bytes": 13368,
+      "twoReadsStable": true,
+      "intent": "新增模板核对报告的纯函数、preflight 装配、前端软闸/明细与收尾实施计划；计划不是实施或测试证据。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "absent-in-old602-manifest",
+        "added": true
+      }
+    },
+    {
+      "path": "doc/dev-plan/模板重排规则核对报告-设计.md",
+      "sha256": "14750b6484a4b26f8cf1056146997d58ee1a93bea267875cd2f14c7c3a8b4c28",
+      "bytes": 5336,
+      "twoReadsStable": true,
+      "intent": "新增大章/锚点/编号和上游滞后核对、preflight report 形态与前端选册规则设计；不能据设计声明服务器行为已经实现。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "absent-in-old602-manifest",
+        "added": true
+      }
+    },
+    {
+      "path": "doc/dev-plan/设计覆盖检测与可交互原型-实施计划.md",
+      "sha256": "d40d5506769bbac65d4925c064790ae65e013fd8b7330873a17ca290ec5aa375",
+      "bytes": 16652,
+      "twoReadsStable": true,
+      "intent": "新增过度设计筛查/dsg 豁免、HLD 补齐、AI 自检评审、UI 章节关联、目录编辑及原型穿流的实施计划，并提及迁移 0031；未据此认定迁移已运行。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "absent-in-old602-manifest",
+        "added": true
+      }
+    },
+    {
+      "path": "doc/dev-plan/设计覆盖检测与可交互原型-设计.md",
+      "sha256": "d54c01da4dddc4610df1d1218b1f76be008560272baecd39a503ed46b858b64b",
+      "bytes": 8788,
+      "twoReadsStable": true,
+      "intent": "新增 PRD 与设计双向覆盖、原型章节对应/滞后及综合交互原型的设计说明；仅为文档意图。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "absent-in-old602-manifest",
+        "added": true
+      }
+    },
+    {
+      "path": "apps/web/src/api.ts",
+      "sha256": "eed3c14ec22002222a75f181fcd94bbf22b53cc28334143dff48e2a33d9f372f",
+      "bytes": 7011,
+      "twoReadsStable": true,
+      "intent": "模板重排预检类型由 mismatch 改为 report；新增剔除上游滞后提示的结构问题计数，用于默认勾选。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "2f22644d86c80e7348323384b89dfec5233773bd5190dac288db9447c3224b49",
+        "oldBytes": 6287,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/api.ts",
+          "sha256": "2f22644d86c80e7348323384b89dfec5233773bd5190dac288db9447c3224b49",
+          "bytes": 6287
+        },
+        "oldPinMatched": true,
+        "linesAdded": 9,
+        "linesRemoved": 1
+      }
+    },
+    {
+      "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+      "sha256": "760cfda8703b5d4c81c011f480240a0f13fc48cebf9e1ffa70530438f7e61179",
+      "bytes": 45562,
+      "twoReadsStable": true,
+      "intent": "显示原型页与 UI 册章节、PRD 需求关联及滞后状态；新增目录条目标题/备注/流程步骤/豁免编辑，并为新增与保存增加忙状态。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "19a7d3632304f780ea3bf2c21a1d770b28b3df706a16e214407c420fd6b226f3",
+        "oldBytes": 40695,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/pages/design/PrototypePanel.tsx",
+          "sha256": "19a7d3632304f780ea3bf2c21a1d770b28b3df706a16e214407c420fd6b226f3",
+          "bytes": 40695
+        },
+        "oldPinMatched": true,
+        "linesAdded": 91,
+        "linesRemoved": 4
+      }
+    },
+    {
+      "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+      "sha256": "8da88bb25ff6c82ca8e5a9442fc87f27af3394dacc01cded5d6ca0f57b6a92bf",
+      "bytes": 10574,
+      "twoReadsStable": true,
+      "intent": "区分种子项重置与 AI 自检评审；新增显式启动、自检候选落项轮询计数、超时提示和 AI 来源标记，人工结论入口保留。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "dd2bb9a956df2e29c3c5492943423d466b2c3fe4620325378244e10a2f904a28",
+        "oldBytes": 6932,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/pages/design/ReviewPanel.tsx",
+          "sha256": "dd2bb9a956df2e29c3c5492943423d466b2c3fe4620325378244e10a2f904a28",
+          "bytes": 6932
+        },
+        "oldPinMatched": true,
+        "linesAdded": 74,
+        "linesRemoved": 7
+      }
+    },
+    {
+      "path": "apps/web/src/pages/design/api.ts",
+      "sha256": "2ad4c74cf790893cbbfe010a5ea44ab0c097f78815d30762b6b1a330e36e8db2",
+      "bytes": 13330,
+      "twoReadsStable": true,
+      "intent": "扩展评审来源和原型章节关联类型；增加 AI 自检 POST 与目录条目修订 PUT 调用。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "e63b2f0e12c0d216b5e3a2018a6f11e43646cfffc31b771f7535de35a1efcc2f",
+        "oldBytes": 12153,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/pages/design/api.ts",
+          "sha256": "e63b2f0e12c0d216b5e3a2018a6f11e43646cfffc31b771f7535de35a1efcc2f",
+          "bytes": 12153
+        },
+        "oldPinMatched": true,
+        "linesAdded": 17,
+        "linesRemoved": 3
+      }
+    },
+    {
+      "path": "apps/web/src/pages/req/RtmPanel.tsx",
+      "sha256": "8d5f494e386ede40609bc101ab1ec9d1b0d4ff70628e7684f146939caf5531e6",
+      "bytes": 25495,
+      "twoReadsStable": true,
+      "intent": "将需求与 HLD 覆盖补齐按域并发处理并分别反馈；展示疑似过度设计候选及设计锚点豁免/撤销入口。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "cdeba106aaa5d4957f3a651a84ac6e52f37198e75f2a5052da09f1830c697691",
+        "oldBytes": 19351,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/pages/req/RtmPanel.tsx",
+          "sha256": "cdeba106aaa5d4957f3a651a84ac6e52f37198e75f2a5052da09f1830c697691",
+          "bytes": 19351
+        },
+        "oldPinMatched": true,
+        "linesAdded": 138,
+        "linesRemoved": 35
+      }
+    },
+    {
+      "path": "apps/web/src/pages/req/api.ts",
+      "sha256": "a8e84b5eee7dba67f6d98e91556e2a8c7ea54cfb0bb5ef98b970b769c4510ec1",
+      "bytes": 8751,
+      "twoReadsStable": true,
+      "intent": "健康视图新增 overdesign 候选/豁免集合；增加设计域 coverage-fix 调用，并将 deferred 接口类型扩展到 dsg。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "24d06ba1ae7e5f2e5b32ccc96c04d7b8bfcb669c627c40c52f4f34d5d5af1b17",
+        "oldBytes": 7978,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/pages/req/api.ts",
+          "sha256": "24d06ba1ae7e5f2e5b32ccc96c04d7b8bfcb669c627c40c52f4f34d5d5af1b17",
+          "bytes": 7978
+        },
+        "oldPinMatched": true,
+        "linesAdded": 15,
+        "linesRemoved": 2
+      }
+    },
+    {
+      "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+      "sha256": "129fef2bbcc9066337a221af2fe0af2c6fce328c2ba6ac67e225a0ddc3d2a2b8",
+      "bytes": 16029,
+      "twoReadsStable": true,
+      "intent": "按结构问题而非单一 mismatch 默认勾选；显示可展开问题明细、上游滞后提示及与模板一致状态。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "f62cf7bf2eada057775e4a131cf74caad251525fa60b577274cd73ef87a7973e",
+        "oldBytes": 14034,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/ui/TemplateRefreshModal.tsx",
+          "sha256": "f62cf7bf2eada057775e4a131cf74caad251525fa60b577274cd73ef87a7973e",
+          "bytes": 14034
+        },
+        "oldPinMatched": true,
+        "linesAdded": 49,
+        "linesRemoved": 15
+      }
+    },
+    {
+      "path": "apps/web/src/ui/ui.css",
+      "sha256": "8b97f4a26177e9cb580647cb3b6d7f4a24db222d9bb8d3782e8198bde4d621dd",
+      "bytes": 6007,
+      "twoReadsStable": true,
+      "intent": "为模板核对问题明细增加展开布局与样式。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-local-r33-bytes-match-old602-pin",
+        "oldSHA256": "97499bdc60bc3a5f225df6578779ebfc64308c3b5dcb20a74cde2dac66ae1a10",
+        "oldBytes": 5340,
+        "oldLocalArtifact": {
+          "path": ".jarvis-dev/workspaces/msf-targets-r33/source/apps/web/src/ui/ui.css",
+          "sha256": "97499bdc60bc3a5f225df6578779ebfc64308c3b5dcb20a74cde2dac66ae1a10",
+          "bytes": 5340
+        },
+        "oldPinMatched": true,
+        "linesAdded": 12,
+        "linesRemoved": 0
+      }
+    },
+    {
+      "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+      "sha256": "0af80720391eb3c0d3567e9074e429f5a93b903b592a4952cf0b72b4524644df",
+      "bytes": 83004,
+      "twoReadsStable": true,
+      "intent": "旧602原文作为精确字节前缀保留，末尾追加2102字节的差异登记；登记内容不是独立验收证据。",
+      "originStatus": "unknown",
+      "author": null,
+      "implementationCommit": null,
+      "sourceBodyPubliclyExposed": false,
+      "old602Comparison": {
+        "method": "exact-current-prefix-matches-old602-pin",
+        "oldSHA256": "ac82c36c9a09c481a48898aa47a0f8c770d9afa950a78cfe3f1217bb5f52cd3f",
+        "oldBytes": 80902,
+        "oldLocalArtifact": null,
+        "oldPinMatched": true,
+        "linesAdded": 2,
+        "linesRemoved": 0,
+        "oldLocalDifferentDocNotUsed": true,
+        "appendOnly": true,
+        "appendedBytes": 2102
+      }
+    }
+  ],
+  "directChangedPathScope": {
+    "webImplementationFiles": 8,
+    "webTestFiles": 1,
+    "documents": 5,
+    "serverFiles": 0,
+    "databaseMigrationFiles": 0,
+    "PG4CallbackFiles": 0,
+    "protectionToolsOrPins": 0,
+    "basis": "The saved 602-to-607 manifest delta contains only these14 paths; this local analysis did not reread unchanged server/protection files.",
+    "unchangedEntriesReportedBySavedManifestComparison": 593
+  },
+  "functionalEffectsAndRisks": [
+    {
+      "id": "interface-contract",
+      "summary": "新增前端依赖 preflight.report、health.overdesign、评审 by、原型 uiRef，以及新增 selfcheck/catalog-update/design-coverage-fix 路由。接口兼容性未在本次验证；缺字段或旧响应形态可能使界面报错或操作失败。",
+      "observedFailure": false
+    },
+    {
+      "id": "project-and-model-side-effects",
+      "summary": "新入口可以请求 AI 自检/HLD 补齐、修改目录与设计豁免。虽未直接修改服务端文件，使用这些入口可能触发模型费用、持久项目数据和后续覆盖判断变化，不能认定无影响。",
+      "executedInThisAnalysis": false
+    },
+    {
+      "id": "async-and-progress",
+      "summary": "AI 自检以候选集合和轮询落项推导进度，并设超时；项目切换、断网、并发和迟到结果没有在本次作行为验证。",
+      "verifiedByTests": false
+    },
+    {
+      "id": "structural-rule-convention",
+      "summary": "默认勾选依赖上游滞后提示恒在 issues 末尾的契约；三个新增测试是源码中的用例，未据此写测试通过。",
+      "testsExecuted": false
+    },
+    {
+      "id": "documents-are-not-execution",
+      "summary": "新增设计/计划提及服务端核对、迁移0031、AI评审、原型穿流等。当前14项差异没有直接服务器或迁移文件变更，文档中的完成或测试陈述未被本次独立验证。",
+      "documentClaimsPromotedToEvidence": false
+    }
+  ],
+  "PG4AndProtectionBoundary": {
+    "directPG4OrProtectionFileChangeIn14": false,
+    "serverCallbacksBehaviorValidated": false,
+    "runtimeOrDeployedCodeVerified": false,
+    "absenceOfIndirectImpactProved": false,
+    "fullProtectionQualified": false,
+    "actualPG4Qualified": false,
+    "modelsInvoked": false,
+    "candidateExecuted": false
+  },
+  "protectionBaselineAdvice": {
+    "recommendation": "reasonable-as-a-new-explicit-unchanged-inventory-expectation-only",
+    "rationale": "已取得607目录四值与14原件双读证据；14差异已限定、8个web旧件与旧602精确相符、另1登记为精确追加，没有把这些变化当产品完成。将该观测库存固定为后续保护不变的期望可以保留未知作者的现状，而不是接受其功能。",
+    "expectedTupleFromSavedObservation": {
+      "sha256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+      "files": 607,
+      "bytes": 18151378,
+      "metadataSHA": "06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e",
+      "stable": true,
+      "identity": {
+        "device": 66306,
+        "inode": 14417953
+      }
+    },
+    "authorAndOriginMustRemainUnknown": true,
+    "productFunctionsAccepted": false,
+    "old602EvidenceAndClosedOperationsPreserved": true,
+    "existingPinsChanged": false,
+    "newBaselineSelectedByThisAnalysis": false,
+    "freshProtectionCaptureRequiredForAnyLaterExecution": true,
+    "laterMismatchMustRefuseRatherThanRebase": true,
+    "scopeDoesNotIncludeCallbacksOrWholeProtectionAcceptance": true
+  },
+  "unresolved": [
+    "14项作者、实施提交与真实变更动机仍未知",
+    "新增前端与当前服务端契约、浏览器行为和模型质量未验",
+    "593项未变只据已保存manifest比较，不代表本次重新读取或当前运行态全部不变",
+    "尚无新607基准下的完整保护、DATA、ENTRY或PG4通过结论"
+  ],
+  "operations": {
+    "localOnly": true,
+    "remoteOrAPICalls": 0,
+    "gitFetch": false,
+    "subjectExecuted": false,
+    "modelsInvoked": false,
+    "testsExecuted": false,
+    "mutationsToSourceOrPins": false
+  },
+  "costs": {
+    "supplierModelRequests": 0,
+    "internalUsageKnown": false,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

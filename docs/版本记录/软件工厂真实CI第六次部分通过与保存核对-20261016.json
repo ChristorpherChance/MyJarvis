@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-service-attempt6-saved-partial-service-results-independent-review",
+  "status": "saved-qualified-A-real-service-pass-B-coverage-original-unavailable",
+  "savedEvidenceIndependentlyAudited": true,
+  "remainingP0P1InSavedIntegrityScope": 0,
+  "actual": {
+    "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-6.json",
+    "sha256": "fac248188f0e42db4c8fbdce33452d29d6304715af29ae35f5600f6c4d1752d6",
+    "bytes": 8348
+  },
+  "privateHarnessSafeResult": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-d29040bf-f18a-42db-955a-c7e44db28613/safe-report/harness-safe.json",
+    "sha256": "d53846ea238cbbe6c45e4e0c426e6535c52d1f7db4264044862a42743a8be0f8",
+    "bytes": 18952
+  },
+  "physicalReadback": {
+    "path": "artifacts/factory-devci-r38/service-attempt6-saved-physical-readback.json",
+    "sha256": "555211a113fb30e8e635d83415c6d924d87904f544881642fed58a26665d2027",
+    "bytes": 18343
+  },
+  "A": {
+    "originalReceiptSHA256": "51d2b95dfa7d342d6921453ba28c79ca3d4e6dbdc98f96c261ffdefa5a6c8e88",
+    "actualSyntheticCIQualified": true,
+    "actualContainerExecution": true,
+    "process": {
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false
+    },
+    "tests": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "pending": 0
+    },
+    "coverage": {
+      "lines": 100,
+      "branches": 100
+    },
+    "originalArtifacts": 8,
+    "receiptAndEightOriginalHashesVerified": true,
+    "twoCollectorFramesStrictRoundtripMetadata9AndClosedVerified": true,
+    "unfinishedClaimObserved": true,
+    "replayInvokedBeforeTerminalObserved": true,
+    "terminalReplayOriginal": true,
+    "actualQualityConsumptionPassed": true,
+    "unitEvidenceCount": 1,
+    "qualityDeduplicated": true,
+    "missingOriginalRejected": "ENOENT",
+    "tamperedOriginalRejected": "GATE_BLOCKED",
+    "bothOriginalsRestoredAndHashVerified": true,
+    "sameRequestChangedBindingRejected": "INVALID_STATE",
+    "staleRevisionRejected": "GATE_BLOCKED",
+    "claimAndEvidenceCountsAreSourceBoundSavedAssertionsNotNewDatabaseRead": true
+  },
+  "B": {
+    "originalReceiptSHA256": "8a27ce4d2063f334fa148592f7379163954fabfc8940fb9c6874d5f2e5f263dd",
+    "conclusion": "fail",
+    "errorCode": "CI_COLLECTOR_REJECTED",
+    "process": {
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false
+    },
+    "actualContainerExecution": null,
+    "receiptTests": null,
+    "receiptCoverage": null,
+    "originalArtifacts": 7,
+    "sevenOriginalHashesVerified": true,
+    "originalVitestReportDomain": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "pending": 0,
+      "success": false
+    },
+    "coverageCollectorOriginalBytes": 234,
+    "coverageCollectorFirstCode": "CI_REPORT_READ_FAILED",
+    "coverageCollectorReadComplete": false,
+    "coverageCollectorClosedFlag": false,
+    "coverageCollectorBodyHashSizeMetadataAllNull": true,
+    "originalCoverageReportCopyAbsent": true,
+    "missingReportNativeErrnoNotSaved": true,
+    "actualExecutionNotUpgradedFromReportOrSource": true,
+    "qualityAndMergeBRefusalAssertionsNotReached": true
+  },
+  "notReached": [
+    "unknown-claim-never-reexecutes",
+    "late-real-result-cannot-qualify-new-task-revision",
+    "append-only-triggers-and-duplicate-terminal",
+    "final-originals-and-source-pins"
+  ],
+  "overall": {
+    "actualRunStatus": "failed",
+    "primaryHarnessCode": "CI_COLLECTOR_REJECTED",
+    "allMandatoryAssertionsPassed": false,
+    "realCIServiceCalls": 2,
+    "31MigrationsSavedApplied": true,
+    "same31PinsAsPriorSourceCheckedCut": true,
+    "outerSourceAndCompiledPinsStableOriginal": false,
+    "falseFlagMeaning": "Final complete-run recheck was not reached; original false flag is preserved and is not evidence of source drift.",
+    "successfulFullServiceChainQualified": false
+  },
+  "savedCleanup": {
+    "bothCandidateContainersRemovedSourceBound": true,
+    "exactCreatedPGMatchesRemovedAndAbsentAfter": true,
+    "beforeCount": 13,
+    "afterCount": 13,
+    "newResidualCount": 0,
+    "beforeAfterSetsEqual": true,
+    "noNewDaemonRead": true
+  },
+  "scope": {
+    "directServiceNotHTTP": true,
+    "syntheticFixtureNotTargetServerSuite": true,
+    "noOld54Or67SemanticsOr1810DependencyRevalidation": true,
+    "newTestsFunctionsImportsDockerPGAPIorModelsExecuted": false,
+    "HTTPQualified": false,
+    "autopilotQualified": false,
+    "frameworkABIQualified": false,
+    "fullPG4Qualified": false,
+    "full74Qualified": false,
+    "productionChanged": false,
+    "R6RepairNotIncludedOrObserved": true
+  },
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-16T07:01:55.378Z",
+  "diagnosticDecision": {
+    "id": "d480ee2c-745c-44dd-ad79-4bda8335668e",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "4372ff0a976732f88907de595f4d65a6f827bd8c50d3b327196910bc440c853e",
+    "independentAcceptance": false
+  },
+  "driverPolicyDecision": {
+    "id": "5d37103d-eee0-4805-92fe-81513a53e209",
+    "revision": 1,
+    "status": "selected",
+    "hash": "33c92751aebd014b7bbe81824893337be741f6470402c7083ea2f4fad8fbdd40",
+    "independentAcceptance": false
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 89,
+    "hash": "83e653622901f3ac3d01c1e9f7549f09bcc22457727a8154fb76ca0ef5476dc6",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "完成仅针对该固定模块的driver最小修正与独立核对，保留13项源码身份和其余加载检查；再处理主目录变化与当前资源收尾，合格后安排新四用例。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 7,
+    "hash": "0a393110859991e2d82ca03215d8435fe4a69fff569016b310989b14b91b6ffa",
+    "summary": "失败原因已查明：验证入口过早加载测试worker专用模块，四个用例尚未启动。正在修正加载方式，环境收尾仍待核清。",
+    "nextAction": "完成仅针对该固定模块的driver最小修正与独立核对，保留13项源码身份和其余加载检查；再处理主目录变化与当前资源收尾，合格后安排新四用例。",
+    "blocker": "新driver修正及其后完整集成尚未验证；主目录变化保护与当前资源收尾仍未合格。",
+    "validationScope": "已取得完整2066字节错误原件并独立核保存范围，message382B完整/stack不可用。原失败发生module-import而非业务回调；仅选择单项worker上下文修正，尚无新四用例通过或当前收尾资格。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 20,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "oneReportR2SucceededClosed": true,
+  "originalReportBytes": 2066,
+  "savedBytesIndependentlyAudited": true,
+  "driverWorkerPolicySelected": true,
+  "driverSuccessorSourceQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

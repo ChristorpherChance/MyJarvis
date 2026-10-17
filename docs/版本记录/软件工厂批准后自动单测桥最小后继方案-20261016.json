@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-approved-autopilot-unit-ci-minimal-next-slice-public-projection",
+  "status": "read-only-proposal-not-implemented",
+  "originalLocalHandoff": {
+    "path": ".jarvis-dev/workspaces/msf-targets-r38-real-devci/artifacts/approved-autopilot-unit-ci-minimal-local-handoff.json",
+    "sha256": "dd6c65340875ac0f81dd8a4271ef3cf89f5a264f986577ac498aefae2c00e070",
+    "bytes": 12612
+  },
+  "proposedSlice": "Approved active unit-CI dispatch for the current task with an existing verified immutable candidate repository/full commit.",
+  "reuse": [
+    "existing active approval scope.unitCi",
+    "existing run authorization and task revision locks",
+    "existing real CI original receipts and stale/quality gates"
+  ],
+  "missingTrustedSourceBehavior": "Return a specific missing-source blocker and launch zero candidate containers; never infer HEAD, branch or a post-merge commit as the pre-CI binding.",
+  "approvalBoundary": "Within an already approved unit-CI scope no per-CI approval is proposed; revocation and exact task/source binding remain required.",
+  "implementationStartedByThisReport": false,
+  "actualBridgeQualified": false,
+  "newDecisionCreatedByThisReport": false,
+  "HTTPQualified": false,
+  "autopilotQualified": false,
+  "realGitMergeQualified": false,
+  "full74Qualified": false
+}

@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 1,
+  "kind": "r40-action-effectiveness-repair-production-release-and-bounded-verification",
+  "at": "2026-10-17T04:07:17.428291+00:00",
+  "release": "20261017-action-effectiveness-r40",
+  "sourceCommit": "1448c17fc6def4aa971d145f43dbd2c6cf62d1ce",
+  "primary112Healthy": true,
+  "sourceSubmitted": true,
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/4",
+  "pullRequestMerged": false,
+  "changes": [
+    {
+      "id": "upload-intent",
+      "priority": "P1",
+      "before": "Different File objects with equal metadata could return a completed prior book without uploading their bytes.",
+      "after": "File-object intent also scopes pending create-upload deduplication; identical File retry/concurrent submission retains one pipeline."
+    },
+    {
+      "id": "memory-draft",
+      "priority": "P1",
+      "before": "Any background memory-list revision change closed editors and erased unsaved input.",
+      "after": "Preserve add/edit/policy drafts and original expectedVersion while selected record stays editable; forgotten/removed/inaccessible target and identity/session changes still clear private edit text."
+    },
+    {
+      "id": "zero-retry",
+      "priority": "P2",
+      "before": "New task and milestone plan replaced saved retryLimit zero with three.",
+      "after": "Use nullish fallback in both form initial values; zero remains zero."
+    },
+    {
+      "id": "task-outcome",
+      "priority": "P2",
+      "before": "Live task list/cards/details showed unmaintained zero percent, including successful execution waiting acceptance.",
+      "after": "Show actual task status, execution receipt and independent acceptance separately; simulated step flow and progress stay demonstration-only."
+    },
+    {
+      "id": "runbook-navigation",
+      "priority": "usability",
+      "before": "Live recovery button opened executor configuration.",
+      "after": "Open backup/recovery tab with accessible read-only runbook context and explicit no-execution statement."
+    },
+    {
+      "id": "R40-API-001",
+      "priority": "P1",
+      "status": "fixed-source-and-bounded-http",
+      "actualDefect": "Direct public execution commands persisted an empty payload and service deployment used the operations namespace. Same public submission then conflicted with its saved fingerprint.",
+      "fix": "Internal commit accepts optional exact public domain/envelope only at direct dispatch calls; old internal defaults and approval alias protocol unchanged.",
+      "targetedProof": "attempt6 direct services execute: persisted queue, close/reopen same SQLite, exact same command returns same receipt, only one queued run; changed deployment same command rejected409. No candidate process or deployment actually executed.",
+      "staticRelatedCalls": [
+        "tasks pause/cancel",
+        "machines wake/sleep",
+        "services health/execute/restore"
+      ],
+      "relatedActualExecutionVerified": false
+    },
+    {
+      "id": "R40-API-002",
+      "priority": "P2",
+      "status": "fixed-source-and-bounded-http",
+      "actualDefect": "Committed live query repeated connector IO before durable replay; source going offline made same committed submission fail.",
+      "fix": "Durable fingerprint replay before IO; sanitizeRead rechecks current source authorization and activity.",
+      "targetedProof": "attempt3 old query replay failed500 after original commit/upstream closed. attempt5 fixed replay exactsame, changed payload409, current revoked result excerpts filtered for replay and GET. Only one source read."
+    }
+  ],
+  "verification": {
+    "clientFocusedPassed": 4,
+    "representativeAuthenticatedHTTPHandlersPassed": 5,
+    "representativeHTTPRequests": 58,
+    "representativeHTTPRestartChecks": 5,
+    "apiTargetedCasesPassedSeparately": 2,
+    "fullApplicationDTOReplayPassed": 1,
+    "browser": {
+      "backgroundUnrelatedMemoryChangePreservesOriginalDraft": true,
+      "forgottenTargetClearsEditorAndDraft": true,
+      "twoEqualMetadataDifferentPDFsStoredSeparately": true,
+      "exactOriginalsReadback": true
+    },
+    "sourceIndependentReviewRemainingP0P1": 0,
+    "apiAndWebBuildExitCode": 0,
+    "package": {
+      "kind": "r40-root-package-independent-byte-readback",
+      "release": "20261017-action-effectiveness-r40",
+      "sourceCommit": "1448c17fc6def4aa971d145f43dbd2c6cf62d1ce",
+      "files": 2059,
+      "payloadBytes": 46215938,
+      "zipBytes": 19522293,
+      "zipSha256": "9fcb6644bc452554bd3fc283ee985e96ac8ce98a063bbc7422f03f5141df03cf",
+      "manifestSha256": "3c569cbb72d107780002b1fa2aaf2f9e6b5f9197e41ef6d2ecfaf420bd5fbe5e",
+      "allManifestEntriesExact": true,
+      "duplicateArchiveEntries": false,
+      "productionAccess": false
+    },
+    "stagedInstalledInspectedActivatedAndHealthVerified": true,
+    "publicAssetsMatchPackage": true,
+    "userNotificationValuesPreserved": true,
+    "all11PersonaRecordsPreserved": true
+  },
+  "releaseActivation": {
+    "node": "112",
+    "release": "20261017-action-effectiveness-r40",
+    "previousRelease": "20261017-personal-settings-r39",
+    "active": true,
+    "activationLockHeld": true,
+    "dataSnapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261017-action-effectiveness-r40",
+      "scope": "primary",
+      "files": 60,
+      "directories": 57,
+      "bytes": 4071930358,
+      "manifestSha256": "cc958f75cd54b548b5ecd2442c5cf8d619c444e0c48e5b1496de422bcec1f6f2",
+      "sqliteDatabasesChecked": 6,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "isolatedRestore": {
+      "status": "passed",
+      "operation": "isolated-restore-verified",
+      "release": "20261017-action-effectiveness-r40",
+      "scope": "primary",
+      "files": 60,
+      "directories": 57,
+      "bytes": 4071930358,
+      "manifestSha256": "cc958f75cd54b548b5ecd2442c5cf8d619c444e0c48e5b1496de422bcec1f6f2",
+      "sqliteDatabasesChecked": 6,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "health": {
+      "node": "112",
+      "release": "20261017-action-effectiveness-r40",
+      "role": "primary",
+      "currentRelease": "20261017-action-effectiveness-r40",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261017-action-effectiveness-r40",
+      "businessHealthy": true,
+      "healthBuild": "20261017-action-effectiveness-r40",
+      "healthStatus": "ok"
+    },
+    "productionDataRestored": false,
+    "factoryResumed": false
+  },
+  "notifications": {
+    "revisionBefore": 13,
+    "revisionAfter": 13,
+    "productionPreferenceWrites": 0
+  },
+  "scopeBoundaries": [
+    "Representative record writes, command replay, uploads, private memory editor behavior and displayed outcomes; no assertion that every one of 27 statically mapped action families ran in production.",
+    "Standalone client tests are controlled; five authenticated HTTP groups use app.inject. Supplemental cancellation replay uses full createApp with DTO validation enabled. Original direct services fixture skipped receipt validation and does not prove actual deployment execution.",
+    "The browser used a fresh synthetic private database. Real user UI edits, physical wake/sleep, actual speaker output, model execution and restore drills were not performed by this release.",
+    "Original approval-inner hypothesis was withdrawn and the incorrect candidate patch reverted. Actual fix preserves public command domain/envelope; approval-internal empty-payload protocol remains unchanged.",
+    "First browser header-refresh interaction clicked the modal backdrop, closing it as designed. Accepted draft proof used a second-page mutation and actual automatic refresh.",
+    "Four early timed-out API fixture temporary directories were retained after automatic approval review rejected recursive cleanup; no alternative deletion was attempted. Passing fixtures closed their owned resources.",
+    "Runbook change improves navigation; original invalid payload belonged to the demo branch and was not a live API failure."
+  ],
+  "factory": {
+    "planRevision": 108,
+    "planActive": false,
+    "original74Accepted": 0,
+    "supervisionItems": {
+      "total": 6,
+      "planned": 1,
+      "running": 1,
+      "completed": 4
+    },
+    "itemRevision": 7,
+    "latestSequence": 41,
+    "autonomyRevision": 20,
+    "autonomyStatus": "blocked",
+    "reason": "REPAIR_ATTEMPTS_EXHAUSTED",
+    "realAIReviewSourceQualified": true,
+    "realModelValidated": false,
+    "automaticFollowup": "PAUSED by user; not resumed",
+    "customer12Delivered": false
+  },
+  "standby101Updated": false,
+  "factoryResumed": false,
+  "accounting": {
+    "policy": "record-only; no spending cap",
+    "supplierModelCalls": 0,
+    "knownAmount": null,
+    "costKnown": false,
+    "internalTokensAndComputeAmount": "unknown; recorded separately"
+  },
+  "evidenceRefs": [
+    {
+      "path": "artifacts/action-effectiveness-r40/api-release-build.json",
+      "sha256": "8069523a488be8f9f629ef871c8160d74a0f41b13a3f2b3f2ce88f14c9b79853",
+      "bytes": 878
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/web-release-build.json",
+      "sha256": "f6334318f3dd314c0c08c105d05366ff0163dd2eb22c66460b0f3d05a5de7583",
+      "bytes": 861
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/full-app-dto-replay.json",
+      "sha256": "98b365ca4b183548b9e6f7bd2a224ba2d9c6b635f7312a98ee8706d7530743f8",
+      "bytes": 864
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/root-predeployment-source-readback.json",
+      "sha256": "81ad81d52316c9d392d544c6ff32888a772e1182eb0acaa9a2d6db0c1d04c498",
+      "bytes": 2240
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/browser-verification-final.json",
+      "sha256": "c58fae438b23396c6ec30a169dbb9478389b9c56a266a98cd50b090f635c40bf",
+      "bytes": 2147
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/package-independent-readback.json",
+      "sha256": "8a4d08602cd63bebf49e0e259e276cdcff94a345e53adf537cc4a8f08198f0a5",
+      "bytes": 522
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/source-publication.json",
+      "sha256": "b0d616ca81f59cee2643f6d704260b83749eb634eae1cd58419a9d29d6e1c779",
+      "bytes": 578
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/112-stage.json",
+      "sha256": "05aab3fd6bc648ebe3e7e04aa9f2546031108cbfd6b65054cd6c1126b4ee6937",
+      "bytes": 1015
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/112-install.json",
+      "sha256": "39f2260766bfb649e7716b63edcbad00e8dad6fb6d62fdb674e4c46c37f35fcc",
+      "bytes": 1005
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/112-inspect.json",
+      "sha256": "ebef0b3a276dc17a5e608f69895544242f145954844159988e3c0592929a3c11",
+      "bytes": 1046
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/112-activate.json",
+      "sha256": "5a4a27b01199587f7f7592910473e43fa4680bf403f615cb48828008162aa60a",
+      "bytes": 2423
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/112-health.json",
+      "sha256": "b590294e8f12cd2fc79c1d5c3a3154ff1e1ca93c49443ece1892d459c1cf3d2e",
+      "bytes": 1098
+    },
+    {
+      "path": "artifacts/action-effectiveness-r40/live-readback.json",
+      "sha256": "e3daca3880e57f15c629aa0a7172e97fcc138b7249a0ff5d8bbd77a601eba018",
+      "bytes": 1787
+    },
+    {
+      "path": ".jarvis-dev/action-effectiveness-r40/artifacts/action-effectiveness-r40/api-effect-replay-final.json",
+      "sha256": "ce2503a00ecb79415b16caa852d51f1af7321f2a5908f0f80eed042c0fcb4114",
+      "bytes": 9238
+    },
+    {
+      "path": ".jarvis-dev/action-effectiveness-r40/artifacts/action-effectiveness-r40/frontend-local-implementation-final.json",
+      "sha256": "8a0b77791d0e8d1dbdcc1717252fdcedef53d27671eced53569580d4f3cc37a6",
+      "bytes": 11884
+    },
+    {
+      "path": ".jarvis-dev/action-effectiveness-r40/artifacts/action-effectiveness-r40/http-representative-verification-final.json",
+      "sha256": "b4bd0f790f989595386e2afa5882cb578d2bba52230c8b389e7175bcf931ec1c",
+      "bytes": 11695
+    },
+    {
+      "path": ".jarvis-dev/action-effectiveness-r40/artifacts/action-effectiveness-r40/independent-production-delta-review-final.json",
+      "sha256": "c0d0ac71e0379140681f3b3606919608464d3bcf244270bb382985127c2f6121",
+      "bytes": 14006
+    },
+    {
+      "path": "artifacts/factory-devci-r38/r9-source-progress-item-readback.json",
+      "sha256": "d9ad3ee5d980b5e682317e9fbf400623c1eaf0593110bd594658cd5f2d394fe0",
+      "bytes": 7408
+    }
+  ]
+}

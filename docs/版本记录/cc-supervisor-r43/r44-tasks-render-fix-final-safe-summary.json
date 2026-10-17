@@ -1,0 +1,229 @@
+{
+  "kind": "r44-tasks-render-fix-final-safe-summary",
+  "at": "2026-10-17T15:13:37.261217+00:00",
+  "userGoal": "修复用户给定tasks链接的真实空白页面，并部署112后以原登录浏览器确认",
+  "result": "fixed-deployed-and-limited-live-browser-accepted",
+  "rootCause": "真实24行API中5个历史tokensUsed字段缺失；旧UI直接toLocaleString使整个React根卸载。前轮七资源补件是另一问题，不能代替本故障修复。",
+  "changes": "101 CC仅将DevelopmentSupervisionPanel切到既有tokenNumber格式化器，保留未知/零/正值与全部任务；另两处仅build标签，后台计量/历史/过滤逻辑未改。",
+  "r11": {
+    "operationId": "04ef0e21-a7e8-4163-9cab-5325bbb6f2cd",
+    "sourceCommit": "9b0a71273a103ca5c2f1db7a63f07969beeabc49",
+    "actual": "600.789268902s timeout/exit143/native final0/cgroup0；组件、types/build原件已完成，但当时四正式报告与包未完成",
+    "tests": "修前真实TypeError保留；首harness alias错误及unknown计数5!=4失败保留；修后真实组件SSR6rows/4unknown/known0/positive通过；非浏览器mock覆盖真实页面",
+    "completeNativeUsage": null,
+    "ledgerMeasurementStatus": "unknown",
+    "allSignedItemTokenFieldsAbsent": true,
+    "costUSD": null
+  },
+  "r12": {
+    "operationId": "2d5fb6bb-4e24-406b-8471-781d6970e3f0",
+    "elapsedSec": 456.7831268470036,
+    "exitCode": 0,
+    "nativeFinalCount": 1,
+    "cgroupProcesses": 0,
+    "productionSourceChanged": false,
+    "previousPassedTestsAndBuildRerun": false,
+    "appHEAD": "9b0a71273a103ca5c2f1db7a63f07969beeabc49",
+    "reportHEAD": "92d04d5530e87f6c26e813c308f9a125751d9fb0",
+    "finalHEAD": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+    "inputIncludingCache": 12078063,
+    "outputTokens": 7632,
+    "totalTokens": 12085695,
+    "costUSD": null,
+    "costKnown": false,
+    "CLIIntervalR11R12CombinedCatalogEstimateUSD": 17.961909999999932,
+    "intervalEstimateNotSingleRoundOrInvoice": true
+  },
+  "package": {
+    "release": "20261017-cc-supervisor-r44-r1",
+    "archiveBytes": 21406430,
+    "archiveSHA256": "c553ea430dccf015b7eadc96782e974a38ef3dcd84c03c9c9339084c47e96ae0",
+    "manifestSHA256": "3240918b27d57aa55a4c9d17e784d7df112f960aafb2efdd6a8cf014df29ce2f",
+    "platformPayloadsVerified": 2177,
+    "exactGitSourceBlobsMatched": 1824,
+    "standaloneNodeFilesVerified": 5,
+    "originalR41AssetsRetained": 7,
+    "allR7AssetsRetained": true
+  },
+  "deployment": {
+    "node": "112",
+    "current": "20261017-cc-supervisor-r44-r1",
+    "fiveOriginalToolPhasesPassed": true,
+    "previous": "20261017-cc-supervisor-r43-r7",
+    "fullBackupAndIsolatedRestoreBytes": 4248201718,
+    "SQLiteDatabasesIntegrityOK": 9,
+    "liveDataRestored": false,
+    "health": "primary/platform+observer active/ok",
+    "node101": "remainsR7; code reinstall not needed for UI-only fix; cfg46/same target4349 and task12blocked preserved",
+    "noBusinessColdbackupStartRequested": true
+  },
+  "browser": {
+    "originalAuthenticatedTab5": true,
+    "withModeAndExactUserNoModeURLsPassed": true,
+    "rows": 24,
+    "unknown": 5,
+    "zero": 12,
+    "positive": 7,
+    "taskList": 27,
+    "projectSupervisionItems": 6,
+    "completedBriefs": 4,
+    "consoleErrorsAfter1500UTC": 0,
+    "userTabLeftAtOriginalURL": true,
+    "limits": "仅页面显示/入口与实时状态可见；未点启动或变更，不冒全产品/所有操作/真实监管闭环验收"
+  },
+  "publication": {
+    "GitHubPR": "https://github.com/ChristorpherChance/MyJarvis/pull/6",
+    "head": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+    "state": "OPEN/DRAFT",
+    "mainMerged": false
+  },
+  "decisions": {
+    "renderFix": "df3e1f9f-f45f-4fc5-8456-5e3d7ff44028 rev2 implemented H7c89db1901452acefc2763969b524c2bb686664521447fb143a63b6438e92d85",
+    "deliveryContinuation": "3f821d0c-b46f-4834-ae45-7e629473a09a rev2 implemented H70fc7f2035e776cbb21d4628e439ee2f21b1bafcef9a45f7636852fb588ff581",
+    "originalActionsAndOptionsPreserved": true
+  },
+  "preserved": "10分钟跟进暂停；旧自治blocked与任务绑定/config/global历史保留；factory74/customer12没有据此交付或签收。",
+  "unresolved": [
+    "通用跨版本旧资源保留与缺资源404/刷新提示的源码机制未实现；本次包仅保全实际旧资源",
+    "通用项目监管真实模型/CC业务闭环、全部操作矩阵和恢复矩阵不是本次页面修复验收范围",
+    "软件工厂既有测试/覆盖/浏览器/沙箱/真实交付缺口仍未完成"
+  ],
+  "operatorFailuresRetained": [
+    "R12选择初稿误把未来交付列作选择缺证而409拒，distinct更正后真实selected，原拒不洗",
+    "Root首次发布参数误传DATA哈希被本机pre-intent拒，未remote/未stage意图；实际正确H后才唯一现场stage"
+  ],
+  "experienceCandidates": [
+    "接口未知值契约须用真实组件混合数据及登录页面验证，不能以健康/资源HTTP通过代替",
+    "平台版本与独立节点版本应按实际兼容范围记录；UI修复不应造成无关节点重装",
+    "旧hashed资源需在新包内有清单，不能只留临时线上补件"
+  ],
+  "internalUsageUnknown": null,
+  "costPolicy": "record-only/no cap; unknown cost/null, known counters and interval estimates separate",
+  "evidence": [
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-tasks-blank-live-usage-diagnostic.json",
+      "sha256": "2d8cd7fc02bc6a647bf865aff040b50fed7b4ef6bda5e9f589a0c41ad8c11bb3",
+      "bytes": 5588
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-round11-tasks-render-independent-source-review.json",
+      "sha256": "b5aa60226425ba67a76abb84c1b185d3b71707d4d366f93071488b87af1955cc",
+      "bytes": 11632
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round11-terminal-native-observation.json",
+      "sha256": "2f0e716c6f6816f837b36f45af562a1de90b1c627df431c2c9665c2befc9c358",
+      "bytes": 2293
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round11-collection-1792248182679.json",
+      "sha256": "b3bd1d8f4632d4dbbd57b3809718b7a433718adcacd36bb44b1573a4f8c6885c",
+      "bytes": 1277
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round11-collection-1792248212227.json",
+      "sha256": "ffa86c26cfaaa7f44a7c8f95d6eed13e627d88a590c9c030255384c338cf5632",
+      "bytes": 3776
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round12-terminal-native-observation.json",
+      "sha256": "5c481546501df7be74feee8ea02a592cbcfe0b871dff9733da88edfa8f6bdd1a",
+      "bytes": 7515
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round12-collection-1792248943042.json",
+      "sha256": "901e54801517629f6fd01fb01416643190a7a45b340baddac1c4df534449fd87",
+      "bytes": 2273
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-round12-delivery-source-report-binding-independent-review.json",
+      "sha256": "334e7fc64ed39f8adf38c024c87596c9eb806ebac4d410788d51016acad15fe6",
+      "bytes": 9715
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-round12-specified-history-publication-preflight.json",
+      "sha256": "5dd8c38010165c9a8096c6015ed64804ebee8f19d386324c41dd5e27587be963",
+      "bytes": 12331
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-round12-package-transfer.json",
+      "sha256": "ac29015301a8089af4537edcf85a31cf838b3e26b2dc4fff48deb6eb433f6c14",
+      "bytes": 2207
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-round12-received-dual-package-verification.json",
+      "sha256": "51e720cc9d6a25fc131c38e77491d0c7497f13f8552eab9062ebb82a4259b4ec",
+      "bytes": 4073
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/release-r44-r1/112-stage.json",
+      "sha256": "94bd201fbfbb65d0c50bc6eb05a9c4f700989b8e33d0c5955f9c6a92d5c60066",
+      "bytes": 1455
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/release-r44-r1/112-install.json",
+      "sha256": "0925aa6a18489b542a351e6631c8b321225ff06927247329a557fae58cdb5d7c",
+      "bytes": 1443
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/release-r44-r1/112-inspect.json",
+      "sha256": "a22cd9600f9f1f5f484346e5c62fbe0132daca574e550b8547404f52d8f27bab",
+      "bytes": 1483
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/release-r44-r1/112-activate.json",
+      "sha256": "37775cb6c52a56c57c6b4194cba279f1fdc7ce27ec29a0053b7e2e3dd3971a35",
+      "bytes": 2833
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/release-r44-r1/112-health.json",
+      "sha256": "86dd745819996247de50326958291e5d24e53ecab02e304d30471e76bd6fb39f",
+      "bytes": 1525
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-r1-live-browser-acceptance.json",
+      "sha256": "eee325aad53cb7e31ccf0d62f9e3063873a7fb382b326291b313b518f03d0240",
+      "bytes": 2794
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round11-unknown-signed-usage-receipt.json",
+      "sha256": "62d438006cc89f03ece9e29def817aeb699b29fe143f89eebccd23671f904745",
+      "bytes": 2118
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round12-usage-ledger-readback.json",
+      "sha256": "b4293b0ef3fe1d84f557cf06c92b0b9c440a4416b82ec9d3f0b1c66b6889956c",
+      "bytes": 1040
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-final-platform-and-dual-usage-readback.json",
+      "sha256": "84ac83c1dc5b8f90f4219efdd55460c8d2e3331feb628271dfa9ce574aa8d8a9",
+      "bytes": 1311
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-df3e1f9f-f45f-4fc5-8456-5e3d7ff44028-implementation-readback.json",
+      "sha256": "5c66cf142d4afabf9dfd623c086295e53a4307effdae40d088d5c2dc4bc421e1",
+      "bytes": 32831
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-3f821d0c-b46f-4834-ae45-7e629473a09a-implementation-readback.json",
+      "sha256": "14c1e49cd521977c8a6cabb910a272b0735fbb00ec8af9bc69176602a6dfbc74",
+      "bytes": 32036
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-source-git-publication-readback.json",
+      "sha256": "af9be95330ca6afb81b2842fcac0b953c5ba75f37e0592d0a97eb2cbf891680b",
+      "bytes": 742
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-round12-selection-first-rejection.json",
+      "sha256": "f137613a56dea5e76823715c4f01033b60e8cacef431d65b2c667af556023a2d",
+      "bytes": 506
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/r44-managed-release-local-preintent-refusal.json",
+      "sha256": "a30281f85e93501e70a52228701a918f67595d88e96e2f71361f34b1a1c64ee6",
+      "bytes": 301
+    }
+  ]
+}

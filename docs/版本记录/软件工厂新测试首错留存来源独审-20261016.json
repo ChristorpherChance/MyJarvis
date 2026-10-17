@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-qa-first-error-source-pair-public-summary",
+  "at": "2026-10-16T05:00:17.182928+00:00",
+  "summary": "新driver/worker首错留存两来源完成本机针对性检查与有限非作者来源独审；完整新测试家族仍在准备。",
+  "verification": {
+    "authorNewControlledGroups": 1,
+    "passed": 1,
+    "independentSourceReviewPassed": true,
+    "remainingP0P1": 0,
+    "rootPhysicalRefsVerified": 13,
+    "unchangedWorkerFunctions": 52,
+    "oldTestsRepeated": 0
+  },
+  "behavior": [
+    "CLI及输入异常输出安全摘要，不把不完整结果当成功。",
+    "worker先记录结构化驱动首错，即使退出码为0也判不完整；后续SQL检查仍执行，后错只列secondary。",
+    "原始错误仅在已验证的私有目的地有界保存；公开摘要不导出原值。"
+  ],
+  "limits": {
+    "sourcePairOnly": true,
+    "originalR7BaseAndProtectionGateStillPresent": true,
+    "completeNewFamilyReady": false,
+    "newActualDataOrEntry": false,
+    "newQAStarted": false,
+    "oldConcreteCauseRecovered": false,
+    "PG4Qualified": false,
+    "supplierModelCalls": 0,
+    "internalTokenUsage": "unknown-separate",
+    "internalPrice": "unknown-separate"
+  },
+  "evidence": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-first-error-pair-independent-local-source-review-final.json",
+    "sha256": "564a2be3070fc02bef9fe1d4e24813d74b534890f909a26c2c251782814eb565",
+    "bytes": 15607
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-plan105-r3-source-and-four-failed-attempts-readback",
+  "at": "2026-10-16T15:03:59.196Z",
+  "input": {
+    "path": "artifacts/factory-devci-r38/plan105-fixed-cut-input-final-v3.json",
+    "sha256": "17dc19a7d389d22a6f81f49347ecd3aa53709a93c0fd0302c77fbb5ce2a8b3d5",
+    "bytes": 14209
+  },
+  "fullOriginalBefore": {
+    "path": ".jarvis-dev/maintenance/r38-plan105-before-private.json",
+    "sha256": "7ac604706b624d0723bded0f4fb97712e3e3ba00f9ebf6ed9667c2a5adb95072",
+    "bytes": 2114247
+  },
+  "fullOriginalBeforePersisted": true,
+  "decision": {
+    "id": "bf0bfc14-4765-4e4e-b1e6-24b96b05a09d",
+    "selectedRevision": 1,
+    "selectedHash": "3684ab8ba56aab6d546818b85c38e2c8f545d7a6ae161f25fee66295b394d5e8",
+    "revision": 2,
+    "hash": "e17653d9784854414fe394aa69a5b4b9966f99d91dda47961e7b124d4fa6d731",
+    "status": "implemented",
+    "independentAcceptance": false,
+    "scope": "R2/R3 SOURCE, actual31 migrations and actual4 start-error retention only; no successful CI, quality or merge"
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 105,
+    "hash": "4b31aee5f139a9f7bc74acdb137a8bceea5a9655347542d596b0d498325f7c10",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "在封定checkout前预建固定空node_modules目录，保持源码和依赖挂载只读；随后验证真实提交的正负CI、同号幂等、过期证据拒绝及质量/合并门，继续其余目标与交付。"
+  },
+  "item": {
+    "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "title": "推进其余目标与自主交付能力",
+    "revision": 3,
+    "hash": "ea1d6829c5a6a35d70e7a4e6bd2a1bc66365a555a2541313d19af9526e77141c",
+    "status": "running",
+    "summary": "隔离库31迁移通过；已定位CI启动所需目录缺失，正在最小修复；尚无真实测试结果。",
+    "nextAction": "在封定checkout前预建固定空node_modules目录，保持源码和依赖挂载只读；随后验证真实提交的正负CI、同号幂等、过期证据拒绝及质量/合并门，继续其余目标与交付。",
+    "blocker": "四次实际尝试已闭合失败；第四次启动错误原件已保存并定位目录缺失，最小修复与后继真实测试尚未验证。第三次UNKNOWN历史保留，成功CI/质量合并未验。",
+    "validationScope": "本次仅同步R2/R3 SOURCE、隔离库31迁移、准备与四次失败保存，R3仅第四次返回start失败的留存限定合格。第四次原因是固定node_modules目录缺失；第三次UNKNOWN不倒填。R4/attempt5、真实正负CI、幂等/过期、quality/merge和自治桥均不纳；完整PG4/ABI/74/客户交付未签。",
+    "evidenceRefs": [
+      {
+        "path": "docs/版本记录/软件工厂执行封装专用报告修复选择-20261016.json",
+        "sha256": "bd117613f2839c76314bbd10983dd9f301ce733b34407a5cc34f669d56c28d95"
+      },
+      {
+        "path": "docs/版本记录/软件工厂执行封装专用报告修复来源独审-20261016.json",
+        "sha256": "abfb55e2f54f75a2db58d68950b9ca443255c544d0158d64d006231965e2ced0"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四回调与原行文本有限验收合同-20261016.json",
+        "sha256": "6464b6fb76f002bf1a76677456d3716b0d2d761d5f02aa474a56655e0a8019dd"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四回调与原行文本有限独立验收回执-20261016.json",
+        "sha256": "3ce22805f4dec85a10046c844c6861e5c6cffb7815ee9bac235ab4b9d17889ea"
+      },
+      {
+        "path": "docs/版本记录/软件工厂既存报告独立消费范围评估-20261016.json",
+        "sha256": "bb4a89fb45803b5bf59aa71f316848ea01ca093a3c0396ba8f12350eb567f194"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四回调与原行文本有限验收非作者复核-20261016.json",
+        "sha256": "2e67832ab165b1c6703d59b8b8034b1f8ae5d6cd22d32a5faa3f6190e20c7f79"
+      },
+      {
+        "path": "docs/版本记录/软件工厂真实CI有限切片来源与验证边界-20261016.json",
+        "sha256": "3452f60e0e63ea1bacac6d66f7e7200f83a19404d4541622739b424b7383cb7d"
+      },
+      {
+        "path": "docs/版本记录/软件工厂真实CI隔离验证镜像与依赖准备-20261016.json",
+        "sha256": "2bdb6effb447e1f4d3c95da94865cdeb590be878ef926dcb40be54501fdf7422"
+      },
+      {
+        "path": "docs/版本记录/软件工厂真实CI隔离验证三次失败与保存核对-20261016.json",
+        "sha256": "420d327fbae387bf8fd79f4a92828926e0de9e17f56dd0679227434525fe10ad"
+      },
+      {
+        "path": "docs/版本记录/软件工厂真实CI启动错误留存修正来源核对-20261016.json",
+        "sha256": "a4ba30630e2129d45bc0e7140b1dec2a47ae6961131431823acef37b58c60866"
+      },
+      {
+        "path": "docs/版本记录/软件工厂真实CI第四次启动失败原因与留存核对-20261016.json",
+        "sha256": "c22482093596f71ff7fb1c61aa03c29e3ffbc0d5b950a539560b9178ce7921de"
+      }
+    ]
+  },
+  "counts": {
+    "total": 6,
+    "planned": 1,
+    "running": 1,
+    "blocked": 0,
+    "completed": 4
+  },
+  "previousSequence": 36,
+  "latestSequence": 37,
+  "persistedNotifications": 1,
+  "notificationMatcherField": "summary",
+  "notificationMatchCount": 1,
+  "publicEvidence": [
+    {
+      "path": "docs/版本记录/软件工厂真实CI有限切片来源与验证边界-20261016.json",
+      "sha256": "3452f60e0e63ea1bacac6d66f7e7200f83a19404d4541622739b424b7383cb7d",
+      "bytes": 5097
+    },
+    {
+      "path": "docs/版本记录/软件工厂真实CI隔离验证镜像与依赖准备-20261016.json",
+      "sha256": "2bdb6effb447e1f4d3c95da94865cdeb590be878ef926dcb40be54501fdf7422",
+      "bytes": 4824
+    },
+    {
+      "path": "docs/版本记录/软件工厂真实CI隔离验证三次失败与保存核对-20261016.json",
+      "sha256": "420d327fbae387bf8fd79f4a92828926e0de9e17f56dd0679227434525fe10ad",
+      "bytes": 4577
+    },
+    {
+      "path": "docs/版本记录/软件工厂真实CI启动错误留存修正来源核对-20261016.json",
+      "sha256": "a4ba30630e2129d45bc0e7140b1dec2a47ae6961131431823acef37b58c60866",
+      "bytes": 859
+    },
+    {
+      "path": "docs/版本记录/软件工厂真实CI第四次启动失败原因与留存核对-20261016.json",
+      "sha256": "c22482093596f71ff7fb1c61aa03c29e3ffbc0d5b950a539560b9178ce7921de",
+      "bytes": 4307
+    }
+  ],
+  "protectedBeforeSHA256": "9613368507e194c07a34f31e02c4b29e08887bba81bc64fb536d2632490faa1a",
+  "protectedAfterSHA256": "9613368507e194c07a34f31e02c4b29e08887bba81bc64fb536d2632490faa1a",
+  "all51PriorDecisionsAndFiveUntouchedItemsExact": true,
+  "planOnlyNextActionAndRevisionMetadataChanged": true,
+  "allFiveStepDefinitionsAndTaskRunBindingsExact": true,
+  "legacyTaskCount": 25,
+  "autonomyRevision": 20,
+  "autonomyStatus": "blocked",
+  "PG4Layer": 29,
+  "environmentLayer": 23,
+  "notes": {
+    "projectCount": 2,
+    "originalBeforeContainedNotes": false,
+    "supplementLaterThanOriginalBefore": true,
+    "privateBefore": {
+      "path": ".jarvis-dev/maintenance/r38-plan105-project-notes-before-private.json",
+      "sha256": "bfa958ecd1b04a4e131e03f4a13f288644b2944e5ff3e1d8d38f6bbc24cefc5e",
+      "bytes": 81860
+    },
+    "privateAfter": {
+      "path": ".jarvis-dev/maintenance/r38-plan105-project-notes-after-private.json",
+      "sha256": "f7f8e7632199d4052b51b85aab4766629e4e004d5740b88d15218e1bc0f2c4df",
+      "bytes": 81826
+    },
+    "filteredNotesBeforeAfterExact": true,
+    "notesWriteEndpointsCalled": 0,
+    "notesTruncated": false
+  },
+  "actual31MigrationsApplied": true,
+  "actualCandidateTests": 0,
+  "actualSuccessfulCI": false,
+  "actualQualityOrMerge": false,
+  "R3Included": true,
+  "R4Included": false,
+  "attempt5Included": false,
+  "currentCause": "READ_ONLY_SOURCE_MISSING_NODE_MODULES_MOUNT_SLOT",
+  "previousAttempt3Cause": "UNKNOWN",
+  "rawStartFailureRetained": true,
+  "R3RetentionQualificationOnlyThisReturnedStartFailure": true,
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "full74Accepted": false,
+  "customerDeliveryAccepted": false,
+  "productionRelease": false,
+  "old25TasksOrAutonomyStarted": false,
+  "maximumBusinessWrites": 4,
+  "attempted": {
+    "selected": true,
+    "implemented": true,
+    "item": true,
+    "plan": true
+  },
+  "receipts": {
+    "privateNotesBefore": {
+      "path": ".jarvis-dev/maintenance/r38-plan105-project-notes-before-private.json",
+      "sha256": "bfa958ecd1b04a4e131e03f4a13f288644b2944e5ff3e1d8d38f6bbc24cefc5e",
+      "bytes": 81860
+    },
+    "selected": {
+      "path": "artifacts/factory-devci-r38/plan105-fixed-cut-selected-receipt.json",
+      "sha256": "34fb1a1262a06e38c90df9a0f7e2311ecfa9e37d20c519687e7ac0a24d688f94",
+      "bytes": 8180
+    },
+    "selectedReadback": {
+      "path": "artifacts/factory-devci-r38/plan105-fixed-cut-selected-readback.json",
+      "sha256": "812979fe6b2185d0e4f39ca7815183eae8076fd3e82e2d9f03e80ede68c1ca1f",
+      "bytes": 17082
+    },
+    "implemented": {
+      "path": "artifacts/factory-devci-r38/plan105-fixed-cut-implementation-receipt.json",
+      "sha256": "a2e9a705c4149fbc8cfd614bf381fbbd90290f7ff9ef32d28066d278d31c711b",
+      "bytes": 10146
+    },
+    "item": {
+      "path": "artifacts/factory-devci-r38/plan105-fixed-cut-item-receipt.json",
+      "sha256": "00e9e6c6737cd161865427c5631ca386392960750ab9419478bea73e27303add",
+      "bytes": 3752
+    },
+    "plan": {
+      "path": "artifacts/factory-devci-r38/plan105-fixed-cut-plan-receipt.json",
+      "sha256": "386207bf7dbbc1f844f7961135d12874fce622627767d61213005da5790c1b85",
+      "bytes": 4656
+    },
+    "privateNotesAfter": {
+      "path": ".jarvis-dev/maintenance/r38-plan105-project-notes-after-private.json",
+      "sha256": "f7f8e7632199d4052b51b85aab4766629e4e004d5740b88d15218e1bc0f2c4df",
+      "bytes": 81826
+    }
+  },
+  "automaticRetry": false,
+  "newSupplierModels": 0,
+  "internalTokens": null,
+  "internalComputeAmount": null
+}

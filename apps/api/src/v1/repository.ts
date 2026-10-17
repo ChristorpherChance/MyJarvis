@@ -9,6 +9,9 @@ export interface CommandReceipt {requestId:string;version:number;data:BusinessRe
 export class V1Repository {
  private db:DatabaseSync;private closed=false;
  private receiptValidator?: (domain:Domain,receipt:CommandReceipt)=>void;
+ private committedListeners=new Set<(events:readonly DomainEvent[])=>void>();
+ /** In-process wakeup only. Durable replay remains v1_events; listeners run after COMMIT. */
+ onCommitted(listener:(events:readonly DomainEvent[])=>void){this.committedListeners.add(listener);return()=>{this.committedListeners.delete(listener);};}
  setReceiptValidator(validator:(domain:Domain,receipt:CommandReceipt)=>void){this.receiptValidator=validator;}
  constructor(databasePath:string){
   this.db=new DatabaseSync(databasePath);this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
@@ -48,7 +51,8 @@ export class V1Repository {
   this.db.prepare('UPDATE v1_commands SET response=? WHERE actor_id=? AND command_id=?').run(encode(receipt),actorId,commandId);
  }
  execute(handler:DomainHandler,command:string,envelope:CommandEnvelope,actorId:string,machine:(id:string)=>Record<string,any>|undefined,emergencyStopped:()=>boolean=()=>false,validateReceipt:(receipt:CommandReceipt)=>void=()=>{},runtime:{ready?:(agent:string,machineId:string)=>boolean;member?:(profileId:string)=>Record<string,any>|undefined}={}):CommandReceipt{
-  return this.transaction(()=>{
+  let committed:DomainEvent[]=[];
+  const receipt=this.transaction(()=>{
    const fingerprint=createHash('sha256').update(canonical({domain:handler.domain,command,...envelope})).digest('hex');
    const previous=this.db.prepare('SELECT fingerprint,response FROM v1_commands WHERE actor_id=? AND command_id=?').get(actorId,envelope.commandId);
    if(previous){if(previous.fingerprint!==fingerprint)throw new BusinessError('CONFLICT','同一个提交编号不能用于不同操作',409);return JSON.parse(String(previous.response))}
@@ -82,8 +86,11 @@ export class V1Repository {
    this.receiptValidator?.((persisted?.domain as Domain)??handler.domain,result);
    this.db.prepare('INSERT INTO v1_commands(actor_id,command_id,fingerprint,response,created_at) VALUES(?,?,?,?,?)').run(actorId,envelope.commandId,fingerprint,encode(result),timestamp);
    this.db.prepare('INSERT INTO audit(action,subjectId,details,createdAt) VALUES(?,?,?,?)').run(`v1.${handler.domain}.${command}`,data.id,encode({scope:data.scope,revision:data.revision,commandId:envelope.commandId}),timestamp);
+   committed=pending;
    return result;
   });
+  for(const listener of this.committedListeners)try{if(committed.length)listener(committed);}catch{/* A committed command cannot be rolled back by an observer. Durable consumers replay their cursor. */}
+  return receipt;
  }
- close(){if(!this.closed){this.db.close();this.closed=true}}
+ close(){if(!this.closed){this.committedListeners.clear();this.db.close();this.closed=true}}
 }

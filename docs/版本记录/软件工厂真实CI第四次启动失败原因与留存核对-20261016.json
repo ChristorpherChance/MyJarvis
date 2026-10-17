@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-service-attempt4-saved-safe-cause-independent-review",
+  "status": "saved-qualified-runtime-diagnostic-retention-verified-ci-not-executed",
+  "savedEvidenceIndependentlyAudited": true,
+  "remainingP0P1InSavedScope": 0,
+  "actual": {
+    "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-4.json",
+    "sha256": "9f87f614ef69ec60603c64ddee44ff8efe3a3fc99ea26a38286b7fce17ba2c53",
+    "bytes": 8346
+  },
+  "privateHarnessSafeResult": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-3123e5a0-5cfc-42f7-9f91-074396546c9a/safe-report/harness-safe.json",
+    "sha256": "430a86d1e25e6304f25373f06dea3dbdd423a61f14039c92d59567911b872e6c",
+    "bytes": 11739
+  },
+  "originalCandidateReceipt": {
+    "path": ".jarvis-dev/maintenance/r38-real-ci-private/service-3123e5a0-5cfc-42f7-9f91-074396546c9a/ci-artifacts/aec35995-6cf7-493c-b69d-4fb8ec2a8c83/receipt.json",
+    "sha256": "25dec95317878b036d13c211eadb6204dfe32dd16312c49563bae72c61d15fdc",
+    "bytes": 1431
+  },
+  "physicalReadback": {
+    "path": "artifacts/factory-devci-r38/service-attempt4-saved-physical-readback.json",
+    "sha256": "e80f4fe6e0fa81fa09c28e4c0258f8764cdd41a796d77e4d757331a7602f7a0e",
+    "bytes": 11649
+  },
+  "actualStage": {
+    "wrapperStatus": "failed",
+    "harnessPhase": "A-real-pass-and-concurrent-replay",
+    "errorCode": "CI_CONTAINER_START_FAILED",
+    "conclusion": "unknown",
+    "candidateTestsExecuted": false,
+    "actualContainerExecution": false,
+    "processTestsCoverageAllNull": true,
+    "AStoppedNoRetry": true,
+    "BAndLateAndQualityMergeNotExecuted": true
+  },
+  "R3RuntimeDiagnosticRetention": {
+    "qualifiedOnlyForThisActualReturnedStartFailure": true,
+    "phase": "start",
+    "exitCode": 1,
+    "signal": null,
+    "timedOut": false,
+    "outputLimited": false,
+    "streamRetentionComplete": true,
+    "streamRetentionErrorCode": null,
+    "originalStreams": [
+      {
+        "name": "start-stdout.bin",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "start-stderr.bin",
+        "bytes": 761,
+        "sha256": "a70c43a1f2ee01be71826435f058ef8b772e94ceb1a6acc4ea6ce5c55dad8f28"
+      }
+    ],
+    "originalReceiptExternalHashAndArtifactHashesVerified": true
+  },
+  "closedCause": {
+    "code": "READ_ONLY_SOURCE_MISSING_NODE_MODULES_MOUNT_SLOT",
+    "evidenceType": "actual private Docker OCI stderr plus fixed source/mount contract; no original body published",
+    "matchedSafeTerms": {
+      "OCI": true,
+      "mount": true,
+      "nodeModules": true,
+      "mkdir": true,
+      "readOnlyFilesystem": true
+    },
+    "statement": "The actual start error identifies a node_modules mount destination mkdir rejected by a read-only filesystem. Preparing the empty mount slot before sealing checkout is the selected narrow successor; no writable source expansion is qualified.",
+    "previousAttempt3CauseStillUnknown": true,
+    "noBackInferenceToEarlierTime": true
+  },
+  "database": {
+    "all31MigrationsAppliedInSavedHarness": true,
+    "all31OrderedPinsEqualPriorIndependentlyCheckedSourcePins": true,
+    "newMigrationOrDatabaseQueryByReviewer": false
+  },
+  "savedCleanup": {
+    "candidateRemovedSourceBound": true,
+    "exactCreatedPostgresEqualsRemovedAndAbsentAfter": true,
+    "beforeCount": 13,
+    "afterCount": 13,
+    "newResidualCount": 0,
+    "beforeAndAfterSetsEqual": true,
+    "noNewDaemonRead": true
+  },
+  "sourceBoundary": {
+    "actualHarness": "R3 manifest 11 plus supplied direct emit pins bound by saved preflight",
+    "R3RetentionActualBoundedSuccess": true,
+    "R4SelectionOrSourceOrRunIncluded": false,
+    "old54Or67SemanticsRepeated": false,
+    "dependency1810Revalidated": false
+  },
+  "qualification": {
+    "successfulCI": false,
+    "qualityMerge": false,
+    "HTTP": false,
+    "autopilot": false,
+    "frameworkABI": false,
+    "fullPG4": false,
+    "full74": false,
+    "productionChanged": false
+  },
+  "reviewOperations": {
+    "savedReadsOnly": true,
+    "newDockerPGAPIorRemote": false,
+    "newTestsFunctionsModulesModels": false
+  },
+  "cost": {
+    "policy": "record-only-no-cap",
+    "supplierModelRequests": 0,
+    "internalTokens": null,
+    "internalCost": null
+  }
+}

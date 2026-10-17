@@ -4,6 +4,7 @@ import {Button,Empty,Note,Panel,Tag,type Props} from './common';
 import {usePrivateRuntime} from './usePrivateRuntime';
 import ProjectBaselinePanel from './ProjectBaselinePanel';
 import ProjectReportPanel from './ProjectReportPanel';
+import ProjectSupervisionWorkPanel from './ProjectSupervisionWorkPanel';
 import type {ProjectReportFixedReport} from './project-report-view';
 import {baselineSnapshot,hasBaseline,type BaselineList,type BaselineSnapshot} from './project-baseline-view';
 import {autonomyControls,currentAutonomyStage,stageDisplayStatus,stageExecution,stoppedExecutionText,type AutonomyRunView} from './project-autonomy-view';
@@ -25,7 +26,7 @@ interface Autonomy {
 }
 type Command='start'|'pause'|'cancel';
 type PlanRunView={runId:string;taskId?:string;status:string;source?:string|null;outcome?:string|null;exitCode?:number|null;validationExitCode?:number|null;lateEvidenceOnly?:boolean;stopRequested?:boolean;summary?:string|null;fixedReport?:ProjectReportFixedReport|null};
-type SupervisionPlanView={projectId:string;planId:string;revision:number;mode:'development'|'acceptance';title:string;goal:string;currentStepId:string|null;nextAction:string|null;latestResult:PlanRunView|null;steps:{id:string;title:string;goal:string;state:string;nextAction:string|null;activeRunIds:string[];runs:PlanRunView[];latestResult:PlanRunView|null}[]};
+type SupervisionPlanView={projectId:string;planId:string;revision:number;mode:'development'|'acceptance';title:string;goal:string;currentStepId:string|null;nextAction:string|null;latestResult:PlanRunView|null;independentProgress?:{available:boolean;totalObjectives:number|null;verifiedObjectiveIds:string[]|null}|null;steps:{id:string;title:string;goal:string;state:string;nextAction:string|null;activeRunIds:string[];runs:PlanRunView[];latestResult:PlanRunView|null}[]};
 const planStepLabel=(value:string)=>({'running':'执行中','queued':'等待执行','execution-finished':'执行结束，待独立验收','needs-attention':'有问题待处理','awaiting-execution':'等待执行','planned':'待安排','stopped':'已停止','unavailable':'绑定暂不可读'}[value]??'待核对');
 const guide='/api/v1/project-autonomy/guide';
 const statuses:Record<string,string>={ready:'待启动',configured:'待启动',draft:'待启动',running:'监督中',active:'监督中',paused:'已暂停',blocked:'已阻塞',waitingBudget:'等待预算',waitingQuota:'等待预算',completed:'监督已结束',cancelled:'已停止',stopped:'已停止','waiting-prerequisite':'等待真实条件','validating-prerequisite':'固定复验中',pending:'待执行',queued:'待执行',worker:'开发修复中',executing:'执行中',validating:'独立验证中',reviewing:'独立评阅中',passed:'独立验证通过',failed:'未通过',waitingUser:'等待输入',waitingResource:'等待节点'};
@@ -65,18 +66,20 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
    else if(!administrator)return;
    const [profileResult,baselineResult,planResult]=await Promise.allSettled([api<{data:Autonomy|null}>(base),api<{data:BaselineList}>(base+'/baselines'),api<{data:SupervisionPlanView|null}>(`/api/v1/projects/${encodeURIComponent(projectId)}/supervision-plans/current`)]);
    if(own!==flight.current)return;
-   if(profileResult.status==='rejected')throw profileResult.reason;
-   const response=profileResult.value;
    if(planResult.status==='fulfilled'){
     if(planResult.value.data&&planResult.value.data.projectId!==projectId)throw new Error('监管计划与当前项目不匹配。');
     setPlanState(planResult.value.data);setPlanError('');setReadAt(new Date().toISOString());
    }else if((planResult.reason as {status?:number}).status===404){setPlanState(null);setPlanError('');}
    else if((planResult.reason as Error).name!=='AbortError')setPlanError('监管计划暂不可读；需刷新确认当前执行。');
-   if(response.data&&response.data.projectId!==projectId)throw new Error('返回的项目不匹配，请刷新重试。');
    if(baselineResult.status==='fulfilled'){
     try{setBaselines(baselineSnapshot(projectId,baselineResult.value.data));setReadAt(new Date().toISOString());setBaselineError('');}catch(e){setBaselines(null);setReadAt(null);setBaselineError((e as Error).message);}
    }else if((baselineResult.reason as {status?:number}).status===404){setBaselines(null);setBaselineError('');}
    else if((baselineResult.reason as Error).name!=='AbortError')setBaselineError('现有成果验收暂不可读；上次读取的检查状态需刷新确认。');
+   // The independent planning ledger remains readable when the old autonomy
+   // runtime is unavailable. One source failure must not erase another's facts.
+   if(profileResult.status==='rejected'){setState(null);setLatestReceipt(null);setError(errorMessage(profileResult.reason));return;}
+   const response=profileResult.value;
+   if(response.data&&response.data.projectId!==projectId)throw new Error('返回的项目不匹配，请刷新重试。');
    const profile=response.data;setState(profile);setLatestReceipt(null);setError('');if(manual)setCommandError('');
    if(profile){
     const execution=stageExecution(currentAutonomyStage(profile.stages)),key=receiptKey(profile);
@@ -123,7 +126,10 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
  const userAction=needsPlan?'暂不能直接继续；可查看任务与处理记录。':state?.status==='blocked'?'可查看最新任务和决策记录，了解待处理条件。':state?.status==='paused'?'需要确认后启动。':terminal?'当前计划无需操作；产品是否交付以验收证据为准。':controls?.active?'无需操作；监督按当前计划进行。':'需要启动监督。';
  const machine=machines.find(m=>m.id===state?.config.machineId)?.name??state?.config.machineId;
  const acceptanceFirst=!!planState||hasBaseline(baselines,projectId),budget=acceptanceFirst&&baselines?.latest?baselines.latest.projectBudget:state?.budget;
- const reportSnapshot=baselines??{projectId,latest:null,main:null,total:0};
+ const reportSnapshot=baselines&&!(planState&&baselineError)?baselines:{projectId,latest:null,main:null,total:0};
+ const reportRequired=required.length||(planState?.independentProgress?.available?planState.independentProgress.totalObjectives??0:0);
+ const reportVerified=verified?[...verified]:planState?.independentProgress?.available?planState.independentProgress.verifiedObjectiveIds:null;
+ const reportStale=planState?!!planError:!!error||!!baselineError||!!planError;
  const reportMode=planState?.mode??(hasBaseline(baselines,projectId)?'acceptance':'development');
  const planCurrent=planState?.steps.find(s=>s.id===planState.currentStepId);
  const activePlanStep=planState?.steps.find(s=>s.activeRunIds.length);
@@ -161,9 +167,10 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
    {events.length?<ol className="project-autonomy-events">{events.map(event=><li key={`${event.seq}-${event.hash}`}><time dateTime={event.at}>{time(event.at)}</time><div><strong>{event.kind==='task-created'&&event.data.review===true?'创建独立评阅任务':eventLabels[event.kind]??event.kind}</strong>{text(event.data.reason||event.data.problem||event.data.workPackage||event.data.stageId)&&<p>{reasonText(text(event.data.reason||event.data.problem||event.data.workPackage||event.data.stageId))}</p>}<small>记录 {event.seq} · {event.hash?.slice(0,12)||'指纹未报告'}</small></div></li>)}</ol>:<Empty title="暂无监督事件" detail="开始执行后会保留真实安排、异常及验收记录。"/>}
   </Panel></details>;
  return <section className="project-autonomy" aria-label="项目自治监督">
+  {administrator===true&&<ProjectSupervisionWorkPanel key={projectId} projectId={projectId} navigate={navigate}/>}
   {baselineError&&<Note tone="warn">{baselineError}</Note>}
   {planError&&<Note tone="warn">{planError}</Note>}
-  <ProjectReportPanel snapshot={reportSnapshot} navigate={navigate} mode={reportMode} factory={reportSnapshot.main?.workspace==='/home/superopen/All-Projects/msf'} plan={planState?{title:planState.title,intro:planState.goal,steps:planState.steps.map(s=>({title:s.title,detail:s.goal}))}:undefined} work={reportWork} required={required.length} verifiedIds={verified?[...verified]:null} stale={!!error||!!baselineError||!!planError} readAt={readAt} refresh={()=>void load(administrator===null,true)} loading={loading||busy!==null}/>
+  <ProjectReportPanel snapshot={reportSnapshot} navigate={navigate} mode={reportMode} factory={reportSnapshot.main?.workspace==='/home/superopen/All-Projects/msf'} plan={planState?{title:planState.title,intro:planState.goal,steps:planState.steps.map(s=>({title:s.title,detail:s.goal}))}:undefined} work={reportWork} required={reportRequired} verifiedIds={reportVerified} stale={reportStale} readAt={readAt} refresh={()=>void load(administrator===null,true)} loading={loading||busy!==null}/>
   {planState&&<details className="project-autonomy-history"><summary>计划记录 · {planState.revision} 次修订</summary><p>{planState.mode==='acceptance'?'测试验收':'持续开发'} · 每次安排保留版本，执行结束后仍须独立验收。</p>{planState.steps.map(step=><p key={step.id}><strong>{step.title}</strong> · {planStepLabel(step.state)}{step.latestResult?.fixedReport&&` · 检查 ${step.latestResult.fixedReport.checks.filter(c=>c.executed&&c.status==='pass').length} 通过 / ${step.latestResult.fixedReport.checks.filter(c=>c.status==='fail').length} 失败 / ${step.latestResult.fixedReport.checks.filter(c=>!c.executed||c.status==='unknown').length} 待验`}</p>)}</details>}
   {acceptanceFirst&&baselines&&<details className="project-autonomy-history"><summary>检查详情 · 主线与历史候选</summary><ProjectBaselinePanel snapshot={baselines} navigate={navigate}/></details>}
   <details className={acceptanceFirst?'project-autonomy-history':'project-autonomy-unfolded'} open={acceptanceFirst?undefined:true}><summary hidden={!acceptanceFirst}>验收目标 · 费用与用量</summary>

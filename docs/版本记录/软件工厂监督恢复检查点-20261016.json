@@ -1,0 +1,471 @@
+{
+  "schemaVersion": 1,
+  "kind": "factory-supervision-resumption-checkpoint",
+  "observedAt": "2026-10-16T02:44:59.012Z",
+  "recordedAt": "2026-10-16T02:48:36.630016+00:00",
+  "live": {
+    "at": "2026-10-16T02:44:59.012Z",
+    "project": {
+      "id": "70ec346f-6520-46ed-abed-22cac770a3e4",
+      "status": "planned",
+      "revision": 45
+    },
+    "plan": {
+      "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+      "revision": 79,
+      "title": "软件工厂 · 最终目标验收",
+      "goal": "围绕原74目标贯通客户需求到真实软件使用及成熟全自动交付；保留全部历史结果。",
+      "currentStepId": "repair",
+      "nextAction": "完成新独立main四值与454 driver/capture两原文件诊断的LOCAL实现、非作者来源审、实际DATA与具体ENTRY后，只执行一次有限只读；两个阶段分别保存结果，按真实差异选择修复。旧START/CHECK/terminal5/current-r1均关闭，不重放、不改原main保护基准。",
+      "active": false,
+      "currentExecution": null,
+      "independentProgress": {
+        "available": true,
+        "status": "blocked",
+        "reason": "REPAIR_ATTEMPTS_EXHAUSTED",
+        "revision": 20,
+        "goalSpecHash": "23d7db28c5b8d3c8516d2607564a03475609cf590b1523e1cd7e6596eac34b42",
+        "totalObjectives": 74,
+        "verifiedObjectives": 0,
+        "verifiedObjectiveIds": []
+      },
+      "steps": [
+        {
+          "id": "tests",
+          "title": "工厂运行",
+          "goal": "当前版本完整打包、隔离安装、前后端/数据同版及恢复核验",
+          "criteria": [
+            "绑定最新主线源码指纹、完整适用测试和实际签名回执",
+            "失败、超时、缺失、跳过与未知分别记录"
+          ],
+          "taskIds": [
+            "98ee355a-6912-46c1-b551-df4ba7ac6030",
+            "bf43cd17-453d-428f-81c3-2a0020726a31"
+          ],
+          "runIds": [
+            "e5ca06dfe49f0e3692b90b0fa9f0120ebc58e849",
+            "f4b26c4c95047ff24f2f5eff7a21ec7d14c579a2"
+          ],
+          "state": "needs-attention",
+          "nextAction": "固定新候选构建包和运行版本；R28基础测试仅作对应范围证据。"
+        },
+        {
+          "id": "artifacts",
+          "title": "全链贯通",
+          "goal": "全新代表项目从客户原始需求到真实代码、测试和软件使用",
+          "criteria": [
+            "原始需求和74目标逐项覆盖，产物使用相同版本",
+            "每个页面及子页面具备真实可交互实现与可核对证据"
+          ],
+          "taskIds": [],
+          "runIds": [],
+          "state": "planned",
+          "nextAction": "以服务请求管理原始需求逐段检查CRD/PRD/RTM、HLD/七册LLD、独立高保真与完整交互、真实代码和产物承接。"
+        },
+        {
+          "id": "repair",
+          "title": "质量闭环",
+          "goal": "真实证据门、统一缺陷、修复复验及变更失效",
+          "criteria": [
+            "问题绑定源版本、需求、失败证据和修复任务",
+            "修复后独立复验，不能靠自报关闭"
+          ],
+          "taskIds": [
+            "580888fe-8edc-40a0-b6a3-46124d119870",
+            "456b2038-a782-4da2-b2d8-d3b291aba8ed",
+            "5b0b27b2-43ad-4153-bff4-63cb4387e024",
+            "bd55cfd8-33bb-4699-8de5-d43b73e46642",
+            "c45462b0-6a28-433c-af8c-d656bd1d2ad3"
+          ],
+          "runIds": [
+            "5c8034046a05b0db89edebbb0e2c6876efb5882f",
+            "a11ac3a06c0f14e9f85bc897c8a766d41e165f24",
+            "44cfcd018b8e12c78928b9bb1a5eabd4fb93705a",
+            "08ce8722e39ea5750857342cdaadc939ebb26d66",
+            "d9f1095aae0edc1b848487b1b567f3be29f25f3b"
+          ],
+          "state": "needs-attention",
+          "nextAction": "完成新独立main四值与454 driver/capture两原文件诊断的LOCAL实现、非作者来源审、实际DATA与具体ENTRY后，只执行一次有限只读；两个阶段分别保存结果，按真实差异选择修复。旧START/CHECK/terminal5/current-r1均关闭，不重放、不改原main保护基准。"
+        },
+        {
+          "id": "delivery",
+          "title": "交付维护",
+          "goal": "完整文档和软件包可安装、使用、升级恢复与变更",
+          "criteria": [
+            "从零客户流程可完整运行且产物关联一致",
+            "交付包安装使用、备份恢复、升级回退和变更复验有证据"
+          ],
+          "taskIds": [],
+          "runIds": [],
+          "state": "planned",
+          "nextAction": "在约定干净环境实际安装并使用工厂及客户产品，版本发布/升级/备份恢复和需求变更另验。"
+        },
+        {
+          "id": "autonomy",
+          "title": "自主优化",
+          "goal": "阶段Agent/子Agent迭代、异常恢复、成熟常规流程全自动",
+          "criteria": [
+            "阶段及子Agent版本评测、晋升和回退可追溯",
+            "连续运行、异常处理与用量记录有实际长期观察证据"
+          ],
+          "taskIds": [],
+          "runIds": [],
+          "state": "planned",
+          "nextAction": "真实纵向流程走通后独立比较Agent候选、提升回退；另跑无逐关点击和第二项目复用。"
+        }
+      ]
+    },
+    "autonomy": {
+      "status": "blocked",
+      "revision": 20,
+      "reason": "REPAIR_ATTEMPTS_EXHAUSTED",
+      "verifiedObjectiveIds": [],
+      "objectives": 74
+    },
+    "tasks": [
+      {
+        "id": "957e0cc8-2e1f-49da-9b15-61a004157386",
+        "title": "软件工厂接管通信验证（单轮）",
+        "status": "validating",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "succeeded",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T10:24:56.937Z"
+      },
+      {
+        "id": "176f44d3-bf68-4ad2-9711-198bd2268aa9",
+        "title": "软件工厂接管通信验证（单轮）",
+        "status": "validating",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "succeeded",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T12:17:48.195Z"
+      },
+      {
+        "id": "331a2d49-1a76-4f3b-93a4-238ebe76e42a",
+        "title": "101 监督控制实测：暂停与检查点续做",
+        "status": "validating",
+        "revision": 8,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "succeeded",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T12:23:37.178Z"
+      },
+      {
+        "id": "a7a9c12a-9374-41b0-88ec-1d58c59212a2",
+        "title": "FM-001 · 101 完整隔离测试与证据真实性审计",
+        "status": "validating",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "succeeded",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T12:28:30.429Z"
+      },
+      {
+        "id": "26fcca31-5033-4e3e-8087-80d1074e0bdc",
+        "title": "FM-001 · 101 完整隔离测试与证据真实性审计 · 环境修复后第二轮",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T13:07:54.181Z"
+      },
+      {
+        "id": "f0e88e90-6b39-428e-b14a-b53b0db62198",
+        "title": "FM-001 · 101 完整隔离测试与证据真实性审计 · 环境修复后第二轮",
+        "status": "cancelled",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "cancelled",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T13:28:37.403Z"
+      },
+      {
+        "id": "8b286976-8756-4bbc-9435-68e033ade929",
+        "title": "软件工厂接管通信验证（单轮）",
+        "status": "validating",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "succeeded",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-10T14:49:20.431Z"
+      },
+      {
+        "id": "30d37bfa-6bf5-4ca7-8167-89a5df5be091",
+        "title": "FA-01 · 开发修复 1",
+        "status": "cancelled",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "cancelled",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T05:50:51.195Z"
+      },
+      {
+        "id": "29adb04a-81b2-49ba-b622-0a42166cba48",
+        "title": "FA-01 · 开发修复 2",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "timeout",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T06:37:33.978Z"
+      },
+      {
+        "id": "a731f64c-23d8-458b-930a-3503a60dffdc",
+        "title": "FA-01 · 开发修复 3",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "timeout",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T06:57:46.885Z"
+      },
+      {
+        "id": "e9942a1f-d8d0-4995-8246-e284990e0dea",
+        "title": "AV-01 · 现有main成果：隔离构建与基础测试",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T10:03:40.773Z"
+      },
+      {
+        "id": "5b06bbba-9d21-45cf-b761-1c41023192b5",
+        "title": "F-R24-001：主项目模板刷新两处TS2345构建缺陷",
+        "status": "queued",
+        "revision": 1,
+        "mode": "observe",
+        "progress": 0,
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T10:18:00.049Z"
+      },
+      {
+        "id": "c1aa17fb-89f1-4c99-bd59-378d24fcde4f",
+        "title": "FA-01 · 候选基线核验 80e4ff1a",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T10:35:09.465Z"
+      },
+      {
+        "id": "a356c76c-73bc-44fe-9958-4cc6b400a546",
+        "title": "F-R24-002：快照及打包反例测试残留临时目录",
+        "status": "queued",
+        "revision": 1,
+        "mode": "observe",
+        "progress": 0,
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T10:38:28.064Z"
+      },
+      {
+        "id": "8120b229-471d-4f43-b009-aa742756dc50",
+        "title": "FA-01 · 候选基线核验 7f0f0ac9",
+        "status": "paused",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "cancelled",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T11:29:30.323Z"
+      },
+      {
+        "id": "9bf0e718-172a-4948-b17b-e4d6f5f52033",
+        "title": "AV-01 · 现有main成果：隔离构建与基础测试",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T11:33:47.376Z"
+      },
+      {
+        "id": "f72d8239-573a-403a-88ac-9d91459158fb",
+        "title": "F-R24-003：候选验收缺口分类与精确复验",
+        "status": "queued",
+        "revision": 1,
+        "mode": "observe",
+        "progress": 0,
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T11:36:45.514Z"
+      },
+      {
+        "id": "4244fb55-7a54-45b9-a94a-ebaddd5d9a59",
+        "title": "AV-01 · 现有main成果：隔离构建与基础测试",
+        "status": "validating",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "succeeded",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T12:14:00.980Z"
+      },
+      {
+        "id": "98ee355a-6912-46c1-b551-df4ba7ac6030",
+        "title": "AT-01 · 当前主线：全量测试与交付包检查",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T15:59:33.498Z"
+      },
+      {
+        "id": "bf43cd17-453d-428f-81c3-2a0020726a31",
+        "title": "AT-01R · 当前主线：报告修复后完整复验",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T16:35:41.242Z"
+      },
+      {
+        "id": "580888fe-8edc-40a0-b6a3-46124d119870",
+        "title": "AT-02 · 测试准备修复与超时定位",
+        "status": "blocked",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "round-limit",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T16:46:58.127Z"
+      },
+      {
+        "id": "456b2038-a782-4da2-b2d8-d3b291aba8ed",
+        "title": "AT-01R · R26 定点修复候选独立完整复验",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-11T17:35:25.844Z"
+      },
+      {
+        "id": "5b0b27b2-43ad-4153-bff4-63cb4387e024",
+        "title": "AT-03R · R27集中修复候选固定完整复验",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-12T03:44:37.379Z"
+      },
+      {
+        "id": "bd55cfd8-33bb-4699-8de5-d43b73e46642",
+        "title": "AT-03R · R28集中修复候选固定完整复验",
+        "status": "failed",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "failed",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-12T04:57:27.827Z"
+      },
+      {
+        "id": "c45462b0-6a28-433c-af8c-d656bd1d2ad3",
+        "title": "R29 · 真实测试与放行证据门修复",
+        "status": "blocked",
+        "revision": 4,
+        "mode": "managed",
+        "progress": 0,
+        "executionStatus": "round-limit",
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "updatedAt": "2026-10-12T15:10:48.097Z"
+      }
+    ]
+  },
+  "savedDiagnostic": {
+    "sourceAt": "2026-10-14T15:45:08.992647Z",
+    "source": {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-root-saved-facts-1791992685967-1cd72152-6f68-487c-b54d-111438bcf29a.json",
+      "sha256": "0c036275eb5d3f13ed4d121e3ab157095c046096f7126d9d31194845579d5b46"
+    },
+    "driver": {
+      "status": "incomplete",
+      "preFixtureGateVerified": false,
+      "errorCode": "R33_PG4_DRIVER_STAGE_INCOMPLETE",
+      "secondaryFailureCodes": [],
+      "fixtureLaunchAttempted": false,
+      "candidateMayHaveExecuted": null,
+      "codeExecuted": null,
+      "actualStartupObserved": false,
+      "PG4Qualified": false,
+      "maximumStarts": 1,
+      "startsAttempted": 0,
+      "sourceRechecksAttempted": true
+    },
+    "mainExpectedMatches": {
+      "fingerprint": true,
+      "files": true,
+      "metadata": false,
+      "rootIdentity": true
+    },
+    "metadataFieldOrWriterKnown": false,
+    "actualFourCases": {
+      "passed": 0,
+      "businessFailed": 0,
+      "incomplete": 4
+    },
+    "diagnosticOpportunityClosed": true
+  },
+  "continuation": {
+    "oldClosedOpportunitiesReplayAllowed": false,
+    "nextLocalPreparation": "prepare-r33-incomplete-driver-current-r2-local.py",
+    "nextLocalPreparationExecuted": false,
+    "newCurrentScopeReadExecuted": false,
+    "newQAExecuted": false,
+    "original74Accepted": false,
+    "customer12Delivered": false
+  },
+  "decision": {
+    "choice": "event-driven-supervision-items-and-briefs",
+    "reason": "用户要求恢复推进并在平台直接看当前事项、真实进展和完成简报；事件提交后推送，未变保持安静。",
+    "alternatives": [
+      {
+        "choice": "only-periodic-status-polling",
+        "selected": false,
+        "reason": "容易重复显示旧状态，完成与阻塞不能立即传达。"
+      },
+      {
+        "choice": "event-driven-supervision-items-and-briefs",
+        "selected": true,
+        "reason": "复用平台通知中心并持久保存事件，可按真实变化更新，支持断线补拉。"
+      }
+    ],
+    "selected": true,
+    "implemented": false,
+    "deployed": false,
+    "accepted": false
+  },
+  "costPolicy": {
+    "limit": "none-record-only",
+    "newSupplierModelCalls": 0,
+    "supplierModelCostKnownUSD": 0,
+    "internalAssistantCostKnown": false,
+    "internalTokensKnown": false
+  },
+  "scope": "Snapshot and selection only; later implementation, tests and deployment require separate evidence."
+}

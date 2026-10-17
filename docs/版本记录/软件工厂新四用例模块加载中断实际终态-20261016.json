@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-new-qa-check-safe-facts",
+  "observedAt": "2026-10-16T05:52:53.698057+00:00",
+  "attempt": "3164f5048c2562a9c29c915f73bfd124",
+  "checkClosed": true,
+  "exitCode": 0,
+  "elapsedSeconds": 7.484000000171363,
+  "status": "failed",
+  "firstFailure": {
+    "phase": "module-import",
+    "errorCode": "R33_PG4_DRIVER_STAGE_INCOMPLETE",
+    "exceptionClass": "Error",
+    "errno": null,
+    "nodeCode": null,
+    "origin": "source-bound-driver",
+    "driverInputBindingVerified": true
+  },
+  "unitProperties": {
+    "Id": "jarvis-pg4-qa-r37-first-error-main607-3164f5048c2562a9c29c915f73bfd124.service",
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "InvocationID": ""
+  },
+  "ownerIdentityRetained": true,
+  "stopIdentityRetained": true,
+  "fiveFilePins": {
+    "state.json": {
+      "sha256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+      "bytes": 22603
+    },
+    "work/postgres.created.json": {
+      "sha256": "1fbf6aaf648a45d97374328a45d3622ba1639d232ce74a4c6de698c315cf690f",
+      "bytes": 313
+    },
+    "work/pg4-runner.created.json": {
+      "sha256": "5fc37387efd36032543806ea38071e929feed2e27e8a4444c26237d383b5e6e8",
+      "bytes": 315
+    },
+    "work/internal-network.created.json": {
+      "sha256": "5eda528b469e961ee9cf52606edef54502ec9b3e374c2f52929184ae577576ef",
+      "bytes": 321
+    },
+    "work/postgres-data.created.json": {
+      "sha256": "a37c6455d704c29ca90630364eae2dfcfc4c4baca7081b262214ce976fbcf516",
+      "bytes": 329
+    }
+  },
+  "retainedDriverPin": {
+    "sha256": "2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a",
+    "bytes": 2066
+  },
+  "fiveOriginalBytesRead": false,
+  "specificModuleCauseVerified": false,
+  "fourCases": {
+    "passed": 0,
+    "businessFailures": 0,
+    "incomplete": 4
+  },
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "productAccepted": false,
+  "originalPublicRef": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-main-actual-check-observation-1792129973698-1e485bc8-cc94-4687-bb62-fedf2c844e4a.json",
+    "sha256": "429c6d2a2f3af8550f6bd6b28c25885edf4de3e7a04259260c484b44c2ac2d5e",
+    "bytes": 162566
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-context-sentinel-main607-meta-r2-report-list-projection-correction",
+  "at": "2026-10-16T12:49:48.866622+00:00",
+  "actualHolder": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-actual-observation-1792154625512-389d44b3-0b8d-47a5-a264-e7d7d1cdedcd.json",
+    "sha256": "4617ea0b66f9ad0f5ae08af6fa53d3bb0e5d3f183bdd85f8a2bac95acd447fc0",
+    "bytes": 4275
+  },
+  "originalState": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-state.json-69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410.json",
+    "sha256": "69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410",
+    "bytes": 24672
+  },
+  "previousLocalProjection": "Root tested whether reports was a dict and then incorrectly described it as absent in a tool summary and a heartbeat handoff.",
+  "correctedOriginalShape": "reports is a list of five entries, all five retainedOriginal references non-null; their original report bodies have not been read by this correction.",
+  "reportEntries": 5,
+  "retainedReferences": 5,
+  "missingReportedReferences": 0,
+  "producerStatus": "failed",
+  "firstFailure": {
+    "phase": "driver",
+    "errorCode": "PG4_R33_UNKNOWN",
+    "exceptionClass": "OtherException",
+    "errno": null
+  },
+  "firstFailureOriginFieldPresent": false,
+  "driverInputBindingVerifiedFieldPresent": false,
+  "originalStateBytesUnchanged": true,
+  "construction286AndPlan100NotBackfilled": true,
+  "plan101CutPredatesActualFiveBodyRead": true,
+  "knownIncompatibleDHelperExecuted": false,
+  "actualCurrentScopeObserved": false,
+  "actualPG4Qualified": false,
+  "reportContentsQualified": false,
+  "RootCalls": 0,
+  "testsRun": 0
+}

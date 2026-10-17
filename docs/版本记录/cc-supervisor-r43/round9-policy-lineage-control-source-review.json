@@ -1,0 +1,167 @@
+{
+  "kind": "independent-local-r43-round9-policy-lineage-and-control-compatibility-source-review",
+  "version": 1,
+  "scope": {
+    "head": "a09cd24997b793d70cbfdacc7b831d2d20cd1373",
+    "appCommit": "d4663381b453fa5d35bab280de66c76cfcd45cfb",
+    "laterTestCommit": "45dfdbe8bfcce967041a12e5d300b28fa333506b",
+    "priorHead": "f9efea4a2955fb4093babd5b46cb10af6df1bd29",
+    "basis": "Frozen final source, actual new tests and saved original author reports/logs. No application/control/SQL execution, project test, network or source edit.",
+    "independentApplicationReview": true,
+    "controlR4ReviewedAsNonAuthor": true,
+    "subsequentControlR5Authorship": "Any separately requested r5 Root-control implementation occurs after this independent app/r4 report and cannot count as independent r5 approval."
+  },
+  "result": {
+    "confirmedApplicationP1InAssignedDelta": [],
+    "priorR8NativePolicyP1": "source-fixed-and-saved-real-three-child-fixture-chain-covered",
+    "newConfirmedRootControlCompatibilityP1": 1,
+    "meaning": "No definite new application P1 was established in the assigned policy/native-session/recovery scope. The needs_more_work flag primarily identifies explicitly unexercised matrices; it is not itself a demonstrated source defect or a mechanical deployment veto. Final package/operational/field acceptance remains Root's separate responsibility. Root r4 is incompatible with the new valid same-generation native rebind history and must be corrected before its use against that state."
+  },
+  "nativePolicyFix": {
+    "references": [
+      "apps/api/src/runtime/project-supervisor-runtime.ts:28",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:57",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:63",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:74",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:80",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:81",
+      "apps/api/src/runtime/supervisor-goal-policy.ts:16",
+      "apps/api/test/execution-stop-lineage-r43.test.ts:3"
+    ],
+    "establishedBySource": [
+      "Explicit new_session preserves the original owner command, stopped source/result hash and old task session, and saves pendingNativeHandoff with the current policyId/generation. It requires an active goal policy rather than silently creating one.",
+      "Dispatch receipt binds the pending handoff to its actual new run. reconcileNativeHandoff accepts only that current run's non-late signed result, same task current request/session and fixed project/machine/workspace, matching nativeLineage and original signed stop result hash/proof.",
+      "rebindNative compares active policyId/generation and previous native session, requires a distinct nonempty next session, preserves the goal authorization/caps/generation and records the verified handoff reason in immutable policy history. It does not generally migrate arbitrary old authorization.",
+      "The reconciliation is reached before ordinary advance and from allows, so a just-returned new native session can satisfy subsequent dispatch/claim policy checks. A revoked or replaced generation cannot rebind.",
+      "A crash after storing the policy but before clearing the pending supervisor field is source-idempotent: rebindNative returns the already matching policy, then the pending field is cleared/saved. This is static reasoning, not a newly run crash test."
+    ],
+    "savedMechanismEvidence": "The final paired stop test now goes beyond the first new child: after signed long-child cancellation and explicit owner handoff, the new child starts without --resume and a third actual finite child resumes exactly the new native session. It asserts current task session and a verified-native-handoff policy-history reason. The saved final-affected log reports this case passing. Pi/native-format output is an explicit deterministic fixture; real supplier/101 CC field use is not established."
+  },
+  "boundaryEvidence": {
+    "references": [
+      "apps/api/test/supervisor-r43-round9-boundaries.test.ts:12",
+      "apps/api/test/supervisor-r43-round9-boundaries.test.ts:34",
+      "apps/api/test/supervisor-r43-round9-boundaries.test.ts:41",
+      "apps/api/src/runtime/execution-runtime.ts:196",
+      "apps/api/src/runtime/execution-runtime.ts:198",
+      "apps/api/src/runtime/execution-runtime.ts:200",
+      "apps/api/src/runtime/execution-runtime.ts:206",
+      "apps/api/src/runtime/execution-runtime.ts:207",
+      "reports/r43-round9-logs/boundaries-executed-final.tap"
+    ],
+    "knownOver10M": "A real finite native-format child reports 10,000,001 signed tokens through createApp/DTO/SQLite/TCP paired agent. The same preserved history opens a policy window capped at 1000 for the successor. The test executes the second actual child, verifies its result and at least two journal ACKs, and verifies the original 10,000,001 remains unchanged. Finite reporting deliberately crosses a technical token boundary; it is not a real model spending experiment.",
+    "queuedPause": "After a real supervisor request is queued, owner pause cancels it and revokes the policy. The paired agent runOnce returns null and the child marker file is absent. This is a real claim/no-child branch, not an execution stub.",
+    "sourceStability": "The R8-to-R9 execution-runtime source has no delta; earlier policyWindowId, exact internal grant replay and waitingUser/awaiting-cost admission fixes remain. The only agent-runner delta is the r6 build label. Runtime/agent/archive labels are reported consistently as 20261017-cc-supervisor-r43-r6. This report does not independently approve physical packages."
+  },
+  "uncoveredNotConfirmedBugs": [
+    {
+      "branch": "persisted pending-grant-only cut",
+      "status": "explicitly untested",
+      "source": "grantContinuation exact-command reuse is present; no saved restart/concurrent-source fault-injection acceptance."
+    },
+    {
+      "branch": "business request committed before runtime row",
+      "status": "explicitly untested",
+      "source": "Exact persisted request recovery and bindWindow exist at execution-runtime:198. Do not report them as absent. No new reproduction establishes a functional failure."
+    },
+    {
+      "branch": "independent awaiting-cost waitingUser successor",
+      "status": "explicitly untested",
+      "source": "Specific admission and current-source checks exist at :200/:206; the successful-result unknown-history chain is a different branch."
+    },
+    {
+      "branch": "queued goalRevision revoke",
+      "status": "explicitly untested",
+      "source": "The saved queued-pause test does not establish the distinct revise-goal matrix."
+    },
+    {
+      "branch": "all handoff/revocation/restart interleavings",
+      "status": "not fully exercised",
+      "source": "Source has policy generation/revocation checks and persisted handoff recovery; the three-child test covers the normal accepted path."
+    },
+    {
+      "branch": "full HTTP decision correction and projection cut lifecycle",
+      "status": "separate reviewer scope and author-listed remaining work"
+    },
+    {
+      "branch": "real model/browser/mobile/101 fixed CC acceptance",
+      "status": "not performed; Root-controlled field acceptance remains separate"
+    }
+  ],
+  "confirmedRootControlFinding": {
+    "id": "R9-ROOT-CONTROL-R4-P1-SAME-GENERATION-NATIVE-HISTORY",
+    "priority": "P1 for use of this maintenance control against a successfully rebound R9 history",
+    "control": ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r4.mjs",
+    "controlSHA256": "d5520d1986fe0de605396e51d8b9b58f82eb8fd41abc42ee09b9cb12fc40ac44",
+    "references": [
+      ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r4.mjs:183",
+      ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r4.mjs:199",
+      ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r4.mjs:205",
+      "apps/api/src/runtime/supervisor-goal-policy.ts:16",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:57"
+    ],
+    "proof": "R9 rebindNative stores a changed nativeSessionId under the same policyId/generation with reason verified-native-handoff:<child>:<source>:<hash>. r4:183 requires every duplicate (policyId,generation) history policy object to be completely equal, so the first valid rebind unconditionally raises R43_NUP_POLICY_HISTORY_REQUIRED. Merely choosing the last history row would also make owner_lineage_proof incorrectly treat the new native session as the old source session for the pre-handoff window.",
+    "narrowCorrection": "A distinct Root-authored control must recognize only the exact verified-native-handoff history transition, keep all non-native authorization fields and generation identical, verify the stopped source/owner command/window/accepted signed new result chain, and retain the correct pre-transition snapshot for the owner-lineage window. Do not blindly relax all same-generation history equality or disguise application revocation. Preserve every existing activity/intent/projection/usage guard and phase/pin behavior.",
+    "schemaDelta": "R9 adds supervisor_projection_stages and supervisor_notice_outbox; existing supervisor, execution and goal-policy table fields read by r4 remain. The new projection staging is behind the existing unfinished supervisor_projection gate; this review found no definite new source mismatch in the existing field names/statuses/sourceHash extraction. New notification work is not execution/lease activity. The specific policy-history semantic change above is the determined blocker.",
+    "ownership": "Root maintenance control, not CC application work. r4 originals remain sealed; any requested r5 is separately authored and requires reviewer B's independent approval."
+  },
+  "preservedEvidence": {
+    "receipt": "artifacts/cc-supervisor-r43/maintenance-round9-collection-1792241442590.json",
+    "verification": "All seven successfully collected originals match both their frozen-tree bytes and separately collected private local copy by SHA256. The rejected oversized patch was not re-requested and no report boundary was enlarged.",
+    "files": [
+      {
+        "path": "reports/r43-implementation-round9.json",
+        "bytes": 3241,
+        "sha256": "3d9671c6fe8674ae9411142b4b46e371eb2a6b41188be9cccc9ed953bcfa30c4"
+      },
+      {
+        "path": "reports/r43-implementation-round9.md",
+        "bytes": 6230,
+        "sha256": "a2c0f661faad8ebf3bd5c116daa9273020605942ceb1da2ddadce33d4c42fa99"
+      },
+      {
+        "path": "reports/r43-round9-packages.json",
+        "bytes": 3450,
+        "sha256": "ad57e1460502a9ea66b79f725cb689ec11d06a23bc7c5e626d8d8a1c60bf09de"
+      },
+      {
+        "path": "reports/r43-round9-logs/final-affected.tap",
+        "bytes": 11839,
+        "sha256": "6d08610f19d9fb4b97702a9453b301ebb34ab65dbaf313626749678aa58dd9ca"
+      },
+      {
+        "path": "reports/r43-round9-logs/boundaries-executed-final.tap",
+        "bytes": 328,
+        "sha256": "e4c8529c9432fd2f90a81e93a6b3178be52470f24c2c64c441bef0ce199afd27"
+      },
+      {
+        "path": "reports/r43-round9-logs/typecheck-final-cut.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+      },
+      {
+        "path": "reports/r43-round9-logs/build-final.txt",
+        "bytes": 3400,
+        "sha256": "9103851321087635b4af676184b96125c47e94c46bf79be824efa86a94be4584"
+      }
+    ],
+    "reportedChecks": "final affected 11/11, distinct final boundary 2/2, types/build exit0. No old groups were rerun or numerically added."
+  },
+  "finalState": {
+    "applicationOrControlSourceModifiedDuringIndependentReview": false,
+    "testsOrModelsRun": false,
+    "networkUsed": false,
+    "actualIdleProven": false,
+    "releaseApproved": false,
+    "R10Reviewed": false
+  },
+  "publicProjection": {
+    "sourceSHA256": "c5873a837c7c28add6d37497c10347c88b324e6eb81d5c94a9396c77ea8d6440",
+    "sourceBytes": 11372,
+    "removedFields": [
+      "scope.tree"
+    ],
+    "originalPreserved": true,
+    "scope": "Only private workspace/authority locator fields removed; original factual cut retained."
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-16T05:02:03.552Z",
+  "decision": {
+    "id": "25580b0e-1a6a-466a-8a49-df3a3f42f9f3",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "40e2dee7cea606acc3fe23795ce0f377e99a8e4550ede0211d8075cb4f056ddd",
+    "independentAcceptance": false
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 84,
+    "hash": "e12ff2f3438db9cf8511ee00b95eb19ff0959b7dee7f93e94e667452bcc864b2",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "前置保护和旧454当前资源核查已通过并经保存独审；准备带原始错误留存的新四用例入口，来源、参数及具体入口核对后，再用执行前新鲜保护安排一次验证。"
+  },
+  "items": [
+    {
+      "id": "4fbfd87a-fe71-461b-b1a6-bc847308b43f",
+      "title": "前置保护与当前范围核查",
+      "status": "completed",
+      "revision": 6,
+      "hash": "1b7a34f6e0d25e92d8c4f5c158cffdfebb369a0952552255711ab7c946c40c78",
+      "summary": "前置核查完成：固定607现状的完整保护通过，旧测试资源和相关进程、连接已核清。",
+      "nextAction": "继续独立复验四个关键用例；旧驱动的具体异常仍待新入口留存原始错误。",
+      "completionSummary": "本次前置核查通过：新保护来源、实际参数和入口独审合格，唯一现场执行完成；前后完整保护、旧454的4资源及2已知进程相关收口通过，保存证据已独立核对。四用例尚未完成，旧驱动原始异常仍未查明。",
+      "validationScope": "仅607现状不变保护和旧454当前资源、进程及连接核查；不接受新增网页功能，不增加原74签收，不代表四用例通过。"
+    },
+    {
+      "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+      "title": "完成四个关键用例的独立复验",
+      "status": "running",
+      "revision": 2,
+      "hash": "9949b9cecbf7566fc1212e787f977c7174fc96566ab975eaf279dc89d7031246",
+      "summary": "前置核查已通过，正在准备能保留原始错误的新测试入口；四用例仍为0通过、0业务失败、4未完成。",
+      "nextAction": "完成新入口的错误留存和来源核对，再按实际参数与独立入口审查安排一次验证。",
+      "completionSummary": "",
+      "validationScope": "当前只完成前置核查；新四用例尚未启动。"
+    }
+  ],
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 15,
+  "matchingPersistedNotifications": 2,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "new607ProtectionImplemented": true,
+  "new607FullProtectionQualified": true,
+  "currentResourceScopeClosedVerified": true,
+  "savedEvidenceIndependentlyAudited": true,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newQAStarted": false,
+  "newSupplierModelCalls": 0
+}

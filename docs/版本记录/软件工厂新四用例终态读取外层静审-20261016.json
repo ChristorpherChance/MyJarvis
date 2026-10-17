@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-qa-main607-terminal5-outer-independent-local-static-addendum",
+  "at": "2026-10-16T05:41:05.576269+00:00",
+  "status": "passed-limited-outer-source-delta",
+  "outerSHA256": "cffbc5eb7ceadb33a2cc3bd4c58c96f97398207c7011240a77972eb6f1c709ef",
+  "operatorSHA256": "36a6d26337f51e2d77d6185ec0b6a87d69040f116b129ca68647a8f91bc5d195",
+  "programSHA256": "efbc0bade50b4bd45e21dc8b625097c07b1c36e6bfac56d68e6e2a90ad71b410",
+  "hostProgramSHA256": "b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66",
+  "sourceReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-independent-local-source-review-final.json",
+    "sha256": "5f1ffc7b105a6a4ef638409a4d8f3d9a0b396d8e78c7ba44c31822d07d9e7437",
+    "bytes": 13393
+  },
+  "sourceReviewUnchanged": true,
+  "staticPreparationReady": true,
+  "remainingP0P1": 0,
+  "findings": [],
+  "checks": {
+    "literalMapEntries": 7,
+    "originalOccurrenceCounts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      4
+    ],
+    "sequentialDistinctReplacementOccurrences": 9,
+    "overlapNote": "The broad final prefix appears four times in the original; the context-specific earlier substitution already consumes one of these, so three remain at the final step.",
+    "forwardBytesAndWholeOldOuterInverse": true,
+    "fixedRootCwd": "D:/AI/workspaces/MyJevis",
+    "newThinContextAndRequiredENTRYKindExact": true,
+    "programAndHostPinsMatchSOURCE5f1": true,
+    "explicitContextHashAndReviewRefRequired": true,
+    "threeOuterArgsBecomeFiveThinCLIArgs": true,
+    "noDefaultTerminalOrNonceMinted": true,
+    "preExistingConsoleRefusesBeforeRun": true,
+    "subprocessTimeoutSeconds": 120,
+    "automaticRetry": false,
+    "privateConsoleOriginalReturnedStdoutStderrSavedWXBeforeParse": true,
+    "publicSelectionContainsSafeRefsAndFlagsOnly": true,
+    "jsonSuffixesAreActualNewlineBytes": true,
+    "exitCodePropagated": true,
+    "guardWXTimeoutAndPublicSelectionBytesUnchangedOutsideLiteralMaps": true,
+    "initialFinalSourceHashesAndSizesStable": true,
+    "allMachineRefsRootPhysicallyVerified": true,
+    "workCopyScope": "This addendum is copied identically to Root/work. The newly Root-prepared outer/proof are not claimed to have been mirrored into work.",
+    "workMissingAtRead": [
+      ".jarvis-dev/maintenance/run-r37-qa-main607-reviewed-terminal-bytes-once.py",
+      "artifacts/software-factory/goals-r29/r37-terminal5-root-outer-local-preparation.json"
+    ]
+  },
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-terminal-binding-bytes-first-error-main607-once.mjs",
+      "sha256": "36a6d26337f51e2d77d6185ec0b6a87d69040f116b129ca68647a8f91bc5d195",
+      "bytes": 17480
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-qa-main607-reviewed-terminal-bytes-once.py",
+      "sha256": "cffbc5eb7ceadb33a2cc3bd4c58c96f97398207c7011240a77972eb6f1c709ef",
+      "bytes": 4288
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-host-source-b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66.py",
+      "sha256": "b03de9bcd87ea693bce2c70c54401d8decea5fa3c125f7558b39eff307e41a66",
+      "bytes": 14369
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-terminal5-independent-local-source-review-final.json",
+      "sha256": "5f1ffc7b105a6a4ef638409a4d8f3d9a0b396d8e78c7ba44c31822d07d9e7437",
+      "bytes": 13393
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-terminal5-root-outer-local-preparation.json",
+      "sha256": "65d93f9abe3cb448fcb3843c587bb0754ed8ac78e5691cc1b28c7f26e81b3959",
+      "bytes": 2275
+    },
+    {
+      "path": "scripts/factory-pg4-terminal-binding-bytes-r37-first-error-main607.py",
+      "sha256": "efbc0bade50b4bd45e21dc8b625097c07b1c36e6bfac56d68e6e2a90ad71b410",
+      "bytes": 10235
+    }
+  ],
+  "historicalInverseSupportRef": {
+    "path": ".jarvis-dev/maintenance/run-r33-pg4-pgready-r7-reviewed-terminal-bytes-once.py",
+    "sha256": "a8a409b2519b862685df8355c2832b83415a7432d0c79776f09b52434536ea51",
+    "bytes": 4257
+  },
+  "actualDATA": false,
+  "actualENTRY": false,
+  "actualTerminalBindingBytesObserved": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "remoteOperationsPerformed": false,
+  "modelsInvoked": false,
+  "limitations": [
+    "This is only an outer source addendum; SOURCE5f1 is unchanged. A future concrete ENTRY must bind this exact outer plus actual context and real parent check/terminal refs.",
+    "The inherited subprocess timeout behavior is unchanged; this review does not execute it or claim actual terminal evidence.",
+    "No real parent journal, attempt, nonce, terminal or five-file pins were read, invented or filled."
+  ],
+  "procedure": {
+    "sourceModified": false,
+    "subjectFunctions": 0,
+    "subjectExports": 0,
+    "testsRun": 0,
+    "remoteCalls": 0,
+    "apiCalls": 0,
+    "selfHashReferenceIncluded": false
+  },
+  "fees": {
+    "policy": "record-only-no-cap",
+    "supplierModelCalls": 0,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

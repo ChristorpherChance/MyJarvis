@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "kind": "r43-round6-awaiting-cost-adoption-source-supplement",
+  "status": "source-only-conditional-reachability-blocker",
+  "source": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round6",
+    "head": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+    "appCommit": "91fdeb1ab35d53c8f846f8bf82843649bd397cc1"
+  },
+  "boundary": "Local source-only continuation of the same review. No app edits, tests, model calls, HTTP, remote or deployment operations. Original A/B sealed reports remain unchanged. This is not an observed field failure.",
+  "finding": {
+    "priority": "P1-if-adopting-awaiting-cost-source",
+    "title": "Adoption accepts awaiting-cost but the next normal judgment step rejects it",
+    "evidence": [
+      "apps/api/src/runtime/project-supervisor-runtime.ts:52 accepts an awaiting-cost signed result and awaiting-cost run status in adopt().",
+      "At line 66, adopt-source-verified also accepts awaiting-cost, saves consumedRunId/resultHash and returns without preparing a model intent or inserting supervisor_consumed.",
+      "On the following tick the normal running branch on the same line accepts only success/failed/round-limit/timeout/budget-exhausted. awaiting-cost raises TERMINAL_NOT_NORMAL, which pump():63 turns into disabled/blocked.",
+      "An owner grant does not by itself supply the missing model decision: command():58 rejects a consumedRunId without decisionId unless resolving a specifically uncertain model intent, which this path never created.",
+      "ExecutionRuntime.result():290 accepts awaiting-cost as a real result outcome, and supervisorDispatch():206 treats it as a grant boundary. Thus this is an explicit supported source shape being blocked before its judgment/grant path."
+    ],
+    "narrowFix": "Align the adoption-to-normal-consumption path for the explicitly accepted signed awaiting-cost outcome. Retain incomplete-cost/unknown usage and source hashes, form conservative failure/diagnostic feedback and a bound model decision, then retain the existing continuation authorization boundary. Do not turn awaiting-cost into success or fabricate known/zero usage.",
+    "verificationRequired": "The already-required real existing-task source-to-judgment-to-next-window acceptance should include this exact source outcome; no additional test or run was performed by this reviewer."
+  },
+  "relatedReports": [
+    "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+    "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json"
+  ],
+  "releaseAccepted": false
+}

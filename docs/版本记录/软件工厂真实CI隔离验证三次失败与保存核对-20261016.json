@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-service-attempts-1-3-saved-safe-cause-summary",
+  "status": "three-closed-failed-attempts-saved",
+  "scope": "Independent LOCAL SAVED byte and phase audit; no new execution",
+  "savedEvidenceIndependentlyAudited": true,
+  "attempts": [
+    {
+      "number": 1,
+      "actual": {
+        "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-1.json",
+        "sha256": "9c4269a554e7105588ac40af217f223c70d46309959c48eaaf3f458561351705",
+        "bytes": 2609
+      },
+      "terminal": "failed",
+      "stage": "PowerShell process startup before ACL was evaluated",
+      "code": "PRIVATE_ACL_NOT_QUALIFIED",
+      "processExitCode": 4294901760,
+      "stderrUTF16LEBytes": 136,
+      "closedOSCode": "8009001d",
+      "causeScope": "Source-bound mixed-case environment allowlist omitted the uppercase system-root key. Complete OS startup root cause not traced. Actual ACL disqualification not established.",
+      "newPostgresCreated": false,
+      "harnessExecuted": false
+    },
+    {
+      "number": 2,
+      "actual": {
+        "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-2.json",
+        "sha256": "7b3ce8c2cad190c51dcf463aa00372b7221828203233b7b42a840130f4ad00c6",
+        "bytes": 8347
+      },
+      "terminal": "failed",
+      "stage": "A private-root validation before candidate container creation",
+      "code": "CI_PRIVATE_ROOT_UNTRUSTED",
+      "migrationsApplied": 31,
+      "candidateTestExecution": false,
+      "terminalCaseReceipts": 0,
+      "causeScope": "Root operator observed legal OwnerRights in the mode-created operation ACL; the fixed SID guard did not accept that identity. This audit verifies saved ACL success for the restricted parent, attributes operator live-ACL diagnosis, and does not claim a saved full ACL snapshot or data exposure.",
+      "newPostgresExactAbsent": true,
+      "newResidualContainerCount": 0
+    },
+    {
+      "number": 3,
+      "actual": {
+        "path": "artifacts/factory-devci-r38/r38-service-integration-actual-attempt-3.json",
+        "sha256": "8380af0ad884b669fc1126294cf1bdc68b99e2280d232865eb7d4b95fd8041a4",
+        "bytes": 8348
+      },
+      "terminal": "failed",
+      "stage": "candidate Docker start after successful create, before tests",
+      "code": "CI_CONTAINER_START_FAILED",
+      "migrationsApplied": 31,
+      "candidateReceiptSHA256": "562b65f7e58e05cd2c424f3cb878250e863cd5d55cc8900ac7551ff938f073d3",
+      "conclusion": "unknown",
+      "actualContainerExecution": false,
+      "containerRemoved": true,
+      "tests": null,
+      "coverage": null,
+      "cause": "UNKNOWN",
+      "failureStdoutStderrAndProcessMetadataSaved": false,
+      "causeScope": "Original R2 guard retained a stage code but no failed create/start transport. Do not infer mount, image, ACL, daemon or candidate-test cause.",
+      "newPostgresExactAbsent": true,
+      "newResidualContainerCount": 0
+    }
+  ],
+  "savedReviews": [
+    {
+      "path": "artifacts/factory-devci-r38/service-attempts-1-2-saved-evidence-independent-local-review-final.json",
+      "sha256": "72b88813fefa78cbad4755f15e5c1c5e3bb8bc96b2afbab7d7c692efeb65a7ea",
+      "bytes": 44627
+    },
+    {
+      "path": "artifacts/factory-devci-r38/service-attempt-3-saved-evidence-independent-local-review-final.json",
+      "sha256": "d9c26cd2236561c49d39360948ff8705550d8b5c03feb3dcf0a2d21289cd501e",
+      "bytes": 23448
+    }
+  ],
+  "migrationBoundary": "Attempt2 original31 source hashes and saved applied receipts were checked against local source; attempt3 original31 pins/applied receipts exactly match. No DB query or migration rerun.",
+  "snapshotBoundary": "Exact new PostgreSQL removal and unchanged 13-container before/after sets are verified from saved stdout. No current daemon inventory, kernel trace or arbitrary cleanup.",
+  "allOriginalFailuresPreserved": true,
+  "noBlindSameRequestRetry": true,
+  "successorPreparationNotExecution": true,
+  "qualification": {
+    "actualSuccessfulCI": false,
+    "qualityMerge": false,
+    "HTTP": false,
+    "autopilot": false,
+    "frameworkABI": false,
+    "fullPG4": false,
+    "full74": false,
+    "production": false
+  },
+  "cost": {
+    "policy": "record-only-no-cap",
+    "newModelRequests": 0,
+    "knownExternalModelCost": 0,
+    "internalTokens": null,
+    "internalCost": null
+  },
+  "performedByThisReview": {
+    "savedFileReadsAndHSizeChecks": true,
+    "newDockerPostgresAPIorRemote": false,
+    "newTestsOrSourceFunctions": false,
+    "dependency1810Revalidation": false
+  }
+}

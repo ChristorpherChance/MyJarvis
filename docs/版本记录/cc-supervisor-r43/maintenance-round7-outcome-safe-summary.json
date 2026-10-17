@@ -1,0 +1,112 @@
+{
+  "kind": "r43-round7-actual-outcome-safe-summary",
+  "at": "2026-10-17T11:03:14.388Z",
+  "operationId": "6661a48c-5e5d-4fa7-92a6-4ec7af599646",
+  "centralDispatched": false,
+  "terminal": true,
+  "exitCode": 0,
+  "elapsedSec": 2211.5575651449617,
+  "timeout": false,
+  "cgroupProcesses": 0,
+  "nativeFinalCompleteCLIReceipt": true,
+  "productAcceptance": false,
+  "nativeTurns": 137,
+  "source": {
+    "startCommit": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+    "appCommit": "c78e5072359975a00c8ed839697f9a2f392d266e",
+    "reportCommit": "f8d23de7e4f5a9a2f456e03e402316d9a0f9eb8c",
+    "privateBundleBytes": 269773,
+    "privateBundleSHA256": "04ac859f44cb8fb887e22d0dd44a3713beb48a3176064644c7a79a7e0990058d",
+    "originalAuthorshipPreserved": true
+  },
+  "checks": {
+    "realCreateAppTaskDTORuntimePairedSignedChildJournalChain": {
+      "tests": 1,
+      "passed": 1,
+      "actualChildRuns": 3,
+      "sameTaskSessionSuccessors": 2,
+      "resumeFlags": [
+        false,
+        true,
+        true
+      ],
+      "modelAndNativeChildAreFixtures": true,
+      "notRealProviderOr101ProductAcceptance": true,
+      "unknownOver10MGrantAndRestartRevokeFullMatrixNotCovered": true
+    },
+    "affectedExperiencePolicyReconcileUI": {
+      "tests": 10,
+      "passed": 10,
+      "coverageIncludesSourceStringAssertionsAndStubDispatch": true,
+      "notBrowserAcceptance": true
+    },
+    "fullTypecheckExit0": true,
+    "fullBuildExit0": true,
+    "chainLogBuildLabel": "20261017-cc-supervisor-r43-r3",
+    "finalSourceAndPackagesBuild": "20261017-cc-supervisor-r43-r4",
+    "finalBuildLabelDeltaDoesNotConstituteNewChainRun": true
+  },
+  "candidates": {
+    "matchingVersionReported": true,
+    "runtimeBuild": "20261017-cc-supervisor-r43-r4",
+    "platformZIPBytes": 20604411,
+    "platformZIPSHA256": "b434d0d552fe9ef062c077f0217279cc8a89107747aa81b70f86f88f47fd8a3e",
+    "sourceCommit": "c78e5072359975a00c8ed839697f9a2f392d266e",
+    "artifactPhysicalBytesNotYetTransferredOrIndependentlyVerified": true,
+    "releaseReady": false
+  },
+  "remainingAsReported": [
+    "unknown/over10M real policy branch and restart/concurrent/CAS matrix",
+    "claim pre-revocation and goal-revision zero-execution chain",
+    "complete ProjectDecision selected/actions/change lifecycle",
+    "browser and real112model/101CC acceptance",
+    "child0 stop and new-session lineage"
+  ],
+  "usage": {
+    "currentParentInputIncludingCache": 62447223,
+    "currentParentOutput": 23708,
+    "currentParentTotal": 62470931,
+    "signedExternalUsageRecorded": true,
+    "nativeCumulativeCatalogEstimateUSD": 228.6071239999997,
+    "priorCounterUSD": 158.71248099999974,
+    "differenceUSD": 69.89464299999995,
+    "catalogEstimateNotInvoice": true,
+    "knownInvoiceUSD": null,
+    "internalUnknown": null,
+    "noMonetaryCap": true,
+    "originalCCUsageUnknownReportPreserved": true
+  },
+  "boundaries": {
+    "formal112": "20261017-project-oversight-r41",
+    "R43Released": false,
+    "101AgentUpgraded": false,
+    "oldTenMinuteAutomation": "PAUSED",
+    "RootAppCodeEditsOrProjectTests": false,
+    "sameOriginalTaskAndSession": true,
+    "originalTaskRevision": 12,
+    "centralConfigRevision": 45,
+    "oldFactory74Accepted": 0
+  },
+  "evidenceRefs": [
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round7-terminal-native-observation.json",
+      "sha256": "ab0654db3b9738f530a3b492aaa3cf6826e3e6245b4c3d51e7a918201be96735",
+      "bytes": 7952
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round7-collection-1792235203216.json",
+      "sha256": "bd60f364be2ae0a2b9cf4ce03b3fccf8728fb4589287207de3b4a05e07ec66b4",
+      "bytes": 14120
+    },
+    {
+      "reference": "artifacts/cc-supervisor-r43/maintenance-round7-usage-ledger-readback.json",
+      "sha256": "89139e8659dcd31fc364c823db326e803bc147928292f2d946cbdec80cd234eb",
+      "bytes": 778
+    }
+  ],
+  "localPreparationIssue": {
+    "previousPythonAttempt": "default GBK decoding refused before any write; retried with explicit UTF8 in distinct local helper",
+    "remoteCalls": 0,
+    "nodeFirstAttempt": "numeric-leading key refused at parse before any execution; distinctr2 quoted the key"
+  }
+}

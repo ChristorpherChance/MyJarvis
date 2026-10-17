@@ -1,0 +1,512 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-existing-four-callback-local-receipt-plan104-readback-recovered",
+  "at": "2026-10-16T13:57:10.026376+00:00",
+  "status": "passed-bounded-post-commit-LOCAL-readback",
+  "platformMutationReplay": false,
+  "newAPIRequests": 0,
+  "newRemoteCalls": 0,
+  "input": {
+    "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-safe-input-r3.json",
+    "sha256": "d5c8ea2ee72bc7bafbe874bad6cfccb4c0e72aa92156618389293eda9d5c37a9",
+    "bytes": 26899
+  },
+  "originalPublisher": {
+    "path": ".jarvis-dev/maintenance/publish-r37-existing-four-callback-local-receipt-plan104-final-r2.mjs",
+    "sha256": "2016d97851c66125578ffddccc4460e9feb51e9ce39c58b4c3b0d6fe125a4737",
+    "bytes": 23492
+  },
+  "originalPublisherFailure": {
+    "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-failure.json",
+    "sha256": "4c6b9085f21a3132c267070c491033e3810c3b9669b9076886707353611f4df9",
+    "bytes": 2713
+  },
+  "privateOriginalDiagnosticSnapshot": {
+    "path": ".jarvis-dev/maintenance/r37-plan104-post-commit-readback-diagnostic.json",
+    "sha256": "195cf81cd8a9f701189e53a54533a3017e5893e1da904607f8c7b172d9d8f24f",
+    "bytes": 5880824
+  },
+  "recovery": {
+    "originalPublisherMutationsCommitted": 7,
+    "originalPublisherExitStatus": "failed-final-readback-only",
+    "originalErrorCode": "PLAN104_FINAL_READBACK_REQUIRED",
+    "originalFailurePreserved": true,
+    "exactRejectedPredicate": "Completion notification incorrectly matched summary rather than completionSummary.",
+    "wrongSummaryMatchCount": 0,
+    "actualCompletionSummaryMatchCount": 1,
+    "nextRunningSummaryMatchCount": 1,
+    "publisherSourceOrOriginalReceiptsEdited": false,
+    "publisherReplayed": false,
+    "onlySavedSnapshotAndReceiptsConsumed": true
+  },
+  "allSevenContractGatesQualifiedAndIndependentlyReviewed": true,
+  "receipt": {
+    "path": "docs/版本记录/软件工厂四回调与原行文本有限独立验收回执-20261016.json",
+    "sha256": "3ce22805f4dec85a10046c844c6861e5c6cffb7815ee9bac235ab4b9d17889ea",
+    "bytes": 85542
+  },
+  "independentReview": {
+    "path": "docs/版本记录/软件工厂四回调与原行文本有限验收非作者复核-20261016.json",
+    "sha256": "2e67832ab165b1c6703d59b8b8034b1f8ae5d6cd22d32a5faa3f6190e20c7f79",
+    "bytes": 66367
+  },
+  "decisions": {
+    "worker": {
+      "id": "b1f2b114-f192-4f30-8a10-0232513b88d3",
+      "selectedRevision": 1,
+      "selectedHash": "46bb789ce9404ac2ffc04e4a3a3dc7468a3374c803900f9504487ecdea42a764",
+      "revision": 2,
+      "hash": "8d038522278b0484c53ef940c2dcf3fe5346ba145aa857366dde6d2d54cfea7b",
+      "status": "implemented",
+      "independentAcceptance": false,
+      "scope": "LOCAL worker SOURCE only; no runtime",
+      "oldActionsExactPrefixPreserved": true
+    },
+    "receipt": {
+      "id": "6410458c-f8ea-4d27-aedb-323aebb3920a",
+      "selectedRevision": 1,
+      "selectedHash": "14a8d31ff7b940199b8376fe911eb41386f32428aaead1222842a763adc67a1e",
+      "revision": 2,
+      "hash": "46db3dedec6a810fd8095e034c0da82f80d8e79cec7225359c266054d221b3e7",
+      "status": "implemented",
+      "independentAcceptance": false,
+      "scope": "Limited existing four callbacks/18 original server row texts/30 migration binding/same-attempt resource LOCAL IO only",
+      "oldActionsExactPrefixPreserved": true
+    }
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 104,
+    "hash": "584d8e717f89685214317ee4fe174f55a316c4871f2190b1241b45c1fbd5a88b",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "在独立R38源码副本实现OBJ035真实repo/fullcommit→真实单测与CI原报告→quality/merge同源消费，替换该路径固定85/78、mock-local和合成提交；先做本机实现与精准验证。执行封装接入、真实runner/PG现场及整体交付链仍待后续，不为四个已通过回调重跑QA。"
+  },
+  "completedItem": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "completed",
+    "revision": 22,
+    "hash": "545614fa05d44a27e2dedb331126080103965aa56209cd928ae206ef53658b75",
+    "summary": "四个真实回调与原18表行文本的有限独立核对已完成；同次资源收尾已核，完整工厂交付继续推进。",
+    "completionSummary": "四个真实回调、原18表行文本、30项迁移来源与结果及同次资源收尾已完成有限独立核对。执行封装专用报告修复已完成本机来源审查；完整PG4、框架ABI与原74项目标仍待推进。",
+    "validationScope": "仅消费已保存同一次真实执行的原件：4个选定回调执行及断言通过，15条报告中的11条非选定跳过；原18表rowText按UTF8原字节与顺序、计数及哈希前后相等；30项迁移按源码顺序与原结果绑定；同次D资源收尾及来源复核已独立保存。producer workerfailed、原codeExecuted及reportedCodeExecuted null保持；新receipt域的派生true仅限四个回调。旧oracle columns/完整列、catalog、sequence门不补造，独立pool-end事件仍未观察；框架ABI、实际worker runner/plugin鉴定、完整PG4、74和客户交付均未签。",
+    "evidenceRefs": [
+      {
+        "path": "docs/版本记录/软件工厂监督事项截至计划101完整证据索引-20261016.json",
+        "sha256": "64508d13551230e758565d87e562eb1dd778136531ad07d435d4d5f9239749c7"
+      },
+      {
+        "path": "docs/版本记录/软件工厂配置标记修正后五原件保存独审-20261016.json",
+        "sha256": "a81380c697dbebfdb1d37626ec2b45f6fb36128cc76ea3cb325f0dfee8a34db7"
+      },
+      {
+        "path": "docs/版本记录/软件工厂配置标记修正后五原件实际读取-20261016.json",
+        "sha256": "4617ea0b66f9ad0f5ae08af6fa53d3bb0e5d3f183bdd85f8a2bac95acd447fc0"
+      },
+      {
+        "path": "docs/版本记录/软件工厂五报告齐全失败状态收尾兼容分析-20261016.json",
+        "sha256": "070522d6981fe493152c0a31c5fef0352e1544a2f3c822f9c9fa43931a6a62f9"
+      },
+      {
+        "path": "docs/版本记录/软件工厂五报告齐全失败状态收尾适配选择-20261016.json",
+        "sha256": "843ddf369dfd2d28cdb5e0ad13d232645e312a4daf800e532a36d1a5a444787f"
+      },
+      {
+        "path": "docs/版本记录/软件工厂本轮报告列表摘要更正-20261016.json",
+        "sha256": "84e198314d6d1d490a9c28c88955c67bf4936c37be1203189f3f89a7007732e2"
+      },
+      {
+        "path": "docs/版本记录/软件工厂失败五报告收尾适配来源独审-20261016.json",
+        "sha256": "b97d73da2b96cdac57adacbf7a13aa415952b955836a5fde1c63df91a02c62e5"
+      },
+      {
+        "path": "docs/版本记录/软件工厂失败五报告收尾实际参数安全事实-20261016.json",
+        "sha256": "9985d0b257eac0fc82a14ae0c622c20c020f0d0e3b4c55a60e715467c0c0d402"
+      },
+      {
+        "path": "docs/版本记录/软件工厂失败五报告收尾具体入口核对-20261016.json",
+        "sha256": "92a905817057ab846fdce1178616494caf0e0b6b627d305984de42100eea18f2"
+      },
+      {
+        "path": "docs/版本记录/软件工厂本轮四资源与五报告独立收尾读取-20261016.json",
+        "sha256": "2186a52c5dc8e32550b644ff2df855ae2f797b6265b24238812f2e64c61f61a8"
+      },
+      {
+        "path": "docs/版本记录/软件工厂本轮四资源与五报告收尾保存独审-20261016.json",
+        "sha256": "e2208d32a2fa9d28ef269538b3d463dd45cdef15a01e142dce4d261bc939a06a"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四用例原报告通过与封装解析失败真实原因-20261016.json",
+        "sha256": "16940a52b4e3b2942ca14411744eb8452db454e2da49f1ad921fd7529c3514d8"
+      },
+      {
+        "path": "docs/版本记录/软件工厂执行封装专用报告修复选择-20261016.json",
+        "sha256": "bd117613f2839c76314bbd10983dd9f301ce733b34407a5cc34f669d56c28d95"
+      },
+      {
+        "path": "docs/版本记录/软件工厂执行封装专用报告修复来源独审-20261016.json",
+        "sha256": "abfb55e2f54f75a2db58d68950b9ca443255c544d0158d64d006231965e2ced0"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四回调与原行文本有限验收合同-20261016.json",
+        "sha256": "6464b6fb76f002bf1a76677456d3716b0d2d761d5f02aa474a56655e0a8019dd"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四回调与原行文本有限独立验收回执-20261016.json",
+        "sha256": "3ce22805f4dec85a10046c844c6861e5c6cffb7815ee9bac235ab4b9d17889ea"
+      },
+      {
+        "path": "docs/版本记录/软件工厂既存报告独立消费范围评估-20261016.json",
+        "sha256": "bb4a89fb45803b5bf59aa71f316848ea01ca093a3c0396ba8f12350eb567f194"
+      },
+      {
+        "path": "docs/版本记录/软件工厂四回调与原行文本有限验收非作者复核-20261016.json",
+        "sha256": "2e67832ab165b1c6703d59b8b8034b1f8ae5d6cd22d32a5faa3f6190e20c7f79"
+      }
+    ]
+  },
+  "nextGoalItem": {
+    "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "title": "推进其余目标与自主交付能力",
+    "status": "running",
+    "revision": 2,
+    "hash": "18470488b408628146bc9027e9a33453e95a38a08f1d1310743845ede3a790fa",
+    "summary": "开始推进冻结625来源的MSF apps/server OBJ035：真实仓库与完整提交绑定、单测和CI原报告接入，供质量与合并同源消费。",
+    "nextAction": "在独立R38源码副本实现OBJ035真实repo/fullcommit→真实单测与CI原报告→quality/merge同源消费，替换该路径固定85/78、mock-local和合成提交；先做本机实现与精准验证。执行封装接入、真实runner/PG现场及整体交付链仍待后续，不为四个已通过回调重跑QA。",
+    "blocker": "R38有限slice正在本机实施；真实runner/PG现场与后继执行封装接入尚未就绪，完整开发交付链和原74仍待推进。",
+    "validationScope": "仅推进独立副本 .jarvis-dev/workspaces/msf-targets-r38-real-devci/source 中MSF apps/server OBJ035真实repo/完整提交、原单测CI报告与quality/merge同源接入；基于冻结625复制，不改贾维斯R36 apps/api，不自动运行旧自治包或改变25tasks/自治20blocked，不签真实runner/PG、完整PG4、74或客户交付。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 1,
+    "running": 1,
+    "blocked": 0,
+    "completed": 4
+  },
+  "previousSequence": 34,
+  "latestSequence": 36,
+  "eventSequencesFromTwoSerialCommittedItemRevisions": [
+    35,
+    36
+  ],
+  "eventSequenceQualification": "Source-bound derivation from the two successful serial item mutations and actual latestSequence36; no separate raw event-row snapshot claimed.",
+  "matchingPersistedNotifications": {
+    "completedItem": 1,
+    "nextGoalItem": 1,
+    "total": 2,
+    "completedBodyField": "completionSummary",
+    "nextRunningBodyField": "summary",
+    "distinctNotificationIds": true
+  },
+  "directEvidenceCount": 18,
+  "priorTwelveEvidenceExactOrderedPrefixPreserved": true,
+  "old29EvidencePreservedInImmutableIndex": true,
+  "newEvidence": [
+    {
+      "path": "docs/版本记录/软件工厂执行封装专用报告修复选择-20261016.json",
+      "sha256": "bd117613f2839c76314bbd10983dd9f301ce733b34407a5cc34f669d56c28d95",
+      "bytes": 3215
+    },
+    {
+      "path": "docs/版本记录/软件工厂执行封装专用报告修复来源独审-20261016.json",
+      "sha256": "abfb55e2f54f75a2db58d68950b9ca443255c544d0158d64d006231965e2ced0",
+      "bytes": 12686
+    },
+    {
+      "path": "docs/版本记录/软件工厂四回调与原行文本有限验收合同-20261016.json",
+      "sha256": "6464b6fb76f002bf1a76677456d3716b0d2d761d5f02aa474a56655e0a8019dd",
+      "bytes": 4102
+    },
+    {
+      "path": "docs/版本记录/软件工厂四回调与原行文本有限独立验收回执-20261016.json",
+      "sha256": "3ce22805f4dec85a10046c844c6861e5c6cffb7815ee9bac235ab4b9d17889ea",
+      "bytes": 85542
+    },
+    {
+      "path": "docs/版本记录/软件工厂既存报告独立消费范围评估-20261016.json",
+      "sha256": "bb4a89fb45803b5bf59aa71f316848ea01ca093a3c0396ba8f12350eb567f194",
+      "bytes": 21607
+    },
+    {
+      "path": "docs/版本记录/软件工厂四回调与原行文本有限验收非作者复核-20261016.json",
+      "sha256": "2e67832ab165b1c6703d59b8b8034b1f8ae5d6cd22d32a5faa3f6190e20c7f79",
+      "bytes": 66367
+    }
+  ],
+  "limitedIndependentAcceptance": {
+    "scope": "four-real-callbacks/original-PG18-row-text/30-migration-source-result/same-attempt-resource-closure",
+    "selectedCallbacks": 4,
+    "accepted": 4,
+    "failed": 0,
+    "incomplete": 0,
+    "nonselectedSkipped": 11,
+    "sevenMandatoryGates": 7
+  },
+  "producerStatus": "failed",
+  "producerCodeExecuted": null,
+  "producerReportedCodeExecuted": null,
+  "derivedCallbackCodeExecutedOnlyInReceipt": true,
+  "oldOracleSQLColumnsProjectionComplete": false,
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "full74Accepted": false,
+  "productAccepted": false,
+  "customerDeliveryAccepted": false,
+  "currentResourceScopeEvidenceQualified": true,
+  "currentResourceScopeIsNotFutureFresh": true,
+  "newWorkerRuntimeExecuted": false,
+  "old25TasksOrAutonomyStarted": false,
+  "preservation": {
+    "actualPlan103RevisionHashChecked": "ebd25e0df70cf7fe4322e4030273f80c6f77481de9997a636c9b48b4ef7fd721",
+    "plan103OriginalFiveStepTitleGoalCriteriaTaskRunBindingsEqual": true,
+    "planModeTitleGoalCurrentStepPreserved": true,
+    "onlyRepairNextActionChanged": true,
+    "original74VerifiedObjectives": 0,
+    "allSixItemIdentitiesPreserved": true,
+    "legacyProtectedStateExactlyMatchesPriorPlan103SHA256": true,
+    "legacyProtectedSHA256": "d8256586d978812f72caf90f0c3d7f8a85700317547416dc1f230517a6c06911",
+    "taskCount": 25,
+    "autonomyRevision": 20,
+    "autonomyStatus": "blocked",
+    "PG4DecisionRevision": 29,
+    "environmentDecisionRevision": 23,
+    "oldD43Revision": 2,
+    "oldD43Hash": "31c75f45695813c6e7d4fe7568912f1dc222ea34e923dbc8edcdf58c9a391e60",
+    "oldDriver9aRevision": 3,
+    "oldDriver9aHash": "9b21994615f640948e6503c0591670d003601df90ad3c523730875eef78a0f85",
+    "preexistingDecisionCount": 49,
+    "untouchedItemCount": 4,
+    "allPreexistingDecisionsAndUntouchedItemsUpdatedBeforeIntent": true,
+    "intentAt": "2026-10-16T13:52:39.822Z",
+    "allOldDecisionPreservationQualification": "Post-snapshot version/timestamp checks plus source-bound seven-write set; no independently recomputed complete before-decision snapshot/hash claimed.",
+    "completeBeforeDecisionSnapshotPersisted": false,
+    "completeBeforeProtectedDomainHashIndependentlyRecomputed": false,
+    "completeBeforeProtectedDomainHash": null,
+    "R22Preservation": "Covered by all49 preexisting decisions timestamp/version boundary and unchanged writer scope, not a missing full-before snapshot.",
+    "notesWritten": false
+  },
+  "health": {
+    "status": "ok",
+    "build": "20261016-factory-supervision-r36"
+  },
+  "sourcePublicationOnly": {
+    "worker": {
+      "path": "scripts/factory-pg4-qa-startup-worker-r37-artifact-result-r1.py",
+      "sha256": "e0585f967d652f85ccc12a3031922dd2bf4962578b3c58feda4ae7fc1e312ae5",
+      "bytes": 96271
+    },
+    "test": {
+      "path": "scripts/test-r37-worker-artifact-result-r1.py",
+      "sha256": "9800bd046dce7d9c3285546a762667c9f38a08b885739eee20cf6c370416b86e",
+      "bytes": 10087
+    },
+    "record288WhitelistMustIncludeWorkerAndExactTargetedTest": true
+  },
+  "receipts": {
+    "workerSelected": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-worker-selected-receipt.json",
+      "sha256": "a8256b66e567d0592d6eee57fc7bb7939692ae97c6846ec3e0c5c9efc6b53d6e",
+      "bytes": 6718
+    },
+    "workerSelectedReadback": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-worker-selected-readback.json",
+      "sha256": "e57b92238644f0fb96c5ea04640d764f2e377713d0edf41911d5356daef0ca31",
+      "bytes": 14150
+    },
+    "workerImplemented": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-worker-implementation-receipt.json",
+      "sha256": "a73008bb007f19b2398336735f759dc9c728c582d6b98efbdfd477bf49fa8ed7",
+      "bytes": 7613
+    },
+    "receiptSelected": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-receipt-selected-receipt.json",
+      "sha256": "2a037eef05309219894df7bd49ff40378fdf7282c8295fb1517fefbee21f3dc0",
+      "bytes": 7025
+    },
+    "receiptSelectedReadback": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-receipt-selected-readback.json",
+      "sha256": "a3cb3b7ff1cce45d19e5c8d5c3a69a1fc944916e30a2280e9b684cd034016922",
+      "bytes": 14740
+    },
+    "receiptImplemented": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-receipt-implementation-receipt.json",
+      "sha256": "9d9291a881818d41a55e195b7e456b940f09b4dfb08a05a4ec1b2a5c695de377",
+      "bytes": 8501
+    },
+    "completedItem": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-completed-item-receipt.json",
+      "sha256": "5308883aca439c61ded34a2510b8a88cf3ec7d02a9e7af017cef59befc69db81",
+      "bytes": 5393
+    },
+    "nextItem": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-next-item-receipt.json",
+      "sha256": "2a99c89893a79d55caeebba50839eb8fedf2d1675660e9dee5865938952a80bd",
+      "bytes": 2839
+    },
+    "plan": {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-plan-receipt.json",
+      "sha256": "e977d39df990c924e13415bf55c6dec1964ae933d992550d7d41500a74136a6b",
+      "bytes": 100
+    }
+  },
+  "intent": {
+    "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-intent.json",
+    "sha256": "31e5da573218810460ece2a4b0346b8f2547035986a33684f52bafcec4cac1fc",
+    "bytes": 2192
+  },
+  "physicalRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/r37-plan104-post-commit-readback-diagnostic.json",
+      "sha256": "195cf81cd8a9f701189e53a54533a3017e5893e1da904607f8c7b172d9d8f24f",
+      "bytes": 5880824
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-safe-input-r3.json",
+      "sha256": "d5c8ea2ee72bc7bafbe874bad6cfccb4c0e72aa92156618389293eda9d5c37a9",
+      "bytes": 26899
+    },
+    {
+      "path": ".jarvis-dev/maintenance/publish-r37-existing-four-callback-local-receipt-plan104-final-r2.mjs",
+      "sha256": "2016d97851c66125578ffddccc4460e9feb51e9ce39c58b4c3b0d6fe125a4737",
+      "bytes": 23492
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-intent.json",
+      "sha256": "31e5da573218810460ece2a4b0346b8f2547035986a33684f52bafcec4cac1fc",
+      "bytes": 2192
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-failure.json",
+      "sha256": "4c6b9085f21a3132c267070c491033e3810c3b9669b9076886707353611f4df9",
+      "bytes": 2713
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-worker-selected-receipt.json",
+      "sha256": "a8256b66e567d0592d6eee57fc7bb7939692ae97c6846ec3e0c5c9efc6b53d6e",
+      "bytes": 6718
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-worker-selected-readback.json",
+      "sha256": "e57b92238644f0fb96c5ea04640d764f2e377713d0edf41911d5356daef0ca31",
+      "bytes": 14150
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-worker-implementation-receipt.json",
+      "sha256": "a73008bb007f19b2398336735f759dc9c728c582d6b98efbdfd477bf49fa8ed7",
+      "bytes": 7613
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-receipt-selected-receipt.json",
+      "sha256": "2a037eef05309219894df7bd49ff40378fdf7282c8295fb1517fefbee21f3dc0",
+      "bytes": 7025
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-receipt-selected-readback.json",
+      "sha256": "a3cb3b7ff1cce45d19e5c8d5c3a69a1fc944916e30a2280e9b684cd034016922",
+      "bytes": 14740
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-receipt-implementation-receipt.json",
+      "sha256": "9d9291a881818d41a55e195b7e456b940f09b4dfb08a05a4ec1b2a5c695de377",
+      "bytes": 8501
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-completed-item-receipt.json",
+      "sha256": "5308883aca439c61ded34a2510b8a88cf3ec7d02a9e7af017cef59befc69db81",
+      "bytes": 5393
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-next-item-receipt.json",
+      "sha256": "2a99c89893a79d55caeebba50839eb8fedf2d1675660e9dee5865938952a80bd",
+      "bytes": 2839
+    },
+    {
+      "path": "artifacts/factory-resume-r37/existing-four-callback-local-receipt-plan104-plan-receipt.json",
+      "sha256": "e977d39df990c924e13415bf55c6dec1964ae933d992550d7d41500a74136a6b",
+      "bytes": 100
+    },
+    {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-closed-plan103-readback.json",
+      "sha256": "48f0f8ad0b728861aba2cc902bf736eca02bdcf4bd9763d39443e6c7d9309cbc",
+      "bytes": 7396
+    },
+    {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-closed-plan103-item-receipt.json",
+      "sha256": "4b12a048b4b93b598585d9e81bf6c9c13b25944bc2a34176a6295d6e88500bf1",
+      "bytes": 4398
+    },
+    {
+      "path": "artifacts/factory-supervision-r36/seed-remaining74-receipt.json",
+      "sha256": "a6ca2f7ff2fd404269db5eec8f6be9b28e9fb1cf38f13cb36b998d5fafb6b5a5",
+      "bytes": 772
+    },
+    {
+      "path": "docs/版本记录/软件工厂执行封装专用报告修复选择-20261016.json",
+      "sha256": "bd117613f2839c76314bbd10983dd9f301ce733b34407a5cc34f669d56c28d95",
+      "bytes": 3215
+    },
+    {
+      "path": "docs/版本记录/软件工厂执行封装专用报告修复来源独审-20261016.json",
+      "sha256": "abfb55e2f54f75a2db58d68950b9ca443255c544d0158d64d006231965e2ced0",
+      "bytes": 12686
+    },
+    {
+      "path": "docs/版本记录/软件工厂四回调与原行文本有限验收合同-20261016.json",
+      "sha256": "6464b6fb76f002bf1a76677456d3716b0d2d761d5f02aa474a56655e0a8019dd",
+      "bytes": 4102
+    },
+    {
+      "path": "docs/版本记录/软件工厂四回调与原行文本有限独立验收回执-20261016.json",
+      "sha256": "3ce22805f4dec85a10046c844c6861e5c6cffb7815ee9bac235ab4b9d17889ea",
+      "bytes": 85542
+    },
+    {
+      "path": "docs/版本记录/软件工厂既存报告独立消费范围评估-20261016.json",
+      "sha256": "bb4a89fb45803b5bf59aa71f316848ea01ca093a3c0396ba8f12350eb567f194",
+      "bytes": 21607
+    },
+    {
+      "path": "docs/版本记录/软件工厂四回调与原行文本有限验收非作者复核-20261016.json",
+      "sha256": "2e67832ab165b1c6703d59b8b8034b1f8ae5d6cd22d32a5faa3f6190e20c7f79",
+      "bytes": 66367
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-worker-r37-artifact-result-r1.py",
+      "sha256": "e0585f967d652f85ccc12a3031922dd2bf4962578b3c58feda4ae7fc1e312ae5",
+      "bytes": 96271
+    },
+    {
+      "path": "scripts/test-r37-worker-artifact-result-r1.py",
+      "sha256": "9800bd046dce7d9c3285546a762667c9f38a08b885739eee20cf6c370416b86e",
+      "bytes": 10087
+    }
+  ],
+  "physicalRefsCount": 25,
+  "physicalRefsInitialFinalExact": true,
+  "mirror": {
+    "RootWorkRefs": 24,
+    "missingWX": 12,
+    "existingSame": 12,
+    "overwritten": 0,
+    "privateDiagnosticRootOnlyNotCopiedToWork": true
+  },
+  "costs": {
+    "recordOnlyNoCap": true,
+    "newSupplierModelCalls": 0,
+    "internalTokens": null,
+    "internalComputeCost": null
+  },
+  "productionRelease": false,
+  "automaticRetry": false,
+  "performed": {
+    "newPlatformMutations": 0,
+    "APIRequests": 0,
+    "remoteCalls": 0,
+    "subjectFunctions": 0,
+    "tests": 0,
+    "ASTOrSyntax": 0,
+    "models": 0,
+    "Git": 0
+  }
+}

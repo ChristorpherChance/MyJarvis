@@ -1,0 +1,104 @@
+{
+  "kind": "r43-correction-learning-non-author-acceptance-checklist",
+  "version": 1,
+  "preparedOn": "2026-10-17",
+  "status": "prepared-not-executed",
+  "basis": {
+    "reviewedCut": "R2 source only",
+    "importedPatchSHA256": "c28a2bc8a114b3f1b0ea21a1f7db00789555e02b31b4afdb75fa81fa4faa35bb",
+    "reportedCCCommit": "c8e2689c4bd187d970aca15713adc69cbd1b3903",
+    "futureR3RunId": "ab0f0356cbd906bbbc9a1f1de7366d56408213b0",
+    "futureR3SourceReviewed": false,
+    "currentBoundary": "R2有experiences、决策版本和主管意图；未发现通用项目主管correction入口。陪练纠错、书籍校勘和记忆修订不替代本项。"
+  },
+  "evidenceLevels": {
+    "static": "只证明所列源码合同和接线；不证明HTTP、模型、节点或实际副作用。",
+    "authenticated-http-fixture": "完整应用、真实IdentityRuntime与SQLite，启用原DTO校验；必须说明inject或真实本地socket，均不冒生产网络验收。",
+    "controlled-async-process-fixture": "可控延迟模型替身、真实持久库与必要子进程/文件计数证明竞态；不是实际供应商模型或101现场验收。",
+    "field": "按实际授权使用101 CC、正式平台入口及原件读回；模型回包、节点签名、停止确认和实际效果分别留证。"
+  },
+  "cases": [
+    {
+      "id": "CL-01-owner-scope",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/v1/repository.ts:31", "apps/api/src/v1/repository.ts:64", "apps/api/src/runtime/project-supervisor-runtime.ts:36", "apps/api/src/runtime/project-decision-routes.ts:11"],
+      "requiredFixture": "同一库准备A/personal、B/personal和A/private项目、决定、候选；用当前本人、非本人、子成员、退出或过期身份调用R3真实更正/学习入口，提交伪造owner和另一项目ID。",
+      "accept": "只有当前授权本人且项目/决定/候选同owner同scope可关联；其余拒绝，原记录、事件、经验候选和派发计数均不增加。owner不得信任请求自报。",
+      "minimumEvidence": ["static", "authenticated-http-fixture"],
+      "fieldBoundary": "本机身份fixture不替代正式平台本人会话验收。",
+      "result": "not-run"
+    },
+    {
+      "id": "CL-02-cas-idempotency-restart",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/v1/repository.ts:56", "apps/api/src/v1/capture-domains.ts:34", "apps/api/src/runtime/project-decision-runtime.ts:124", "apps/api/src/runtime/supervisor-intents.ts:10"],
+      "requiredFixture": "真实入口先读取再并发修改基底；旧expectedVersion更正必须409。同commandId同正文并发和重开数据库后重放；同号改正文、改项目或改操作分别反例。",
+      "accept": "一次有效更正仅产生一份更正/候选和关联事件，同号重放返回原回执；冲突无部分提交。ctx.require(...,true)和ctx.update不能替代显式ctx.check。保留旧版本与更正指向。",
+      "minimumEvidence": ["static", "authenticated-http-fixture"],
+      "fieldBoundary": "重启fixture应重开原SQLite文件，不能只重新构造内存对象；不能由模型自报幂等。",
+      "result": "not-run"
+    },
+    {
+      "id": "CL-03-decision-change-is-not-effect-rollback",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/runtime/project-decision-runtime.ts:98", "apps/api/src/runtime/project-decision-runtime.ts:195", "apps/api/src/runtime/project-supervisor-runtime.ts:45"],
+      "requiredFixture": "保留一个selected/implemented旧决定及真实受控子进程已写文件、执行回执和费用记录；通过更正入口新增判断或更换方案，再读旧决定所有revision及文件字节。",
+      "accept": "新判断追加关联版本；旧选择、失败、已实施动作、证据和费用保原。更正不自动撤销已发生文件/外部副作用，不把rollbackPlan当已执行回退。若停止当前任务，仅签名停止确认后才可称已停；另行补偿动作需独立授权与实证。",
+      "minimumEvidence": ["static", "authenticated-http-fixture", "controlled-async-process-fixture"],
+      "fieldBoundary": "受控文件fixture不证明真实部署、邮件、设备或101源码已回滚；未做的补偿明确未做。",
+      "result": "not-run"
+    },
+    {
+      "id": "CL-04-late-model-after-correction",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/runtime/project-supervisor-runtime.ts:45", "apps/api/src/runtime/project-supervisor-runtime.ts:49", "apps/api/src/runtime/project-supervisor-runtime.ts:58", "apps/api/src/runtime/supervisor-intents.ts:14"],
+      "requiredFixture": "让旧goalRevision的主管判断promise处于pending；分别执行pause、revise和人工接管，再释放旧回包。加入调用中断后重开数据库及同一判断回执重放。",
+      "accept": "旧回包保留实际观察/费用与原绑定，但不能覆盖新目标、更正、新directive或终态，不能新派CC、标achieved或自动发布经验。已started而结果未知的模型意图不能静默再调用；重复回包不重复候选/派发/收费。",
+      "minimumEvidence": ["static", "controlled-async-process-fixture"],
+      "fieldBoundary": "延迟替身验证状态交错，不等同真实模型认证、计费或101运行；现场只按实际收到结果报告。",
+      "result": "not-run"
+    },
+    {
+      "id": "CL-05-learning-candidate-provenance",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/v1/capture-domains.ts:49", "apps/api/src/v1/capture-domains.ts:215", "apps/api/src/v1/capture-domains.ts:238", "apps/api/src/runtime/project-decision-runtime.ts:30"],
+      "requiredFixture": "从一次有证据的错误判断和一次明确的人类更正生成候选；另给缺证据、反例推翻和仅模型自称成功的输入。用同号重放并重开库核候选。",
+      "accept": "候选关联项目、决定/更正及原证据指纹，分开记录当时前提、适用版本/环境、反例或排除情形、待验证项。缺证据不得伪称已验证；默认verified=false/status=inbox，不自动引用执行或autoSkill。前提/反例目前不是R2专门结构合同，R3接线及存储需实审。",
+      "minimumEvidence": ["static", "authenticated-http-fixture"],
+      "fieldBoundary": "保存候选不代表经验有效，更不代表已验证通用Skill。",
+      "result": "not-run"
+    },
+    {
+      "id": "CL-06-skill-version-and-counterexample",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/v1/capture-domains.ts:250", "apps/api/src/v1/capture-domains.ts:263", "apps/api/src/v1/capture-domains.ts:270", "apps/api/src/runtime/execution-skills.ts:11", "apps/api/src/runtime/execution-skills.ts:33"],
+      "requiredFixture": "已发布v1引用冻结后，新建更正候选v2；分别篡改已验证正文、条件和证据，再尝试publish/reuse。给适用前提不满足和明确反例场景，并查看待派发prompt及skillSnapshots。",
+      "accept": "v1正文/条件/证据与历史冻结快照保持；v2未验证发布不能执行，旧任务不得悄换最新版。publish需匹配已验证当前内容。反例/前提不符不能被当作当前任务已批准执行依据；资料不能扩大目录、权限、费用或验收标准。",
+      "minimumEvidence": ["static", "authenticated-http-fixture", "controlled-async-process-fixture"],
+      "fieldBoundary": "R2把conditions带入冻结提示，不证明模型会自动正确判定所有适用情形；需区分结构保留与实际使用效果。",
+      "result": "not-run"
+    },
+    {
+      "id": "CL-07-private-evidence-and-independent-acceptance",
+      "priority": "P1",
+      "sourceRefs": ["apps/api/src/runtime/project-decision-runtime.ts:61", "apps/api/src/runtime/project-decision-runtime.ts:146", "apps/api/src/runtime/project-supervisor-runtime.ts:55", "apps/api/src/runtime/project-supervisor-runtime.ts:58"],
+      "requiredFixture": "通过R3真实入口提交含明显凭据、带私有访问参数链接、私配置路径和raw-thought字段的反例；另提交只有摘要/不存在原件的ready_for_review反馈。比较拒绝前后数据库和派发计数。",
+      "accept": "敏感输入或未知私密字段在写入前拒绝且无部分落库；只引用安全摘要和证据指纹。没有已核原件不能将更正/学习升级为达标或独立验收；所有候选和判断保持各自状态。",
+      "minimumEvidence": ["static", "authenticated-http-fixture"],
+      "fieldBoundary": "已知隐私反例通过不代表通用自动隐私识别完整；主管达标也不增加原74独立签收。",
+      "result": "not-run"
+    }
+  ],
+  "reportingRules": [
+    "随后R3源码、执行与验收分别绑定实际版本；不得把本清单准备状态写成测试通过。",
+    "复用既有真实repository/完整HTTP测试组织；仅FakeContext、静态字符串检查或模型自报不够。",
+    "每组保具体cut、请求/回执与持久读回证据；分开报告源码静审、inject/本地socket、受控fixture和实际101现场。",
+    "已有通过组不为补记录重跑；新代码、失败或未覆盖竞态才增加对应验证。",
+    "缺少执行许可、原件通道或环境时准确标未执行/阻塞，不绕过自动门。"
+  ],
+  "testsExecutedForThisChecklist": false,
+  "networkOrModelCalls": 0,
+  "projectSourceModified": false,
+  "implementationAccepted": false,
+  "productionDeployed": false
+}

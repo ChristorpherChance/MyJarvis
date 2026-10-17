@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-main-after-qa-observed-prior607-difference",
+  "at": "2026-10-16T07:24:00.591542+00:00",
+  "actualObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-actual-observation-1792135433924-c67d00cc-5b68-4610-b30f-0da03e9a87fd.json",
+    "sha256": "7f37d66d4200cd070fa1cecc530ec9131f38df7bc2900f73e20fa4a1edbf2ce9",
+    "bytes": 5994
+  },
+  "baselineRawReference": {
+    "path": ".jarvis-dev/maintenance/r37-current-main-only-host-original-1792122982167-719eb50e-b16a-4fce-a3af-a6717d85ebda.json",
+    "sha256": "341b856db3f0223050b82b7086085f83a26b85781b4033b938a8826115362d44",
+    "bytes": 321322
+  },
+  "baselineTuple": {
+    "sha256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+    "files": 607,
+    "bytes": 18151378,
+    "metadataSHA": "06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e",
+    "stable": true,
+    "identity": {
+      "device": 66306,
+      "inode": 14417953
+    }
+  },
+  "observedTuple": {
+    "sha256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+    "files": 607,
+    "bytes": 18151378,
+    "metadataSHA": "a952d757430ebd43fa943754e419209b0ab9d399551cb0436f622d47302f8200",
+    "stable": true,
+    "identity": {
+      "device": 66306,
+      "inode": 14417953
+    }
+  },
+  "expectedMatches": {
+    "fingerprint": true,
+    "files": true,
+    "metadata": false,
+    "rootIdentity": true
+  },
+  "twoCurrentFramesStable": {
+    "tuple": true,
+    "manifest": true,
+    "rootMetadata9": true,
+    "metadataRows": true
+  },
+  "currentReaderClosed": true,
+  "comparisonCounts": {
+    "oldFiles": 607,
+    "newFiles": 607,
+    "added": 0,
+    "removed": 0,
+    "contentModified": 0,
+    "contentUnchanged": 607,
+    "sharedMetadataChanged": 4
+  },
+  "added": [],
+  "removed": [],
+  "modified": [],
+  "metadataChanges": [
+    {
+      "path": "apps/server/src/modules/design/design.integration.test.ts",
+      "changedFields": [
+        "mode",
+        "mtimeNs",
+        "ctimeNs"
+      ]
+    },
+    {
+      "path": "apps/server/src/modules/design/generate.service.ts",
+      "changedFields": [
+        "mtimeNs",
+        "ctimeNs"
+      ]
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-sections.test.ts",
+      "changedFields": [
+        "mode",
+        "mtimeNs",
+        "ctimeNs"
+      ]
+    },
+    {
+      "path": "apps/server/src/modules/platform/doc-sections.ts",
+      "changedFields": [
+        "mtimeNs",
+        "ctimeNs"
+      ]
+    }
+  ],
+  "rootMetadataChangedFields": [],
+  "baselineOnlySavedManifestComparison": true,
+  "actualAuthorUnknown": true,
+  "savedEvidenceIndependentlyAudited": false,
+  "protectionBaselineReset": false,
+  "mainBaselineQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "actualPG4Qualified": false,
+  "modelsInvoked": false
+}

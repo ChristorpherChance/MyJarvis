@@ -1,0 +1,22 @@
+{
+  "kind": "r43-cost-field-scope-evidence-supplement",
+  "at": "2026-10-17T07:44:23.306705+00:00",
+  "runId": "e3334033e872558cdcd58df125959032ac957306",
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "observedNativeVersion": "2.1.296",
+  "signedInitLogId": 7832,
+  "signedInitTextSHA256": "3d4481e223bbad92aea94cb4837015b3e681fc225363a3b043866b01f1ae09be",
+  "sourceSnapshotSHA256": "6184fa35e9f5d95e4901010945575d441646eaed7cfb584ddd5919bde8bf2faf",
+  "officialSource": {
+    "url": "https://code.claude.com/docs/en/agent-sdk/cost-tracking",
+    "accessedOn": "2026-10-17",
+    "section": "Accumulate costs across multiple calls; Track costs in streaming input mode",
+    "paraphrase": "Versions from 2.1.277 restore normally exited session spend on resume. Cost and modelUsage may include restored spend/subagents; usage covers main-loop turn activity. Native cost figures remain client-side estimates, not billing receipts."
+  },
+  "scopeBoundary": "Official version semantics plus saved init support this version condition; they do not independently prove invoice amount or every reset/crash boundary. No extra native/model call performed.",
+  "firstNativeReportedCostUSD": 19.139963999999992,
+  "invoiceVerified": false,
+  "originalDecisionAndResultPreserved": true,
+  "runtimeAccountingImplementationRepaired": false,
+  "versionSpecificExperienceOnly": true
+}

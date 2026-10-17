@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "kind": "factory-supervision-r36-local-validation",
+  "at": "2026-10-16T03:02:00.939965+00:00",
+  "runtimeBuild": "20261016-factory-supervision-r36",
+  "status": "passed-in-described-scopes",
+  "implementation": [
+    "owner-only versioned supervision items with concise progress/blocker/next action",
+    "completed briefs, validation scope, evidence references and immutable revisions",
+    "after-commit persistent notifications with one shared owner event stream and durable replay",
+    "old task history and 74 independent objectives kept separate"
+  ],
+  "verification": {
+    "apiUniqueGroups": 6,
+    "apiPassingCuts": [
+      {
+        "cut": 1,
+        "passed": 2,
+        "failed": 3
+      },
+      {
+        "cut": 2,
+        "previouslyFailedPassed": 3
+      },
+      {
+        "cut": "owner-stream",
+        "passed": 1
+      }
+    ],
+    "frontendInitialGroupsPassed": 2,
+    "frontendNewUnknownReceiptCasePassed": 1,
+    "existingNotificationRegression": {
+      "passed": 11,
+      "failed": 0
+    },
+    "httpContract": [
+      {
+        "name": "http-cas-auth-completion-contract",
+        "status": "passed",
+        "evidence": {
+          "anonymousRejected": true,
+          "idempotent": true,
+          "conflictRejected": true,
+          "incompleteCompletionRejected": true,
+          "noObjectiveAcceptance": true
+        }
+      }
+    ],
+    "realDesktopAndMobileBrowser": [
+      {
+        "name": "desktop-live-event-notification-reconnect",
+        "status": "passed",
+        "evidence": {
+          "visibleDelayMs": 141,
+          "realBrowser": true,
+          "realSSE": true,
+          "mobile": false,
+          "layoutWithinViewport": true
+        }
+      },
+      {
+        "name": "mobile-brief-details-layout",
+        "status": "passed",
+        "evidence": {
+          "visibleDelayMs": 93,
+          "realBrowser": true,
+          "realSSE": true,
+          "mobile": true,
+          "layoutWithinViewport": true
+        }
+      }
+    ],
+    "finalApiBuildExitCode": 0,
+    "finalWebTypecheckAndBuildExitCode": 0,
+    "freshWebArtifactBuilt": true,
+    "staticIndependentReviewRemainingP0P1": 0,
+    "independentReviewTestExecution": false
+  },
+  "retainedFailures": [
+    "initial strict body.parse(before) rejected revision metadata; corrected field projection and only failed groups repeated",
+    "first local API selection was rejected before mutation because selected decision included performed action; distinct corrected selection succeeded",
+    "an early local typecheck observed implicit page any, then corrected",
+    "HTTP5xx uncertain commit and shared-browser identity downgrade were found in independent review and fixed before deployment"
+  ],
+  "boundaries": {
+    "productionDeployed": false,
+    "physicalPhoneVerified": false,
+    "offlineSystemPush": false,
+    "emailOrChatPush": false,
+    "factoryCurrentScopeQualified": false,
+    "PG4Qualified": false,
+    "original74Accepted": false,
+    "newModelCalls": 0,
+    "internalAssistantTokensAndCostKnown": false
+  },
+  "costPolicy": "record-only-no-spending-cap",
+  "evidence": [
+    {
+      "path": "artifacts/capture-r36/supervision-work-api-local.json",
+      "sha256": "1b24766d071c33d9a408ceab13f9d5d77ca654398045b52ceb1c6afb6eef76ae",
+      "bytes": 3668
+    },
+    {
+      "path": "artifacts/supervision-r36/frontend-cut-attempt-1.json",
+      "sha256": "f245949bc662dea2c29acc4baf261569e15ef43113a00e626c97d2741aa6d7c3",
+      "bytes": 3234
+    },
+    {
+      "path": "artifacts/supervision-r36/frontend-p1-attempt-2.json",
+      "sha256": "a8fb893cf572952690fd63cc9df6d839b5b6722b7e2fa932b5ba064361a60764",
+      "bytes": 1780
+    },
+    {
+      "path": "artifacts/factory-supervision-r36/independent-review.json",
+      "sha256": "57aa306a15ea33f4a667cd1f7c3541761bf701c3811f1a093324574b8c6de630",
+      "bytes": 10363
+    },
+    {
+      "path": "artifacts/factory-supervision-r36/browser-http1.json",
+      "sha256": "cd87285676afa570c7e6cd938043040f0d4270f6f6d66c942f57edc36f72359e",
+      "bytes": 498
+    },
+    {
+      "path": "artifacts/factory-supervision-r36/browser-browser1.json",
+      "sha256": "e26cbc746aa0a2e899bf4e54b7d5d62d6ca5b8a4ec1c918b8906d797dd6b80c5",
+      "bytes": 732
+    }
+  ]
+}

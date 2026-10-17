@@ -1,0 +1,248 @@
+{
+  "kind": "r43-interrupted-transition-readonly-qualification-independent-source-review",
+  "createdAt": "2026-10-17T13:40:27.156762+00:00",
+  "immutableCut": true,
+  "scope": "LOCAL review of the exact new read-only qualifier sources, inherited guard preservation, fixed pure serializer and original/final binding. No old test matrices or broader app design.",
+  "conclusion": {
+    "confirmedP1InReviewedSource": [],
+    "sourceQualifiedForSeparateReadonlyInvocation": true,
+    "statement": "The qualifier derives all expected running-config bytes from the original pinned staged candidate and the fixed source-compatible serializer, then requires full canonical and full raw equality. It does not replace expected pins with a sample of current data. Full central and node safety checks remain; no product mutation route exists.",
+    "actualQualifierExecutedByReviewer": false,
+    "actualCurrentRuntimeQualifiedByReviewer": false,
+    "actualRequestReviewedByThisReport": false,
+    "originalFailedApplyRemainsFailed": true,
+    "wholeUserAcceptance": false
+  },
+  "authorHandoff": {
+    "path": "artifacts/cc-supervisor-r43/r43-same-id-transition-readonly-qualification-author-handoff.json",
+    "bytes": 8917,
+    "sha256": "eb8583245270d5aa2bfa44466d31b13c5b8ded22ed3508476c78b79474b05680"
+  },
+  "independentByteChecks": {
+    "fingerprintRecordsIncludingHandoff": 20,
+    "allMatchSuppliedHashAndSize": true,
+    "centralFunctionBytesIdenticalToOriginalR2": true,
+    "loadGuardsIdenticalExceptExplicitOriginalSelfFileRead": true,
+    "libraryForwardDerivationByteExact": true,
+    "libraryInverseRestoresOriginalByteExact": true,
+    "centralForwardPatchRecomputedByteExact": true,
+    "fixedSerializerBytes": 922,
+    "fixedSerializerSHA256": "1abfb34dce80978ce1521fbceb35a2f820fcc7ba0ef30748a7b21f89bd0bf8d6",
+    "nullRequestExecutionFieldsAllNull": true
+  },
+  "sourceConclusions": [
+    {
+      "id": "RO-01",
+      "result": "confirmed",
+      "topic": "Before/after/spec evidence remains bound, not repaired in place",
+      "refs": [
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-qualification.mjs",
+          "line": 16
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 16
+        }
+      ],
+      "details": "Library load rechecks the original r2 self/controller/transport, original upgrade spec/activation/source qualification and all old pins. The false apply receipt must match exact operation/spec and SST_RESTART_UNCONFIRMED. Original central-before bytes are independently pinned, must have old revision/canonical config, and derive exactly the same new target/config. Protected node state must remain restart-intent with original spec/old/new H; protected before/after config files must match original hashes, and candidate(old) must equal staged bytes."
+    },
+    {
+      "id": "RO-02",
+      "result": "confirmed",
+      "topic": "Fixed pure normalizer reproduces serializer order without application imports",
+      "refs": [
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 9
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/execution-runtime.ts",
+          "line": 65
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/cli-supervision.ts",
+          "line": 10
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/agent-runner.ts",
+          "line": 185
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/agent/src/index.ts",
+          "line": 10
+        }
+      ],
+      "details": "Fixed stdin-only JS rebuilds template keys in the actual validator return order, nested validation keys in program/args/timeout order, and supervision keys in the actual policy return order including optional rates. Parent config keys retain parsed insertion order. It writes JSON.stringify(c,null,2) with no trailing newline, as actual save(). It uses only node:fs stdin and stdout; no app module, ExecutionAgent, pair/start, network or subprocess import exists in the fixed expression. Trusted Node executable hash is checked before this pure --eval, and inherited snapshot checks its exact --version/hash as well.",
+      "conservativeLimit": "This is a source-specific fixed serializer, not a second full validator. Any value/default/path normalization drift is rejected by full parsed equality to staged config and full current-byte equality; no semantic mutation is accepted to force qualification."
+    },
+    {
+      "id": "RO-03",
+      "result": "confirmed",
+      "topic": "Expected H is source-derived, not sampled from current file",
+      "refs": [
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 19
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 21
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 24
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 29
+        }
+      ],
+      "details": "Only sealed staged bytes are input to the serializer. saved must be nonempty/bounded/no-newline and parse identically to staged. expected=H(saved) is computed before reading current config; current bytes must equal all saved bytes. The inherited snapshot expectedConfigSHA256 is assigned only this proven-derived hash. Current observed H is never assigned as expected, and no fixed literal from the actual observation is accepted as a replacement pin. Identity/key equality and original uid/gid/0600/installed inode are additionally required."
+    },
+    {
+      "id": "RO-04",
+      "result": "confirmed",
+      "topic": "Full central authority/history/drain contracts retained at revision46",
+      "refs": [
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-central.mjs",
+          "line": 48
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-central.mjs",
+          "line": 62
+        }
+      ],
+      "details": "central() body is byte-identical to original r2. It is called newer=true, requiring original expectedRevision+1 and independently derived complete new central config. Exact target, all other templates, probes, wol, global supervision, whole original blocked task/session, frozen source/result, same paired capability, R22 state, selected decision and deployed platform bytes remain mandatory. All thirteen explicit zero counts and exact complete history metadata hash/schema are retained. Each GET and SSH read is awaited serially. No historical accounting/task/source entry is changed."
+    },
+    {
+      "id": "RO-05",
+      "result": "confirmed",
+      "topic": "Bound live node, two same-state reads and fresh signed heartbeat",
+      "refs": [
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 29
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 31
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-qualification.mjs",
+          "line": 23
+        }
+      ],
+      "details": "Uses pinned original controller definition prefix and r2 candidate/stable/native helpers without their main functions. snapshot checks exact fixed package/runtime/unit/argv/proc owner/cgroup, active journal identity/owner/inode/drained/history and maintenance idle; every native file H is rechecked. Current process PID and boot:startticks identity must both differ from original before process. Original state/before/after bytes are reread unchanged. First node result must be ok, then a same-agent online heartbeat newer than first central observation and fresh within60s is required, followed by second full central and node observations; complete node result must equal first.",
+      "scopeLimit": "This accepts only a separate observed current-state qualification. It cannot reconstruct the lost restart child error or mark the old operation successful."
+    },
+    {
+      "id": "RO-06",
+      "result": "confirmed",
+      "topic": "No config/state/service/product mutation or model invocation",
+      "refs": [
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-central.mjs",
+          "line": 67
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-qualification.mjs",
+          "line": 20
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+          "line": 32
+        }
+      ],
+      "details": "Library extraction removes mutating run/CLI/node phase caller and unused wx; exports only load and central. New wrapper has no apply/stop/CAS/restart route. New Python calls only definition prefixes and its own read-only qualify(), never state_save/main_transition. Remote subprocesses are fixed pure trusted Node data projection, inherited Node --version and systemctl show/list; no service start/stop, DB write or app/native execution occurs. Product API calls remain GET. Only local WX report output and existing temporary maintenance authentication create/revoke are side effects, explicitly disclosed. OriginalApplySuccess=false and maintenanceState=interrupted remain in all outcomes."
+    }
+  ],
+  "retainedRootCauseObservation": {
+    "ref": {
+      "path": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+      "bytes": 2501,
+      "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f"
+    },
+    "facts": "Retained Root read-only observation reports unit active, original operation state restart-intent, changedTopLevelKeys empty, unchangedProjectionMatches true, both old observe attempts rejected by raw H, central revision46 and originalApplySuccess false. These support the previously reported serializer mismatch; they do not replace the new qualifier full derived-byte proof.",
+    "priorFailureAnalysis": {
+      "path": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+      "bytes": 10946,
+      "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af"
+    }
+  },
+  "refs": {
+    "newSourcesAndNullRequest": [
+      {
+        "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-central.mjs",
+        "bytes": 12406,
+        "sha256": "4d1f27c9cf6671807e8f5cb5f2b5712fe203b34eda247ddba3433b45b2f83e48"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-node.py",
+        "bytes": 5421,
+        "sha256": "0765ea56f08028e02b6e26a49ef0b62710570f6b7024af89ddd8cae12ff0bf53"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-qualification.mjs",
+        "bytes": 6686,
+        "sha256": "9ded6c386aa87f5c5ae775da25c2feab3457311fe85be571d81155af3a1f23bd"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-readonly-qualification.request.template.json",
+        "bytes": 428,
+        "sha256": "66d4f9ed1e2b2f6452c6a1a28bde7e14a59fb7a32e42a7980d10c818353d5659"
+      }
+    ],
+    "pinnedAppSource": [
+      {
+        "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/agent/src/index.ts",
+        "bytes": 1590,
+        "sha256": "6f76415c6e05c12ace1882026735efc359ff315f124eab63ae615da5f266ea6f"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/agent-runner.ts",
+        "bytes": 54554,
+        "sha256": "f57889cfdb3c4b3fc0adb8e464c852cedeeb353951696dff6d7311e8144afdae"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/execution-runtime.ts",
+        "bytes": 129697,
+        "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/cli-supervision.ts",
+        "bytes": 6831,
+        "sha256": "ecd1a47863ab7663c9a14d142aea06df3f0cfe552a3108c28845b39e6ad50ef2"
+      }
+    ],
+    "originalControllers": [
+      {
+        "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-node-r2.py",
+        "bytes": 10744,
+        "sha256": "97d140817e16ff0cefb92f390842bba152d69d796cd88890ef638aa0c8f6b31e"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-node.py",
+        "bytes": 20035,
+        "sha256": "95bab23cc05f7e0898b09330387af79de684ffbd41d2410df9614e23d9aa033f"
+      }
+    ],
+    "centralForwardPatch": {
+      "path": "artifacts/cc-supervisor-r43/r43-same-id-transition-readonly-qualification-seal/central-library-forward.patch",
+      "bytes": 11075,
+      "sha256": "4f6dfeac07a6c6fcc75b447d853c101da1dff13a9c608954d19ee9e791ba084e"
+    }
+  },
+  "remainingBoundary": "Root must independently bind and invoke its actual request and retain the real result. Source preparation does not assert the current runtime is qualified, does not execute any recovery action and does not cover broader product/user acceptance. A failed qualifier remains failed/uncertain; the old apply record and sealed expected staged hash must stay untouched.",
+  "reviewerOperations": {
+    "localSourceReadHashAndInMemoryForwardInverseOnly": true,
+    "serializerInspectedAsFixedLiteralNotExecuted": true,
+    "originalOrNewHelperImportedOrExecuted": false,
+    "appCodeEditedOrTestsRun": false,
+    "remoteSQLAPIServiceOrNativeUsed": false,
+    "oldEvidenceModified": false,
+    "newReportWrittenWX": true
+  },
+  "privacy": "No private config/keys/cookies/environment/streams or raw user chat copied. Source paths, classifications, metadata observations and fingerprints only."
+}

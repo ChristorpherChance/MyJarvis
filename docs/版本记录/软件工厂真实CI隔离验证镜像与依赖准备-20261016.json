@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-ci-isolated-validation-preparation-public-projection",
+  "at": "2026-10-16T14:40:32.884169+00:00",
+  "draftCut": true,
+  "imagePreparation": {
+    "originalReceipt": {
+      "path": "artifacts/factory-devci-r38/local-validation-images-attempt-1-receipt.json",
+      "sha256": "fce7e9d1500479df6f6693e381f36ccbe67dfa32c60a54c8ac76b8034b59211d",
+      "bytes": 1907
+    },
+    "node": {
+      "exitCode": 0,
+      "timedOut": false,
+      "wallSeconds": 227.56300000008196
+    },
+    "postgresInitial": {
+      "exitCode": null,
+      "timedOut": true,
+      "wallSeconds": 300.03100000019185
+    },
+    "manifestLookupTimeout": {
+      "path": "artifacts/factory-devci-r38/postgres-pinned-cache-resume-attempt-2-failure.json",
+      "sha256": "49ad1bc520502b8bd36d00bdd32c3a02d313067f17720eb01de8a4b449122932",
+      "bytes": 471
+    },
+    "cachedPull": {
+      "receipt": {
+        "path": "artifacts/factory-devci-r38/postgres-daemon-cached-pull-attempt-3-receipt.json",
+        "sha256": "981397fa7b3f10d9f344340e30e2a40b66ea67a394e2632f3ce0d15360475ce1",
+        "bytes": 996
+      },
+      "exitCode": 0,
+      "timedOut": false,
+      "wallSeconds": 32.03099999995902
+    },
+    "actualServiceOrDatabaseResult": null
+  },
+  "originalDependencyPreparation": [
+    {
+      "path": "artifacts/factory-devci-r38/dependency-install-attempt-1-receipt.json",
+      "sha256": "0cf38c216ecd7e3d31fcacb96254389c9cf5c2e116ca52b34348d22661049121",
+      "bytes": 920
+    },
+    {
+      "path": "artifacts/factory-devci-r38/shared-cjs-compile-attempt-1-receipt.json",
+      "sha256": "bf24e03316d1a680490dcf164f011eac7098e8810f20885c6ff95cb3f24f1528",
+      "bytes": 701
+    },
+    {
+      "path": "artifacts/factory-devci-r38/shared-esm-compile-attempt-1-receipt.json",
+      "sha256": "b21dbdd112fea9a24452259e965919de423dd85ec802ea77bfbbf3eebd53a633",
+      "bytes": 701
+    }
+  ],
+  "syntheticFixture": {
+    "preparation": {
+      "path": "artifacts/factory-devci-r38/validation-input/fixture-preparation.json",
+      "sha256": "379c357d4ee40a7c278dc6749e13e19670b2079debb393441bbfa54becdef923",
+      "bytes": 17085
+    },
+    "commits": {
+      "A": "38a7a2c09844bb1ff65d5eced620fbd623c9d7a2",
+      "B": "7ef346fb77534b19b161495d07ec777598d0f0f6"
+    },
+    "trackedFiles": 7,
+    "fourInputBlobsUnchanged": true,
+    "actualTestOrCoverageResult": null,
+    "scope": "synthetic CI mechanism only, not server/full suite/integration/customer implementation"
+  },
+  "linuxDependencies": {
+    "npm": {
+      "receipt": {
+        "path": "artifacts/factory-devci-r38/linux-dependency-preparation/new-ci-mechanism-toolchain/installation-process-receipt.json",
+        "sha256": "92023d2ae33200998d3dc11e964319f81061862d699b45667b372c4f5d89e148",
+        "bytes": 296
+      },
+      "exitCode": 0,
+      "elapsedMs": 70072
+    },
+    "originalOuter": {
+      "receipt": {
+        "path": "artifacts/factory-devci-r38/linux-depkit-actual-attempt-1-receipt.json",
+        "sha256": "3a0b1ec719c8f93286d8ac0df6bc28b7883923d13d12fe6e4ae652bd0e96e2b8",
+        "bytes": 774
+      },
+      "exitCode": null,
+      "timedOut": true,
+      "wallSeconds": 241.2029999999795,
+      "exactPreparationContainerAbsent": true,
+      "unchanged": true
+    },
+    "nativeCompletion": {
+      "receipt": {
+        "path": "artifacts/factory-devci-r38/validation-input/native-linux-dependency-completion-receipt.json",
+        "sha256": "103f6644085a7962d2fe037609ce3c450c3a5489c65509d3488e53556c639d68",
+        "bytes": 501152
+      },
+      "status": "passed-existing-byte-post-install-verification-only",
+      "fileCount": 1810,
+      "dependencyBytes": 35539222,
+      "manifest": {
+        "sha256": "d1d33cdd2b8b56326b887f7710311afb07390347a2ab3201dc287a61d0d4f771",
+        "bytes": 304741,
+        "unchanged": true
+      },
+      "handles": {
+        "opened": 1845,
+        "closed": 1845,
+        "closeFailures": 0
+      },
+      "physicalRefsCount": 1828,
+      "allFilesRegularSingleLink": true,
+      "noSymlinkOrExtraFile": true,
+      "manifestClosed": true,
+      "allOpenedFileDescriptorsClosed": true,
+      "postInstallVerificationCompleted": true
+    },
+    "scope": "native existing-byte post-install verification, not tests/Linux runtime/server dependencies",
+    "actualCIOrCoverageResult": null
+  },
+  "actualFutureResults": {
+    "actualCI": null,
+    "actualPostgresIntegration": null,
+    "actualServiceHTTP": null,
+    "platformPlan": null,
+    "items": null,
+    "decisions": null,
+    "notifications": null
+  },
+  "candidateNextPlanVersionOnly": 105,
+  "rawStderrOrPrivateConfigurationOrFullDependencyFileListIncluded": false,
+  "costs": {
+    "recordOnlyNoCap": true,
+    "newSupplierModelCalls": 0,
+    "internalTokens": null,
+    "internalComputeAmount": null
+  }
+}

@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-main-after-qa-protection-failure-independent-local-saved-review",
+  "status": "passed-limited-main-only-saved-observation-and-local-diff-review",
+  "at": "2026-10-16T07:28:06.792614+00:00",
+  "savedMainOnlyObservationQualified": true,
+  "localNativeIntegerDiffQualified": true,
+  "remainingP0P1": 0,
+  "findings": [],
+  "actualObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-actual-observation-1792135433924-c67d00cc-5b68-4610-b30f-0da03e9a87fd.json",
+    "sha256": "7f37d66d4200cd070fa1cecc530ec9131f38df7bc2900f73e20fa4a1edbf2ce9",
+    "bytes": 5994
+  },
+  "actualData": {
+    "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-actual-data.json",
+    "sha256": "13d0920fd378e47be00747f089975216e1d3ce792031b00b26adead71bf0bd76",
+    "bytes": 3250
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-specific-entry-independent-local-review-final.json",
+    "sha256": "32200198629cb828f4c2c1ca3969cdf8aae110b3e11ebe3855f635a32d80893a",
+    "bytes": 13272
+  },
+  "sourceReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-source-independent-local-review-final.json",
+    "sha256": "0a9c0c9990edf5431045563c4fc63a9b8831519a0863d9b4d042e3eac6185a1f",
+    "bytes": 17513
+  },
+  "rawTransport": {
+    "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-transport-1792135433647-d1c40e0f-4c65-4a91-a3f1-bfbb3ece3a5a.json",
+    "sha256": "0ac6f16ff8ae128012485a3cdf8d4b7689fddd33dca3e7c8341f912bc1398273",
+    "bytes": 429927
+  },
+  "rawHostBytes": {
+    "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-host-original-1792135433720-79d02395-0c16-433a-95cf-3adf687a07ca.json",
+    "sha256": "9c582fd2f8e3cc77fc64042a352e621e69f974035a412af88bfdec7d524e9bc7",
+    "bytes": 321328
+  },
+  "savedComparison": {
+    "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-observed-prior607-difference.json",
+    "sha256": "98f827de537178beb6662a6c983996e7745f53f51a3334bd11a2bec9f9503a66",
+    "bytes": 2903
+  },
+  "historicalHostBytes": {
+    "path": ".jarvis-dev/maintenance/r37-current-main-only-host-original-1792122982167-719eb50e-b16a-4fce-a3af-a6717d85ebda.json",
+    "sha256": "341b856db3f0223050b82b7086085f83a26b85781b4033b938a8826115362d44",
+    "bytes": 321322
+  },
+  "RootCallsRecorded": 1,
+  "opportunityClosed": true,
+  "automaticRetry": false,
+  "executionNonce": null,
+  "reviewRemoteCalls": 0,
+  "reviewAPI": 0,
+  "reviewFunctions": 0,
+  "reviewTests": 0,
+  "reviewModels": 0,
+  "mainBaselineQualified": false,
+  "protectionBaselineReset": false,
+  "fullProtectionQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "observed": {
+    "files": 607,
+    "bytes": 18151378,
+    "contentSHA256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+    "metadataSHA256": "a952d757430ebd43fa943754e419209b0ab9d399551cb0436f622d47302f8200",
+    "rootIdentity": {
+      "device": 66306,
+      "inode": 14417953
+    },
+    "expectedMatches": {
+      "fingerprint": true,
+      "files": true,
+      "metadata": false,
+      "rootIdentity": true
+    },
+    "currentFrames": 2,
+    "nativeMetadataRows": 1214,
+    "metadataFieldsPerRow": 9,
+    "nativeIntegerMetadataFields": 10926,
+    "integersBeyondJSSafeInteger": 2428,
+    "rootMetadataRows": 2,
+    "bothFramesStable": true,
+    "readerDescriptorsClosedReported": true,
+    "sourceBoundNotKernelTrace": true
+  },
+  "independentLocalComparison": {
+    "counts": {
+      "oldFiles": 607,
+      "newFiles": 607,
+      "added": 0,
+      "removed": 0,
+      "contentModified": 0,
+      "contentUnchanged": 607,
+      "sharedMetadataChanged": 4
+    },
+    "metadataChanges": [
+      {
+        "path": "apps/server/src/modules/design/design.integration.test.ts",
+        "changedFields": [
+          "mode",
+          "mtimeNs",
+          "ctimeNs"
+        ]
+      },
+      {
+        "path": "apps/server/src/modules/design/generate.service.ts",
+        "changedFields": [
+          "mtimeNs",
+          "ctimeNs"
+        ]
+      },
+      {
+        "path": "apps/server/src/modules/platform/doc-sections.test.ts",
+        "changedFields": [
+          "mode",
+          "mtimeNs",
+          "ctimeNs"
+        ]
+      },
+      {
+        "path": "apps/server/src/modules/platform/doc-sections.ts",
+        "changedFields": [
+          "mtimeNs",
+          "ctimeNs"
+        ]
+      }
+    ],
+    "rootMetadataChangedFields": [],
+    "allContentUnchanged": true,
+    "authorUnknown": true,
+    "timeOrModeChangeCauseUnknown": true,
+    "historicalFilesNotReobserved": true,
+    "newBaselineSelected": false
+  },
+  "dataEntryBindings": {
+    "actualDataSourceRefs": 13,
+    "entrySourceRefs": 14,
+    "actualRecordedSourceRefs": 15,
+    "dataEntryActualMapsExact": true,
+    "requestMatchesOriginalWireAndHost": true,
+    "callerFingerprintBoundByOriginalWireAndQualifiedEntry": "a9ea17a6b7b6447b19ed5d7bf41f29c78929d0cb5b0bd29455f0092a36b0913f",
+    "callerAndOnceFilesNotReopened": true,
+    "declaredCallerRefsNotReopened": [
+      {
+        "path": "scripts/read-factory-current-main-only-r37.mjs",
+        "sha256": "c470206e2f8c0288166b3c1c8693b26afc6d8225b7301b9b0dd444a554d3e008",
+        "bytes": 23459
+      },
+      {
+        "path": "scripts/read-factory-main-after-qa-protection-failure-r37.mjs",
+        "sha256": "a9ea17a6b7b6447b19ed5d7bf41f29c78929d0cb5b0bd29455f0092a36b0913f",
+        "bytes": 23611
+      }
+    ],
+    "oldSourceSemanticsNotRepeated": true
+  },
+  "checks": [
+    "Original private transport and original host bytes are exact H/size bound, with strict base64 stdout equality and matching stdout/stderr hashes and lengths; transport status0 has no signal or error.",
+    "Actual DATA13, concrete ENTRY14 and actual15 reference maps agree exactly; request and caller/program/host pins match the original wire and qualified entry. Source references other than the two caller files were raw-hash checked only, without imports or source-function execution.",
+    "Both native current frames contain607 unique manifest entries,607 nine-field integer metadata rows and one native rootMetadata9. Content fingerprints,18151378-byte sum and metadata canonical H were recomputed independently without JavaScript Number conversion.",
+    "All native current tuple/manifest/rootMetadata9/metadataRows values agree across both retained frames; readComplete/close/error flags and fixed helper hash bind the source-reported closure, not independent kernel tracing.",
+    "The local historical host341b bytes were hash checked and used only for saved manifest/metadata comparison. Independent recomputation matches Root difference98f827:0added/0removed/0content modified/607unchanged and the exact four metadata field differences; rootMetadata9 unchanged.",
+    "The root local comparison script was read as source only and was not executed. Its original saved report retains savedEvidenceIndependentlyAuditedfalse at its historical cut; this later review is separate.",
+    "Original outcome equals actual result excluding its own outcome ref. Opportunity is reported closed with one Root call and no retry; caller/once were not reopened or invoked."
+  ],
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-actual-observation-1792135433924-c67d00cc-5b68-4610-b30f-0da03e9a87fd.json",
+      "sha256": "7f37d66d4200cd070fa1cecc530ec9131f38df7bc2900f73e20fa4a1edbf2ce9",
+      "bytes": 5994
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-observed-prior607-difference.json",
+      "sha256": "98f827de537178beb6662a6c983996e7745f53f51a3334bd11a2bec9f9503a66",
+      "bytes": 2903
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-actual-data.json",
+      "sha256": "13d0920fd378e47be00747f089975216e1d3ce792031b00b26adead71bf0bd76",
+      "bytes": 3250
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-specific-entry-independent-local-review-final.json",
+      "sha256": "32200198629cb828f4c2c1ca3969cdf8aae110b3e11ebe3855f635a32d80893a",
+      "bytes": 13272
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-source-independent-local-review-final.json",
+      "sha256": "0a9c0c9990edf5431045563c4fc63a9b8831519a0863d9b4d042e3eac6185a1f",
+      "bytes": 17513
+    },
+    {
+      "path": "artifacts/factory-resume-r37/main-after-qa-protection-failure-actual-data-seal.json",
+      "sha256": "5ec3437afecd94d8964681e86de585ca0188851dc62e0b35e174e4766d0cd233",
+      "bytes": 3755
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-diagnostic-root-selection.json",
+      "sha256": "10f5bf447caccf47336cda2870bd2d4a8ac699c6b6940bf3c898e345a09e47a5",
+      "bytes": 3083
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-prior607-main-diagnostic-comparison.json",
+      "sha256": "ecc69ae86734d34912511348f6ff023a48ce23427763a3d36b889cc45a0b40b6",
+      "bytes": 918
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-current-actual-observation-1792131803311-a066edcf-3dfb-4dd4-baaf-e2da4a19b1ee.json",
+      "sha256": "3f8b8854d4c22d5e7f978dc54201403e399f100d90e25f4d76e99f2d7b4b4bfb",
+      "bytes": 2573
+    },
+    {
+      "path": "scripts/factory-current-main-only-r37.py",
+      "sha256": "e5121ad059faca53adc9dd02237fae4d26dabf067e0246d39a1d0e96ea11bc48",
+      "bytes": 12618
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-host.py",
+      "sha256": "8059726979a18ef17b1f3c18f87100c6aea6c29c73ea6ce30eb7bbe1e088fa1b",
+      "bytes": 18088
+    },
+    {
+      "path": "scripts/project-autonomy-evidence.py",
+      "sha256": "57aa1d8c49c189f0a9d2f4c1438ce154b556c263b907543462167b1faa673dd2",
+      "bytes": 11026
+    },
+    {
+      "path": "scripts/managed-server-client.mjs",
+      "sha256": "e287938e2d79b0335523d3d198bd93b588541866cebc2c21d997ae6fce5e4a9f",
+      "bytes": 6440
+    },
+    {
+      "path": "scripts/factory-main-after-qa-protection-failure-r37.py",
+      "sha256": "8627f84c4194982b20370b04c1c06f5ff21b18388cdebc73b0e505ae6169b8af",
+      "bytes": 12647
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-host.py",
+      "sha256": "61cee9800e666c6398f0b0ab8df60e81c401a7b97b0a0653d8fcf6a47553cfc0",
+      "bytes": 18158
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-source-extraction-proof.json",
+      "sha256": "d0ee4dc7acf1db8b18d05e6e332e4dfff8b4c66096b011c47b007c7545025d49",
+      "bytes": 19168
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-local-source-author.json",
+      "sha256": "1bdb800880717f8ef70cdbfa048b0fe57c3d5e6d496bd02957c90adb30c1803b",
+      "bytes": 10838
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r37-main-after-qa-protection-failure-actual-data.py",
+      "sha256": "2c748fbc4b6c12fb1bee149b575f5abdc1e7670abd70f4d7fb948bf9f0249914",
+      "bytes": 3237
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-transport-1792135433647-d1c40e0f-4c65-4a91-a3f1-bfbb3ece3a5a.json",
+      "sha256": "0ac6f16ff8ae128012485a3cdf8d4b7689fddd33dca3e7c8341f912bc1398273",
+      "bytes": 429927
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-host-original-1792135433720-79d02395-0c16-433a-95cf-3adf687a07ca.json",
+      "sha256": "9c582fd2f8e3cc77fc64042a352e621e69f974035a412af88bfdec7d524e9bc7",
+      "bytes": 321328
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-main-after-qa-protection-failure-outcome.json",
+      "sha256": "f88d78511b1fa49845bf71b22654bc9f466ff088f9c03fcefbe49e270ddb05cc",
+      "bytes": 5810
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-host-original-1792122982167-719eb50e-b16a-4fce-a3af-a6717d85ebda.json",
+      "sha256": "341b856db3f0223050b82b7086085f83a26b85781b4033b938a8826115362d44",
+      "bytes": 321322
+    },
+    {
+      "path": ".jarvis-dev/maintenance/summarize-r37-main-after-qa-prior607-difference.py",
+      "sha256": "8233cdc7809b5e9b431a4ae054604d95325e215f16571f33fca9d3af1e16cdcb",
+      "bytes": 4146
+    }
+  ],
+  "physicalRefsCount": 23,
+  "mirrorReadback": {
+    "RootWorkExact": true,
+    "initialFinalRawHashesStable": true,
+    "newMissingCopiesWX": 7,
+    "existingFilesOverwritten": 0,
+    "privateRawCopiesRemainUnderMaintenance": true
+  },
+  "limitations": [
+    "Only the saved main-only observation and local native-integer comparison are qualified. No new baseline, full protection, current four-resource/actor/CG/FD/socket/labels/ACK closure or PG4 qualification follows.",
+    "The unchanged content does not establish provenance, author or reason/timing of the four metadata changes. No source-file bodies from the historical607 were remotely reread.",
+    "No caller, once, observer function, comparison script, source import, test, remote/API or model was executed; the complete old source graph was not reaudited.",
+    "Individual metadata rows and full inventory are not reproduced in this safe report."
+  ],
+  "fees": {
+    "policy": "record only; no spending cap",
+    "knownAmount": null,
+    "unknownInternalCost": true,
+    "newModelCalls": 0,
+    "tokens": null
+  }
+}

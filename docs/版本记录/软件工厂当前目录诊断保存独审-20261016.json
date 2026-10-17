@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-current-main-only-saved-evidence-independent-local-review",
+  "at": "2026-10-16T03:59:48.371694+00:00",
+  "reviewerRole": "independent-non-author-local-saved-evidence-review",
+  "savedEvidenceAuditPassed": true,
+  "remainingP0P1InSavedEvidenceIntegrity": 0,
+  "findings": [],
+  "sourceRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-main-only-actual-observation-1792122982401-7304f971-fb28-42ab-a07f-750e60cc5485.json",
+      "sha256": "cd547dc82fadd98f4e5d948c35c45f2541ac361d09ae2318e0bddf3088f37bca",
+      "bytes": 5950
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-once.json",
+      "sha256": "13dbbdd9916794595fe9c7379ad5165f86e7949c6808fb7d21f95ee1c7a29f6d",
+      "bytes": 3465
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-transport-1792122982069-f628c6b1-c727-4821-afdf-9541aa98fbd1.json",
+      "sha256": "c407264e93d33fc4e03bd1a0fce5f5ea2e9832448491fcb289926c26b943c479",
+      "bytes": 429879
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-host-original-1792122982167-719eb50e-b16a-4fce-a3af-a6717d85ebda.json",
+      "sha256": "341b856db3f0223050b82b7086085f83a26b85781b4033b938a8826115362d44",
+      "bytes": 321322
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-outcome.json",
+      "sha256": "b6719766d504286c98f29d845969354686d1df96cd04f220fd3d60715386371d",
+      "bytes": 5781
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-current-main-only-actual-data.json",
+      "sha256": "dc12b7d72cd312cdde7a5fd7ed941472ca4ed4b8a1459377e7914f600114b0af",
+      "bytes": 3237
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-current-main-only-specific-entry-independent-local-review-1792122944152-bce192de-3163-44e6-84c7-402231f7b654.json",
+      "sha256": "6dead98bbc6b587439abc6cf049ec2e88b2064a80c482cd38aa964ed93526aa6",
+      "bytes": 11423
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-actual-observation-1791992601711-3849ad1c-6b78-4584-8dc5-293ac5b52902.json",
+      "sha256": "38e8e62452527f49cea25683cbf6a5a155ca618dba57df49a92546c1112fedb8",
+      "bytes": 7114
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-main602-driver-diagnostic-r1-host-original-1791992601224-729d475a-3838-454c-bb94-4d029e8c304a.json",
+      "sha256": "2562e55f8bac34b12c6caffcd2813fc9b16685c9733eb6a45ce0bab14631d744",
+      "bytes": 177984
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-actual-observation-1792121820397-4bdb9f4d-01f2-4b41-875b-c5083f7b61c3.json",
+      "sha256": "b5b86d46faa8dc1f22e817ea90a5fe975f90af086f1ea9b0cbc149e040b21167",
+      "bytes": 3794
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-incomplete-driver-current-r2-outer-once.json",
+      "sha256": "29652ee5b7f5987546eb9519e0f470de3254479ed51b048bc742a0010fd1ee0c",
+      "bytes": 882
+    }
+  ],
+  "supportRefs": [
+    {
+      "path": "artifacts/factory-resume-r37/main-only-saved-review-local-projection-cut-68014c41-a5c6-4c56-bd78-4f8c56816215.json",
+      "sha256": "397792885063d12503d966db664edddbabb4e3e5f566c34be4f03bca2975257d",
+      "bytes": 712
+    }
+  ],
+  "finiteSavedRefCount": 11,
+  "initialAndFinalRawBytesMatched": true,
+  "remoteOperationsPerformed": false,
+  "apiRequests": 0,
+  "testsExecuted": false,
+  "subjectExecutedByReviewer": false,
+  "subjectFunctionsInvokedByReviewer": false,
+  "exportsInvoked": false,
+  "newModelRequests": 0,
+  "sourceSemanticsRepeated": false,
+  "entry14ReferenceSemanticReviewRepeated": false,
+  "savedActualExecution": {
+    "diagnosticReadComplete": true,
+    "rootCalls": 1,
+    "maximumRootCalls": 1,
+    "automaticRetry": false,
+    "opportunityClosed": true,
+    "transportStatus": 0,
+    "transportSignal": null,
+    "transportErrorCode": null,
+    "stdoutBytes": 321322,
+    "stderrBytes": 0,
+    "stdoutSHA256": "341b856db3f0223050b82b7086085f83a26b85781b4033b938a8826115362d44",
+    "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transportAndOriginalHostBytesEqual": true,
+    "publicOutcomeExactMatched": true,
+    "sourceDataReviewOnceTransportBindingMatched": true,
+    "sourceBytesStableRecorded": true,
+    "scope": "Fixed current main only; no terminal-file rerun, process census, SQL or environment read represented by this diagnostic."
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "manifestEntries": 607,
+      "totalBytes": 18151378,
+      "contentSHA256Recomputed": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+      "metadataRows": 607,
+      "metadataSHA256Recomputed": "06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e",
+      "nativeIntegerMetadataValues": 5463,
+      "metadataIntegersAboveJavaScriptSafeRange": 1214,
+      "rootMetadataIntegersAboveJavaScriptSafeRange": 2,
+      "originalIntegerDomainPreserved": true,
+      "rootIdentity": {
+        "device": 66306,
+        "inode": 14417953
+      },
+      "expectedMatches": {
+        "fingerprint": false,
+        "files": false,
+        "metadata": false,
+        "rootIdentity": true
+      }
+    },
+    {
+      "frame": 2,
+      "manifestEntries": 607,
+      "totalBytes": 18151378,
+      "contentSHA256Recomputed": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+      "metadataRows": 607,
+      "metadataSHA256Recomputed": "06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e",
+      "nativeIntegerMetadataValues": 5463,
+      "metadataIntegersAboveJavaScriptSafeRange": 1214,
+      "rootMetadataIntegersAboveJavaScriptSafeRange": 2,
+      "originalIntegerDomainPreserved": true,
+      "rootIdentity": {
+        "device": 66306,
+        "inode": 14417953
+      },
+      "expectedMatches": {
+        "fingerprint": false,
+        "files": false,
+        "metadata": false,
+        "rootIdentity": true
+      }
+    }
+  ],
+  "framesEqualRecomputed": {
+    "tuple": true,
+    "manifest": true,
+    "rootMetadata9": true,
+    "metadataRows": true
+  },
+  "publicSafeSummaryIndependentlyRecomputed": true,
+  "metadataRowsPubliclyExposed": false,
+  "rawTransportOrContentsPubliclyExposed": false,
+  "descriptorClosureEvidence": {
+    "savedAllReaderDescriptorsClosed": true,
+    "savedErrors": [],
+    "savedFirstClosedError": null,
+    "scope": "Source-bound normal-return descriptor-close claim for this bounded reader; saved bytes contain no independent OS-wide descriptor inventory."
+  },
+  "oldSavedManifestComparison": {
+    "basis": {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-actual-observation-1791992601711-3849ad1c-6b78-4584-8dc5-293ac5b52902.json",
+      "sha256": "38e8e62452527f49cea25683cbf6a5a155ca618dba57df49a92546c1112fedb8",
+      "bytes": 7114
+    },
+    "oldFiles": 602,
+    "oldBytes": 18083755,
+    "oldFingerprint": "11446020cbec373e92ab22293352bde874b18e82cca11f3a5757454dc9b9e212",
+    "oldMetadataSHA256": "7565aff1d4cf39ee3308001d5ef51479980e4c6949b8da0f00323e7bf52840f6",
+    "newFiles": 607,
+    "newBytes": 18151378,
+    "newFingerprint": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+    "newMetadataSHA256": "06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e",
+    "addedCount": 5,
+    "changedCount": 9,
+    "removedCount": 0,
+    "unchangedCount": 593,
+    "deltaBytes": 67623,
+    "added": [
+      {
+        "path": "apps/web/src/ui/TemplateRefreshModal.test.ts",
+        "sha256": "cabd210de0181de76b58f7f4f4661833a7832b9d9237f557b9686a62105ae889",
+        "bytes": 1388
+      },
+      {
+        "path": "doc/dev-plan/模板重排规则核对报告-实施计划.md",
+        "sha256": "aa04e530275dd2ef18657fbc13ea3b32379ee34615462c34c50690eb4577e680",
+        "bytes": 13368
+      },
+      {
+        "path": "doc/dev-plan/模板重排规则核对报告-设计.md",
+        "sha256": "14750b6484a4b26f8cf1056146997d58ee1a93bea267875cd2f14c7c3a8b4c28",
+        "bytes": 5336
+      },
+      {
+        "path": "doc/dev-plan/设计覆盖检测与可交互原型-实施计划.md",
+        "sha256": "d40d5506769bbac65d4925c064790ae65e013fd8b7330873a17ca290ec5aa375",
+        "bytes": 16652
+      },
+      {
+        "path": "doc/dev-plan/设计覆盖检测与可交互原型-设计.md",
+        "sha256": "d54c01da4dddc4610df1d1218b1f76be008560272baecd39a503ed46b858b64b",
+        "bytes": 8788
+      }
+    ],
+    "changed": [
+      {
+        "path": "apps/web/src/api.ts",
+        "before": {
+          "path": "apps/web/src/api.ts",
+          "sha256": "2f22644d86c80e7348323384b89dfec5233773bd5190dac288db9447c3224b49",
+          "bytes": 6287
+        },
+        "after": {
+          "path": "apps/web/src/api.ts",
+          "sha256": "eed3c14ec22002222a75f181fcd94bbf22b53cc28334143dff48e2a33d9f372f",
+          "bytes": 7011
+        }
+      },
+      {
+        "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+        "before": {
+          "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+          "sha256": "19a7d3632304f780ea3bf2c21a1d770b28b3df706a16e214407c420fd6b226f3",
+          "bytes": 40695
+        },
+        "after": {
+          "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+          "sha256": "760cfda8703b5d4c81c011f480240a0f13fc48cebf9e1ffa70530438f7e61179",
+          "bytes": 45562
+        }
+      },
+      {
+        "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+        "before": {
+          "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+          "sha256": "dd2bb9a956df2e29c3c5492943423d466b2c3fe4620325378244e10a2f904a28",
+          "bytes": 6932
+        },
+        "after": {
+          "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+          "sha256": "8da88bb25ff6c82ca8e5a9442fc87f27af3394dacc01cded5d6ca0f57b6a92bf",
+          "bytes": 10574
+        }
+      },
+      {
+        "path": "apps/web/src/pages/design/api.ts",
+        "before": {
+          "path": "apps/web/src/pages/design/api.ts",
+          "sha256": "e63b2f0e12c0d216b5e3a2018a6f11e43646cfffc31b771f7535de35a1efcc2f",
+          "bytes": 12153
+        },
+        "after": {
+          "path": "apps/web/src/pages/design/api.ts",
+          "sha256": "2ad4c74cf790893cbbfe010a5ea44ab0c097f78815d30762b6b1a330e36e8db2",
+          "bytes": 13330
+        }
+      },
+      {
+        "path": "apps/web/src/pages/req/RtmPanel.tsx",
+        "before": {
+          "path": "apps/web/src/pages/req/RtmPanel.tsx",
+          "sha256": "cdeba106aaa5d4957f3a651a84ac6e52f37198e75f2a5052da09f1830c697691",
+          "bytes": 19351
+        },
+        "after": {
+          "path": "apps/web/src/pages/req/RtmPanel.tsx",
+          "sha256": "8d5f494e386ede40609bc101ab1ec9d1b0d4ff70628e7684f146939caf5531e6",
+          "bytes": 25495
+        }
+      },
+      {
+        "path": "apps/web/src/pages/req/api.ts",
+        "before": {
+          "path": "apps/web/src/pages/req/api.ts",
+          "sha256": "24d06ba1ae7e5f2e5b32ccc96c04d7b8bfcb669c627c40c52f4f34d5d5af1b17",
+          "bytes": 7978
+        },
+        "after": {
+          "path": "apps/web/src/pages/req/api.ts",
+          "sha256": "a8e84b5eee7dba67f6d98e91556e2a8c7ea54cfb0bb5ef98b970b769c4510ec1",
+          "bytes": 8751
+        }
+      },
+      {
+        "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+        "before": {
+          "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+          "sha256": "f62cf7bf2eada057775e4a131cf74caad251525fa60b577274cd73ef87a7973e",
+          "bytes": 14034
+        },
+        "after": {
+          "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+          "sha256": "129fef2bbcc9066337a221af2fe0af2c6fce328c2ba6ac67e225a0ddc3d2a2b8",
+          "bytes": 16029
+        }
+      },
+      {
+        "path": "apps/web/src/ui/ui.css",
+        "before": {
+          "path": "apps/web/src/ui/ui.css",
+          "sha256": "97499bdc60bc3a5f225df6578779ebfc64308c3b5dcb20a74cde2dac66ae1a10",
+          "bytes": 5340
+        },
+        "after": {
+          "path": "apps/web/src/ui/ui.css",
+          "sha256": "8b97f4a26177e9cb580647cb3b6d7f4a24db222d9bb8d3782e8198bde4d621dd",
+          "bytes": 6007
+        }
+      },
+      {
+        "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+        "before": {
+          "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+          "sha256": "ac82c36c9a09c481a48898aa47a0f8c770d9afa950a78cfe3f1217bb5f52cd3f",
+          "bytes": 80902
+        },
+        "after": {
+          "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+          "sha256": "0af80720391eb3c0d3567e9074e429f5a93b903b592a4952cf0b72b4524644df",
+          "bytes": 83004
+        }
+      }
+    ],
+    "removed": [],
+    "sourceRelativePathsAndHashesOnly": true,
+    "newFileContentsRead": false,
+    "authorAndReasonKnown": false,
+    "expectedTupleRebased": false,
+    "oldMetadataRowsAvailable": false,
+    "perFileOldMetadataChangeAttributionPerformed": false
+  },
+  "interpretation": "Stable 607-file current frames retain the pinned root device/inode, but content fingerprint, file count and metadata digest differ from the pinned 602-file inventory. Five paths were added and nine existing paths changed; none were removed. The prior R28_HOST_MAIN_CHANGED rejection is consistent with this later measurement, but this does not establish the exact state during that earlier failed observation, authors or reasons for changes, or permission to adopt a replacement baseline.",
+  "nextNarrowNeed": "Use the saved public path/SHA/size delta to identify and confirm provenance and intended authorization of changes before any separate successor baseline or protection entry. Do not replay closed old current-r2 or this closed main-only opportunity.",
+  "oldCurrentR2Closed": true,
+  "oldCurrentR2ClosureBasis": "Original terminal exit1/entryInvocations1/noRetry and hash-bound outer-once max1 are saved.",
+  "thisMainOnlyClosed": true,
+  "mainBaselineQualified": false,
+  "fullProtectionQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "costs": {
+    "spendCap": null,
+    "supplierModelRequests": 0,
+    "internalUsageKnown": false,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

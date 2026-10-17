@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-normalized-api-new-qa-source-data-entry-safe-summary",
+  "at": "2026-10-16",
+  "scope": "source-data-specific-main-entry-only",
+  "evidence": {
+    "selection": {
+      "path": "artifacts/software-factory/goals-r29/r37-normalized-api-minimal-new-qa-family-root-selection.json",
+      "sha256": "df5a0769ff919152c2f19ee4d355c42daa811f55def811e01c3a2c3fb5715c0c",
+      "bytes": 3329
+    },
+    "finalHandoff": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-final-local-source-handoff.json",
+      "sha256": "f41dfb095517070c670441629cdd5dfd539b4a66ca5920882193f9c9875031ff",
+      "bytes": 20951
+    },
+    "correctedNull": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-complete-null-interface-r2.json",
+      "sha256": "33b9506a9011757dbcb25c3dd6a3a0fd2cb3e618be0d258a66c28784c62ede61",
+      "bytes": 94760
+    },
+    "preSourceReview": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-source-preparation-independent-local-review-final.json",
+      "sha256": "27b5b4008d10239f84f703d5058dc3ab6c3a23bb856449825b3aef8926cc5636",
+      "bytes": 35587
+    },
+    "sourceData": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-source-data-seal.json",
+      "sha256": "048e0bb730260c98537c12bcaa55d1552236478093ec25020583097afbf9fd70",
+      "bytes": 170042
+    },
+    "completeSource": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-complete-family-source-review-aggregate-final.json",
+      "sha256": "4c32b234fc2141ea4280e372e3fb44a07fe8695fe366d8c818894d7d988fc662",
+      "bytes": 173497
+    },
+    "lateData": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-late-entry-data-seal.json",
+      "sha256": "9dd37b11f7c6a854a5b2de5c9b3819eb80ec6f9f63de46d1c53146173a582e4e",
+      "bytes": 178942
+    },
+    "specificMainEntry": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-specific-main-entry-independent-local-review-final.json",
+      "sha256": "76180db6cc2c865ad183a907150be0e40a9dfcd41be3a3e6da2d34a7ba699688",
+      "bytes": 350818
+    },
+    "terminalSource": {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-normalized-api-meta-r2-terminal5-independent-local-source-review-final.json",
+      "sha256": "c004ef57f36f3470d29a3d18a27d0c51ab980b15831e06607c8a05c8417c06b6",
+      "bytes": 17949
+    }
+  },
+  "sourceFamily": {
+    "newSources": 7,
+    "newStaticHosts": 2,
+    "reusedDriverSHA256": "0fd0414f84fd7c34135c01b61b9c0e0c6756de616d38ffdc88c3e5f52dc8bb05",
+    "sourceDataPhysicalReferencesVerified": 678,
+    "completeSourcePhysicalReferencesVerified": 682,
+    "lateDataPhysicalReferencesVerified": 692,
+    "mainEntryPhysicalReferencesVerified": 693,
+    "mainEntryMachineReferencesVerified": 692,
+    "executionContractOldOrderedPrefixPreserved": 639,
+    "admissionContractOldOrderedPrefixPreserved": 50,
+    "allFourConsumerHeadersVerified": true,
+    "fixed607MetadataRetained": true,
+    "firstNullTwoDerivedScopeHashLeavesCorrectedBeforeSoleWiringGroup": true,
+    "oldNullPreserved": true,
+    "wiringGroupRuns": 1,
+    "wiringGroupPassed": 1,
+    "oldPassedGroupsRerun": false
+  },
+  "limits": {
+    "actualWorkerFrameworkABIQualifiedBySource": false,
+    "actualFourCasesQualified": false,
+    "terminalSourceOnlyActualDataAbsentAtCut": true,
+    "newSupplierModelCalls": 0,
+    "productionRelease": false,
+    "original74AcceptanceChanged": false
+  },
+  "localPreparationBoundaries": [
+    "Root helper map ordering collision refused before writing either target; distinct corrected preparation preserved old script and did not perform remote operations.",
+    "New terminal source author and auditor each repeated 3 AST parses plus 1 syntax check; counted as duplicate syntax only, no functional or old test group rerun.",
+    "New terminal actual context and five file pins require the actual CHECK; its SOURCE is not actual terminal qualification."
+  ]
+}

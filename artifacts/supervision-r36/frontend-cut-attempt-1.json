@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16T02:55:07.963692+00:00",
+  "scope": "local new frontend supervision work implementation only",
+  "status": "passed-in-bounded-scope",
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/supervision-work-client.ts",
+      "sha256": "e344bdc97b9d1f94bc42696cf97a3d4b5a135c7ed6db6ef4e3356a87d3e5f632",
+      "bytes": 5744
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+      "sha256": "6f1dd31ccb65668aa61cc152b24737128b084dd4987e26f36af668e207ab613a",
+      "bytes": 14074
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.css",
+      "sha256": "0b545c407882f3dd353c289f48d510db0c009d206ba0bd1f2023caa0b49832de",
+      "bytes": 2391
+    },
+    {
+      "path": "apps/web/src/features/operations/supervision-work-view.ts",
+      "sha256": "c060530604b5929737d954f64f22b1e6618f34e4b77adeab5ad564fbf1173235",
+      "bytes": 2026
+    },
+    {
+      "path": "apps/web/src/features/operations/supervision-work-view.test.ts",
+      "sha256": "92ef84f1c4d45e3a5d8a7d5f3593f30775afbf7065e82236fbf73b4362ddaf63",
+      "bytes": 5293
+    },
+    {
+      "path": "apps/web/src/demo/context.tsx",
+      "sha256": "8968ca4160441da7b9c0c36e66787e28a13e09a9f484aa2023591fbd983f8191",
+      "bytes": 19338
+    },
+    {
+      "path": "apps/web/src/NotificationCenter.tsx",
+      "sha256": "62c6b5c87d90e25442236572582511f831eb700abe30671933b266cb18c9d426",
+      "bytes": 8170
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectAutonomyPanel.tsx",
+      "sha256": "d52936e65f81dd856eec9ac3cf356548e6dcb2944888b92fd6426551c229d3d7",
+      "bytes": 35487
+    },
+    {
+      "path": "apps/web/src/features/operations/work.tsx",
+      "sha256": "56074c61c87080ec9925bf5d039443511ea2e1e6b3c3a8ffe5465d4adfdccb73",
+      "bytes": 41553
+    }
+  ],
+  "validation": {
+    "newTargetedGroups": 2,
+    "passed": 2,
+    "failed": 0,
+    "executions": 1,
+    "oldTestsRerun": false,
+    "testToolChunk": "d27bcb",
+    "testExitCode": 0,
+    "webTypecheckExitCode": 0,
+    "typecheckSession": 52226,
+    "typecheckCompletionChunk": "5b4740",
+    "browserRunByThisAgent": false,
+    "buildRunByThisAgent": false
+  },
+  "boundaries": [
+    "One owner SSE shared by provider and every project panel, no project-count socket multiplication",
+    "Committed metadata triggers authoritative overview and notification reads; ready after reconnect catches up",
+    "Current stream session-expired closes old streams and dispatches existing auth invalidation; late old stream cannot clear new identity",
+    "Owner admin CAS forms require completion summary, validation scope and at least one path/SHA reference; references are not file verification",
+    "Original product acceptance and historical tasks remain separate; no new time/model based percentage",
+    "Native browser alerts retain existing permission/preferences/quiet-time controls; no offline WebPush claim"
+  ],
+  "externalOperations": {
+    "serverApi": 0,
+    "ssh": 0,
+    "providerModel": 0,
+    "production": 0
+  },
+  "cost": {
+    "knownExternalUSD": null,
+    "internalAssistantTokens": null,
+    "internalAssistantCostUSD": null,
+    "spendCap": null
+  }
+}

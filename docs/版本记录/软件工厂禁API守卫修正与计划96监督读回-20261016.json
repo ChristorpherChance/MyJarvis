@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-16T10:21:55.445Z",
+  "decision": {
+    "id": "f0be5267-55f0-4536-a25a-b98d9d6a2614",
+    "revision": 2,
+    "hash": "92c7761fb1d0161fbe4fb6c315c43a0d2026e81b2d00dde8e04ccbb5581b6396",
+    "status": "implemented",
+    "independentAcceptance": false,
+    "implementationScope": "single-driver-source-only"
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 96,
+    "hash": "a127491b3861f06b0d3443667940a8392758047deb5ca84ba1b2794ecc3b828d",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "将已审的最小修正接入新的独立验证入口，核对来源、实际参数和新鲜环境保护后，只执行一次新的四用例验证，并保留错误与资源收尾证据。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 14,
+    "hash": "eccbc692d455844dce5c7cbc0263a0b073f9df20c049b709d0c7889881e1b8c0",
+    "summary": "已定位并修正验证脚本对“禁用接口”配置的误判，单项源码核对通过。正在准备重新验证，四个关键用例仍未完成。",
+    "nextAction": "将已审的最小修正接入新的独立验证入口，核对来源、实际参数和新鲜环境保护后，只执行一次新的四用例验证，并保留错误与资源收尾证据。",
+    "blocker": "修正目前通过单项源码核对；完整入口、实际环境复验和四用例结果尚未完成。",
+    "validationScope": "本轮已保存D完整保护及资源收尾资格保持。三份精确Vitest2.1.9原body静核证明api:false归一为middlewareMode+内部UUID对象，旧!c.api是充分拒绝项；原ctx、短路首项和其它20项实况仍未知。关联改选保留plan95原准备选择，取消额外现场config-only。新0fd0414f只增严格plain data/Reflect ownKeys及描述符/UUID4形态的禁API对象门、替换单谓词；port/host/strictPort/额外键/symbol/accessor等仍拒，其余20条件和reporter/plugin/模块/fixture/SQL/fresh/首错close逐byte保持。唯一新controlled组1/1，Node实际0与原计数/GBK包装错误分列且未重组。SOURCE为单源范围，不冒完整家族、实际DATA/ENTRY、框架ABI或四用例通过。四用例0通过0业务失败4未完成、74 0/74，原五步/25tasks/自治/global/R22/PG29Env23/notes保持，无新模型或发布。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 27,
+  "matchingPersistedNotifications": 1,
+  "evidenceCount": 12,
+  "staticSufficientRejectingPredicateProven": true,
+  "originalActualContextRecovered": false,
+  "otherTwentyConditionsQualified": false,
+  "driverSourceIndependentlyQualified": true,
+  "completeQAFamilyQualified": false,
+  "newQAActuallyExecuted": false,
+  "newOnsiteConfigOnlyDiagnosticPerformed": false,
+  "currentScopeSavedIndependentlyQualified": true,
+  "oldEvidencePreserved": true,
+  "originalFiveStepCriteriaBindingsTitlesGoalsAndTaskRunsPreserved": true,
+  "oldAutonomyGlobalAnd25TasksUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false
+}

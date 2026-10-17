@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-context-sentinel-failed-five-current-r1-actual-observation",
+  "at": "2026-10-16T13:10:37.787247+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-context-sentinel-failed-five-current-r1-once.mjs",
+    "sha256": "fedbd632cb2166e8d04aa47bd3151353a91fdfbe6e856de7a046da22d43144f4"
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-entry-context.json",
+    "sha256": "56f1ab3f221318e8e4dc527619328f68f9e6bcd81678484a390036a3a6d6266f"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-entry-independent-local-review-final.json",
+    "sha256": "90046483f8057c87498670dddace35b52570011d1b8a32c84ca49c4afd9a6646"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 54.531999999890104,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-operator-outcome.json",
+    "sha256": "9f6b8195f6bd8bcaef261a47a35b1c230c302ea31691513416d82737d2e477d0",
+    "bytes": 232629
+  },
+  "result": {
+    "kind": "r37-context-sentinel-failed-five-current-r1-entry-result",
+    "ready": true,
+    "errorCode": null,
+    "actualCurrentScopeObserved": true,
+    "privateOutcome": {
+      "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-outcome-1792156236855-3147a6d9-045c-42e8-a124-866fb71b1b35.json",
+      "sha256": "d399c3f3fa58c443c8dc12cd319d379eb3de39af8ea7a80a396fc83008e1f7b1",
+      "bytes": 11514567
+    },
+    "once": {
+      "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-read-once.json",
+      "sha256": "d6f94919831fb20c49883551e0400021861c7b05d94218b71b9152e3eb0ae061",
+      "bytes": 175594
+    },
+    "rawCurrentTransport": {
+      "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-private-1792156221530-47fb1196-ce19-4170-8b49-5a2c3c67c182.json",
+      "sha256": "5e6ca4f41312d3a47bb57a5d201390362b4a4dc6587ffe442a80e9f3be360efe",
+      "bytes": 13268841
+    },
+    "sourceBytesStable": true,
+    "maximumReaderRuns": 1,
+    "maximumScopeReads": 1,
+    "maximumWholeReads": 2,
+    "expectedRootRoutes": 9,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "currentResourceScopeClosedVerified": true,
+    "actualPG4Qualified": false,
+    "evidence": null
+  },
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": true,
+  "savedEvidenceIndependentlyAudited": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

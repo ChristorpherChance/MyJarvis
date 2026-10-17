@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-actual-observation",
+  "at": "2026-10-16T12:43:45.512665+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-pg4-terminal-binding-bytes-context-sentinel-meta-r2-once.mjs",
+    "sha256": "cd7271feebbbb69b0088acabcefa4dcf0a9415ccf947feeb708457f895fdda47"
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-entry-context.json",
+    "sha256": "d2f776d2c91f790df0c1e04041b448dc3362b38a78b6ed984320e580df94bccf"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-entry-independent-local-review-final.json",
+    "sha256": "ab0d44f4b710d75c5f00122ee86e88d185479c1f1de6b356cbc27a4c8086b9fb"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 1.1089999999385327,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-operator-outcome.json",
+    "sha256": "c55306bb088e0e4300e4e5a432913026bab7275102df1b0eba08483287b6ec68",
+    "bytes": 3623
+  },
+  "result": {
+    "kind": "r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-read-result",
+    "ready": true,
+    "errorCode": null,
+    "terminalBindingBytesObserved": true,
+    "bindingRefs": {
+      "state.json": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-state.json-69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410.json",
+        "sha256": "69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410",
+        "bytes": 24672
+      },
+      "work/postgres.created.json": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-work-postgres.created.json-9f5f23b86546d37da90fdf26602ab71417cf0083ee61832e46120daae4e291e8.json",
+        "sha256": "9f5f23b86546d37da90fdf26602ab71417cf0083ee61832e46120daae4e291e8",
+        "bytes": 313
+      },
+      "work/pg4-runner.created.json": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-work-pg4-runner.created.json-08d53e9761a4d5f4dc0e24d65fb7a224d89a9b71d03cac80443aa885e382f108.json",
+        "sha256": "08d53e9761a4d5f4dc0e24d65fb7a224d89a9b71d03cac80443aa885e382f108",
+        "bytes": 315
+      },
+      "work/internal-network.created.json": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-work-internal-network.created.json-4b71df0ad67e233302cc9b7a057d39137f679c1e96010274461e8848e9714043.json",
+        "sha256": "4b71df0ad67e233302cc9b7a057d39137f679c1e96010274461e8848e9714043",
+        "bytes": 321
+      },
+      "work/postgres-data.created.json": {
+        "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-work-postgres-data.created.json-0c6944d83095047355dce94553cfad6013155a688b4e548cc4d9b91e3beed964.json",
+        "sha256": "0c6944d83095047355dce94553cfad6013155a688b4e548cc4d9b91e3beed964",
+        "bytes": 334
+      }
+    },
+    "privateOriginalTransport": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-byte-private-1792154624942-4afddd98-dfbe-43ef-b99c-f923d64c4850.json",
+      "sha256": "4cd97e17a2a441e24840bb3c8c2c69508d0e0bd0707ccb33cc6ec11462083da9",
+      "bytes": 51970
+    },
+    "privateOutcome": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-byte-private-1792154625411-8851c918-6f8c-47aa-92e7-d7f37093bf89.json",
+      "sha256": "78ec4b44e3ff139ee4f7d9e85fe3bb026211271155077e7c2f72d08ab5bb2eec",
+      "bytes": 65232
+    },
+    "sourceBytesStable": true,
+    "RootCalls": 1,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "currentResourceScopeClosedVerified": false,
+    "actualPG4Qualified": false,
+    "fullProtectionQualified": false,
+    "unsafeMetadataOnlyInOriginalPrivateWire": true,
+    "evidence": null
+  },
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

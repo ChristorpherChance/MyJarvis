@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "kind": "factory-supervision-r36-production-acceptance",
+  "at": "2026-10-16T03:16:51.908400+00:00",
+  "sourceCommit": "e62016034f45538e96698a2a1b3a740198b2799c",
+  "release": "20261016-factory-supervision-r36",
+  "health": "ok",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "counts": {
+    "total": 6,
+    "planned": 3,
+    "running": 1,
+    "blocked": 0,
+    "completed": 2
+  },
+  "items": [
+    {
+      "id": "ef385d9f-2eaa-4691-8898-fd5572df6342",
+      "title": "上线简明监督与主动简报",
+      "status": "completed",
+      "revision": 2,
+      "summary": "已上线并完成本地、Linux、正式健康和真实监督事件通道核对。",
+      "nextAction": "继续按新事项推进工厂修复和独立验收。",
+      "completionSummary": "简明监督与主动简报已上线：事项状态、阻塞和下一步清楚可见，完成可展开简报、证据和历史；真实事件通知已接通。",
+      "validationScope": "监督软件功能及双机安装、正式服务健康；不代表原74目标或四用例通过。浏览器系统提醒仍须本人授权，不含离线推送。"
+    },
+    {
+      "id": "a24cdb77-77e1-476f-acf4-2240a48befa5",
+      "title": "核清暂停前的诊断结果",
+      "status": "completed",
+      "revision": 1,
+      "summary": "重新核对已保存的真实诊断：主源码内容、文件数和目录身份未变，元数据指纹不同；原驱动未启动四用例。",
+      "nextAction": "",
+      "completionSummary": "已核清历史诊断：源码内容未变、元数据发生变化，四用例仍未进入执行。具体前置异常需要新的错误留存入口定位。",
+      "validationScope": "仅核对已经关闭的诊断与本次当前平台状态；不代表当前资源收口或四用例通过。"
+    },
+    {
+      "id": "4fbfd87a-fe71-461b-b1a6-bc847308b43f",
+      "title": "继续定位前置问题与当前范围核查",
+      "status": "running",
+      "revision": 1,
+      "summary": "已恢复本地修复；新读取来源及接口绑定已通过非作者审查。原来的执行器仍因保护上限停下，尚未进行新的远端验证。",
+      "nextAction": "封存新的实际参数与具体入口，核对当前环境后只执行一次新的当前范围读取；不重派旧运行。",
+      "completionSummary": "",
+      "validationScope": ""
+    },
+    {
+      "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+      "title": "完成四个关键用例的独立复验",
+      "status": "planned",
+      "revision": 1,
+      "summary": "当前0通过、0业务失败、4未完成。此前缺少完整报告，不能当成四个业务用例失败。",
+      "nextAction": "当前范围核查合格后，仅启动一次新的验证，再独立检查四用例、原始报告和资源收口。",
+      "completionSummary": "",
+      "validationScope": ""
+    },
+    {
+      "id": "fc0b17cd-0f09-488d-910c-df6a3e85614d",
+      "title": "跑通客户12项需求到实际使用",
+      "status": "planned",
+      "revision": 1,
+      "summary": "服务请求管理的12项原始需求已保存，需求到可使用软件的完整流程尚未交付。",
+      "nextAction": "在关键用例与运行条件通过后，逐段接通需求、设计、开发、测试、安装使用与维护。",
+      "completionSummary": "",
+      "validationScope": ""
+    },
+    {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "title": "推进其余目标与自主交付能力",
+      "status": "planned",
+      "revision": 1,
+      "summary": "原74项目标的编号、标准与依赖保留；当前独立验收仍为0/74。",
+      "nextAction": "先贯通代表项目真实交付，再按原标准逐项验收和比较各阶段Agent。",
+      "completionSummary": "",
+      "validationScope": ""
+    }
+  ],
+  "realServerEvent": {
+    "at": "2026-10-16T03:14:43.508Z",
+    "status": "passed",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "itemId": "ef385d9f-2eaa-4691-8898-fd5572df6342",
+    "revision": 2,
+    "eventId": 7,
+    "ownerStreamReady": true,
+    "eventAfterRealCommit": true,
+    "observedEvents": 7,
+    "localServerEventDelayMs": 34,
+    "brief": "简明监督与主动简报已上线：事项状态、阻塞和下一步清楚可见，完成可展开简报、证据和历史；真实事件通知已接通。",
+    "independentAcceptance": false,
+    "modelsInvoked": false
+  },
+  "notificationEvents": {
+    "count": 7,
+    "unique": 7,
+    "completedBriefPresent": true,
+    "privatePreferencesPreserved": true
+  },
+  "durableDatabase": {
+    "supervisionSQLiteIntegrity": "ok",
+    "workItems": 6,
+    "eventRows": 7,
+    "notifiedRows": 7,
+    "databaseFiles": 6,
+    "snapshotScope": "new database lives inside the existing complete-tree backup scope"
+  },
+  "originalTaskCount": 25,
+  "oldAutonomy": {
+    "revision": 20,
+    "status": "blocked",
+    "reason": "REPAIR_ATTEMPTS_EXHAUSTED",
+    "verifiedObjectives": 0
+  },
+  "original74IndependentAcceptanceUnchanged": true,
+  "fourCases": {
+    "passed": 0,
+    "businessFailed": 0,
+    "incomplete": 4
+  },
+  "resumption": {
+    "automationId": "automation",
+    "status": "ACTIVE",
+    "sameExistingHeartbeatResumed": true,
+    "heartbeatPurpose": "fallback continuation, user-facing notifications are event-driven and quiet while unchanged",
+    "previousAutomationBytesArchived": true,
+    "previousAutomationSha256": "d4e1e0a2daacf798a2223b54d93401a63ed3f136bfd0b465007f0032eebe1d49",
+    "newPromptSha256": "aed863ebeb5d6d9e19e33754e4ddd0cf1effcc90462bb5e2acd0e849db265aa4"
+  },
+  "factoryWork": {
+    "independentWorktree": "factory-resume-r37",
+    "sourceOnly": true,
+    "sourceReviewSha256": "8cecc8d54a7d58e878259ee0361ea21daf25f8079f3179658a42ddbdc84affdd",
+    "sixSourcesWholeByteForwardVerified": true,
+    "firstLocalPreparationFailurePreserved": true,
+    "oldNullBindingFindingPreserved": true,
+    "correctedNullIndependentlyReviewed": true,
+    "actualDataExecuted": false,
+    "specificEntryReviewed": false,
+    "newRemoteCurrentReadExecuted": false,
+    "newQAStarted": false
+  },
+  "limitations": [
+    "Browser system notifications require the existing personal permission and preference.",
+    "Offline Web Push, email and chat-app delivery are not implemented.",
+    "New supervision database is inside complete-tree backup scope; current supervision data was not replicated to standby in this release.",
+    "Original 74 objectives and customer 12 delivery remain unaccepted."
+  ],
+  "costPolicy": {
+    "limit": "none-record-only",
+    "newSupplierModelCalls": 0,
+    "internalAssistantTokensAndCostKnown": false
+  }
+}

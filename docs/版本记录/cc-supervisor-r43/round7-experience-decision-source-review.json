@@ -1,0 +1,492 @@
+{
+  "schema": 1,
+  "kind": "round7-experience-decision-nonauthor-local-source-and-saved-evidence-review",
+  "sealedAt": "2026-10-17T11:10:17.701320+00:00",
+  "status": "confirmed-B-scope-gaps-remain-not-complete-product-acceptance",
+  "sourceBinding": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round7",
+    "actualLocalHEAD": "f8d23de7e4f5a9a2f456e03e402316d9a0f9eb8c",
+    "localHEADReadBy": "git rev-parse HEAD (local only)",
+    "previousCut": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+    "reportedAppSourceCommit": "c78e5072359975a00c8ed839697f9a2f392d266e",
+    "reportedNeedsMoreWork": true,
+    "runtimeBuildClaim": "20261017-cc-supervisor-r43-r4",
+    "packageOrRuntimeBuildIndependentlyVerifiedInThisReview": false
+  },
+  "scope": {
+    "authorOfReviewedAppChanges": false,
+    "applicationFilesChanged": false,
+    "testsRun": false,
+    "applicationExecuted": false,
+    "remoteOrNetworkUsed": false,
+    "apiOrDaemonOperated": false,
+    "nativeInvoked": false,
+    "subagentSpawned": false,
+    "browserOrMobileOperated": false,
+    "savedEvidenceRead": true,
+    "productionDeploymentReviewedOrExecuted": false,
+    "goalPolicyClaimProtocolAndStopMatrix": "Outside this B review; other reviewers own those checks."
+  },
+  "summary": {
+    "P1": 2,
+    "P2": 2,
+    "fullDecisionLifecycleDelivered": false,
+    "fullHistoryDiscoverabilityDelivered": false,
+    "wholeExperienceContextChangeGuardDelivered": false,
+    "existingCASVerificationCorrectionFeaturesPresent": true,
+    "savedAffectedLogPass": 10,
+    "savedAffectedLogTotal": 10,
+    "savedPassIsNotNewTestExecution": true
+  },
+  "findings": [
+    {
+      "id": "R7-B-01",
+      "priority": 1,
+      "title": "Dispatch validates selected experiences but leaves model-visible exclusions mutable",
+      "classification": "confirmed static cause; missing branch not reproduced here",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 75,
+          "reason": "modelInput includes experienceReferences and experienceExclusions"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 78,
+          "reason": "post-model check only experiencesCurrent(experienceReferences)"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 72,
+          "reason": "dispatch boundary repeats selected-reference-only check"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+          "line": 35,
+          "reason": "checks only the refs supplied by caller"
+        }
+      ],
+      "trigger": "A model intent includes an unverified/condition-mismatched/counterexample exclusion. Before dispatch, that excluded record is edited/reverified/replaced, or a new matching lesson is added. The selected record set is unchanged or empty.",
+      "effect": "The old judgment can reach supervisorDispatch with unchanged selected refs although its actual experience input changed; the full context-freeze requirement is not implemented. An empty selected array passes vacuously.",
+      "smallestRequiredChange": "Bind a stable fingerprint/revision set for the actual authorized selected+excluded context used by the model and compare it again before accepting the judgment and before dispatch. A changed context should require a new judgment/reconciliation; do not force candidates into verified status.",
+      "existingProofLimit": "The saved test updates an already selected verified record and correctly blocks the successor. It never changes an exclusion, adds an eligible record or uses zero selected refs with changing reminders."
+    },
+    {
+      "id": "R7-B-02",
+      "priority": 1,
+      "title": "Supervisor decisions stay proposed and normal actual-action projection is skipped",
+      "classification": "confirmed existing delivery gap explicitly acknowledged by R7 report; not a claim of a new regression",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+          "line": 44,
+          "reason": "calculates chosenId"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+          "line": 45,
+          "reason": "returns chosenId:null/status:proposed/actions:[]"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 79,
+          "reason": "calls record/change only; no select integration"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 80,
+          "reason": "implementation is conditional on selected/implemented"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 82,
+          "reason": "skipped projection is still marked done"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 155,
+          "reason": "real CAS select exists"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 174,
+          "reason": "real implementation ledger exists"
+        }
+      ],
+      "trigger": "A model provides a real selected option and the supervisor dispatches/receives its next bound run. The linked ProjectDecision was created by the normal supervisor projection and was never independently selected.",
+      "effect": "The selected choice is lost from the projected record and instruction/outcome actions are not appended. Marking those projection rows done means a later external selection does not replay those earlier actual actions automatically.",
+      "existingWorkingParts": "Frozen feedback.options are normalized from actual event feedback rather than fabricated alternatives; event hash references and event-to-decision IDs persist. Correction changeOf is wired when targetEventId directly names an already mapped decision/review/correction. ProjectDecision API itself provides CAS select/implementation/change and preserves old versions.",
+      "narrowCorrectionLimit": "A correction aimed at a feedback/instruction/outcome event has no direct supervisor_decision_links row; current code falls back to an unrelated record rather than resolving the associated decision by its frozen relation. Do not claim arbitrary correction targets already form a complete changeOf chain.",
+      "smallestRequiredChange": "Wire the existing selection/change/implementation stages to actual authorized selection and bound action evidence, preserving proposed status when no valid selection exists. Do not manufacture evidence eligibility, selected choices or implementation merely to populate the ledger. Retain the old record and explicit new-version relation.",
+      "existingProofLimit": "Affected tests assert one proposed decision is created and survives restart; they do not assert real feedback A/B selection, a selected record, actual actions, correction changeOf replacement and historical retention through the full supervisor path."
+    },
+    {
+      "id": "R7-B-03",
+      "priority": 2,
+      "title": "Known old event IDs are readable but arbitrary history beyond the latest100 is not discoverable",
+      "classification": "confirmed API/UI reachability gap; no browser execution",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 56,
+          "reason": "view SQL LIMIT100"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 57,
+          "reason": "details lookup reads all rows only after eventId is known"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-routes.ts",
+          "line": 11,
+          "reason": "details route"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-routes.ts",
+          "line": 18,
+          "reason": "events route is SSE revision notification, not paginated history"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+          "line": 37,
+          "reason": "fetches details for a supplied visible event"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+          "line": 66,
+          "reason": "renders snapshot.events only"
+        }
+      ],
+      "trigger": "An earlier unrelated goal/correction event falls outside the newest100 and its eventId is not otherwise known from a related visible run.",
+      "effect": "The source rows and hashes remain stored, and a known old ID can still be read/corrected. The UI offers no cursor/older list or hash-to-event lookup to discover that arbitrary old event. Related-event details may reveal some older rows, but do not provide a general complete history entrance.",
+      "smallestRequiredChange": "Expose an authorized bounded history page/cursor and a visible older-history control; preserve the existing exact-ID/hash detail and correction gates.",
+      "existingProofLimit": "The UI test checks source strings and fetch URL presence only; it creates no101+ event history and exercises no cursor or browser interaction."
+    },
+    {
+      "id": "R7-B-04",
+      "priority": 2,
+      "title": "The fifth-reference cap silently drops further qualified experiences without a reason",
+      "classification": "confirmed finite selector omission",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+          "line": 27,
+          "reason": "collects every qualified record"
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+          "line": 31,
+          "reason": "returns selected.slice(0,5) but excluded contains only disqualified records"
+        }
+      ],
+      "trigger": "Six or more verified matching records qualify.",
+      "effect": "References beyond the first five disappear from selected/excluded/reminders, so the promised exclusion/accounting reason is absent for those records.",
+      "smallestRequiredChange": "Keep the existing bound, but record an explicit deterministic non-selection/cap reason for each omitted qualified reference and include that projection in the context binding.",
+      "existingProofLimit": "The selector test uses one qualified record plus disqualified cases; it does not exercise the qualified cap."
+    }
+  ],
+  "confirmedExistingFeatures": [
+    {
+      "area": "Structure, top-level verification and exact conditions",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 220
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 260
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+          "line": 14
+        }
+      ],
+      "finding": "Captured supervisor lessons start top-level verified=false/inbox. Verification requires nonempty machineId/executor/nativeVersion and evidence/conditions, stores verifiedContent/verifiedConditions and clears unknownConditions. Selection requires owner/project and all three machine conditions match actual binding, verified===true, unchanged verified content/conditions and evidence. Nested metadata does not grant qualification."
+    },
+    {
+      "area": "Counterexample/revocation/supersession, CAS and old facts",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/experience-supervisor-routes.ts",
+          "line": 15
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 34
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 227
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 235
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 240
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 254
+        }
+      ],
+      "finding": "New owner-admin-only narrow HTTP commands use repository expectedVersion/replay/scope checks. Counterexamples and revocation clear current top-level qualification; supersession links both old and replacement candidate without inheriting qualification. Prior content/conditions/evidence/verification snapshots are appended. Updates invalidate current verification; original event/decision facts are not overwritten."
+    },
+    {
+      "area": "Disable semantics are limited, not fabricated",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+          "line": 311
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/experience.tsx",
+          "line": 33
+        }
+      ],
+      "finding": "Published-skill deprecate exists and preserves fixed task references. A lesson is excluded by revocation/counterexample/supersession; there is no separate lesson deprecate operation in the new narrow route. The selector unit test constructs a deprecated record rather than proving a lesson can be deprecated through that route. Treat lesson eligibility revocation and skill-version disable as distinct existing capabilities."
+    },
+    {
+      "area": "UI correction fields and server truth binding",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+          "line": 35
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+          "line": 38
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+          "line": 64
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 67
+        }
+      ],
+      "finding": "Fact/preference UI branches explicitly send correctionType and the matching fact/preferred field, original eventId/hash, current session expectedVersion, commandId and selected applyTo. The server resolves that event in the owner-authorized session and requires exact hash/CAS. current_followup revokes policy and invalidates current decision context; future_reference is stored as such. Criteria edits use the separate revise action/goalRevision. This is source wiring, not browser acceptance."
+    },
+    {
+      "area": "Decision ledger can preserve selections, implementation and revisions independently",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-routes.ts",
+          "line": 25
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 123
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 155
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 174
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 186
+        }
+      ],
+      "finding": "Existing APIs reject stale versions, keep prior revision hashes, distinguish proposed/selected/implemented, require real performed-action evidence, and create changeOf proposals that do not supersede a still-valid old selection until selected. The remaining gap is automatic supervisor integration, not absence of the decision ledger."
+    }
+  ],
+  "savedEvidence": {
+    "collection": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round7-collection-1792235203216.json",
+      "bytes": 14120,
+      "sha256": "bd60f364be2ae0a2b9cf4ce03b3fccf8728fb4589287207de3b4a05e07ec66b4"
+    },
+    "terminalObservation": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round7-terminal-native-observation.json",
+      "bytes": 7952,
+      "sha256": "ab0654db3b9738f530a3b492aaa3cf6826e3e6245b4c3d51e7a918201be96735"
+    },
+    "checkedCollectionArtifacts": [
+      {
+        "path": "reports/r43-implementation-round7.json",
+        "bytes": 2700,
+        "sha256": "b110aceb372bcff094c89a1614e2d4d15ae28e391cea50e4ee41312fb3fc5f65",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      },
+      {
+        "path": "reports/r43-implementation-round7.md",
+        "bytes": 6136,
+        "sha256": "21626caef5bb48d8b6e88dcb20c87c42af081475573d3d8b6a6f8bc405dabeda",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      },
+      {
+        "path": "reports/r43-round7-packages.json",
+        "bytes": 2777,
+        "sha256": "95bb756f3af85ddf850c3432d88aa75dc511fed6c318f4c589c15d6466ab2b55",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      },
+      {
+        "path": "reports/r43-round7-logs/createapp-chain-final.tap",
+        "bytes": 9904,
+        "sha256": "92c10350454710f324ba19b9b1b768c92caf5bab203651754852a8f9d6dfd40a",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      },
+      {
+        "path": "reports/r43-round7-logs/final-affected.tap",
+        "bytes": 1305,
+        "sha256": "cdf20afdd5bd256776507c339a8588afada400f0a8943dd47fa382aba595a6f4",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      },
+      {
+        "path": "reports/r43-round7-logs/typecheck-final.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      },
+      {
+        "path": "reports/r43-round7-logs/build-final.txt",
+        "bytes": 3400,
+        "sha256": "67f817a60351ff356c0732d1c97ac422b211dfcd86dc030b33dd778890033922",
+        "collectionBindingMatches": true,
+        "importedCopyMatches": true
+      }
+    ],
+    "affectedLog": {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/reports/r43-round7-logs/final-affected.tap",
+      "bytes": 1305,
+      "sha256": "cdf20afdd5bd256776507c339a8588afada400f0a8943dd47fa382aba595a6f4"
+    },
+    "observedLogSummary": {
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "sourceReportedExitCode": 0,
+      "reviewerExecuted": false
+    },
+    "coverageClassification": {
+      "realHTTPRepoSQLite": [
+        "experience learning commands CAS/replay/scope/history",
+        "append-only supervisor correction and restart-readability"
+      ],
+      "selectorUnit": [
+        "explicit exclusion reasons/top-level verification; synthetic records"
+      ],
+      "runtimeWithStubExecutionAndDeterministicModel": [
+        "selected experience reaches model input and update blocks successor",
+        "pending model return invalidated by current-followup owner correction"
+      ],
+      "UIReadFileStringAssertions": [
+        "experience detail fields/buttons",
+        "correction labels/type branch/event URL/goalRevision strings"
+      ],
+      "otherAffectedItems": "Three goal-policy/reconcile cases appear in the same10-pass log; their correctness belongs to the other scope reviewer."
+    },
+    "importantLimits": [
+      "The supervisor fixture uses real HTTP/SQLite but stubs supervisorDispatch, runs and model; its title is not evidence of an actual child/native chain.",
+      "The separate createApp chain evidence is outside this B review and does not replace missing decision/history/context branches.",
+      "No saved affected test demonstrates a full ProjectDecision selected/changeOf/implementation lifecycle, arbitrary history>100 discovery, changed exclusions/new records, or a real browser/mobile correction interaction.",
+      "ProjectDecisionRuntime unit source includes select/implementation/change/CAS/history tests; no fresh run of that suite is asserted in this10-pass artifact.",
+      "R7 itself reports needs_more_work=true and explicitly lists full decision lifecycle and browser/mobile as remaining. The review agrees and does not reinterpret packing/type/build success as their acceptance."
+    ]
+  },
+  "minimumCCFollowup": [
+    "Freeze/recheck all model-visible experience context and preserve explicit non-selection reasons at the cap; verify exclusion/new-record changes stop a stale successor.",
+    "Complete actual selected/changeOf/implementation projection using the existing ledger and real feedback/options/action evidence; retain unresolved proposals and historical decisions honestly.",
+    "Provide a bounded authorized older-history entrance and verify a record outside100 can be discovered and corrected with its original hash.",
+    "Keep browser/mobile and complete decision lifecycle unaccepted until actual corresponding evidence exists; do not broaden into unrelated suites or manufacture fixture facts."
+  ],
+  "sourceFingerprints": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/experience-supervisor-routes.ts",
+      "bytes": 2610,
+      "sha256": "cfd1e1db6843d5b4eaaaf5dad49d9d31a860890702c79bab0f7dd761636512fa"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/supervisor-review.ts",
+      "bytes": 8428,
+      "sha256": "e0d42f3156d195f0abc35e326990cc15b53a4c3b25a22b05b12d1da10ce7eed3"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-runtime.ts",
+      "bytes": 42756,
+      "sha256": "ddbebdb454e553df9a5e1dfb399eafa01869e1c55c7996e76324c25f0df02adc"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-model.ts",
+      "bytes": 5854,
+      "sha256": "2f64f4ee1134a7f2552f86937e0bccd6bd312c0ab03981402769e49d8f741bd9"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-supervisor-routes.ts",
+      "bytes": 2822,
+      "sha256": "7e3796767b24456afdb330c66a2eb8055044c34eefe0bf9eb316f81b62e07221"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-runtime.ts",
+      "bytes": 18310,
+      "sha256": "9222554bb241ae338fa82e9e590fa58411841217c7d8296d907ebe66b48c939f"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/runtime/project-decision-routes.ts",
+      "bytes": 2034,
+      "sha256": "632c937ae16ea73f96888b3b250473f3131f3ab48f9457654191e68bb991a6a5"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/src/v1/capture-domains.ts",
+      "bytes": 35329,
+      "sha256": "737825c88a36dcc48f21be28ce2cab9f83035d7313f385e1cf999314ebaea032"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "bytes": 25162,
+      "sha256": "30f56b9aeb00768f3ba6300d9f2434971bea3e598bcc36445b9107b01153b343"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/experience.tsx",
+      "bytes": 19846,
+      "sha256": "8d39b570ef6392ce38ea79258074d98218eb6e9e9d79f06cec940fc3ace5a98a"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/features/operations/experience-supervisor-ui.test.ts",
+      "bytes": 1345,
+      "sha256": "7cb4920286dab3b85143da3252739cc9fc49195e5e6925737b0675e9f2280a6d"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/web/src/demo/live-operation-commands.ts",
+      "bytes": 16996,
+      "sha256": "d862fb761f54b4ab647811b057610c21e7034be0c65790fdaaf86240f7c982f7"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/test/experience-supervisor-routes.test.ts",
+      "bytes": 6805,
+      "sha256": "b14620d4d49c9de3a43f876338ae727fbf8b0ff8e432286cfd04b069f003db79"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/test/project-supervisor-r43.test.ts",
+      "bytes": 9196,
+      "sha256": "91384ba4350d7b7b29a31c461455c85eec11e36fc83291f4b0a0e5e2bdb2ee8c"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round7/apps/api/test/project-decision-runtime.test.ts",
+      "bytes": 18338,
+      "sha256": "217e9cc9f78acc9353714582c6abb4342f16345ce22e7e6c08999e9dec42931f"
+    }
+  ],
+  "finalState": {
+    "releaseReady": false,
+    "BRequirementsComplete": false,
+    "existingFeaturesAcknowledged": true,
+    "reviewOnly": true,
+    "appCodeUnchanged": true,
+    "newTestsOrNativeRun": false,
+    "reportContainsPrivateRawOrAuthentication": false
+  }
+}

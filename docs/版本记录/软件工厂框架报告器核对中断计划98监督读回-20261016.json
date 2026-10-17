@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-16T11:08:06.625Z",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 98,
+    "hash": "40130a60c0bfb3fe8c121708b81d3d95b48df361fa94b9d61df71546edf42a0a",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "读取并核对本轮原始错误与资源收尾证据，定位具体不兼容项后选择最小修正，再安排新的独立复验。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 16,
+    "hash": "2e763d58e62c282ca917896265315d3be6ea6123915c8ddfe4b0827cb3ae0957",
+    "summary": "本轮复验在测试框架与报告器核对阶段中断，尚未得到四个用例结果。正在核对错误记录并完成资源收尾。",
+    "nextAction": "读取并核对本轮原始错误与资源收尾证据，定位具体不兼容项后选择最小修正，再安排新的独立复验。",
+    "blocker": "本轮框架核对中断；具体子条件与完整资源收尾仍待独立核验，四个用例均未完成。",
+    "validationScope": "Root唯一CHECK于11:03:25.232229Z保存producer failed，晚于保守11:03:01.751142Z边界23.481087秒；Node9.531秒exit0不是业务通过。首错framework-context-validation/R33_PG4_DRIVER_CONTEXT_OR_REPORTER_CHANGED，组内具体短路项及actual ctx未知。CHECK SAVED13c961f4/13896与Root15引用双根核通过，原JP保START前缀并只追加1CHECK，原wire28793/0stderr/status0/privateprojection一致。unitnotfound/inactive/dead/Main0，owner/stop历史对象与136原记录指纹存在，不自行签当前资源收尾。五原件DATA已纯本机封实际8CTX和5pin，但五byte正文/具体ENTRY/当前D仍待后继；本cut不提前计为完成。新旧START/CHECK均CLOSED不重放；四用例0通过0业务失败4未完成、74 0/74，旧97/284 START-only cut保原。五步/25tasks/自治/global/R22/PG29Env23/notes不变，无新模型或生产发布。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 29,
+  "matchingPersistedNotifications": 1,
+  "evidenceCount": 18,
+  "actualCheck": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-main-actual-check-observation-1792148605232-a84d0905-07f6-4168-ba84-db3ed5324e74.json",
+    "sha256": "b816e3682492c516b5c22598036c80e19e4ca97dda8a1fe6ab3ad15bfcfb0f73",
+    "bytes": 3041
+  },
+  "actualCheckSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-check-saved-evidence-independent-local-review-final.json",
+    "sha256": "13c961f421425524f2ebfff9aa08cd8b48e2a117b772f6fbe0e204fd782f4e4f",
+    "bytes": 13896
+  },
+  "producerStatus": "failed",
+  "checkSavedIndependentlyQualified": true,
+  "actualStartsAndCHECKsClosed": true,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "cases": {
+    "passed": 0,
+    "businessFailed": 0,
+    "uncompleted": 4
+  },
+  "original74AcceptanceChanged": false,
+  "allOriginalFiveStepCriteriaBindingsAndTitlesGoalsPreserved": true,
+  "oldAutonomyGlobalAnd25TasksUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false
+}

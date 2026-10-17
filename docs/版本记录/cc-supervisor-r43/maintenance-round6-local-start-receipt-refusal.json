@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-17T09:57:43.520Z",
+  "kind": "r43-round6-local-receipt-name-collision",
+  "error": "EEXIST after actual start and readback calls, before local public receipt write",
+  "originalHelperSHA256": "becf6cdc24f351c5d42134f4c7f2c727e81ebf47c6795df22321d7adf6ac5287",
+  "correctedHelperSHA256": "67c533f231656f784226aff7284b434da0ac700ed2bf10133dc23bd2a1639f7b",
+  "changedOnly": [
+    "local start receipt filename",
+    "local observation output prefix"
+  ],
+  "originalRound5FilesPreserved": true,
+  "nativeStartNotReplayed": true,
+  "correctedHelperStartMustNotExecute": true
+}

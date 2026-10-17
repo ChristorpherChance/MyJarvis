@@ -1,0 +1,73 @@
+{
+  "kind": "r43-owner-authorized-maintenance-development",
+  "operationId": "d3bd002f-e1b4-4ad3-bb0e-375155adb57c",
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "previousCentralRunId": "ab0f0356cbd906bbbc9a1f1de7366d56408213b0",
+  "dispatchSource": "owner-authorized-maintenance",
+  "centralDispatched": false,
+  "controlledRunId": null,
+  "phase": "started",
+  "selection": {
+    "path": "artifacts/cc-supervisor-r43/maintenance-round10-selection-readback.json",
+    "sha256": "81c09ff36255abeadec416075b30b0b69e98273ddb01412f714c50c5d5548ce5",
+    "decisionId": "d37ea483-cfd7-4f60-930d-a4cb5118c3ff",
+    "revision": 1,
+    "hash": "d74a7eb4fa3ed793b334c0fc813319761c8be8820f9f3bf536cb5dd61bcbaca3"
+  },
+  "directiveSHA256": "06d285cfa12020a63930d4bd0c97e8ce2a7949eb9d8df7f949a085499107108b",
+  "controllerSHA256": "6eb8e0be720fc1c7763ad323e03f245d98552f275d408c471980a8175668654d",
+  "at": "2026-10-17T12:56:57.029Z",
+  "timeoutSec": 900,
+  "retry": 0,
+  "costPolicy": "record-only/no-money-cap; preserve original known and unknown cumulative ledger",
+  "started": {
+    "operationId": "d3bd002f-e1b4-4ad3-bb0e-375155adb57c",
+    "unit": "jarvis-cc-maint-r43-d3bd002f-e1b4-4ad3-bb0e-375155adb57c.service",
+    "unitState": {
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "4175259",
+      "ControlGroup": "/system.slice/jarvis-cc-maint-r43-d3bd002f-e1b4-4ad3-bb0e-375155adb57c.service"
+    },
+    "before": {
+      "head": "a09cd24997b793d70cbfdacc7b831d2d20cd1373",
+      "status": "?? .r43-tools/\n?? reports/r43-round2-changes.patch\n?? reports/r43-round4-changes.patch\n?? reports/r43-round4-git.json\n?? reports/r43-round4-logs/agent-protocol-final.tap\n?? reports/r43-round4-logs/api-typecheck-final.txt\n?? reports/r43-round4-logs/cli-supervision-final.tap\n?? reports/r43-round5-changes.patch\n?? reports/r43-round6-changes.patch\n?? reports/r43-round7-changes.patch\n?? reports/r43-round8-changes.patch\n?? reports/r43-round9-changes.patch",
+      "agentPID": 3422716,
+      "agentProcessIdentity": [
+        "328726a0-5495-4892-b0a6-2fa9de26242e",
+        "67499918"
+      ],
+      "programSHA256": "24972e3bc859fab2b46ed4c1e51f7d6130f06d3bd550811a114640de3370d0de",
+      "directiveSHA256": "06d285cfa12020a63930d4bd0c97e8ce2a7949eb9d8df7f949a085499107108b",
+      "environmentPrivateOn101": true,
+      "environmentValuesExported": false
+    },
+    "dispatchSource": "owner-authorized-maintenance",
+    "centralDispatched": false,
+    "controlledRunId": null,
+    "started": true,
+    "noAutomaticRetry": true,
+    "rawEvidencePrivate": true
+  },
+  "unchangedReadback": {
+    "centralConfig": true,
+    "task": true,
+    "lastRun": true
+  },
+  "nodeConfigurationExpectedUnchanged": true,
+  "nodeConfigurationAfterReadback": false,
+  "platform112Released": false,
+  "publicProjection": {
+    "sourceSHA256": "0411c461d6b056df7bec3386886ad937a099a5a040e98b05226b4a7bdcbcd459",
+    "sourceBytes": 3178,
+    "removedFields": [
+      "workspace",
+      "authority"
+    ],
+    "originalPreserved": true,
+    "scope": "Only private workspace/authority locator fields removed; original factual cut retained."
+  }
+}

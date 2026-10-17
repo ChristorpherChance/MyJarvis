@@ -1,0 +1,158 @@
+{
+  "kind": "r43-round4-owner-authorized-maintenance-outcome-safe-summary",
+  "at": "2026-10-17T09:26:38.469Z",
+  "operationId": "c56f3899-4404-4567-982c-ad10c8f2d3eb",
+  "dispatchSource": "owner-authorized-maintenance",
+  "centralDispatched": false,
+  "controlledRunId": null,
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "terminal": {
+    "exitCode": 0,
+    "elapsedSec": 1093.2180295180297,
+    "timeout": false,
+    "cgroupProcesses": 0,
+    "finalRawHashesMatch": true
+  },
+  "permissionMode": "bypassPermissions",
+  "nativeVersion": "2.1.296",
+  "source": {
+    "before": "d5d418b7e9dc0c638c9c914b3a9a5913523e9633",
+    "firstNew": "b716272dacaeae02d5891dd8e69539babdbbc1d5",
+    "head": "607f4a62387311276dc214999c82850acf1a1139",
+    "patchSHA256": "c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e",
+    "patchBytes": 498404,
+    "dirtyAllowedNonAppArtifactsRemain": true,
+    "formalDocsIncidentRestoredInIsolatedCopyOnly": true
+  },
+  "actualChecks": {
+    "authorReportedFullTypesExit": 0,
+    "authorReportedFullBuildExit": 0,
+    "collectedOriginalLogs": true,
+    "RootReranAppTests": false,
+    "httpSQLite": {
+      "passed": 3,
+      "total": 3,
+      "scope": "real TCP/SQLite with explicit model and execution fixtures; not full createApp DTO/native/production"
+    },
+    "combined": {
+      "passed": 9,
+      "total": 10,
+      "failed": 1,
+      "preserved": true
+    },
+    "laterProtocolDelta": {
+      "passed": 5,
+      "total": 5
+    },
+    "lateUncommittedLogs": {
+      "agentProtocol": {
+        "passed": 8,
+        "total": 8
+      },
+      "cliAccounting": {
+        "passed": 4,
+        "total": 4
+      },
+      "notCombinedWithOtherSuites": true
+    },
+    "runtimeRegression": {
+      "reportedTotal": 39,
+      "reportedPassed": 37,
+      "reportedSkipped": 1,
+      "reportedFailed": 1,
+      "failure": "quota recovery AGENT_RESULT_REJECTED",
+      "rawLogSupplied": false,
+      "independentReproduction": false
+    }
+  },
+  "sourceReviews": {
+    "protocol": {
+      "path": "artifacts/cc-supervisor-r43/round4-protocol-grant-source-review.json",
+      "sha256": "4d37c65e964406e131e9daaa76a097cd9630b24c7264210d7f8562a5b12204b5",
+      "P1": 5
+    },
+    "correction": {
+      "path": "artifacts/cc-supervisor-r43/round4-correction-learning-source-review.json",
+      "sha256": "8d7e5f8db92a50690393568fea630f97049728dea57940318f6c110a9727c225",
+      "P1": 3
+    },
+    "testsByReviewers": false
+  },
+  "usage": {
+    "parentCurrentInvocation": {
+      "source": "external-cli",
+      "sourceRecordId": "owner-maintenance:c56f3899-4404-4567-982c-ad10c8f2d3eb:native-parent-phases1-3",
+      "actorId": "server-admin",
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "measuredAt": "2026-10-17T09:20:56.594066Z",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "sessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+      "scenario": "owner-authorized-r43-maintenance",
+      "usageKind": "maintenance-native-parent-current-invocation",
+      "measurementStatus": "reported",
+      "inputTokens": 23775634,
+      "outputTokens": 15822,
+      "cacheReadTokens": 23704192,
+      "cacheWriteTokens": 0,
+      "totalTokens": 23791456,
+      "costUSD": null,
+      "costKind": "unavailable"
+    },
+    "phaseTurns": [
+      92,
+      1,
+      1
+    ],
+    "parentAllThreePhasesCounted": true,
+    "lastPhaseOnlyWouldUnderstate": true,
+    "sessionEstimateUSD": 84.1770319999999,
+    "priorNativeSessionEstimateUSD": 58.403230999999934,
+    "nativeCounterDifferenceUSD": 25.773800999999963,
+    "estimateBasis": "native cumulative counter, not supplier invoice; model costBasis unknown",
+    "differenceNotPostedAsKnownInvoice": true,
+    "modelUsageCumulativeNotAddedToParent": true,
+    "signedExternalLedger": {
+      "id": "source_4c36e23fc5eeae7081c7b08dd082effda9ec8d86293fadbd43302d84d54beb24",
+      "sourceRecordId": "owner-maintenance:c56f3899-4404-4567-982c-ad10c8f2d3eb:native-parent-phases1-3",
+      "measurementStatus": "reported",
+      "inputIncludingCache": 23775634,
+      "output": 15822,
+      "totalTokens": 23791456,
+      "costUSD": null,
+      "costKind": "unavailable",
+      "costComplete": 0,
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "source": "external-cli"
+    },
+    "oldMissingHistoryStillUnknown": true,
+    "internalCodexTokensAndAmount": null
+  },
+  "blockers": [
+    "existing fixed CC task adoption/reconciliation endpoint missing",
+    "continuation grant source hash/window/unknown-history and old preflight gate incompatible",
+    "formal Task DTO rejects unknown usage and early/restart receipts remain incomplete",
+    "single child really emitted3 complete result phases; parser still conflicts or drops partial",
+    "runtime version has no signed data source; conditional experience reuse unreachable",
+    "private narrative rules and model write-before-check remain"
+  ],
+  "next": "Give original CC session a new specifically bounded directive to repair confirmed blockers, verify actual DTO/runner/claim paths, then produce compatible platform and101 node packages.",
+  "release": {
+    "ready": false,
+    "deployed": false,
+    "platform112": "20261017-project-oversight-r41",
+    "agentUpgraded": false
+  },
+  "originalFactory": {
+    "plan": 108,
+    "PG": 29,
+    "Env": 23,
+    "accepted74": 0,
+    "tenMinuteAutomation": "PAUSED"
+  }
+}

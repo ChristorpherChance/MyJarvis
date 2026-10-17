@@ -1,0 +1,359 @@
+{
+  "schema": 1,
+  "kind": "independent-local-round9-B-source-and-collected-evidence-review",
+  "sealedAt": "2026-10-17T12:55:56.024005+00:00",
+  "cut": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round9",
+    "head": "a09cd24997b793d70cbfdacc7b831d2d20cd1373",
+    "appCommit": "d4663381b453fa5d35bab280de66c76cfcd45cfb",
+    "testEnhancementCommit": "45dfdbe8bfcce967041a12e5d300b28fa333506b",
+    "reportedRuntimeBuild": "20261017-cc-supervisor-r43-r6",
+    "headVerifiedByReadonlyGit": true
+  },
+  "scope": {
+    "areas": [
+      "projection phase identifiers/input-response recovery",
+      "correction change/CAS/history",
+      "option eligibility and actual action facts",
+      "important-state notification wiring/idempotency",
+      "saved context and real mechanism test evidence"
+    ],
+    "applicationEdited": false,
+    "testsExecutedByReviewer": false,
+    "SQLOrRemoteOrProductApiUsed": false,
+    "nativeOrModelInvoked": false,
+    "browserUsed": false,
+    "productionOrNodeDeployed": false,
+    "oldReportOverwritten": false,
+    "AOwnsPolicyPrivacyAndRootControlCompatibility": true
+  },
+  "verdict": {
+    "confirmedP1": 1,
+    "BReleaseApproved": false,
+    "reason": "The new label-to-eligibility authority can falsely assert a qualified bounded choice for an unrestricted or unsupported actual directive. This is a specific audit-truth defect, not a rejection solely because the author retained needs_more_work or some cut matrices are unverified.",
+    "noAdditionalBNormalFlowBlockerConfirmedWithinScope": true,
+    "doesNotEvaluateIndependentAFindings": true
+  },
+  "confirmedFindings": [
+    {
+      "id": "R9-B-P1-1",
+      "priority": "P1",
+      "title": "An option label is promoted to goal/authority/environment evidence without binding the dispatched action",
+      "refs": [
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 87
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 88
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-review.ts",
+          "line": 47
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-review.ts",
+          "line": 48
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-review.ts",
+          "line": 49
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-model.ts",
+          "line": 44
+        },
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 207
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 22
+        }
+      ],
+      "actualSourcePredicate": "boundedEvidenceChoice checks continue, current policy, a nonempty reason, membership of selectedOption in prior feedback.options, four exact option titles, source result hash and an allowed previous outcome. These are genuine context/identity checks, but none proves that the actual directive implements that option or that a test environment/evidence exists.",
+      "promotion": "A matching label causes projectionAuthority. deriveDecisionProjection then unconditionally fills compliesWithGoals=yes, withinAuthority=yes, environmentEvidence=available, missingEvidence=[], reversibility=bounded and a synthetic bounded-evidence-followup objective.",
+      "reachableCounterexample": "A schema-valid model decision selects the supplied run bounded tests or collect missing evidence string but provides a directive for a different architecture/deployment action, or tests whose environment is unknown. The adapter only type/length-checks directive; SupervisorDispatch sends that free directive as the native request goal. The prior source hash and owner policy can still match, so the ledger selection becomes eligible and a later actual dispatch action can mark it implemented despite the claimed bounded option not being established.",
+      "impact": "This creates unsupported evidence and a potentially false selected/implemented decision record. Broad existing owner execution permission does not prove the selected action, environment facts or objective coverage. It is an audit and evidence truth issue; no new blanket permission approval or restriction is proposed.",
+      "testStatus": "Static causal review only; reviewer did not execute the counterexample. Existing successful label fixture demonstrates the same production promotion path, but does not test a mismatched/unknown actual directive.",
+      "minimalSafeCorrection": "Remove label-to-authority promotion. Leave genuinely unknown source options proposed and retain actual dispatch/result facts via the already implemented observeActions path. Policy-authorized CC progression is independent of ProjectDecision proposal status and should continue. If future auto-selection is wanted, require server-verifiable structured evidence that actually constrains and binds the real dispatched action; a regex over directive prose or hardcoded yes/available is insufficient.",
+      "narrowR10Acceptance": "One mismatch/unknown-environment counterexample must remain proposed with no manufactured eligibility, while the actual authorized successor and its observed action facts remain recorded. Retain a legitimate explicit owner choice or genuinely evidenced selected branch. Run affected/types/build and same-source packages only; do not turn this into a broad new matrix/design task."
+    }
+  ],
+  "R8FindingClosure": [
+    {
+      "prior": "R8-B-P1-1",
+      "status": "closed for the deterministic command-ID collision and normal stage replay path",
+      "evidence": "supervisorStageId deterministically derives distinct UUIDs by event/stage; the stage table freezes input/CAS before a domain call and stores its response. record/change and select no longer share the same command ID. A persisted record response can be reused to continue select; links are inserted after selection or explicit evidence-required proposal disposition.",
+      "refs": [
+        {
+          "path": "apps/api/src/runtime/supervisor-projection.ts",
+          "line": 3
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 12
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 19
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 20
+        }
+      ],
+      "limit": "The saved test restarts after completed stages and checks no duplicate records/actions. It does not prove every cross-database crash/concurrent-edit cut."
+    },
+    {
+      "prior": "R8-B-P1-2",
+      "status": "closed for a correction resolving to an existing decision",
+      "evidence": "The projector resolves target decision/feedback/instruction/outcome linkage, stores priorId and exact prior revision in the record-stage input, and calls ProjectDecisionRuntime.change when priorId exists. It no longer calls record with a non-null changeOf. The SQLite integration observes a linked change, chosen owner preference, preserved original revision hash and unchanged prior action prefix.",
+      "refs": [
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 11
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 16
+        },
+        {
+          "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+          "line": 19
+        },
+        {
+          "path": "apps/api/src/runtime/project-decision-runtime.ts",
+          "line": 188
+        }
+      ],
+      "limit": "The full owner correction cycle in this focused integration uses the actual runtime/SQLite/domain directly, with fixture execution; it is not an all-cut real HTTP/native field acceptance."
+    }
+  ],
+  "actualActionFacts": {
+    "confirmed": "Instruction and outcome events now have a deterministic action stage. Selected/implemented decisions use implementation; unresolved proposals use observeActions and keep their status/choice unchanged. A performed instruction has a bound execution-run reference; a terminal result has the immutable supervisor-event hash. Prior actions/revisions are appended rather than overwritten.",
+    "refs": [
+      {
+        "path": "apps/api/src/runtime/supervisor-projection-runtime.ts",
+        "line": 22
+      },
+      {
+        "path": "apps/api/src/runtime/project-decision-runtime.ts",
+        "line": 187
+      }
+    ],
+    "safeFallbackAlreadyAvailable": "Formal eligibility can remain unknown/proposed without losing a truthful actual action record. The supervisor dispatch loop does not depend on the projected ledger being selected. No fake verification/acceptance is needed to let the currently authorized work advance.",
+    "limit": "No comprehensive fault-injection claim is made. The specific normal selected -> instruction -> failed outcome -> owner correction -> preserved action/revision path and completed-stage restart are supported by saved evidence."
+  },
+  "notificationWiring": {
+    "status": "R8 missing direct important-state outbox wiring is closed in source and same-event fixture scope",
+    "facts": [
+      "createApp passes the existing NotificationRuntime into ProjectSupervisorRuntime.",
+      "The supervisor creates durable notice outbox entries for blocked, review/achieved, wait_user decision and stop confirmation. Notice content is checked by the public-content guard and scoped to original owner/project.",
+      "flushNotices uses existing publishSupervision and marks its source row done only after publication. The existing notification runtime derives deterministic owner/event IDs and rejects conflicting event contents, so replay of the same immutable event deduplicates across database boundaries.",
+      "registerDurableSource lets existing notification scans retry retained outbox entries, and close unregisters the callback.",
+      "The new SQLite+existing NotificationRuntime test verifies one blocked notice with the same ID after repeated recovery scans and restart, with private owner scope."
+    ],
+    "refs": [
+      {
+        "path": "apps/api/src/app.ts",
+        "line": 203
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 40
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 46
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 53
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 79
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 90
+      },
+      {
+        "path": "apps/api/src/runtime/notifications.ts",
+        "line": 96
+      },
+      {
+        "path": "apps/api/src/runtime/notifications.ts",
+        "line": 98
+      }
+    ],
+    "notClaimed": "Browser/mobile/physical audio/external delivery was not exercised. The same-event dedup test is not all stop-notice generation or cross-database crash cut acceptance."
+  },
+  "savedEvidenceAssessment": {
+    "finalAffected": {
+      "path": "reports/r43-round9-logs/final-affected.tap",
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "scope": [
+        "real createApp paired signed three-child chain and decision API readback",
+        "paired stop/new-session then successor resume",
+        "HTTP/SQLite initial correction and history pagination",
+        "selected-reference dispatch recheck",
+        "pending-model current-followup correction stops stale return",
+        "three excluded/new/empty-visible context changes with one model call and no stale followup",
+        "existing durable notice same-event replay",
+        "SQLite projected selected/actions/owner change and completed-stage restart"
+      ]
+    },
+    "boundaries": {
+      "path": "reports/r43-round9-logs/boundaries-executed-final.tap",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "scope": [
+        "known history over10M keeps original total and executes/ACKs the finite-window successor child",
+        "queued pause makes paired claim null and starts no child"
+      ]
+    },
+    "sourceCoverageLimits": [
+      "The paired native-looking executable and model are deterministic fixtures, not real supplier or actual112/101 site execution.",
+      "The direct projection integration uses real runtime/domain/SQLite with a fixture dispatch map; it does not combine all HTTP correction actions and all crash points in the same real native chain.",
+      "The new-applicable context test adds an unverified candidate and tests visible frozen-context drift; it does not establish every transition to a fully qualified record or every cap/counterexample combination.",
+      "The native author report retains pending-grant/business-runtime crash cuts, concurrency, awaiting-cost and goal-revision matrices plus browser/site acceptance. Their absence alone is not a source failure or automatic reason to reject this release."
+    ],
+    "readNotRunByReviewer": true,
+    "authorReportedTypesBuildPackagesExit0": true,
+    "authorNeedsMoreWorkRetained": true,
+    "noWholeProjectOrHumanAcceptanceClaim": true
+  },
+  "minimalNextStep": "Limit R10 to the P1 eligibility correction and one or two relevant counterexamples plus affected/types/build and same-source r7 packages. Preserve policy-authorized execution, existing actual facts, stable stage IDs/change/CAS and notification outbox. Do not delay solely to fill unrelated optional matrices or weaken original acceptance/history/cost rules.",
+  "evidenceIntegrity": {
+    "collection": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round9-collection-1792241442590.json",
+      "bytes": 17637,
+      "sha256": "c389831985c71f99c8ff72d0e09f6b5cddc7cf2df2551291274586730ea0b8f9"
+    },
+    "allCollectedPrivateAndImportedBytesMatch": true,
+    "files": [
+      {
+        "path": "reports/r43-implementation-round9.json",
+        "bytes": 3241,
+        "sha256": "3d9671c6fe8674ae9411142b4b46e371eb2a6b41188be9cccc9ed953bcfa30c4",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      },
+      {
+        "path": "reports/r43-implementation-round9.md",
+        "bytes": 6230,
+        "sha256": "a2c0f661faad8ebf3bd5c116daa9273020605942ceb1da2ddadce33d4c42fa99",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      },
+      {
+        "path": "reports/r43-round9-packages.json",
+        "bytes": 3450,
+        "sha256": "ad57e1460502a9ea66b79f725cb689ec11d06a23bc7c5e626d8d8a1c60bf09de",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      },
+      {
+        "path": "reports/r43-round9-logs/final-affected.tap",
+        "bytes": 11839,
+        "sha256": "6d08610f19d9fb4b97702a9453b301ebb34ab65dbaf313626749678aa58dd9ca",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      },
+      {
+        "path": "reports/r43-round9-logs/boundaries-executed-final.tap",
+        "bytes": 328,
+        "sha256": "e4c8529c9432fd2f90a81e93a6b3178be52470f24c2c64c441bef0ce199afd27",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      },
+      {
+        "path": "reports/r43-round9-logs/typecheck-final-cut.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      },
+      {
+        "path": "reports/r43-round9-logs/build-final.txt",
+        "bytes": 3400,
+        "sha256": "9103851321087635b4af676184b96125c47e94c46bf79be824efa86a94be4584",
+        "matchesPrivateCollectedOriginalAndImportedCut": true
+      }
+    ]
+  },
+  "sourceFingerprints": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/supervisor-projection.ts",
+      "bytes": 388,
+      "sha256": "2f0e9c0d500d48d45a79428863eefaff6aeece0f4ddac0c42d0480622e021043"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/supervisor-projection-runtime.ts",
+      "bytes": 6856,
+      "sha256": "f8957185c2cb2e47f2d340e9d4b3ecf671904318086edfed3f092afa9512af4a"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/supervisor-review.ts",
+      "bytes": 10372,
+      "sha256": "0d63a6b00d5c7ef7076d0871465b700254c12c66c084235ae045a8400eb831eb"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/project-supervisor-runtime.ts",
+      "bytes": 49354,
+      "sha256": "596c5df8de7228234a06ce4f68ea9d69354577983cf380e8567e22ec059d9a55"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/project-decision-runtime.ts",
+      "bytes": 19122,
+      "sha256": "0ced7b3c26212cacecb240a09a9252b4fa89e863da946f070efb36a297c3173a"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/project-supervisor-model.ts",
+      "bytes": 5854,
+      "sha256": "2f64f4ee1134a7f2552f86937e0bccd6bd312c0ab03981402769e49d8f741bd9"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 129697,
+      "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/runtime/notifications.ts",
+      "bytes": 40496,
+      "sha256": "ad7f3f27082f915cb7325b90cbe8f7b3070e0a5971eff627aa9e0e8f832b0b68"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/src/app.ts",
+      "bytes": 53967,
+      "sha256": "a7c7277d7b351e8bdf88c25cc08b8aad1f46d0cbc08db20d56ed79af24f4a65b"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/test/supervisor-projection-round9.test.ts",
+      "bytes": 5198,
+      "sha256": "2399011713fbea20f0742e21b6e3c6b97cb82155ec6b7273a205a4d3cb7812a9"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/test/supervisor-notices-round9.test.ts",
+      "bytes": 2919,
+      "sha256": "78e8941b7ebe95904ca57d11eaf01de8677323f8b2af6af5be27d610324a4441"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/test/supervisor-context-change-round9.test.ts",
+      "bytes": 3775,
+      "sha256": "61bf1e8670c78b6c13bd9fb960590f5823789f3578f0ed326290cdde71a69483"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round9/apps/api/test/execution-createapp-chain.test.ts",
+      "bytes": 9968,
+      "sha256": "009fede258d017b9350c1adbee29ac609318b9475fdaf36a6b8836daf3ad3496"
+    }
+  ],
+  "relatedMaintenanceHandoff": {
+    "path": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-helper-author-handoff.json",
+    "bytes": 20332,
+    "sha256": "78840e8bbcc8eda79195a6e40bd5c7eed34e1c54f086ba83db1c91cd9f07b181"
+  },
+  "releaseBoundary": "This B report blocks the unsupported eligibility promotion only. It is not a veto based on needs_more_work; independent A, code provenance/package/privacy and actual controlled dual deployment/field checks remain separate."
+}

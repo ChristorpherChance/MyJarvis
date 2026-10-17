@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "kind": "r39-personal-settings-save-repair-live-bounded-summary",
+  "at": "2026-10-16T17:30:46.804Z",
+  "release": "20261017-personal-settings-r39",
+  "previousRelease": "20261016-factory-supervision-r36",
+  "sourceCommit": "f13fa9211180b94b3515767a0f4dae5cddb9e96c",
+  "sourceAndLocalValidation": {
+    "nonAuthorStaticReview": {
+      "path": "artifacts/settings-preferences-r39/independent-source-review-final.json",
+      "sha256": "a548d699b9cb6240e6c5191633354bf0bf2a4e49fcf4e28a76d7571d4cfe3719",
+      "bytes": 9760
+    },
+    "remainingP0P1": 0,
+    "authorImplementation": {
+      "path": "artifacts/settings-preferences-r39/frontend-local-implementation-final.json",
+      "sha256": "29d8382430392d82cba8d3aec7c3a0822c0893295d526de1c252f86a6a8a1a79",
+      "bytes": 6113
+    },
+    "newHttpGroups": 1,
+    "httpPassed": 1,
+    "httpRawOutputSeparatelyCaptured": false,
+    "newClientGroups": 4,
+    "clientPassed": 4,
+    "clientScope": "pure draft state and actual client serialization with fake fetch, not DOM",
+    "finalWebTypecheckExitCode": 0,
+    "finalWebTypecheckSeconds": 127.641,
+    "priorSuccessfulTypecheckBeforeSessionGuardChangeRetained": true,
+    "oldPassedTestsRerun": false,
+    "builds": [
+      {
+        "name": "api-build.json",
+        "exitCode": 0,
+        "wallSeconds": 125.65186715126038,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/api-build.json",
+          "sha256": "903ae8723d3ef9f3ccac35a7fbad17d8fb520e941959bc7ab5b38abf2bdb0173",
+          "bytes": 850
+        }
+      },
+      {
+        "name": "api-release-layout-build.json",
+        "exitCode": 0,
+        "wallSeconds": 71.54416084289551,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/api-release-layout-build.json",
+          "sha256": "156d5667122c76fda9d5ecab44f8ffdb9703a2c43a35ca2063f2f8ccd33c84c4",
+          "bytes": 885
+        }
+      },
+      {
+        "name": "web-release-build.json",
+        "exitCode": 0,
+        "wallSeconds": 25.78238868713379,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/web-release-build.json",
+          "sha256": "3486b3689c253230463a75b78e30f7a9e5f7861e0b7044da31b3800ed4ae6126",
+          "bytes": 854
+        }
+      }
+    ],
+    "apiBuildsInTwoOutputLayoutsDisclosed": true
+  },
+  "isolatedBrowser": {
+    "receipt": {
+      "path": "artifacts/personal-settings-r39/browser-local-verification.json",
+      "sha256": "4c8f2156b5a259186c88c1f262b3218b0e37992d68d1fe56152355e394da163b",
+      "bytes": 2152
+    },
+    "method": "Root CUA real compiled UI and HTTP with isolated SQLite account",
+    "productionAccountUsed": false,
+    "productionPreferencesChanged": false,
+    "verified": [
+      "Browser notification preference remained enabled while native permission remained ungranted; quiet hours 22:15 to 07:45 and room voice preference saved successfully without requesting permission.",
+      "Reload retained the saved quiet times and checked room voice option.",
+      "Two settings pages loaded one revision; first page saved a newer revision, second page received a visible conflict, retained its unchecked quiet-hours draft and disabled save.",
+      "Explicit reload discarded the conflicted draft and loaded the latest preferences; quiet hours could then be disabled and saved, and remained disabled after reload.",
+      "The personal assistant page saved a synthetic display name and autoSpeak=true with quiet hours disabled; success was visible and both values persisted after reload."
+    ],
+    "limits": [
+      "The production browser tab remained on its login page; no production-account UI save was performed.",
+      "Controlled late initial GET and cross-identity storage-event timing were statically reviewed but not reproduced in this browser run.",
+      "Initial automated time fill did not commit React changes; native arrow input committed valid 22:15 and 07:45 before the successful save. Earlier incomplete input was visibly rejected.",
+      "This checks stored preferences, not physical speaker output or actual quiet-hours scheduling."
+    ],
+    "agentTabsClosed": true,
+    "isolatedListenerAbsent": true
+  },
+  "package": {
+    "independentReadback": {
+      "path": "artifacts/personal-settings-r39/package-independent-readback.json",
+      "sha256": "5a5008c2a1efcca71c8ad0ebf0b1406c3aee18c0c38d7f9f89402ed52eef91b1",
+      "bytes": 5122
+    },
+    "archive": {
+      "path": "artifacts/personal-settings-r39/release/20261017-personal-settings-r39.zip",
+      "sha256": "60773f0a4cbd340889c365d99e438882396416faa140342b2487189148fb757b",
+      "bytes": 19496176
+    },
+    "manifest": {
+      "path": "artifacts/personal-settings-r39/release/release-manifest.json",
+      "sha256": "14e484780f1145f0799fb2f9a3de2415e0de02d9535d1794afed22bd3a170346",
+      "bytes": 406513
+    },
+    "payloadFiles": 2053,
+    "payloadBytes": 46150610,
+    "allFileHashesCRCUnixModesAndClosedSetVerified": true,
+    "sourceCommitBound": true,
+    "apiCompiledFiles": 194,
+    "webCompiledFiles": 88,
+    "offlineEntryCount": 5
+  },
+  "deployment": {
+    "nodeRole": "112-primary",
+    "phaseReceipts": [
+      {
+        "phase": "stage",
+        "exitCode": 0,
+        "wallSeconds": 25.01401925086975,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/112-stage.json",
+          "sha256": "9e632978c0c790fd591575fe1cc6fb64634de830bf5516cb91fbeb63d07f7234",
+          "bytes": 1002
+        }
+      },
+      {
+        "phase": "install",
+        "exitCode": 0,
+        "wallSeconds": 5.105006217956543,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/112-install.json",
+          "sha256": "ead05655a369bda52ca188afe9722cb99ae04d61cfd16f748ae5da1abed50fb9",
+          "bytes": 994
+        }
+      },
+      {
+        "phase": "inspect",
+        "exitCode": 0,
+        "wallSeconds": 0.7908353805541992,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/112-inspect.json",
+          "sha256": "16e840c662a84297ce8f0e14303e895e685a456169924242e3106aecee49841e",
+          "bytes": 1034
+        }
+      },
+      {
+        "phase": "activate",
+        "exitCode": 0,
+        "wallSeconds": 244.27941012382507,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/112-activate.json",
+          "sha256": "cc7e9464578f82eec9d69a9d72dbf5041e2962cf0f3e13e51ca6d9dad7579ecf",
+          "bytes": 2396
+        }
+      },
+      {
+        "phase": "health",
+        "exitCode": 0,
+        "wallSeconds": 0.5779013633728027,
+        "receipt": {
+          "path": "artifacts/personal-settings-r39/112-health.json",
+          "sha256": "37bfdd1577053f59cf58f64412ce1ba31e59c81b8030f8308cb46075732543da",
+          "bytes": 1077
+        }
+      }
+    ],
+    "previousRelease": "20261016-factory-supervision-r36",
+    "newRelease": "20261017-personal-settings-r39",
+    "activateSeconds": 244.27941012382507,
+    "fullPrivateDataSnapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261017-personal-settings-r39",
+      "scope": "primary",
+      "files": 60,
+      "directories": 57,
+      "bytes": 3907459574,
+      "manifestSha256": "a264c13b5dfb3d093c5d0fde68f00f247a281218f00afd22c391a850ed699e99",
+      "sqliteDatabasesChecked": 6,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "isolatedRestore": {
+      "status": "passed",
+      "operation": "isolated-restore-verified",
+      "release": "20261017-personal-settings-r39",
+      "scope": "primary",
+      "files": 60,
+      "directories": 57,
+      "bytes": 3907459574,
+      "manifestSha256": "a264c13b5dfb3d093c5d0fde68f00f247a281218f00afd22c391a850ed699e99",
+      "sqliteDatabasesChecked": 6,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "liveDataRestored": false,
+    "factoryResumedByActivation": false,
+    "health": {
+      "node": "112",
+      "release": "20261017-personal-settings-r39",
+      "role": "primary",
+      "currentRelease": "20261017-personal-settings-r39",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261017-personal-settings-r39",
+      "businessHealthy": true,
+      "healthBuild": "20261017-personal-settings-r39",
+      "healthStatus": "ok"
+    }
+  },
+  "postReadback": {
+    "receipt": {
+      "path": "artifacts/personal-settings-r39/live-readback-r2.json",
+      "sha256": "a37943fea59736f9bd3f4c71915542ae43750e9b55338951215ea6a0b017bc46",
+      "bytes": 1686
+    },
+    "publicAssetsReceipt": {
+      "path": "artifacts/personal-settings-r39/settings-public-assets-readback.json",
+      "sha256": "30db21762d4fb9f8a444057a07cc15aa8836638b9558a0f89c351418f24a67a1",
+      "bytes": 614
+    },
+    "publicHealthBuild": "20261017-personal-settings-r39",
+    "indexEqualsPackage": true,
+    "threeEntryAssetsEqualPackage": true,
+    "twoSettingsAssetsStatus200AndEqualPackage": true,
+    "notificationValuesExactlyPreserved": true,
+    "notificationRevisionBefore": 12,
+    "notificationRevisionAfter": 13,
+    "notificationOnlyChangedField": "revision",
+    "notificationRevisionChangeCause": "unknown",
+    "firstVerifierRefusedUnchangedRevisionAssumption": true,
+    "firstVerifierAndSavedPrivateSnapshotsPreserved": true,
+    "r2UsedSavedPreferenceSnapshotsWithoutAnotherPreferenceGET": true,
+    "allPersonaRecordsExactlyPreserved": true,
+    "personaCount": 11,
+    "rootProductionPreferencePUTs": 0,
+    "productionBrowserSavePerformed": false,
+    "standby101Updated": false
+  },
+  "sourcePublication": {
+    "receipt": {
+      "path": "artifacts/personal-settings-r39/source-publication.json",
+      "sha256": "adeee22eee134ef263ed8a27ce3a0d3e59ac97332f51434fa7bb6d71586bf386",
+      "bytes": 492
+    },
+    "sourceCommit": "f13fa9211180b94b3515767a0f4dae5cddb9e96c",
+    "remoteHead": "f13fa9211180b94b3515767a0f4dae5cddb9e96c",
+    "branch": "fix/personal-settings-save",
+    "baseBranch": "feat/factory-supervision-events",
+    "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/3",
+    "draft": true,
+    "merged": false,
+    "laterDocumentationCommitsAreNotPackagedSourceCommit": true
+  },
+  "boundaries": [
+    "This is the personal-settings repair and 112 R39 release scope; source, local checks, isolated browser, package and deployment evidence remain distinct.",
+    "Production browser remained at login; real user-account UI saving, physical audio and actual quiet-hour scheduling were not verified.",
+    "Notification values and all 11 persona full records were retained; notification revision changed 12 to 13 for an unknown cause and is not claimed unchanged.",
+    "101 was not updated or newly verified in this release; its existing cold standby and the independent software factory were not started by this operation.",
+    "Software factory plan108, item revision6/event40 and record291 cut remain; R9 source/model work is outside this settings-repair cut.",
+    "No new supplier model calls; internal tokens and monetary amount remain unknown separately, with no spending cap inferred."
+  ],
+  "sourceRefs": [
+    {
+      "path": "artifacts/settings-preferences-r39/independent-source-review-final.json",
+      "sha256": "a548d699b9cb6240e6c5191633354bf0bf2a4e49fcf4e28a76d7571d4cfe3719",
+      "bytes": 9760
+    },
+    {
+      "path": "artifacts/settings-preferences-r39/frontend-local-implementation-final.json",
+      "sha256": "29d8382430392d82cba8d3aec7c3a0822c0893295d526de1c252f86a6a8a1a79",
+      "bytes": 6113
+    },
+    {
+      "path": "artifacts/personal-settings-r39/browser-local-verification.json",
+      "sha256": "4c8f2156b5a259186c88c1f262b3218b0e37992d68d1fe56152355e394da163b",
+      "bytes": 2152
+    },
+    {
+      "path": "artifacts/personal-settings-r39/package-independent-readback.json",
+      "sha256": "5a5008c2a1efcca71c8ad0ebf0b1406c3aee18c0c38d7f9f89402ed52eef91b1",
+      "bytes": 5122
+    },
+    {
+      "path": "artifacts/personal-settings-r39/live-readback-r2.json",
+      "sha256": "a37943fea59736f9bd3f4c71915542ae43750e9b55338951215ea6a0b017bc46",
+      "bytes": 1686
+    },
+    {
+      "path": "artifacts/personal-settings-r39/settings-public-assets-readback.json",
+      "sha256": "30db21762d4fb9f8a444057a07cc15aa8836638b9558a0f89c351418f24a67a1",
+      "bytes": 614
+    },
+    {
+      "path": "artifacts/personal-settings-r39/source-publication.json",
+      "sha256": "adeee22eee134ef263ed8a27ce3a0d3e59ac97332f51434fa7bb6d71586bf386",
+      "bytes": 492
+    },
+    {
+      "path": "artifacts/personal-settings-r39/112-stage.json",
+      "sha256": "9e632978c0c790fd591575fe1cc6fb64634de830bf5516cb91fbeb63d07f7234",
+      "bytes": 1002
+    },
+    {
+      "path": "artifacts/personal-settings-r39/112-install.json",
+      "sha256": "ead05655a369bda52ca188afe9722cb99ae04d61cfd16f748ae5da1abed50fb9",
+      "bytes": 994
+    },
+    {
+      "path": "artifacts/personal-settings-r39/112-inspect.json",
+      "sha256": "16e840c662a84297ce8f0e14303e895e685a456169924242e3106aecee49841e",
+      "bytes": 1034
+    },
+    {
+      "path": "artifacts/personal-settings-r39/112-activate.json",
+      "sha256": "cc7e9464578f82eec9d69a9d72dbf5041e2962cf0f3e13e51ca6d9dad7579ecf",
+      "bytes": 2396
+    },
+    {
+      "path": "artifacts/personal-settings-r39/112-health.json",
+      "sha256": "37bfdd1577053f59cf58f64412ce1ba31e59c81b8030f8308cb46075732543da",
+      "bytes": 1077
+    },
+    {
+      "path": "artifacts/personal-settings-r39/api-build.json",
+      "sha256": "903ae8723d3ef9f3ccac35a7fbad17d8fb520e941959bc7ab5b38abf2bdb0173",
+      "bytes": 850
+    },
+    {
+      "path": "artifacts/personal-settings-r39/api-release-layout-build.json",
+      "sha256": "156d5667122c76fda9d5ecab44f8ffdb9703a2c43a35ca2063f2f8ccd33c84c4",
+      "bytes": 885
+    },
+    {
+      "path": "artifacts/personal-settings-r39/web-release-build.json",
+      "sha256": "3486b3689c253230463a75b78e30f7a9e5f7861e0b7044da31b3800ed4ae6126",
+      "bytes": 854
+    }
+  ]
+}

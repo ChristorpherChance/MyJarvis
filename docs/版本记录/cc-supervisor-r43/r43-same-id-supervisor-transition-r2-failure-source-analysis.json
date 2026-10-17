@@ -1,0 +1,184 @@
+{
+  "kind": "r43-same-id-template-transition-r2-failure-source-analysis",
+  "createdAt": "2026-10-17T13:34:14.584210+00:00",
+  "immutableCut": true,
+  "scope": "LOCAL source and retained evidence diagnosis only. No remote observations, helper executions, SQL, API, service/config modifications or app tests.",
+  "conclusion": {
+    "operationStillFailed": true,
+    "helperDefectConfirmed": "The helper incorrectly assumes pre-start staged raw JSON SHA256 remains valid after the existing agent entrypoint unconditionally normalizes and saves configuration. It also loses the restart false-response error before durable logging.",
+    "actualUnderlyingRestartErrorRecoverableFromRetainedPrivateLog": false,
+    "currentServiceStateEstablishedByThisReview": false,
+    "currentConfigSemanticEqualityEstablishedByThisReview": false,
+    "productDaemonFaultClaimed": false
+  },
+  "evidence": {
+    "publicFailure": {
+      "path": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+      "bytes": 4434,
+      "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2"
+    },
+    "privateLog": {
+      "bytes": 14155,
+      "sha256": "f93cd5f370789e4996477a34faabc2040abafabcc99b0eb8addb20dddb24b64c",
+      "matchesPublicTerminalFingerprint": true,
+      "rawContentsExported": false
+    },
+    "retainedStages": [
+      "intent",
+      "central-preflight",
+      "node-preflight",
+      "private-central-backup",
+      "stop-intent",
+      "stopped",
+      "central-stop-barrier",
+      "node-second-stop-barrier",
+      "central-CAS-intent",
+      "central-CAS-readback",
+      "node-install-intent",
+      "node-installed",
+      "central-before-restart",
+      "restart-intent",
+      "failure",
+      "failure-stop-readback",
+      "terminal"
+    ],
+    "confirmedMilestones": {
+      "centralConfigRevisionAfterCAS": 46,
+      "nodeInstallReplyOk": true,
+      "installedRawConfigSHA256": "54dfef8b5b22d9d3817101c1042c0c619a11a38d747e55cd7db02f5798cc43a3",
+      "installedSnapshotSameHash": true,
+      "installedServiceState": "inactive",
+      "installedProcessPresent": false,
+      "restartReplyRecorded": false,
+      "wrapperError": "SST_RESTART_UNCONFIRMED",
+      "failStopReply": {
+        "ok": false,
+        "phase": "fail-stop",
+        "errorCode": "NUP_FAIL_STOP_CONFIG_CHANGED"
+      },
+      "publicServiceLeftStopped": false,
+      "publicStopStateUncertain": true
+    }
+  },
+  "findings": [
+    {
+      "id": "SST-FAIL-01",
+      "priority": "P1",
+      "location": {
+        "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-node-r2.py",
+        "line": 55
+      },
+      "relatedLines": [
+        42,
+        92,
+        94,
+        98,
+        106
+      ],
+      "problem": "Staged raw-byte hash is treated as both post-start config identity and fail-stop authorization even though the installed application unconditionally rewrites this JSON on normal startup.",
+      "sourceChain": [
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/agent/src/index.ts",
+          "line": 9,
+          "fact": "Constructs agent from parsed file, then line10 always calls pair() and save(configPath) before agent.start()."
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/agent-runner.ts",
+          "line": 183,
+          "fact": "Constructor maps every template through validateExecutionTemplate; it does not retain raw file formatting."
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/execution-runtime.ts",
+          "line": 65,
+          "fact": "Validator returns a reconstructed template with a fixed property insertion order and normalized path/policy."
+        },
+        {
+          "file": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/agent-runner.ts",
+          "line": 185,
+          "fact": "save() writes JSON.stringify(this.config,null,2) to configPath. Existing agentId makes pair() return without new pairing at line215; it does not skip save()."
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-node-r2.py",
+          "line": 42,
+          "fact": "candidate() instead replaces only the selected template with compact sorted-key canon and preserves all other original raw JSON bytes."
+        },
+        {
+          "file": ".jarvis-dev/maintenance/r43-upgrade-101-idle-node.py",
+          "line": 102,
+          "fact": "snapshot() rejects any raw config hash unequal to expectedConfigSHA256 before obtaining unit/process state."
+        }
+      ],
+      "inferenceBoundary": "This proves the helper contract is incompatible with normal startup save and explains the observed hash rejection without positing a product defect. The current raw bytes have not been collected here, so it does not prove only formatting changed or identify the exact missing original restart error.",
+      "actualEffect": "The retained install observation matches the staged new raw H. Later fail-stop returns NUP_FAIL_STOP_CONFIG_CHANGED at line106, before unit()/proc()/systemctl stop. Thus it neither confirms nor stops the possibly running new process. The private log supplies no observed current hash or configuration diff."
+    },
+    {
+      "id": "SST-FAIL-02",
+      "priority": "P2",
+      "location": {
+        "file": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-control-r2.mjs",
+        "line": 84
+      },
+      "relatedLines": [
+        76,
+        79,
+        83,
+        86,
+        87
+      ],
+      "problem": "The node response is checked with need(started.ok,RESTART_UNCONFIRMED) before record(restarted,started). A structured false response is thrown away and replaced by a generic wrapper error.",
+      "actualEvidence": "Retained private log has restart-intent immediately followed by generic SST_RESTART_UNCONFIRMED; no restarted/node-restart-response record exists. The later fail-stop response is retained and states NUP_FAIL_STOP_CONFIG_CHANGED.",
+      "limit": "Original restart error cannot be reconstructed honestly from these saved files. Other stage false replies share the same check-before-record pattern, but this report confines actual evidence loss to the observed restart failure."
+    }
+  ],
+  "minimumReadOnlyReconciliationEvidenceForRoot": [
+    "Preserve the original public failure, complete private log and remote operation state/config.before/config.after bytes under distinct private WX evidence before attempting any further action. Do not overwrite the original expected staged H or mark this failed operation successful.",
+    "Use a minimal independent read-only observation, not this helper inspect/observe branch: it requires state started and the already mismatched raw H. Read only the fixed service show properties, bound MainPID plus boot:startticks/uid/argv/exe, its service cgroup membership, and fixed operation state phase/hashes. No environment dump, app invocation, service command or model/native retry.",
+    "Read current private config through owner/mode/no-link/inode/race checks; retain exact bytes privately and publish only SHA256/size/inode/uid/gid/mode. Compare privately to config.after and original config.before: full parsed canonical equality, exact identity/key/api/CA/delivery-directory values, target template delta and all non-target values. Export booleans and field paths only, never their private values.",
+    "If current config differs canonically, preserve exact differing field classifications and block inferred normalization acceptance. If canonical equality and expected normalizer property shape are confirmed, record a new explicit reconciliation proof linking old staged raw H to current raw H; do not silently substitute the current hash into the old sealed spec.",
+    "Only if needed to distinguish real startup failure from successful start followed by observer rejection, retain bounded logs for the exact unit/time window privately with a safe public allowlist. Existing failure shows no current process state, so a new observation must precede any service-state assertion.",
+    "Read journal identity, owner and pending counts and current central config/task/queue state using existing read-only contracts as appropriate to the observed service state. Central revision45-to46 and node installation are committed milestones; do not replay old apply or repeat central CAS to recover observability."
+  ],
+  "repairBoundary": "Root handles actual reconciliation. A later narrow helper repair must preserve the staged raw proof, distinguish exact normalized running-config identity from pre-start bytes, retain all identity/non-target/hash/CAS/idle gates, and record each child response before converting it into a wrapper failure. Simply removing config checks or assuming a changed file is harmless is not justified. No repair is authored or executed here.",
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-node-r2.py",
+      "bytes": 10744,
+      "sha256": "97d140817e16ff0cefb92f390842bba152d69d796cd88890ef638aa0c8f6b31e"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r43-specialize-msf-supervisor-control-r2.mjs",
+      "bytes": 18695,
+      "sha256": "be081fe5660cbb1fae84a8ac3b7e3dc9c04437798ff65ab851500955138df43f"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-node.py",
+      "bytes": 20035,
+      "sha256": "95bab23cc05f7e0898b09330387af79de684ffbd41d2410df9614e23d9aa033f"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/agent/src/index.ts",
+      "bytes": 1590,
+      "sha256": "6f76415c6e05c12ace1882026735efc359ff315f124eab63ae615da5f266ea6f"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/agent-runner.ts",
+      "bytes": 54554,
+      "sha256": "f57889cfdb3c4b3fc0adb8e464c852cedeeb353951696dff6d7311e8144afdae"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r43-round10/apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 129697,
+      "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0"
+    }
+  ],
+  "priorScope": "The prior independent r2 report checked exact owner/path/target-contract delta and preserved original bytes; it did not prove full real startup compatibility. This failure exposes a preexisting original helper assumption that that delta review did not close. Preserve that prior report and append this failure finding.",
+  "operations": {
+    "localSourceAndPrivateEvidenceRead": true,
+    "privateRawLogPrinted": false,
+    "applicationOrHelperSourceEdited": false,
+    "remoteAPIServiceSQLOrModelUsed": false,
+    "testsExecuted": false,
+    "newReportWrittenWX": true
+  },
+  "publicSafety": "No private raw log content, key/config values, environment or user/session chat copied; public evidence uses hashes, stage names, allowed error codes and limited state classifications."
+}

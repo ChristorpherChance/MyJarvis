@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-saved-main-602-to-607-manifest-delta",
+  "at": "2026-10-16T03:58:47.798419+00:00",
+  "oldObservation": {
+    "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-actual-observation-1791992601711-3849ad1c-6b78-4584-8dc5-293ac5b52902.json",
+    "sha256": "38e8e62452527f49cea25683cbf6a5a155ca618dba57df49a92546c1112fedb8",
+    "bytes": 7114
+  },
+  "newObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-current-main-only-actual-observation-1792122982401-7304f971-fb28-42ab-a07f-750e60cc5485.json",
+    "sha256": "cd547dc82fadd98f4e5d948c35c45f2541ac361d09ae2318e0bddf3088f37bca",
+    "bytes": 5950
+  },
+  "oldTuple": {
+    "sha256": "11446020cbec373e92ab22293352bde874b18e82cca11f3a5757454dc9b9e212",
+    "files": 602,
+    "bytes": 18083755,
+    "metadataSHA": "7565aff1d4cf39ee3308001d5ef51479980e4c6949b8da0f00323e7bf52840f6",
+    "stable": true,
+    "identity": {
+      "device": 66306,
+      "inode": 14417953
+    }
+  },
+  "newTuple": {
+    "sha256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+    "files": 607,
+    "bytes": 18151378,
+    "metadataSHA": "06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e",
+    "stable": true,
+    "identity": {
+      "device": 66306,
+      "inode": 14417953
+    }
+  },
+  "added": [
+    {
+      "path": "apps/web/src/ui/TemplateRefreshModal.test.ts",
+      "sha256": "cabd210de0181de76b58f7f4f4661833a7832b9d9237f557b9686a62105ae889",
+      "bytes": 1388
+    },
+    {
+      "path": "doc/dev-plan/模板重排规则核对报告-实施计划.md",
+      "sha256": "aa04e530275dd2ef18657fbc13ea3b32379ee34615462c34c50690eb4577e680",
+      "bytes": 13368
+    },
+    {
+      "path": "doc/dev-plan/模板重排规则核对报告-设计.md",
+      "sha256": "14750b6484a4b26f8cf1056146997d58ee1a93bea267875cd2f14c7c3a8b4c28",
+      "bytes": 5336
+    },
+    {
+      "path": "doc/dev-plan/设计覆盖检测与可交互原型-实施计划.md",
+      "sha256": "d40d5506769bbac65d4925c064790ae65e013fd8b7330873a17ca290ec5aa375",
+      "bytes": 16652
+    },
+    {
+      "path": "doc/dev-plan/设计覆盖检测与可交互原型-设计.md",
+      "sha256": "d54c01da4dddc4610df1d1218b1f76be008560272baecd39a503ed46b858b64b",
+      "bytes": 8788
+    }
+  ],
+  "changed": [
+    {
+      "path": "apps/web/src/api.ts",
+      "before": {
+        "sha256": "2f22644d86c80e7348323384b89dfec5233773bd5190dac288db9447c3224b49",
+        "bytes": 6287
+      },
+      "after": {
+        "sha256": "eed3c14ec22002222a75f181fcd94bbf22b53cc28334143dff48e2a33d9f372f",
+        "bytes": 7011
+      }
+    },
+    {
+      "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+      "before": {
+        "sha256": "19a7d3632304f780ea3bf2c21a1d770b28b3df706a16e214407c420fd6b226f3",
+        "bytes": 40695
+      },
+      "after": {
+        "sha256": "760cfda8703b5d4c81c011f480240a0f13fc48cebf9e1ffa70530438f7e61179",
+        "bytes": 45562
+      }
+    },
+    {
+      "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+      "before": {
+        "sha256": "dd2bb9a956df2e29c3c5492943423d466b2c3fe4620325378244e10a2f904a28",
+        "bytes": 6932
+      },
+      "after": {
+        "sha256": "8da88bb25ff6c82ca8e5a9442fc87f27af3394dacc01cded5d6ca0f57b6a92bf",
+        "bytes": 10574
+      }
+    },
+    {
+      "path": "apps/web/src/pages/design/api.ts",
+      "before": {
+        "sha256": "e63b2f0e12c0d216b5e3a2018a6f11e43646cfffc31b771f7535de35a1efcc2f",
+        "bytes": 12153
+      },
+      "after": {
+        "sha256": "2ad4c74cf790893cbbfe010a5ea44ab0c097f78815d30762b6b1a330e36e8db2",
+        "bytes": 13330
+      }
+    },
+    {
+      "path": "apps/web/src/pages/req/RtmPanel.tsx",
+      "before": {
+        "sha256": "cdeba106aaa5d4957f3a651a84ac6e52f37198e75f2a5052da09f1830c697691",
+        "bytes": 19351
+      },
+      "after": {
+        "sha256": "8d5f494e386ede40609bc101ab1ec9d1b0d4ff70628e7684f146939caf5531e6",
+        "bytes": 25495
+      }
+    },
+    {
+      "path": "apps/web/src/pages/req/api.ts",
+      "before": {
+        "sha256": "24d06ba1ae7e5f2e5b32ccc96c04d7b8bfcb669c627c40c52f4f34d5d5af1b17",
+        "bytes": 7978
+      },
+      "after": {
+        "sha256": "a8e84b5eee7dba67f6d98e91556e2a8c7ea54cfb0bb5ef98b970b769c4510ec1",
+        "bytes": 8751
+      }
+    },
+    {
+      "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+      "before": {
+        "sha256": "f62cf7bf2eada057775e4a131cf74caad251525fa60b577274cd73ef87a7973e",
+        "bytes": 14034
+      },
+      "after": {
+        "sha256": "129fef2bbcc9066337a221af2fe0af2c6fce328c2ba6ac67e225a0ddc3d2a2b8",
+        "bytes": 16029
+      }
+    },
+    {
+      "path": "apps/web/src/ui/ui.css",
+      "before": {
+        "sha256": "97499bdc60bc3a5f225df6578779ebfc64308c3b5dcb20a74cde2dac66ae1a10",
+        "bytes": 5340
+      },
+      "after": {
+        "sha256": "8b97f4a26177e9cb580647cb3b6d7f4a24db222d9bb8d3782e8198bde4d621dd",
+        "bytes": 6007
+      }
+    },
+    {
+      "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+      "before": {
+        "sha256": "ac82c36c9a09c481a48898aa47a0f8c770d9afa950a78cfe3f1217bb5f52cd3f",
+        "bytes": 80902
+      },
+      "after": {
+        "sha256": "0af80720391eb3c0d3567e9074e429f5a93b903b592a4952cf0b72b4524644df",
+        "bytes": 83004
+      }
+    }
+  ],
+  "removed": [],
+  "counts": {
+    "before": 602,
+    "after": 607,
+    "added": 5,
+    "changed": 9,
+    "removed": 0,
+    "bytesDelta": 67623
+  },
+  "localFrozenSourceComparison": [
+    {
+      "path": "apps/web/src/ui/TemplateRefreshModal.test.ts",
+      "localFrozenR33FilePresent": false,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "doc/dev-plan/模板重排规则核对报告-实施计划.md",
+      "localFrozenR33FilePresent": false,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "doc/dev-plan/模板重排规则核对报告-设计.md",
+      "localFrozenR33FilePresent": false,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "doc/dev-plan/设计覆盖检测与可交互原型-实施计划.md",
+      "localFrozenR33FilePresent": false,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "doc/dev-plan/设计覆盖检测与可交互原型-设计.md",
+      "localFrozenR33FilePresent": false,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/api.ts",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/pages/design/PrototypePanel.tsx",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/pages/design/ReviewPanel.tsx",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/pages/design/api.ts",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/pages/req/RtmPanel.tsx",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/pages/req/api.ts",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/ui/TemplateRefreshModal.tsx",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "apps/web/src/ui/ui.css",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    },
+    {
+      "path": "doc/dev-plan/AI会话互通与对话改文档-差异登记.md",
+      "localFrozenR33FilePresent": true,
+      "localFrozenR33MatchesCurrent": false
+    }
+  ],
+  "authorAndChangeReasonKnown": false,
+  "newMetadataRowsRetained": true,
+  "oldPerFileMetadataRowsPresent": false,
+  "remoteOperations": 0,
+  "newBaselineSelected": false,
+  "mainBaselineQualified": false,
+  "fullProtectionQualified": false,
+  "actualPG4Qualified": false
+}

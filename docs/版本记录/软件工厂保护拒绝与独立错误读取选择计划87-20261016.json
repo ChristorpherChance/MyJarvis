@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-16T06:36:35.426Z",
+  "decision": {
+    "id": "d480ee2c-745c-44dd-ad79-4bda8335668e",
+    "revision": 1,
+    "status": "selected",
+    "hash": "ab3c9783afe0f8fa34055834e89758dcf3f11af38275e726b35d309b1a290252",
+    "independentAcceptance": false
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 87,
+    "hash": "eeab6e4e40fc29c34c4ba1ffd4b59d3690a174cc5e9fb60dbe8add43130ccf42",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "先以新目的、固定指纹和独立入口只读本次2066字节错误文件，定位真实原因；完整保护与当前资源收尾继续单独核验，不重设基准或重放旧入口。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 5,
+    "hash": "6ed294033276a803c7191870b04672e4afec4edba46c0bdc7e0dcf5d27070d99",
+    "summary": "测试加载阶段失败；后续资源核查被主目录变化保护拦住。已选择独立只读错误原件，当前仍为0通过、0业务失败、4未完成。",
+    "nextAction": "先以新目的、固定指纹和独立入口只读本次2066字节错误文件，定位真实原因；完整保护与当前资源收尾继续单独核验，不重设基准或重放旧入口。",
+    "blocker": "当前资源收尾尚未核清：前后主目录库存保护均拒绝；具体变化项和错误原始内容仍未知。",
+    "validationScope": "终态failed、五原件保存域和D失败保存域已有独立核对。新单报告读取仅已选方案，实际读取未完成；不签当前清理、完整保护、四用例或原74验收。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 18,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "actualDObserved": true,
+  "DClosed": true,
+  "singleReportSelected": true,
+  "singleReportActuallyRead": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

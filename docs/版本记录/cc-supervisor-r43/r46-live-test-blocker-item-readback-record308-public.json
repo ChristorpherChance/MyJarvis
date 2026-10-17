@@ -1,0 +1,35 @@
+{
+  "kind": "r46-live-test-blocker-item-readback",
+  "at": "2026-10-17T18:14:06.925Z",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "itemId": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+  "previousRevision": 9,
+  "revision": 10,
+  "hash": "6333cc4bce9e590f76e35593bf4c3a01c2b721df0cf4916aaadf10a8068ecfb7",
+  "status": "blocked",
+  "summary": "本次完整监管测试在实际点击开始时发现入口缺陷：按钮没有提交，软件工厂新测试尚未派发。已记录问题，并向101的CC安排贾维斯入口修复与真实按钮回归；修好后从原页面继续测试。上次432项测试结果仍作为历史保留。",
+  "blocker": "当前开始按钮未触发表单提交；不能把点击或页面可见算成CC已执行。",
+  "nextAction": "101的CC先修复提交按钮并简化最近结果、问题和下一步展示；核对产物上线后，从同一项目重新点击开始，继续测试回传、问题反馈和修复安排。十分钟跟进保持暂停。",
+  "counts": {
+    "total": 6,
+    "planned": 1,
+    "running": 0,
+    "blocked": 1,
+    "completed": 4
+  },
+  "latestSequence": 61,
+  "historyPreserved": true,
+  "completionNotClaimed": true,
+  "factoryTestDispatched": false,
+  "existingItemReused": true,
+  "noAutomaticRetry": true,
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-blocker-item-readback.json",
+      "sha256": "b5f28184426b5b8b76feee56e7a3238e9d4da481a20bde83ecff19f547afeb4c",
+      "bytes": 1283
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

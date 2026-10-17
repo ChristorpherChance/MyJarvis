@@ -47,16 +47,16 @@ export function roundCliUsage(engine:ExecutionTemplate['engine'],usage:ActualUsa
   else{value.costUSD=totalCost-(baseline??0);value.costKind='catalog-estimate';}
   // A compatible gateway model outside Claude's catalogue can report a zero estimate
   // despite real usage. It is unpriced evidence, not permission for unlimited priced rounds.
-  if(totalCost===0&&(value.totalTokens??value.inputTokens+value.outputTokens)>0&&policy?.billing!=='subscription'&&!/^(?:anthropic\/)?claude[-_]/i.test(value.model??'')){delete value.costUSD;delete value.costKind;}
- }else if(engine==='codex'&&policy?.inputUSDPerMillion!==undefined&&policy.outputUSDPerMillion!==undefined){value.costUSD=(value.inputTokens*policy.inputUSDPerMillion+value.outputTokens*policy.outputUSDPerMillion)/1000000;value.costKind='catalog-estimate';}
+  if(totalCost===0&&(value.totalTokens??((value.inputTokens??0)+(value.outputTokens??0)))>0&&policy?.billing!=='subscription'&&!/^(?:anthropic\/)?claude[-_]/i.test(value.model??'')){delete value.costUSD;delete value.costKind;}
+ }else if(engine==='codex'&&policy?.inputUSDPerMillion!==undefined&&policy.outputUSDPerMillion!==undefined&&typeof value.inputTokens==='number'&&typeof value.outputTokens==='number'){value.costUSD=(value.inputTokens*policy.inputUSDPerMillion+value.outputTokens*policy.outputUSDPerMillion)/1000000;value.costKind='catalog-estimate';}
  if(engine==='claude'&&value.costUSD===undefined&&policy&&['priced','record-only'].includes(policy.billing)&&value.usageComplete===true){
   const inputRate=policy.inputUSDPerMillion,outputRate=policy.outputUSDPerMillion;
   const count=(n:unknown)=>Number.isSafeInteger(n)&&Number(n)>=0;
   const rate=(n:unknown)=>typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=1000;
-  if(rate(inputRate)&&rate(outputRate)&&count(value.inputTokens)&&count(value.outputTokens)&&(value.totalTokens===undefined||value.totalTokens===value.inputTokens+value.outputTokens)){
+  if(rate(inputRate)&&rate(outputRate)&&count(value.inputTokens)&&count(value.outputTokens)&&(value.totalTokens===undefined||value.totalTokens===value.inputTokens!+value.outputTokens!)){
    // Explicit owner prices are an estimate, never an invoice or a replacement
    // for a reliable native session delta. Normalized Claude input already includes caches.
-   value.costUSD=(value.inputTokens*inputRate!+value.outputTokens*outputRate!)/1000000;value.costKind='catalog-estimate';
+   value.costUSD=(value.inputTokens!*inputRate!+value.outputTokens!*outputRate!)/1000000;value.costKind='catalog-estimate';
   }
  }
  return {usage:value,...(checkpoint?{checkpoint}:{})};

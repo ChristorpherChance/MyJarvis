@@ -9,7 +9,8 @@ import {monitorQuery} from './monitor-history.js';
 import {cpuPowerSample} from './power-runtime.js';
 import {qnapStorageSample} from './qnap-storage.js';
 import {observationConfig,serviceLogQuery,serviceLogBatch} from './observability.js';
-import {RuntimeAccessError,type IdentityRuntime} from './identity.js';
+import {MEMBER_COOKIE,RuntimeAccessError,type IdentityRuntime} from './identity.js';
+import type {ContinuationGrantInput} from './execution-types.js';
 import {externalUsageSchema} from './usage-ledger.js';
 import {SUPERVISOR_EVIDENCE_MAX_ITEMS,SUPERVISOR_EVIDENCE_MAX_ITEM_BYTES} from './supervisor-evidence.js';
 
@@ -17,6 +18,7 @@ export const isExecutionProtocolPath=(method:string,path:string)=>method==='POST
 const ticketSchema=z.object({machineId:z.string().min(1).max(200),capabilities:z.array(z.string().min(1).max(200)).min(1).max(100),ttlSec:z.number().int().min(30).max(600).default(300)}).strict();
 const protocolPair=z.object({ticket:z.string().min(1).max(200),publicKey:z.string().min(1).max(1000)}).strict();
 const response=(data:unknown)=>({requestId:randomUUID(),version:1,data,events:[]});
+const continuationGrantSchema=z.object({commandId:z.string().uuid(),expectedVersion:z.number().int().positive(),maxRounds:z.literal(1),timeoutSec:z.number().int().min(1).max(1200),retryCount:z.literal(0),maxParentTokens:z.number().int().min(1).max(10_000_000),sourceRunId:z.string().min(1).max(200).optional()}).strict();
 export function registerExecutionRoutes(app:FastifyInstance,runtime:ExecutionRuntime,authenticated?:(cookie:string)=>boolean,identity?:IdentityRuntime){
  const streams=new Set<()=>void>();
  const backups=new ExecutionBackups(runtime);
@@ -29,6 +31,7 @@ export function registerExecutionRoutes(app:FastifyInstance,runtime:ExecutionRun
  app.get('/api/v1/execution/monitoring',async req=>{const input=monitorQuery.parse(req.query);if(input.kind==='machine'&&!runtime.options.machine(input.id)||input.kind==='service'&&!runtime.repository.read('services',input.id,runtime.actorId))throw new BusinessError('VALIDATION','设备或服务不存在',404);return response(runtime.monitoring.query(input));});
  app.post('/api/v1/execution/backups',async req=>backups.create(z.object({sourcePath:z.string().min(1).max(2000),machineId:z.string().min(1).max(200),target:z.enum(['projects','knowledge']),scope:z.enum(['personal','private','family']).default('personal')}).strict().parse(req.body)));
  app.post<{Params:{id:string}}>('/api/v1/execution/backups/:id/drill',async req=>{z.object({isolated:z.literal(true)}).strict().parse(req.body);return backups.drill(z.string().uuid().parse(req.params.id))});
+ app.post<{Params:{id:string}}>('/api/v1/tasks/:id/continuation-grants',async req=>{if(!identity)throw new RuntimeAccessError('ADMIN_REQUIRED','仅当前管理员本人可追加续轮授权',403);const principal=identity.principal(req,!Object.hasOwn(req.cookies??{},MEMBER_COOKIE));if(!identity.isPrincipalCurrent(principal)||!principal.administrator||principal.profileId!=='me'||principal.actorId!==runtime.actorId)throw new RuntimeAccessError('ADMIN_REQUIRED','仅当前管理员本人可追加续轮授权',403);const input=continuationGrantSchema.parse(req.body),grant=runtime.grantContinuation({...input,taskId:z.string().min(1).max(200).parse(req.params.id),ownerId:principal.actorId});return response(grant)});
  app.get('/api/v1/execution/supervision',async()=>response(runtime.supervisionOverview()));
  app.get('/api/v1/execution/capabilities',async()=>response(runtime.capabilities()));
  app.get('/api/v1/execution/config',async()=>{const data=runtime.configuration();return {...response(data),version:data.revision}});

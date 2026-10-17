@@ -63,7 +63,7 @@ export class AgentProtocolConsumer {
           e.type === 'thread.started' ? {type:e.type,thread_id:typeof e.thread_id==='string'?e.thread_id.slice(0,200):undefined} : {type:e.type,message:String(e.error?.message??e.message??'').slice(0,2000),error:{code:typeof e.error?.code==='string'?e.error.code.slice(0,100):undefined}};
         this.retain(JSON.stringify(compact));
       } else if (this.engine === 'claude' && (e.type === 'system' || e.type === 'assistant')) {
-        if (e.type === 'system' && typeof e.session_id === 'string') this.retain(JSON.stringify({type:'system',session_id:e.session_id.slice(0,200)}));
+        if (e.type === 'system' && typeof e.session_id === 'string') this.retain(JSON.stringify({type:'system',subtype:typeof e.subtype==='string'?e.subtype.slice(0,100):undefined,session_id:e.session_id.slice(0,200),model:typeof e.model==='string'?e.model.slice(0,200):undefined,cli_version:typeof e.claude_code_version==='string'?e.claude_code_version.slice(0,100):undefined}));
         if (e.type === 'assistant' && e.message?.usage) {
           const u=e.message.usage, m=e.message;
           this.retain(JSON.stringify({type:'assistant',uuid:typeof e.uuid==='string'?e.uuid.slice(0,200):undefined,message:{id:typeof m.id==='string'?m.id.slice(0,200):undefined,model:typeof m.model==='string'?m.model.slice(0,200):undefined,usage:{input_tokens:u.input_tokens,output_tokens:u.output_tokens,cache_read_input_tokens:u.cache_read_input_tokens,cache_creation_input_tokens:u.cache_creation_input_tokens}}}));
@@ -74,10 +74,25 @@ export class AgentProtocolConsumer {
     const canonical = JSON.stringify(stable(e));
     if (this.finalCanonical !== undefined) {
       if (this.finalCanonical === canonical) return;
+      // Some CLI versions emit an empty zero-turn result before initialization. It
+      // is provisional only: preserve already retained invocation evidence and let
+      // one later substantive final replace it. Complete finals still conflict.
+      if (this.isProvisionalEmptyFinal(this.finalLine!) && !this.isProvisionalEmptyFinal(line) && this.retained.some(record=>{try{const event=JSON.parse(record);return this.engine==='claude'?event.type==='system'&&(event.subtype==='init'||event.subtype===undefined):this.engine==='codex'&&event.type==='thread.started'}catch{return false}})) {
+        this.finalCanonical = canonical;
+        this.finalLine = JSON.stringify(e);
+        return;
+      }
       this.protocolError = 'AGENT_PROTOCOL_FINAL_CONFLICT'; return;
     }
     this.finalCanonical = canonical;
     this.finalLine = JSON.stringify(e);
+  }
+
+  private isProvisionalEmptyFinal(line:string):boolean {
+    let e:any;try{e=JSON.parse(line)}catch{return false}
+    if(e?.type==='result')return e.is_error!==true&&(e.result===undefined||e.result==='')&&e.usage&&['input_tokens','output_tokens','cache_read_input_tokens','cache_creation_input_tokens'].every(k=>e.usage[k]===0)&&e.total_cost_usd===0&&typeof e.session_id==='string';
+    if(e?.type==='turn.completed')return e.usage&&['input_tokens','output_tokens','cached_input_tokens'].every(k=>e.usage[k]===0)&&!e.last_agent_message&&typeof e.thread_id==='string';
+    return false;
   }
 
   private retain(line: string): void {

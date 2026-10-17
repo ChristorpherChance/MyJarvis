@@ -1,7 +1,9 @@
 import type { CommandEnvelope, Domain } from '../v1/types.js';
 import type { CommandReceipt } from '../v1/repository.js';
 
-export interface ActualUsage { inputTokens?:number; outputTokens?:number; cacheReadTokens?:number;cacheWriteTokens?:number;totalTokens?:number;provider?:string;model?:string; /** True only when every round has a native final usage receipt; false retains partial observations. */ usageComplete?:boolean; costUSD?:number; /** Known observed fee lower bound, even when other rounds are unpriced; never fabricated zero. */ knownCostUSD?:number; /** False means costUSD is unknown; knownCostUSD may retain a partial observation. */ costComplete?:boolean; costKind?:'provider-reported'|'catalog-estimate'; measurementStatus?:'reported'|'partial'|'unknown'; /** Internal SDK result only; node protocol cannot assert this flag. */ ledgerRecorded?:boolean }
+export interface ActualUsage { inputTokens?:number; outputTokens?:number; cacheReadTokens?:number;cacheWriteTokens?:number;totalTokens?:number;provider?:string;model?:string; /** True only when every round has a native final usage receipt; false retains partial observations. */ usageComplete?:boolean; costUSD?:number; /** Known observed fee lower bound, even when other rounds are unpriced; never fabricated zero. */ knownCostUSD?:number; /** False means costUSD is unknown; knownCostUSD may retain a partial observation. */ costComplete?:boolean; costKind?:'provider-reported'|'catalog-estimate';measurementStatus?:'reported'|'partial'|'unknown'; /** Internal SDK result only; node protocol cannot assert this flag. */ ledgerRecorded?:boolean }
+export interface ContinuationGrantInput {commandId:string;expectedVersion:number;taskId:string;ownerId:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;sourceRunId?:string}
+export interface ContinuationGrant {grantId:string;commandId:string;ownerId:string;taskId:string;projectId:string;machineId:string;workspace:string;sourceRunId:string;sourceResultHash:string;expectedTaskVersion:number;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;createdAt:string;status:'pending'|'consumed';consumedRunId?:string}
 export type FixedValidationPurpose='project-autonomy-validation'|'project-candidate-validation';
 export type ExecutionPurpose=FixedValidationPurpose|'project-supervisor';
 export function isFixedValidationPurpose(value:unknown):value is FixedValidationPurpose{return value==='project-autonomy-validation'||value==='project-candidate-validation';}
@@ -59,7 +61,7 @@ export interface ProjectSupervisorController {
 }
 export interface ProjectSupervisorDispatchInput {
  sessionId:string;goalRevision:number;supervisorRevision:number;taskId:string;expectedTaskRevision:number;
- consumedRunId?:string|null;resultHash?:string|null;resumeStopped?:boolean;directive:string;goal:string;criteria:string;
+ consumedRunId?:string|null;resultHash?:string|null;grantId?:string;resumeStopped?:boolean;directive:string;goal:string;criteria:string;
  machineId:string;executorId:string;workspace:string;ownerId:string;
 }
 export interface ExecutionRuntimeOptions {

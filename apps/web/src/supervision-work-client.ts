@@ -14,6 +14,14 @@ export interface SupervisionWorkOverview {
  independentProgress:{automaticAcceptance:false;statement:string};
 }
 export interface SupervisionWorkDetail {item:SupervisionWorkItem;history:SupervisionWorkItem[];historyTruncated:boolean;evidenceVerification:'references-only'}
+export interface SupervisionActivity {items:(SupervisionChange&{title:string;summary:string})[];hasMore:boolean;nextBefore:number|null}
+export interface SupervisionConsole extends SupervisionWorkOverview {
+ reportedAt:string;project:{id:string;name:string;goal:string};
+ runtime:{running:number;queued:number;runningRunIds:string[];scope:'bound-persisted-task-runs';unavailable:boolean;autonomyStatus:string|null;reason:string;revision:number|null};
+ acceptance:{available:boolean;total:number|null;accepted:number|null;source:'independent-objectives'};
+ plan:{revision:number;currentStepId:string|null;steps:{id:string;title:string;state:string;goal:string;nextAction:string}[]}|null;
+ attention:{total:number;items:{id:string;kind:'approval'|'task';title:string;reason:string;route:string}[];truncated:boolean};activity:SupervisionActivity;
+}
 export type SupervisionWorkBody=Pick<SupervisionWorkItem,'title'|'status'|'summary'|'nextAction'|'blocker'|'stepId'|'taskId'|'runId'|'completionSummary'|'validationScope'|'evidenceRefs'>;
 export const supervisionWorkBase=(projectId:string)=>`/api/v1/projects/${encodeURIComponent(projectId)}/supervision-work`;
 export const loadSupervisionWork=(projectId:string,signal?:AbortSignal)=>v1Request<{data:SupervisionWorkOverview}>(supervisionWorkBase(projectId)+'/overview',{signal});

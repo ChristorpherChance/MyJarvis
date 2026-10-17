@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "r41-project-oversight-console-design-release-and-bounded-verification",
+  "at": "2026-10-17T05:10:19.146230Z",
+  "release": "20261017-project-oversight-r41",
+  "sourceCommit": "73392718f2af1e3ea995b487af4cbb32347fb0d5",
+  "primary112Healthy": true,
+  "sourceSubmitted": true,
+  "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/5",
+  "pullRequestMerged": false,
+  "goal": "远程打开软件工厂监管时，首先看懂实际运行、当前重点、阻塞、下一步和待本人处理；完成结果用简报并能展开依据。",
+  "design": {
+    "chosen": "独立项目监管台，复用既有事项、版本保护和持久事件",
+    "considered": [
+      {
+        "option": "继续扩充原项目弹窗",
+        "advantage": "原入口不变，改动少",
+        "drawback": "远程和手机仍需多层查找，首屏重点难集中"
+      },
+      {
+        "option": "独立监管台并保留原高级入口",
+        "advantage": "直接链接和一级入口，首屏清晰，原证据历史继续沿用",
+        "drawback": "增加一个页面，离线推送仍需后续配置"
+      }
+    ],
+    "navigation": "项目监管 → 软件工厂",
+    "directRoute": "https://cc-jarvis.ikvein.com/?mode=platform#view=supervision%2F70ec346f-6520-46ed-abed-22cac770a3e4&theme=stark&board=all",
+    "layers": [
+      "实际运行与本人待办",
+      "当前重点、阻塞、下一步",
+      "原五阶段与待推进事项",
+      "完成简报与时间线",
+      "展开公开引用、历史和高级控制"
+    ]
+  },
+  "actualOperations": [
+    "调整下一步安排使用原事项版本保护接口保存新修订，产生一个真实事件和提醒；不启动执行器",
+    "阶段筛选只筛选真实绑定事项，不伪造阶段完成率",
+    "通知点开新监管台，沿用本人偏好；页面有事件即更新，重新聚焦和可见时只读核对",
+    "任务预算和人工项目审批按当前目标、所有者与范围核对归属"
+  ],
+  "verification": {
+    "uniqueTargetedCases": 5,
+    "combinedFreshFiveCaseRun": false,
+    "originalFourCases": "按已保存两切片结果核对；fixture身份漏设的原失败保留并只重两失败用例",
+    "approvalDefect": "独审发现真实authorizationBinding漏筛；新第五组使用真实审批producer，修前0而预期2失败，修后通过；原四组未重",
+    "independentSourceReview": true,
+    "remainingP0P1P2": 0,
+    "APICompilation": true,
+    "WebTypecheckAndBuild": true,
+    "browser": "隔离真实服务，实际保存/展开/筛选/复制链接/提醒设置/退出清除均核对；390宽度无横向溢出，最终视口已复原",
+    "productionUIWritePerformed": false,
+    "productionChecks": {
+      "notificationValuesPreserved": true,
+      "personaRecordsPreserved": true,
+      "planPreserved": true,
+      "autonomyPreserved": true,
+      "sixItemsPreserved": true,
+      "oldDecisionsPreserved": true,
+      "consoleMatchesOverview": true,
+      "consoleBoundRunningZero": true,
+      "consoleAutonomyBlocked": true,
+      "objectiveAcceptancePreserved": true
+    },
+    "publicAssetCount": 7,
+    "publicAssetsMatchPackage": true
+  },
+  "production": {
+    "node": "112",
+    "standby101Updated": false,
+    "activateWallSeconds": 254.19090914726257,
+    "backupAndRestore": {
+      "node": "112",
+      "release": "20261017-project-oversight-r41",
+      "previousRelease": "20261017-action-effectiveness-r40",
+      "active": true,
+      "activationLockHeld": true,
+      "dataSnapshot": {
+        "status": "passed",
+        "operation": "snapshot-created",
+        "release": "20261017-project-oversight-r41",
+        "scope": "primary",
+        "files": 60,
+        "directories": 57,
+        "bytes": 4087138806,
+        "manifestSha256": "7720ff07c5e6c9091ac427c4490c2c6758308edb7494e2b77e226780ff7290dd",
+        "sqliteDatabasesChecked": 6,
+        "sqliteIntegrity": "ok",
+        "completeTreeVerified": true,
+        "liveDirectoryModified": false,
+        "automaticRollback": false
+      },
+      "isolatedRestore": {
+        "status": "passed",
+        "operation": "isolated-restore-verified",
+        "release": "20261017-project-oversight-r41",
+        "scope": "primary",
+        "files": 60,
+        "directories": 57,
+        "bytes": 4087138806,
+        "manifestSha256": "7720ff07c5e6c9091ac427c4490c2c6758308edb7494e2b77e226780ff7290dd",
+        "sqliteDatabasesChecked": 6,
+        "sqliteIntegrity": "ok",
+        "completeTreeVerified": true,
+        "liveDirectoryModified": false,
+        "automaticRollback": false
+      },
+      "health": {
+        "node": "112",
+        "release": "20261017-project-oversight-r41",
+        "role": "primary",
+        "currentRelease": "20261017-project-oversight-r41",
+        "platformService": "active",
+        "observerService": "active",
+        "observerBuild": "20261017-project-oversight-r41",
+        "businessHealthy": true,
+        "healthBuild": "20261017-project-oversight-r41",
+        "healthStatus": "ok"
+      },
+      "productionDataRestored": false,
+      "factoryResumed": false
+    },
+    "rollback": "保留旧R40与固定备份，若需回退须另走受控版本发布；未执行回退"
+  },
+  "factory": {
+    "planRevision": 108,
+    "counts": {
+      "total": 6,
+      "planned": 1,
+      "running": 1,
+      "blocked": 0,
+      "completed": 4
+    },
+    "runtime": {
+      "running": 0,
+      "queued": 0,
+      "runningRunIds": [],
+      "scope": "bound-persisted-task-runs",
+      "unavailable": false,
+      "autonomyStatus": "blocked",
+      "reason": "REPAIR_ATTEMPTS_EXHAUSTED",
+      "revision": 20
+    },
+    "acceptance": {
+      "available": true,
+      "total": 74,
+      "accepted": 0,
+      "source": "independent-objectives"
+    },
+    "attention": {
+      "total": 0,
+      "items": [],
+      "truncated": false
+    },
+    "autonomyRevision": 20,
+    "exhaustedWorkPackageRestarted": false,
+    "tenMinuteFollowup": "PAUSED",
+    "customer12Delivered": false,
+    "realModelReviewValidated": false
+  },
+  "failuresPreserved": [
+    "初始synthetic member fixture遗漏me造成两例失败，纠正fixture后只重失败例",
+    "本地打包首次传短commit被原工具写包前拒绝，改用完整commit且保原回执",
+    "一次成功Web构建后的GBK控制台输出失败，原build exit0回执保留",
+    "首审P2审批遗漏及首审测试指纹时点更正均追加保留，最终新源码和包重新封存"
+  ],
+  "cost": {
+    "supplierModelCalls": 0,
+    "consumptionCap": null,
+    "internalTokens": null,
+    "internalAmount": null,
+    "unknownParts": "内部Token与价格未获得，未知不填零"
+  },
+  "notCompleted": [
+    "用户远程使用的最终人工验收",
+    "关闭页面后的离线Web Push及邮件渠道",
+    "真实AI评审、Git合并、完整开发交付链",
+    "原74独立验收和客户12交付"
+  ],
+  "evidence": [
+    {
+      "path": "artifacts/project-oversight-r41/local-verification.json",
+      "sha256": "e899f7573afb368fc6bf7f0e8a92b4d5ffb580fbc04a31f09b4b79b6a5a30e50",
+      "bytes": 3946
+    },
+    {
+      "path": "artifacts/project-oversight-r41/independent-local-review.json",
+      "sha256": "4e26b79fe25d0996dc6dd3b56286c6a6d91c8a89f2a97274b3d278b070b2fd9b",
+      "bytes": 11953
+    },
+    {
+      "path": "artifacts/project-oversight-r41/independent-local-review-reference-boundary-addendum.json",
+      "sha256": "efa4f6834aec98c15bc2efccb5dac1783c2104b1780e2a2554b90d24cd5b9c3c",
+      "bytes": 1412
+    },
+    {
+      "path": "artifacts/project-oversight-r41/independent-approval-binding-delta-review.json",
+      "sha256": "bd70d6783933727631a0aaaf7d46c30c30467851aeebbe5a764a8399ad1cbe56",
+      "bytes": 7526
+    },
+    {
+      "path": "artifacts/project-oversight-r41/approval-binding-before-fix.json",
+      "sha256": "83048b6a2bdd2b7af180ecc5baf2fc6ea525d75b30163b9e1a8f45c6efd42606",
+      "bytes": 925
+    },
+    {
+      "path": "artifacts/project-oversight-r41/approval-binding-after-fix.json",
+      "sha256": "38497fbfa10b4fd109be7fa6a2fb6870091f34c0d34f5a40d2a6433d9e912776",
+      "bytes": 922
+    },
+    {
+      "path": "artifacts/project-oversight-r41/api-approval-correction-build.json",
+      "sha256": "2187d7adf00e1596a9cb2b079ee3e863902f9db6c7089e3fa56192dae8391073",
+      "bytes": 892
+    },
+    {
+      "path": "artifacts/project-oversight-r41/web-browser-refinement-typecheck.json",
+      "sha256": "2a77f4ecaf30a97649c8b28bbf183870c9ab5da2605f97de11e28c005ca430f5",
+      "bytes": 881
+    },
+    {
+      "path": "artifacts/project-oversight-r41/web-browser-refinement-build.json",
+      "sha256": "22760ec347548378df3311a6a87f7bb79bfcb4286be3698d04610ec88d077958",
+      "bytes": 893
+    },
+    {
+      "path": "artifacts/project-oversight-r41/package-independent-final-readback.json",
+      "sha256": "e0a0f9f4db8993875f4291042f2252fe47164d033665111e5c326288af7abe42",
+      "bytes": 635
+    },
+    {
+      "path": "artifacts/project-oversight-r41/112-stage.json",
+      "sha256": "de1cc9e33388ecd22e05033b6443a0fc61f40ca670467cfc997913d32a2551b3",
+      "bytes": 1003
+    },
+    {
+      "path": "artifacts/project-oversight-r41/112-install.json",
+      "sha256": "79f24a102917f4ce067a9d297885f2c0cc837ec1b751501476ca852962572991",
+      "bytes": 995
+    },
+    {
+      "path": "artifacts/project-oversight-r41/112-inspect.json",
+      "sha256": "f42ad4d5880d9f11678cfd92ff1ed585f4307f6c46ae51d62cd91a028d19eb6f",
+      "bytes": 1033
+    },
+    {
+      "path": "artifacts/project-oversight-r41/112-activate.json",
+      "sha256": "ce99e062d65ff116ac71b15f76d56838ba182a940bd756197ce63b509eff0f09",
+      "bytes": 2397
+    },
+    {
+      "path": "artifacts/project-oversight-r41/112-health.json",
+      "sha256": "486374f3502d331616a7c7dcd2e7501a642cfb41bee9d84f93684f604b5cc2db",
+      "bytes": 1077
+    },
+    {
+      "path": "artifacts/project-oversight-r41/live-readback.json",
+      "sha256": "7626a125b834816470099aa8bd961ac7e485d7661bbd9faec49c330dfbec118c",
+      "bytes": 2911
+    },
+    {
+      "path": "artifacts/project-oversight-r41/source-publication-readback.json",
+      "sha256": "d4b020f576194cd9ec2df6b3f1b5cfefdeaef14d12fca0b98fc10628cd658c32",
+      "bytes": 690
+    },
+    {
+      "path": "artifacts/project-oversight-r41/desktop-console.jpg",
+      "sha256": "55437ddce946948f7d8db2f0c35f2e3556dfd58b7961707a50d849ae096458a5",
+      "bytes": 76087
+    },
+    {
+      "path": "artifacts/project-oversight-r41/mobile-console.jpg",
+      "sha256": "19d9f0e8d5e4f533a0011711d60c40c9b9a1990b99db10b8c5f0a5d7651fd2e7",
+      "bytes": 32254
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 import { useDemo } from '../../demo/context';
 import { ResearchPage, InboxPage } from './research';
 import { ProjectsPage, TasksPage } from './work';
+import {ProjectOversightPage} from './ProjectOversightPage';
 import { MachinesPage, ServicesPage, OperationsDashboard, ApprovalsPage } from './system';
 import { ExperiencesPage } from './experience';
 import { Button, Empty, Note } from './common';
@@ -15,7 +16,7 @@ export function OperationsPage({ route, navigate, target }: {
     const props = { data, act, navigate, real, target };
     if (data.profile !== 'me' && !['inbox', 'knowledge'].includes(route))
         return <Empty title="这是管理者的工作空间" detail="家庭成员可以使用收件、资料与自己的学习空间。"/>;
-    const views: Record<string, ComponentType<typeof props>> = { inbox: InboxPage, research: ResearchPage, projects: ProjectsPage, tasks: TasksPage, knowledge: ExperiencesPage, machines: MachinesPage, services: ServicesPage, operations: OperationsDashboard, approvals: ApprovalsPage };
+    const views: Record<string, ComponentType<typeof props>> = { inbox: InboxPage, research: ResearchPage, projects: ProjectsPage, supervision: ProjectOversightPage, tasks: TasksPage, knowledge: ExperiencesPage, machines: MachinesPage, services: ServicesPage, operations: OperationsDashboard, approvals: ApprovalsPage };
     const View = views[route];
     const domains: Record<string, string> = { inbox: 'inbox', research: 'research', projects: 'projects', tasks: 'tasks', knowledge: 'experiences' };
     const capability = real?.capabilities.domains.find(d => d.domain === domains[route]);

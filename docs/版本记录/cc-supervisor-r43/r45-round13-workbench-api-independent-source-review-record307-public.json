@@ -1,0 +1,334 @@
+{
+  "kind": "r45-round13-project-workbench-api-independent-source-review",
+  "fixedFinalHeadSuppliedByRoot": "6ab3e09b325a8f0f1868c8aeacb76c22d7060320",
+  "fixedAppHeadSuppliedByRoot": "f1fdec236fa9e3f901fee02aa9ca4b623a5e2d0a",
+  "baselineHead": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+  "gitObjectIndependentlyVerified": false,
+  "scope": "LOCAL independent source, saved report and targeted log review. No app edits, tests, helper/runtime execution, API/remote/daemon/model/Git-network. Root has collected candidate packages but has not deployed this cut.",
+  "outcome": "Two concrete P1 defects in the new coordinator require the narrow correction below before release. Existing actual targeted2/2 and most reused execution protections are real; needs_more_work or untested matrices alone are not defects.",
+  "p1": [
+    {
+      "id": "R45-API-P1-INVALID-PREPARED-LOCK",
+      "title": "Known invalid first kickoff leaves a nonrecoverable pending request through the normal UI",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 24
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 25
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 23
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "line": 10
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "line": 14
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "line": 18
+        }
+      ],
+      "sourceCause": "A new prepared intent is written at line24 before modelReady, current copy/executor readiness and downstream complete create validators. Those known failures then throw at line25 or later. Any new command for this project is rejected KICKOFF_PENDING. Context returns no pending request/command/stage. The UI uses a transient useRef, resets it on goal/criteria/choice edits and loses it after reload, so the user cannot recover the original exact request by fixing the visible input.",
+      "reachableCounterexample": "Authenticated owner submits syntactically valid kickoff with unavailable model, or registered but currently unready executor, or a workspace not in current choices. No task is necessary for this failure: prepared persists. Fix configuration/selection or reload, submit a new command -> KICKOFF_PENDING; no disclosed old request to reconcile. This is static source reachability, not a newly executed test.",
+      "narrowFix": "Perform all known pure prerequisites and shared task/supervisor schema checks before the initial durable write. Keep genuine post-effect partial intents, but expose their exact owner-bound original command/binding/stage in read-only context and a resume/reconciliation path; UI must persist/reuse that original request rather than silently replacing its UUID. Do not delete history, clear unknown accounting or auto-start on GET.",
+      "targetedRegression": "Invalid model/choice/duplicate criterion creates0task/session/run and no permanent pending reservation. Existing genuine after-task cut survives reload via original exact request, not a new nonce; editing an uncommitted invalid draft can submit normally."
+    },
+    {
+      "id": "R45-API-P1-PAUSE-LOST-ON-SESSION-RECOVERY",
+      "title": "Task-stage recovery adopts the current paused session revision as a fresh start authority",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 25
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 28
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 29
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 73
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 74
+        }
+      ],
+      "sourceCause": "When intent has stage task and sessionId null, the CONTROL_CHANGED guard is skipped. The recovery branch accepts any existing session with the same task and uses its current revision as startRevision, without requiring the original create-command receipt, untouched draft or original expected revision. The following original start command has not yet executed and action start permits a paused session.",
+      "reachableCounterexample": "Crash after supervisor.create has committed but before coordinator persists sessionId/stage. Intent remains task. On restart the owner pauses the visible draft, revoking authority. Retry the original kickoff: sessionId-null bypasses line25; line28 copies the paused latest revision; line29 issues first start with authorizeContinuous true and matching new revision -> re-enables the paused goal. The unchanged supervisor command accepts this sequence. This is a precise source counterexample, not a fabricated runtime observation.",
+      "narrowFix": "Recover the fixed supervisor.create command receipt/id/revision instead of refreshing authority from current snapshot. Replaying that original create command already returns its frozen receipt. Persist the original expected revision, then reject/control-reconcile any current session or policy changed by pause/stop/takeover/revise. Never substitute a newly observed control revision as permission for an old kickoff.",
+      "targetedRegression": "Inject a cut after supervisor session commit but before kickoff session-stage write; owner pause; retry original kickoff -> CONTROL_CHANGED/CAS rejection, paused policy remains revoked,0newrun. Also verify untouched draft recovers to one task/session/start with stable IDs."
+    }
+  ],
+  "implementedAndReusable": [
+    {
+      "item": "Read-only owner project context and explicit kickoff route are real and registered in createApp. GET does not create task/session/run, call model or pump. Principal is current administrator profile me; project owner is enforced; routes return no-store.",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-routes.ts",
+          "line": 2
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 20
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 23
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/app.ts",
+          "line": 207
+        }
+      ]
+    },
+    {
+      "item": "Task identity is durably reserved before repository create. The repository create override uses the deterministic reserved ID; pendingOwns is connected to supervisor owns before execution timers begin. Generic start, scheduler and queued preflight already consult ownership, so the demonstrated after-task cut cannot be stolen.",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 19
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 22
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 26
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/v1/repository.ts",
+          "line": 67
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 62
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+          "line": 168
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+          "line": 218
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+          "line": 331
+        }
+      ]
+    },
+    {
+      "item": "Fixed task/session/start child command IDs, exact fingerprint replay and complete-response replay are implemented. Completed kickoff replay after a later pause returns its old response without side effects; the saved real test covers that successful-completion case. It does not cover the session-commit cut in P1 above.",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 24
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 26
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 28
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 29
+        }
+      ]
+    },
+    {
+      "item": "No fake cross-SQLite transaction is claimed. WAL/FULL kickoff stages and V1 task/supervisor command receipts are used. Genuine unresolved partial state is retained rather than deleting records or inventing a new task to recover.",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 17
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+          "line": 19
+        }
+      ]
+    },
+    {
+      "item": "Existing supervisor start/policy windows, signed normal terminal/evidence, model consume-once, stop confirmation, unknown/incomplete usage and experience correction paths are reused. This slice does not reset historical task usage or resume the old10-minute automation.",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 72
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+          "line": 205
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+          "line": 206
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+          "line": 207
+        }
+      ]
+    }
+  ],
+  "specificQuestions": {
+    "historyTasks": "There is no historyTasks all-history blocker in this fixed runtime or workbench source. Context lists existing tasks, but kickoff does not inspect/reuse them and always creates a new task when there is no supervisor. Thus all real projects are not automatically blocked. It also has not simplified continuation of an existing native task/session: owner must use the existing explicit advanced adopt/reconcile path; it must not claim the new task reuses old native history. Existing supervisor sessions are reused by normal explicit commands. Safe never-run draft reuse from the plan is not implemented in kickoff. Treat this as a clearly bounded missing convenience/continuation slice, not a proof every existing project is unusable.",
+    "budgetOneDollar": "Not an active1USD cap in the supported supervisor execution path. New task budget1 satisfies the legacy required TaskDTO. supervisorDispatch205 requires record-only;207 constructs budgetUSD0; preflight168 accepts project-supervisor/record-only independently of task.cost<budget; agent-runner141/144 skips USD exhaustion under recordOnly and79 removes native max-budget args. Actual costs/unknown status are unchanged. Do not present task budget1 as paid spend or an added cap.",
+    "codexVsClaudeLabel": "Not a proven Codex dispatch rejection: actual executorId comes from task.agent and execution205 explicitly allows claude or codex engines. supervisor.executor is still forced claude-code metadata, so its UI/experience selection label can misdescribe Codex. Actual engine should be displayed/matched honestly, but current101Claude flow is not blocked by that constant. Do not report unsupported Codex solely from create.executor literal.",
+    "unknownAcknowledgment": "Fresh goal policy permits acknowledgeUnknownHistory false; it does not throw solely for false. Future unknown-history continuation is still guarded by grant/window acknowledgment. No unknown counts are zeroed by this coordinator. UI acknowledgment messaging and later eligibility must stay honest.",
+    "preparedRecoveryProof": "Current test injects afterTask only after i.stage=task was written. It is not a prepared/reserved-ID or session/start-unknown full crash matrix. Before-task pending ownership is nevertheless explicit in source, so missing tests alone are not reported as a vulnerability.",
+    "existingPausedSession": "Normal GET and completed replay do not resume it. UI resume is an explicit POST and disabled for running/judging/dispatching. The narrow unrecorded-session recovery path in P1 is the specific exception requiring repair.",
+    "newProjectCopyPrerequisite": "API project registration defaults copies[]; context choices are only registered nonproduction copies paired with templates. A independently reviews the new UI reachability of copy registration; this API review confirms there is no implicit default-copy provisioning API. Do not claim a copy record creates or verifies a physical remote directory."
+  },
+  "actualSavedVerification": {
+    "targeted": "kickoff-final.tap contains actual2/2 pass,0fail. One production createApp+SQLite+real local signed native-format child fixture integration test plus one shared route test. It covers read-only GET, after-task cut, pending ownership at that cut, ordinary start denial, null agent claim before supervisor binding, exact recovery/changed payload rejection, one signed result and durable ACK, completed replay after later pause.",
+    "notARealVendorFieldRun": "The test Pi model is deterministic fixture and native child emits a fixed CLI-shaped result; it is not112 real model->101 provider acceptance.",
+    "typesAndBuild": "Saved final typecheck includes API/Web commands; final build log includes frontend success/promote and API tsc. Producer reports exit0. This reviewer read the saved material and did not re-run checks.",
+    "otherUI": "Producer reports6-state production SSR and R44 mixed-token regression. A owns independent UI/source review. SSR/fixture proof is not browser interaction or whole lifecycle acceptance.",
+    "unmeasuredNotDefects": [
+      "full multi-process concurrency",
+      "all missing-model/offline/scope/archived HTTP combinations",
+      "every cross-store interruption point",
+      "real browser/mobile/back-forward",
+      "Root actual model/101 production loop and product acceptance"
+    ]
+  },
+  "minimalNextCCScope": [
+    "Fix only preflight-before-reservation and actual pending-context/original-request recovery for the new coordinator, preserving all original task/history/policy/accounting records.",
+    "Fix unrecorded-session recovery to use frozen create receipt and original revision; do not refresh paused control authority.",
+    "Add the two direct production-path counterexamples above and preserve the existing passing integration. If A confirms missing project-copy controls, restore only that necessary setup entry in the same project entity; no old three-page navigation restoration.",
+    "Run only directly affected API/coordinator and actual workbench component checks, then required types/build once for the corrected cut and produce same-source packages. No broad old matrix or completed vendor/model re-run merely to update reports."
+  ],
+  "notPerformed": [
+    "app source modification",
+    "application or helper tests",
+    "runtime/API/SSH/service/model/Git-network",
+    "actual kickoff/session/task creation or release",
+    "browser or whole-user acceptance"
+  ],
+  "unchangedComparedToPriorImportedTree": [
+    "apps/api/src/runtime/supervisor-goal-policy.ts",
+    "apps/api/src/runtime/execution-runtime.ts",
+    "apps/api/src/runtime/agent-runner.ts",
+    "apps/api/src/v1/repository.ts",
+    "apps/api/src/v1/types.ts",
+    "apps/api/src/v1/work-domains.ts"
+  ],
+  "refs": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-runtime.ts",
+      "bytes": 8940,
+      "sha256": "c2c3918691a6321f47a03b983e67e05431296e6d1cd5c21d96e5edb43480f72a"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-workbench-routes.ts",
+      "bytes": 1236,
+      "sha256": "1d24cb86859c76d2a8239bd8cc7effa035ef5c0343d3e2f9d01675e614a8863f"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/project-supervisor-runtime.ts",
+      "bytes": 48782,
+      "sha256": "d08f387a10356284fc5c9a0f4835377c721a5e34599ef6c1c69723ba17effc65"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/supervisor-goal-policy.ts",
+      "bytes": 6310,
+      "sha256": "d5ae5f13444ceddb906850e170486ab9139baaddf47a0febafb447fb620f64fa"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 129697,
+      "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/runtime/agent-runner.ts",
+      "bytes": 54554,
+      "sha256": "1a7cb1f202d1ea337132c9242325caf4d3fbc625f30ef2df7765f13f77185286"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/v1/repository.ts",
+      "bytes": 12896,
+      "sha256": "42df86773d63ca3e70ae9141ed1ef1cd08707f70614493df4adda08dc4fdc4dd"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/v1/types.ts",
+      "bytes": 2121,
+      "sha256": "90b2aef27aed988e54a376c85dff80d885ef1948859aabcb395fb43dc2e068ea"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/v1/work-domains.ts",
+      "bytes": 25138,
+      "sha256": "a3f1b93631541f91278c3c66c310e6c51b72785918a6849960deaf5c3c9b4e3d"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/src/app.ts",
+      "bytes": 54471,
+      "sha256": "a92fcc5102633f67f0631ceb6b7b9ce67f4cdd2d392e83b5a503f10356071822"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/api/test/project-workbench-r45.test.ts",
+      "bytes": 6420,
+      "sha256": "b6b7bbb5a77c76839be19bcacad55c182bff16f243bcbf0a035c80d546e214b4"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "bytes": 9240,
+      "sha256": "f70460e1b5031e4950446e5c85a41b6dda03f4d4510e54ca68dee17d9dbf4ca1"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/reports/r45-round13-implementation.json",
+      "bytes": 2749,
+      "sha256": "d60bb08d1ff1cd7763066093886784035dc16097510e239b290ec854cb6b5075"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/reports/r45-round13-implementation.md",
+      "bytes": 6283,
+      "sha256": "ba4626cb07e1f8c1b3c44742b1e2c67712783bba8f1d7ab866918c05315ce7b3"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/reports/r45-round13-logs/kickoff-final.tap",
+      "bytes": 361,
+      "sha256": "7775be125361404ea927f75c6198bf38380acb6d11b3500977d886dd516745cd"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/reports/r45-round13-logs/typecheck-final.txt",
+      "bytes": 193,
+      "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/reports/r45-round13-logs/build-final-delta.txt",
+      "bytes": 3400,
+      "sha256": "0f0da0a477c63d2c6a790e9650de2e288a7a609937f4357bbadc02c9dd19932f"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round13/reports/r45-round13-git.json",
+      "bytes": 630,
+      "sha256": "ab84bad1b418edffed24283cee5f8a382914423e8bb67dd3734aa76ddb3d57f9"
+    }
+  ],
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-round13-workbench-api-independent-source-review.json",
+      "sha256": "35d923473750171c8b1bbc8abc33df9834397ac6bfd038629e005efcd5d6c270",
+      "bytes": 20982
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

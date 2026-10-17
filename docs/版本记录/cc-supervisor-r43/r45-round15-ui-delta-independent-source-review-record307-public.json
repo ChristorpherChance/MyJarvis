@@ -1,0 +1,99 @@
+{
+  "kind": "r45-round15-ui-delta-independent-source-review",
+  "mode": "LOCAL fixed source delta and saved evidence only",
+  "cut": {
+    "base": "8e646d8c2627294cf8e51ce216f55c286a2f31fc",
+    "app": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+    "final": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2"
+  },
+  "result": {
+    "confirmedNewUIP1": [],
+    "R14UIClosuresStillApply": true,
+    "browserAccepted": false,
+    "normalNativeTerminal": false,
+    "releaseApproval": false
+  },
+  "delta": [
+    {
+      "ref": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:18",
+      "change": "Added trim/filter plus Set duplicate-condition validation for a fresh non-pending kickoff before generating its commandId. Original pending.input remains authoritative and is not silently rewritten. This is a real additional client guard, not solely a wording change.",
+      "assessment": "Consistent with rejecting duplicate criteria while preserving fixed pending binding; server preflight implementation is independently reviewed by B."
+    },
+    {
+      "ref": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:22",
+      "change": "Replaced the technical pending stage in the primary notice with a plain explanation that the original target/executor binding will be used. Detailed context still retains the actual stage.",
+      "assessment": "No hidden start/adopt/permission expansion or state truth regression found in this wording delta."
+    },
+    {
+      "ref": "apps/api/src/runtime/cluster-runtime.ts:10",
+      "change": "Platform build R45r2 to20261018-unified-projects-r45-r3.",
+      "assessment": "Platform label is separate from the unchanged standalone101 agent contract."
+    }
+  ],
+  "unchangedR14Evidence": [
+    {
+      "path": "apps/web/src/DemoApp.tsx",
+      "sha256": "2befcf78c392d7be82ab8596dea604cbf7dd288580401521c7bf3f239435cc04",
+      "meaning": "Single project navigation and query-free Shell route matching unchanged."
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectDataDetails.tsx",
+      "sha256": "e08c8505dd729c1caed9add35998e44f8872b95f597fdd187bd7e2ae971894b1",
+      "meaning": "Project data/copies/milestones/environment/decision/autonomy on-demand controls unchanged."
+    },
+    {
+      "path": "apps/web/src/project-route.ts",
+      "sha256": "550b7311ae0d17957b000538e098eaa00a17819dfd5cd3674d74ecde7ab9d819",
+      "meaning": "Legacy route resolver and path-only root contract unchanged."
+    },
+    {
+      "path": "scripts/test-r45-r14-components.mjs",
+      "sha256": "143b949076829d0199c3377b456e28fd3fa3017da3783dd89bade9d143acc22e",
+      "meaning": "Prior saved handler/effect/SSR verification remains the prior bounded result; it was not rerun in this review or represented as browser acceptance."
+    }
+  ],
+  "changedPins": [
+    {
+      "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "sha256": "58bc61ea0c25d3df3776f6fd2306cf0b592e3db4ae8d8a79e4cc6fbaa1513398"
+    },
+    {
+      "path": "apps/api/src/runtime/cluster-runtime.ts",
+      "sha256": "4b90c70f700d7f3c49988f2e70b7b3f42337480e87e6bef29bc4337929668483"
+    },
+    {
+      "path": "reports/r45-round15-implementation.json",
+      "sha256": "fb89ef3fa33ac76c6f74f71d19a8c48e88d99fdc864f3dc89a5030372bef553c"
+    },
+    {
+      "path": "reports/r45-round15-logs/preflight-verified.tap",
+      "sha256": "8a8d13e5f6c54fb1b3b3b46eba3b55f35b73e86745bfb04598391573fd744905"
+    }
+  ],
+  "inheritedReview": {
+    "path": "artifacts/cc-supervisor-r43/r45-round14-ui-route-independent-source-review.json",
+    "bytes": 7691,
+    "sha256": "08ef13aeac5e88887bc3369118500defb634ea97ca7cc57bdf89f74400e57caa"
+  },
+  "evidenceBoundary": "The CLI maintenance ended at its900-second timeout with exit143 per Root's actual observation; that original failure remains and is not converted into a normal native completion by this review. The committed source,1/1 final API regression, saved type/build/package logs and actual collected artifacts are independent evidence that can be assessed despite that terminal. Usage/final completeness must follow actual signed/terminal evidence, not inferred zero or a fabricated final result.",
+  "reportBindingNote": "The implementation report references reports/r45-round15-git.json, which has no tracked entry in this new fixed delta. Root's actual Git import/bundle/app/final receipts can independently bind the delivered objects; do not describe the missing named report as present or restart a model merely to manufacture that reference.",
+  "remainingAcceptance": "Root's actual published original-tab routes, task-focus/back-forward, project-data dialogs and narrow/mobile display still require their real observation. This is no new claim that those checks passed, and their absence is not itself a source P1.",
+  "execution": {
+    "applicationEdits": 0,
+    "testsRun": 0,
+    "buildsRun": 0,
+    "browser": 0,
+    "network": 0,
+    "remote": 0,
+    "refsChanged": 0
+  },
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-ui-delta-independent-source-review.json",
+      "sha256": "64f3221704974a8efb16f52329fea7f5b15ae453c7d175fc895eba9adf13f10a",
+      "bytes": 4613
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

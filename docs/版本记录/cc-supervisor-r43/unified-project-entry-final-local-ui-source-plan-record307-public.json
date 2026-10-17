@@ -1,0 +1,448 @@
+{
+  "kind": "unified-project-entry-final-local-ui-source-plan",
+  "createdAt": "2026-10-17T15:24:08.650865+00:00",
+  "status": "final-local-handoff-for-101-CC-not-implemented",
+  "fixedSource": {
+    "finalHEAD": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+    "appHEAD": "9b0a71273a103ca5c2f1db7a63f07969beeabc49"
+  },
+  "scope": "LOCAL frozen source read and bounded UI/information architecture proposal only; no app edits/tests/browser/network/API/CC execution. Backend command-contract detail is assigned to B; this plan does not claim missing APIs already exist.",
+  "recommendation": "One visible Projects entry, a project list, then one persistent project workspace at projects/:projectId. Requirements, design, implementation, tests, fixes and release belong to the same project history and goal; tasks/runs/supervisor remain internal execution records and are opened as details, not separately registered user workspaces. This is not three old pages renamed or placed in Tabs.",
+  "currentProblems": [
+    {
+      "refs": [
+        "DemoApp.tsx:17-18",
+        "OperationsPage.tsx:19"
+      ],
+      "fact": "Three first-class routes/navigation entries expose projects, tasks and supervision as competing places for the same work."
+    },
+    {
+      "refs": [
+        "work.tsx:23-34",
+        "work.tsx:49-77",
+        "ProjectOversightPage.tsx:11"
+      ],
+      "fact": "Project selection opens a management Dialog; tasks/project has a second progress surface; supervision stacks two complete panels with overlapping state/goal/brief sections."
+    },
+    {
+      "refs": [
+        "ProjectSupervisorPanel.tsx:31-34",
+        "ProjectSupervisorPanel.tsx:63-70"
+      ],
+      "fact": "Main path requires pre-registered task, repeated goal/criteria, machine/workspace and a task ID; start/reply and the useful text form are buried among technical details."
+    },
+    {
+      "refs": [
+        "project-supervisor-runtime.ts:67-68",
+        "project-supervisor-runtime.ts:74"
+      ],
+      "fact": "create rejects task history; adopt mutates and enables judgment; reply can enable dispatch. Hiding fields or calling these on page open does not safely implement automatic reuse."
+    }
+  ],
+  "oneProjectHome": {
+    "topToBottom": [
+      {
+        "block": "Header and current goal",
+        "visible": "Project name, current agreed goal, brief completion criteria and a small edit-goal action. Use active supervisor goal revision when present, otherwise existing project goal; retain original project/task goal versions in details and do not silently overwrite them to make text match."
+      },
+      {
+        "block": "Current status, blocker and next step",
+        "visible": "One concise factual statement showing who is acting: Jarvis reviewing, node actually running, queued, waiting for person, paused, stopped or unknown. Include current blocker and next planned action. Bind executor status to actual run, not manual work-item running or supervisor status alone."
+      },
+      {
+        "block": "Needs your input or existing approval",
+        "visible": "Actual CC question/options or a real pending approval, with a direct response/processing action in this workspace. Do not hide this in details and do not introduce a new approval cycle for ordinary already-authorized continuation."
+      },
+      {
+        "block": "Tell Jarvis",
+        "visible": "Always-visible text composer with contextual reply to the current question. One Send action plus explicit Pause/Stop controls when applicable. Status questions remain read-only. A directive, goal change, reply or stop is persisted as the correct bound command with its actual outcome, not an unbound global Pi chat or blind reply call."
+      },
+      {
+        "block": "Latest result and completion brief",
+        "visible": "Latest actual result, what was done/verified, what remains and a concise source-linked brief. Distinguish AI execution end/Jarvis judged achieved/independent acceptance/deployment. Manual work-item completed and a successful child cannot label whole project delivered."
+      }
+    ],
+    "foldedDetails": [
+      {
+        "name": "Process and evidence",
+        "contents": [
+          "Chronological instructions, CC feedback, option/reason, supervisor decisions and actual action/outcome",
+          "Complete evidence references/hash and older history paging",
+          "Owner correction, relevant experience adoption/exclusion and original decision links"
+        ]
+      },
+      {
+        "name": "Project and execution details",
+        "contents": [
+          "Existing task list and selected task/run details",
+          "Server/executor/workspace/session and binding diagnostics",
+          "Known/unknown cost and tokens, technical window/retry/time bounds",
+          "Project metadata/copies/milestones, environment and release/version records",
+          "Original approvals/stop proof/reconciliation/lineage controls when relevant"
+        ]
+      }
+    ],
+    "alwaysVisibleTruth": [
+      "Connection stale/unknown and actual read errors",
+      "Real wait-user/approval blocker",
+      "Stop requested versus signed stop confirmed",
+      "Unknown cost/tokens remain unknown",
+      "Owner control is not automatically resumed by navigation"
+    ],
+    "doNotCopyAsWhole": [
+      "Do not put full ProjectSupervisorPanel plus full consoleMode ProjectSupervisionWorkPanel into the new home; extract their state/actions and small render sections.",
+      "Do not show the global DevelopmentSupervisionPanel as the selected project state; it lists all managed tasks and global policy.",
+      "Do not turn legacy plan step labels into a fabricated current lifecycle stage; only show a named stage when backed by a real step/task/result."
+    ]
+  },
+  "firstAndReturnFlow": {
+    "returnToExistingProject": [
+      "GET-only resolve the existing supervisor and its exact bound task/run/native session first. If it exists, show it; page open causes zero create/adopt/resume/dispatch calls.",
+      "If no supervisor exists, read eligible existing task/session candidates within owner/project/server/workspace bindings. Unique eligible candidate is preselected and displayed by meaningful task/session title and status. Multiple candidates get one readable choice, not UUID entry.",
+      "The same single Start/Continue gesture can authorize the validated reuse/adoption path. adopt is not a read operation; do not run it while merely inspecting the page.",
+      "If existing history is not a valid signed adoptable terminal or is still active/unresolved, show the real current state and reconciliation action; never create a fresh task/session to bypass history."
+    ],
+    "firstNewProject": {
+      "askNormally": [
+        "What should this project achieve?",
+        "Development server / AI session / workspace only when not already uniquely known from registered bindings"
+      ],
+      "selectionPresentation": "A single readable binding line by default, expandable to server/AI/session/workspace choices. Name, description and existing acceptance criteria may be prefilled from the selected real project/task; task/run/session IDs are internal. No repeated project registration or mandatory repo/branch/budget/UUID form in the normal path.",
+      "criteriaBoundary": "Reuse existing confirmed completion criteria. If a truly new goal lacks an objective completion condition, ask one necessary clarification in the same composer; do not insert fabricated generic passed criteria merely to satisfy a schema.",
+      "authorizationPresentation": "One clear Start/Continue action for this goal with concise disclosure that existing history and unknown usage are retained and continuation stays within this goal. Technical per-window limits live in details; costs remain record-only without a new money cap.",
+      "backendNeed": "The current APIs require separate project/copy/task/create-or-adopt/start mutations. A narrow idempotent service-level kickoff/continuation orchestration is required to hide those steps safely, preserve CAS/receipts and recover partial outcomes. UI-only success chaining must not create duplicate tasks after a lost response.",
+      "goalAndCriteriaUI": "Prefill existing real project goal and existing confirmed criteria, both editable in the same short setup. Show registered node/AI session/workspace suggestions; changing them must pass server binding checks. If no unambiguous criterion/binding exists, ask only the missing information in place; do not guess a path/node, hide adoption/start or create duplicate records."
+    }
+  },
+  "routeCompatibility": {
+    "implementation": "Normalize in one shared project-route resolver used by initial locationView, navigate and hashchange before ROUTES validation. Keep legacy route recognition, but remove duplicate visible navigation. Update canonical URL with replaceState without reload or command side effects; preserve theme/board and relevant detail target.",
+    "mapping": [
+      {
+        "legacy": "projects",
+        "canonical": "projects",
+        "behavior": "Project cards with current goal/status/next action and a Start project entry."
+      },
+      {
+        "legacy": "projects/:id or projects/:id?tab=overview",
+        "canonical": "projects/:id",
+        "behavior": "Persistent project home, not the current Dialog over the project list."
+      },
+      {
+        "legacy": "supervision/:projectId",
+        "canonical": "projects/:projectId",
+        "behavior": "Same home, no second panel tree."
+      },
+      {
+        "legacy": "supervision",
+        "canonical": "projects/:registeredPreviouslyPreferredProjectId or projects",
+        "behavior": "Preserve the formerly selected/factory project only if actually accessible; otherwise show project list, never silently take over an arbitrary project."
+      },
+      {
+        "legacy": "tasks/project/:projectId?details=open",
+        "canonical": "projects/:projectId?detail=tasks",
+        "behavior": "Open existing task history drawer; project home remains the context."
+      },
+      {
+        "legacy": "tasks/:taskId",
+        "canonical": "projects/:realOwnerProjectId?detail=task&task=:taskId",
+        "behavior": "Resolve the real task/project binding first. Preserve task evidence, command context and notification deep link. Unknown/inaccessible records show a real not-found/access error rather than create a replacement."
+      },
+      {
+        "legacy": "tasks",
+        "canonical": "projects?detail=all-work",
+        "behavior": "Projects entry with cross-project work history/attention as a secondary drawer/filter; preserve orphan/unresolved history access without inventing project bindings."
+      },
+      {
+        "legacy": "tasks/new?projectId=:id",
+        "canonical": "projects/:id?intent=arrange-work",
+        "behavior": "Open same project composer/setup context; do not create a task from a navigation effect."
+      },
+      {
+        "legacy": "projects/:id?tab=autonomy or tab=decisions",
+        "canonical": "projects/:id?detail=progress or detail=decisions",
+        "behavior": "Open existing evidence/decision detail inside the same workspace; retain old records and exact decision links."
+      }
+    ],
+    "notificationCompatibility": "Existing notifications.ts:73-76 points to tasks/:id and :101 to supervision/:id. Preserve those server-stored routes and let the shared resolver reach the same project/task detail; update new generated links gradually without rewriting history."
+  },
+  "implementationSlices": [
+    {
+      "slice": 1,
+      "deliverable": "One project entity page and route compatibility for existing records",
+      "files": [
+        "DemoApp.tsx:17-18,21,27-30,43",
+        "OperationsPage.tsx:19-26",
+        "work.tsx:16-34,42-77",
+        "ProjectOversightPage.tsx:6-11",
+        "proposed small project-route resolver and ProjectWorkspacePage.tsx"
+      ],
+      "change": "Keep a single Projects navigation entry. Reuse project list and existing detail components, make projects/:id a full workspace, and translate old links centrally. Preserve old task/detail handlers behind drawers during extraction. This slice alone is navigation/read consolidation, not full one-step kickoff completion."
+    },
+    {
+      "slice": 2,
+      "deliverable": "One factual home and visible text/control loop",
+      "files": [
+        "ProjectSupervisorPanel.tsx:18-42,43-70",
+        "ProjectSupervisionWorkPanel.tsx:25-44,93-108",
+        "supervision-work-runtime.ts:83-106",
+        "proposed useProjectWorkspace/useProjectSupervisor hooks"
+      ],
+      "change": "Extract reusable controller state/actions from the current all-in-one panels. Compose only goal/current state/attention/text/latest brief in the home; fold raw details. Use actual run and stop proof for state; preserve feedback options/corrections/experience/history. Read/status text must not invoke reply/dispatch."
+    },
+    {
+      "slice": 3,
+      "deliverable": "Minimal initial setup and safe reuse/continue",
+      "files": [
+        "project-supervisor-runtime.ts:64,67-74,81,87",
+        "project-supervisor-routes.ts",
+        "existing project/task command services; exact server contracts in B parallel review"
+      ],
+      "change": "Implement only read-only extended supervisor context plus explicit durable idempotent kickoff stages and stable per-step IDs, including pending ownership protection against scheduleManaged/ordinary start. Reuse existing project/task/supervisor runtimes and authority checks. No new executor/general workflow engine, cross-database atomicity claim or hidden adopt/resume. Existing historical or paused/blocked state remains visible and explicit continuation uses real protections."
+    }
+  ],
+  "minimalReviewableCompletionChecks": [
+    "All three old entry/notification links reach the same project and the exact old task/decision history; refresh/back/forward do not create tasks or runs.",
+    "A returning project with an existing session opens read-only and retains task/session/usage history; a lost Start response/retry returns the same binding and command outcome, not a duplicate task.",
+    "A new user can start with goal and only missing readable binding choices, without visiting task registration/supervision setup pages or typing internal IDs. Objective criteria remain real.",
+    "Read-status message creates no dispatch; an explicit instruction reaches the same bound CC session; genuine question/approval/stop-pending state remains visible.",
+    "Known-zero and unknown usage render safely; missing/stale data shows unknown/read failure, not an empty root or a false stopped/completed state.",
+    "Latest completion brief links actual results, acceptance and release facts; no manual work-item count or model self-report becomes whole-project completion.",
+    "Crash/lost response between task creation and supervisor binding must not let scheduleManaged/ordinary start dispatch the pending kickoff task; retry resolves the original command receipt and same task/session, or blocks for reconciliation.",
+    "When an existing child runs, the message UI distinguishes unsent/queued-for-next-turn/current CC acknowledged; it cannot claim immediate delivery through the existing reply route."
+  ],
+  "nonImplementationBoundary": [
+    "No production code or API changed by this proposal. No tests, browser, network or runtime executed.",
+    "Current create/adopt/reply semantics are source facts, not an assertion that one-click reuse already works.",
+    "Final deployment authority and existing approval/release gates stay in their current services; a unified text box is not direct shell or unrestricted deployment authority.",
+    "B owns the precise existing backend command/API contract and remaining reachability gaps; combine both reviews before directing101CC."
+  ],
+  "sourceRefs": [
+    {
+      "path": "apps/web/src/DemoApp.tsx",
+      "lines": [
+        17,
+        18,
+        21,
+        25,
+        27,
+        28,
+        30,
+        43,
+        47
+      ],
+      "sha256": "dde5aeae6994eb94560869277912ee0771f0e5605556f550dbd369ffb24d8327",
+      "bytes": 34373
+    },
+    {
+      "path": "apps/web/src/features/operations/OperationsPage.tsx",
+      "lines": [
+        19,
+        21,
+        24,
+        25,
+        26
+      ],
+      "sha256": "e1562b0e7e9636a5aba6b71fa03c9bc872ef5d7c26712f3d1cb906417d9d02a6",
+      "bytes": 2600
+    },
+    {
+      "path": "apps/web/src/features/operations/work.tsx",
+      "lines": [
+        16,
+        23,
+        24,
+        27,
+        28,
+        30,
+        31,
+        33,
+        34,
+        42,
+        49,
+        53,
+        59,
+        60,
+        61,
+        76,
+        77
+      ],
+      "sha256": "910a5ecf884a3bad88375fe63af69d30c6790f6fca74c0697606de6400f99572",
+      "bytes": 42260
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectOversightPage.tsx",
+      "lines": [
+        6,
+        8,
+        11
+      ],
+      "sha256": "385ddb4bc6b771d786b40686ff9cb5e5330a996967be02509bc66a50824ab9fc",
+      "bytes": 2230
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "lines": [
+        14,
+        18,
+        20,
+        31,
+        32,
+        33,
+        34,
+        39,
+        41,
+        42,
+        43,
+        47,
+        50,
+        52,
+        60,
+        61,
+        62,
+        63,
+        65,
+        66,
+        67,
+        70
+      ],
+      "sha256": "d9ca2cbf6d38e1b8bccae83aee3fea629d899eae6a9689e672dabafd94f1711c",
+      "bytes": 26387
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+      "lines": [
+        25,
+        28,
+        38,
+        40,
+        76,
+        93,
+        97,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "sha256": "43edf72124d444e95715b746b38b9a84814c846f10ea933038c82dcd963d9fcf",
+      "bytes": 26040
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "lines": [
+        64,
+        67,
+        68,
+        69,
+        73,
+        74,
+        81,
+        87
+      ],
+      "sha256": "ad866b1cc82506284e4f86c444e69dd6d5ca614055864b2bcb854628c757c1da",
+      "bytes": 48601
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-routes.ts",
+      "lines": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "sha256": "2e4884008e39f41053e3d04e0a030fa183c2efe474535c9ffc3649c210085586",
+      "bytes": 3106
+    },
+    {
+      "path": "apps/api/src/runtime/supervision-work-runtime.ts",
+      "lines": [
+        72,
+        73,
+        83,
+        89,
+        98,
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "sha256": "403f21a3b5a5c8feb675fc48d5d080630441542ddff6508aa65d37d7479f09a0",
+      "bytes": 22670
+    },
+    {
+      "path": "apps/api/src/runtime/notifications.ts",
+      "lines": [
+        73,
+        74,
+        76,
+        101
+      ],
+      "sha256": "ad7f3f27082f915cb7325b90cbe8f7b3070e0a5971eff627aa9e0e8f832b0b68",
+      "bytes": 40496
+    },
+    {
+      "path": "apps/web/src/demo/live-projection.ts",
+      "lines": [
+        59,
+        60
+      ],
+      "sha256": "2cfc79d3b87db2f81882da8c982beb53d37bcfa71f306cbd424fe7cf514468ba",
+      "bytes": 13127
+    },
+    {
+      "path": "apps/web/src/features/operations/usage-ledger.ts",
+      "lines": [
+        24
+      ],
+      "sha256": "59291e6c3f4544432f11b8a5d8c6b893dbbd003837c117e586c7284f394eb20e",
+      "bytes": 5842
+    }
+  ],
+  "priorProposal": {
+    "path": "artifacts/cc-supervisor-r43/unified-project-entry-local-ui-source-plan.json",
+    "sha256": "4e3d98bdb30308f9b6a5b47e963978124fe9c4ad92912489b26511bf69858c82",
+    "bytes": 18871
+  },
+  "RootConfirmedImplementationBoundary": {
+    "singleProjectWorkspace": true,
+    "minimumContextKickoffAPI": true,
+    "nativeImplementationWindowSec": 2400,
+    "retry": 0,
+    "testSubagentsAtMost": 1,
+    "doNotPassOffThreeWholePanelsOrTabsAsMerge": true,
+    "goalAndCriteriaPrefilledFromExistingRealProjectEditable": true,
+    "nodeAndWorkspaceSuggestedFromRegisteredBindingsEditable": true,
+    "existingBlockedPausedNeverAutoResumed": true,
+    "adoptAndStartEffectsMustBeExplicitVisibleOperations": true,
+    "RootReadsTheseSourceFindingsAndEmbedsNarrowDirective": true,
+    "noNeedToTransferLargeReviewSourceCopiesTo101": true,
+    "applicationImplementationAndTestsBy101CC": true,
+    "RootOwnsReleaseAndBrowserAcceptance": true
+  },
+  "minimumServerContract": {
+    "readOnlyContext": "Extend existing GET /api/v1/projects/:id/supervisor while preserving its current session/events envelope. Add project/current supervisor/bound task/actual run/native session/eligible template/registered nonproduction copy candidates/allowedActions and blocked reasons. GET must not create, adopt, reconcile, resume or dispatch.",
+    "explicitKickoff": "Add POST under the existing supervisor route, e.g. /kickoff. A user command with stable commandId and expected versions resolves a uniquely eligible existing safe draft or creates only truly missing project work, then creates supervisor draft and explicitly starts within the same goal authorization. Existing supervisor returns the same entity/context; active, blocked, paused and historical bindings are never silently reset.",
+    "distributedCommitTruth": "Existing V1 repository and supervisor SQLite are separate databases; do not claim a cross-database SQL transaction. Use the narrow durable kickoff intent/stage receipts and stable per-step command IDs needed for exact retry/recovery. Pending kickoff ownership must exclude the newly created queued task from scheduleManaged and ordinary start until binding/start is safely committed or explicitly reconciled.",
+    "BSourceReason": "B source review found ExecutionRuntime.scheduleManaged at328-345 can pick queued tasks before supervisorOwns; merely sequencing tasks.create then supervisor.create in the browser has an orphan auto-dispatch window. Use original command receipts for recovery, never new task IDs/nonces to bypass unknown results.",
+    "reuseVisibility": "For a no-history safe draft, show Start this project. For valid existing signed history, show an explicit Continue existing session / bind-and-review action with its real effects; adopt itself enables judgment, so never hide it in a view load or label it Save. Existing paused/blocked uses the allowed existing protected continue command only after the explicit action. Ineligible history remains visible with its exact reconciliation reason.",
+    "composerTruth": "Read-status is GET/read only. Existing reply is an execution directive that can enable dispatch; do not send every chat/status question through reply. There is no current native-stdin live message endpoint. While a child is running, do not claim a text was delivered to current CC: either persist a properly bound next-turn message which is actually consumed by judgment/dispatch and label queued, or retain an unsent draft until a supported action is available. No invented immediate interrupt/injection channel.",
+    "authorityTruth": "One goal-scoped authorization retains existing policy/window/CAS/stop/revoke/evidence/unknown usage guards. Existing approvals remain visible; no new per-round approval or money cap. A text composer does not bypass release authorization or run shell commands."
+  },
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/unified-project-entry-final-local-ui-source-plan.json",
+      "sha256": "fed2b9f2830d768a50de1b4ce708ade0f2c926f7da794ac9c4bb6280e1de3a38",
+      "bytes": 23620
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

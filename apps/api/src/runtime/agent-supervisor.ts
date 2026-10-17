@@ -1,11 +1,14 @@
-import { spawn } from 'node:child_process';
-import { isAbsolute } from 'node:path';
-
-/** This process survives a node-agent crash long enough to stop the controlled child tree. */
+import {spawn} from 'node:child_process';
+import {isAbsolute} from 'node:path';
+import {writeSync} from 'node:fs';
+/** A distinct worker owns the child process group. fd3 is an agent-only control channel, never child stdout. */
 const parentPid=process.ppid;
-let input='',started=false,child:ReturnType<typeof spawn>|undefined,stopping=false;
-async function stop(){if(stopping)return;stopping=true;const pid=child?.pid;if(pid){if(process.platform==='win32')await new Promise<void>(res=>{const kill=spawn('taskkill.exe',['/PID',String(pid),'/T','/F'],{windowsHide:true,stdio:'ignore',shell:false});kill.once('error',()=>{child?.kill();res()});kill.once('close',()=>res())});else{try{process.kill(-pid,'SIGTERM')}catch{child?.kill('SIGTERM')}await new Promise(r=>setTimeout(r,500));try{process.kill(-pid,'SIGKILL')}catch{}}}process.exit(143)}
-process.once('SIGTERM',()=>{void stop()});process.once('SIGINT',()=>{void stop()});
-const parentWatch=setInterval(()=>{try{process.kill(parentPid,0)}catch{void stop()}},1000);parentWatch.unref();
-process.stdin.setEncoding('utf8');process.stdin.on('data',(value:string)=>{input+=value;if(input.length>2*1024*1024){process.exit(64)} });
-process.stdin.once('end',()=>{try{const p=JSON.parse(input);if(started||!isAbsolute(p.program)||!Array.isArray(p.args)||p.args.some((x:any)=>typeof x!=='string')||!isAbsolute(p.workspace))throw Error();started=true;child=spawn(p.program,p.args,{cwd:p.workspace,shell:false,windowsHide:true,detached:process.platform!=='win32',stdio:['ignore','pipe','pipe'],env:process.env});child.stdout?.pipe(process.stdout);child.stderr?.pipe(process.stderr);child.once('error',()=>process.exit(127));child.once('close',code=>{clearInterval(parentWatch);process.exit(code===null?1:Math.max(0,Math.min(255,code)))})}catch{process.exit(64)}});
+let input='',started=false,child:ReturnType<typeof spawn>|undefined,stopping=false,closed=false;
+function control(value:unknown){try{writeSync(3,JSON.stringify(value)+'\n');}catch{/* Older callers have no control fd. */}}
+function groupEmpty(pid:number){if(process.platform==='win32')return false;try{process.kill(-pid,0);return false;}catch(e){return (e as NodeJS.ErrnoException).code==='ESRCH';}}
+async function finish(code:number){if(closed)return;closed=true;clearInterval(parentWatch);const pid=child?.pid;if(pid){if(!groupEmpty(pid)){try{process.kill(-pid,'SIGKILL');}catch{}}for(let i=0;i<40&&!groupEmpty(pid);i++)await new Promise(r=>setTimeout(r,25));control({kind:'terminated',supervisorPid:process.pid,childPid:pid,processGroupId:pid,childExitObserved:true,stdioClosed:true,groupEmpty:groupEmpty(pid),observedAt:new Date().toISOString(),platform:process.platform==='win32'?'win32':'linux',method:'process-group-probe'});}process.exit(code);}
+async function stop(){if(stopping)return;stopping=true;const pid=child?.pid;if(!pid){process.exit(143);return;}if(process.platform==='win32'){const kill=spawn('taskkill.exe',['/PID',String(pid),'/T','/F'],{stdio:'ignore',windowsHide:true,shell:false});kill.once('error',()=>child?.kill());}else{try{process.kill(-pid,'SIGTERM');}catch{child?.kill('SIGTERM');}setTimeout(()=>{try{process.kill(-pid,'SIGKILL');}catch{}},500).unref();}setTimeout(()=>{if(!closed){control({kind:'termination-unknown',childPid:pid});process.exit(143);}},3000).unref();}
+process.once('SIGTERM',()=>void stop());process.once('SIGINT',()=>void stop());
+const parentWatch=setInterval(()=>{try{process.kill(parentPid,0);}catch{void stop();}},1000);parentWatch.unref();
+process.stdin.setEncoding('utf8');process.stdin.on('data',(value:string)=>{input+=value;if(input.length>2*1024*1024)process.exit(64);});
+process.stdin.once('end',()=>{try{const p=JSON.parse(input);if(started||!isAbsolute(p.program)||!Array.isArray(p.args)||p.args.some((v:any)=>typeof v!=='string')||!isAbsolute(p.workspace))throw Error();started=true;child=spawn(p.program,p.args,{cwd:p.workspace,shell:false,windowsHide:true,detached:process.platform!=='win32',stdio:['ignore','pipe','pipe'],env:process.env});control({kind:'started',supervisorPid:process.pid,childPid:child.pid});child.stdout?.pipe(process.stdout);child.stderr?.pipe(process.stderr);child.once('error',()=>void finish(127));child.once('close',code=>void finish(stopping?143:code===null?1:Math.max(0,Math.min(255,code))));}catch{process.exit(64);}});

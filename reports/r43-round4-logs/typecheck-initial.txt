@@ -1,0 +1,170 @@
+
+> jarvis-platform@0.1.0 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @jarvis/api@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+src/app.ts(175,692): error TS2345: Argument of type '{ runId: string; actorId: string; provider: string; model: string; projectId: string | undefined; taskId: string | undefined; machineId: string | undefined; executorId: string | undefined; ... 13 more ...; ledgerRecorded?: boolean; }' is not assignable to parameter of type '{ runId: string; actorId: string; provider: string; model: string; inputTokens: number; outputTokens: number; cacheReadTokens?: number | undefined; cacheWriteTokens?: number | undefined; ... 12 more ...; measuredAt?: string | undefined; }'.
+  Types of property 'inputTokens' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+src/runtime/agent-runner.ts(69,730): error TS18048: 'next.inputTokens' is possibly 'undefined'.
+src/runtime/agent-runner.ts(69,809): error TS18048: 'next.outputTokens' is possibly 'undefined'.
+src/runtime/agent-runner.ts(148,312): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+src/runtime/agent-runner.ts(148,364): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+src/runtime/agent-runner.ts(148,568): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+src/runtime/agent-runner.ts(148,582): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+src/runtime/agent-runner.ts(170,66): error TS2345: Argument of type 'ActualUsage | undefined' is not assignable to parameter of type '{ inputTokens: number; outputTokens: number; } | undefined'.
+  Type 'ActualUsage' is not assignable to type '{ inputTokens: number; outputTokens: number; }'.
+    Types of property 'inputTokens' are incompatible.
+      Type 'number | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/runtime/cli-supervision.ts(50,41): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(50,59): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(51,124): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(51,168): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(56,146): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(56,164): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(59,19): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+src/runtime/cli-supervision.ts(59,48): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(59,30): error TS18048: 'supervision' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,2275): error TS18048: 'totals.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,2295): error TS18048: 'output.usage.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,2320): error TS18048: 'totals.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,2341): error TS18048: 'output.usage.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,2610): error TS18048: 'output.usage.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,2635): error TS18048: 'output.usage.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,3643): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,3699): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,3756): error TS18048: 'totals.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,3776): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,3790): error TS18048: 'totals.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,3811): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,4036): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+src/runtime/execution-runtime.ts(335,4050): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+src/runtime/project-supervisor-runtime.ts(38,395): error TS18048: 'project' is possibly 'undefined'.
+src/runtime/project-supervisor-runtime.ts(42,406): error TS18048: 'project' is possibly 'undefined'.
+src/runtime/project-supervisor-runtime.ts(45,409): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(45,467): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,66): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,89): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,97): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,109): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,124): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,143): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,268): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,386): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,386): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/runtime/project-supervisor-runtime.ts(46,404): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,404): error TS2322: Type 'string[] | undefined' is not assignable to type 'string[]'.
+  Type 'undefined' is not assignable to type 'string[]'.
+src/runtime/project-supervisor-runtime.ts(46,430): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,447): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,447): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/runtime/project-supervisor-runtime.ts(46,470): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,491): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,509): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,529): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,552): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,565): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(46,575): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,10): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,32): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,167): error TS2345: Argument of type 'SupervisorSession | null' is not assignable to parameter of type 'SupervisorSession'.
+  Type 'null' is not assignable to type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(47,173): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,196): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,224): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,270): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,319): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,621): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,637): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,649): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,677): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,724): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,778): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,791): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,815): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,898): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,916): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,986): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1001): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1010): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1019): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1029): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1088): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1116): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(47,1129): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(48,12): error TS2345: Argument of type 'SupervisorSession | null' is not assignable to parameter of type 'SupervisorSession'.
+  Type 'null' is not assignable to type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(48,154): error TS2345: Argument of type 'SupervisorSession | null' is not assignable to parameter of type 'SupervisorSession'.
+  Type 'null' is not assignable to type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(49,396): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,544): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,690): error TS18048: 'row' is possibly 'undefined'.
+src/runtime/project-supervisor-runtime.ts(49,774): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,918): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,945): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,977): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1002): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1045): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1068): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1076): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1088): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1096): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1121): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1147): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1163): error TS18047: 's' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(49,1295): error TS2345: Argument of type 'SupervisorSession | null' is not assignable to parameter of type 'SupervisorSession'.
+  Type 'null' is not assignable to type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(49,1411): error TS2345: Argument of type 'SupervisorSession | null' is not assignable to parameter of type 'SupervisorSession'.
+  Type 'null' is not assignable to type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(54,547): error TS18048: 'task' is possibly 'undefined'.
+src/runtime/project-supervisor-runtime.ts(54,713): error TS18048: 'task' is possibly 'undefined'.
+src/runtime/project-supervisor-runtime.ts(56,315): error TS2322: Type '{ state: string; summary: string; question: string; options: never[]; recommendedOption: null; evidence: never[]; nextSuggestion: string; diagnostic: { outcome: string; exitCode: any; summary: string; usage: any; protocolError: any; logHash: any; source: string; }; }' is not assignable to type '{ state: "progress" | "blocked" | "needs_decision" | "ready_for_review"; summary: string; question: string; options: string[]; recommendedOption: string | null; evidence: { path: string; sha256: string; }[]; nextSuggestion: string; }'.
+  Types of property 'state' are incompatible.
+    Type 'string' is not assignable to type '"progress" | "blocked" | "needs_decision" | "ready_for_review"'.
+src/runtime/project-supervisor-runtime.ts(60,232): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,267): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,289): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,315): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,368): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,467): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,516): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,552): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,603): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,987): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,1154): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,1242): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,1289): error TS18047: 'intent' is possibly 'null'.
+src/runtime/project-supervisor-runtime.ts(60,1416): error TS18047: 'intent' is possibly 'null'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api
+npm error workspace @jarvis/api@0.1.0
+npm error location /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api
+npm error command failed
+npm error command sh -c tsc --noEmit -p tsconfig.json
+
+
+> @jarvis/web@0.1.0 typecheck
+> tsc --noEmit
+
+src/features/operations/ProjectSupervisorPanel.tsx(42,10): error TS17008: JSX element 'section' has no corresponding closing tag.
+src/features/operations/ProjectSupervisorPanel.tsx(56,5): error TS1003: Identifier expected.
+src/features/operations/ProjectSupervisorPanel.tsx(58,6): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/features/operations/ProjectSupervisorPanel.tsx(60,4): error TS17015: Expected corresponding closing tag for JSX fragment.
+src/features/operations/ProjectSupervisorPanel.tsx(60,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/features/operations/ProjectSupervisorPanel.tsx(61,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/features/operations/ProjectSupervisorPanel.tsx(62,1): error TS1005: '</' expected.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/web
+npm error workspace @jarvis/web@0.1.0
+npm error location /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/web
+npm error command failed
+npm error command sh -c tsc --noEmit

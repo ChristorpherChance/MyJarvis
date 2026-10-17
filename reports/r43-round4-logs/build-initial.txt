@@ -1,0 +1,22 @@
+
+> jarvis-platform@0.1.0 build
+> npm run build -w @jarvis/web && npm run build -w @jarvis/api
+
+
+> @jarvis/web@0.1.0 build
+> tsc --noEmit && vite build --outDir .dist-staging && node ../../scripts/promote-web.mjs
+
+src/features/operations/ProjectSupervisorPanel.tsx(42,10): error TS17008: JSX element 'section' has no corresponding closing tag.
+src/features/operations/ProjectSupervisorPanel.tsx(56,5): error TS1003: Identifier expected.
+src/features/operations/ProjectSupervisorPanel.tsx(58,6): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/features/operations/ProjectSupervisorPanel.tsx(60,4): error TS17015: Expected corresponding closing tag for JSX fragment.
+src/features/operations/ProjectSupervisorPanel.tsx(60,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/features/operations/ProjectSupervisorPanel.tsx(61,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/features/operations/ProjectSupervisorPanel.tsx(62,1): error TS1005: '</' expected.
+npm error Lifecycle script `build` failed with error:
+npm error code 2
+npm error path /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/web
+npm error workspace @jarvis/web@0.1.0
+npm error location /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/web
+npm error command failed
+npm error command sh -c tsc --noEmit && vite build --outDir .dist-staging && node ../../scripts/promote-web.mjs

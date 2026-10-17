@@ -217,6 +217,7 @@ const experiences:DomainHandler = {
       ensure(kind!=='health'||ctx.scope==='private','健康资料仅可保存在本人私有空间','FORBIDDEN',403);ensure(kind!=='family'||ctx.scope==='family','家庭资料需选择家庭共享范围','FORBIDDEN',403);
       const body=experienceBody(text(p.title,'标题',300),text(p.content,'正文',20000,true),kind,text(p.source,'来源'),ctx.now,optional(p.conditions));
       if (p.terminalId!==undefined) body.terminalId=text(p.terminalId,'终端 ID',200);
+      if(p.supervisorLearning!==undefined){ensure(['lesson','experience'].includes(kind),'主管候选不得自动发布技能');const metadata=p.supervisorLearning;ensure(metadata&&typeof metadata==='object'&&!Array.isArray(metadata)&&JSON.stringify(metadata).length<=12000,'主管经验元数据无效');body.supervisorLearning=JSON.parse(JSON.stringify(metadata));body.verified=false;body.status='inbox';}
       if(p.summary!==undefined)body.summary=optional(p.summary,2000);if(p.tags!==undefined)body.tags=[...new Set(strings(p.tags,'标签'))].slice(0,30);if(p.projectId){ctx.require('projects',text(p.projectId,'项目ID',200));body.projectId=p.projectId;}
       const record=ctx.create('experiences',body);ctx.emit('experiences',record.id,'captured',{kind});return record;
     }

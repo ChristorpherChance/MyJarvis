@@ -1,0 +1,40 @@
+{
+  "kind": "r43-root-independent-idle-control-r2-delta-source-review",
+  "at": "2026-10-17T10:23:42.933Z",
+  "fullOriginalReview": {
+    "path": "artifacts/cc-supervisor-r43/r43-101-idle-upgrade-control-independent-source-review.json",
+    "sha256": "9a019469ede26633c24f6d212da296ac173aaa0cdf1fd8c64979e22b6a24947c"
+  },
+  "finding": "CONTROL-P1-01",
+  "sourceFindingClosed": true,
+  "exactSingleDeltaInverseVerified": true,
+  "actualDelta": "Six central API reads are strictly ordered await calls; first failure throws before the next API call or phase.",
+  "original": {
+    "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-control.mjs",
+    "bytes": 16788,
+    "sha256": "bd0041d3813b7931771bc033f4ea41df91a00e57c43f972e74c1c98a70591090"
+  },
+  "r2": {
+    "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r2.mjs",
+    "bytes": 16867,
+    "sha256": "d935caa1be77e9176ec677c6ecaa5b0804893731dd6eaf0afba5ecce1a305e05"
+  },
+  "unchangedSources": [
+    {
+      "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-node.py",
+      "sha256": "95bab23cc05f7e0898b09330387af79de684ffbd41d2410df9614e23d9aa033f",
+      "bytes": 20035
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r43-upgrade-101-idle-spec.template.json",
+      "sha256": "d932aa5d2a17419b5d23664ac608409e9f5d8f5bdf9893c7428ed8ed1bc5f078",
+      "bytes": 1182
+    }
+  ],
+  "controlExecuted": false,
+  "testsRerun": false,
+  "remoteCalls": 0,
+  "realSpecFilled": false,
+  "finalPackageOrLiveIdleAccepted": false,
+  "limits": "Accepts the source delta only, inheriting the original local full-source review limits. Final application schema/package and actual stop/backup/drain/stage/activate/heartbeat/rollback require their own exact pins and live evidence."
+}

@@ -1,0 +1,81 @@
+{
+  "operationId": "6661a48c-5e5d-4fa7-92a6-4ec7af599646",
+  "unit": "jarvis-cc-maint-r43-6661a48c-5e5d-4fa7-92a6-4ec7af599646.service",
+  "unitState": {
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "3831833",
+    "ControlGroup": "/system.slice/jarvis-cc-maint-r43-6661a48c-5e5d-4fa7-92a6-4ec7af599646.service"
+  },
+  "cgroupProcesses": 2,
+  "files": {
+    "unit.stderr.raw": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr.raw": {
+      "size": 82,
+      "sha256": "9104f1a4d181ca48b29747963d07d567b8d8e48092ecf26af75d13bb29efa20b"
+    },
+    "stdout.raw": {
+      "size": 2530,
+      "sha256": "4fcff6b05f352f2dde890cd327f7c4cf47b457e1d3eac4337c0fc90e6165ce72"
+    },
+    "unit.stdout.raw": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "controller-intent.json": {
+      "size": 644,
+      "sha256": "e2f411369247d5a97a413e7392b26f57b9da8b9bb0f6c8583a8bca4a4f2f1559"
+    },
+    "child-started.json": {
+      "size": 214,
+      "sha256": "52a232a6a8b8c79914b3c0357c3837e027573329c198de9c48751ac900da2a09"
+    }
+  },
+  "centralDispatched": false,
+  "controller-intent.json": {
+    "operationId": "6661a48c-5e5d-4fa7-92a6-4ec7af599646",
+    "dispatchSource": "owner-authorized-maintenance",
+    "centralDispatched": false,
+    "controlledRunId": null,
+    "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+    "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+    "controller": {
+      "pid": 3831833,
+      "startTicks": "68541872",
+      "bootId": "328726a0-5495-4892-b0a6-2fa9de26242e"
+    },
+    "startedEpoch": 1792232782.8312993,
+    "timeoutSec": 2400,
+    "programSHA256": "24972e3bc859fab2b46ed4c1e51f7d6130f06d3bd550811a114640de3370d0de",
+    "directiveSHA256": "ba45aaa68511ddafe182063c1e1568df450be38baf039e90e016f8a76a8ef7c4"
+  },
+  "child-started.json": {
+    "operationId": "6661a48c-5e5d-4fa7-92a6-4ec7af599646",
+    "child": {
+      "pid": 3831836,
+      "startTicks": "68541937",
+      "bootId": "328726a0-5495-4892-b0a6-2fa9de26242e"
+    },
+    "atEpoch": 1792232783.4344592
+  },
+  "nativeInits": [
+    {
+      "line": 1,
+      "session_id": "a58a280d-2f26-47bc-980b-097187bb137d",
+      "permissionMode": "bypassPermissions",
+      "model": "gpt-6.1-sol[1m]",
+      "claude_code_version": "2.1.296"
+    }
+  ],
+  "nativeResults": [],
+  "assistantMessages": 0,
+  "partialUsageCount": 0,
+  "lastEventTypes": [
+    "system"
+  ],
+  "terminal": false
+}

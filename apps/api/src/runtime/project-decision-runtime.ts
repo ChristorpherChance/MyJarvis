@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {z} from 'zod';
 import {BusinessError} from '../v1/types.js';
 import type {V1Repository} from '../v1/repository.js';
-import {redactExecutionLog} from './execution-runtime.js';
+import {assertPublicSupervisorContent} from './public-privacy-guard.js';
 
 const text=(max=2000)=>z.string().trim().min(1).max(max);
 const identifier=text(200),hash=z.string().regex(/^[a-f0-9]{64}$/);
@@ -58,16 +58,7 @@ function fail(message:string,code='DECISION_INVALID',status=400):never {throw ne
 function canonical(value:any):string {if(value===null||typeof value!=='object')return JSON.stringify(value);if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}'}
 const sha=(value:unknown)=>createHash('sha256').update(canonical(value)).digest('hex');
 /** Summaries only. Credentials and private references are rejected before persistence. */
-function publicSummary(value:unknown):void {
- const inspect=(item:unknown)=>{
-  if(typeof item==='string'){
-   if(redactExecutionLog(item)!==item||/\b(?:password|api[_-]?key|access[_-]?token|client[_-]?secret)\s+(?:is|为|是)\s+\S+/i.test(item)||/(?:密码|密钥|令牌)\s*[:：=]\s*\S+/.test(item))fail('决策摘要包含疑似凭据，请改为公开事实摘要','DECISION_PRIVATE_CONTENT');
-   if(/(?:^|[\\/])(?:\.secrets|\.jarvis-dev|private|credentials)(?:[\\/]|$)/i.test(item))fail('决策引用包含私有路径','DECISION_PRIVATE_CONTENT');
-   for(const found of item.matchAll(/https?:\/\/[^\s<>"']+/gi)){try{const url=new URL(found[0]);if(url.username||url.password||[...url.searchParams.keys()].some(k=>/token|secret|password|key|cookie/i.test(k)))fail('决策引用包含私有访问参数','DECISION_PRIVATE_CONTENT');}catch(error){if(error instanceof BusinessError)throw error;}}
-  }else if(Array.isArray(item))item.forEach(inspect);else if(item&&typeof item==='object')Object.values(item).forEach(inspect);
- };inspect(value);
- if(Buffer.byteLength(JSON.stringify(value),'utf8')>192*1024)fail('决策摘要超过保存范围');
-}
+function publicSummary(value:unknown):void {try{assertPublicSupervisorContent(value);}catch(error){if(error instanceof BusinessError)fail(error.message,'DECISION_PRIVATE_CONTENT');throw error;}}
 function uniqueOptions(options:Option[],ctx:Context){
  if(new Set(options.map(o=>o.id)).size!==options.length)fail('备选方案编号重复');
  if(new Set(ctx.objectives).size!==ctx.objectives.length)fail('目标编号重复');

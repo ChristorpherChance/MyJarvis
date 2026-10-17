@@ -26,6 +26,7 @@ async function nativeRecoveryFixture(){
 
 test('durable quota recovery switches only the authorized same-workspace native executor, stops at the limit and never auto-accepts',async()=>{
  const f=await nativeRecoveryFixture();try{
+  const originalResult=f.runtime.result.bind(f.runtime);(f.runtime as any).result=async(agentId:string,body:any)=>{try{return await originalResult(agentId,body)}catch(error){const e=error as any;console.error('SYNTHETIC_RESULT_REJECTION',JSON.stringify({code:e.code??'UNKNOWN',message:e.message??'rejected',fields:e.details?.fields??[]}));throw error}};
   f.repo.setReceiptValidator((domain,r)=>{if(domain==='tasks')assertDto('Task',r.data)});
   await (f.runtime as any).scheduleManaged();const first=await f.nativeAgent.runOnce();assert.equal(first.status,'failed');let task=f.repo.read('tasks',f.taskId,'server-admin')!;assert.equal(task.status,'waitingQuota');assert.equal(task.executionResult.recovery.nextExecutorId,f.claude.id);assert.equal(task.sessionId,'codex-original-session');assert.equal(task.acceptance,null);
   f.due();let supervised=false;f.runtime.options.supervised=()=>supervised;await (f.runtime as any).scheduleManaged();assert.equal(f.runtime.listRuns().length,1);supervised=true;

@@ -52373,13 +52373,19 @@
           "usageComplete": {
             "type": "boolean",
             "description": "true表示每轮均有原生最终用量回执，false为取消/失败等部分已观察用量；旧节点省略时保持历史兼容，不声称已恢复缺失数据。"
+          },
+          "measurementStatus": {
+            "type": "string",
+            "enum": [
+              "reported",
+              "partial",
+              "unknown"
+            ],
+            "description": "unknown表示没有可靠token观察，不得以0替代。"
           }
         },
-        "required": [
-          "inputTokens",
-          "outputTokens"
-        ],
-        "description": "所有已发生轮次累计的真实用量，失败或取消时保留已报告部分；缓存为明细，totalTokens优先，不再叠加缓存。没有供应商usage不伪造0。partial回执与后续稳定message证据以非负余量调和，原始签名回执保留在执行记录。"
+        "required": [],
+        "description": "所有已发生轮次累计的真实用量，失败或取消时保留已报告部分；缓存为明细，totalTokens优先，不再叠加缓存。没有供应商usage不伪造0。partial回执与后续稳定message证据以非负余量调和，原始签名回执保留在执行记录；无usage时明确为unknown，input/output tokens可选。"
       },
       "ExecutionTemplate": {
         "type": "object",
@@ -53023,6 +53029,16 @@
           },
           "stopReason": {
             "$ref": "#/components/schemas/ExecutionNodeStopReason"
+          },
+          "executionMetadata": {
+            "$ref": "#/components/schemas/ExecutionMetadata"
+          },
+          "nativePhases": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/ExecutionNativePhase"
+            }
           }
         },
         "required": [
@@ -53688,6 +53704,8 @@
           "sessionBilling": {
             "$ref": "#/components/schemas/CliBillingCheckpoint"
           },
+          "executionMetadata": {"$ref":"#/components/schemas/ExecutionMetadata"},
+          "nativePhases": {"type":"array","maxItems":50,"items":{"$ref":"#/components/schemas/ExecutionNativePhase"}},
           "failureKind": {
             "type": "string",
             "enum": [
@@ -64154,7 +64172,9 @@
           "costUSD": {
             "type": "number",
             "minimum": 0
-          }
+          },
+          "nativeCliVersion": {"type":"string","minLength":1,"maxLength":200},
+          "costScope": {"type":"string","const":"session-cumulative"}
         },
         "required": [
           "engine",
@@ -73244,6 +73264,72 @@
           "quoteKind",
           "resolvedAt",
           "notice"
+        ]
+      },
+      "ExecutionMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nativeCliVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "agentBuild": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "programSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "invocationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "agentBuild",
+          "programSha256",
+          "invocationId"
+        ]
+      },
+      "ExecutionNativePhase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "usageComplete": {
+            "type": "boolean"
+          },
+          "summarySha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failed",
+              "cancelled",
+              "budget-exhausted",
+              "timeout",
+              "awaiting-cost",
+              "round-limit"
+            ]
+          }
+        },
+        "required": [
+          "index",
+          "usageComplete",
+          "summarySha256",
+          "outcome"
         ]
       }
     },

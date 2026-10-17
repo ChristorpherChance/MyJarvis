@@ -17,7 +17,7 @@ export class AgentProtocolConsumer {
  const init=this.engine==='claude'&&e.type==='system'&&e.subtype==='init'||this.engine==='codex'&&e.type==='thread.started';
  const active=this.engine==='claude'&&['assistant','user','tool_result'].includes(e.type)||this.engine==='codex'&&['item.started','item.completed','turn.started'].includes(e.type);
  if(init)this.initialized=true;
- if(init&&this.finalLine){this.boundary=true;this.activity=false;}
+ if(init&&this.finalLine){if(!this.provisional){this.keep(this.finalLine);this.phases++;}this.finalLine=undefined;this.finalCanonical=undefined;this.provisional=false;this.boundary=true;this.activity=false;}
  if(active&&this.initialized&&this.finalLine&&this.provisional){this.finalLine=undefined;this.finalCanonical=undefined;this.provisional=false;this.activity=true;}
  if(active&&this.boundary){if(this.provisional){this.finalLine=undefined;this.finalCanonical=undefined;this.provisional=false;}this.activity=true;}
  const final=this.engine==='claude'?e.type==='result':this.engine==='codex'?e.type==='turn.completed':this.engine==='fixed'?e.type==='execution.result':false;

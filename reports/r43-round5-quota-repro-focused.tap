@@ -1,0 +1,29 @@
+TAP version 13
+# (node:3694866) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: durable quota recovery switches only the authorized same-workspace native executor, stops at the limit and never auto-accepts
+not ok 1 - durable quota recovery switches only the authorized same-workspace native executor, stops at the limit and never auto-accepts
+  ---
+  duration_ms: 881.60487
+  type: 'test'
+  location: '/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/execution-runtime.test.ts:1:3744'
+  failureType: 'testCodeFailure'
+  error: 'AGENT_RESULT_REJECTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ExecutionAgent.executeClaimed (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/src/runtime/agent-runner.ts:234:1111)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async ExecutionAgent.execute (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/src/runtime/agent-runner.ts:227:94)
+    async TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/execution-runtime.test.ts:30:58)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2618.442269

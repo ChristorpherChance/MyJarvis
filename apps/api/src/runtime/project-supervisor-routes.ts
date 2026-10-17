@@ -10,6 +10,7 @@ export function registerProjectSupervisorRoutes(app:FastifyInstance,runtime:Proj
  app.get(base,handle(req=>runtime.view(id(req),principal(req))));
  app.post(base,handle(req=>runtime.create(id(req),req.body,principal(req))));
  app.post(base+'/commands',handle(req=>runtime.command(id(req),req.body,principal(req))));
+ app.post(base+'/corrections',handle(req=>runtime.correct(id(req),req.body,principal(req))));
  const streams=new Set<()=>void>();
  app.get(base+'/events',async(req:any,reply:any)=>{const p=principal(req),projectId=id(req);runtime.view(projectId,p);reply.hijack();reply.raw.writeHead(200,{'content-type':'text/event-stream; charset=utf-8','cache-control':'private, no-cache, no-transform','connection':'keep-alive'});let last=-1,closed=false;const close=()=>{if(closed)return;closed=true;clearInterval(timer);streams.delete(close);if(!reply.raw.writableEnded)reply.raw.end();};const send=()=>{try{const snapshot=runtime.view(projectId,p),revision=snapshot.session?.revision??0;if(reply.raw.writableLength>65536){close();return;}if(last!==revision){last=revision;reply.raw.write('id: '+revision+'\nevent: supervisor.changed\ndata: '+JSON.stringify({projectId,revision})+'\n\n');}}catch{reply.raw.write('event: session-expired\ndata: {}\n\n');close();}};const timer=setInterval(send,1000);timer.unref();streams.add(close);reply.raw.once('close',close);send();});
  app.addHook('preClose',async()=>{for(const close of streams)close();});

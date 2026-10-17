@@ -12,7 +12,6 @@ export interface NativeProtocolResult { lines: string[]; error?: string }
 export class AgentProtocolConsumer {
   private retained: string[] = [];
   private finalCanonical?: string;
-  private readonly finalSeen = new Set<string>();
   private finalLine?: string;
   private retainedBytes = 0;
   private eventCount = 0;
@@ -73,7 +72,8 @@ export class AgentProtocolConsumer {
       return;
     }
     const canonical = JSON.stringify(stable(e));
-    if (this.finalCanonical !== undefined && this.finalCanonical !== canonical) {
+    if (this.finalCanonical !== undefined) {
+      if (this.finalCanonical === canonical) return;
       this.protocolError = 'AGENT_PROTOCOL_FINAL_CONFLICT'; return;
     }
     this.finalCanonical = canonical;

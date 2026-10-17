@@ -1,0 +1,626 @@
+{
+  "kind": "r46-business-test-and-maintenance-failure-final-summary",
+  "at": "2026-10-17T19:24:11.503Z",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "sessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+  "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+  "currentRunId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+  "summary": "已收到真实业务测试事实，但完整验收未过：207断言通过、36跳过，server覆盖率28.2低于90门且命令exit1；原型27纯逻辑断言单列。第三轮报告已成功回传，主管消费仍受question:null协议阻塞。R17/R18两次限定维护均因provider API错误exit1，只有R17保存null组2/2通过和4件未提交源；没有新构建包、部署、第三轮模型判断或产品修复执行。",
+  "businessTestFacts": {
+    "basis": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-business-three-runs-safe-facts.json",
+      "sha256": "25a6e26cf4694bc69f84de32d9922a0e5181c917324b3b44e75afe3575c0256f",
+      "bytes": 16706
+    },
+    "assertionsPassed": 207,
+    "assertionsFailed": 0,
+    "skipped": 36,
+    "serverCommandExitCode": 1,
+    "reportedCoveragePercent": 28.2,
+    "reportedRequiredLinePercent": 90,
+    "reportedRequiredBranchPercent": 80,
+    "prototypeSeparate": {
+      "commandResults": [
+        {
+          "group": "prototype-run-all",
+          "exitCode": 1
+        },
+        {
+          "group": "prototype-logic",
+          "exitCode": 0
+        },
+        {
+          "group": "prototype-state-kernel",
+          "exitCode": 0
+        },
+        {
+          "group": "prototype-material-zip",
+          "exitCode": 1
+        },
+        {
+          "group": "prototype-browser-attempt",
+          "exitCode": 1
+        }
+      ],
+      "logicAssertionsPassed": 19,
+      "stateKernelAssertionsPassed": 8,
+      "logicAndKernelAssertionSubtotal": 27,
+      "aggregateEntryGroups": {
+        "attempted": 1,
+        "notRun": 29,
+        "total": 30
+      },
+      "otherEntrypointsNotRun": 48,
+      "unsafeScriptsNotRun": 3,
+      "unregisteredCases": null,
+      "interpretation": "27 pure logic/kernel assertions are separate from Vitest207 and from the 30 aggregate entry groups; counts must not be added into one pass percentage."
+    },
+    "thirdRecoveryResult": "signed-agent success/exit0 with one 3967-byte derived facts original",
+    "thirdOriginalFingerprint": {
+      "sha256": "3492fe193c3005df2a80648ab45b90a5b4e265304b6287311fe93fe987d09561",
+      "bytes": 3967,
+      "hashSizeVerified": true,
+      "kind": "derived-facts-report",
+      "bodyPublic": false
+    },
+    "completeLargeOriginalsCollected": false,
+    "originalIndexIsNotBodyCollection": true,
+    "rootRerunTestsForReportRecovery": false,
+    "fullGoalAccepted": false,
+    "sourceScope": "The saved derived report recovers earlier tests within this newly started business task; the later two rounds only recovered facts. These are not fresh reruns or independent complete suite certification."
+  },
+  "supervisorConsumption": {
+    "sessionRevisionObserved": 11,
+    "status": "blocked",
+    "enabled": false,
+    "taskRevisionObserved": 10,
+    "resultReceived": true,
+    "historicalActiveCount": 0,
+    "questionNullStringSchemaMismatch": true,
+    "thirdSpecificJudgmentCompleted": false,
+    "existingThirdReportReconciled": false,
+    "newProductRepairDispatchedFromThirdReport": false,
+    "existingSupervisionItemRevision": 13,
+    "existingSupervisionItemStatus": "blocked",
+    "existingEventSequence": 74
+  },
+  "maintenance": [
+    {
+      "round": 17,
+      "operationId": "67e2c02d-6114-4f99-98f6-6f75414b49ee",
+      "terminal": true,
+      "exitCode": 1,
+      "elapsedSec": 466.05027317092754,
+      "nativeFinalCount": 1,
+      "nativeFinalIsError": true,
+      "nativeTurns": 17,
+      "cgroupProcesses": 0,
+      "providerErrorClassification": "provider-api-request-error",
+      "savedNullGroup": {
+        "tests": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "sourceState": "4件未提交源199544B原样私存；APIquestion派生和中央goal合同已写，四UI投影仅部分源改且未完成验证、构建或部署。",
+      "typesBuildCommitPackageDeployCompleted": false,
+      "priorSafeFacts": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-failed-maintenance-partial-safe-facts.json",
+        "sha256": "875561a9f6e6f860d2bc7a252067cd5a5213f0e37b10eafe4fa6181dd8af7e6d",
+        "bytes": 3663
+      },
+      "UIProjectionScope": {
+        "writtenButUnverified": [
+          "current lead uses bound queued/running facts, old summary labelled in details",
+          "phase label changes disabled active caption",
+          "short fields and full details retained",
+          "prior collection feedback retained until later relevant report"
+        ],
+        "remainingSmallDefects": [
+          "waiting_user long-question fallback bypasses short limit",
+          "unresolved issue/blocker hides actual owner question in collapsed details"
+        ],
+        "typesBuildPackageDeployCompleted": false
+      }
+    },
+    {
+      "round": 18,
+      "operationId": "bd8e5efc-eaca-4cd5-b8f6-b5a661de1290",
+      "terminal": true,
+      "exitCode": 1,
+      "elapsedSec": 56.72154996404424,
+      "nativeFinalCount": 1,
+      "nativeFinalIsError": true,
+      "nativeTurns": 1,
+      "cgroupProcesses": 0,
+      "providerErrorClassification": "Root observed same 43-byte provider API error as R17; upstream provider internals unproved",
+      "newReportsCount": 0,
+      "newTestsOrRepairsCompleted": false,
+      "nativeReportedUsage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0
+      },
+      "reportedZeroDoesNotEstablishActualCostZero": true
+    }
+  ],
+  "sourceAndRelease": {
+    "HEAD": "e8012e8629c496447c31be19d2025a003153d6d1",
+    "preservedDirtySourceCount": 4,
+    "preservedDirtySourceRawBytes": 199544,
+    "capturedPathHashSizeIdenticalBetweenR17R18": true,
+    "RootAppEditsOrTests": false,
+    "newCommit": false,
+    "newBuild": false,
+    "newPackage": false,
+    "newDeployment": false,
+    "formal112": "20261018-unified-projects-r46-r1",
+    "node101": "R7",
+    "configRevision": 46,
+    "noBlindThirdProviderAttempt": true,
+    "providerReadOnlyStatus": {
+      "basis": {
+        "path": "artifacts/cc-supervisor-r43/r46-model-readiness-existing-settings-readonly.json",
+        "sha256": "4a6dde1f2143626fe36d771a7e1f995041fb9325ebe30f4dfef29a1f4d7c5abb",
+        "bytes": 4270
+      },
+      "authenticatedSettingsGET": true,
+      "platform112RouteConfigured": true,
+      "pricingKnown": false,
+      "liveProviderConnectionVerified": false,
+      "nativeCCEndpointOrCredentialsRead": false,
+      "newModelRequests": 0,
+      "settingsChanged": false,
+      "interpretation": "112 Pi settings readiness is not provider live connectivity and is not proof that101 native CC uses the same configuration. No claim112 Pi is down or balance insufficient."
+    },
+    "fourCapturedFilesWholeByteComparison": {
+      "path": "artifacts/cc-supervisor-r43/r46-round18-partial-exact-unchanged-local-proof.json",
+      "sha256": "8621c251fd5e39f1d3d0cbdb5cb0b8f30b6dc8db3417a0adbcc8409bbb550e0d",
+      "bytes": 3433
+    },
+    "whole833EntryWorkspaceUnchangedClaimed": false
+  },
+  "issuesAndArrangements": [
+    {
+      "priority": "P1",
+      "issue": "主管反馈消费兼容未上线，维护又受provider API错误阻塞。",
+      "owner": "101 CC",
+      "status": "planned",
+      "executed": false,
+      "dependencies": [
+        "查明可信provider当前可用性；不盲同错第三次",
+        "保原e801基线、4件未提交源、旧两轮失败和费用",
+        "已保存null组2/2不重复"
+      ],
+      "acceptance": [
+        "保原signed result/rawH，只派生允许状态question:null",
+        "完成剩余UI短文案fallback与owner问题可见性",
+        "保四UI投影，补长question短文案fallback和owner问题首屏可见性；保原完整详情/未发送草稿/禁用权限",
+        "必要types/build/平台包和独审/真实发布各有证据",
+        "版本保护消费同f9报告一次，真实模型判断与后继动作另核"
+      ]
+    },
+    {
+      "priority": "P1",
+      "issue": "server断言189通过但覆盖率28.2低于90，server命令exit1；36项跳过，DB/Redis/MinIO不可用、Docker masked等环境缺项。",
+      "owner": "101 CC",
+      "status": "planned",
+      "executed": false,
+      "dependencies": [
+        "可核验隔离基础设施及原测试输入、完整报告",
+        "不能用207断言通过掩盖覆盖率或环境跳过"
+      ],
+      "acceptance": [
+        "在授权隔离范围修环境/实现并保存完整覆盖原件",
+        "server命令exit0、lines>=90、branches>=80",
+        "不得仍因DB/Redis/MinIO等基础设施缺失跳过应验用例；无infra skip",
+        "跳过项的实际范围及原因逐项保留并独立确认"
+      ]
+    },
+    {
+      "priority": "P2",
+      "issue": "ZIP原型api.read不可用导致检查中止。",
+      "owner": "101 CC",
+      "status": "planned",
+      "executed": false,
+      "scope": "doc/tests/material-zip.cjs",
+      "dependencies": [
+        "确认实际exports和原失败日志",
+        "保原测试/源码版本，不把恢复报告当已修"
+      ],
+      "acceptance": [
+        "一次ZIP正反例定向验证exit0和原日志/H索引",
+        "实现、验证、发布分别确认"
+      ]
+    },
+    {
+      "priority": "P2",
+      "issue": "缺历史/Playwright；browser attempt和Firefox probe未通过，UI端到端未验。",
+      "owner": "101 CC",
+      "status": "planned",
+      "executed": false,
+      "dependencies": [
+        "明确可用且获授权的浏览器环境与历史输入",
+        "完整原件按分件索引收回"
+      ],
+      "acceptance": [
+        "适用当前浏览器用例真实执行与结果留存",
+        "把实际登录页面操作、模型/101CC闭环与纯逻辑/SSR分开验收"
+      ]
+    },
+    {
+      "priority": "evidence-gap",
+      "issue": "完整大报告/日志尚只收到H索引，未全部物理收回。",
+      "owner": "101 CC；Root负责受控接收",
+      "status": "planned",
+      "executed": false,
+      "dependencies": [
+        "保原件不变，按真实H/size分件",
+        "避免把长日志或目录塞入小证据硬门"
+      ],
+      "acceptance": [
+        "完整原件收件逐件H/size核对，声明未收和不完整",
+        "不为补记录重跑测试或模型"
+      ]
+    }
+  ],
+  "usage": {
+    "businessThreeParent": {
+      "scope": "Three business native-parent run usage records; maintenance R16/R17, supervisor Pi and internal Codex are separate.",
+      "perRun": [
+        {
+          "runId": "b9229790af042425b3d06597221041302e71d7df",
+          "inputTokensIncludingCacheRead": 1992470,
+          "outputTokens": 16781,
+          "cacheReadTokensIncludedInInput": 1916928,
+          "totalTokens": 2009251,
+          "directoryEstimateUSD": 2.501507,
+          "actualBillUSD": null
+        },
+        {
+          "runId": "2ad1cb1529b3a73622aefea6a7a232542e9c050b",
+          "inputTokensIncludingCacheRead": 432359,
+          "outputTokens": 3761,
+          "cacheReadTokensIncludedInInput": 422528,
+          "totalTokens": 436120,
+          "directoryEstimateUSD": 0.354444,
+          "actualBillUSD": null
+        },
+        {
+          "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+          "inputTokensIncludingCacheRead": 576214,
+          "outputTokens": 4734,
+          "cacheReadTokensIncludedInInput": 566016,
+          "totalTokens": 580948,
+          "directoryEstimateUSD": 0.452348,
+          "actualBillUSD": null
+        }
+      ],
+      "parentTotals": {
+        "inputTokensIncludingCacheRead": 3001043,
+        "outputTokens": 25276,
+        "cacheReadTokensIncludedInInput": 2905472,
+        "totalTokens": 3026319
+      },
+      "cacheReadIsIncludedInInputNotAddedAgain": true,
+      "directoryEstimateUSD": 3.308299,
+      "directoryEstimateIsInvoice": false,
+      "actualBillUSD": null,
+      "supervisorPiTokens": null,
+      "supervisorPiCostUSD": null,
+      "internalCodexTokens": null,
+      "internalCodexCostUSD": null,
+      "originalDerivedReportUsageUnknownPreserved": true,
+      "policy": "record-only; no monetary spending cap; unknown usage/prices remain null rather than zero"
+    },
+    "R17FailedParent": {
+      "inputTokensIncludingCacheRead": 14675981,
+      "outputTokens": 4836,
+      "cacheReadTokensIncludedInInput": 14651392,
+      "totalTokens": 14680817,
+      "costUSD": null,
+      "signedPOST": {
+        "statusCode": 200,
+        "acceptedItems": 1,
+        "duplicate": false
+      },
+      "receipt": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-post-receipt.json",
+        "sha256": "685837668e2a8760d0004214c6315f6febb89a2cbf53f281bbf85a3abe369851",
+        "bytes": 2122
+      }
+    },
+    "R18": {
+      "nativeReportedInput": 0,
+      "nativeReportedOutput": 0,
+      "nativeReportedCacheRead": 0,
+      "nativeReportedCacheCreation": 0,
+      "measurementMeaning": "These are four zeros reported by an error final, not a verified invoice or a claim of no resource use.",
+      "costUSD": null,
+      "signedLedgerReadback": {
+        "path": "artifacts/cc-supervisor-r43/r46-round18-failed-final-usage-post-receipt.json",
+        "sha256": "fc4ed12b88197b28756473eb2208a1f4d754b22ffd95f62c4ca1a24b731e7afa",
+        "bytes": 2122
+      },
+      "signedLedgerAccepted": {
+        "statusCode": 200,
+        "acceptedItems": 1,
+        "duplicate": false,
+        "costUSD": null,
+        "reportedZeroIsNotKnownZeroCost": true
+      }
+    },
+    "supervisorPiAndInternalAmountsRemainUnknown": true,
+    "noSpendingCap": true,
+    "unknownAmountIsZero": false
+  },
+  "unmodified": {
+    "factoryPlanRevision": 108,
+    "PG": 29,
+    "Env": 23,
+    "original74Accepted": 0,
+    "customer12Delivered": false,
+    "supervisionItems": 6,
+    "completedBriefs": 4,
+    "tenMinuteFollowup": "PAUSED",
+    "oldCentralTask": 12,
+    "oldCentralTaskStatus": "blocked"
+  },
+  "actualPendingResults": {
+    "providerReadOnlyStatus": {
+      "path": "artifacts/cc-supervisor-r43/r46-model-readiness-existing-settings-readonly.json",
+      "sha256": "4a6dde1f2143626fe36d771a7e1f995041fb9325ebe30f4dfef29a1f4d7c5abb",
+      "bytes": 4270
+    },
+    "itemRevision13Readback": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-double-blocked-after-maintenance-item-readback.json",
+      "sha256": "9836da5c98f21a0051ccadcaf4fb00dd078501d21bb10b96c7d1c5e676c8dffd",
+      "bytes": 2119
+    },
+    "decisionRevision8Readback": {
+      "path": "artifacts/cc-supervisor-r43/r46-round18-outcome-selection-readback.json",
+      "sha256": "3cdc1f4722a746af4eb586e77d33a4d665383e0a1697b544a9243777351afe56",
+      "bytes": 179781
+    },
+    "R17R18ImplementationAccepted": false,
+    "construction309AppendedAtSummarySeal": false
+  },
+  "evidenceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-business-three-runs-safe-facts.json",
+      "sha256": "25a6e26cf4694bc69f84de32d9922a0e5181c917324b3b44e75afe3575c0256f",
+      "bytes": 16706
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-blocked-after-results-item-readback.json",
+      "sha256": "3593292a9e816032db0b76efbde7120edb58f90dc59b23f4a58ed3026a73959d",
+      "bytes": 2405
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-terminal-native-observation.json",
+      "sha256": "3b5b009e288729bb49398bf086c0c8fdda17f7fb64b657158b12087a461ecefa",
+      "bytes": 3288
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round18-terminal-native-observation.json",
+      "sha256": "198f71b1f1925b2b738b907770654bca228bfc9f6f1f1ac406b0f0ab3071de56",
+      "bytes": 3266
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-terminal-metadata-1792264357995.json",
+      "sha256": "e85eda1be3d8fc90985e8a2ecc48c49c51b7a1d42f7e9cccc8809f59825368fd",
+      "bytes": 3641
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round18-terminal-metadata-1792264777016.json",
+      "sha256": "12512f436dd20e8fc0b2ec7ecc90e81e1b6b1f4927b196971dab61c37d397902",
+      "bytes": 2440
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-item.json",
+      "sha256": "7308c6df9ceb5aa781d47741a78a197c2b6f787dfff41c8f7bbe3def03e5b28a",
+      "bytes": 861
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-post-receipt.json",
+      "sha256": "685837668e2a8760d0004214c6315f6febb89a2cbf53f281bbf85a3abe369851",
+      "bytes": 2122
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-model-readiness-existing-settings-readonly.json",
+      "sha256": "4a6dde1f2143626fe36d771a7e1f995041fb9325ebe30f4dfef29a1f4d7c5abb",
+      "bytes": 4270
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round18-partial-exact-unchanged-local-proof.json",
+      "sha256": "8621c251fd5e39f1d3d0cbdb5cb0b8f30b6dc8db3417a0adbcc8409bbb550e0d",
+      "bytes": 3433
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-partial-source-review-r18-remaining-handoff.json",
+      "sha256": "5cfd63ba5f6d3a0d90cc4a97ed4ffa2e10a1233998e15ca18cf7c134240c8005",
+      "bytes": 11245
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-partial-api-and-failed-final-usage-local-handoff.json",
+      "sha256": "a4316858bd8a9b40a680ab40ae6642a8b951f5f90738c89e220b31279d9bf152",
+      "bytes": 9743
+    }
+  ],
+  "preparationScope": "LOCAL safe allowlist only; no API, remote, daemon, model, tests, application edit, construction append or document publication performed.",
+  "finalEvidenceCut": "Through authenticated settings read-only observation and exact four-file R17/R18 comparison. Future CAS/item13/decision8 receipts are not prefilled.",
+  "record": 309,
+  "release": "20261018-unified-projects-r46-r1",
+  "status": "blocked",
+  "fullTestComplete": false,
+  "actualSupervisionItem": {
+    "source": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-double-blocked-after-maintenance-item-readback.json",
+      "sha256": "9836da5c98f21a0051ccadcaf4fb00dd078501d21bb10b96c7d1c5e676c8dffd",
+      "bytes": 2119
+    },
+    "revision": 13,
+    "hash": "94375a49079ea5f99d1e725dd9184988167a367320218161b573d26551c5f8a4",
+    "status": "blocked",
+    "latestSequence": 74,
+    "summary": "测试报告已回收：207项断言通过、36项跳过；覆盖率28.2%未达90%。ZIP、浏览器和隔离环境仍有缺项，完整验收未通过。",
+    "blocker": "报告格式兼容尚未上线；101 CC连续两轮模型请求失败，界面修复停在未构建、未打包状态。",
+    "nextAction": "先恢复101 CC模型通道，再完成监管界面与报告格式修复并验证上线。101 CC按报告安排覆盖率/环境、ZIP、浏览器三类修复；当前均为待执行。十分钟跟进保持暂停。",
+    "counts": {
+      "total": 6,
+      "planned": 1,
+      "running": 0,
+      "blocked": 1,
+      "completed": 4
+    },
+    "historyPreserved": true,
+    "base29Preserved": true,
+    "rollingAggregateCount": 1,
+    "evidenceCount": 30,
+    "otherFivePreserved": true,
+    "completedBriefs": 4
+  },
+  "actualDecision": {
+    "source": {
+      "path": "artifacts/cc-supervisor-r43/r46-round18-outcome-selection-readback.json",
+      "sha256": "3cdc1f4722a746af4eb586e77d33a4d665383e0a1697b544a9243777351afe56",
+      "bytes": 179781
+    },
+    "revision": 8,
+    "hash": "59f873a379d779ed58f22a3d254a7969fa05d50b0b6886469204df2f08620543",
+    "priorActionsAndHistoryPreserved": true,
+    "independentAcceptance": false
+  },
+  "actual112CurrentHealth": {
+    "source": {
+      "path": "artifacts/cc-supervisor-r43/r46-final-current112-health-readonly.json",
+      "sha256": "53ecca0ea9751f260e2c44ad1a3b18c356aeac5e63f037d5d1a87f8e633c0477",
+      "bytes": 283
+    },
+    "kind": "r46-final-current112-health-readonly",
+    "at": "2026-10-17T19:24:11.503Z",
+    "status": "ok",
+    "build": "20261018-unified-projects-r46-r1",
+    "nodeId": "112",
+    "role": "primary",
+    "applicationMutations": 0,
+    "releaseOrRestartPerformed": false,
+    "modelsInvoked": 0
+  },
+  "actualFailedMaintenanceUsage": [
+    {
+      "round": 17,
+      "itemFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-item.json",
+        "sha256": "7308c6df9ceb5aa781d47741a78a197c2b6f787dfff41c8f7bbe3def03e5b28a",
+        "bytes": 861
+      },
+      "POSTFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-post-receipt.json",
+        "sha256": "685837668e2a8760d0004214c6315f6febb89a2cbf53f281bbf85a3abe369851",
+        "bytes": 2122
+      },
+      "measurementStatus": "reported",
+      "inputTokensIncludingCacheRead": 14675981,
+      "outputTokens": 4836,
+      "cacheReadIncludedInInput": 14651392,
+      "cacheWriteTokens": 0,
+      "totalTokens": 14680817,
+      "costUSD": null,
+      "statusCode": 200,
+      "acceptedItems": 1,
+      "duplicate": false,
+      "reportedZeroDoesNotProveZeroActualCost": false
+    },
+    {
+      "round": 18,
+      "itemFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round18-failed-final-usage-item.json",
+        "sha256": "7ec6e4e76eeb2d5ac0d809e2fd157a195b069817feba35e41df1f1c52079c30e",
+        "bytes": 837
+      },
+      "POSTFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round18-failed-final-usage-post-receipt.json",
+        "sha256": "fc4ed12b88197b28756473eb2208a1f4d754b22ffd95f62c4ca1a24b731e7afa",
+        "bytes": 2122
+      },
+      "measurementStatus": "reported",
+      "inputTokensIncludingCacheRead": 0,
+      "outputTokens": 0,
+      "cacheReadIncludedInInput": 0,
+      "cacheWriteTokens": 0,
+      "totalTokens": 0,
+      "costUSD": null,
+      "statusCode": 200,
+      "acceptedItems": 1,
+      "duplicate": false,
+      "reportedZeroDoesNotProveZeroActualCost": true
+    }
+  ],
+  "finalCut": "Business three-run saved evidence and explicit issues, two provider-failed maintenance windows, signed usage, existing item13/event74 and decision8, final112 health. No new package/deployment/reconcile/model judgment or executed product repair.",
+  "publicationScope": "Safe allowlist projections and evidence fingerprints only; native session/raw conversations/private config/local raw paths are not published. The current documentation uses the exact short summary/blocker/nextAction persisted on item13; longer technical detail is retained in the report and log.",
+  "publicSupportingEvidence": [
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-first-run-receipt-record309-public.json",
+      "sha256": "25a25377b933923f9ab79e2f74aae04486a6c00741af36cd8f92b2e05ef9caa2",
+      "bytes": 2753
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-second-run-receipt-record309-public.json",
+      "sha256": "852d1fa5f23b051168a804d0948c7642f2a63f59856fbc2fc483ec708eca8f94",
+      "bytes": 2759
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-third-run-receipt-record309-public.json",
+      "sha256": "76e6a80d7cc0854578ce8063878948377c96078cb99a044939415b677f6d5a4c",
+      "bytes": 3105
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-business-three-runs-safe-facts-record309-public.json",
+      "sha256": "25a6e26cf4694bc69f84de32d9922a0e5181c917324b3b44e75afe3575c0256f",
+      "bytes": 16706
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-test-blocked-item-revisions-record309-public.json",
+      "sha256": "1f65ce17ff1bf984945d63d5683c3e6423914a3c779cb0bd132fb8ed06c46d9b",
+      "bytes": 5333
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-round17-round18-maintenance-failure-record309-public.json",
+      "sha256": "b173f0b267417867d362b96fc2cf38bee5b25d21ec07a0f550cb8eb912327502",
+      "bytes": 1674
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-business-and-failed-maintenance-usage-record309-public.json",
+      "sha256": "a1f7730bb816e93a02b626c7592ab726eaf13b977064e799311df419153757e7",
+      "bytes": 3683
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-model-settings-readonly-record309-public.json",
+      "sha256": "f172b257923139d61ae8162ad4daab3fc7c98fa0d9b8be2438879e2ea4026617",
+      "bytes": 568
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-final-current112-health-record309-public.json",
+      "sha256": "53ecca0ea9751f260e2c44ad1a3b18c356aeac5e63f037d5d1a87f8e633c0477",
+      "bytes": 283
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-unified-decision-revision8-record309-public.json",
+      "sha256": "ccfd6bc30d241c8a6167ea43fc0140e34ed92a3664bef08e5a3f5e98ed8fd1a5",
+      "bytes": 1371
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-four-partial-files-preserved-record309-public.json",
+      "sha256": "d37d798bad2fb4578bcf23550eca88625c193e1e6fcec27326430f68501c88bd",
+      "bytes": 879
+    }
+  ],
+  "UIAcceptanceBoundary": {
+    "item13APIReadbackVerified": true,
+    "item13LowerPanelBrowserVerified": false,
+    "ownerPageMainPanelOldLongSummaryStillObserved": true,
+    "reason": "Browser control channel timed out before the updated lower item could be inspected; API readback is not claimed as UI acceptance. R17 UI partial remains undeployed."
+  }
+}

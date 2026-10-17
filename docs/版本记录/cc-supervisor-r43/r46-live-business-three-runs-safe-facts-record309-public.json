@@ -1,0 +1,440 @@
+{
+  "kind": "r46-live-business-three-runs-safe-facts",
+  "at": "2026-10-17T19:07:40.741072Z",
+  "scope": "Saved central receipts plus one exactly received 3967-byte derived report. Local reads only; no test, model, API, source edit, construction append or deployment performed by this preparation.",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "sessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+  "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+  "summary": "已收到本次既有测试的事实报告：Vitest 207断言通过、0断言失败、36跳过，但server覆盖率门exit1；原型及未运行项目另列。第三轮正常回包后，question:null与平台严格字符串协议不兼容，主管会话受阻；尚未完成第三轮模型判断、完整原件收集、修复执行或产品验收。",
+  "runReceipts": [
+    {
+      "runId": "b9229790af042425b3d06597221041302e71d7df",
+      "centralStatus": "failed",
+      "resultOutcome": "failed",
+      "exitCode": 0,
+      "rounds": 1,
+      "evidenceOriginalCount": 0,
+      "recordedIssue": "SUPERVISOR_EVIDENCE_SIZE_INVALID",
+      "meaning": "Evidence collection/protocol failure, not a test verdict. Original failure preserved."
+    },
+    {
+      "runId": "2ad1cb1529b3a73622aefea6a7a232542e9c050b",
+      "centralStatus": "failed",
+      "resultOutcome": "failed",
+      "exitCode": 0,
+      "rounds": 1,
+      "evidenceOriginalCount": 0,
+      "recordedIssue": "SUPERVISOR_EVIDENCE_SIZE_INVALID",
+      "meaning": "Recovery round also failed its evidence collection/protocol boundary; not an independent rerun or test verdict."
+    },
+    {
+      "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+      "centralStatus": "succeeded",
+      "resultOutcome": "success",
+      "exitCode": 0,
+      "rounds": 1,
+      "feedbackState": "ready_for_review",
+      "evidenceOriginalCount": 1,
+      "meaning": "Successful return of a recovery facts report. It is not all-tests-passed, supervisor acceptance or product delivery."
+    }
+  ],
+  "provenance": {
+    "centralResultSource": "signed-agent",
+    "offlineOriginalSignatureHeadersVerified": false,
+    "offlineSignatureScope": "The central receipt records protocol provenance; original HTTP signature headers were not returned for independent offline cryptographic verification.",
+    "receivedOriginal": {
+      "sha256": "3492fe193c3005df2a80648ab45b90a5b4e265304b6287311fe93fe987d09561",
+      "bytes": 3967,
+      "hashSizeVerified": true,
+      "kind": "derived-facts-report",
+      "bodyPublic": false
+    },
+    "privateOriginalFingerprints": [
+      {
+        "label": "first-run-original",
+        "sha256": "693fc1564ceab13140a3bc95ff78e9ce189aa4e568205ec32673c32c34d14049",
+        "bytes": 5418,
+        "publicBody": false
+      },
+      {
+        "label": "second-run-original",
+        "sha256": "9ff2d1ae13fa493eb26688cb1188a167cd7e0fa272a2891e027f1481bae00c98",
+        "bytes": 5986,
+        "publicBody": false
+      },
+      {
+        "label": "third-run-original",
+        "sha256": "791e526b996aeb7b959ec7d675b4d72e424b7e2e74c2212c6c562f56be5320d4",
+        "bytes": 13574,
+        "publicBody": false
+      }
+    ],
+    "producerReportedSource": "c8494d00083c5e0e9ff968891261a95977349679",
+    "producerReportedHead": "302af8e56672c0d1dae4ade494d7e267ee0a7292",
+    "sourceCheckoutOrTestLogsIndependentlyReexecuted": false,
+    "reportBindingLimitPreserved": "The derived report itself lacked the full second-run ID and original local signatures. Root central receipts bind all three full run IDs; this supplement does not rewrite that original gap."
+  },
+  "savedTestFacts": {
+    "basis": "Producer-recovered results inside the received derived report. Complete underlying large logs are indexed, not fully collected and independently audited by Root.",
+    "testResultTiming": "These tests were run before the two recovery-only rounds. They are not tests rerun by this report preparation.",
+    "coreCommands": [
+      {
+        "group": "shared-typecheck",
+        "exitCode": 0
+      },
+      {
+        "group": "shared-build-cjs",
+        "exitCode": 0
+      },
+      {
+        "group": "shared-build-esm",
+        "exitCode": 0
+      },
+      {
+        "group": "server-typecheck",
+        "exitCode": 0
+      },
+      {
+        "group": "web-typecheck",
+        "exitCode": 0
+      },
+      {
+        "group": "server-build",
+        "exitCode": 0
+      },
+      {
+        "group": "web-build",
+        "exitCode": 0
+      },
+      {
+        "group": "web-vite-build",
+        "exitCode": 0
+      },
+      {
+        "group": "lint",
+        "exitCode": 0
+      },
+      {
+        "group": "dependency-directions",
+        "exitCode": 0
+      },
+      {
+        "group": "error-codes",
+        "exitCode": 0
+      }
+    ],
+    "vitest": {
+      "packages": [
+        {
+          "package": "shared",
+          "assertionsPassed": 15,
+          "assertionsFailed": 0,
+          "skipped": 0,
+          "commandExitCode": 0
+        },
+        {
+          "package": "server",
+          "assertionsPassed": 189,
+          "assertionsFailed": 0,
+          "skipped": 36,
+          "commandExitCode": 1
+        },
+        {
+          "package": "web",
+          "assertionsPassed": 3,
+          "assertionsFailed": 0,
+          "skipped": 0,
+          "commandExitCode": 0
+        }
+      ],
+      "assertionsPassed": 207,
+      "assertionsFailed": 0,
+      "skipped": 36,
+      "serverCommandExitCode": 1,
+      "serverCoverageGate": {
+        "status": "failed",
+        "reportedCoveragePercent": 28.2,
+        "reportedRequiredLinePercent": 90,
+        "reportedRequiredBranchPercent": 80,
+        "rawCoverageOriginalFullyCollected": false
+      },
+      "overallSuitePassed": false,
+      "interpretation": "207 passing assertions do not override server command exit1 or 36 skips. No business-failure count is invented from the coverage failure."
+    },
+    "prototypeSeparateDenominators": {
+      "commandResults": [
+        {
+          "group": "prototype-run-all",
+          "exitCode": 1
+        },
+        {
+          "group": "prototype-logic",
+          "exitCode": 0
+        },
+        {
+          "group": "prototype-state-kernel",
+          "exitCode": 0
+        },
+        {
+          "group": "prototype-material-zip",
+          "exitCode": 1
+        },
+        {
+          "group": "prototype-browser-attempt",
+          "exitCode": 1
+        }
+      ],
+      "logicAssertionsPassed": 19,
+      "stateKernelAssertionsPassed": 8,
+      "logicAndKernelAssertionSubtotal": 27,
+      "aggregateEntryGroups": {
+        "attempted": 1,
+        "notRun": 29,
+        "total": 30
+      },
+      "otherEntrypointsNotRun": 48,
+      "unsafeScriptsNotRun": 3,
+      "unregisteredCases": null,
+      "interpretation": "27 pure logic/kernel assertions are separate from Vitest207 and from the 30 aggregate entry groups; counts must not be added into one pass percentage."
+    },
+    "probes": [
+      {
+        "group": "isolation-preflight",
+        "exitCode": 0
+      },
+      {
+        "group": "runtime-capabilities",
+        "exitCode": 0
+      },
+      {
+        "group": "firefox-headless-probe",
+        "exitCode": 46
+      }
+    ],
+    "producerReportedIssues": [
+      {
+        "priority": "P1",
+        "issue": "coverage28.2<90; backend unverified",
+        "suggestedAcceptance": "isolated infra; lines>=90 branches>=80; no infra skips",
+        "independentlyReproducedHere": false
+      },
+      {
+        "priority": "P2",
+        "issue": "missing history/Playwright; UI unverified",
+        "suggestedAcceptance": "explicit historical gaps; approved current/browser suites complete",
+        "independentlyReproducedHere": false
+      },
+      {
+        "priority": "P2",
+        "issue": "ZIP api.read unavailable; checks abort",
+        "suggestedAcceptance": "ZIP positive/negative checks exit0",
+        "independentlyReproducedHere": false
+      },
+      {
+        "priority": "P1",
+        "issue": "602 preexisting staged deletions; commit-all unsafe",
+        "suggestedAcceptance": "preserve index; report-only commits",
+        "independentlyReproducedHere": false
+      }
+    ],
+    "fullGoalAccepted": false
+  },
+  "fullOriginalIndexOnly": {
+    "base": "reports/supervision-20261017-1843/",
+    "entries": [
+      {
+        "path": "report.json",
+        "bytes": 2549,
+        "sha256": "0833793777d6bdae9fbb79d78d9a31a2355a78bbf5191a6f9b45ecbac10db7df",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "test-checklist.json",
+        "bytes": 47855,
+        "sha256": "d6806cdb5bb6740dec8bca4f163f05ecd7bc2d2febae45cc63d6790bcfb842a9",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "core-results.json",
+        "bytes": 11023,
+        "sha256": "9478ecdd5e8a2021b171df25b209c3abf62a75c7affbcec56fdab88ca0bd7b1d",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "test-results.json",
+        "bytes": 4427,
+        "sha256": "22349bf0d8702829aa1bb280fc34c630cea5461b4e4c33f2c35fcb003bd4c650",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "supplemental-results.json",
+        "bytes": 6013,
+        "sha256": "334f2943fda3308440e8df0c61b75ee39646cf8806fcec472d75e40dc49f3415",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "server-tests.stderr.log",
+        "bytes": 577,
+        "sha256": "8ad6590e1530fe2cf5134d8ca7b86bda5628c404bb2ed76e57cdaddc49f6e7c2",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "fingerprints.json",
+        "bytes": 16122,
+        "sha256": "0f4fd13947a7aabdae8ea986ea20928c807c360557b9d33c17a399bccedb296d",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "handoff.json",
+        "bytes": 1047,
+        "sha256": "52ece676082beefcc7c348011489ab93f9ad6027a8f90a8cbebf963a82e2aa73",
+        "fullyCollectedByRoot": false
+      },
+      {
+        "path": "commit-binding.json",
+        "bytes": 6953,
+        "sha256": "38c329091554ca4a1217e930f29ffc3d64bf5824e9b1bd07711441052e5d36c6",
+        "fullyCollectedByRoot": false
+      }
+    ],
+    "note": "These are original fingerprints reported by the received derived report. They are not substituted local files and not claims that the full original bodies were received. fingerprints.json is said by the producer to index the complete logs/issues/dirty records; that full body was not collected here."
+  },
+  "repairArrangement": {
+    "owner": "101 CC",
+    "status": "planned",
+    "goal": "Restore ZIP test loading",
+    "scope": "doc/tests/material-zip.cjs only",
+    "reportedDependencies": "Separate repair authorization; confirm exports",
+    "reportedVerification": "After approval: one ZIP positive/negative run, exit/log/SHA; not executed",
+    "executed": false,
+    "authorizationInterpretation": "This preserves the producer report as historical facts. It does not add a new user-approval requirement or claim a product repair was dispatched."
+  },
+  "currentSavedBlocker": {
+    "observedSessionRevision": 11,
+    "status": "blocked",
+    "enabled": false,
+    "currentRunId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+    "taskRevisionObserved": 10,
+    "executionState": "succeeded",
+    "resultReceived": true,
+    "historicalActiveCount": 0,
+    "feedbackMismatch": "ready_for_review feedback supplied question:null but platform schema requires string.",
+    "thirdSpecificJudgmentPreparedOrConsumed": false,
+    "thirdSpecificModelJudgmentCalled": false,
+    "inferenceScope": "Exact saved parse point plus consumedRun/modelIntent still bound to second run and no third outcome/feedback event. No direct private database row query was made.",
+    "R17DecisionRevision": 6,
+    "R17DecisionReadback": {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-selection-readback.json",
+      "sha256": "e7a3c8e6452bf615e1a99768285a191971080363b9aa1402560ee5510fee21af",
+      "bytes": 123223
+    },
+    "R17CompatibilityAndUIFixCompleted": false,
+    "existingThirdReportReconciled": false,
+    "reconcileBoundary": "After a qualified patch, explicit version-protected reconciliation may consume the stored third report once; it is a real runtime mutation and may allow a guarded successor if the model decides continue. It is not guaranteed read-only or guaranteed zero later CC activity."
+  },
+  "usage": {
+    "scope": "Three business native-parent run usage records; maintenance R16/R17, supervisor Pi and internal Codex are separate.",
+    "perRun": [
+      {
+        "runId": "b9229790af042425b3d06597221041302e71d7df",
+        "inputTokensIncludingCacheRead": 1992470,
+        "outputTokens": 16781,
+        "cacheReadTokensIncludedInInput": 1916928,
+        "totalTokens": 2009251,
+        "directoryEstimateUSD": 2.501507,
+        "actualBillUSD": null
+      },
+      {
+        "runId": "2ad1cb1529b3a73622aefea6a7a232542e9c050b",
+        "inputTokensIncludingCacheRead": 432359,
+        "outputTokens": 3761,
+        "cacheReadTokensIncludedInInput": 422528,
+        "totalTokens": 436120,
+        "directoryEstimateUSD": 0.354444,
+        "actualBillUSD": null
+      },
+      {
+        "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+        "inputTokensIncludingCacheRead": 576214,
+        "outputTokens": 4734,
+        "cacheReadTokensIncludedInInput": 566016,
+        "totalTokens": 580948,
+        "directoryEstimateUSD": 0.452348,
+        "actualBillUSD": null
+      }
+    ],
+    "parentTotals": {
+      "inputTokensIncludingCacheRead": 3001043,
+      "outputTokens": 25276,
+      "cacheReadTokensIncludedInInput": 2905472,
+      "totalTokens": 3026319
+    },
+    "cacheReadIsIncludedInInputNotAddedAgain": true,
+    "directoryEstimateUSD": 3.308299,
+    "directoryEstimateIsInvoice": false,
+    "actualBillUSD": null,
+    "supervisorPiTokens": null,
+    "supervisorPiCostUSD": null,
+    "internalCodexTokens": null,
+    "internalCodexCostUSD": null,
+    "originalDerivedReportUsageUnknownPreserved": true,
+    "policy": "record-only; no monetary spending cap; unknown usage/prices remain null rather than zero"
+  },
+  "stateBoundaries": {
+    "supervisionItemCurrentSavedRevision": 11,
+    "supervisionItemCurrentSavedStatus": "running",
+    "supervisionItemBlockedUpdateExecuted": false,
+    "construction309Appended": false,
+    "productionReleaseAtThisCut": "20261018-unified-projects-r46-r1",
+    "node101Release": "R7",
+    "nodeConfigRevision": 46,
+    "factoryPlanRevision": 108,
+    "original74Accepted": 0,
+    "customer12Delivered": false,
+    "tenMinuteFollowup": "PAUSED",
+    "newSeventhSupervisionItemCreated": false
+  },
+  "limits": [
+    "Evidence size error labels do not prove the exact rejected byte size or underlying collection root cause.",
+    "Producer reports Docker/DB/Redis/MinIO and browser/history gaps; real browser/UI/model/end-to-end completeness is unaccepted.",
+    "The original report mentions preexisting 602 staged deletions and unsafe commit-all risk; this preparation did not inspect that remote index or change it.",
+    "No complete product repair, new package, new deployment, original74 or customer12 acceptance follows from a returned facts report."
+  ],
+  "evidenceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-first-run-receipt-terminal-first.json",
+      "sha256": "89e06927f1fb95183d4f10090f04a463e2018d0fddebd7f9e6df2d5a2ac86e1e",
+      "bytes": 2197
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-second-run-receipt-terminal-second.json",
+      "sha256": "98a5490b3d3d10bcfed75be00c6862759c6ff377056448ada6d3c5741ee88a1d",
+      "bytes": 2201
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-third-run-receipt-terminal-third.json",
+      "sha256": "1dd54b0455e28c5840f05781a3b5fd358c7f6b5ffd5da729651efd7a062e68e8",
+      "bytes": 2531
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-business-snapshot-explicit-recovery-check-02.json",
+      "sha256": "efd450599d5a7fa3a95a9ae74d3562cebbc24bf5c8f52aee585a57d874a8b4b1",
+      "bytes": 20540
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-third-feedback-null-question-compat-and-reconcile-source-review.json",
+      "sha256": "345cfc79c0f3dc8b11bc7a81bcd45d72a1329eddb1fd7f66aac7542d759450ae",
+      "bytes": 10658
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-started-item-readback.json",
+      "sha256": "9f088a502298d9b7d88844edcf0d7f0ebe927455268c02f91f737583579cdcef",
+      "bytes": 1796
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round17-selection-readback.json",
+      "sha256": "e7a3c8e6452bf615e1a99768285a191971080363b9aa1402560ee5510fee21af",
+      "bytes": 123223
+    }
+  ]
+}

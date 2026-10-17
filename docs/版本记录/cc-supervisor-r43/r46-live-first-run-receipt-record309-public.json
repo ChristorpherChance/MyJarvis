@@ -1,0 +1,77 @@
+{
+  "kind": "record309-public-central-receipt",
+  "source": {
+    "path": "artifacts/cc-supervisor-r43/r46-live-first-run-receipt-terminal-first.json",
+    "sha256": "89e06927f1fb95183d4f10090f04a463e2018d0fddebd7f9e6df2d5a2ac86e1e",
+    "bytes": 2197
+  },
+  "projectionScope": "Existing saved allowlisted central receipt; no raw task/run/result/evidence body or original signature headers are published.",
+  "receipt": {
+    "kind": "r46-live-first-run-receipt",
+    "label": "terminal-first",
+    "at": "2026-10-17T18:50:41.006Z",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "supervisorSessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "runId": "b9229790af042425b3d06597221041302e71d7df",
+    "bindingsChecked": true,
+    "task": {
+      "revision": 6,
+      "status": "running",
+      "executionStatus": "running",
+      "currentRunIsThisFirstRun": false,
+      "currentResultCanonicalMatchesFirstRun": false
+    },
+    "run": {
+      "status": "failed",
+      "hasResult": true,
+      "stopRequested": false,
+      "supervisorGoalRevision": 1,
+      "result": {
+        "source": "signed-agent",
+        "lateEvidenceOnly": false,
+        "outcome": "failed",
+        "exitCode": 0,
+        "rounds": 1,
+        "jsonSHA256": "d55d1171ecc2d23b64e91298962b5526717801f61197d23d5fd6abb6d3c388c3",
+        "summary": {
+          "bytes": 68,
+          "sha256": "3e14ff431813ad5ecf38f0c88a8f98fcc22beae783f7e69ec68ae49346b65928"
+        },
+        "feedbackJSONParsed": false,
+        "feedbackState": null,
+        "declaredFeedbackEvidenceCount": null,
+        "terminationProofPresent": false,
+        "stopConfirmationPresent": false,
+        "executionMetadataPresent": true,
+        "nativePhaseCount": 1
+      }
+    },
+    "evidenceReceipts": {
+      "count": 0,
+      "totalBytes": 0,
+      "items": []
+    },
+    "raw": {
+      "task": {
+        "bytes": 10631,
+        "sha256": "65175ad895dd859c841eec1e4a4c0d028bed9c4dcbfb2285f1d331b663d8caeb",
+        "private": true
+      },
+      "run": {
+        "bytes": 5418,
+        "sha256": "693fc1564ceab13140a3bc95ff78e9ce189aa4e568205ec32673c32c34d14049",
+        "private": true
+      }
+    },
+    "businessGETs": 2,
+    "businessMutations": 0,
+    "authenticationLifecycle": "existing withPlatform transient login created and revoked; cookie never exported",
+    "noAutomaticRetry": true,
+    "noPolling": true,
+    "originalHTTPAgentSignatureHeadersReturned": false,
+    "provenance": "server-authenticated API persisted result; signed-agent is central protocol provenance, not offline independent signature verification",
+    "independentProductAcceptance": false,
+    "fullSummaryAndOriginalsPublic": false
+  }
+}

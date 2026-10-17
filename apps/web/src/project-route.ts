@@ -1,3 +1,4 @@
+export const projectRouteRoot=(value:string)=>value.split('?')[0].split('/')[0];
 export interface ProjectRouteTask {id:string;projectId?:string;project?:string;}
 /** Shared by initial hash, in-app navigation and browser history. Unresolved task links stay explicit. */
 export function resolveProjectRoute(value:string,tasks:ProjectRouteTask[]=[]):string{

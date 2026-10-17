@@ -4,7 +4,7 @@ import type {Props} from './common';
 import './ProjectSupervisorPanel.css';
 
 type Session={id:string;revision:number;goalRevision:number;goal:string;criteria:string[];status:string;summary:string;blocker:string;nextAction:string;machineId:string;executor:string;workspace:string;taskId:string;runId:string;adoptionBinding?:Record<string,unknown>};
-type SupervisorResponse={data:{session:Session|null;events:any[];independentAcceptance:false}};
+type SupervisorResponse={data:{session:Session|null;events:any[];independentAcceptance:false;stop?:{requested:boolean;confirmed:boolean;sourceRunId:string|null;state:string}}};
 const splitCriteria=(value:string)=>value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
 type SupervisorAction='start'|'pause'|'stop'|'resume'|'takeover'|'revise'|'reply';
 const labels:Record<string,string>={draft:'尚未启动',ready:'待启动',dispatching:'正在派发',running:'CC执行中',judging:'贾维斯判断中',waiting_user:'等待本人信息',review_pending:'等待原件核验',human_control:'本人已接管',paused:'已暂停',blocked:'已阻塞',stopped:'已停止',completed:'监督结束',failed:'执行失败',achieved:'贾维斯判定达标',review_required:'等待本人复核'};
@@ -43,7 +43,7 @@ export default function ProjectSupervisorPanel({projectId,data}: {projectId:stri
  const latestFeedback=snapshot?.events.find((event:any)=>event.feedback)?.feedback;
  const stopRequested=snapshot?.events.find((event:any)=>event.stopRequested===true);
  const stopConfirmed=snapshot?.events.find((event:any)=>event.stopConfirmation||event.actualOutcome==='cancelled'&&event.stopConfirmed===true);
- const stopState=stopRequested?(stopConfirmed?'已收到绑定停止确认':'停止请求已提交，等待节点确认；不能视为子树已停'):'当前没有停止请求';
+ const stopState=snapshot?.stop?.requested?(snapshot.stop.confirmed?'已收到绑定停止确认':snapshot.stop.state==='pending'?'停止请求已提交，等待节点确认；不能视为子树已停':'停止确认状态未知；禁止盲目重派'):stopRequested?(stopConfirmed?'已收到绑定停止确认':'停止请求已提交，等待节点确认；不能视为子树已停'):'当前没有停止请求';
  const activeNode=session?.machineId?data.machines.find(machine=>machine.id===session.machineId):undefined;
  const executorAction=session?.status==='judging'?'贾维斯正在核对 CC 执行结果':session?.status==='dispatching'?'CC 正在接收派发任务':session?.status==='running'?`CC 正在${session.nextAction||'执行当前任务'}`:session?.status==='waiting_user'?'当前等待本人补充信息':session?.status==='review_pending'?'当前等待原件核验':session?.status==='paused'?'CC 执行已暂停':session?.status==='blocked'?'执行受阻，等待处理':session?.status==='completed'?'当前监督已结束':session?.status==='failed'?'CC 当前执行失败':session?.status==='human_control'?'本人已接管当前执行':session?.status==='stopped'?'当前监督已停止':session?.status==='ready'?'CC 尚未启动，等待开始监督':session?.status==='draft'?'监督会话尚未启动':'尚无 CC 执行动作';
  const waitingFor=session?.status==='waiting_user'?'本人提供所需信息':session?.status==='review_pending'?'本人核验原件':session?.status==='judging'?'贾维斯完成结果判断':session?.status==='dispatching'?'CC 接收派发':session?.status==='blocked'?session.blocker||'处理当前阻塞':null;

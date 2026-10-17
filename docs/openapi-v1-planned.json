@@ -52476,9 +52476,10 @@
           "purpose": {
             "enum": [
               "project-autonomy-validation",
-              "project-candidate-validation"
+              "project-candidate-validation",
+              "project-supervisor"
             ],
-            "description": "固定无模型核验用途。原FA授权保持；R27候选复验仅使用本轮明确固定的机器、目录和root入口，费用只记录，任务表预算不作为消费限制。"
+            "description": "固定无模型核验用途或项目主管专用单轮受控执行用途。候选复验范围只使用登记机器、目录和入口；主管用途不授权执行范围扩张。"
           }
         },
         "required": [
@@ -52768,6 +52769,32 @@
             "type": "string",
             "maxLength": 200
           },
+          "supervisor": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sessionId": {"type":"string","minLength":1,"maxLength":200},
+              "goalRevision": {"type":"integer","minimum":1},
+              "supervisorRevision": {"type":"integer","minimum":1},
+              "expectedTaskRevision": {"type":"integer","minimum":1},
+              "consumedRunId": {"type":["string","null"],"maxLength":200},
+              "resultHash": {"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},
+              "fingerprint": {"type":"string","pattern":"^[a-f0-9]{64}$"}
+            },
+            "required": ["sessionId","goalRevision","supervisorRevision","expectedTaskRevision","consumedRunId","resultHash","fingerprint"]
+          },
+          "continuationGrant": {
+            "type":"object",
+            "additionalProperties":false,
+            "properties": {
+              "grantId":{"type":"string","minLength":1,"maxLength":200},
+              "maxParentTokens":{"type":"integer","minimum":1,"maximum":10000000},
+              "sourceRunId":{"type":"string","minLength":1,"maxLength":200},
+              "sourceResultHash":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+              "historyAcknowledgedUnknown":{"type":"boolean"}
+            },
+            "required":["grantId","maxParentTokens","sourceRunId","sourceResultHash"]
+          },
           "template": {
             "$ref": "#/components/schemas/ExecutionTemplate"
           },
@@ -52777,7 +52804,8 @@
           "purpose": {
             "enum": [
               "project-autonomy-validation",
-              "project-candidate-validation"
+              "project-candidate-validation",
+              "project-supervisor"
             ]
           },
           "remainingTokens": {
@@ -53635,7 +53663,12 @@
           "usageComplete": {
             "type": "boolean",
             "description": "true表示每轮均有原生最终用量回执，false为取消/失败等部分已观察用量；旧节点省略时保持历史兼容，不声称已恢复缺失数据。"
-          }
+          },
+          "measurementStatus": {"type":"string","enum":["reported","partial","unknown"]},
+          "costUSD": {"type":"number","minimum":0},
+          "knownCostUSD": {"type":"number","minimum":0},
+          "costComplete": {"type":"boolean"},
+          "costKind": {"type":"string","enum":["provider-reported","catalog-estimate"]}
         },
         "required": [
           "inputTokens",

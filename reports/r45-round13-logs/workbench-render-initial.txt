@@ -1,0 +1,22 @@
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/.r43-tools/r45-render-1fvKfs/scenario-none.mjs?null:1464
+        return resolveDispatcher().useRef(initialValue);
+                                  ^
+
+TypeError: Cannot read properties of null (reading 'useRef')
+    at process.env.NODE_ENV.exports.useRef (file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/.r43-tools/r45-render-1fvKfs/scenario-none.mjs?null:1464:35)
+    at EntityWorkbench (file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/.r43-tools/r45-render-1fvKfs/scenario-none.mjs?null:5667:44)
+    at Object.react_stack_bottom_frame (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:10371:18)
+    at renderWithHooks (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5361:19)
+    at renderElement (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5796:23)
+    at retryNode (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:6772:31)
+    at renderNodeDestructive (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:6717:11)
+    at finishFunctionComponent (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5405:13)
+    at renderElement (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5851:11)
+    at retryNode (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:6772:31)
+
+Node.js v24.15.0

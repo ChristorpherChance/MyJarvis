@@ -1,0 +1,50 @@
+
+> jarvis-platform@0.1.0 build
+> npm run build -w @jarvis/web && npm run build -w @jarvis/api
+
+
+> @jarvis/web@0.1.0 build
+> tsc --noEmit && vite build --outDir .dist-staging && node ../../scripts/promote-web.mjs
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 207 modules transformed.
+rendering chunks...
+computing gzip size...
+.dist-staging/index.html                                          0.52 kB │ gzip:   0.37 kB
+.dist-staging/offline-capture.html                                0.66 kB │ gzip:   0.40 kB
+.dist-staging/offline-capture-shell-manifest.json                 1.14 kB │ gzip:   0.51 kB
+.dist-staging/offline-capture-sw.js                               4.15 kB
+.dist-staging/assets/EvidenceAssistantPanel-DuoOicCv.css          1.67 kB │ gzip:   0.66 kB
+.dist-staging/assets/MaterialManager-B-adSYOj.css                 2.83 kB │ gzip:   0.85 kB
+.dist-staging/assets/NotificationPreferencesPanel-CMPr2Z5F.css    3.00 kB │ gzip:   1.04 kB
+.dist-staging/assets/offlineCapture-CTF5MCW4.css                  4.72 kB │ gzip:   1.58 kB
+.dist-staging/assets/RoomVoice-Boq6QLI7.css                      15.59 kB │ gzip:   3.79 kB
+.dist-staging/assets/ApiWorkbench-BU9U4-wP.css                   24.19 kB │ gzip:   5.90 kB
+.dist-staging/assets/index-Bn0_XvS3.css                          35.14 kB │ gzip:   6.58 kB
+.dist-staging/assets/KnowledgePage-DO5gJB2N.css                  38.46 kB │ gzip:   6.91 kB
+.dist-staging/assets/index-C4A9K3Js.css                          40.70 kB │ gzip:   8.49 kB
+.dist-staging/assets/OperationsPage-BrEOh5vG.css                 52.84 kB │ gzip:   9.01 kB
+.dist-staging/assets/DemoApp-L1CrooRu.css                        87.28 kB │ gzip:  15.90 kB
+.dist-staging/assets/api-Chk_xhf3.js                              1.79 kB │ gzip:   0.99 kB
+.dist-staging/assets/v1-client-CX0ITgRR.js                        2.27 kB │ gzip:   1.27 kB
+.dist-staging/assets/index-BWW6DgEo.js                            2.70 kB │ gzip:   1.37 kB
+.dist-staging/assets/EvidenceAssistantPanel-Gxi7GIkS.js           8.82 kB │ gzip:   3.72 kB
+.dist-staging/assets/offline-vault-g54LtOEF.js                   10.71 kB │ gzip:   4.36 kB
+.dist-staging/assets/MaterialManager-BSJ0JW-p.js                 25.94 kB │ gzip:   9.20 kB
+.dist-staging/assets/offlineCapture-Dp37MnGd.js                  26.59 kB │ gzip:   9.59 kB
+.dist-staging/assets/App-Bw5WWsEu.js                             42.77 kB │ gzip:  13.79 kB
+.dist-staging/assets/ApiWorkbench-Dmp8PqAz.js                    50.86 kB │ gzip:  16.83 kB
+.dist-staging/assets/RoomVoice-DgLk029p.js                       85.73 kB │ gzip:  29.68 kB
+.dist-staging/assets/KnowledgePage-CoG1rh-n.js                  105.35 kB │ gzip:  32.84 kB
+.dist-staging/assets/index-BOK2KYgE.js                          132.64 kB │ gzip:  43.44 kB
+.dist-staging/assets/DemoApp-Dc9Q7TVE.js                        186.06 kB │ gzip:  58.60 kB
+.dist-staging/assets/client-OI5hagxP.js                         222.59 kB │ gzip:  69.34 kB
+.dist-staging/assets/NotificationPreferencesPanel-C9BkAmZa.js   233.14 kB │ gzip:  79.80 kB
+.dist-staging/assets/OperationsPage-D62v5whk.js                 390.57 kB │ gzip: 115.66 kB
+✓ built in 3.38s
+Frontend assets promoted; existing data and active browser chunks preserved.
+
+> @jarvis/api@0.1.0 build
+> tsc -p tsconfig.json
+

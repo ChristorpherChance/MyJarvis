@@ -52,6 +52,8 @@ import {registerProjectSupervisionPlanRoutes} from './runtime/project-supervisio
 import {SupervisionWorkRuntime} from './runtime/supervision-work-runtime.js';
 import {registerSupervisionWorkRoutes} from './runtime/supervision-work-routes.js';
 import {ProjectSupervisorRuntime} from './runtime/project-supervisor-runtime.js';
+import {ProjectWorkbenchRuntime} from './runtime/project-workbench-runtime.js';
+import {registerProjectWorkbenchRoutes} from './runtime/project-workbench-routes.js';
 import {registerProjectSupervisorRoutes} from './runtime/project-supervisor-routes.js';
 import {createProjectSupervisorModel} from './runtime/project-supervisor-model.js';
 import {registerExperienceSupervisorRoutes} from './runtime/experience-supervisor-routes.js';
@@ -202,6 +204,9 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   startupCleanup.push(()=>supervisionWork.close());
   const projectSupervisor=new ProjectSupervisorRuntime(v1,execution,{directory:join(options.dataDir,'project-supervisor'),identity,stopped,modelReady:()=>pi.health('project-supervisor').configured,model:createProjectSupervisorModel(pi),decisions:projectDecisions,notifications});
   startupCleanup.push(()=>projectSupervisor.close());
+  const projectWorkbench=new ProjectWorkbenchRuntime(v1,projectSupervisor,execution,identity,join(options.dataDir,'project-workbench'));
+  startupCleanup.push(()=>projectWorkbench.close());
+  app.addHook('onClose',async()=>projectWorkbench.close());
   const learningSummary:DomainHandler={domain:'learning',commands:['companion-summary'],execute:(_command,p,ctx)=>{const record=ctx.create('learning',{kind:'practice',profile:'me',memberProfileId:p.profileId,type:'language',title:p.title,minutes:Math.floor(p.activeSeconds/60),activeSeconds:p.activeSeconds,rounds:p.rounds,answers:p.rounds.map((r:any)=>r.answer),corrections:p.rounds.filter((r:any)=>r.correction).map((r:any)=>r.correction),score:null,source:'pi-text-companion',assessmentStatus:'text-feedback',lessonId:p.id,time:ctx.now,status:'recorded',createdAt:ctx.now,updatedAt:ctx.now});ctx.emit('learning',record.id,'practice-recorded',{source:'pi-text-companion',rounds:p.rounds.length});return record;}};
   companion=new CompanionRuntime(identity,pi,notifications,{onLearning:(p,s)=>v1!.execute(learningSummary,'companion-summary',{commandId:'companion_'+s.id,expectedVersion:0,scope:'private',payload:{id:s.id,profileId:p.profileId,title:s.title,rounds:s.rounds,activeSeconds:s.activeSeconds}},p.actorId,()=>undefined).data.id});
   startupCleanup.push(()=>companion?.close());
@@ -410,6 +415,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   registerProjectSupervisionPlanRoutes(app,supervisionPlans,identity);
   registerSupervisionWorkRoutes(app,supervisionWork,identity);
   registerProjectSupervisorRoutes(app,projectSupervisor,identity);
+  registerProjectWorkbenchRoutes(app,projectWorkbench,identity);
   registerExperienceSupervisorRoutes(app,v1,identity);
   app.addHook('preClose',async()=>projectSupervisor.close());
   projectSupervisor.start();
@@ -423,7 +429,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   // Stop SDK streams before Fastify waits for existing SSE connections to close.
   app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();supervisionWork.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
   app.addHook('onClose',async()=>{supervisionPlans.close();projectDecisions.close();web?.close();identity.close();billing.close();governance.close();store.close();});
-  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy,projectSupervisor};
+  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy,projectSupervisor,projectWorkbench};
   }catch(error){
     try{await startupApp?.close();}catch{/* Preserve the initialization error. */}
     for(const close of startupCleanup.reverse())try{await close();}catch{/* Other handles must still be released. */}

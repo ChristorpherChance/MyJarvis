@@ -183,6 +183,8 @@ export class ProjectDecisionRuntime {
    return this.append({...snapshot,status,actions,origin:parsed.origin,revision:old.revision+1,updatedAt:new Date().toISOString(),previousHash,revisionReason:parsed.reason,selfReported:old.selfReported||parsed.origin==='ai'});
   });
  }
+ /** Bound observed actions do not confer selection eligibility or product acceptance. */
+ observeActions(projectId:string,id:string,input:unknown){const parsed=implementationSchema.parse(input);return this.command(projectId,'observed-actions:'+id,parsed.commandId,parsed,()=>{const old=this.current(projectId,id);if(old.revision!==parsed.expectedVersion)fail('决策已更新，请刷新后提交','CONFLICT',409);if(parsed.actions.some(a=>a.state==='performed'&&!a.evidenceRefs.length))fail('实际动作必须保留原件引用');const {hash:previousHash,...snapshot}=old;return this.append({...snapshot,actions:[...old.actions,...parsed.actions],revision:old.revision+1,updatedAt:new Date().toISOString(),previousHash,revisionReason:'事实记录不等于方案资格或独立验收：'+parsed.reason});});}
  change(projectId:string,id:string,input:unknown){
   const parsed=projectDecisionChangeSchema.parse(input);const {commandId,expectedVersion,reason,...body}=parsed;
   return this.command(projectId,'change:'+id,commandId,parsed,()=>{

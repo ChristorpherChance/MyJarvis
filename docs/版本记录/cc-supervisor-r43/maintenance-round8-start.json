@@ -1,0 +1,68 @@
+{
+  "kind": "r43-owner-authorized-maintenance-development",
+  "operationId": "e1b6a5e6-8a0a-462c-b02c-1b7a6e1d4c4e",
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "previousCentralRunId": "ab0f0356cbd906bbbc9a1f1de7366d56408213b0",
+  "dispatchSource": "owner-authorized-maintenance",
+  "centralDispatched": false,
+  "controlledRunId": null,
+  "phase": "started",
+  "directiveSHA256": "8339ccf89a644b98432e933ade755fb7b954dc3dd8dcfc5e4dc6b829d3731030",
+  "controllerSHA256": "6eb8e0be720fc1c7763ad323e03f245d98552f275d408c471980a8175668654d",
+  "at": "2026-10-17T11:12:19.980Z",
+  "timeoutSec": 2400,
+  "retry": 0,
+  "costPolicy": "record-only/no-money-cap; preserve original known and unknown cumulative ledger",
+  "started": {
+    "operationId": "e1b6a5e6-8a0a-462c-b02c-1b7a6e1d4c4e",
+    "unit": "jarvis-cc-maint-r43-e1b6a5e6-8a0a-462c-b02c-1b7a6e1d4c4e.service",
+    "unitState": {
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "3941608",
+      "ControlGroup": "/system.slice/jarvis-cc-maint-r43-e1b6a5e6-8a0a-462c-b02c-1b7a6e1d4c4e.service"
+    },
+    "before": {
+      "head": "f8d23de7e4f5a9a2f456e03e402316d9a0f9eb8c",
+      "status": "?? .r43-tools/\n?? reports/r43-round2-changes.patch\n?? reports/r43-round4-changes.patch\n?? reports/r43-round4-git.json\n?? reports/r43-round4-logs/agent-protocol-final.tap\n?? reports/r43-round4-logs/api-typecheck-final.txt\n?? reports/r43-round4-logs/cli-supervision-final.tap\n?? reports/r43-round5-changes.patch\n?? reports/r43-round6-changes.patch\n?? reports/r43-round7-changes.patch",
+      "agentPID": 3422716,
+      "agentProcessIdentity": [
+        "328726a0-5495-4892-b0a6-2fa9de26242e",
+        "67499918"
+      ],
+      "programSHA256": "24972e3bc859fab2b46ed4c1e51f7d6130f06d3bd550811a114640de3370d0de",
+      "directiveSHA256": "8339ccf89a644b98432e933ade755fb7b954dc3dd8dcfc5e4dc6b829d3731030",
+      "environmentPrivateOn101": true,
+      "environmentValuesExported": false
+    },
+    "dispatchSource": "owner-authorized-maintenance",
+    "centralDispatched": false,
+    "controlledRunId": null,
+    "started": true,
+    "noAutomaticRetry": true,
+    "rawEvidencePrivate": true
+  },
+  "unchangedReadback": {
+    "centralConfig": true,
+    "task": true,
+    "lastRun": true
+  },
+  "nodeConfigurationExpectedUnchanged": true,
+  "nodeConfigurationAfterReadback": false,
+  "platform112Released": false,
+  "publicProjection": {
+    "originalArtifact": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round8-start.json",
+      "sha256": "1e504d1e6743f52e59bd8202e505801793e5d14d058813df0cdb3e246a7a002b",
+      "bytes": 2758
+    },
+    "removedFields": [
+      "workspace",
+      "authority"
+    ],
+    "reason": "Omit absolute working-copy locator and authority paraphrase; preserve original receipt unchanged and publish actual owner-authorized start boundary."
+  }
+}

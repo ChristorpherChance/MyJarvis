@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+5 !== 4
+
+    at file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/scripts/test-r44-task-render.mjs:16:65
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 5,
+  expected: 4,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

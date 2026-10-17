@@ -34622,11 +34622,11 @@
           },
           "quietStart": {
             "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "pattern": "^(?:([01][0-9]|2[0-3]):[0-5][0-9])?$"
           },
           "quietEnd": {
             "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "pattern": "^(?:([01][0-9]|2[0-3]):[0-5][0-9])?$"
           },
           "timezone": {
             "type": "string",
@@ -34715,7 +34715,57 @@
           "ownerId",
           "profileId"
         ],
-        "description": "保存声音/唤醒词配置不等于接通语音或认证身份。"
+        "description": "保存声音/唤醒词配置不等于接通语音或认证身份。",
+        "allOf": [
+          {
+            "if": {
+              "anyOf": [
+                {
+                  "required": [
+                    "quietStart"
+                  ]
+                },
+                {
+                  "required": [
+                    "quietEnd"
+                  ]
+                }
+              ]
+            },
+            "then": {
+              "oneOf": [
+                {
+                  "required": [
+                    "quietStart",
+                    "quietEnd"
+                  ],
+                  "properties": {
+                    "quietStart": {
+                      "const": ""
+                    },
+                    "quietEnd": {
+                      "const": ""
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "quietStart",
+                    "quietEnd"
+                  ],
+                  "properties": {
+                    "quietStart": {
+                      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                    },
+                    "quietEnd": {
+                      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
       },
       "Machine": {
         "type": "object",
@@ -41527,11 +41577,11 @@
           },
           "start": {
             "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "pattern": "^(?:([01][0-9]|2[0-3]):[0-5][0-9])?$"
           },
           "end": {
             "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "pattern": "^(?:([01][0-9]|2[0-3]):[0-5][0-9])?$"
           },
           "timezone": {
             "type": "string",
@@ -41544,6 +41594,40 @@
           "start",
           "end",
           "timezone"
+        ],
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "start": {
+                    "const": ""
+                  },
+                  "end": {
+                    "const": ""
+                  }
+                }
+              },
+              {
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "start": {
+                    "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                  },
+                  "end": {
+                    "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                  }
+                }
+              }
+            ]
+          }
         ]
       },
       "PersonasQuietHoursCommand": {
@@ -50788,11 +50872,11 @@
           },
           "start": {
             "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "pattern": "^(?:([01][0-9]|2[0-3]):[0-5][0-9])?$"
           },
           "end": {
             "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "pattern": "^(?:([01][0-9]|2[0-3]):[0-5][0-9])?$"
           },
           "timezone": {
             "type": "string",
@@ -50817,6 +50901,40 @@
           "start",
           "end",
           "timezone"
+        ],
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "start": {
+                    "const": ""
+                  },
+                  "end": {
+                    "const": ""
+                  }
+                }
+              },
+              {
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "start": {
+                    "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                  },
+                  "end": {
+                    "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                  }
+                }
+              }
+            ]
+          }
         ]
       },
       "PersonasSaveCommand": {

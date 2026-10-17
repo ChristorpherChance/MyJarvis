@@ -121,8 +121,9 @@ function personaPatch(command: string, p: Values): Values {
     if (p.autoSpeak !== undefined) { ensure(typeof p.autoSpeak === 'boolean', '自动朗读选项无效'); patch.autoSpeak = p.autoSpeak; }
   }
   if (['quiet-hours', 'save'].includes(command)) {
-    patch.quietStart = text(p.start, '安静时间开始', 5); patch.quietEnd = text(p.end, '安静时间结束', 5);
-    ensure(/^([01]\d|2[0-3]):[0-5]\d$/.test(patch.quietStart) && /^([01]\d|2[0-3]):[0-5]\d$/.test(patch.quietEnd), '安静时间无效');
+    ensure(typeof p.start === 'string' && typeof p.end === 'string', '安静时间须填写开始与结束，或同时留空');
+    patch.quietStart = p.start; patch.quietEnd = p.end;
+    ensure((p.start === '' && p.end === '') || (/^([01]\d|2[0-3]):[0-5]\d$/.test(p.start) && /^([01]\d|2[0-3]):[0-5]\d$/.test(p.end)), '安静时间须完整有效，或同时留空关闭');
     patch.timezone = text(p.timezone, '时区', 100); try { new Intl.DateTimeFormat('en', { timeZone: patch.timezone }); } catch { throw new BusinessError('VALIDATION', '时区无效'); }
   }
   return patch;

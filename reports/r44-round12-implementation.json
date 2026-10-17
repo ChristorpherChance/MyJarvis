@@ -1,0 +1,49 @@
+{
+  "operationId": "2d5fb6bb-4e24-406b-8471-781d6970e3f0",
+  "startedAt": "2026-10-17T14:47:44Z",
+  "status": "delivery_closeout_completed_pending_Root_field_acceptance",
+  "appHEAD": "9b0a71273a103ca5c2f1db7a63f07969beeabc49",
+  "reportHEAD": null,
+  "version": "20261017-cc-supervisor-r44-r1",
+  "needs_more_work": false,
+  "R11": {
+    "closed": true,
+    "outcome": "timeout",
+    "exitCode": 143,
+    "nativeFinalCount": 0,
+    "fourFormalReportsMissing": true,
+    "sourceCommitPreserved": true,
+    "existingRenderRegression": "before TypeError; intermediate fixture count failure; final real production component SSR passed six rows/four unknown/known zero and positive",
+    "typecheckAndBuild": "prior logs only; not rerun"
+  },
+  "R12": {
+    "productionSourceChanged": false,
+    "regressionRerun": false,
+    "typecheckRerun": false,
+    "buildRerun": false,
+    "existingBuildMarker": "verified",
+    "sourceAssociation": "original packager raw tracked bytes/API source maps/build mtimes/offline closure verified",
+    "platformPackageExit": 0,
+    "nodePackageExit": 0,
+    "legacyCopyAndHashExit": 0,
+    "zipReadbackExit": 0,
+    "legacySevenZipReadback": "seven entries verified in ZIP and new release manifest; 851685 exact original bytes"
+  },
+  "notPerformed": [
+    "112 deployment",
+    "running101agent change",
+    "Root online same-tab browser acceptance",
+    "whole product independent acceptance"
+  ],
+  "usage": {
+    "R11Complete": false,
+    "R11Tokens": null,
+    "R11CostUSD": null,
+    "R12FinalParentTokens": null,
+    "R12CostUSD": null
+  },
+  "reportedAt": "2026-10-17T14:52:26.322Z",
+  "reportHEADBinding": "reports/r44-round12-report-binding.json",
+  "needs_more_work_scope": "This delivery-closeout operation only; Root live-browser/deployment and whole product acceptance remain separate",
+  "packages": "reports/r44-round12-packages.json"
+}

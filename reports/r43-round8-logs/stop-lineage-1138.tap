@@ -1,0 +1,25 @@
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (1320.368342ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3188.633349
+
+✖ failing tests:
+
+test at apps/api/test/execution-stop-lineage-r43.test.ts:1:483
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (1320.368342ms)
+  Error: ENOENT: no such file or directory, open '/tmp/r43-stop-chain-7UEF1f/work/project/new-args'
+      at async open (node:internal/fs/promises:640:25)
+      at async readFile (node:internal/fs/promises:1287:14)
+      at async TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/execution-stop-lineage-r43.test.ts:3:5583)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/r43-stop-chain-7UEF1f/work/project/new-args'
+  }

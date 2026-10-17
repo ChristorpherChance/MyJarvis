@@ -1,0 +1,12 @@
+
+> jarvis-platform@0.1.0 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @jarvis/api@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @jarvis/web@0.1.0 typecheck
+> tsc --noEmit
+

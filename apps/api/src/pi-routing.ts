@@ -10,6 +10,7 @@ export const modelScenarios = [
   { id: 'research', name: '深度研究', description: '研究问题、证据分析与方案比较' },
   { id: 'development', name: '项目开发', description: 'Pi 项目执行器的开发轮次' },
   { id: 'background', name: '通用作业', description: '其他有边界的智能整理作业' },
+  { id: 'project-supervisor', name: '项目主管', description: '项目作业的边界内决策与验收' },
 ] as const;
 export type ModelScenario = typeof modelScenarios[number]['id'];
 export const scenarioSchema = z.enum(modelScenarios.map(x => x.id));

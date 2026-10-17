@@ -1,0 +1,26 @@
+/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1752
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 6 errors:
+error: Cannot read directory ".r43-tools/render-r44-iE0QrJ/react-state.mjs": not a directory
+error: Cannot read directory ".r43-tools/render-r44-iE0QrJ/react-state.mjs": not a directory
+error: Cannot read directory ".r43-tools/render-r44-iE0QrJ/react-state.mjs": not a directory
+apps/web/src/features/operations/DevelopmentSupervisionPanel.tsx:28:8: ERROR: Could not resolve "/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/.r43-tools/render-r44-iE0QrJ/react-state.mjs/jsx-runtime" (originally "react/jsx-runtime")
+apps/web/src/features/operations/common.tsx:42:439: ERROR: Could not resolve "/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/.r43-tools/render-r44-iE0QrJ/react-state.mjs/jsx-runtime" (originally "react/jsx-runtime")
+...
+    at failureErrorWithLog (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1752:15)
+    at /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1211:25
+    at /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1163:52
+    at buildResponseToResult (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1209:7)
+    at /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:1236:16
+    at responseCallbacks.<computed> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:886:9)
+    at handleIncomingPacket (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:941:12)
+    at Socket.readFromStdout (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/node_modules/esbuild/lib/main.js:864:7)
+    at Socket.emit (node:events:509:28)
+    at addChunk (node:internal/streams/readable:563:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v24.15.0

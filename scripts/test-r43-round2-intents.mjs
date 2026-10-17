@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {SupervisorIntents} from '../apps/api/src/runtime/supervisor-intents.ts';
+const fixture=fn=>{const dir=mkdtempSync(join(tmpdir(),'r43-intent-'));try{return fn(join(dir,'state.sqlite'));}finally{rmSync(dir,{recursive:true,force:true});}};
+test('persistent complete model result reopens once and immutable observation retained',()=>fixture(path=>{let store=new SupervisorIntents(path);store.prepare('m','model',{goalRevision:1,run:'r'});store.started('m');store.complete('m',{action:'continue',directive:'new'});store.close();store=new SupervisorIntents(path);assert.equal(store.get('m').state,'complete');assert.equal(store.get('m').result.directive,'new');assert.throws(()=>store.started('m'),/ALREADY_STARTED/);assert.throws(()=>store.complete('m',{action:'stop'}),/CONFLICT/);store.close();}));
+test('crashed in-flight model becomes uncertain, never a fresh authorized retry',()=>fixture(path=>{let store=new SupervisorIntents(path);store.prepare('m','model',{run:'r'});store.started('m');store.close();store=new SupervisorIntents(path);assert.equal(store.interrupted('m').state,'uncertain');assert.throws(()=>store.started('m'),/ALREADY_STARTED/);store.close();}));
+test('dispatch input persisted across restart and binding tamper rejected',()=>fixture(path=>{let store=new SupervisorIntents(path);store.prepare('d','dispatch',{taskRevision:3,run:'r'});store.close();store=new SupervisorIntents(path);assert.equal(store.get('d').input.taskRevision,3);assert.throws(()=>store.prepare('d','dispatch',{taskRevision:4,run:'r'}),/BINDING_CHANGED/);store.complete('d',{runId:'r'});assert.deepEqual(store.complete('d',{runId:'r'}).result,{runId:'r'});store.close();}));

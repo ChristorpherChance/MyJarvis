@@ -1,0 +1,87 @@
+TAP version 13
+# (node:3741500) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real HTTP adoption is idempotent, owner-bound and preserves existing signed run before authorized reconcile
+not ok 1 - real HTTP adoption is idempotent, owner-bound and preserves existing signed run before authorized reconcile
+  ---
+  duration_ms: 227.135137
+  type: 'test'
+  location: '/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-adoption-privacy.test.ts:1:3747'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-adoption-privacy.test.ts:27:1187)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: adoption rejects unowned, changed, nonterminal, mismatched and stop-only sources without task creation
+ok 2 - adoption rejects unowned, changed, nonterminal, mismatched and stop-only sources without task creation
+  ---
+  duration_ms: 77.608165
+  type: 'test'
+  ...
+# Subtest: public supervisor content guard blocks credentials, private paths and URL access parameters before event or decision persistence
+not ok 3 - public supervisor content guard blocks credentials, private paths and URL access parameters before event or decision persistence
+  ---
+  duration_ms: 60.344272
+  type: 'test'
+  location: '/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-adoption-privacy.test.ts:1:6019'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'session')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-adoption-privacy.test.ts:29:604)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# (node:3741501) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections
+ok 4 - real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections
+  ---
+  duration_ms: 244.572875
+  type: 'test'
+  ...
+# Subtest: experience enters actual model input and is rechecked at real dispatch boundary
+not ok 5 - experience enters actual model input and is rechecked at real dispatch boundary
+  ---
+  duration_ms: 81.691932
+  type: 'test'
+  location: '/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:1:5641'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'experienceId')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:29:1349)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: model wait correction invalidates old return: zero follow-up dispatch and one model call
+ok 6 - model wait correction invalidates old return: zero follow-up dispatch and one model call
+  ---
+  duration_ms: 85.646384
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 3
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1029.917404

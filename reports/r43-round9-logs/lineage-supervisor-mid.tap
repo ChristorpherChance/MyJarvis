@@ -1,0 +1,35 @@
+✔ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (2515.418051ms)
+✖ real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections (251.595321ms)
+✔ experience enters actual model input and is rechecked at real dispatch boundary (88.263127ms)
+✔ real HTTP history cursor pages all events beyond the top 100 (495.244134ms)
+✔ model wait correction invalidates old return: zero follow-up dispatch and one model call (85.133806ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4343.182991
+
+✖ failing tests:
+
+test at apps/api/test/project-supervisor-r43.test.ts:1:4318
+✖ real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections (251.595321ms)
+  AssertionError [ERR_ASSERTION]: the initial goal event is not an existing decision to supersede
+  + actual - expected
+  
+  + 'selected'
+  - 'proposed'
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:28:1458)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'selected',
+    expected: 'proposed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

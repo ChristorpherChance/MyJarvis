@@ -1,0 +1,29 @@
+apps/api/src/app.ts(175,692): error TS2345: Argument of type '{ runId: string; actorId: string; provider: string; model: string; projectId: string | undefined; taskId: string | undefined; machineId: string | undefined; executorId: string | undefined; ... 13 more ...; ledgerRecorded?: boolean; }' is not assignable to parameter of type '{ runId: string; actorId: string; provider: string; model: string; inputTokens: number; outputTokens: number; cacheReadTokens?: number | undefined; cacheWriteTokens?: number | undefined; ... 12 more ...; measuredAt?: string | undefined; }'.
+  Types of property 'inputTokens' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+apps/api/src/runtime/agent-runner.ts(149,312): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/agent-runner.ts(149,364): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/agent-runner.ts(149,568): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/agent-runner.ts(149,582): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/cli-supervision.ts(50,41): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/cli-supervision.ts(50,59): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/cli-supervision.ts(56,146): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/cli-supervision.ts(56,164): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/cli-supervision.ts(59,19): error TS18048: 'value.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/cli-supervision.ts(59,48): error TS18048: 'value.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(59,30): error TS18048: 'supervision' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,2275): error TS18048: 'totals.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,2295): error TS18048: 'output.usage.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,2320): error TS18048: 'totals.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,2341): error TS18048: 'output.usage.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,2610): error TS18048: 'output.usage.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,2635): error TS18048: 'output.usage.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,3643): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,3699): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,3756): error TS18048: 'totals.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,3776): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,3790): error TS18048: 'totals.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,3811): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,4036): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(335,4050): error TS18048: 'u.outputTokens' is possibly 'undefined'.

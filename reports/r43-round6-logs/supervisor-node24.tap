@@ -1,0 +1,42 @@
+✔ real HTTP adoption is idempotent, owner-bound and preserves existing signed run before authorized reconcile (247.810379ms)
+✔ adoption rejects unowned, changed, nonterminal, mismatched and stop-only sources without task creation (73.544812ms)
+✔ public supervisor content guard blocks credentials, private paths and URL access parameters before event or decision persistence (53.391536ms)
+✖ real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections (243.690963ms)
+✖ experience enters actual model input and is rechecked at real dispatch boundary (76.113466ms)
+✔ model wait correction invalidates old return: zero follow-up dispatch and one model call (80.896779ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 844.669687
+
+✖ failing tests:
+
+test at apps/api/test/project-supervisor-r43.test.ts:1:4163
+✖ real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections (243.690963ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:28:1002)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/api/test/project-supervisor-r43.test.ts:1:5641
+✖ experience enters actual model input and is rechecked at real dispatch boundary (76.113466ms)
+  TypeError: Cannot read properties of undefined (reading 'experienceId')
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:29:1349)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7)

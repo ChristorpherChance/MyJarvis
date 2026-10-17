@@ -95,6 +95,8 @@ export interface PiRunInput {
   ephemeral?: boolean;
   /** Server-only purpose; project-supervisor is restricted to bounded ephemeral memory-only runs. */
   purpose?: 'project-supervisor';
+  /** Trusted server-only attribution, never taken directly from HTTP model input. */
+  supervisorBinding?: {projectId:string;taskId?:string;goalRevision:number;sourceRunId:string};
   /** Authenticated callers supply their own restricted tools; profiles never grant administrator tools. */
   businessCallbacks?: PiCallbacks;
   maxCostUSD?: number;
@@ -444,7 +446,7 @@ export class PiService {
       if(!this.priced(selected)&&(input.boundedJob||input.maxCostUSD!==undefined)&&!ephemeral)failure('PI_PRICE_UNAVAILABLE');
       const selectedModel=this.resolvedModel(selected),pricingKnown=this.priced(selected);
       if(conversationTurn)emit('route',{tier,reason:complexity.reason,provider:selected.provider,model:selected.model,...(fallback?{fallback}:{})});
-      metadata = { runId: randomUUID(), actorId: actor, conversationId: conversation, provider: selected.provider, model: selected.model, scenario, origin: input.boundedJob ? 'bounded-job' : 'chat', ...(ephemeral ? {recordOnly:true,usageKind:input.purpose==='project-supervisor'?'supervisor-model':'evidence-model'} : {}) };
+      metadata = { runId: randomUUID(), actorId: actor, conversationId: conversation, provider: selected.provider, model: selected.model, scenario, origin: input.boundedJob ? 'bounded-job' : 'chat', ...(ephemeral ? {recordOnly:true,usageKind:input.purpose==='project-supervisor'?'supervisor-model':'evidence-model'} : {}),...(input.purpose==='project-supervisor'&&input.supervisorBinding?{projectId:input.supervisorBinding.projectId,taskId:input.supervisorBinding.taskId,source:`supervisor:${input.supervisorBinding.goalRevision}:${input.supervisorBinding.sourceRunId}`}:{}) };
       await this.lifecycle.beforeRun?.(metadata);
       lifecycleStarted = true;
       if (run.cancelled) return { text: '', status: 'cancelled' };

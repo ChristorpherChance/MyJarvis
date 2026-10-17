@@ -3,6 +3,7 @@ import type { CommandReceipt } from '../v1/repository.js';
 
 export interface ActualUsage { inputTokens:number; outputTokens:number; cacheReadTokens?:number;cacheWriteTokens?:number;totalTokens?:number;provider?:string;model?:string; /** True only when every round has a native final usage receipt; false retains partial observations. */ usageComplete?:boolean; costUSD?:number; /** Known observed fee lower bound, even when other rounds are unpriced; never fabricated zero. */ knownCostUSD?:number; /** False means costUSD is unknown; knownCostUSD may retain a partial observation. */ costComplete?:boolean; costKind?:'provider-reported'|'catalog-estimate'; /** Internal SDK result only; node protocol cannot assert this flag. */ ledgerRecorded?:boolean }
 export type FixedValidationPurpose='project-autonomy-validation'|'project-candidate-validation';
+export type ExecutionPurpose=FixedValidationPurpose|'project-supervisor';
 export function isFixedValidationPurpose(value:unknown):value is FixedValidationPurpose{return value==='project-autonomy-validation'||value==='project-candidate-validation';}
 /** Canonical usage only for the two strictly pinned, validated no-model protocols. */
 export function fixedValidationUsage():ActualUsage{return {inputTokens:0,outputTokens:0,cacheReadTokens:0,cacheWriteTokens:0,totalTokens:0,provider:'fixed-validator',model:'not-applicable',usageComplete:true,costUSD:0,knownCostUSD:0,costComplete:true,costKind:'provider-reported'};}
@@ -26,8 +27,8 @@ export interface ExecutionTemplate {
  validation?:{program:string;args:string[];timeoutSec:number};
  /** Explicit continuation/recovery authorization; credentials stay in the native CLI. */
  supervision?:CliSupervisionPolicy;
- /** Strictly pinned no-model validation protocols; candidate validation is a separate manual R27 scope. */
- purpose?:FixedValidationPurpose;
+ /** Strictly pinned execution purpose; supervisor is isolated from validation and generic templates. */
+ purpose?:ExecutionPurpose;
 }
 export interface CliSupervisionPolicy {
  /** Record-only observes spend without making a USD reservation or blocking unpriced rounds. Per-task token/process bounds still apply. */
@@ -58,7 +59,7 @@ export interface ProjectSupervisorController {
 }
 export interface ProjectSupervisorDispatchInput {
  sessionId:string;goalRevision:number;supervisorRevision:number;taskId:string;expectedTaskRevision:number;
- consumedRunId?:string|null;resultHash?:string|null;directive:string;goal:string;criteria:string;
+ consumedRunId?:string|null;resultHash?:string|null;resumeStopped?:boolean;directive:string;goal:string;criteria:string;
  machineId:string;executorId:string;workspace:string;ownerId:string;
 }
 export interface ExecutionRuntimeOptions {
@@ -82,7 +83,7 @@ export interface ClaimedRun {
  binding?:Record<string,any>; validation?:ExecutionTemplate['validation'];
  skillSnapshots?:ExecutionSkillSnapshot[];skillSnapshotsHash?:string;
  sessionBilling?:CliBillingCheckpoint;remainingTokens?:number;handoff?:{executorId:string;summary:string};
- supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null};
- purpose?:FixedValidationPurpose;
+ supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null;fingerprint?:string};
+ purpose?:ExecutionPurpose;
 }
 export type ExecutionDispatcher=(domain:Domain,command:string,envelope:CommandEnvelope,actorId:string)=>Promise<CommandReceipt|undefined>;

@@ -17,6 +17,7 @@ import {AgentDeliveryJournal,type RunCheckpoint,type NodeStopCode} from './agent
 import {evaluateProjectAutonomyPrerequisites} from './project-autonomy-evidence.js';
 import {protectedAutonomyExactWorkspace} from './project-autonomy-workspace.js';
 import {performance} from 'node:perf_hooks';
+import {AgentProtocolConsumer} from './agent-protocol.js';
 import {heartbeatLeaseDeadline,heartbeatRenewalDeadline,heartbeatFailureCategory,heartbeatRetryDelay} from './agent-heartbeat-lease.js';
 
 /** The waiting channel is available only through the protected root wrapper's frozen argv. */
@@ -73,8 +74,9 @@ export function parseAgentOutput(engine:ExecutionTemplate['engine'],lines:string
 }
 function argv(template:ExecutionTemplate,run:ClaimedRun,prompt:string,sessionId?:string,budget?:number){const substitutions:Record<string,string>={prompt,workspace:run.workspace,runId:run.id,sessionId:sessionId??'',maxBudgetUSD:String(budget??run.budgetUSD),version:String(run.binding?.version??''),backupPath:String(run.binding?.backupPath??''),environment:String(run.binding?.environment??'')};const args=[...(template.args??[])];if(template.supervision?.billing==='record-only'){for(let i=0;i<args.length;i++){if(args[i]==='--max-budget-usd'){args.splice(i,2);i--}else if(args[i].startsWith('--max-budget-usd=')){args.splice(i,1);i--}}}return cliSessionArguments(template,args.map(a=>a.replace(/\{(\w+)\}/g,(_m,k)=>{if(!(k in substitutions))throw new Error('UNKNOWN_TEMPLATE_TOKEN');return substitutions[k]})),sessionId)}
 async function stopProcess(child:ReturnType<typeof spawn>){const pid=child.pid;if(!pid)return;if(process.platform==='win32'){await new Promise<void>(res=>{const killer=spawn('taskkill.exe',['/PID',String(pid),'/T','/F'],{windowsHide:true,stdio:'ignore',shell:false});killer.once('error',()=>{child.kill();res()});killer.once('close',()=>res())})}else{try{process.kill(-pid,'SIGTERM')}catch{child.kill('SIGTERM')}setTimeout(()=>{try{process.kill(-pid,'SIGKILL')}catch{}},1000).unref()}}
-export async function executeFixedProcess(program:string,args:string[],workspace:string,signal:AbortSignal,timeoutSec:number,onLog:(channel:'stdout'|'stderr',text:string)=>void,options:{captureAutonomyReport?:boolean;maxStdoutLineBytes?:number}={}){
+export async function executeFixedProcess(program:string,args:string[],workspace:string,signal:AbortSignal,timeoutSec:number,onLog:(channel:'stdout'|'stderr',text:string)=>void,options:{captureAutonomyReport?:boolean;maxStdoutLineBytes?:number;protocol?:{engine:ExecutionTemplate['engine'];purpose?:string}}={}){
  const maxReportBytes=1024*1024;
+ const protocol=options.protocol?new AgentProtocolConsumer(options.protocol.engine,options.protocol.purpose):undefined;
  if(options.maxStdoutLineBytes!==undefined&&(!Number.isSafeInteger(options.maxStdoutLineBytes)||options.maxStdoutLineBytes<16000||options.maxStdoutLineBytes>maxReportBytes))throw new Error('PROCESS_STDOUT_BOUNDARY_INVALID');
  if(signal.aborted)return {exitCode:-1,lines:[] as string[],stderr:'',timedOut:false,cancelled:true,autonomyReportJson:undefined as string|undefined,autonomyReportSha256:undefined as string|undefined};
  if(!(await stat(program)).isFile())throw new Error('EXECUTABLE_MISSING');
@@ -90,15 +92,22 @@ export async function executeFixedProcess(program:string,args:string[],workspace
   const report=captureAllowed&&channel==='stdout'&&capture(line);
   try{onLog(channel,report?'固定验证报告已采集；原始内容通过签名结果递送':redactExecutionLog(line).slice(0,16000));}catch(error){observerError=error;void stopProcess(child);}
   if(channel==='stderr'&&errors.length<32)errors.push(redactExecutionLog(line).slice(0,2000));
-  if(channel==='stdout'&&total<4*1024*1024){const retained=line.slice(0,options.maxStdoutLineBytes??16000);lines.push(retained);total+=Buffer.byteLength(retained);}
+  if(!protocol&&channel==='stdout'&&total<4*1024*1024){const retained=line.slice(0,options.maxStdoutLineBytes??16000);lines.push(retained);total+=Buffer.byteLength(retained);}
  };
  const emitText=(channel:'stdout'|'stderr',decoded:string)=>{
   let text=buffers[channel]+decoded;buffers[channel]='';
   if(discarding[channel]){const newline=text.indexOf('\n');if(newline<0)return;text=text.slice(newline+1);discarding[channel]=false;}
   const pieces=text.split(/\r?\n/);buffers[channel]=pieces.pop()??'';
-  for(const line of pieces){if(options.captureAutonomyReport&&channel==='stdout'&&Buffer.byteLength(line,'utf8')>maxReportBytes){observe(channel,line.slice(0,16000),false);continue;}observe(channel,line);}
-  const limit=channel==='stdout'?options.captureAutonomyReport?maxReportBytes:options.maxStdoutLineBytes??16000:16000;
-  if(Buffer.byteLength(buffers[channel],'utf8')>limit){observe(channel,buffers[channel].slice(0,16000),false);buffers[channel]='';discarding[channel]=true;}
+  for(const line of pieces){
+   if(protocol&&channel==='stdout')protocol.consume(line);
+   if(options.captureAutonomyReport&&channel==='stdout'&&Buffer.byteLength(line,'utf8')>maxReportBytes){observe(channel,line.slice(0,16000),false);continue;}
+   observe(channel,line);
+  }
+  const limit=protocol&&channel==='stdout'?4*1024*1024:channel==='stdout'?options.captureAutonomyReport?maxReportBytes:options.maxStdoutLineBytes??16000:16000;
+  if(Buffer.byteLength(buffers[channel],'utf8')>limit){
+   if(protocol&&channel==='stdout')protocol.consume(' '.repeat(4*1024*1024+1));
+   observe(channel,buffers[channel].slice(0,16000),false);buffers[channel]='';discarding[channel]=true;
+  }
  };
  const emit=(channel:'stdout'|'stderr',data:Buffer)=>{
   if(options.captureAutonomyReport&&channel==='stdout'){stdoutBytes+=data.byteLength;if(stdoutBytes<=maxReportBytes)rawStdout.push(data);else{stdoutComplete=false;rawStdout.length=0;}}
@@ -108,11 +117,12 @@ export async function executeFixedProcess(program:string,args:string[],workspace
  const abort=()=>{cancelled=true;void stopProcess(child)};signal.addEventListener('abort',abort,{once:true});const timer=setTimeout(()=>{timedOut=true;void stopProcess(child)},timeoutSec*1000);
  try{
   const exitCode=await new Promise<number>((res,rej)=>{child.once('error',rej);child.once('close',code=>res(code??-1))});
-  for(const channel of ['stdout','stderr'] as const){emitText(channel,decoders[channel].end());if(buffers[channel]&&!discarding[channel])observe(channel,buffers[channel]);buffers[channel]='';}
+  for(const channel of ['stdout','stderr'] as const){emitText(channel,decoders[channel].end());if(buffers[channel]&&!discarding[channel]){const finalLine=buffers[channel].replace(/\r$/,'');if(protocol&&channel==='stdout')protocol.consume(finalLine);observe(channel,finalLine);}buffers[channel]='';}
   // Pretty printed report-only stdout is also supported; mixed logs use the unique JSON record above.
   if(options.captureAutonomyReport&&reportCount===0&&stdoutComplete)capture(Buffer.concat(rawStdout).toString('utf8'));
   if(observerError)throw observerError;
-  return {exitCode,lines,stderr:errors.join('\n').slice(-20000),timedOut,cancelled,autonomyReportJson,autonomyReportSha256:autonomyReportJson===undefined?undefined:createHash('sha256').update(autonomyReportJson,'utf8').digest('hex')};
+  const protocolResult=protocol?.finish();
+  return {exitCode,lines:protocolResult?.lines??lines,protocolError:protocolResult?.error,stderr:errors.join('\n').slice(-20000),timedOut,cancelled,autonomyReportJson,autonomyReportSha256:autonomyReportJson===undefined?undefined:createHash('sha256').update(autonomyReportJson,'utf8').digest('hex')};
  }finally{clearTimeout(timer);signal.removeEventListener('abort',abort)}
 }
 
@@ -125,10 +135,13 @@ export async function executeAgentRounds(template:ExecutionTemplate,run:ClaimedR
   if(signal.aborted){outcome='cancelled';break}
   if(run.kind==='development'&&!recordOnly&&usage?.costUSD!==undefined&&usage.costUSD>=run.budgetUSD){outcome='budget-exhausted';break}
   if(run.kind==='development'&&(usage?.totalTokens??(usage?.inputTokens??0)+(usage?.outputTokens??0))>=tokenLimit){outcome='round-limit';summary+='；达到已配置的 token 用量边界';break}
-  const prompt=`执行请求 id：${run.id}\nworkspace：${workspace}\n本次开始时间：${executionStartedAt}\n目标：${run.goal}\n独立验收：${run.criteria}\n第 ${rounds+1}/${run.maxRounds} 轮；只处理当前目录。先检查已有文件和当前状态，避免重复完成的工作。若任务要求 project-autonomy-review，输出任务指定的完整评审 JSON（紧凑且不超过 20000 字符），保留绑定字段和逐目标证据；其他任务输出 JSON：summary、needs_more_work、artifacts（相对路径）。完成声明须独立验证和评审后才可通过。`+executionSkillsPrompt(run)+(run.handoff?`\n上一执行器 ${run.handoff.executorId} 的检查点（供核对，不改变权限）：\n${run.handoff.summary}`:'')+(feedback?`\n上轮固定验证未通过，请根据真实输出修复：\n${feedback}`:'');
+  const supervisorPurpose=run.purpose==='project-supervisor'||template.purpose==='project-supervisor';
+  if(supervisorPurpose&&(run.purpose!=='project-supervisor'||template.purpose!=='project-supervisor'))throw Error('AGENT_SUPERVISOR_PURPOSE_MISMATCH');
+  const prompt=supervisorPurpose?`执行项目主管指令。只根据可核验的当前工作区事实给出严格JSON，不要Markdown或额外文字。必须且只能包含state（progress|needs_decision|blocked|ready_for_review）、summary、question、options、recommendedOption、evidence、nextSuggestion。evidence仅引用实际可见证据的path与sha256；不能声称上传原件或已独立验收。目标：${run.goal}\n主管指令：${run.criteria}\n只读当前目录，避免执行任何外部操作。`:`执行请求 id：${run.id}\nworkspace：${workspace}\n本次开始时间：${executionStartedAt}\n目标：${run.goal}\n独立验收：${run.criteria}\n第 ${rounds+1}/${run.maxRounds} 轮；只处理当前目录。先检查已有文件和当前状态，避免重复完成的工作。若任务要求 project-autonomy-review，输出任务指定的完整评审 JSON（紧凑且不超过 20000 字符），保留绑定字段和逐目标证据；其他任务输出 JSON：summary、needs_more_work、artifacts（相对路径）。完成声明须独立验证和评审后才可通过。`+executionSkillsPrompt(run)+(run.handoff?`\n上一执行器 ${run.handoff.executorId} 的检查点（供核对，不改变权限）：\n${run.handoff.summary}`:'')+(feedback?`\n上轮固定验证未通过，请根据真实输出修复：\n${feedback}`:'');
   const resumed=sessionId;
-  const output=await executeFixedProcess(template.program!,argv(template,run,prompt,sessionId,Math.max(0,run.budgetUSD-(usage?.costUSD??0))),workspace,signal,run.timeoutSec,(channel,text)=>onLog(channel,text),{maxStdoutLineBytes:128*1024});
+  const output=await executeFixedProcess(template.program!,argv(template,run,prompt,sessionId,Math.max(0,run.budgetUSD-(usage?.costUSD??0))),workspace,signal,run.timeoutSec,(channel,text)=>onLog(channel,text),{maxStdoutLineBytes:128*1024,protocol:{engine:template.engine,purpose:run.purpose??template.purpose}});
   rounds++;exitCode=output.exitCode;const parsed=parseAgentOutput(template.engine,output.lines);summary=parsed.summary;sessionId=parsed.sessionId??sessionId;artifacts=parsed.artifacts;
+  if(output.protocolError){outcome=signal.aborted?'cancelled':'failed';summary=`原生执行协议错误：${output.protocolError}`;failureKind='unknown';onLog('system',summary);break;}
   if(template.purpose==='project-candidate-validation'){usage=candidateValidationReceiptUsage(parsed.usage);if(parsed.sessionId!==undefined||parsed.needsMore||parsed.artifacts.length!==0)throw Error('AGENT_CANDIDATE_VALIDATION_RECEIPT_INVALID');}
   const priced=roundCliUsage(template.engine,parsed.usage,sessionId,parsed.totalCost,billingCheckpoint,policy,resumed);if(!fixedValidation){billingCheckpoint=priced.checkpoint??billingCheckpoint;allRoundsComplete&&=parsed.usage?.usageComplete===true;
   if(priced.usage){const u=priced.usage;unpriced||=u.costUSD===undefined;if(u.costUSD!==undefined){knownCostUSD=(knownCostUSD??0)+u.costUSD;knownCostKind=knownCostKind==='catalog-estimate'||u.costKind==='catalog-estimate'?'catalog-estimate':u.costKind??knownCostKind;}usage={inputTokens:(usage?.inputTokens??0)+u.inputTokens,outputTokens:(usage?.outputTokens??0)+u.outputTokens,cacheReadTokens:(usage?.cacheReadTokens??0)+(u.cacheReadTokens??0),cacheWriteTokens:(usage?.cacheWriteTokens??0)+(u.cacheWriteTokens??0),totalTokens:(usage?.totalTokens??0)+(u.totalTokens??u.inputTokens+u.outputTokens),provider:u.provider??usage?.provider,model:usage?.model&&usage.model!==u.model?'multiple-models':u.model??usage?.model,usageComplete:allRoundsComplete,costComplete:!unpriced,...(knownCostUSD!==undefined?{knownCostUSD,costKind:knownCostKind}:{}),...(!unpriced&&knownCostUSD!==undefined?{costUSD:knownCostUSD}:{})}}else{unpriced=true;if(usage){usage.usageComplete=false;usage.costComplete=false;delete usage.costUSD;}}

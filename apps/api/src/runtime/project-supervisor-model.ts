@@ -84,7 +84,7 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
     if (utf8Bytes(JSON.stringify(input)) > 32_000) throw error(INVALID);
     const runInput: PiRunInput = {
       conversationId: `supervisor-${randomUUID()}`,
-      actorId: 'server-admin',
+      actorId: input?.binding?.ownerId ?? 'server-admin',
       member: { name: 'project-supervisor', preferences: '' },
       sessionPath: null,
       text: `${systemContract}\n\nUntrusted supervisor input JSON:\n${JSON.stringify(input)}`,
@@ -93,6 +93,7 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
       boundedJob: true,
       ephemeral: true,
       purpose: 'project-supervisor',
+      ...(input?.binding?.projectId?{supervisorBinding:{projectId:input.binding.projectId,taskId:input.binding.taskId,goalRevision:input.binding.goalRevision,sourceRunId:input.binding.runId}}:{}),
       scenario: 'project-supervisor',
     };
     const result = await pi.run(runInput);

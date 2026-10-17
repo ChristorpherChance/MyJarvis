@@ -1,0 +1,227 @@
+{
+  "kind": "r43-round5-correction-learning-source-and-saved-log-review",
+  "version": 1,
+  "reviewedOn": "2026-10-17",
+  "status": "source-only-remaining-blockers-not-release-ready",
+  "source": {
+    "reportedPreservedGitHead": "8d73dc87f7224b3a730d709fdfd408fb4bf80e23",
+    "reportedApplicationCommit": "94c1217ef8baa3ad0c0f729b4dd5bf756c9d5896",
+    "identityBoundary": "Commit identities supplied by Root; the files and preserved logs below were directly read locally."
+  },
+  "boundary": {
+    "appEdited": false,
+    "testsRun": false,
+    "modelsCalled": false,
+    "networkAccessed": false,
+    "productionChanged": false,
+    "newTestResultsClaimed": false
+  },
+  "savedFailuresExplained": [
+    {
+      "case": "privacy GET undefined",
+      "evidence": [
+        "reports/r43-round5-logs/adoption-privacy-final.tap:34",
+        "reports/r43-round5-logs/adoption-delta.tap:34",
+        "apps/api/test/project-supervisor-adoption-privacy.test.ts:24",
+        "apps/api/test/project-supervisor-adoption-privacy.test.ts:29"
+      ],
+      "classification": "specific-fixture-request-defect-not-proven-app-privacy-failure",
+      "cause": "The helper call(path:string,...) has no default. The test calls f.call() without a path, producing /api/v1/projects/p/supervisorundefined. Its nonmatching-route JSON has no data, so reading value.data.session throws. This occurs after the test already asserted that the private adoption request returned 400.",
+      "narrowFix": "Default path to the empty string or call f.call('') explicitly, and assert the GET HTTP status/envelope before reading session. Preserve the original failed logs. Do not weaken the application privacy guard to repair this test.",
+      "limit": "The failure does not prove the app accepted private content, nor does identifying this fixture defect establish complete privacy acceptance. The subsequent guard assertions were not reached."
+    },
+    {
+      "case": "adoption expected one dispatch but observed zero",
+      "evidence": [
+        "reports/r43-round5-logs/adoption-delta.tap:5",
+        "apps/api/test/project-supervisor-adoption-privacy.test.ts:23",
+        "apps/api/test/project-supervisor-adoption-privacy.test.ts:27",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:66",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:71"
+      ],
+      "classification": "invalid-model-fixture-explains-this-assertion; separate-application-lifecycle-defects-remain",
+      "cause": "The replacement model is async()=>({}), which has no valid action or directive. In the final R5 source the first pump only records adopt-source-verified and returns; after reconcile, the next pump consumes the source through the normal evidence/model path. It then receives {}, persists that replacement-model result and rejects its missing action. No valid continue decision exists that could authorize the expected dispatch.",
+      "narrowFix": "Supply a valid bounded continue decision for the successful adoption test and separately assert the first source-verification phase, model input/decision and dispatch. Keep an invalid-decision case as its own failure-boundary case. Do not bypass model judgment or change the expected count merely to obtain green output.",
+      "timingCorrection": "An initial reviewer message assumed the first pump already called the model. Reading final R5 line 66 corrected that assumption: the dedicated adopt-source-verified branch returns before ordinary consumption/model processing. This report records the corrected final-source order.",
+      "limit": "This saved assertion alone cannot establish that a real valid-model first adoption dispatch is broken. The stale adoption binding and consumed-result reconcile defects below are independently established by source dataflow."
+    },
+    {
+      "case": "experienceReferences[0] undefined",
+      "evidence": [
+        "reports/r43-round5-logs/adoption-privacy-final.tap:58",
+        "apps/api/test/project-supervisor-r43.test.ts:21",
+        "apps/api/test/project-supervisor-r43.test.ts:29",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:68"
+      ],
+      "classification": "fixture-contract-drift",
+      "cause": "The old replacement execution map still puts agentVersion:'v1' on the run and supplies a result without executionMetadata. R5 now matches nativeCliVersion from result.executionMetadata, so the current binding version is null and the pre-seeded v1 candidate is correctly excluded.",
+      "narrowFix": "Update this fixture to the new signed metadata contract and add a DTO/runtime-path assertion proving actual metadata propagation; retain missing-version rejection. Do not relax the exact version selector or infer version from the fixture-only agentVersion property."
+    }
+  ],
+  "remainingP1": [
+    {
+      "id": "R5-CL-P1-01",
+      "title": "The first adopted handoff never consumes its adoption binding, so the next continuation reuses the old run/version",
+      "refs": [
+        "apps/api/src/runtime/project-supervisor-runtime.ts:65",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:69",
+        "apps/api/src/runtime/execution-runtime.ts:199",
+        "apps/api/src/runtime/execution-runtime.ts:201",
+        "apps/api/src/runtime/execution-runtime.ts:209"
+      ],
+      "trigger": "A valid adopted source receives a valid continue decision, its first new CC run actually completes, and the supervisor attempts another continuation.",
+      "evidence": "Each dispatch chooses expectedTaskRevision, consumedRunId and resultHash from s.adoptionBinding before the latest task/session fields. After a successful dispatch it changes runId and deletes intent/grant fields but never consumes/removes/advances adoptionBinding. The later outcome updates consumedRunId/resultHash, yet the next dispatch still sends the original adopted task revision and r-old. Actual executionRuntime rejects the stale task revision/current executionRequest.",
+      "narrowFix": "Use the adoption proof only for the first successful supervised handoff. After its durable receipt, preserve the adoption history in immutable evidence while subsequent dispatches use the latest consumed supervised run/hash/current task revision. Make crash/replay of that transition idempotent.",
+      "requiredFocusedEvidence": "An authorized finite real-runtime fixture must exercise adoption plus two successive supervised handoffs and restart/replay at the first handoff; a replacement executor that never advances task revision is insufficient. Not executed here."
+    },
+    {
+      "id": "R5-CL-P1-02",
+      "title": "Reconcile reports running for an already consumed source without restoring a reachable judgment state",
+      "refs": [
+        "apps/api/src/runtime/project-supervisor-runtime.ts:53",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:66",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:69",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:71",
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:33"
+      ],
+      "trigger": "A source has already been inserted into supervisor_consumed, but its model judgment failed, was interrupted or was rejected; the owner invokes the new reconcile route.",
+      "evidence": "reconcile unconditionally sets enabled=true/status=running after terminal/source checks. It does not account for the existing modelIntentId, consumed row or uncertain/completed model state. advance only processes that intent when status=judging; under status=running it returns immediately when the consumed row exists. The route can therefore return success while its next pump makes no progress.",
+      "narrowFix": "Reconcile according to the durable phase: resume a previously complete valid judgment in judging state, preserve started/uncertain calls as explicit reconciliation-required without silently re-calling, or reject an unsupported resolution. Never report running when its only source is already consumed and no actionable phase is selected. Keep original observations/accounting.",
+      "requiredFocusedEvidence": "Separate unconsumed adopted-source verification from consumed/complete, consumed/invalid and started/uncertain model cases. Assert actual state transition and absence of duplicate model/CC effects, not just HTTP 200. Not executed here."
+    },
+    {
+      "id": "R5-CL-P1-03",
+      "prior": "R4-MODEL-P1-01",
+      "title": "Pi system prompt and response validator still disagree on experienceReferences",
+      "refs": [
+        "apps/api/src/pi.ts:475",
+        "apps/api/src/runtime/project-supervisor-model.ts:37",
+        "apps/api/src/runtime/project-supervisor-model.ts:39",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:68"
+      ],
+      "evidence": "R5 leaves the actual Pi system override at exactly five keys, while runtime always supplies experienceReferences and the adapter requires the sixth key. Both pi.ts and project-supervisor-model.ts have the same fingerprints as R4.",
+      "narrowFix": "Use one same-source response contract for the actual system prompt and strict parser, explicitly covering empty/nonempty references. Do not rely on a contradictory lower-priority Also return instruction or a replacement-model HTTP fixture.",
+      "requiredFocusedEvidence": "An actual prompt/adapter contract check plus the next required genuine supervisor judgment, separately identifying provider usage and accepted strict output. No provider call was made by this reviewer."
+    }
+  ],
+  "R4DeltaDisposition": {
+    "adoptionEntry": "Real adopt/reconcile routes and UI are now present (routes:14-15, panel:32-33). The broad R4 absence is repaired at entry level; the above first/second-handoff and reconcile defects prevent declaring the lifecycle complete.",
+    "versionProvenance": "The source now parses native CLI version in agent-runner.ts:70, sends executionMetadata at :237, accepts it in the strict signed-result DTO (execution-routes.ts:22/:52), persists it in execution-runtime.ts:313 and passes it into model/outcome/candidate metadata (supervisor runtime:68-69/:73). This is a real wiring repair. Actual provider/CC metadata chain and matching reuse remain unaccepted; the stale agentVersion fixture does not refute the source repair.",
+    "privacy": "The shared public guard now rejects the previously identified credential/private-path/private-access URL patterns. finishJudgment:71 checks the decision before intents.complete, repairing the prior write-before-check order. Existing pre-fix databases are not retrospectively sanitized by that source change. The malformed privacy GET test is not evidence of a new guard failure.",
+    "learningAndProjection": "Candidate capture now includes fact-type counterexamples and decision event-to-record mapping. Remaining wiring gaps: correction events at :60 do not carry executionMetadata, so correction candidates at :73 still get an unknown version; panel:36 does not send correctionType even though its form asks for a fact, so fact-counterexample capture is not reached from that UI. deriveDecisionProjection expects event.feedback.options, but decision/review events saved at :71 include only decision/resultHash, not their source feedback. Full linked selection/change/implementation evidence is still incomplete.",
+    "noAutomaticSkillAcceptance": "Candidates remain inbox/unverified; this review does not authorize publication or claim actual qualified reuse."
+  },
+  "fourUIWorkflowHoles": [
+    {
+      "prior": "UV-01",
+      "status": "still-open",
+      "refs": [
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:44",
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:52"
+      ],
+      "evidence": "Paused/stopped wording still follows session command state without signed stopConfirmation display."
+    },
+    {
+      "prior": "UV-02",
+      "status": "still-open",
+      "refs": [
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:58"
+      ],
+      "evidence": "History still flattens top-level text; actual nested question/options/recommendation and target judgment/evidence have no detail view."
+    },
+    {
+      "prior": "UV-03",
+      "status": "partially-wired-but-blocked",
+      "refs": [
+        "apps/api/src/runtime/project-supervisor-runtime.ts:53",
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:54"
+      ],
+      "evidence": "A reconcile entry now exists, but it is only surfaced when adoptionBinding exists and has the consumed-model phase defect in R5-CL-P1-02."
+    },
+    {
+      "prior": "UV-04",
+      "status": "still-open",
+      "refs": [
+        "apps/api/src/runtime/project-supervisor-runtime.ts:71",
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:10",
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:44"
+      ],
+      "evidence": "Runtime still emits achieved; UI still maps completed and falls through for achieved."
+    }
+  ],
+  "releaseBoundary": {
+    "report": "reports/r43-implementation-round5.json",
+    "releaseReady": false,
+    "reportedRuntimeBuild": "20261017-cc-supervisor-r43",
+    "reportedArchiveVersion": "20261017-cc-supervisor-r43-r2",
+    "explanation": "The author honestly marks the packet candidate-only. The runtime/archive mismatch must be resolved on a new exact build/package cut before the existing managed-release tool can stage it as the selected release. This reviewer has not read package bytes, installed dependencies or executed either bundle."
+  },
+  "savedEvidenceFingerprints": [
+    {
+      "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "bytes": 33359,
+      "sha256": "3f6e6976464eccb02e179644880993e668b195861b75cc465ca75129886c876b"
+    },
+    {
+      "path": "apps/api/src/runtime/public-privacy-guard.ts",
+      "bytes": 1746,
+      "sha256": "a66c0a6cb3a766037d8328bca278afcb5a49f96ac4b51d00fac202e070113ce4"
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-model.ts",
+      "bytes": 6822,
+      "sha256": "237e6b24b1209fa28115c1cb42fdfdffa62514de703a23e078578e33395306df"
+    },
+    {
+      "path": "apps/api/src/pi.ts",
+      "bytes": 51386,
+      "sha256": "547827f0f2687afa7a21881f85a1553d63570000a20dd76d965d383c4814b21f"
+    },
+    {
+      "path": "apps/api/test/project-supervisor-adoption-privacy.test.ts",
+      "bytes": 6833,
+      "sha256": "63b6c8e9d3bb03345e896b81b5d22efdad889654e47fb7d16c72da99d51c6a85"
+    },
+    {
+      "path": "apps/api/test/project-supervisor-r43.test.ts",
+      "bytes": 8667,
+      "sha256": "51ec02428e1f5399b6da2da7375223be2b262f7c7e76ce5b2c5782054222e705"
+    },
+    {
+      "path": "reports/r43-round5-logs/adoption-privacy-final.tap",
+      "bytes": 4197,
+      "sha256": "47f3e361bcbb555130a3f1d4117682ebfec03d20f88be82d25475ec22235978a"
+    },
+    {
+      "path": "reports/r43-round5-logs/adoption-delta.tap",
+      "bytes": 2595,
+      "sha256": "53805167f8663c0d5f60c5910d527f4ee86be1a26c95bb8c37b5ec7bec721b20"
+    },
+    {
+      "path": "reports/r43-implementation-round5.json",
+      "bytes": 2803,
+      "sha256": "a49f4d0eac7ef066f136e347d9f813cb5add58ccd913d62f800a975049ac7fa9"
+    }
+  ],
+  "nextCCScope": "Repair the two small fixture contracts without hiding their old failures; fix adoption proof consumption and phase-aware reconciliation; unify the actual Pi system contract; then verify only affected cases on the next exact cut. Preserve owner/task/native session and unknown accounting. Keep source fixes, test receipts, dual-bundle packaging, actual deployment and browser/live acceptance distinct.",
+  "finalState": {
+    "remainingP1InThisScope": 3,
+    "newlyIntroducedOrExposedLifecycleP1": 2,
+    "knownPromptP1": 1,
+    "sourceReviewedOnly": true,
+    "independentlyReproducedFailures": false,
+    "productionDeployed": false,
+    "implementationAccepted": false
+  },
+  "publicProjection": {
+    "originalArtifact": {
+      "path": "artifacts/cc-supervisor-r43/round5-correction-learning-source-review.json",
+      "sha256": "fcc61a22172dc40570959876e07319a83d555635ab48e088b318fbf4ddd31776",
+      "bytes": 14999
+    },
+    "removedFields": [
+      "source.tree"
+    ],
+    "reason": "Omit local absolute source-tree locator; preserve all findings, source file fingerprints and original artifact unchanged."
+  }
+}

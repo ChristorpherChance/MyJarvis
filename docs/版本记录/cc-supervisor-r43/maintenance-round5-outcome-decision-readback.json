@@ -1,0 +1,718 @@
+{
+  "at": "2026-10-17T09:57:15.590Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decisionId": "7013bdab-749d-4a72-b4d8-fd96418e84e8",
+  "revision": 3,
+  "hash": "b1824d5c83b5ed5cb717394bf5f8fceb83bb9f7815940fc30ac39bfe5e47fbe9",
+  "priorActionsAndRevisionsPreserved": true,
+  "decision": {
+    "questionSummary": "完整构建与HTTP切片通过后，如何修复真实旧任务续接及协议阻断并准备双端发布？",
+    "context": {
+      "observedAt": "2026-10-17T09:28:21.088Z",
+      "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+      "sourceFingerprint": "c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e",
+      "sourceVersion": "101 CC607f4a62，112仍R41",
+      "runId": null,
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "objectives": [
+        "R43-REGULATION-CONTROL",
+        "R43-ACCOUNTING-RECONCILE"
+      ],
+      "constraints": [
+        "原task/session/所有历史失败及未知费用保持",
+        "owner已授权101权限；本次维护非中央派发",
+        "单次1440秒/0重试/最多2子任务，12分钟保存checkpoint，终态前join",
+        "Root核源码与真实包后才控制112及101 agent切换，旧十分钟仍PAUSED"
+      ],
+      "situation": "完整类型和构建已由CC执行0退出；3组真实TCP/SQLite显式模型/执行fixture通过。非作者SOURCE分别协议5P1/纠错3P1，原task接续和grant仍不可达；正式Task DTO也拒未知用量。单进程实际3完整阶段回包，当前parser会冲突/漏账。R4真实23791456父Token已签名外账读回，原未知不清，目录估算非账单。"
+    },
+    "options": [
+      {
+        "id": "single-24m-focused",
+        "title": "原会话单次24分钟定向修复与双包准备",
+        "advantages": [
+          "复用已装依赖和编译基线，集中修有实码定位的阻断",
+          "同轮join源码与日志后打包，减少阶段切换遗漏"
+        ],
+        "disadvantages": [
+          "单轮较长，必须中途提交checkpoint和最终留足回包时间"
+        ],
+        "impact": "仅101原隔离源码；不直接部署或升级正在运行节点。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "two-short-stages",
+        "title": "先12分钟只修阻断，后另轮再验收打包",
+        "advantages": [
+          "较早形成有界源码回传，阶段边界清楚"
+        ],
+        "disadvantages": [
+          "需要额外模型恢复和重新绑定结果",
+          "真实多phase回包合同尚未修复时多轮对账成本较高"
+        ],
+        "impact": "仍保原会话和账，分阶段推进，112暂不发布。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "single-24m-focused",
+    "decisionRationale": "本人要求完成既定开发，且已授权101权限。依赖和编译基线已就绪、阻断有非作者精确SOURCE依据，选择一次1440秒有界维护，以12分钟checkpoint和终态join保可回收性；不发布partial、不清账、不拿新任务绕旧历史。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+        "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "R43-REGULATION-CONTROL",
+      "R43-ACCOUNTING-RECONCILE"
+    ],
+    "rollbackPlan": {
+      "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+      "triggers": [
+        "身份/会话/源码绑定变化",
+        "终态或原件不完整",
+        "权限配置发生未核变化"
+      ],
+      "impact": "影响101后继CC；不改112业务或旧账。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "在原CC会话定向修复既有任务adopt、grant哈希与最终preflight窗口、未知usage全DTO/ACK、多phase协议、真实版本与私密输入先门；通过实际路径后交双端包。",
+        "at": "2026-10-17T09:28:21.088Z",
+        "state": "planned",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+            "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "外部owner授权维护operation f7a378a4已启动原task/session/workspace，systemd1440秒/retry0；native init实际为bypassPermissions/version2.1.296。中央run未伪造，原blocked/result/Token保持；112仍R41、旧十分钟保持暂停。",
+        "at": "2026-10-17T09:30:08.832Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round5-observation-1792229323023.json",
+            "sha256": "4757b40505146e6311ddd6ed093f92fee86d63a0abfc4cc868dab4e20bdaba96",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "原会话维护5正常0退出/1389.515秒/104turn/无timeout，末raw指纹同且限定进程组0。源码94c1217、报告提交8d73dc8及完整提交历史已私有收回，Root只读审查，未写app或跑项目测试。",
+        "at": "2026-10-17T09:57:14.987Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json",
+            "sha256": "2c4bbcd3252af68f20d0a31c184b27cd957dce85aacfbc18e2877e32a5408479",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "真实child8/8及完整types/build0；combined17/18、adopt/privacy3/6、末delta1/3按各自cut保留，fixture错误与独立协议5P1/纠错3P1分列。候选runtime/archive不一致，101升级器仅plan，原任务正式派发/ACK/二次后继仍未闭合，不发布partial。",
+        "at": "2026-10-17T09:57:14.987Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json",
+            "sha256": "2c4bbcd3252af68f20d0a31c184b27cd957dce85aacfbc18e2877e32a5408479",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "完整native父32877121 Token已signed external-cli并实际读回，costUSD null/costComplete0；累计估算116.885622及差32.708590非账单，旧未知和内部未知保持。原task12/config45、112R41及十分钟PAUSED未改变。",
+        "at": "2026-10-17T09:57:14.987Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json",
+            "sha256": "2c4bbcd3252af68f20d0a31c184b27cd957dce85aacfbc18e2877e32a5408479",
+            "kind": "observation"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "7013bdab-749d-4a72-b4d8-fd96418e84e8",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 3,
+    "createdAt": "2026-10-17T09:28:21.702Z",
+    "updatedAt": "2026-10-17T09:57:15.589Z",
+    "changeOf": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+    "changeOfRevision": 3,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": null,
+      "status": "ambiguous",
+      "candidates": [
+        {
+          "id": "single-24m-focused",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "two-short-stages",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        }
+      ],
+      "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "5524c3effa132f4475c04fcaf9d61b61e27c3f44366f113e99bd521ec40a4b76",
+    "revisionReason": "追加维护5实际终态、原件与独审范围；不是上线或验收。",
+    "hash": "b1824d5c83b5ed5cb717394bf5f8fceb83bb9f7815940fc30ac39bfe5e47fbe9",
+    "revisions": [
+      {
+        "questionSummary": "完整构建与HTTP切片通过后，如何修复真实旧任务续接及协议阻断并准备双端发布？",
+        "context": {
+          "observedAt": "2026-10-17T09:28:21.088Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e",
+          "sourceVersion": "101 CC607f4a62，112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "原task/session/所有历史失败及未知费用保持",
+            "owner已授权101权限；本次维护非中央派发",
+            "单次1440秒/0重试/最多2子任务，12分钟保存checkpoint，终态前join",
+            "Root核源码与真实包后才控制112及101 agent切换，旧十分钟仍PAUSED"
+          ],
+          "situation": "完整类型和构建已由CC执行0退出；3组真实TCP/SQLite显式模型/执行fixture通过。非作者SOURCE分别协议5P1/纠错3P1，原task接续和grant仍不可达；正式Task DTO也拒未知用量。单进程实际3完整阶段回包，当前parser会冲突/漏账。R4真实23791456父Token已签名外账读回，原未知不清，目录估算非账单。"
+        },
+        "options": [
+          {
+            "id": "single-24m-focused",
+            "title": "原会话单次24分钟定向修复与双包准备",
+            "advantages": [
+              "复用已装依赖和编译基线，集中修有实码定位的阻断",
+              "同轮join源码与日志后打包，减少阶段切换遗漏"
+            ],
+            "disadvantages": [
+              "单轮较长，必须中途提交checkpoint和最终留足回包时间"
+            ],
+            "impact": "仅101原隔离源码；不直接部署或升级正在运行节点。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "two-short-stages",
+            "title": "先12分钟只修阻断，后另轮再验收打包",
+            "advantages": [
+              "较早形成有界源码回传，阶段边界清楚"
+            ],
+            "disadvantages": [
+              "需要额外模型恢复和重新绑定结果",
+              "真实多phase回包合同尚未修复时多轮对账成本较高"
+            ],
+            "impact": "仍保原会话和账，分阶段推进，112暂不发布。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "single-24m-focused",
+        "decisionRationale": "本人要求完成既定开发，且已授权101权限。依赖和编译基线已就绪、阻断有非作者精确SOURCE依据，选择一次1440秒有界维护，以12分钟checkpoint和终态join保可回收性；不发布partial、不清账、不拿新任务绕旧历史。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+            "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "在原CC会话定向修复既有任务adopt、grant哈希与最终preflight窗口、未知usage全DTO/ACK、多phase协议、真实版本与私密输入先门；通过实际路径后交双端包。",
+            "at": "2026-10-17T09:28:21.088Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+                "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "selected",
+        "origin": "ai",
+        "id": "7013bdab-749d-4a72-b4d8-fd96418e84e8",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-17T09:28:21.702Z",
+        "updatedAt": "2026-10-17T09:28:21.702Z",
+        "changeOf": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+        "changeOfRevision": 3,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": null,
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "id": "single-24m-focused",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "two-short-stages",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "R4有实质交付但独审确认实际接续仍阻断，新增一次明确1440秒维护指令，不更改旧run和账。",
+        "hash": "dd86099f29ad842e11316921334b2b418482bb6a20735f7d6dd6591b6adc3979"
+      },
+      {
+        "questionSummary": "完整构建与HTTP切片通过后，如何修复真实旧任务续接及协议阻断并准备双端发布？",
+        "context": {
+          "observedAt": "2026-10-17T09:28:21.088Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e",
+          "sourceVersion": "101 CC607f4a62，112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "原task/session/所有历史失败及未知费用保持",
+            "owner已授权101权限；本次维护非中央派发",
+            "单次1440秒/0重试/最多2子任务，12分钟保存checkpoint，终态前join",
+            "Root核源码与真实包后才控制112及101 agent切换，旧十分钟仍PAUSED"
+          ],
+          "situation": "完整类型和构建已由CC执行0退出；3组真实TCP/SQLite显式模型/执行fixture通过。非作者SOURCE分别协议5P1/纠错3P1，原task接续和grant仍不可达；正式Task DTO也拒未知用量。单进程实际3完整阶段回包，当前parser会冲突/漏账。R4真实23791456父Token已签名外账读回，原未知不清，目录估算非账单。"
+        },
+        "options": [
+          {
+            "id": "single-24m-focused",
+            "title": "原会话单次24分钟定向修复与双包准备",
+            "advantages": [
+              "复用已装依赖和编译基线，集中修有实码定位的阻断",
+              "同轮join源码与日志后打包，减少阶段切换遗漏"
+            ],
+            "disadvantages": [
+              "单轮较长，必须中途提交checkpoint和最终留足回包时间"
+            ],
+            "impact": "仅101原隔离源码；不直接部署或升级正在运行节点。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "two-short-stages",
+            "title": "先12分钟只修阻断，后另轮再验收打包",
+            "advantages": [
+              "较早形成有界源码回传，阶段边界清楚"
+            ],
+            "disadvantages": [
+              "需要额外模型恢复和重新绑定结果",
+              "真实多phase回包合同尚未修复时多轮对账成本较高"
+            ],
+            "impact": "仍保原会话和账，分阶段推进，112暂不发布。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "single-24m-focused",
+        "decisionRationale": "本人要求完成既定开发，且已授权101权限。依赖和编译基线已就绪、阻断有非作者精确SOURCE依据，选择一次1440秒有界维护，以12分钟checkpoint和终态join保可回收性；不发布partial、不清账、不拿新任务绕旧历史。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+            "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "在原CC会话定向修复既有任务adopt、grant哈希与最终preflight窗口、未知usage全DTO/ACK、多phase协议、真实版本与私密输入先门；通过实际路径后交双端包。",
+            "at": "2026-10-17T09:28:21.088Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+                "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "外部owner授权维护operation f7a378a4已启动原task/session/workspace，systemd1440秒/retry0；native init实际为bypassPermissions/version2.1.296。中央run未伪造，原blocked/result/Token保持；112仍R41、旧十分钟保持暂停。",
+            "at": "2026-10-17T09:30:08.832Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round5-observation-1792229323023.json",
+                "sha256": "4757b40505146e6311ddd6ed093f92fee86d63a0abfc4cc868dab4e20bdaba96",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "7013bdab-749d-4a72-b4d8-fd96418e84e8",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 2,
+        "createdAt": "2026-10-17T09:28:21.702Z",
+        "updatedAt": "2026-10-17T09:30:09.491Z",
+        "changeOf": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+        "changeOfRevision": 3,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": null,
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "id": "single-24m-focused",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "two-short-stages",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "dd86099f29ad842e11316921334b2b418482bb6a20735f7d6dd6591b6adc3979",
+        "revisionReason": "101原会话维护指令已真实启动并回读native权限；记录不是完成或发布。",
+        "hash": "5524c3effa132f4475c04fcaf9d61b61e27c3f44366f113e99bd521ec40a4b76"
+      },
+      {
+        "questionSummary": "完整构建与HTTP切片通过后，如何修复真实旧任务续接及协议阻断并准备双端发布？",
+        "context": {
+          "observedAt": "2026-10-17T09:28:21.088Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e",
+          "sourceVersion": "101 CC607f4a62，112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "原task/session/所有历史失败及未知费用保持",
+            "owner已授权101权限；本次维护非中央派发",
+            "单次1440秒/0重试/最多2子任务，12分钟保存checkpoint，终态前join",
+            "Root核源码与真实包后才控制112及101 agent切换，旧十分钟仍PAUSED"
+          ],
+          "situation": "完整类型和构建已由CC执行0退出；3组真实TCP/SQLite显式模型/执行fixture通过。非作者SOURCE分别协议5P1/纠错3P1，原task接续和grant仍不可达；正式Task DTO也拒未知用量。单进程实际3完整阶段回包，当前parser会冲突/漏账。R4真实23791456父Token已签名外账读回，原未知不清，目录估算非账单。"
+        },
+        "options": [
+          {
+            "id": "single-24m-focused",
+            "title": "原会话单次24分钟定向修复与双包准备",
+            "advantages": [
+              "复用已装依赖和编译基线，集中修有实码定位的阻断",
+              "同轮join源码与日志后打包，减少阶段切换遗漏"
+            ],
+            "disadvantages": [
+              "单轮较长，必须中途提交checkpoint和最终留足回包时间"
+            ],
+            "impact": "仅101原隔离源码；不直接部署或升级正在运行节点。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "two-short-stages",
+            "title": "先12分钟只修阻断，后另轮再验收打包",
+            "advantages": [
+              "较早形成有界源码回传，阶段边界清楚"
+            ],
+            "disadvantages": [
+              "需要额外模型恢复和重新绑定结果",
+              "真实多phase回包合同尚未修复时多轮对账成本较高"
+            ],
+            "impact": "仍保原会话和账，分阶段推进，112暂不发布。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "single-24m-focused",
+        "decisionRationale": "本人要求完成既定开发，且已授权101权限。依赖和编译基线已就绪、阻断有非作者精确SOURCE依据，选择一次1440秒有界维护，以12分钟checkpoint和终态join保可回收性；不发布partial、不清账、不拿新任务绕旧历史。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+            "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "在原CC会话定向修复既有任务adopt、grant哈希与最终preflight窗口、未知usage全DTO/ACK、多phase协议、真实版本与私密输入先门；通过实际路径后交双端包。",
+            "at": "2026-10-17T09:28:21.088Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round4-outcome-safe-summary.json",
+                "sha256": "316d54eb458701b52bf11565119e63b38ad9fe50efc90038452a8be7d66547fd",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "外部owner授权维护operation f7a378a4已启动原task/session/workspace，systemd1440秒/retry0；native init实际为bypassPermissions/version2.1.296。中央run未伪造，原blocked/result/Token保持；112仍R41、旧十分钟保持暂停。",
+            "at": "2026-10-17T09:30:08.832Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round5-observation-1792229323023.json",
+                "sha256": "4757b40505146e6311ddd6ed093f92fee86d63a0abfc4cc868dab4e20bdaba96",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "原会话维护5正常0退出/1389.515秒/104turn/无timeout，末raw指纹同且限定进程组0。源码94c1217、报告提交8d73dc8及完整提交历史已私有收回，Root只读审查，未写app或跑项目测试。",
+            "at": "2026-10-17T09:57:14.987Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json",
+                "sha256": "2c4bbcd3252af68f20d0a31c184b27cd957dce85aacfbc18e2877e32a5408479",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "真实child8/8及完整types/build0；combined17/18、adopt/privacy3/6、末delta1/3按各自cut保留，fixture错误与独立协议5P1/纠错3P1分列。候选runtime/archive不一致，101升级器仅plan，原任务正式派发/ACK/二次后继仍未闭合，不发布partial。",
+            "at": "2026-10-17T09:57:14.987Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json",
+                "sha256": "2c4bbcd3252af68f20d0a31c184b27cd957dce85aacfbc18e2877e32a5408479",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "完整native父32877121 Token已signed external-cli并实际读回，costUSD null/costComplete0；累计估算116.885622及差32.708590非账单，旧未知和内部未知保持。原task12/config45、112R41及十分钟PAUSED未改变。",
+            "at": "2026-10-17T09:57:14.987Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json",
+                "sha256": "2c4bbcd3252af68f20d0a31c184b27cd957dce85aacfbc18e2877e32a5408479",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "7013bdab-749d-4a72-b4d8-fd96418e84e8",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 3,
+        "createdAt": "2026-10-17T09:28:21.702Z",
+        "updatedAt": "2026-10-17T09:57:15.589Z",
+        "changeOf": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+        "changeOfRevision": 3,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": null,
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "id": "single-24m-focused",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "two-short-stages",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "5524c3effa132f4475c04fcaf9d61b61e27c3f44366f113e99bd521ec40a4b76",
+        "revisionReason": "追加维护5实际终态、原件与独审范围；不是上线或验收。",
+        "hash": "b1824d5c83b5ed5cb717394bf5f8fceb83bb9f7815940fc30ac39bfe5e47fbe9"
+      }
+    ]
+  }
+}

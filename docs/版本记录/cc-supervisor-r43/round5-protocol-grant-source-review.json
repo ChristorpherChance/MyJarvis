@@ -1,0 +1,84 @@
+{
+  "version":1,
+  "kind":"r43-round5-protocol-grant-release-delta-source-review",
+  "status":"blocking-source-contracts-and-release-gaps-remain",
+  "source":{"root":".jarvis-dev/cc-supervisor-r43-round5","actualHEAD":"8d73dc87f7224b3a730d709fdfd408fb4bf80e23","applicationSourceCommit":"94c1217ef8baa3ad0c0f729b4dd5bf756c9d5896","comparedWithR4":"607f4a62387311276dc214999c82850acf1a1139","workingTreeObservedClean":true},
+  "boundary":{"applicationEdited":false,"testsOrApplicationCodeExecuted":false,"networkCalls":0,"scope":"R4 to R5 protocol, unknown DTO, metadata/checkpoint, grant/preflight/claim and release controls only","actualR5MaintenanceReportedByRoot":{"nativeExitCode":0,"elapsedSec":1389.515,"cgroupEmpty":true,"nativeTurns":104,"nativeFinals":1,"needsMoreWork":true,"centralDispatched":false}},
+  "addressedSinceR4":[
+    {"item":"Initialized multi-phase parent usage accumulation","refs":["apps/api/src/runtime/agent-protocol.ts:20","apps/api/src/runtime/agent-runner.ts:72","apps/api/src/runtime/agent-runner.ts:75"],"assessment":"Substantive finals are preserved at the next init, parent phase usages are summed, and the main structured report is retained. Captured finite-child tests cover the three initialized phases and same-phase conflict negatives. This is not a standard-node signed HTTP/ledger acceptance."},
+    {"item":"Zero provisional then activity without successor final","refs":["apps/api/src/runtime/agent-protocol.ts:21","apps/api/src/runtime/agent-protocol.ts:32"],"assessment":"The covered zero-cost provisional case now invalidates the provisional final and reports missing final/partial usage. Nonzero cumulative-cost empty cases are not demonstrated by these fixtures."},
+    {"item":"No-checkpoint and pre-start unknown observations","refs":["apps/api/src/runtime/agent-runner.ts:230","apps/api/src/runtime/agent-runner.ts:231","apps/api/src/runtime/agent-delivery-journal.ts:64","apps/api/src/runtime/execution-runtime.ts:303","docs/openapi-v1-planned.json:52315"],"assessment":"Explicit unknown/incomplete usage is now emitted and normalized; ExecutionActualUsage token counts are optional and measurementStatus is admitted. The previous missing-usage/required-count source defect is addressed; complete ACK coverage remains separate."},
+    {"item":"Grant source hash and acknowledged unknown history","refs":["apps/api/src/runtime/execution-runtime.ts:186","apps/api/src/runtime/execution-runtime.ts:206"],"assessment":"Grant result hashing now matches the existing JSON.stringify consumer, and issuance records explicit acknowledgement of unknown history. Later request and preflight contracts still block the actual path as below."},
+    {"item":"Physical stop is not inferred from a cancellation receipt","refs":["apps/api/src/runtime/execution-runtime.ts:201"],"assessment":"Stop-confirmed resume now fails closed pending independent child termination proof. This avoids the earlier unsafe inference but does not implement usable verified stop/resume."}
+  ],
+  "findings":[
+    {
+      "id":"R5-PG-F01","priority":"P1","title":"Server result validation rejects the new native checkpoint fields",
+      "refs":["apps/api/src/runtime/cli-supervision.ts:44","apps/api/src/runtime/agent-runner.ts:153","apps/api/src/runtime/agent-runner.ts:237","apps/api/src/runtime/execution-routes.ts:52","apps/api/src/runtime/execution-runtime.ts:302"],
+      "cause":"roundCliUsage now creates a Claude checkpoint containing costScope='session-cumulative' and optionally nativeCliVersion. The Zod and published checkpoint DTO admit these fields, but runtime.result still requires Object.keys(sessionBilling) to contain only engine/sessionId/costUSD.",
+      "reachableEffect":"A normal Claude final with a native cost checkpoint reaches the runtime check and receives VALIDATION/400. Durable result delivery then cannot ACK, even though the route and DTO were updated.",
+      "fix":"Unify runtime/route/DTO checkpoint semantics, validate the new version/scope explicitly, and preserve unknown or mismatching checkpoint lineage. Do not remove the checkpoint or bypass result validation to obtain ACK.",
+      "verifyByCC":"One actual ExecutionAgent native fixture -> signed HTTP -> production Task DTO -> journal ACK with both new fields, old compatible checkpoint, bad scope/version/session negatives and reopened-journal replay.",
+      "evidenceType":"deterministic static path, not independently reproduced"
+    },
+    {
+      "id":"R5-PG-F02","priority":"P1","title":"The real Task ExecutionRequest DTO rejects every supervisor request and grant request",
+      "refs":["apps/api/src/runtime/execution-runtime.ts:207","apps/api/src/runtime/execution-runtime.ts:209","apps/api/src/v1/routes.ts:42","apps/api/src/v1/contract.ts:17","docs/openapi-v1-planned.json:52700"],
+      "cause":"ExecutionRequest still has additionalProperties:false and its final property inventory includes neither supervisor nor continuationGrant. supervisorDispatch always inserts supervisor and additionally inserts continuationGrant when granted. The real repository Task receipt validator therefore rejects this request before the durable run can be queued.",
+      "reachableEffect":"First supervisor dispatch and granted continuation both fail at business commit; fixture-only supervisor HTTP tests do not establish the real runtime/pump/claim path.",
+      "fix":"Add the explicit bounded/owner-bound request fields to the authoritative contract and its generator, with compatible supervisor/grant types and public projection semantics. Keep Task DTO enforcement enabled.",
+      "verifyByCC":"CreateApp or equivalent production repository validator with real ExecutionRuntime: adopt/create -> owner grant -> supervisorDispatch -> committed Task request -> durable outbox/pump -> signed node claim and result. Include unknown history, over-10M history and once/restart negatives.",
+      "evidenceType":"schema inventory and deterministic static commit path"
+    },
+    {
+      "id":"R5-PG-F03","priority":"P1","title":"Unknown-history grant acknowledgement is lost before preflight",
+      "refs":["apps/api/src/runtime/execution-runtime.ts:168","apps/api/src/runtime/execution-runtime.ts:186","apps/api/src/runtime/execution-runtime.ts:206","apps/api/src/runtime/execution-runtime.ts:207","apps/api/src/runtime/execution-runtime.ts:235"],
+      "cause":"Grant issuance preserves historyAcknowledgedUnknown:true, and supervisorDispatch accepts it. The frozen request copies only grantId/maxParentTokens/sourceRunId/sourceResultHash, omitting historyAcknowledgedUnknown. Both pump and claim preflight require p.continuationGrant.historyAcknowledgedUnknown===true when historical usage is unknown.",
+      "reachableEffect":"After the earlier DTO gate is repaired, an explicitly authorized bounded continuation of the existing incomplete-history task still fails BUDGET_EXHAUSTED before a child starts.",
+      "fix":"Bind the acknowledged history status into the frozen request and validate against the persisted consumed grant at replay/preflight/claim rather than trusting a loose boolean. Retain historical unknowns and known totals; do not substitute zero or a replacement task.",
+      "verifyByCC":"A real persisted unknown-history task with explicit owner acknowledgement reaches node claim on one bounded window; missing acknowledgement, changed source/hash/version and a reused consumed grant must reject. Repeat after runtime restart without new model work.",
+      "evidenceType":"deterministic static propagation omission"
+    },
+    {
+      "id":"R5-PG-F04","priority":"P1","title":"Error final with zero usage overwrites preceding observed assistant usage",
+      "refs":["apps/api/src/runtime/agent-runner.ts:71","apps/api/src/runtime/agent-runner.ts:72","apps/api/src/runtime/agent-runner.ts:75","apps/api/test/execution-runtime-r43-quota.test.ts:5"],
+      "cause":"The parser treats any numeric final usage as complete, even an error/quota final with zero input/output after a nonzero assistant observation. It overwrites partial, pushes the zero complete final and clears the observed message map. The new quota fixture explicitly supplies this contradiction but asserts zero and complete=true, so its passing test endorses lost observed usage.",
+      "reachableEffect":"This error path can undercount real work and turn an incomplete/contradictory quota receipt into known zero for recovery/accounting.",
+      "fix":"Reconcile final usage against already observed phase messages. Preserve the known lower bound and mark the discrepancy/incomplete remainder rather than accepting contradictory zero. Keep native final and partial provenance; do not count both redundantly.",
+      "verifyByCC":"Finite child plus real result/ledger test for nonzero assistant usage followed by zero error final, missing final, valid authoritative complete final and duplicate messages. Assert known partial retained and unknown remainder, without fabricated zero.",
+      "evidenceType":"static path plus directly inspected synthetic fixture; not an asserted live R5 occurrence"
+    },
+    {
+      "id":"R5-PG-F05","priority":"P1","title":"Delivered platform identity mismatch and absent node switch executor block release",
+      "refs":["apps/api/src/runtime/cluster-runtime.ts:10","reports/r43-implementation-round5.json:1","reports/r43-round5-packages.json:2","scripts/prepare-r43-idle-node-upgrade.mjs:10","scripts/capture-managed-release.py:23"],
+      "cause":"The delivered candidate reports runtimeBuild=20261017-cc-supervisor-r43 but archiveVersion=20261017-cc-supervisor-r43-r2. Original managed stage requires both to equal its release argument. The new node script only writes a plan with executeImplemented=false; it cannot perform idle/CAS/backup/switch/ACK/rollback.",
+      "reachableEffect":"Packager success establishes a candidate archive, not a deployable matching managed release or an upgraded101 node. There is no currently reviewed ready dual-end switch operation.",
+      "fix":"After functional blockers close, select one real runtime/archive release identity, rebuild/repackage from its actual committed source and provide a release-specific reviewed idle-only node executor. Preserve original one-shot controls and old pins; do not bypass managed identity checks or run the r28 upgrader unchanged.",
+      "verifyByCC":"Matching manifest/source/compiled runtime identity and same-source node package; reviewed isolated node-switch/rollback evidence before any live operation. Use the prepared dual-release control checklist for later actual preflight.",
+      "evidenceType":"reported package metadata plus source control inspection; no package extraction/deployment by reviewer"
+    }
+  ],
+  "fixtureAndFailureInterpretation":{
+    "combinedFinal":"The inspected combined-final.tap is 17/18: the failing case is experience reference access reading experienceId from undefined. This audit does not assign a metadata contract cause to that distinct fixture failure.",
+    "quotaFocusedLog":"The focused quota log records AGENT_RESULT_REJECTED from an earlier reproduction; it must retain its own source/time association rather than be called the final current path.",
+    "quotaBroadOriginalLog":"The broader retained reproduction includes failed versus waitingQuota. Current recoveryFor at execution-runtime.ts:163 deliberately requires known historical and current tokens. Its Codex quota fixture emits no usage final, so no automatic retry is consistent with the current safe unknown policy. Preserve that unknown negative, and add a known-usage quota fixture to verify authorized bounded fallback; do not restore the old implicit zero assumption merely to satisfy waitingQuota.",
+    "fullGrantClaim":"Not yet demonstrated. The concrete DTO and acknowledgement propagation gates explain why successful grant storage or mocked dispatch does not prove node reachability.",
+    "maintenanceVsProduct":"R5 maintenance native success/physical teardown is not evidence that the new standard agent, grant or stop/resume path has been installed or accepted."
+  },
+  "nextCCInstruction":"Fix the exact production contract seams first: runtime checkpoint fields, authoritative ExecutionRequest supervisor/grant DTO and consumed-grant acknowledgement propagation. Then run one real createApp/ExecutionRuntime/Task-validator/pump/claim/signed-result/journal-ACK fixture on the original bounded lineage, covering known-over10M and explicitly acknowledged unknown history, one-shot restart replay and rejection cases. Fix contradictory zero quota usage while keeping missing-usage recovery safely blocked; give the old recovery test a separate credible known-usage positive. Preserve and explain the experience/privacy fixture failures in their own source scope. Once these pass, prepare a matching real release identity/package and an actual guarded node upgrader, then hand back final source/logs and package fingerprints. Root does not run project tests or silently bypass DTO, history, identity or release gates.",
+  "sourceFingerprints":[
+    {"path":"apps/api/src/runtime/agent-protocol.ts","bytes":4844,"sha256":"df36de3e678fb9e0ef33dad63cdddd484be9346a2a299853f85bad905b295554"},
+    {"path":"apps/api/src/runtime/agent-runner.ts","bytes":53020,"sha256":"e17b9bcb095b34b35fee77ddcdc7a92d946044fe774a59118c119fd454fffcec"},
+    {"path":"apps/api/src/runtime/cli-supervision.ts","bytes":6831,"sha256":"ecd1a47863ab7663c9a14d142aea06df3f0cfe552a3108c28845b39e6ad50ef2"},
+    {"path":"apps/api/src/runtime/execution-runtime.ts","bytes":124109,"sha256":"b12ae1c29f665bd11931ef8d0cab18204973cd17c535fe7ed38a2189ea3ef32d"},
+    {"path":"apps/api/src/runtime/execution-routes.ts","bytes":14100,"sha256":"9e47900b7ad5aa7a68feb0c783d32e65f9567bc7cb5cf539ff34336e5dd5191d"},
+    {"path":"apps/api/src/runtime/execution-types.ts","bytes":10016,"sha256":"10f8b7dd7abc10966aaa6e1a07fb869db2157e0b5bf930f096533a8cd60cdf66"},
+    {"path":"docs/openapi-v1-planned.json","bytes":2000742,"sha256":"173c8da138d9613ecca25b3e570463bc496ed41b0d6cf704b2bd46fe0ac0fb5f"},
+    {"path":"scripts/prepare-r43-idle-node-upgrade.mjs","bytes":2700,"sha256":"bc2da2d6964e999d7ae51d00f9f93d16759dd71050b3f32cf760c255c8a48c33"},
+    {"path":"reports/r43-round5-logs/combined-final.tap","bytes":6059,"sha256":"587f59bc44645f1cfacfbea1bb5e8e776854ad42810acb6fd952b909cf03a28e"},
+    {"path":"reports/r43-round5-quota-repro-original.tap","bytes":247159,"sha256":"9b20573c8089a7e92bc8c0ff71d3efe589adb3219312beee9988cda47ce09fbe"},
+    {"path":"reports/r43-round5-quota-repro-focused.tap","bytes":1488,"sha256":"5e3fb45e74fce7c24925c2651ee4ced719a851bfcc0a81dadaec0ca6c778b686"},
+    {"path":"reports/r43-round5-packages.json","bytes":2389,"sha256":"79881949ab71b8dd9f730b4052fee33593f2e66b5243110f5c81ef93534f2889"}
+  ],
+  "implementationAccepted":false,"standardGrantClaimAccepted":false,"releaseReady":false,"deployed":false
+}

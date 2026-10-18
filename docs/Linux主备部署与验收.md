@@ -1,3 +1,25 @@
+# 贾维斯 · Linux主备部署与验收（R55实际补充）
+
+<!-- jarvis-doc-meta {"version":"R55冷备时点同步","date":"2026-10-19","eyebrow":"112正式 / 101冷备 / 原件保留","subtitle":"程序和时点恢复核验通过，900秒新鲜度不放宽；不是持续同步或自动接替。","stats":[{"value":"R55","label":"112主平台 / 101冷备"},{"value":"1282秒","label":"最终快照年龄，已过900秒"},{"value":"冷备","label":"三业务单元禁用、未接管"}]} -->
+
+## R55实际补充：完整批次已装入，当前仍不可接替
+
+本节为2026-10-19后继事实；下方R35全文原字节保留，其中“当前”及resident load仅指其历史时点，不是本轮R55结论。
+
+112保持R55/primary并健康。101隔离程序安装和临时运行检查通过，基础载荷2231项保持，另补129件R54/R36兼容资产；实际只更新release配置和程序并重启observer。101的jarvis-platform、jarvis-frpc、jarvis-voice仍disabled/inactive，独立软件工厂未触碰。
+
+恢复点是 **2026-10-18 16:10:54.080506 UTC（北京时间10月19日00:10:54）**：64文件、59目录、4,633,958,902字节、10个SQLite。112经既有授权短停保存快照，至恢复健康约129.122秒；随后私有导出、传输、101隔离恢复及冷备安装全树核同，旧101数据和标记保留，未覆盖112实时数据。
+
+最终16:32:17.820 UTC回读距快照 **1282秒**，原阈值 **900秒** 保持，所以recoveryMaterialsReady=false，材料原因仅SNAPSHOT_TOO_OLD_OR_FUTURE，canTakeover=false。验证时间更新不改变原snapshotAt；传输完整也不能让过期批次保持fresh。112后续数据没有连续复制，没有自动failover或真实接管。
+
+现存语音文件、包版本和pip一致性已核；当前没有新R55 resident load、推理或音质验收，R35历史装载结论保持其原范围。接管前仍需满足新鲜度的新批次，实际停止并隔离旧主，再按唯一主/角色/业务启动流程核验。本轮没有启用101冷业务。
+
+本次材料继续保留，未清理：112的 /var/lib/jarvis-control/standby-r55-sync-20261019-112/ 保存源data-snapshot和本批归档；101的 /var/lib/jarvis-control/cold-r55-81e81d3b-28bc-4441-94fb-65830b13f0a9/ 保存导入归档、snapshot及prior-101-data旧数据。已安装的101冷备数据在 /var/lib/jarvis/data，三业务单元仍禁用。这里只公开受控资料位置和指纹回执，不公开原始数据或密钥；未自动清理、持续复制或接替。后续112开发目录与Git仅同步本轮文档，不重复发布程序。
+
+[最终双机核对](../artifacts/standby-101-r55/final-live-verification.json) · [保存范围独审](../artifacts/standby-101-r55/final-saved-independent-review.json) · [本轮事实摘要](../artifacts/standby-101-r55/cold-standby-final-safe-summary.json)。
+
+---
+
 # 贾维斯 · Linux主备部署与验收（R35）
 
 <!-- jarvis-doc-meta {"version":"R35","date":"2026-10-16","eyebrow":"主备部署 / 人工接管 / 阶段事实","subtitle":"112 正式运行；101 保持冷备。完整批次、新鲜度、语音与人工接管分别核对，不提供自动切换。","stats":[{"value":"R35","label":"112 已发布，结束时健康核对通过"},{"value":"900 秒","label":"原恢复材料新鲜度阈值保持"},{"value":"人工","label":"先隔离旧主，再确认唯一主"}]} -->

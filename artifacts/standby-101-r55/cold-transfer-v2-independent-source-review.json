@@ -1,0 +1,41 @@
+{
+  "kind": "r55-cold-transfer-v2-independent-local-source-review",
+  "reviewedAt": "2026-10-18T16:08:29.028011+00:00",
+  "source": {
+    "path": ".jarvis-dev/maintenance/cold-r55-transfer-v2.py",
+    "bytes": 28069,
+    "sha256": "2c3115fc76c4aaf5e48ad9bf68ff9023132a44db8e43f3c8cf3000b3ff6a137c"
+  },
+  "parentReview": {
+    "path": "artifacts/standby-101-r55/cold-transfer-independent-source-review.json",
+    "bytes": 2276,
+    "sha256": "dda07d8fa668175f6f975e88e41eb51d5549b5d9f9d35d35f009ca79a868a092",
+    "P1Original": 1
+  },
+  "acceptedForFiniteSourceScope": true,
+  "P0": 0,
+  "P1": 0,
+  "wholeByteInverseExact": true,
+  "literalCorrection": "Only frpc.service -> jarvis-frpc.service, matching saved actual unit.",
+  "closedFinding": "WRONG_FRPC_UNIT corrected before any helper execution in this review.",
+  "finiteChecks": [
+    "Input/self hashes and NULL refusal precede phase intents/remote.",
+    "Fixed primary snapshot sourceRoot/release/createdAt/manifest/counts/SQLite binding; no new snapshot in export.",
+    "Private exact archive hash/size; path/type/link/duplicate checks, exclusive extraction, whole verification and isolated restore.",
+    "101 config hash/ownership and standby role/current release remain fixed; cold business services required.",
+    "Original101data retained by rename; full installed content/voice-key hash checks; original marker bytes+ownership retained for rollback.",
+    "Observer-only service operations; current voice byte/package evidence and historical R35 resident-load scope distinguished.",
+    "Actual snapshot createdAt preserved, no freshness relabel, no automatic takeover or retries."
+  ],
+  "scope": "Static export/download/import/install and input/phase flow; no helper execution, remote access, application tests, or source modification.",
+  "knownBoundaries": [
+    "Final 900-second material readiness must be checked from actual createdAt by the existing readiness API; installation alone is not takeover qualification.",
+    "No claim of new R55 voice resident load or physical voice acceptance.",
+    "No live factory data, config, agent or session actions."
+  ],
+  "syntaxOnly": "Outer and COMMON+export/import/install AST parsed, no helper import/evaluation.",
+  "executedRemote": false,
+  "executedTests": false,
+  "actualSnapshotInputsNotYetQualified": true,
+  "actualInstallOrTakeoverNotCertified": true
+}

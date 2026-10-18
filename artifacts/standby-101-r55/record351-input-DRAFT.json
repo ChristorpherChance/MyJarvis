@@ -1,0 +1,108 @@
+{
+  "kind": "standby-r55-record351-draft-only",
+  "preparedAtUTC": "2026-10-18T16:10:12.686201Z",
+  "expectedParent": {
+    "records": 350,
+    "head": "e9aff742932b3a087206fae3b20c5cb64e87a079f957687d8b40783982743711",
+    "ledgerBytes": 1791715,
+    "ledgerSHA256": "d5cde78af8f171186ead0b71788d7ebd9577e1fe71789676fc5ee5ae624eff47"
+  },
+  "readyEvidencePins": [
+    {
+      "path": "artifacts/standby-101-r55/stage.json",
+      "bytes": 425,
+      "sha256": "1b1796fa6726eff88c5bf3ecaf404460c804ff9759249db0cc15dff94166c31d"
+    },
+    {
+      "path": "artifacts/standby-101-r55/install.json",
+      "bytes": 413,
+      "sha256": "1e3016c3810529882053c93dc18cb32b81995e5ee9d0e219710fd189db3dcf39"
+    },
+    {
+      "path": "artifacts/standby-101-r55/smoke.json",
+      "bytes": 6201,
+      "sha256": "f4d4a7bfb5965ea41461d53a8561fe7068edd23011ae719259d91d28636b7a7c"
+    },
+    {
+      "path": "artifacts/standby-101-r55/overlay-r2.json",
+      "bytes": 360,
+      "sha256": "23dd86cf980b2e2b4d50bc5e7ce06bdd89f8be27a72438c09d0b5c6acd335761"
+    },
+    {
+      "path": "artifacts/standby-101-r55/voice.json",
+      "bytes": 1058,
+      "sha256": "12ab75877f44eca8176beb49eaceec2e9b180fd12c7595903b282eb53a883dc3"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-v2-apply.json",
+      "bytes": 1770,
+      "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181"
+    },
+    {
+      "path": "artifacts/standby-101-r55/prepare-independent-review.json",
+      "bytes": 4198,
+      "sha256": "233d79af00c7473101bce3c0db6bb55aa5ef719be69e1c9252528b95366e9b81"
+    }
+  ],
+  "futureActualRefs": {
+    "primarySnapshotTerminal": null,
+    "primaryPostSnapshotHealth": null,
+    "privateTransfer": null,
+    "tenSQLiteWholeTreeRestore": null,
+    "finalCutAt": null
+  },
+  "recordInput": {
+    "id": "JARVIS-20261019-R55-101-COLD-STANDBY-PREPARATION",
+    "kind": "change",
+    "project": "jarvis",
+    "retrospective": false,
+    "occurredAt": null,
+    "title": "101冷备程序已对齐R55，私有恢复材料仍待实际核验",
+    "objective": "准备101冷备，同时保持112正式服务和101独立软件工厂；程序准备、私有数据恢复、接管演练分别确认。",
+    "changes": [
+      "101已在新隔离R55目录完成2231项载荷安装及临时运行smoke；未把临时检查当正式业务接管。",
+      "新增129件兼容资产（119件R54与10件R36），2231项基础载荷不改，原101的27件旧资产保持。",
+      "101已切换R55程序和release配置，仅重启observer；平台、穿透和语音三项业务单元仍disabled/inactive。"
+    ],
+    "decisions": [
+      "先完成程序与冷备检查，再按既有授权短暂停112平台以保存一致快照，随后立即启动并核健康；保留失败与恢复证据。",
+      "私有业务数据只进入受控私有传输和恢复路径；10库全树核验、101接管和自动切换不从程序更新推定。"
+    ],
+    "facts": [
+      "program-v2实际apply成功、observer为R55/standby；未修改业务数据、未触碰101软件工厂。",
+      "现存语音文件、Python包版本及pip一致性检查通过；服务token仅类型/大小检查，常驻装载仍为R35历史证据，没有新的模型推理或音质测试。",
+      "Root正在唯一执行112短停快照；本草稿不记录快照成功、恢复成功、停服时长、私有传输或10库恢复结果。",
+      "费用只记录：本阶段没有新增供应商模型调用；内部Token、金额和实际账单未知，不填零费用。"
+    ],
+    "verification": [
+      "已保存stage/install、临时smoke、129件补层、语音现存材料和program-v2回执，最终记录需逐项绑定当时指纹。",
+      "snapshot源码审发现锁前绑定及失败后跳过恢复健康的问题；按Root授权仅修snapshot分支，原源与修改证据保留，未为记录重跑测试。"
+    ],
+    "pending": [
+      "等待112快照终态、启动后独立健康和实际停服窗口。",
+      "等待私有传输、完整10库树与恢复核验；未获实际结果前不称冷备恢复材料已就绪。",
+      "本轮不自动接管、不启101冷业务、不触碰101工厂；完整平台/软件工厂验收及十分钟暂停保持。"
+    ],
+    "lessons": [
+      "程序版本、现存依赖、恢复材料与真实接管是不同验收层次。",
+      "短停维护失败后也必须核恢复健康并保留首错，不能只发启动命令后跳过结果。"
+    ],
+    "state": {
+      "implementation": "partial",
+      "verification": "partial",
+      "deployment": "partial",
+      "acceptance": "pending"
+    },
+    "evidence": [
+      "artifacts/standby-101-r55/stage.json",
+      "artifacts/standby-101-r55/install.json",
+      "artifacts/standby-101-r55/smoke.json",
+      "artifacts/standby-101-r55/overlay-r2.json",
+      "artifacts/standby-101-r55/voice.json",
+      "artifacts/standby-101-r55/program-v2-apply.json",
+      "artifacts/standby-101-r55/prepare-independent-review.json"
+    ]
+  },
+  "finalReady": false,
+  "instructions": "DRAFT only; occurredAt and future actual refs are NULL. Do not append/render or modify current docs until Root supplies terminal cut and authorizes distinct FINAL."
+}

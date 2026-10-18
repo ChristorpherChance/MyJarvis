@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "kind": "capture-compiled-install-smoke",
+  "at": "2026-10-18T16:03:26.460Z",
+  "group": "temporary-compiled-app-sqlite-http-and-offline-static",
+  "status": "passed",
+  "platform": "linux",
+  "arch": "x64",
+  "node": "24.15.0",
+  "linuxExecution": true,
+  "productionAccess": false,
+  "businessDataRead": false,
+  "piConfigurationRead": false,
+  "asrExecuted": false,
+  "sourceModulesExecuted": false,
+  "checks": [
+    "node24-runtime",
+    "explicit-compiled-release-and-build",
+    "compiled-web-within-selected-release",
+    "offline-manifest-shape",
+    "offline-html-and-module-present",
+    "offline-manifest-version",
+    "offline-worker-matches-manifest",
+    "compiled-runtime-build",
+    "new-compiled-runtime-exports-resolve",
+    "real-http-health-build",
+    "anonymous-private-routes-401",
+    "real-temporary-sqlite-schema-and-integrity",
+    "offline-html-worker-manifest-and-every-asset-http-sha256",
+    "no-model-or-outside-fetch-attempts"
+  ],
+  "files": [
+    {
+      "path": "apps/api/dist/app.js",
+      "bytes": 61825,
+      "sha256": "4489dc01b80218c4658bc4342810aebbceb26f743cdc2a059e3b235c53adf11d"
+    },
+    {
+      "path": "apps/api/dist/runtime/cluster-runtime.js",
+      "bytes": 12156,
+      "sha256": "03bd04b408ad76ed55d76360eb8858ebe76eebbbee8d9af7155dbff14c612f99"
+    },
+    {
+      "path": "apps/api/dist/runtime/offline-draft-sync.js",
+      "bytes": 9632,
+      "sha256": "50fe765849ca5c15ebdc067a853337f9c4e68e494909423f5685465f13754581"
+    },
+    {
+      "path": "apps/api/dist/runtime/evidence-assistant.js",
+      "bytes": 17228,
+      "sha256": "325fde4981f49aeda671e4f80cec16d5758830d3cb308d4a5040702a434f45ba"
+    },
+    {
+      "path": "apps/api/dist/runtime/evidence-corpus.js",
+      "bytes": 7548,
+      "sha256": "931831fc7c9c84f334b3d9275400996e3946d9275943a5baaee296a6b947c57b"
+    },
+    {
+      "path": "apps/api/resources/skills/jarvis-companion/SKILL.md",
+      "bytes": 2619,
+      "sha256": "e9361efdc322de53d3f8a374949ef15e57f4cba652fd389e3a59e7edc3c85492"
+    },
+    {
+      "path": "apps/api/resources/voice/asr_faster_whisper.py",
+      "bytes": 2400,
+      "sha256": "016a8ec264a95cbd0cef757daafeaa749a6a7dffb2f38d5f5607ed6e00aca0f6"
+    },
+    {
+      "path": "apps/api/resources/voice/audio_duration.py",
+      "bytes": 773,
+      "sha256": "294c0ecc9e41060c3a88dc4ea5c483f386decd10f37e644b44de53c46ab235dd"
+    },
+    {
+      "path": "apps/api/resources/knowledge-runtime/scan_worker.py",
+      "bytes": 6664,
+      "sha256": "fd3b97a57df175c6ebb44bb4a00a0dbcd9d50ab7b63c16f4c15baffc518265e7"
+    },
+    {
+      "path": "apps/api/resources/inbox-runtime/docx_worker.py",
+      "bytes": 5828,
+      "sha256": "45b5aaa467155fa432c5f2073c9f9c9c8bea2f22db42bc8a8ae985f6730c25cc"
+    },
+    {
+      "path": "apps/api/resources/inbox-runtime/html_worker.py",
+      "bytes": 5080,
+      "sha256": "b04b0435e5d7e43ab2e4fe5b7cb1fe02519627a9362a8047df38aacaa4c1a602"
+    },
+    {
+      "path": "apps/web/dist/offline-capture-shell-manifest.json",
+      "bytes": 1135,
+      "sha256": "281bd81bc4220ca5d1a50e33374f17dd11a722515ed69aa386a2ed9314c067b4"
+    },
+    {
+      "path": "apps/web/dist/offline-capture-sw.js",
+      "bytes": 4154,
+      "sha256": "1c74b31f443dbd703982ea72184995314e72ec3e3e1c075011bce39f40eef085"
+    },
+    {
+      "path": "apps/web/dist/assets/client-OI5hagxP.js",
+      "bytes": 222585,
+      "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6"
+    },
+    {
+      "path": "apps/web/dist/assets/offline-vault-g54LtOEF.js",
+      "bytes": 10707,
+      "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94"
+    },
+    {
+      "path": "apps/web/dist/assets/offlineCapture-CTF5MCW4.css",
+      "bytes": 4717,
+      "sha256": "81ca3809012e895c9c7ecbf96fa695ca1e0485e917be83737e3d0ef9fbe655a8"
+    },
+    {
+      "path": "apps/web/dist/assets/offlineCapture-Dp37MnGd.js",
+      "bytes": 26587,
+      "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851"
+    },
+    {
+      "path": "apps/web/dist/offline-capture.html",
+      "bytes": 658,
+      "sha256": "d8bad6e8ab79f60fe4928e89adab1126a2bfaef9dae556cc2160bcecf1b10920"
+    }
+  ],
+  "offlineManifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+  "offlineManifestEntries": 5,
+  "build": "20261018-ai-development-ops-r55",
+  "runtimeBuild": "20261018-ai-development-ops-r55",
+  "staticHttpTypes": [
+    {
+      "path": "/assets/client-OI5hagxP.js",
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "/assets/offline-vault-g54LtOEF.js",
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "/assets/offlineCapture-CTF5MCW4.css",
+      "contentType": "text/css"
+    },
+    {
+      "path": "/assets/offlineCapture-Dp37MnGd.js",
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "/offline-capture.html",
+      "contentType": "text/html"
+    }
+  ],
+  "modelCalls": 0,
+  "blockedFetchAttempts": 0,
+  "httpRequests": 12,
+  "cleanupVerified": true,
+  "privateTemporaryDirectory": true,
+  "linuxQualification": "this-staged-compiled-installation-only",
+  "boundaries": [
+    "Temporary loopback app only; selected release entrypoint and business services not started",
+    "No business data, Pi configuration, credentials, model or ASR invocation",
+    "Nonexistent temporary Python path disables OCR health execution; Python/model availability is not verified",
+    "This is dependency/startup/static integrity smoke, not browser, audio, model quality, restore or production acceptance"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "standby-r55-metadata-shape-local-handoff",
+  "actualProtocols": [
+    "apps/api/src/runtime/project-decision-routes.ts: new record POST",
+    "apps/api/src/runtime/project-decision-runtime.ts: expectedVersion=0/status implemented requires performed action with evidence; revision1 independentAcceptance=false",
+    "apps/api/src/v1/routes.ts: generic experiences capture envelope",
+    "apps/api/src/v1/capture-domains.ts: capture creates inbox candidate, not a verified skill"
+  ],
+  "priorExamples": [
+    "artifacts/migration-112/retention-platform-sync-public.json",
+    "artifacts/ai-development-ops/platform-sync-public.json"
+  ],
+  "minimalSequence": [
+    "After 112 actual recovery is confirmed, Root freezes fresh command UUID and observedAt, hashes exact request and saves private intent.",
+    "GET current Jarvis project before; do not resubmit notes (known capacity issue).",
+    "POST this new decision exactly once with expectedVersion=0; GET response id and verify revision1/implemented/actions/evidence/independentAcceptance=false.",
+    "GET project after and confirm persistent goal/revision/environment/notes/copies/milestones unchanged; no Factory endpoint.",
+    "Optional separate capture command expectedVersion=0; GET new experience to confirm inbox/verified=false. No verify/skill publish."
+  ],
+  "nullSafety": "These are data templates only, not runnable publishers; null commandId/observedAt require Root actual binding. No API called.",
+  "finalRecordEvidence": "Only successful Root safe readback can enter distinct FINAL351; do not cite these NULLs as platform sync success."
+}

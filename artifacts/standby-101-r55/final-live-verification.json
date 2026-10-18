@@ -1,0 +1,212 @@
+{
+  "kind": "r55-101-cold-standby-final-live-verification",
+  "at": "2026-10-18T16:32:17.820Z",
+  "release": "20261018-ai-development-ops-r55",
+  "operationId": "81e81d3b-28bc-4441-94fb-65830b13f0a9",
+  "servers": [
+    {
+      "node": "101",
+      "role": "standby",
+      "release": "20261018-ai-development-ops-r55",
+      "current": "/opt/jarvis/releases/20261018-ai-development-ops-r55",
+      "configSHA256": "b491c634a668d395b0f36b2028b4d2c98ff378b759d9f34234c3f88385df2fc2",
+      "units": {
+        "jarvis-platform.service": {
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "UnitFileState": "disabled",
+          "MainPID": "0",
+          "NRestarts": "0"
+        },
+        "jarvis-observer.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "3592730",
+          "NRestarts": "0"
+        },
+        "jarvis-frpc.service": {
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "UnitFileState": "disabled",
+          "MainPID": "0",
+          "NRestarts": "0"
+        },
+        "jarvis-voice.service": {
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "UnitFileState": "disabled",
+          "MainPID": "0",
+          "NRestarts": "0"
+        }
+      },
+      "observer": {
+        "version": 1,
+        "clusterId": "myjevis-home",
+        "nodeId": "101",
+        "role": "standby",
+        "epoch": 1,
+        "build": "20261018-ai-development-ops-r55",
+        "observedAt": "2026-10-18T16:32:15.294Z",
+        "businessHealthy": false,
+        "businessBuild": null,
+        "snapshot": {
+          "batchId": "cold-r55-81e81d3b-28bc-4441-94fb-65830b13f0a9",
+          "snapshotAt": "2026-10-18T16:10:54.080Z",
+          "verifiedAt": "2026-10-18T16:32:01.665Z",
+          "build": "20261018-ai-development-ops-r55",
+          "verified": true,
+          "businessIntegrity": "ok",
+          "executionIntegrity": "ok",
+          "filesChecked": 64,
+          "manifestSha256": "6f732b6e0bd4f3c977419757180989f8b4807e7c1b38e39eac8548e8abb3d61d",
+          "voiceKeyPreserved": true
+        },
+        "dependenciesReady": true
+      },
+      "baseFilesVerified": 2231,
+      "primaryHashedAssetsMatched": 146,
+      "configurationProjectionPreserved": true,
+      "configurationMetadata": {
+        "uid": 0,
+        "gid": 973,
+        "mode": 416
+      },
+      "snapshotLagSeconds": 1282,
+      "independentFactoryInspected": false,
+      "factoryActions": 0
+    },
+    {
+      "node": "112",
+      "role": "primary",
+      "release": "20261018-ai-development-ops-r55",
+      "current": "/opt/jarvis/releases/20261018-ai-development-ops-r55",
+      "configSHA256": "1149ea11ed4e7c7ffeb16af46aeb54f98e0833a775b27be33e9c7b44f4024059",
+      "units": {
+        "jarvis-platform.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "848520",
+          "NRestarts": "0"
+        },
+        "jarvis-observer.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "626443",
+          "NRestarts": "0"
+        },
+        "jarvis-frpc.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "2045",
+          "NRestarts": "0"
+        },
+        "jarvis-voice.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "2900037",
+          "NRestarts": "0"
+        }
+      },
+      "observer": {
+        "version": 1,
+        "clusterId": "myjevis-home",
+        "nodeId": "112",
+        "role": "primary",
+        "epoch": 1,
+        "build": "20261018-ai-development-ops-r55",
+        "observedAt": "2026-10-18T16:32:16.690Z",
+        "businessHealthy": true,
+        "businessBuild": "20261018-ai-development-ops-r55",
+        "snapshot": {
+          "batchId": "migration-20261007043835235",
+          "snapshotAt": "2026-10-07T04:38:38.311Z",
+          "verifiedAt": "2026-10-07T04:38:51.332Z",
+          "build": "20261007-linux-cluster",
+          "verified": true,
+          "businessIntegrity": "ok",
+          "executionIntegrity": "ok",
+          "filesChecked": 11,
+          "manifestSha256": "0b15d03f6dedc3858af7f56740dcbe6ccdefb8a8e1abff35fcb9c157924e3466",
+          "voiceKeyPreserved": true
+        },
+        "dependenciesReady": false
+      },
+      "health": {
+        "status": "ok",
+        "build": "20261018-ai-development-ops-r55",
+        "nodeId": "112",
+        "role": "primary"
+      }
+    }
+  ],
+  "primaryPeerView": {
+    "nodeId": "101",
+    "url": "https://192.168.10.101:3141/",
+    "checkedAt": "2026-10-18T16:32:17.046Z",
+    "status": "reachable",
+    "observation": {
+      "version": 1,
+      "clusterId": "myjevis-home",
+      "nodeId": "101",
+      "role": "standby",
+      "epoch": 1,
+      "build": "20261018-ai-development-ops-r55",
+      "observedAt": "2026-10-18T16:32:17.064Z",
+      "businessHealthy": false,
+      "businessBuild": null,
+      "snapshot": {
+        "batchId": "cold-r55-81e81d3b-28bc-4441-94fb-65830b13f0a9",
+        "snapshotAt": "2026-10-18T16:10:54.080Z",
+        "verifiedAt": "2026-10-18T16:32:01.665Z",
+        "build": "20261018-ai-development-ops-r55",
+        "verified": true,
+        "businessIntegrity": "ok",
+        "executionIntegrity": "ok",
+        "filesChecked": 64,
+        "manifestSha256": "6f732b6e0bd4f3c977419757180989f8b4807e7c1b38e39eac8548e8abb3d61d",
+        "voiceKeyPreserved": true
+      },
+      "dependenciesReady": true
+    },
+    "readiness": {
+      "nodeId": "101",
+      "recoveryMaterialsReady": false,
+      "snapshotLagSec": 1282,
+      "automaticTakeover": false,
+      "canTakeover": false,
+      "reasons": [
+        "SNAPSHOT_TOO_OLD_OR_FUTURE"
+      ],
+      "activationBlocker": "OLD_PRIMARY_MUST_BE_STOPPED_AND_FENCED",
+      "note": "已核验恢复材料不等于已隔离旧主。此接口不启动服务，不切换角色或入口。"
+    },
+    "error": null
+  },
+  "replication": {
+    "mode": "controlled-cold-snapshot",
+    "continuous": false,
+    "maxSnapshotLagSec": 900
+  },
+  "automaticFailover": false,
+  "factoryActions": 0,
+  "scope": "R55 cold standby program and point-in-time complete recovery data. No role promotion, business activation, current R55 voice inference, continuous replication, or independent factory execution.",
+  "sourceSnapshot": {
+    "path": "/var/lib/jarvis-control/standby-r55-sync-20261019-112/data-snapshot",
+    "manifestSHA256": "6f732b6e0bd4f3c977419757180989f8b4807e7c1b38e39eac8548e8abb3d61d",
+    "createdAt": "2026-10-18T16:10:54.080506+00:00",
+    "files": 64,
+    "directories": 59,
+    "bytes": 4633958902,
+    "sqliteDatabases": 10
+  },
+  "cost": {
+    "supplierModelCalls": 0,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

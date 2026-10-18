@@ -1,0 +1,38 @@
+{
+  "kind": "r55-cold-transfer-local-source-preparation",
+  "source": ".jarvis-dev/maintenance/cold-r55-transfer.py",
+  "bytes": 28062,
+  "sha256": "36fbaee43aacc911cbb7e0e43c4bc8ccbe05b5edf4daea8049ab5fee39f53fa5",
+  "sourceOrigin": ".jarvis-dev/maintenance/capture-r35-cold-data-voice-gated.py",
+  "actualInput": "artifacts/standby-101-r55/operation-input.json",
+  "NULLInput": "artifacts/standby-101-r55/operation-input-NULL.json",
+  "NULLInputSHA256": "d26f4243dc0d6bcea783c55f6000db2e748380f5ca2b87bd8b18b5d9d5ab7141",
+  "phases": [
+    "export",
+    "download",
+    "import",
+    "install"
+  ],
+  "syntaxOnly": {
+    "outerAST": true,
+    "embeddedExportImportInstallAST": true,
+    "sourceExecuted": false,
+    "testsExecuted": false
+  },
+  "contract": [
+    "Root actual input and self SHA required before phase intent/remote",
+    "Fresh completed primary snapshot only; manifest/time/count/bytes/SQLite/recovery and both node config H pinned",
+    "Export reads existing snapshot only; never stops 112 or makes a new snapshot",
+    "Full private archive H/size and safe members; verify plus isolated restore on101",
+    "Install requires R55 current/config metadata + platform/frpc/voice inactive AND disabled",
+    "Root runtime smoke exact raw DTO body/H: current compiled Linux temporary API/SQLite/static only",
+    "Root voice wrapper exact body/H: current bytes/Python/packages/pip; R35 historical load separately scoped; no R55 resident load claimed",
+    "Prior101data and prior restore/dependencies marker bytes+permissions retained; controlled rollback; only observer stop/start",
+    "No factory path/agent/config/session writes; no role/epoch/token/config modification",
+    "Original createdAt propagated; verifiedAt separate; no automatic takeover or retry",
+    "Each phase public intent/receipt WX; raw transfer and stdout/stderr private; public safe fields and H only"
+  ],
+  "CLI": "python .jarvis-dev/maintenance/cold-r55-transfer.py <export|download|import|install> --input-sha256 <actual operation-input H> --self-sha256 36fbaee43aacc911cbb7e0e43c4bc8ccbe05b5edf4daea8049ab5fee39f53fa5",
+  "futureActualPinsAllNULL": true,
+  "remoteOperationsPerformed": 0
+}

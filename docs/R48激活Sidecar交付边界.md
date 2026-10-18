@@ -20,6 +20,14 @@ Root提供新UUID、私有0600完整输入JSON及其SHA256；仅接受node、rel
 
 只运行新增两项隔离fixture（各normal/rollback子场景）：先未ready后成功不造首错；截止耗尽不新增窗口且保旧首错；成功/失败最终回执原日志指纹与self/recovery/input绑定可重算。控制语法一次通过。旧两fixture原日志保持，未重跑；未执行activate、recovery、systemctl、真实DB、应用types/build或打包。Root仍须审源码/完整回执安全性和实机时序，候选尚无部署资格。
 
+## 配置ownership窄修（接续9e2e19f，源码交付未部署）
+
+首次合法配置读取使用no-follow fd及前后完整stat签名，固定原安全文件uid/gid/mode与原字节H。正常候选与rollback旧字节两写均使用同一original_metadata：WX temp后fchown原uid/gid、再fchmod准确原mode，fstat核普通单链接与元数据、fsync，复核临时路径身份/H及旧目标身份/H后才原子replace；设置或验证失败在replace前拒绝，原配置不被覆盖。写后核metadata/身份/H，回执仅新增原/临时/写后uid/gid/mode与前后字节H，不含配置原文。不猜gid、不用进程默认group、不修改服务身份/目录ownership，不放宽权限。
+
+新增两项纯临时fixture：正常及rollback实际写字节并fchown回本测试用户原uid/gid，fake进程默认group不同而调用仍采用原元数据；chown拒绝与mode验证失败两负例均确认replace未调用、原文件完整签名与字节不变。临时目录fixture替换生产root祖先安全门，未在112验证真实权限，也未测试真实不同属组切换。控制语法及新组各一次通过；旧组未重跑，原日志保持。
+
+主管提供4dabdee3-4a20-4a90-92b6-2c18da605bbc已FAILED CLOSED及snapshot/restore同manifest事实，且Root私journal已指EACCES打开node.json；本地源码确有旧config_write只chmod不保gid缺陷。本轮仅将该次故障按主管证据归属配置权限，不冒本副本重新读取journal或现场重现。当前Root恢复后旧R48健康为主管反馈，非本轮CC测试；更早9feac首异常仍未知，不能倒填因果。旧失败control/备份/restore/费用不删不复用，R48r2未上线，后续部署与Pi/产品验收均未做。
+
 ## 实际验证和未验证（前一ops历史）
 
 两项纯隔离fixture使用fake clock/runner、临时目录及假Popen，覆盖首错＋回退双错仍保首错、原stdout/stderr完整H、预算动态timeout、terminate/kill/wait只管自己child及同UUID拒绝。首轮及最窄收尾修正后最终两项均通过，语法AST通过。没有实机超时/服务/恢复/部署资格，不能据fixture或进程exit0冒独验。

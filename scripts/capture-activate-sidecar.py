@@ -286,12 +286,63 @@ def switch(target, operation_id):
     syncdir(current.parent)
 
 
-def config_write(path, data, mode, operation_id):
+def config_metadata(info):
+    return {'uid': info.st_uid, 'gid': info.st_gid, 'mode': stat.S_IMODE(info.st_mode)}
+
+
+def config_signature(info):
+    return (info.st_dev, info.st_ino, info.st_mode, info.st_uid, info.st_gid,
+            info.st_nlink, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+
+def capture_config(path):
+    safe(path)
+    before = path.lstat()
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        need(config_signature(os.fstat(fd)) == config_signature(before), 'CONFIG_RACE')
+        with os.fdopen(fd, 'rb', closefd=False) as stream:
+            data = stream.read()
+        need(config_signature(os.fstat(fd)) == config_signature(before), 'CONFIG_RACE')
+    finally:
+        os.close(fd)
+    need(config_signature(path.lstat()) == config_signature(before), 'CONFIG_RACE')
+    return data, config_metadata(before)
+
+
+def config_write(path, data, metadata, operation_id):
+    # Both forward and rollback use the same original pre-publication metadata.
+    current, current_metadata = capture_config(path)
+    need(current_metadata == metadata, 'CONFIG_METADATA_CHANGED')
+    before = config_signature(path.lstat())
     temp = path.with_name('node.sidecar-' + operation_id + '.json')
     wx(temp, data)
-    os.chmod(temp, mode)
-    os.replace(temp, path)
-    syncdir(path.parent)
+    safe(temp)
+    fd = os.open(temp, os.O_RDWR | os.O_NOFOLLOW)
+    try:
+        initial = os.fstat(fd)
+        need(config_signature(initial) == config_signature(temp.lstat()), 'CONFIG_TEMP_RACE')
+        os.fchown(fd, metadata['uid'], metadata['gid'])
+        # chown can clear mode bits: set exact original mode afterwards.
+        os.fchmod(fd, metadata['mode'])
+        checked = os.fstat(fd)
+        need(config_metadata(checked) == metadata and stat.S_ISREG(checked.st_mode)
+             and checked.st_nlink == 1, 'CONFIG_TEMP_METADATA_INVALID')
+        os.fsync(fd)
+        need(config_signature(temp.lstat()) == config_signature(checked), 'CONFIG_TEMP_RACE')
+        need(digest(temp) == hashlib.sha256(data).hexdigest(), 'CONFIG_TEMP_HASH')
+        safe(path)
+        need(config_signature(path.lstat()) == before and digest(path) == hashlib.sha256(current).hexdigest(), 'CONFIG_RACE')
+        os.replace(temp, path)
+        syncdir(path.parent)
+        written = path.lstat()
+        need(config_signature(written)[:-1] == config_signature(checked)[:-1]
+             and config_metadata(written) == metadata and digest(path) == hashlib.sha256(data).hexdigest(), 'CONFIG_WRITTEN_METADATA_INVALID')
+        return {'originalMetadata': metadata, 'temporaryMetadata': config_metadata(checked),
+                'writtenMetadata': config_metadata(written), 'previousSHA256': hashlib.sha256(current).hexdigest(),
+                'writtenSHA256': hashlib.sha256(data).hexdigest()}
+    finally:
+        os.close(fd)
 
 
 def recovery_summary(value):
@@ -327,7 +378,8 @@ def activate(pins, operation_id, input_sha256):
         try:
             safe(prior, directory=True)
             safe(config_path)
-            old, mode = config_path.read_bytes(), stat.S_IMODE(config_path.stat().st_mode)
+            old, original_metadata = capture_config(config_path)
+            op.observed['originalConfigMetadata'] = original_metadata
             need(hashlib.sha256(old).hexdigest() == pins['configSHA256'], 'CONFIG_PIN')
             config = json.loads(old)
             need(config['release'] == EXPECTED and config['role'] == 'primary' and Path('/opt/jarvis/current').resolve() == prior, 'CURRENT_BINDING')
@@ -383,7 +435,7 @@ def activate(pins, operation_id, input_sha256):
             op.restore = recovery_summary(restored)
             def change(_timeout):
                 need(digest(config_path) == pins['configSHA256'] and Path('/opt/jarvis/current').resolve() == prior, 'CURRENT_CHANGED')
-                config_write(config_path, encoded({**config, 'release': RELEASE}), mode, operation_id)
+                op.observed['candidateConfigWrite'] = config_write(config_path, encoded({**config, 'release': RELEASE}), original_metadata, operation_id)
                 switch(base, operation_id)
             op.phase('switch', change, 5, 75)
             for unit in ['jarvis-platform.service', 'jarvis-observer.service']:
@@ -396,7 +448,7 @@ def activate(pins, operation_id, input_sha256):
                 for unit in ['jarvis-observer.service', 'jarvis-platform.service']:
                     op.child('rollback-stop-' + unit, ['systemctl', 'stop', unit], 25, 100, True)
                 def revert(_timeout):
-                    config_write(config_path, old, mode, operation_id + '-rollback')
+                    op.observed['rollbackConfigWrite'] = config_write(config_path, old, original_metadata, operation_id + '-rollback')
                     switch(prior, operation_id + '-rollback')
                 op.phase('rollback-switch', revert, 5, 85, True)
                 for unit in ['jarvis-platform.service', 'jarvis-observer.service']:

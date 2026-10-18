@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {PROJECT_SUPERVISOR_CONTRACT} from './project-supervisor-contract.js';
-export const SUPERVISOR_PROMPT_MAX_UTF8_BYTES=64*1024;
+export const SUPERVISOR_PROMPT_MAX_UTF8_BYTES=128*1024;
 const separator='\n\nUntrusted supervisor input JSON:\n';
 const prepared=new WeakMap<object,ReturnType<typeof supervisorModelProjection>>();
 const hash=(bytes:string)=>createHash('sha256').update(bytes,'utf8').digest('hex');

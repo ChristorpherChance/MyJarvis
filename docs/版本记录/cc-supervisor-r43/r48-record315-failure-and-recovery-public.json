@@ -1,0 +1,198 @@
+{
+  "kind": "record315-failed-activation-and-emergency-recovery",
+  "record": 315,
+  "asOf": "2026-10-18T05:25:06.815Z",
+  "actualFacts": {
+    "kind": "r48-sidecar4dab-failure-and-emergency-recovery-facts",
+    "at": "2026-10-18T05:13:31.826266+00:00",
+    "failedActivationOperation": "4dabdee3-4a20-4a90-92b6-2c18da605bbc",
+    "failedSourceSHA256": "8b25ab3db05c31443bdead4a018c185d04bc4b9c2763bd9b589ec46af1e11fc3",
+    "sidecarFailedFinalFingerprint": {
+      "bytes": 49804,
+      "sha256": "40c097b2703bf1e7778005b2292ea82dd946f950dc8914468d3a56b4deabe1d6"
+    },
+    "firstError": {
+      "classification": "READINESS_EXHAUSTED",
+      "lastProbe": {
+        "childEnded": true,
+        "duration": 0.12233051098883152,
+        "exitCode": 1,
+        "stderr": {
+          "bytes": 325,
+          "sha256": "ddcdcf7bca9606e3a51b6e4d37724c3b89c58aa75e141dd89dd0057e4dee82fe"
+        },
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timeout": false
+      },
+      "phase": "new-health-probe-20"
+    },
+    "producerRollback": {
+      "attempted": true,
+      "classification": "READINESS_EXHAUSTED",
+      "health": null,
+      "ok": false
+    },
+    "snapshot": {
+      "automaticRollback": false,
+      "bytes": 4462950902,
+      "completeTreeVerified": true,
+      "directories": 59,
+      "files": 64,
+      "liveDirectoryModified": false,
+      "manifestSha256": "3f53d6214cff16d21e379c33f2a739c601a567ca4c3dff7350accaf2e9362e10",
+      "operation": "snapshot-created",
+      "release": "20261018-project-goals-r48-r2",
+      "scope": "primary",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "status": "passed"
+    },
+    "restore": {
+      "automaticRollback": false,
+      "bytes": 4462950902,
+      "completeTreeVerified": true,
+      "directories": 59,
+      "files": 64,
+      "liveDirectoryModified": false,
+      "manifestSha256": "3f53d6214cff16d21e379c33f2a739c601a567ca4c3dff7350accaf2e9362e10",
+      "operation": "isolated-restore-verified",
+      "release": "20261018-project-goals-r48-r2",
+      "scope": "primary",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "status": "passed"
+    },
+    "originalFailureUnchanged": true,
+    "fullCollectionQualified": false,
+    "partialCollectionReason": "TOTAL_LIMIT after 200 saved files; final and first-error were already transferred and bound",
+    "operatorEvidence": [
+      {
+        "path": "artifacts/cc-supervisor-r43/r48-emergency-current-status-05891a37-61df-4b74-b449-c7c01bcd3f65.json",
+        "bytes": 2533,
+        "sha256": "ae903c0b7d2d8bbd1837e36ed3ec47cb165e1749e4ee0d9357b15821a1717bdc"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/r48-config-permission-observe-f18fe047-81d8-496f-a2ce-ad967b7f8323.json",
+        "bytes": 1293,
+        "sha256": "038b15f8d3eb1b75c4be823d9c6dfcd1fba556cf9a264d29ccb82ecc84c4764e"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/r48-config-permission-restore-f88a9e51-72b3-4b11-84bd-2bea8b86e1f6.json",
+        "bytes": 1542,
+        "sha256": "08571b664e3ae895d3fd429551c6388e4bf98956dd881d57ec7302f478027e5b"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/r48-post-emergency-independent-health-ad75466a-f46b-42ab-8f1f-e366e0366035.json",
+        "bytes": 1039,
+        "sha256": "19d86a7768e5132e6ccf4cdc2b92eed3de06eeea9a8554c9e83b0e7ff78446c5"
+      }
+    ],
+    "confirmedConfigurationReadError": "EACCES opening fixed /etc/jarvis/node.json in both service journals",
+    "configurationGroupBefore": 0,
+    "existingServiceAndDirectoryGroup": 973,
+    "configurationGroupAfter": 973,
+    "contentModeOwnerInodeUnchanged": true,
+    "emergencyServiceStarts": 2,
+    "emergencyConfigurationGroupChanges": 1,
+    "oldReleaseIndependentlyHealthy": "20261018-project-goals-r48",
+    "newR48r2Deployed": false,
+    "originalOlder9feacFailureCause": "unknown",
+    "rootProjectSourceEdits": 0,
+    "liveDataRestored": false,
+    "fullSupervisionFlowAccepted": false,
+    "automaticRetry": false
+  },
+  "sourceCorrection": {
+    "priority": "P1",
+    "sourceCommit": "9e2e19f67c6b0b3f904a772fd8e96ff2e7cd2b63",
+    "sourceSHA256": "8b25ab3db05c31443bdead4a018c185d04bc4b9c2763bd9b589ec46af1e11fc3",
+    "title": "Atomic configuration replacement loses the service-readable group in both activation and rollback",
+    "sourceCause": "activate saves bytes and mode only. config_write creates a new root-run temporary file through wx, applies chmod, and replaces node.json without preserving its uid/gid. Both the normal switch and rollback call that function. Restoring identical bytes and mode therefore does not restore service access.",
+    "reviewCorrection": {
+      "preservePriorReports": true,
+      "priorOperationalSourceReview": {
+        "path": "artifacts/cc-supervisor-r43/r48-ops-goal4-sidecar-independent-source-review.json",
+        "sha256": "12a63253a66e2ef3a04a46d56f6dd4ac5d20e4473e1cfe980f64b9f434c7d974",
+        "correction": "The source pass closed the two then-targeted findings but missed the config uid/gid preservation boundary. It must not be represented as proof that this activation path was safe or successful."
+      },
+      "priorScopePrivacyReview": {
+        "path": "artifacts/cc-supervisor-r43/r48-ops-goal4-delta-scope-privacy-independent-source-review.json",
+        "sha256": "0ea5811084480d3395e8a73e3cc8c8a93b004ea8c8bf0efd41e235cfd0e217c4",
+        "correction": "My finite scope/privacy review did not cover the runtime configuration ownership tuple. Its absence of privacy findings cannot be promoted into whole-source or deployment acceptance. I acknowledge this uncovered service-access boundary; the report remains immutable and this correction is appended."
+      },
+      "experienceCandidate": "For configuration used by non-root services, content hash alone is insufficient: preserve uid/gid/mode through atomic replacement and rollback, and include a non-default group plus service-readability assertion in the narrow regression. A root-only health reader does not prove the daemon can read the same configuration.",
+      "skillPublished": false
+    }
+  },
+  "independentHealth": {
+    "kind": "r48-post-emergency-independent-health",
+    "purposeId": "ad75466a-f46b-42ab-8f1f-e366e0366035",
+    "exitCode": 0,
+    "timeout": false,
+    "childEnded": true,
+    "elapsedSeconds": 1.5,
+    "qualified": true,
+    "health": {
+      "node": "112",
+      "release": "20261018-project-goals-r48",
+      "role": "primary",
+      "currentRelease": "20261018-project-goals-r48",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261018-project-goals-r48",
+      "businessHealthy": true,
+      "healthBuild": "20261018-project-goals-r48",
+      "healthStatus": "ok"
+    },
+    "priorActivationQualified": false,
+    "newR48r2Deployed": false,
+    "remoteMutationCount": 0,
+    "originalConfigBytesUnchanged": true,
+    "automaticRetry": false,
+    "rawPrivate": {
+      "health.stdout": {
+        "bytes": 322,
+        "sha256": "796688727c004733ad1714c8cf64aa987c8c4964193cb06ebf053cf2acb8e2d9"
+      },
+      "health.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "localReadRefusal": "First local read compared Windows named and held ctime; before private intent or SSH it refused. Distinct r2 preserves named and held full-key stability separately, excludes only cross-object ctime on Windows; remote program unchanged.",
+  "partialCollection": "New readonly retrieval hit its 200-file bound after final and first-error were privately preserved; collectionQualified remains false. No full per-file audit claimed. The later eight-file helper was prepared but not executed after service recovery.",
+  "originalOlderActivation": "Older9feac failure cause remains unknown; do not backfill the new4dab ownership cause into it.",
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-sidecar4dab-failure-and-emergency-recovery-facts.json",
+      "bytes": 3780,
+      "sha256": "51a094c7f8efa7c480b721c9bd715d01b12815db8abf44b4666161f525866823"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-sidecar4dab-config-ownership-finding-and-review-correction.json",
+      "bytes": 6376,
+      "sha256": "c2a0069208ba82c72391f4f0b188c611338efaa4cebd771d97f47f302fbb60f5"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-post-emergency-independent-health-ad75466a-f46b-42ab-8f1f-e366e0366035.json",
+      "bytes": 1039,
+      "sha256": "19d86a7768e5132e6ccf4cdc2b92eed3de06eeea9a8554c9e83b0e7ff78446c5"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-failed-readonly-local-preio-refusal.json",
+      "bytes": 868,
+      "sha256": "348a2f2988f91a71028f196a5a010303dbe580d13912c01ce5b4c7a0ee9ebb88"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-failed-readonly-local-stat-refusal-and-r2-correction.json",
+      "bytes": 1479,
+      "sha256": "5cf73468c3a588d4d97dcb169af0a94f761e912f8c378a75c531446fd1c0a9dc"
+    }
+  ],
+  "newDeployment": false,
+  "liveDataRestored": false
+}

@@ -1,0 +1,120 @@
+{
+  "record": 315,
+  "asOf": "2026-10-18T05:25:06.815Z",
+  "newDeployment": false,
+  "r48r2SuccessfullyLive": false,
+  "factoryAllAccepted": false,
+  "factoryGoal2Dispatched": false,
+  "oldR48Recovered": true,
+  "planBRevision": 4,
+  "itemRevision": 21,
+  "itemStatus": "running",
+  "goal5RunId": "10ee0a1e38a2ea6caef963ddaabfb0df38f16012",
+  "goal5IncludedStatus": "saved-running-observation-only",
+  "goal5ResultIncluded": false,
+  "kind": "record315-final-safe-fixed-cut",
+  "current": "112旧R48已恢复并独立确认健康；发布权限问题已通过正式贾维斯交101CC返修。候选R48r2未上线，工厂ZIP修复未派。",
+  "failure": "4dab新切换真实FAILED；完整4,462,950,902B/64files59dirs/10SQLite快照和隔离恢复passed且同manifest；候选与回退均readiness20次耗尽。原子配置替换丢失gid，双服务EACCES。",
+  "recovery": "Root仅同inode将gid0恢复973、保bytes/mode/uid不变，reset-failed/start各服务一次；独立旧R48primary/双active/statusok/businessHealthytrue。无liveData还原，原failed不改绿。",
+  "auditLimits": "源审未覆盖uid/gid边界已追加承认；两个fakefixture不是完整现场。Windows本机ctime拒发生任何SSH前；新读取200文件触顶保持partial，未冒全日志独验。",
+  "workflow": "正式goal5已queued并有保存running观察，结果/新源码/新切换/新费用不纳本条。item21running与planB4真实单CAS已保存；旧目标、标准、绑定和所有历史保持。",
+  "usage": {
+    "knownFiveCCParentTotalTokens": 27930217,
+    "cacheAlreadyIncludedInInput": true,
+    "catalogEstimateUSD": 17.751339999999992,
+    "invoiceUSD": null,
+    "costPolicy": "record-only without monetary cap",
+    "sixDistinctPiBindingsUsagePrice": null,
+    "goal5UsageAndPriceAtThisCut": null,
+    "goal3": {
+      "inputTokens": 4875734,
+      "outputTokens": 13188,
+      "cacheReadTokens": 4848640,
+      "cacheWriteTokens": 0,
+      "totalTokens": 4888922,
+      "costUSD": 2.8894899999999986,
+      "costKind": "catalog-estimate",
+      "invoiceUSD": null
+    },
+    "goal4": {
+      "inputTokens": 6846214,
+      "outputTokens": 8755,
+      "cacheReadTokens": 6821504,
+      "cacheWriteTokens": 0,
+      "totalTokens": 6854969,
+      "costUSD": 3.7531769999999973,
+      "costKind": "catalog-estimate",
+      "invoiceUSD": null
+    }
+  },
+  "refs": [
+    {
+      "path": "artifacts/construction-history/record315-public/r48-record315-source-and-usage-public.json",
+      "bytes": 6015,
+      "sha256": "29d6696b41bd318d4274bfccc9d7f8255fdfd246732b4cbf6a9eb1a586d0a7d7"
+    },
+    {
+      "path": "artifacts/construction-history/record315-public/r48-record315-failure-and-recovery-public.json",
+      "bytes": 9227,
+      "sha256": "127f18d4a9fd57192c0034fe29853b9a1dfba3acd3aa746cdeb4da311de61074"
+    },
+    {
+      "path": "artifacts/construction-history/record315-public/r48-record315-current-metadata-goal5-public.json",
+      "bytes": 8786,
+      "sha256": "a7ce975da206af088d671698706bd79a0e496bd79968c510a8471446e8cb2326"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-sidecar4dab-failure-and-emergency-recovery-facts.json",
+      "bytes": 3780,
+      "sha256": "51a094c7f8efa7c480b721c9bd715d01b12815db8abf44b4666161f525866823"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-sidecar4dab-config-ownership-finding-and-review-correction.json",
+      "bytes": 6376,
+      "sha256": "c2a0069208ba82c72391f4f0b188c611338efaa4cebd771d97f47f302fbb60f5"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-post-emergency-independent-health-ad75466a-f46b-42ab-8f1f-e366e0366035.json",
+      "bytes": 1039,
+      "sha256": "19d86a7768e5132e6ccf4cdc2b92eed3de06eeea9a8554c9e83b0e7ff78446c5"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-current-item21-7a31b8a3-219d-4e3a-8a47-75756cc0c044-readback.json",
+      "bytes": 1821,
+      "sha256": "39312bb13208d651d81a765f05f80cfacfc95de2da905450936c11d65caf3538"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-current-planB4-ef0b782e-b3e9-4d76-8598-70a0badb3509-readback.json",
+      "bytes": 1368,
+      "sha256": "a805d00390f19fc2b69bd7fcddb63932941282228005bc6c2d728e692ccb456c"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-sidecar-decision-implementation-rev4-readback.json",
+      "bytes": 1435,
+      "sha256": "196609c37df743279e00654a5a2d967e8253aee8a5c99ee76bce295424268a33"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-jarvis-release-sidecar-goal5-098e96ef-60a0-43fa-b523-40915f3f8165-readback.json",
+      "bytes": 1558,
+      "sha256": "d2019b34a4ca4fe4545a83ceb254b4e3c7001ef328c43199a615c5c77773bbf6"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-sidecar-goal5-first-result-window.json",
+      "bytes": 6442,
+      "sha256": "4bc8e63cc0021be6f8e4e54ef0b8b1392edf37c8c997ed47f9b60cb28b9b7b75"
+    }
+  ],
+  "future": [
+    "goal5signedsource and narrow ownership/service-access regression",
+    "independent source review then fresh activation and independent health",
+    "natural new Pi report judgment and factory ZIP limited repair",
+    "12+5 remaining real product delivery and full-flow acceptance"
+  ],
+  "concurrentHistoryPreservation": {
+    "path": "artifacts/construction-history/r48-record315-concurrent-history-preservation.json",
+    "bytes": 3637,
+    "sha256": "d23912e69171ccdeb5dab03d303245eb48e9edc834b0ce71d5d5684408fa0788"
+  },
+  "noTimedFollowupResumed": true,
+  "noProductCompleteClaim": true
+}

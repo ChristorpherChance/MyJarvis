@@ -1,0 +1,70 @@
+{
+  "record": 317,
+  "asOf": "2026-10-18T06:46:14.073Z",
+  "newDeployment": true,
+  "r49SuccessfullyLive": true,
+  "factoryAllAccepted": false,
+  "factoryLimitedGoal3Achieved": true,
+  "factorySupervisorStatus": "achieved",
+  "factorySupervisorEnabled": false,
+  "factoryActiveRun": false,
+  "planBRevision": 7,
+  "currentStepId": "C2",
+  "itemRevision": 24,
+  "itemStatus": "running",
+  "UIAccepted": false,
+  "jarvisGoal7RunId": "87ed35491efc3e832c6285f8b5556c947c27a9e9",
+  "jarvisGoal7ObservedStatus": "running",
+  "goal7ResultIncluded": false,
+  "r49r1Deployed": false,
+  "kind": "record317-final-safe-summary",
+  "basis": "当前12项工厂能力＋5项监管；旧74只历史，不是现行分母。原目标/标准/历史保持。",
+  "mainResult": "112 R49健康；Factory新的只读报告已被真实Pi按两项有限标准审阅达标。首屏实测不合格，已正式交Jarvis goal7/101CC返修；不是完整产品验收。",
+  "publicEvidence": [
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r49-record317-source-release-public.json",
+      "bytes": 13761,
+      "sha256": "e654c60a1d3788ae0b6157e106c6fe1480307da206ce2bdd3b5f1610d93c5c4b"
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r49-record317-factory-report-judgment-public.json",
+      "bytes": 7974,
+      "sha256": "95c7effe0d7b16ff385e9f9723cc85cca18772d59c07664f7eaaccee0bc4ee22"
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r49-record317-current-metadata-ui-public.json",
+      "bytes": 8601,
+      "sha256": "9d6c301f96a4a2b7755da44e550452becc7d9fe7cdbe9d128630f5997e8cca12"
+    }
+  ],
+  "knownUsage": {
+    "previousKnownRunTokens": 34057044,
+    "newGoal6Tokens": 22893109,
+    "newFactoryGoal3Tokens": 607055,
+    "knownTotalTokens": 57557208,
+    "inputIncludesCache": true,
+    "cacheNotAddedAgain": true,
+    "newGoal6CatalogEstimateUSD": 15.955343,
+    "newFactoryGoal3CatalogEstimateUSD": 0.442063,
+    "knownCatalogEstimateUSD": 38.082965,
+    "catalogIsNotInvoice": true,
+    "invoiceUSD": null,
+    "PiAndInternalUsagePrice": null,
+    "goal7UsagePrice": null,
+    "nativeSessionCumulativeNotAddedAgain": true,
+    "amountCap": null,
+    "technical10MIsNotHardSingleInvocationWall": true,
+    "goal6ActualOver10MRetained": true
+  },
+  "pending": [
+    "回收goal7的R49r1源码/限定验证/同源包，独审后再决定全新发布、独立健康和简明首屏/SSE现场验收。",
+    "完整工厂、独立产品验收及客户原始12需求的交付使用仍未完成；继续12＋5当前/后续阶段按依赖推进。"
+  ],
+  "invariants": {
+    "tenMinuteAutomation": "PAUSED",
+    "node101": "R7/config46",
+    "oldAutonomy": "rev20 blocked unchanged",
+    "oldFailuresAndRollingHistoryPreserved": true,
+    "fullProductOrCustomerAcceptance": false
+  }
+}

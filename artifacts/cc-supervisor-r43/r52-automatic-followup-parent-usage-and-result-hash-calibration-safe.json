@@ -1,0 +1,101 @@
+{
+  "kind": "r52-jarvis-goal11-automatic-followup-parent-usage-and-JS-result-hash-calibration",
+  "at": "2026-10-18T10:08:35.017062+00:00",
+  "scope": "LOCAL saved original signed parent result; unique followup run accounting only. No native cumulative amount added.",
+  "previousAddendum": {
+    "path": "artifacts/cc-supervisor-r43/r52-two-parent-runs-usage-addendum-safe.json",
+    "bytes": 3569,
+    "sha256": "4b751a35f9ec74363e24c2cebe469d2f2364fa512e74f604804d1a40fcdd0d1a"
+  },
+  "baseline": {
+    "knownParentTokens": 106776525,
+    "catalogUSD": "66.246518",
+    "catalogMicroUSD": 66246518
+  },
+  "deduplication": {
+    "runAlreadyIncludedInPriorAddendumChain": false,
+    "priorExplicitRunIdsChecked": 8,
+    "candidate7276NotAddedAgain": true,
+    "newUniqueParentRunCount": 1
+  },
+  "uniqueParentRuns": [
+    {
+      "runId": "3c694e0993f9e5a592d146489cb0e6f3e6ada283",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "sourceResultSHA256": "15a647679e3643aa461bd7dd5d0f4e7fa864378a46b5d1397d95cbac2fc1dfd8",
+      "sourceResultHashAlgorithm": "Node cryptoSHA256(JSON.stringify(parsedRun.result))",
+      "savedRawFingerprint": {
+        "bytes": 11697,
+        "sha256": "0e655ed53ebe772b3c0df7032766edf91db2e540348a0a7bf1b3582f3c4abfa0"
+      },
+      "usage": {
+        "inputTokens": 1365050,
+        "outputTokens": 3009,
+        "cacheReadTokens": 1355776,
+        "cacheWriteTokens": 0,
+        "totalTokens": 1368059
+      },
+      "producerUsageComplete": true,
+      "producerCatalogCostComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogUSD": "0.799483",
+      "catalogMicroUSD": 799483,
+      "rawCostUSDDecimal": "0.7994830000000022",
+      "rawKnownCostUSDDecimal": "0.7994830000000022",
+      "automaticSuccessorSourceRunId": "727666151f69bf59e6a5fadfd0ac5cf4801fe744",
+      "cacheReadAlreadyIncludedInInput": true,
+      "nativeSessionCumulativeExcluded": true
+    }
+  ],
+  "knownCumulativeAfterAddendum": {
+    "knownParentTokens": 108144584,
+    "catalogUSD": "67.046001",
+    "catalogMicroUSD": 67046001
+  },
+  "legacyStateHashCalibration": {
+    "legacyPublicRef": {
+      "path": "artifacts/cc-supervisor-r43/r52-legacy-Jarvis-handoff-current-state.json",
+      "bytes": 827,
+      "sha256": "91d8d3ea1db57359ffc29a2a3badff7090be9da8626afb49ae3f5c08d37189fd"
+    },
+    "legacyReportedResultSHA256": "15a647679e3643aa461bd7dd5d0f4e7fa864378a46b5d1397d95cbac2fc1dfd8",
+    "NodeJSONStringifyResultSHA256": "15a647679e3643aa461bd7dd5d0f4e7fa864378a46b5d1397d95cbac2fc1dfd8",
+    "matches": true,
+    "correctionRequired": false,
+    "rawFileSHA256IsSeparate": "0e655ed53ebe772b3c0df7032766edf91db2e540348a0a7bf1b3582f3c4abfa0",
+    "rawFileHashEqualsResultHashClaimed": false,
+    "savedWorkbenchFingerprint": {
+      "bytes": 303562,
+      "sha256": "361aa9163cb2e9dbeaeb893b822a2c8da4a3bb946952d9f617db974f4d5be294"
+    },
+    "sessionRevision": 67,
+    "goalRevision": 11,
+    "status": "waiting_user",
+    "enabled": false
+  },
+  "unknowns": {
+    "FactoryGoal10Tokens": null,
+    "FactoryGoal10USD": null,
+    "PiInternalTokens": null,
+    "PiInternalUSD": null,
+    "invoiceUSD": null,
+    "otherHistoricalUnknownPartsPreserved": true
+  },
+  "feePolicy": {
+    "recordOnly": true,
+    "moneyCap": null,
+    "technicalSoftWindowTokens": 10000000,
+    "technicalWindowNotHardCap": true,
+    "catalogEstimateNotInvoice": true,
+    "nativeCumulativeNotAdded": true,
+    "cacheNotDoubleAdded": true,
+    "tenMinuteAutomation": "PAUSED"
+  },
+  "executed": {
+    "API": 0,
+    "remote": 0,
+    "models": 0,
+    "applicationOrTests": 0,
+    "ledgerWrites": 0
+  }
+}

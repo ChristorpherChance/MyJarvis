@@ -1,0 +1,274 @@
+{
+  "kind": "record316-permission-fix-release-and-independent-health",
+  "record": 316,
+  "asOf": "2026-10-18T06:03:30.575Z",
+  "release": "20261018-project-goals-r48-r2",
+  "newDeployment": true,
+  "producer": {
+    "kind": "r48-r2-root-sidecar-activation-outcome",
+    "operationId": "6e9b7c24-0d28-4e60-8703-6e9b6002defc",
+    "qualified": true,
+    "producerQualified": true,
+    "configurationPermissionPreservationQualified": true,
+    "configurationPermissionExpected": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "priorFailedSidecarChanged": false,
+    "independentHealthQualified": false,
+    "factoryDispatchQualified": false,
+    "classification": "QUALIFIED",
+    "transportExitCode": 0,
+    "transportTimeout": false,
+    "transportChildEnded": true,
+    "elapsedSeconds": 301.5470000000205,
+    "sidecarSourceSHA256": "c6e3ccc01042ce61a88e198caf211446006f0600ea5eb91e7714f49b51a7b883",
+    "inputSHA256": "cb5d88f13d09700987cf18e7249f011d181540fa7e3da514d908deabad2b5745",
+    "rawPrivateFingerprints": {
+      "ssh.stdout": {
+        "bytes": 19239,
+        "sha256": "bf2315baa9292694fe6db653d8a9a52a5d1bfadd9742b13010dbf5fcd83b67aa"
+      },
+      "ssh.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "sidecarRawPrivateFingerprints": {
+      "stdout": {
+        "bytes": 13826,
+        "sha256": "276446560697e8a65c382ef82bb4f567f0f913382a662e8ee78c2b6604e1c58e"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "reconciliationRequired": false,
+    "automaticRetry": false,
+    "oldFailedActivateChanged": false,
+    "stageInstallRepeated": false,
+    "wrapperServiceActions": 0,
+    "wrapperRollback": false
+  },
+  "privateFinalFingerprintOnly": {
+    "bytes": 13826,
+    "sha256": "276446560697e8a65c382ef82bb4f567f0f913382a662e8ee78c2b6604e1c58e"
+  },
+  "savedFinalSelectedSafeFields": {
+    "node": "112",
+    "release": "20261018-project-goals-r48-r2",
+    "prior": "20261018-project-goals-r48",
+    "sourceCommit": "6d8504fab6c727550ba409425c8ef0bffc68a738",
+    "archiveSHA256": "e0495dc61b879d89c1a09b388c57de01e7d7c54d7291f0f3c1d4cd84704dac40",
+    "manifestSHA256": "63c5463c8bb0e118faba9bd1a90cdec6e4be21b6b3cefacc57f4dd8ac0faa1bb",
+    "installSHA256": "bccb75fe47ef821abcef25ad8f936ceffd98f3231a30397655ad665147ab8613",
+    "inputSHA256": "cb5d88f13d09700987cf18e7249f011d181540fa7e3da514d908deabad2b5745",
+    "selfSHA256": "c6e3ccc01042ce61a88e198caf211446006f0600ea5eb91e7714f49b51a7b883",
+    "recoverySHA256": "1f74cb9fea17d5f3a964675fc2909e79bbf5d00b65a59146af9eb1e86d128179",
+    "snapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261018-project-goals-r48-r2",
+      "scope": "primary",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4469660150,
+      "manifestSha256": "19a747abb19afc6135acf72a4d56580bded7a668cc1e09672b0c110ab4e890f8",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "restore": {
+      "status": "passed",
+      "operation": "isolated-restore-verified",
+      "release": "20261018-project-goals-r48-r2",
+      "scope": "primary",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4469660150,
+      "manifestSha256": "19a747abb19afc6135acf72a4d56580bded7a668cc1e09672b0c110ab4e890f8",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "health": {
+      "release": "20261018-project-goals-r48-r2",
+      "healthy": true,
+      "probe": "new-health-probe-4",
+      "response": {
+        "bytes": 17,
+        "sha256": "0a98974220d589e9faa1ec7f77d0b9f124b69fb7a05a93ca97157165d4a94c87"
+      }
+    },
+    "firstError": null,
+    "rollback": {
+      "attempted": false,
+      "reason": "NOT_REQUIRED",
+      "health": null
+    },
+    "liveDataRestored": false
+  },
+  "configurationMetadataPreservation": {
+    "original": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "candidate": {
+      "originalMetadata": {
+        "uid": 0,
+        "gid": 973,
+        "mode": 416
+      },
+      "temporaryMetadata": {
+        "uid": 0,
+        "gid": 973,
+        "mode": 416
+      },
+      "writtenMetadata": {
+        "uid": 0,
+        "gid": 973,
+        "mode": 416
+      },
+      "previousSHA256": "d98e8bd97a8f59f03ffb8893d93a9804c03e5d3313aefc9973d645602632f72c",
+      "writtenSHA256": "bd2847ea0ca710f497ff0087fa78410d96d38565a8261f8ccdc5ece87c4e5bc0"
+    }
+  },
+  "independentHealth": {
+    "kind": "r48-r2-newpurpose-independent-health",
+    "at": "2026-10-18T05:41:53Z",
+    "healthOperationId": "77aa8ad2-a2a9-44b4-8d51-172b7ba80672",
+    "activationOperationId": "6e9b7c24-0d28-4e60-8703-6e9b6002defc",
+    "producerReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-sidecar-goal5-activation-6e9b7c24-0d28-4e60-8703-6e9b6002defc-outcome.json",
+      "bytes": 1535,
+      "sha256": "d9789226ad51c9f6a791ec6e694bac2a97513293e4d8550dd793a8b21dc84013"
+    },
+    "activationFinalFingerprint": {
+      "sha256": "276446560697e8a65c382ef82bb4f567f0f913382a662e8ee78c2b6604e1c58e",
+      "bytes": 13826
+    },
+    "release": "20261018-project-goals-r48-r2",
+    "sourceCommit": "6d8504fab6c727550ba409425c8ef0bffc68a738",
+    "exitCode": 0,
+    "timeout": false,
+    "childEnded": true,
+    "elapsedSeconds": 0.6409999998286366,
+    "independentHealthQualified": true,
+    "health": {
+      "node": "112",
+      "release": "20261018-project-goals-r48-r2",
+      "role": "primary",
+      "currentRelease": "20261018-project-goals-r48-r2",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261018-project-goals-r48-r2",
+      "businessHealthy": true,
+      "healthBuild": "20261018-project-goals-r48-r2",
+      "healthStatus": "ok"
+    },
+    "failureCode": null,
+    "rawPrivateFingerprints": {
+      "health.stdout": {
+        "bytes": 334,
+        "sha256": "80fc73f0437a0a25f2d3a71c88006bcc0d32a946504bdce7799fcd5888062544"
+      },
+      "health.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "producerQualifiedPreviously": true,
+    "producerConfigurationMetadataAccepted": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "producerPreviousConfigSHA256Accepted": "d98e8bd97a8f59f03ffb8893d93a9804c03e5d3313aefc9973d645602632f72c",
+    "productAccepted": false,
+    "fullSupervisionFlowAccepted": false,
+    "oldHealthPhaseInvokedOrOverwritten": false,
+    "oldFailedActivationChanged": false,
+    "serviceRecoveryStageInstallOrActivateCalled": false,
+    "APIAuthenticationUsed": false,
+    "automaticRetry": false
+  },
+  "formalGoal5Result": {
+    "kind": "r48-formal-goal5-compact-report-received",
+    "at": "2026-10-18T05:28:19.797Z",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "supervisorSessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+    "goalRevision": 5,
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "runId": "10ee0a1e38a2ea6caef963ddaabfb0df38f16012",
+    "source": "signed-agent",
+    "outcome": "success",
+    "nativeExitCode": 0,
+    "sourceResultSHA256": "fe35842b661370afc06b7400ad78da8ac7fec9aa76feccb737a3e5ac7098e742",
+    "evidence": {
+      "path": "artifacts/r48-config-ownership-facts.json",
+      "sha256": "a37412aa158012ce30a0bf5c28406a11c81f9bf5b93db6ec3b4cc915c884fa27",
+      "bytes": 3123
+    },
+    "reportRawUTF8CanonicalBase64HsizeChecked": true,
+    "authorClaimsIndependentlyVerified": false,
+    "productionDeployed": false,
+    "productAccepted": false,
+    "oldResultsOrIntentsReplayed": false,
+    "usageRecomputedByThisReceipt": false
+  },
+  "sourcePublication": {
+    "kind": "r48-ops-goal5-git-publication",
+    "at": "2026-10-18T05:47:43.417630+00:00",
+    "head": "254d25a030537073a41dc5e5c0de6cc4825ad52b",
+    "applicationPackageSource": "6d8504fab6c727550ba409425c8ef0bffc68a738",
+    "branch": "feat/unified-projects-r45",
+    "normalFastForwardPush": true,
+    "forcePush": false,
+    "pr": {
+      "number": 7,
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/7",
+      "state": "OPEN",
+      "draft": true,
+      "headRefOid": "254d25a030537073a41dc5e5c0de6cc4825ad52b"
+    },
+    "sourceWorktreeClean": true,
+    "canonicalConstructionLedgerReplaced": false,
+    "merged": false,
+    "publicationItselfDeployed": false
+  },
+  "scope": "6e9 is a fresh operation after old9feac/4dab failures. Full new snapshot/isolated restore and independent runtime health qualified; old failures remain unchanged. No product, full supervisor flow or R49 acceptance.",
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-sidecar-goal5-activation-6e9b7c24-0d28-4e60-8703-6e9b6002defc-outcome.json",
+      "bytes": 1535,
+      "sha256": "d9789226ad51c9f6a791ec6e694bac2a97513293e4d8550dd793a8b21dc84013"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-goal5-newpurpose-independent-health-77aa8ad2-a2a9-44b4-8d51-172b7ba80672.json",
+      "bytes": 2080,
+      "sha256": "b6ed260f86ddb3374abe2bf20f4ce6e5bc81c261c32e8e45d6fa5e9eb030c3a2"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-goal5-compact-report-public-receipt.json",
+      "bytes": 1160,
+      "sha256": "63e0e7028ca350d2ae6de3a642e342473dec8897831f7ab72310970c5d87834e"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-goal5-ownership-delta-source-privacy-independent-review.json",
+      "bytes": 7573,
+      "sha256": "5e072bff51d803420688534a1a18288fa13ac58821f46a21dbc98cc74091daf3"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-goal5-git-publication-receipt.json",
+      "bytes": 651,
+      "sha256": "741289122986b15f11769e310dabbc746a40f8ad0e979842d7bfd87b3a4c8537"
+    }
+  ]
+}

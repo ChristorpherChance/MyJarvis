@@ -1,0 +1,102 @@
+{
+  "kind": "r51-r1-factory-goal8-two-parent-runs-usage-addendum-for-record330",
+  "scope": "LOCAL saved result.usage arithmetic only; no ledger/API/test/provider calls",
+  "constructionRecordWritten": false,
+  "previousAddendum": {
+    "path": "artifacts/cc-supervisor-r43/r51-r1-four-parent-runs-usage-addendum-for-record330.json",
+    "bytes": 8618,
+    "sha256": "be897b484c27803bc5adfe12a2350c3ed59cdaeb39cbeaa0d06fad6136285e02"
+  },
+  "baseline": {
+    "knownParentTokens": 99754418,
+    "catalogUSD": "62.222283",
+    "catalogMicroUSD": 62222283,
+    "doNotRecomputePriorHistory": true
+  },
+  "uniqueParentRuns": [
+    {
+      "runId": "d2523e399abb8c5fd135e80881f0c77483d5ab78",
+      "rawFile": {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal8-observation-6dadaafd-aee8-4152-8c5b-307be95fd630/run.json",
+        "bytes": 14310,
+        "sha256": "d5c007bd35d879481ae7ce1b09d7297bba767c6be739dcd1d00cae281648d725"
+      },
+      "resultSHA256": "89b410279990a354b7c18e8b0ef149d1688701bb2cabbc05bee2ad973f849138",
+      "usage": {
+        "inputTokens": 724793,
+        "outputTokens": 3088,
+        "cacheReadTokens": 716800,
+        "cacheWriteTokens": 0,
+        "totalTokens": 727881
+      },
+      "usageComplete": true,
+      "costComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogUSD": "0.475565",
+      "catalogMicroUSD": 475565,
+      "rawKnownCostUSDDecimal": "0.47556500000000135",
+      "rawCostUSDDecimal": "0.47556500000000135",
+      "nativeCumulativeExcluded": true
+    },
+    {
+      "runId": "fe7cdd37eb94dc9cbd4eec5e3a7043150ca0f4c6",
+      "rawFile": {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal8-observation-79a98276-4b44-4671-8d6b-96a976be5996/run.json",
+        "bytes": 14032,
+        "sha256": "ddca020fecb443ed50203e63cb34df30d874608d869af0e92dfdbc05fd762fbc"
+      },
+      "resultSHA256": "52192afc7dd683206f84c2f2038c36bd6f7c454848504fd93eea54f36d192d93",
+      "usage": {
+        "inputTokens": 559103,
+        "outputTokens": 2686,
+        "cacheReadTokens": 554752,
+        "cacheWriteTokens": 0,
+        "totalTokens": 561789
+      },
+      "usageComplete": true,
+      "costComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogUSD": "0.366281",
+      "catalogMicroUSD": 366281,
+      "rawKnownCostUSDDecimal": "0.36628100000000074",
+      "rawCostUSDDecimal": "0.36628100000000074",
+      "nativeCumulativeExcluded": true
+    }
+  ],
+  "batchAdded": {
+    "inputTokens": 1283896,
+    "outputTokens": 5774,
+    "cacheReadTokens": 1271552,
+    "cacheWriteTokens": 0,
+    "totalTokens": 1289670,
+    "catalogUSD": "0.841846",
+    "catalogMicroUSD": 841846,
+    "rawDecimalCatalogSum": "0.84184600000000209",
+    "cacheReadAlreadyIncludedInInput": true
+  },
+  "knownCumulativeAfterAddendum": {
+    "knownParentTokens": 101044088,
+    "catalogUSD": "63.064129",
+    "catalogMicroUSD": 63064129
+  },
+  "unknownAmounts": {
+    "invoiceUSD": null,
+    "PiInternalUSD": null,
+    "PiInternalTokens": null,
+    "futureRuns": null,
+    "priorUnknownPartsPreserved": true
+  },
+  "feePolicy": "Known catalog estimate, not invoice. No monetary cap. Cache counts are included in input and native session cumulative costs are not added. No progress inference.",
+  "savedResultHashVerificationRef": {
+    "path": "artifacts/cc-supervisor-r43/r51-r1-factory-goal8-saved-chain-and-budget-correction-independent-review.json",
+    "bytes": 10616,
+    "sha256": "672b772583f7f1a71e62e08aaf75baca4592e8bec0ffb8cbe3c122a32da4576b"
+  },
+  "executed": {
+    "API": 0,
+    "network": 0,
+    "models": 0,
+    "appTests": 0,
+    "ledgerWrites": 0
+  }
+}

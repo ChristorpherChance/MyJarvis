@@ -1,0 +1,356 @@
+{
+  "at": "2026-10-17T11:12:14.326Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decisionId": "07e3d541-c435-4f15-b196-d83f408cbe34",
+  "revision": 1,
+  "hash": "b66823d803c4408f644f8924591d77a70daa55aa6c1fa110dcafb83d64131da2",
+  "decision": {
+    "questionSummary": "怎样闭合R7已证策略窗口、恢复、未知费用和实际决策经验历史的剩余使用缺口？",
+    "context": {
+      "observedAt": "2026-10-17T11:12:13.701Z",
+      "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+      "sourceFingerprint": "04ac859f44cb8fb887e22d0dd44a3713beb48a3176064644c7a79a7e0990058d",
+      "sourceVersion": "101 CC appc78e507/reportf8d23de，112仍R41",
+      "runId": null,
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "objectives": [
+        "R43-REGULATION-CONTROL",
+        "R43-ACCOUNTING-RECONCILE"
+      ],
+      "constraints": [
+        "同原task/session与累计known/unknown账，Root只监管收集发布控制",
+        "一次2400秒/0自动重试/最多2子agent，10分钟checkpoint/32分钟join留8分钟收尾",
+        "仅修固定独审5个P1与实际旧历史/cap原因，真实Runtime边界矩阵不能stub执行器替代",
+        "停止和目标撤权须真实零新增执行/child0证明，不靠模型自报或重开task清账",
+        "最终r43-r5双包源/build/archive同名，不覆盖R7候选、不自动上线",
+        "旧自治20及十分钟PAUSED保持，费用无美元上限未知null"
+      ],
+      "situation": "R7真实生产派发机制已得到三个fixturechild和两后继、签名ACK；普通15Token链未触发policy边界。固定非作者发现request漏policyWindowId、pending grant replay拒、awaiting-cost task状态拒；全经验context与自动decision lifecycle仍缺。原类型构建通过和r4双包保原，用户闭环不能据此签收。"
+    },
+    "options": [
+      {
+        "id": "narrow-existing-chain-completion",
+        "title": "沿真实现有链补具体缺口及对应边界矩阵",
+        "advantages": [
+          "复用已通过的真实链和准备环境，直接复现确定可达分支",
+          "保原账号会话与历史，最少源码补齐实际目标使用"
+        ],
+        "disadvantages": [
+          "需要执行窗口与经验决策接缝协调，最终仍须现场验收"
+        ],
+        "impact": "仅既有101隔离工作副本；最后由Root另行控制双端更新。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "publish-basic-chain-first",
+        "title": "先上线已过普通链，剩余使用分支另补",
+        "advantages": [
+          "可先看到基本链改动"
+        ],
+        "disadvantages": [
+          "真实unknown/累计边界会必拒，决策行动及旧历史仍不完整",
+          "提前上线会暴露已知阻断，不能满足完整监管目标"
+        ],
+        "impact": "涉及112/101切换但仍有已知功能缺口。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "narrow-existing-chain-completion",
+    "decisionRationale": "固定真实证据已证明基本链，下一步不再泛设计或重跑通过组。按确定5个P1和旧历史/cap缺口，原会话一次40分钟修复与真实边界验证，再同源r5配套包。用户已授权全部101开发所需权限与完成目标；未知历史和副作用保留，未验现场仍单列。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-supervisor-r43/maintenance-round7-outcome-safe-summary.json",
+        "sha256": "84c897419dc2b1dc19a12b9f71a78178369ecad271ac0ac70cb81d8fdfc4a375",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/round7-protocol-policy-source-review.json",
+        "sha256": "da3960d1955f6ea0d0ebb1b28498855e022a913eb1e0d925e436212c78548a37",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/round7-experience-decision-source-review.json",
+        "sha256": "31dc7b26dd9842c1c2222b880bf533c06dab5fbd38ddebb4c60fa897d69415be",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "R43-REGULATION-CONTROL",
+      "R43-ACCOUNTING-RECONCILE"
+    ],
+    "rollbackPlan": {
+      "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+      "triggers": [
+        "身份/会话/源码绑定变化",
+        "终态或原件不完整",
+        "权限配置发生未核变化"
+      ],
+      "impact": "影响101后继CC；不改112业务或旧账。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "最窄修policy窗口ID/幂等恢复/awaiting-cost后继，贯通实际边界及停止/撤权证明；补全经验冻结、真实选项选择行动改选、旧历史入口，形成最终同源双端候选。",
+        "at": "2026-10-17T11:12:13.701Z",
+        "state": "planned",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round7-outcome-safe-summary.json",
+            "sha256": "84c897419dc2b1dc19a12b9f71a78178369ecad271ac0ac70cb81d8fdfc4a375",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round7-protocol-policy-source-review.json",
+            "sha256": "da3960d1955f6ea0d0ebb1b28498855e022a913eb1e0d925e436212c78548a37",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round7-experience-decision-source-review.json",
+            "sha256": "31dc7b26dd9842c1c2222b880bf533c06dab5fbd38ddebb4c60fa897d69415be",
+            "kind": "observation"
+          }
+        ]
+      }
+    ],
+    "status": "selected",
+    "origin": "ai",
+    "id": "07e3d541-c435-4f15-b196-d83f408cbe34",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 1,
+    "createdAt": "2026-10-17T11:12:14.321Z",
+    "updatedAt": "2026-10-17T11:12:14.321Z",
+    "changeOf": "042f3630-81b4-4764-83a8-16b73c998559",
+    "changeOfRevision": 3,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": null,
+      "status": "ambiguous",
+      "candidates": [
+        {
+          "id": "narrow-existing-chain-completion",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "publish-basic-chain-first",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        }
+      ],
+      "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "revisionReason": "已有真实基本执行链，按固定源码确定阻断继续最窄修复和边界验证，不重造家族、不提前发布。",
+    "hash": "b66823d803c4408f644f8924591d77a70daa55aa6c1fa110dcafb83d64131da2",
+    "revisions": [
+      {
+        "questionSummary": "怎样闭合R7已证策略窗口、恢复、未知费用和实际决策经验历史的剩余使用缺口？",
+        "context": {
+          "observedAt": "2026-10-17T11:12:13.701Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "04ac859f44cb8fb887e22d0dd44a3713beb48a3176064644c7a79a7e0990058d",
+          "sourceVersion": "101 CC appc78e507/reportf8d23de，112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "同原task/session与累计known/unknown账，Root只监管收集发布控制",
+            "一次2400秒/0自动重试/最多2子agent，10分钟checkpoint/32分钟join留8分钟收尾",
+            "仅修固定独审5个P1与实际旧历史/cap原因，真实Runtime边界矩阵不能stub执行器替代",
+            "停止和目标撤权须真实零新增执行/child0证明，不靠模型自报或重开task清账",
+            "最终r43-r5双包源/build/archive同名，不覆盖R7候选、不自动上线",
+            "旧自治20及十分钟PAUSED保持，费用无美元上限未知null"
+          ],
+          "situation": "R7真实生产派发机制已得到三个fixturechild和两后继、签名ACK；普通15Token链未触发policy边界。固定非作者发现request漏policyWindowId、pending grant replay拒、awaiting-cost task状态拒；全经验context与自动decision lifecycle仍缺。原类型构建通过和r4双包保原，用户闭环不能据此签收。"
+        },
+        "options": [
+          {
+            "id": "narrow-existing-chain-completion",
+            "title": "沿真实现有链补具体缺口及对应边界矩阵",
+            "advantages": [
+              "复用已通过的真实链和准备环境，直接复现确定可达分支",
+              "保原账号会话与历史，最少源码补齐实际目标使用"
+            ],
+            "disadvantages": [
+              "需要执行窗口与经验决策接缝协调，最终仍须现场验收"
+            ],
+            "impact": "仅既有101隔离工作副本；最后由Root另行控制双端更新。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "publish-basic-chain-first",
+            "title": "先上线已过普通链，剩余使用分支另补",
+            "advantages": [
+              "可先看到基本链改动"
+            ],
+            "disadvantages": [
+              "真实unknown/累计边界会必拒，决策行动及旧历史仍不完整",
+              "提前上线会暴露已知阻断，不能满足完整监管目标"
+            ],
+            "impact": "涉及112/101切换但仍有已知功能缺口。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "narrow-existing-chain-completion",
+        "decisionRationale": "固定真实证据已证明基本链，下一步不再泛设计或重跑通过组。按确定5个P1和旧历史/cap缺口，原会话一次40分钟修复与真实边界验证，再同源r5配套包。用户已授权全部101开发所需权限与完成目标；未知历史和副作用保留，未验现场仍单列。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round7-outcome-safe-summary.json",
+            "sha256": "84c897419dc2b1dc19a12b9f71a78178369ecad271ac0ac70cb81d8fdfc4a375",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round7-protocol-policy-source-review.json",
+            "sha256": "da3960d1955f6ea0d0ebb1b28498855e022a913eb1e0d925e436212c78548a37",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round7-experience-decision-source-review.json",
+            "sha256": "31dc7b26dd9842c1c2222b880bf533c06dab5fbd38ddebb4c60fa897d69415be",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "最窄修policy窗口ID/幂等恢复/awaiting-cost后继，贯通实际边界及停止/撤权证明；补全经验冻结、真实选项选择行动改选、旧历史入口，形成最终同源双端候选。",
+            "at": "2026-10-17T11:12:13.701Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round7-outcome-safe-summary.json",
+                "sha256": "84c897419dc2b1dc19a12b9f71a78178369ecad271ac0ac70cb81d8fdfc4a375",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round7-protocol-policy-source-review.json",
+                "sha256": "da3960d1955f6ea0d0ebb1b28498855e022a913eb1e0d925e436212c78548a37",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round7-experience-decision-source-review.json",
+                "sha256": "31dc7b26dd9842c1c2222b880bf533c06dab5fbd38ddebb4c60fa897d69415be",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "selected",
+        "origin": "ai",
+        "id": "07e3d541-c435-4f15-b196-d83f408cbe34",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-17T11:12:14.321Z",
+        "updatedAt": "2026-10-17T11:12:14.321Z",
+        "changeOf": "042f3630-81b4-4764-83a8-16b73c998559",
+        "changeOfRevision": 3,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": null,
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "id": "narrow-existing-chain-completion",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "publish-basic-chain-first",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "已有真实基本执行链，按固定源码确定阻断继续最窄修复和边界验证，不重造家族、不提前发布。",
+        "hash": "b66823d803c4408f644f8924591d77a70daa55aa6c1fa110dcafb83d64131da2"
+      }
+    ]
+  },
+  "oldDecisionId": "042f3630-81b4-4764-83a8-16b73c998559",
+  "oldHistoryPreserved": true,
+  "maintenanceNotStartedYet": true
+}

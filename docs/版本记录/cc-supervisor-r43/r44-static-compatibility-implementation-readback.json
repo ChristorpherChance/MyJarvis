@@ -1,0 +1,701 @@
+{
+  "at": "2026-10-17T14:00:35.144Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decisionId": "79734e7e-7323-43da-9774-341f1f711ef2",
+  "revision": 2,
+  "hash": "be11e8d0b570675f6f3165626ea3e89b5988ad887bc0ac3ab6da7158fa93d1a5",
+  "priorActionsPreserved": true,
+  "independentUserAcceptance": false,
+  "decision": {
+    "questionSummary": "怎样恢复R43发布后已打开的项目监管页面，同时保持现有平台代码与数据？",
+    "context": {
+      "observedAt": "2026-10-17T14:00:03.016Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+      "sourceVersion": "112R7，旧R41资源URL实际返回200HTML；监管API200",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [
+        "R44-SUPERVISION-PAGE-AVAILABILITY"
+      ],
+      "constraints": [
+        "仅补已公开旧版immutable静态资源",
+        "不得覆盖同名不同H、改当前index/API/DB/原包manifest或重启",
+        "原发布健康结论与真实页面验收分开记录",
+        "十分钟跟进仍PAUSED"
+      ],
+      "situation": "用户报监管页打不开。两origin真实旧Ops JS/CSS都返回519B当前indexHTML；独立图25件中18同H/7缺851685B，固定新包本身import图完整。全新112预检证明旧slot原件与当前slot/manifest/index固定H、所有祖先owner/mode通过。"
+    },
+    "options": [
+      {
+        "id": "restore-missing-immutable-closure",
+        "title": "补回精确验证的7个旧静态资源",
+        "advantages": [
+          "无需停机或回滚新功能",
+          "恢复已开旧文档的递归依赖，全部新增不覆盖"
+        ],
+        "disadvantages": [
+          "已被浏览器缓存的lazy加载失败仍可能需正常刷新一次",
+          "需后续发布验收持续覆盖跨版本资源"
+        ],
+        "impact": "仅112R7 assets新增851685B，index/API/业务数据不改",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R44-SUPERVISION-PAGE-AVAILABILITY"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "rollback-platform",
+        "title": "将平台整体回退到R41",
+        "advantages": [
+          "可重新取得旧资源完整目录"
+        ],
+        "disadvantages": [
+          "会撤销已部署R43功能并需服务切换",
+          "当前API和新bundle健康，回退范围大于已证故障"
+        ],
+        "impact": "涉及整个平台服务版本",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R44-SUPERVISION-PAGE-AVAILABILITY"
+        ],
+        "operationalImpact": 3
+      }
+    ],
+    "chosenId": "restore-missing-immutable-closure",
+    "decisionRationale": "已有实际HTTP和精确依赖图证实资源遗漏，采用有限新增能直接恢复该兼容故障，不扩大为源码改动或整站回滚。现场用户首异常及登录后页面仍须另验。 原首次平台摘要因缺risk/rollbackPlan被400严格拒且未写业务记录；静态恢复依此前本机意图已完成，本版本补同步当时选择，实施另追加。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+        "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+        "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+        "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+        "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+        "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+        "kind": "observation"
+      }
+    ],
+    "risk": "low",
+    "affectedObjectives": [
+      "R44-SUPERVISION-PAGE-AVAILABILITY"
+    ],
+    "rollbackPlan": {
+      "plan": "仅对本操作新增的7件完整H核对后另立撤回方案，不改R7原件、index或业务数据；当前未执行撤回。",
+      "triggers": [
+        "发现同名不同H或页面兼容问题",
+        "核验新增内容不匹配封存旧manifest"
+      ],
+      "impact": "撤回将再次影响持有旧页面的浏览器，必须先核目标与替代路径。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "Root按同一actual spec在原发布互斥锁内只WX补missing7，核全部25字节H及HTTP正确MIME/原H；不覆盖/不重启/不更换当前index。",
+        "at": "2026-10-17T14:00:03.016Z",
+        "state": "planned",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+            "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+            "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+            "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+            "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+            "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "112持有原发布锁，实际仅WX新增7旧immutable资源851685B；全部25件字节H已核。当前R7 index/双manifest原H不变、18旧同H不覆盖；0服务重启/API/DB/原源码改动。",
+        "at": "2026-10-17T14:00:34.180Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+            "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+            "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+            "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "公开域名29项HTTP检查全部通过：旧Ops JS为application/javascript且353240B原H，CSS为text/css且46777B原H；其余旧依赖和当前4个入口原H/正确类型。原监管API和6事项读取正常。已告知本人正常刷新一次清除已缓存的lazy失败。",
+        "at": "2026-10-17T14:00:34.180Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+            "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+            "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+            "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "原发布验收只检查健康，未覆盖已开旧页面的懒资源，确属遗漏。后续发布必须将前版本immutable闭包保留/碰撞H守门和旧新URL MIME检查纳为切换前提；缺assets应404和页面失败提示属后续源码改进。当前未声称本人登录监管页面已实测、未验写操作/模型101CC端到端；十分钟仍PAUSED。",
+        "at": "2026-10-17T14:00:34.180Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+            "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+            "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+            "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+            "kind": "observation"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "79734e7e-7323-43da-9774-341f1f711ef2",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 2,
+    "createdAt": "2026-10-17T14:00:03.693Z",
+    "updatedAt": "2026-10-17T14:00:35.134Z",
+    "changeOf": null,
+    "changeOfRevision": null,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": "restore-missing-immutable-closure",
+      "status": "recommended",
+      "candidates": [
+        {
+          "id": "restore-missing-immutable-closure",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "rollback-platform",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            3
+          ]
+        }
+      ],
+      "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "dbcd428e09c22000bf9d4da9e54702540b09615f2ec82a056e0ba7f4b570ca31",
+    "revisionReason": "已依据本机封存意图完成有限恢复并实际核验，再追加实施事实；本人登录后的现场页面仍待核验。",
+    "hash": "be11e8d0b570675f6f3165626ea3e89b5988ad887bc0ac3ab6da7158fa93d1a5",
+    "revisions": [
+      {
+        "questionSummary": "怎样恢复R43发布后已打开的项目监管页面，同时保持现有平台代码与数据？",
+        "context": {
+          "observedAt": "2026-10-17T14:00:03.016Z",
+          "goalSpecHash": null,
+          "sourceFingerprint": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+          "sourceVersion": "112R7，旧R41资源URL实际返回200HTML；监管API200",
+          "runId": null,
+          "taskId": null,
+          "machineId": null,
+          "objectives": [
+            "R44-SUPERVISION-PAGE-AVAILABILITY"
+          ],
+          "constraints": [
+            "仅补已公开旧版immutable静态资源",
+            "不得覆盖同名不同H、改当前index/API/DB/原包manifest或重启",
+            "原发布健康结论与真实页面验收分开记录",
+            "十分钟跟进仍PAUSED"
+          ],
+          "situation": "用户报监管页打不开。两origin真实旧Ops JS/CSS都返回519B当前indexHTML；独立图25件中18同H/7缺851685B，固定新包本身import图完整。全新112预检证明旧slot原件与当前slot/manifest/index固定H、所有祖先owner/mode通过。"
+        },
+        "options": [
+          {
+            "id": "restore-missing-immutable-closure",
+            "title": "补回精确验证的7个旧静态资源",
+            "advantages": [
+              "无需停机或回滚新功能",
+              "恢复已开旧文档的递归依赖，全部新增不覆盖"
+            ],
+            "disadvantages": [
+              "已被浏览器缓存的lazy加载失败仍可能需正常刷新一次",
+              "需后续发布验收持续覆盖跨版本资源"
+            ],
+            "impact": "仅112R7 assets新增851685B，index/API/业务数据不改",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R44-SUPERVISION-PAGE-AVAILABILITY"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "rollback-platform",
+            "title": "将平台整体回退到R41",
+            "advantages": [
+              "可重新取得旧资源完整目录"
+            ],
+            "disadvantages": [
+              "会撤销已部署R43功能并需服务切换",
+              "当前API和新bundle健康，回退范围大于已证故障"
+            ],
+            "impact": "涉及整个平台服务版本",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R44-SUPERVISION-PAGE-AVAILABILITY"
+            ],
+            "operationalImpact": 3
+          }
+        ],
+        "chosenId": "restore-missing-immutable-closure",
+        "decisionRationale": "已有实际HTTP和精确依赖图证实资源遗漏，采用有限新增能直接恢复该兼容故障，不扩大为源码改动或整站回滚。现场用户首异常及登录后页面仍须另验。 原首次平台摘要因缺risk/rollbackPlan被400严格拒且未写业务记录；静态恢复依此前本机意图已完成，本版本补同步当时选择，实施另追加。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+            "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+            "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+            "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+            "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+            "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+            "kind": "observation"
+          }
+        ],
+        "risk": "low",
+        "affectedObjectives": [
+          "R44-SUPERVISION-PAGE-AVAILABILITY"
+        ],
+        "rollbackPlan": {
+          "plan": "仅对本操作新增的7件完整H核对后另立撤回方案，不改R7原件、index或业务数据；当前未执行撤回。",
+          "triggers": [
+            "发现同名不同H或页面兼容问题",
+            "核验新增内容不匹配封存旧manifest"
+          ],
+          "impact": "撤回将再次影响持有旧页面的浏览器，必须先核目标与替代路径。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "Root按同一actual spec在原发布互斥锁内只WX补missing7，核全部25字节H及HTTP正确MIME/原H；不覆盖/不重启/不更换当前index。",
+            "at": "2026-10-17T14:00:03.016Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+                "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+                "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+                "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+                "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+                "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "selected",
+        "origin": "ai",
+        "id": "79734e7e-7323-43da-9774-341f1f711ef2",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-17T14:00:03.693Z",
+        "updatedAt": "2026-10-17T14:00:03.693Z",
+        "changeOf": null,
+        "changeOfRevision": null,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "restore-missing-immutable-closure",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "restore-missing-immutable-closure",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "rollback-platform",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                3
+              ]
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "记录当时的问题与选择",
+        "hash": "dbcd428e09c22000bf9d4da9e54702540b09615f2ec82a056e0ba7f4b570ca31"
+      },
+      {
+        "questionSummary": "怎样恢复R43发布后已打开的项目监管页面，同时保持现有平台代码与数据？",
+        "context": {
+          "observedAt": "2026-10-17T14:00:03.016Z",
+          "goalSpecHash": null,
+          "sourceFingerprint": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+          "sourceVersion": "112R7，旧R41资源URL实际返回200HTML；监管API200",
+          "runId": null,
+          "taskId": null,
+          "machineId": null,
+          "objectives": [
+            "R44-SUPERVISION-PAGE-AVAILABILITY"
+          ],
+          "constraints": [
+            "仅补已公开旧版immutable静态资源",
+            "不得覆盖同名不同H、改当前index/API/DB/原包manifest或重启",
+            "原发布健康结论与真实页面验收分开记录",
+            "十分钟跟进仍PAUSED"
+          ],
+          "situation": "用户报监管页打不开。两origin真实旧Ops JS/CSS都返回519B当前indexHTML；独立图25件中18同H/7缺851685B，固定新包本身import图完整。全新112预检证明旧slot原件与当前slot/manifest/index固定H、所有祖先owner/mode通过。"
+        },
+        "options": [
+          {
+            "id": "restore-missing-immutable-closure",
+            "title": "补回精确验证的7个旧静态资源",
+            "advantages": [
+              "无需停机或回滚新功能",
+              "恢复已开旧文档的递归依赖，全部新增不覆盖"
+            ],
+            "disadvantages": [
+              "已被浏览器缓存的lazy加载失败仍可能需正常刷新一次",
+              "需后续发布验收持续覆盖跨版本资源"
+            ],
+            "impact": "仅112R7 assets新增851685B，index/API/业务数据不改",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R44-SUPERVISION-PAGE-AVAILABILITY"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "rollback-platform",
+            "title": "将平台整体回退到R41",
+            "advantages": [
+              "可重新取得旧资源完整目录"
+            ],
+            "disadvantages": [
+              "会撤销已部署R43功能并需服务切换",
+              "当前API和新bundle健康，回退范围大于已证故障"
+            ],
+            "impact": "涉及整个平台服务版本",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R44-SUPERVISION-PAGE-AVAILABILITY"
+            ],
+            "operationalImpact": 3
+          }
+        ],
+        "chosenId": "restore-missing-immutable-closure",
+        "decisionRationale": "已有实际HTTP和精确依赖图证实资源遗漏，采用有限新增能直接恢复该兼容故障，不扩大为源码改动或整站回滚。现场用户首异常及登录后页面仍须另验。 原首次平台摘要因缺risk/rollbackPlan被400严格拒且未写业务记录；静态恢复依此前本机意图已完成，本版本补同步当时选择，实施另追加。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+            "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+            "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+            "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+            "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+            "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+            "kind": "observation"
+          }
+        ],
+        "risk": "low",
+        "affectedObjectives": [
+          "R44-SUPERVISION-PAGE-AVAILABILITY"
+        ],
+        "rollbackPlan": {
+          "plan": "仅对本操作新增的7件完整H核对后另立撤回方案，不改R7原件、index或业务数据；当前未执行撤回。",
+          "triggers": [
+            "发现同名不同H或页面兼容问题",
+            "核验新增内容不匹配封存旧manifest"
+          ],
+          "impact": "撤回将再次影响持有旧页面的浏览器，必须先核目标与替代路径。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "Root按同一actual spec在原发布互斥锁内只WX补missing7，核全部25字节H及HTTP正确MIME/原H；不覆盖/不重启/不更换当前index。",
+            "at": "2026-10-17T14:00:03.016Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+                "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+                "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+                "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+                "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+                "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "112持有原发布锁，实际仅WX新增7旧immutable资源851685B；全部25件字节H已核。当前R7 index/双manifest原H不变、18旧同H不覆盖；0服务重启/API/DB/原源码改动。",
+            "at": "2026-10-17T14:00:34.180Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+                "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+                "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+                "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "公开域名29项HTTP检查全部通过：旧Ops JS为application/javascript且353240B原H，CSS为text/css且46777B原H；其余旧依赖和当前4个入口原H/正确类型。原监管API和6事项读取正常。已告知本人正常刷新一次清除已缓存的lazy失败。",
+            "at": "2026-10-17T14:00:34.180Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+                "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+                "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+                "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "原发布验收只检查健康，未覆盖已开旧页面的懒资源，确属遗漏。后续发布必须将前版本immutable闭包保留/碰撞H守门和旧新URL MIME检查纳为切换前提；缺assets应404和页面失败提示属后续源码改进。当前未声称本人登录监管页面已实测、未验写操作/模型101CC端到端；十分钟仍PAUSED。",
+            "at": "2026-10-17T14:00:34.180Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+                "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+                "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+                "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "79734e7e-7323-43da-9774-341f1f711ef2",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 2,
+        "createdAt": "2026-10-17T14:00:03.693Z",
+        "updatedAt": "2026-10-17T14:00:35.134Z",
+        "changeOf": null,
+        "changeOfRevision": null,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "restore-missing-immutable-closure",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "restore-missing-immutable-closure",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "rollback-platform",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                3
+              ]
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "dbcd428e09c22000bf9d4da9e54702540b09615f2ec82a056e0ba7f4b570ca31",
+        "revisionReason": "已依据本机封存意图完成有限恢复并实际核验，再追加实施事实；本人登录后的现场页面仍待核验。",
+        "hash": "be11e8d0b570675f6f3165626ea3e89b5988ad887bc0ac3ab6da7158fa93d1a5"
+      }
+    ]
+  }
+}

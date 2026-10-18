@@ -1,0 +1,286 @@
+{
+  "schema": 1,
+  "kind": "r43-interrupted-transition-readonly-current-state-qualification",
+  "startedAt": "2026-10-17T13:40:10.825Z",
+  "originalApplySuccess": false,
+  "maintenanceState": "interrupted",
+  "originalSpecSHA256": "9ecdf8535775e1fe75e46e2f5a7258932956e63305e1fb440099a2febc3d70a6",
+  "requestSHA256": "7262345811b6d712d97ef9fe16cb9bb9be9fe407fc8a2b969534f5d2a9619787",
+  "ok": true,
+  "configurationAndRuntimeQualified": true,
+  "remoteMutations": 0,
+  "stateWrites": 0,
+  "configWrites": 0,
+  "nativeInvoked": false,
+  "privateValuesExported": false,
+  "centralBefore": {
+    "build": "20261017-cc-supervisor-r43-r7",
+    "configRevision": 46,
+    "targetSHA256": "4349a770e87b4dc93572f33437e2dd7bf56e7c19991a470fa88f7338ebe3547f",
+    "taskSHA256": "3ffa944c59c3ee7f8c88d9e2e32a68855e4d27b9fa4a5f0b34b341d8315f7b1e",
+    "sourceSHA256": "6957be98f6bce5ff7b05bb3f116b456b367a30564a8455d1a706816b77140002",
+    "historySHA256": "3f3b7bf983aa1b0d4f5a8b17272479bae817201a4671414f30a6272a5e06fb8f",
+    "agentId": "0b5aea06-47e1-4f4b-a32e-969417915c9c",
+    "lastSeen": "2026-10-17T13:40:08.806Z",
+    "allBlockingCountsZero": true
+  },
+  "nodeBefore": {
+    "ok": true,
+    "readOnly": true,
+    "qualificationKind": "source-derived-save-format-and-current-runtime",
+    "originalApplySuccess": false,
+    "maintenanceState": "interrupted",
+    "originalStatePhase": "restart-intent",
+    "stateSHA256": "a16e64a732701702dcfe6740c681a3ab20cf607e3ed4622b25b0f0fc9832836c",
+    "sourceCandidateSHA256": "54dfef8b5b22d9d3817101c1042c0c619a11a38d747e55cd7db02f5798cc43a3",
+    "expectedSavedConfigSHA256": "68c2379066b64d9cc6818e7ce344ea57dd2dc23d5e9afe9ec162e77338dab492",
+    "configCanonicalMatchesSealedCandidate": true,
+    "serializerSHA256": "1abfb34dce80978ce1521fbceb35a2f820fcc7ba0ef30748a7b21f89bd0bf8d6",
+    "serializerTrailingNewline": false,
+    "samePairedKeyIdentity": true,
+    "configMetadataPreserved": true,
+    "node": {
+      "configSHA256": "68c2379066b64d9cc6818e7ce344ea57dd2dc23d5e9afe9ec162e77338dab492",
+      "configInode": [
+        66306,
+        6718786
+      ],
+      "baseInode": [
+        66306,
+        2661091
+      ],
+      "files": {
+        "jarvis-node.mjs": {
+          "sha256": "dab1f9808ac587f5ca325d7eecda7d31a485af9aad1b800f3947c1d64402743d",
+          "bytes": 984069,
+          "inode": [
+            66306,
+            2661143
+          ],
+          "mode": 420
+        },
+        "agent-supervisor.js": {
+          "sha256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c",
+          "bytes": 3196,
+          "inode": [
+            66306,
+            2661127
+          ],
+          "mode": 420
+        },
+        "prepare-development-node.mjs": {
+          "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572",
+          "bytes": 5967,
+          "inode": [
+            66306,
+            2661113
+          ],
+          "mode": 420
+        },
+        "使用说明.md": {
+          "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e",
+          "bytes": 7945,
+          "inode": [
+            66306,
+            2661124
+          ],
+          "mode": 420
+        },
+        "package.json": {
+          "sha256": "dc96d7f5167ea7dd8b03f7908b30cc7e028db9cb7a686a64405f76cb20914d44",
+          "bytes": 92,
+          "inode": [
+            66306,
+            2661123
+          ],
+          "mode": 420
+        }
+      },
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "FragmentPath": "/etc/systemd/system/jarvis-software-factory-development.service",
+        "DropInPaths": "",
+        "MainPID": "59553",
+        "ControlGroup": "/system.slice/jarvis-software-factory-development.service",
+        "User": "superopen",
+        "Group": "superopen"
+      },
+      "process": {
+        "pid": 59553,
+        "identity": "328726a0-5495-4892-b0a6-2fa9de26242e:69655607",
+        "inode": [
+          24,
+          120419418
+        ],
+        "argvSHA256": "f17290dd3a1621e41cd5ad47b48f31a9d8004706aa3f574f39f3cce77d489f14"
+      },
+      "journal": {
+        "unresolvedRuns": 0,
+        "unconfirmedDeliveries": 0,
+        "pendingLogs": 0,
+        "identityMatches": true,
+        "ownerMatches": true,
+        "inode": [
+          66306,
+          6703462
+        ],
+        "directoryInode": [
+          66306,
+          6703428
+        ],
+        "historySHA256": "a049041f5c24333b19accc8cf8bd61bf838a7ba04e343f648588c53159b3f6d7"
+      },
+      "maintenance": {
+        "terminalUnits": 7,
+        "nativeSessionActive": false
+      },
+      "nodeSHA256": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c",
+      "nodeVersion": "v24.15.0",
+      "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+      "privateValuesExported": false
+    },
+    "remoteMutations": 0,
+    "stateWrites": 0,
+    "configWrites": 0,
+    "nativeInvoked": false,
+    "privateValuesExported": false
+  },
+  "centralAfter": {
+    "build": "20261017-cc-supervisor-r43-r7",
+    "configRevision": 46,
+    "targetSHA256": "4349a770e87b4dc93572f33437e2dd7bf56e7c19991a470fa88f7338ebe3547f",
+    "taskSHA256": "3ffa944c59c3ee7f8c88d9e2e32a68855e4d27b9fa4a5f0b34b341d8315f7b1e",
+    "sourceSHA256": "6957be98f6bce5ff7b05bb3f116b456b367a30564a8455d1a706816b77140002",
+    "historySHA256": "3f3b7bf983aa1b0d4f5a8b17272479bae817201a4671414f30a6272a5e06fb8f",
+    "agentId": "0b5aea06-47e1-4f4b-a32e-969417915c9c",
+    "lastSeen": "2026-10-17T13:40:13.902Z",
+    "allBlockingCountsZero": true
+  },
+  "nodeAfter": {
+    "ok": true,
+    "readOnly": true,
+    "qualificationKind": "source-derived-save-format-and-current-runtime",
+    "originalApplySuccess": false,
+    "maintenanceState": "interrupted",
+    "originalStatePhase": "restart-intent",
+    "stateSHA256": "a16e64a732701702dcfe6740c681a3ab20cf607e3ed4622b25b0f0fc9832836c",
+    "sourceCandidateSHA256": "54dfef8b5b22d9d3817101c1042c0c619a11a38d747e55cd7db02f5798cc43a3",
+    "expectedSavedConfigSHA256": "68c2379066b64d9cc6818e7ce344ea57dd2dc23d5e9afe9ec162e77338dab492",
+    "configCanonicalMatchesSealedCandidate": true,
+    "serializerSHA256": "1abfb34dce80978ce1521fbceb35a2f820fcc7ba0ef30748a7b21f89bd0bf8d6",
+    "serializerTrailingNewline": false,
+    "samePairedKeyIdentity": true,
+    "configMetadataPreserved": true,
+    "node": {
+      "configSHA256": "68c2379066b64d9cc6818e7ce344ea57dd2dc23d5e9afe9ec162e77338dab492",
+      "configInode": [
+        66306,
+        6718786
+      ],
+      "baseInode": [
+        66306,
+        2661091
+      ],
+      "files": {
+        "jarvis-node.mjs": {
+          "sha256": "dab1f9808ac587f5ca325d7eecda7d31a485af9aad1b800f3947c1d64402743d",
+          "bytes": 984069,
+          "inode": [
+            66306,
+            2661143
+          ],
+          "mode": 420
+        },
+        "agent-supervisor.js": {
+          "sha256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c",
+          "bytes": 3196,
+          "inode": [
+            66306,
+            2661127
+          ],
+          "mode": 420
+        },
+        "prepare-development-node.mjs": {
+          "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572",
+          "bytes": 5967,
+          "inode": [
+            66306,
+            2661113
+          ],
+          "mode": 420
+        },
+        "使用说明.md": {
+          "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e",
+          "bytes": 7945,
+          "inode": [
+            66306,
+            2661124
+          ],
+          "mode": 420
+        },
+        "package.json": {
+          "sha256": "dc96d7f5167ea7dd8b03f7908b30cc7e028db9cb7a686a64405f76cb20914d44",
+          "bytes": 92,
+          "inode": [
+            66306,
+            2661123
+          ],
+          "mode": 420
+        }
+      },
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "FragmentPath": "/etc/systemd/system/jarvis-software-factory-development.service",
+        "DropInPaths": "",
+        "MainPID": "59553",
+        "ControlGroup": "/system.slice/jarvis-software-factory-development.service",
+        "User": "superopen",
+        "Group": "superopen"
+      },
+      "process": {
+        "pid": 59553,
+        "identity": "328726a0-5495-4892-b0a6-2fa9de26242e:69655607",
+        "inode": [
+          24,
+          120419418
+        ],
+        "argvSHA256": "f17290dd3a1621e41cd5ad47b48f31a9d8004706aa3f574f39f3cce77d489f14"
+      },
+      "journal": {
+        "unresolvedRuns": 0,
+        "unconfirmedDeliveries": 0,
+        "pendingLogs": 0,
+        "identityMatches": true,
+        "ownerMatches": true,
+        "inode": [
+          66306,
+          6703462
+        ],
+        "directoryInode": [
+          66306,
+          6703428
+        ],
+        "historySHA256": "a049041f5c24333b19accc8cf8bd61bf838a7ba04e343f648588c53159b3f6d7"
+      },
+      "maintenance": {
+        "terminalUnits": 7,
+        "nativeSessionActive": false
+      },
+      "nodeSHA256": "d1de76d8edf2fededf6f8b30d244e2c0529ac607923a018283b77e9c74bd932c",
+      "nodeVersion": "v24.15.0",
+      "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+      "privateValuesExported": false
+    },
+    "remoteMutations": 0,
+    "stateWrites": 0,
+    "configWrites": 0,
+    "nativeInvoked": false,
+    "privateValuesExported": false
+  },
+  "finishedAt": "2026-10-17T13:40:16.196Z",
+  "authenticationLifecycle": "withPlatform temporary authorized maintenance login create/revoke; product calls remain GET"
+}

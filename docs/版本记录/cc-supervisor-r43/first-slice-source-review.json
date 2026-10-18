@@ -1,0 +1,90 @@
+{
+  "kind": "r43-first-CC-slice-nonauthor-readonly-source-review",
+  "at": "2026-10-17T07:43:31.872406+00:00",
+  "sourceBaseCommit": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+  "CCReportCommit": "5a70ea0d35132ac8098b290565a67ca752b7f3b9",
+  "transferredGitPatchSHA256": "526a30b41e8f29a66a3e98265c940c3c3cca530113259c5df6d6194bef162f6e",
+  "scope": "non-author read-only review of CC-returned source; no project source implementation, tests or model calls by reviewer; local material hashes do not claim a new remote physical source census",
+  "status": "changes-required",
+  "blockingIssueCount": 4,
+  "otherIssueCount": 2,
+  "issues": [
+    {
+      "priority": "P1",
+      "title": "主管协议与旧验证合同冲突",
+      "gitPath": "apps/api/src/runtime/execution-runtime.ts",
+      "line": 171,
+      "reason": "旧base模板固定目录validator被带入新副本；native标准输出与主管反馈合同不一致，真实链路未被验通。"
+    },
+    {
+      "priority": "P1",
+      "title": "原件读取及最终评审入口未完成",
+      "gitPath": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "line": 55,
+      "reason": "目前直接采用CC提供的path/SHA，review_pending没有完成原件核对和逐项评审闭环。"
+    },
+    {
+      "priority": "P1",
+      "title": "停止确认、目标修订和接管恢复存在断点",
+      "gitPath": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "line": 43,
+      "reason": "暂停/停止即显示终态但无签名实际停止确认；运行后恢复和目标重绑未实现，人接管后任务操作仍被owns拦截。"
+    },
+    {
+      "priority": "P1",
+      "title": "持久判断的崩溃对账未完成",
+      "gitPath": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "line": 54,
+      "reason": "已consumed且judging状态在重启后不推进，失败或模型超时的恢复路径不足。"
+    },
+    {
+      "priority": "P2",
+      "title": "多行验收条件换行处理错误",
+      "gitPath": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "line": 20,
+      "reason": "使用字面反斜线n拆分，真实textarea换行未按项拆开。"
+    },
+    {
+      "priority": "P2",
+      "title": "页面缺少主管进展的自动事件更新",
+      "gitPath": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "line": 19,
+      "reason": "只在挂载、切项目或手动动作后读取；主管内部事件未连入持久通知及页面订阅。"
+    }
+  ],
+  "positiveFinding": "Pi purpose has bounded/ephemeral/null-session/scenario guards and no tools; current mock adapter tests do not prove live model or full supervisor chain.",
+  "reviewMaterial": [
+    {
+      "gitPath": "apps/api/src/pi.ts",
+      "localReviewBytes": 50949,
+      "localReviewSHA256": "29e0e80ac67727c03550a8be695c338904816d386a4bfe801ebc1fe32b7c5b52"
+    },
+    {
+      "gitPath": "apps/api/src/runtime/agent-runner.ts",
+      "localReviewBytes": 45752,
+      "localReviewSHA256": "14319b3bd41b7802dbfe38686e3d79ed9e8384bd5b3f6178e4539edfe4222506"
+    },
+    {
+      "gitPath": "apps/api/src/runtime/execution-runtime.ts",
+      "localReviewBytes": 107002,
+      "localReviewSHA256": "b1b963a1e2b83704695cc0ad87af25f9be34d39700e2a3c4877a31ea56e79322"
+    },
+    {
+      "gitPath": "apps/api/src/runtime/project-supervisor-model.ts",
+      "localReviewBytes": 5473,
+      "localReviewSHA256": "7c090dae47435594e38722a9101553312a52f4630a21985f92c8a8f7d198cd9f"
+    },
+    {
+      "gitPath": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "localReviewBytes": 15320,
+      "localReviewSHA256": "66203d2b13c1af20b4a230b5d5ffbf493daf4a8873e370548ac5abfdd158a442"
+    },
+    {
+      "gitPath": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "localReviewBytes": 10985,
+      "localReviewSHA256": "1d9eac79b666e79de713532acd1d8af6ed1e17f0eb10de99df18af58311f2cfe"
+    }
+  ],
+  "R43ImplementedAndAccepted": false,
+  "productionDeploymentApproved": false
+}

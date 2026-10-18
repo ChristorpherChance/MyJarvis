@@ -1,0 +1,360 @@
+{
+  "kind": "r45-project-unification-final-safe-summary",
+  "at": "2026-10-17T17:51:04.626Z",
+  "record": 307,
+  "release": "20261018-unified-projects-r45-r3",
+  "objective": "将项目管理、项目监管和开发监督收为一个简明项目与远程AI指挥入口，原有资料、任务、简报和决策按需展开。",
+  "rounds": [
+    {
+      "round": 13,
+      "controllerExitCode": 0,
+      "wallSeconds": 2353.5132355239475,
+      "nativeResultCount": 1,
+      "confirmedP1": 4,
+      "deployed": false,
+      "reason": "UI两项和API两项确定缺陷；不以CLI0或打包报告冒交付。"
+    },
+    {
+      "round": 14,
+      "controllerExitCode": 0,
+      "wallSeconds": 1897.613709506928,
+      "nativeResultCount": 1,
+      "confirmedRemainingP1": 1,
+      "deployed": false,
+      "reason": "重复criteria未在kickoff前拒，task写入后才被supervisorCreate拒绝，固定pending可能卡住。"
+    },
+    {
+      "round": 15,
+      "controllerExitCode": 143,
+      "wallSeconds": 900.7636966820573,
+      "nativeResultCount": 0,
+      "cgroupProcesses": 0,
+      "nativeCLIComplete": false,
+      "originalTimeoutPreserved": true,
+      "appHEAD": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+      "finalHEAD": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2",
+      "reviewedDeltaConfirmedP1": 0,
+      "savedValidation": "新定向反例修前失败，最终1/1，已保存types/build/packager日志和实际包分别独立接纳；Root未重跑项目测试。",
+      "missingProducerReport": "reports/r45-round15-git.json仍缺；以Root实际Git import及原作者PR7/source/package指纹绑定，不造存在，不为补native收尾再调用模型。"
+    }
+  ],
+  "package": {
+    "archiveBytes": 22484354,
+    "archiveSHA256": "fac0d591ef13babcf0ed1077ccd6c09040c77aa4450a9a5371a521012818aaaf",
+    "manifestSHA256": "a8a658207df6f1a6388b1c8ba7b85e33a69d557cc7ea259abd9caf90caa114d8",
+    "payloadFiles": 2218,
+    "packagedGitBlobs": 1836,
+    "allAppSrcExactGitBlobs": 306,
+    "nodeFiles": 5,
+    "realPlatformR45r3MarkerVerified": true,
+    "nodeContract": "五件与已接纳R44原件同H，原构建器不注入新版号；101仍R7/config46，未重装。",
+    "oldAssets": {
+      "R44": 67,
+      "R7": 54,
+      "originalR41Compatibility": 7
+    }
+  },
+  "deployment": {
+    "node112": "20261018-unified-projects-r45-r3",
+    "fivePhasesPassed": true,
+    "dataBackupAndIsolatedRestore": {
+      "bytes": 4285618678,
+      "files": 63,
+      "directories": 58,
+      "SQLiteDatabases": 9,
+      "completeTreeAndIntegrityPassed": true,
+      "productionDataRestored": false
+    },
+    "node101": "R7/config46 unchanged"
+  },
+  "browser": {
+    "limitedReadOnlyAcceptancePassed": true,
+    "desktopProjectEntries": 1,
+    "projects": 2,
+    "copies": 8,
+    "tasks": 27,
+    "factorySupervisionItems": 6,
+    "completedBriefs": 4,
+    "sameEntityDetailsCopiesDecisions": true,
+    "oldTaskDeepLinkFocus": true,
+    "legacySupervisionRendersWorkbench": true,
+    "legacyAddressRetained": true,
+    "forcedCanonicalURLRewriteClaimed": false,
+    "mobileViewport": [
+      390,
+      844
+    ],
+    "horizontalOverflow": false,
+    "viewportOverrideReset": true,
+    "consoleErrors": 0,
+    "connectionTimeoutsRecoveredNotProductFailure": true,
+    "productionCommandWriteOrNewModelCCRoundAccepted": false
+  },
+  "Git": {
+    "kind": "r45-source-git-publication-readback",
+    "date": "2026-10-18",
+    "repository": "https://github.com/ChristorpherChance/MyJarvis",
+    "branch": "feat/unified-projects-r45",
+    "base": "feat/cc-supervisor-r43",
+    "baseObservedBeforePush": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+    "newBranchAbsentBeforePush": true,
+    "head": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2",
+    "remoteHead": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2",
+    "appCommit": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+    "originalAuthorsPreserved": true,
+    "forcePush": false,
+    "pullRequest": {
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/7",
+      "state": "OPEN",
+      "draft": true,
+      "attached": true
+    },
+    "merged": false,
+    "privacyPreflight": "artifacts/cc-supervisor-r43/r45-round15-specified-history-publication-preflight.json",
+    "privateBundlesOrRawChatsPublished": false,
+    "verification": "Actual push exit0, remote head readback match, gh pr view confirms exact head/base and OPEN draft."
+  },
+  "usage": {
+    "knownR13R14Subtotal": {
+      "inputTokens": 125648352,
+      "outputTokens": 47501,
+      "cacheReadTokens": 125511424,
+      "cacheWriteTokens": 0,
+      "totalTokens": 125695853,
+      "inputIncludesCache": true,
+      "doNotAddCacheAgain": true,
+      "excludesUnknownR15AndR11": true,
+      "overallTokenCompleteness": "incomplete"
+    },
+    "R15Tokens": null,
+    "oldR11Tokens": null,
+    "costUSD": null,
+    "costComplete": false,
+    "inputIncludesCacheDoNotAddAgain": true,
+    "unknownNotZero": true,
+    "recordOnlyNoMoneyCap": true
+  },
+  "decision": {
+    "id": "84f0574e-e882-48a1-99f2-51e77989865c",
+    "revision": 4,
+    "hash": "284955861b73ebab58b44c7950b8524d6322b91f2ef6d95dcdceca4e69ad8c12",
+    "status": "implemented",
+    "priorActionsAndHistoryPreserved": true,
+    "independentAcceptance": false
+  },
+  "preserved": {
+    "factoryPlan": 108,
+    "PG": 29,
+    "Env": 23,
+    "original74Accepted": 0,
+    "original74Total": 74,
+    "customer12Delivered": false,
+    "configurationRevision": 46,
+    "originalTaskRevision": 12,
+    "originalTaskStatus": "blocked",
+    "global": {
+      "supervised": false,
+      "stopped": false
+    },
+    "tenMinuteAutomation": "PAUSED"
+  },
+  "notAccepted": [
+    "未在生产发送kickoff/reply/pause或执行新模型/101CC闭环。",
+    "没有以只读UI验收签收原74、客户12或完整工厂交付。",
+    "SSR/保存用例与真实浏览器检查分列，不冒新生产写入测试。"
+  ],
+  "localIssuesPreserved": [
+    "Root过长摘要shell获自动审查拒绝，执行0；改用apply_patch保存安全报告，没有远端或产品失败。",
+    "收件metadata原helper转义正确；本机误读JSON转义后静态AST确认，原H保留，未因此重跑现场。"
+  ],
+  "publicEvidence": [
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round13-ui-route-source-review-record307-public.json",
+      "sha256": "0d641e12d8f59535042161aeb617208a1ab8df5079937e4b107cdf812e6f0cf0",
+      "bytes": 14483
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round13-workbench-api-independent-source-review-record307-public.json",
+      "sha256": "7634de397e62685469f64646b9f3120643fc9b557849aad1696064f74f06fca1",
+      "bytes": 21304
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round14-ui-route-independent-source-review-record307-public.json",
+      "sha256": "accfa82d0f55c9460f37743080242bb3eef557cd09bed714124b20cc11482f4e",
+      "bytes": 8723
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round14-api-independent-source-review-record307-public.json",
+      "sha256": "097f4e2c276f7eba33151dfb1d962aafa12b6012b12df74283c568816635e049",
+      "bytes": 11603
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round15-ui-delta-independent-source-review-record307-public.json",
+      "sha256": "9c77dc8be61b0ebb374573a7f0a0b27e16dec90b183de3d9bcfaa8fe31ae3559",
+      "bytes": 5358
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round15-preflight-patch-independent-source-review-record307-public.json",
+      "sha256": "d881ec867622dba75f84a21c672c06e0324449fd84d26532309838160ddfea23",
+      "bytes": 13549
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/unified-project-entry-final-local-ui-source-plan-record307-public.json",
+      "sha256": "760f7e61c1521565f64b19e374825132d1662d2410665d197d2ce8655e01b37f",
+      "bytes": 23913
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-project-workspace-workflow-api-source-plan-record307-public.json",
+      "sha256": "3808240416f09809d10f3644b010cb05fc66d1774299a472dd060343bf440c13",
+      "bytes": 23081
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-round15-received-dual-package-verification-record307-public.json",
+      "sha256": "a3993b51b1a7edcb1073c3f8292fc83f4275b13dc7658c80b6fbc7b742aa41b6",
+      "bytes": 6680
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-r3-live-browser-acceptance-record307-public.json",
+      "sha256": "fa8d000bc6290353bfccea61046785aae37bdd72cecae231c750e225b3d4115a",
+      "bytes": 3230
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-source-git-publication-readback-record307-public.json",
+      "sha256": "5b1e6bf025e7b71100c0ce75f8e61e08feb464c35c70aff469e31da9c1c656c5",
+      "bytes": 1368
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-final-local-binding-record307-usage-summary-record307-public.json",
+      "sha256": "a5baa19c5acce5595634d30841c3c34886601a248ddd849a94e8f6d863dd37e3",
+      "bytes": 6266
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-final-platform-and-triple-usage-readback-r2-record307-public.json",
+      "sha256": "2b8daa2768ea6ad6b84c81f28f31d510eebeb4eb671be2d8e4ca8a44e0ae6180",
+      "bytes": 5264
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-unified-decision-rev4-result-readback-record307-public.json",
+      "sha256": "b5532057992ac61a5582995e2e9a62ce80bbe6c0fc478d803c4e60d7d5c2a8d6",
+      "bytes": 1419
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-r3-five-phase-release-record307-public.json",
+      "sha256": "c3b4d8acd7f8ac132bc11ee2aacc755874a730f792831e0f543b4170e638b453",
+      "bytes": 3419
+    }
+  ],
+  "sourceEvidenceFingerprints": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round13-ui-route-source-review.json",
+      "sha256": "2ff1a25e14be5894da686dccefef444a030e4fbccbab23106aff545ac2bbe931",
+      "bytes": 13757
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round13-workbench-api-independent-source-review.json",
+      "sha256": "35d923473750171c8b1bbc8abc33df9834397ac6bfd038629e005efcd5d6c270",
+      "bytes": 20982
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round14-ui-route-independent-source-review.json",
+      "sha256": "08ef13aeac5e88887bc3369118500defb634ea97ca7cc57bdf89f74400e57caa",
+      "bytes": 7691
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round14-api-independent-source-review.json",
+      "sha256": "861e1b2df55f970a016f9c0cfe0b3a2d50344f2220a6685193d8b4e5598d5b51",
+      "bytes": 11287
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-ui-delta-independent-source-review.json",
+      "sha256": "64f3221704974a8efb16f52329fea7f5b15ae453c7d175fc895eba9adf13f10a",
+      "bytes": 4613
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-preflight-patch-independent-source-review.json",
+      "sha256": "f48d95a35d64ad79b0d5042a94d51339df3b0bfb4707b52ac0bbdfea225fcf51",
+      "bytes": 13221
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round13-terminal-native-observation.json",
+      "sha256": "b78fefe12ef3c674dc135d6b9d7e6a05f0cd79bfad90312604be65688e2c2747",
+      "bytes": 8229
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round14-terminal-native-observation.json",
+      "sha256": "5a50422125427984f96102e18eacb8526bcffee3b9f48879603b78a3a51a8102",
+      "bytes": 8261
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-terminal-native-observation.json",
+      "sha256": "da39ade6d63de94034b685ea82eeaa19b511fdaaf27679e2a7c17e71e689ce6d",
+      "bytes": 2294
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-received-dual-package-verification.json",
+      "sha256": "f842fe58c005c9317e9295b34dfa42ae965e2633d84c98842839a75ef0ac33ba",
+      "bytes": 6307
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-stage.json",
+      "sha256": "70087ac786fce18051c24ce61f9d76f26dc05cba805a04a378deb3d0e24ed780",
+      "bytes": 1460
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-install.json",
+      "sha256": "a42671265470cd8a219e673b0f95f2f2c82bbd6b25597dbe7cf29588450036bf",
+      "bytes": 1448
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-inspect.json",
+      "sha256": "a0f1bc86f8abe71098627291a2d97562b064148e54c715786318fe9fe7b2be37",
+      "bytes": 1489
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-activate.json",
+      "sha256": "c410974b74d1146ae8d4249519e411fc129ebea1d730e9e9c87cff1fc7f1ffb3",
+      "bytes": 2857
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-health.json",
+      "sha256": "5c9a4d3cc609a2ef9b07a53fc91103adbb8ffbc264d75d6a6d49b22789e9a47d",
+      "bytes": 1540
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-r3-live-browser-acceptance.json",
+      "sha256": "df2620e9bab0a83b8f2089e8e8a7b4b38132e6dc908925c08df1ea7baa966d80",
+      "bytes": 2566
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-source-git-publication-readback.json",
+      "sha256": "8fd8f3b5ad20acbecb7d9c5c82f0d6fc2ca2e1fc9bab8253aa28c6413ae2df9e",
+      "bytes": 980
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-final-local-binding-record307-usage-summary.json",
+      "sha256": "041bbd964b4fbb503b03f7be96a7a02846eb3dd1a06e681e417e11b8b0f71d6e",
+      "bytes": 5949
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-final-platform-and-triple-usage-readback-r2.json",
+      "sha256": "b6824431e585047a9b6d8ab873eab3408e6b5e15cab75ebd81058ea56e2fe9a3",
+      "bytes": 5973
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-unified-decision-rev4-result-readback.json",
+      "sha256": "db53b7ea9081e8cc6a54b859e83e75b49cfeff7d09f101f479aabb127d77c315",
+      "bytes": 1910
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/unified-project-entry-final-local-ui-source-plan.json",
+      "sha256": "fed2b9f2830d768a50de1b4ce708ade0f2c926f7da794ac9c4bb6280e1de3a38",
+      "bytes": 23620
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-project-workspace-workflow-api-source-plan.json",
+      "sha256": "68b59f5e09d22fa25f1d8689c5a6be6142658a7f04b54efcb80807afcd2681d0",
+      "bytes": 22764
+    }
+  ],
+  "privacy": "无原native/私人会话、私配置、环境值、authority或bundle内容；保原件仅以安全报告和指纹说明。"
+}

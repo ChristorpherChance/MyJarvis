@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-post-publication-retention-status",
+  "at": "2026-10-18T10:09:16.686718+00:00",
+  "complete": true,
+  "running": false,
+  "service": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "InvocationID": "5d2f2c8b6b0047669387f801b5c446d5",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0"
+  },
+  "report": {
+    "schemaVersion": 1,
+    "kind": "jarvis-112-keep-two-capture-maintenance",
+    "startedAt": "2026-10-18T10:06:02.673805+00:00",
+    "complete": true,
+    "executed": true,
+    "guardSHA256": "88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124",
+    "deletedDirectories": 2,
+    "deletedLogicalBytes": 9049494508,
+    "modelsInvoked": false,
+    "serviceOperations": 0,
+    "preBackupsTouched": false,
+    "releasesTouched": false,
+    "policySHA256": "b86ece15471dbd5633e32a25ed843d73c54ee2c3e38246d6c5fa6b427058d1c5",
+    "retainedSnapshots": 2,
+    "candidateDirectories": 2,
+    "protectedUnknownCaptures": 3,
+    "protectedUnknownCodes": [
+      "LEGACY_RECOVERY_INCOMPLETE",
+      "OS_GUARD_FAILED",
+      "ROLLBACK_TERMINAL_INCOMPLETE"
+    ],
+    "selectionSHA256": "f97de8bd17dc6c24df888476d3b70a87272af31dbcfd5b2e610562f9cb4703a8",
+    "protectedSHA256": "ba6ffb4f7a608e44356f4dcdf24ab6dbf491edbf5c2a251bf80a2e7c38acd328",
+    "retainedSnapshotBindingsSHA256": "1f61db9d3f1894fde50878ef0697ac1f359bec375a565c9ed6a7d9c5ea6cff49",
+    "recoveryToolPinsSHA256": "a4c11444690b6557509a3f7ccf12f4098c0e445390830375873931410dda1ee5",
+    "heldLiveReferenceDirectories": 0,
+    "eligibleDirectories": 2,
+    "candidatePlanSHA256": "53382819c4339969681f45a26bcd77ed20cbd2eee8e6e96438bc6e223372d2a3",
+    "recoveryContentsVerifiedThisRun": true,
+    "recoveryVerificationCount": 2,
+    "retainedPayloadMetadataUnchanged": true,
+    "phase": "complete",
+    "finishedAt": "2026-10-18T10:07:40.696214+00:00"
+  },
+  "modelsInvoked": false,
+  "plan": {
+    "schemaVersion": 1,
+    "kind": "jarvis-112-post-publication-retention-plan",
+    "complete": true,
+    "readOnly": true,
+    "at": "2026-10-18T10:06:02.605102+00:00",
+    "retainedSnapshots": [
+      {
+        "capture": "capture-activate-sidecar-4d4f040f-01c6-4594-81a5-6be886ba5314",
+        "release": "20261018-project-goals-r52",
+        "manifestSHA256": "b41e538aa40c42f96cc2a33ebb1b5abc373adf59833e660464f979e4ee6227be",
+        "terminalSHA256": "23eaf04f279dff8a33f69b86b7e6ef088b1ea07d97fae87157960a97d0cc81c8",
+        "createdAt": "2026-10-18T10:01:18.860768+00:00"
+      },
+      {
+        "capture": "capture-activate-sidecar-c6e2f76b-401d-4c85-9465-5798f7e297ca",
+        "release": "20261018-project-goals-r51-r1",
+        "manifestSHA256": "a557d47f2abd5bc49f41d0e27f735a42edb52345e9772cd610a9a2645fa25aca",
+        "terminalSHA256": "c1330d9e80218ed1e866a8641b3ae2e35032ce6d789f8a500b4b1309802b231f",
+        "createdAt": "2026-10-18T09:05:00.922803+00:00"
+      }
+    ],
+    "selectionSHA256": "f97de8bd17dc6c24df888476d3b70a87272af31dbcfd5b2e610562f9cb4703a8",
+    "candidateDirectories": 2,
+    "candidateAllocatedBytes": 9049739264,
+    "olderPayloads": 1,
+    "candidateKinds": [
+      "completed-restored-check",
+      "old-snapshot-payload"
+    ],
+    "policySHA256": "b86ece15471dbd5633e32a25ed843d73c54ee2c3e38246d6c5fa6b427058d1c5",
+    "modelsInvoked": false,
+    "deletedDirectories": 0
+  },
+  "allocatedBytesOfDeletedCandidates": 9049739264,
+  "retainedSnapshotsVerified": true
+}

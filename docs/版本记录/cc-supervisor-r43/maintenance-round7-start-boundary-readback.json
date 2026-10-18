@@ -1,0 +1,41 @@
+{
+  "kind": "r43-round7-actual-start-boundary-readback",
+  "at": "2026-10-17T10:27:54.431Z",
+  "operationId": "6661a48c-5e5d-4fa7-92a6-4ec7af599646",
+  "centralDispatched": false,
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "timeoutSec": 2400,
+  "retry": 0,
+  "expectedSourceHead": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+  "directiveSHA256": "ba45aaa68511ddafe182063c1e1568df450be38baf039e90e016f8a76a8ef7c4",
+  "unit": "jarvis-cc-maint-r43-6661a48c-5e5d-4fa7-92a6-4ec7af599646.service",
+  "startObservedUnit": {
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "3831833",
+    "ControlGroup": "/system.slice/jarvis-cc-maint-r43-6661a48c-5e5d-4fa7-92a6-4ec7af599646.service"
+  },
+  "nativeInit": {
+    "line": 1,
+    "session_id": "a58a280d-2f26-47bc-980b-097187bb137d",
+    "permissionMode": "bypassPermissions",
+    "model": "gpt-6.1-sol[1m]",
+    "claude_code_version": "2.1.296"
+  },
+  "observationRef": "artifacts/cc-supervisor-r43/maintenance-round7-observation-1792232789909.json",
+  "checks": {
+    "configRevision45": true,
+    "taskRevision12": true,
+    "taskRemainsBlocked": true,
+    "originalRunBinding": true,
+    "nodeConfigExactHashUnchanged": true,
+    "nodeTargetAndOthersExactHashUnchanged": true
+  },
+  "centralWholeBeforeSnapshotNotSerialized": true,
+  "nativeStartCount": 1,
+  "nativeReplayed": false,
+  "terminalObserved": false,
+  "platform112Released": false
+}

@@ -1,0 +1,48 @@
+{
+  "kind": "r52-root-sidecar-activation-outcome",
+  "operationId": "4d4f040f-01c6-4594-81a5-6be886ba5314",
+  "qualified": true,
+  "producerQualified": true,
+  "configurationPermissionPreservationQualified": true,
+  "configurationPermissionExpected": {
+    "uid": 0,
+    "gid": 973,
+    "mode": 416
+  },
+  "priorFailedSidecarChanged": false,
+  "independentHealthQualified": false,
+  "factoryDispatchQualified": false,
+  "classification": "QUALIFIED",
+  "transportExitCode": 0,
+  "transportTimeout": false,
+  "transportChildEnded": true,
+  "elapsedSeconds": 316.1879999998491,
+  "sidecarSourceSHA256": "736e5c25043e4355a24be50ff2194a07291a8a6b719fdd20733b8eaaa3d3b309",
+  "inputSHA256": "45eeccad49656ef6058751c44c9f09d5a6ec907ff2fe1778773f87b52d78e81c",
+  "rawPrivateFingerprints": {
+    "ssh.stdout": {
+      "bytes": 18040,
+      "sha256": "edc2d37abd4ab19a2b1183a5f73f753b1e237698a34d7cddab41a0e60d337144"
+    },
+    "ssh.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "sidecarRawPrivateFingerprints": {
+    "stdout": {
+      "bytes": 12927,
+      "sha256": "cf7a86ddfc266e1ad85e2634b64473f6c2461164dfaf9a1891b353e8d5d551c8"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reconciliationRequired": false,
+  "automaticRetry": false,
+  "oldFailedActivateChanged": false,
+  "stageInstallRepeated": false,
+  "wrapperServiceActions": 0,
+  "wrapperRollback": false
+}

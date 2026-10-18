@@ -1,0 +1,88 @@
+{
+  "kind": "r43-round10-received-dual-package-verification",
+  "at": "2026-10-17T13:12:50.895426+00:00",
+  "sourceCommit": "2bd2e27b97b44f76567ccf6c6b90cfd9a8dc618b",
+  "reportCommit": "3c047fc203d8fc2e4aa16a13bedd317450175b5c",
+  "runtimeBuild": "20261017-cc-supervisor-r43-r7",
+  "archiveVersion": "20261017-cc-supervisor-r43-r7",
+  "reportedArtifacts": [
+    {
+      "file": ".jarvis-dev/releases/r43-r7/platform/20261017-cc-supervisor-r43-r7.zip",
+      "bytes": 20893252,
+      "sha256": "af07648042bb874598190b291d002bfa068db5e069b9304b8dd2f985db73fb84"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/platform/20261017-cc-supervisor-r43-r7.zip.sha256",
+      "bytes": 100,
+      "sha256": "ec30eade2df765bef7d4053a81b01c3b5ecbdcc5adb19a20e56ffc2a697e5afa"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/platform/release-manifest.json",
+      "bytes": 428609,
+      "sha256": "bbb9d3a2e091dbb0db45c3a78ef758245fd074db6a99fa9f7ced034656f35a30"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/SHA256.json",
+      "bytes": 622,
+      "sha256": "82f621c94ae146c164a0804c6cea43f3ee72eaae99ea31c0fde5d1e3960ac6c3"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/agent-supervisor.js",
+      "bytes": 3196,
+      "sha256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/jarvis-node.mjs",
+      "bytes": 984069,
+      "sha256": "dab1f9808ac587f5ca325d7eecda7d31a485af9aad1b800f3947c1d64402743d"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/package.json",
+      "bytes": 92,
+      "sha256": "dc96d7f5167ea7dd8b03f7908b30cc7e028db9cb7a686a64405f76cb20914d44"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/prepare-development-node.mjs",
+      "bytes": 5967,
+      "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572"
+    },
+    {
+      "file": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/使用说明.md",
+      "bytes": 7945,
+      "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e"
+    }
+  ],
+  "platformPayloadFilesVerified": 2163,
+  "packagedTrackedSourceFilesComparedToExactGitBlob": 1823,
+  "nodePayloadFilesVerified": 5,
+  "dualWorkerBuildContract": {
+    "platformWorkerCompilation": "TypeScript per-module emit",
+    "nodeWorkerCompilation": "esbuild standalone bundle target node24",
+    "bytesExpectedIdentical": false,
+    "sameEntrySourcePath": "apps/api/src/runtime/agent-supervisor.ts",
+    "entrySourceSHA256": "bcd78ab8213884dd6d4998ea605b5f326a1ea665a823c65ed2a7a3c9f42215c9",
+    "nodeWorkerSHA256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c",
+    "platformWorkerSHA256": "3202e01590ef2a3d133ab8cc701e4b8d676c03d0412f982648f3673d8eaa575a"
+  },
+  "nodeBuildMarkerVerified": true,
+  "manifestSHA256": "bbb9d3a2e091dbb0db45c3a78ef758245fd074db6a99fa9f7ced034656f35a30",
+  "nodeProvenance": {
+    "path": ".jarvis-dev/releases/r43-r7/node-20261017-cc-supervisor-r43-r7/root-provenance.json",
+    "bytes": 602,
+    "sha256": "a2f09ca182c835f2ee3ed5b329f38563f5bb36eb4202d3522977339ffd2954cb"
+  },
+  "compiledReproducibilityClaimed": false,
+  "applicationExecutedByRoot": false,
+  "productionDeployed": false,
+  "historicalVerificationFailure": {
+    "scope": "Prior R9 Root verifier, not an R10 product failure",
+    "code": "DUAL_PACKAGE_WORKER_CHANGED",
+    "rootAssumptionCorrected": "The original packagers intentionally emit tsc modules for the platform and a standalone esbuild worker for the node. No product bytes were changed."
+  },
+  "historicalCollectorFailure": {
+    "scope": "Prior R9 patch collection only, no repeated patch attempt in R10",
+    "code": "REPORT_BOUNDARY",
+    "oversizedPatchWasExcludedWithoutWideningGuard": true,
+    "sevenOtherReportsCollected": true
+  }
+}

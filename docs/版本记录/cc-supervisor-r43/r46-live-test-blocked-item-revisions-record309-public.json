@@ -1,0 +1,115 @@
+{
+  "kind": "record309-existing-item-blocked-revisions",
+  "sources": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-blocked-after-results-item-readback.json",
+      "sha256": "3593292a9e816032db0b76efbde7120edb58f90dc59b23f4a58ed3026a73959d",
+      "bytes": 2405
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-double-blocked-after-maintenance-item-readback.json",
+      "sha256": "9836da5c98f21a0051ccadcaf4fb00dd078501d21bb10b96c7d1c5e676c8dffd",
+      "bytes": 2119
+    }
+  ],
+  "revision12": {
+    "kind": "r46-live-test-blocked-after-results-item-readback",
+    "at": "2026-10-17T19:08:37.892Z",
+    "operationId": "e19ac1ab-461d-4c14-ad34-3fe70bcfad14",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "itemId": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "previousRevision": 11,
+    "revision": 12,
+    "hash": "452957dcb8e64709bb149ce57fa6b210a845a4ecf55b07cdbf9c6f55d66a0dc0",
+    "status": "blocked",
+    "summary": "本次既有测试事实已收：207断言通过、36跳过，但server覆盖率门exit1；原型分母另列，完整原件只收索引。第三轮正常回传3967字节报告后，question:null与平台反馈协议不兼容使主管受阻；完整测试验收、报告判断和修复闭环均未完成。",
+    "blocker": "已有第三轮报告待消费：ready_for_review反馈question:null被平台字符串协议拒绝，主管会话blocked且无活动执行。server覆盖率门未通过，完整大原件未全部回收；至少一项ZIP修复仅planned未执行。",
+    "nextAction": "由101CC窄修typed/no-question兼容、运行态文案和报告协议；独审及实际发布合格后，按版本保护核对并消费既有第三轮报告，反馈问题和修复安排，不为报告恢复重跑整测。十分钟跟进继续暂停。",
+    "stepId": "autonomy",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+    "counts": {
+      "total": 6,
+      "planned": 1,
+      "running": 0,
+      "blocked": 1,
+      "completed": 4
+    },
+    "latestSequence": 73,
+    "historyPreserved": true,
+    "base29EvidencePreserved": true,
+    "rollingAggregateAtIndex29": true,
+    "evidenceCount": 30,
+    "oldRollingReferencePreservedInRevision11": true,
+    "otherFiveItemsPreserved": true,
+    "originalCompletedBriefsPreserved": 4,
+    "existingItemReused": true,
+    "thirdFactsReportReceived": true,
+    "fullTestComplete": false,
+    "supervisorThirdJudgmentComplete": false,
+    "plannedZipRepairExecuted": false,
+    "independentAcceptance": false,
+    "newProblemTaskCreated": false,
+    "planOr74OrTimerWritten": false,
+    "noAutomaticRetry": true,
+    "evidence": [
+      {
+        "path": "artifacts/cc-supervisor-r43/r46-live-business-three-runs-safe-facts.json",
+        "sha256": "25a6e26cf4694bc69f84de32d9922a0e5181c917324b3b44e75afe3575c0256f",
+        "bytes": 16706
+      }
+    ],
+    "inputSHA256": "6a6ed01aca0e3103fc675ca16e013c72702f72c88ef3a6405623a2dfde1b489a"
+  },
+  "revision13": {
+    "kind": "r46-live-test-double-blocked-after-maintenance-item-readback",
+    "at": "2026-10-17T19:23:41.629Z",
+    "operationId": "23b6a681-d338-4b96-8c31-a03c4e54cbbe",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "itemId": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "previousRevision": 12,
+    "revision": 13,
+    "hash": "94375a49079ea5f99d1e725dd9184988167a367320218161b573d26551c5f8a4",
+    "status": "blocked",
+    "summary": "测试报告已回收：207项断言通过、36项跳过；覆盖率28.2%未达90%。ZIP、浏览器和隔离环境仍有缺项，完整验收未通过。",
+    "blocker": "报告格式兼容尚未上线；101 CC连续两轮模型请求失败，界面修复停在未构建、未打包状态。",
+    "nextAction": "先恢复101 CC模型通道，再完成监管界面与报告格式修复并验证上线。101 CC按报告安排覆盖率/环境、ZIP、浏览器三类修复；当前均为待执行。十分钟跟进保持暂停。",
+    "stepId": "autonomy",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+    "counts": {
+      "total": 6,
+      "planned": 1,
+      "running": 0,
+      "blocked": 1,
+      "completed": 4
+    },
+    "latestSequence": 74,
+    "historyPreserved": true,
+    "base29EvidencePreserved": true,
+    "rollingAggregateAtIndex29": true,
+    "evidenceCount": 30,
+    "oldRollingReferencePreservedInRevision12": true,
+    "otherFiveItemsPreserved": true,
+    "originalCompletedBriefsPreserved": 4,
+    "existingItemReused": true,
+    "thirdFactsReportReceived": true,
+    "fullTestComplete": false,
+    "supervisorThirdJudgmentComplete": false,
+    "plannedZipRepairExecuted": false,
+    "independentAcceptance": false,
+    "newProblemTaskCreated": false,
+    "planOr74OrTimerWritten": false,
+    "noAutomaticRetry": true,
+    "evidence": [
+      {
+        "path": "artifacts/cc-supervisor-r43/r46-business-and-maintenance-double-blocker-safe-facts-FINAL.json",
+        "sha256": "98cb0805e87aa75f1450a19ec4076034ef73954578cfe295b95e47948c4b9af3",
+        "bytes": 17201
+      }
+    ],
+    "inputSHA256": "be2d79068d0ffab44d3e75e2c265dff5858c040848770e267f0292d4f6edf516"
+  },
+  "newSeventhItemCreated": false,
+  "original74Accepted": 0
+}

@@ -1,0 +1,235 @@
+{
+  "kind": "independent-local-source-and-preserved-evidence-review",
+  "round": 8,
+  "scope": {
+    "head": "f9efea4a2955fb4093babd5b46cb10af6df1bd29",
+    "appCommit": "104676128894a59ffb1d273a48781c1e701f0cdb",
+    "previousHead": "f8d23de7e4f5a9a2f456e03e402316d9a0f9eb8c",
+    "applicationEdited": false,
+    "projectCommandsOrTestsRun": false,
+    "networkOrRemoteOrControlOrSqlExecuted": false,
+    "reviewer": "non-author source reviewer",
+    "releaseApproval": false,
+    "limitations": "Static source and existing author evidence only. No field model, browser, deployment, daemon or live idle proof. No R9 or subsequent cut reviewed."
+  },
+  "summary": {
+    "confirmedApplicationP1": 1,
+    "separateRootMaintenanceCompatibilityBlockers": 1,
+    "priorR7ThreeP1": "All three have concrete source fixes in this cut; pending-grant interruption/replay and isolated awaiting-cost continuation remain independently unexercised.",
+    "conclusion": "The unknown-history policy-window chain now has saved evidence through production createApp, DTO, ExecutionRuntime, TCP signed agent, three finite children and journal ACK. New-lineage authorization still pins the old native session and blocks the following autonomous successor. The candidate is not accepted for release."
+  },
+  "confirmedFindings": [
+    {
+      "id": "R8-A-P1-NEW-LINEAGE-POLICY-OLD-SESSION",
+      "priority": "P1",
+      "domain": "application",
+      "title": "Explicit new_session authorizes the old native session, then rejects the next successor after the new child returns",
+      "references": [
+        "apps/api/src/runtime/project-supervisor-runtime.ts:50",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:51",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:57",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:68",
+        "apps/api/src/runtime/execution-runtime.ts:203",
+        "apps/api/src/runtime/execution-runtime.ts:207",
+        "apps/api/src/runtime/execution-runtime.ts:317",
+        "apps/api/test/execution-stop-lineage-r43.test.ts:3"
+      ],
+      "sourceProof": [
+        "The new_session command verifies a bound signed cancelled source and child-termination proof, saves native-session-handoff-request, and subsequently calls authorizePolicy when authorizeContinuous is true.",
+        "authorizePolicy reads task.sessionId at this moment. It is still the old native session; no new child has run yet.",
+        "The queued newSession request omits resume session/sessionBilling and preserves previousSessionId, sourceRunId and sourceHash as nativeLineage.",
+        "A signed successful new child result sets task.sessionId to its returned new native session at execution-runtime:317.",
+        "The still-active policy retains the old nativeSessionId. policyCurrent requires equality, and allows returns false for a stored non-current policy. The following supervisor dispatch or owner resume is rejected; the first new child is not the complete autonomous new-lineage loop."
+      ],
+      "whySavedTestMissesIt": "The paired stop/new-lineage test uses a deterministic Pi decision that always chooses wait_user. It verifies the second child starts without --resume and preserves the cancelled source, but never requests a third child in the new native session.",
+      "narrowFixBoundary": "At the explicit owner-authorized new_session transition, first validate and pin Task.oldSession, the stopped source hash/proof and intended handoff/request. Bind the new lineage only from the matching first signed new-session result, with policy generation/history and revocation retained. Do not drop native-session equality, migrate arbitrary old authorization, or grant a global null-session wildcard. Exact implementation remains for CC to select.",
+      "minimumAcceptance": "The same signed stop/new_session chain must request continue after the first new-session result, start one further child resuming the new session under the original bounded goal policy, preserve old source/history, and reject mismatched source/result or revoked authorization."
+    }
+  ],
+  "priorFindingsDelta": [
+    {
+      "id": "R7-policyWindowId-first-claim",
+      "status": "source-fixed-and-unknown-window-chain-covered",
+      "references": [
+        "apps/api/src/runtime/execution-runtime.ts:207",
+        "apps/api/test/execution-createapp-chain.test.ts"
+      ],
+      "evidence": "Nested continuationGrant now carries grant.policyWindowId as well as supervisor.policyWindowId. Saved unknown-window three-child evidence includes two policy-window successors reaching claim, result signature verification and ACK."
+    },
+    {
+      "id": "R7-pending-grant-exact-replay",
+      "status": "source-fixed-interruption-branch-unverified",
+      "references": [
+        "apps/api/src/runtime/execution-runtime.ts:180",
+        "apps/api/src/runtime/execution-runtime.ts:181",
+        "apps/api/src/runtime/execution-runtime.ts:196",
+        "apps/api/src/runtime/execution-runtime.ts:198",
+        "apps/api/src/runtime/execution-runtime.ts:206",
+        "apps/api/src/runtime/execution-runtime.ts:209",
+        "apps/api/src/runtime/execution-runtime.ts:210"
+      ],
+      "evidence": "The unconditional existing internal grant command rejection is removed; exact command fingerprint reuses the saved grantContinuation result. Existing runtime/business request recovery binds the same policy window. No assertion is made that these recovery statements were missing in R7.",
+      "remaining": "No saved crash/restart/concurrent exact-replay matrix for the pending-grant cut or business-commit-before-runtime insertion. Source fix is not reported as fault-injection acceptance."
+    },
+    {
+      "id": "R7-awaiting-cost-waitingUser-rejection",
+      "status": "source-fixed-isolated-real-chain-unverified",
+      "references": [
+        "apps/api/src/runtime/execution-runtime.ts:200",
+        "apps/api/src/runtime/execution-runtime.ts:206",
+        "apps/api/src/runtime/execution-runtime.ts:317"
+      ],
+      "evidence": "The consumed-source admission now specifically allows waitingUser with current awaiting-cost result. Dispatch separately checks that same outcome/current request and uses a policy window with preserved unknown-history acknowledgement. Other waitingUser states are not broadly admitted.",
+      "remaining": "Author explicitly lists the isolated awaiting-cost waitingUser continuation chain as unexecuted. Unknown history in a successful result is not this branch."
+    }
+  ],
+  "mechanismAndEvidenceAssessment": {
+    "unknownWindow": {
+      "classification": "real local application/agent transport and finite child chain with deterministic model/native-format fixtures",
+      "references": [
+        "apps/api/test/execution-createapp-chain.test.ts",
+        "reports/r43-round8-logs/unknown-window-final.tap",
+        "reports/r43-round8-logs/final-mechanisms.tap"
+      ],
+      "established": "Real createApp with SQLite/HTTP/Task DTO and ExecutionRuntime; paired agent TCP signatures; first child reports unknown input/output without inventing zeros; two subsequent bounded policy-window children run and their results are acknowledged; journal has no pending result/log tail at assertion.",
+      "notEstablished": "A real supplier model judgment or live fixed 101 CC session; known-history >10M boundary; interruption/restart/revocation matrices."
+    },
+    "stopProof": {
+      "classification": "worker-owned process-group probe over separate fd3, with signed result binding",
+      "references": [
+        "apps/api/src/runtime/agent-supervisor.ts:7",
+        "apps/api/src/runtime/agent-supervisor.ts:9",
+        "apps/api/src/runtime/agent-supervisor.ts:10",
+        "apps/api/src/runtime/agent-supervisor.ts:14",
+        "apps/api/src/runtime/agent-runner.ts:90",
+        "apps/api/src/runtime/agent-runner.ts:91",
+        "apps/api/src/runtime/execution-runtime.ts:305",
+        "apps/api/src/runtime/execution-runtime.ts:313",
+        "apps/api/test/agent-termination-proof-r43.test.ts",
+        "apps/api/test/execution-stop-lineage-r43.test.ts"
+      ],
+      "established": "The worker owns the detached native child group, writes termination messages on fd3, and does not give the native child fd3. Runner accepts this separate control stream with worker PID binding, not model stdout. The signed central stop confirmation requires bound agent/lease/invocation, cancellation and stop request, observed child exit, closed stdio, group-empty probe and valid proof metadata. Without that proof late output is saved as late evidence rather than stop confirmation.",
+      "scope": "Observed process-group termination proof and tested long child/stdout-spoof cases. This does not itself establish complete new-lineage autonomous continuation; the P1 above remains."
+    },
+    "reportedChecks": {
+      "finalMechanisms": "7/7",
+      "stopFinal": "3/3",
+      "unknownWindowFinal": "1/1",
+      "typecheckExitCode": 0,
+      "buildExitCode": 0,
+      "overlap": "These groups overlap and are not summed into a larger test total."
+    },
+    "buildAndPackage": {
+      "runtimeBuild": "20261017-cc-supervisor-r43-r5",
+      "archiveVersion": "20261017-cc-supervisor-r43-r5",
+      "packageIsCandidateOnly": true,
+      "deployed": false,
+      "running101AgentUpgraded": false
+    }
+  },
+  "minimumRemainingAcceptance": [
+    {
+      "branch": "new-lineage policy transition",
+      "status": "confirmed source blocker; fix before acceptance",
+      "minimum": "Extend the existing signed stop/new_session fixture through one continue and third child in the new native session, with source/proof/task binding and revocation checks."
+    },
+    {
+      "branch": "known historical parent tokens at or above 10M",
+      "status": "explicitly untested",
+      "minimum": "Use preserved nonzero history and the same goal policy; verify a bounded successor window and ACK without clearing history or seeking a fresh goal authorization."
+    },
+    {
+      "branch": "pending internal grant and business-before-runtime cut",
+      "status": "explicitly untested",
+      "minimum": "Exercise exact replay across the stated saved-grant/business/runtime boundaries, restart and concurrent replay; assert one matching successor, same window and no duplicated consumption/effects."
+    },
+    {
+      "branch": "awaiting-cost waitingUser",
+      "status": "explicitly untested",
+      "minimum": "An independently isolated signed awaiting-cost result must continue through current waitingUser source, policy window, claim and signed child ACK while leaving unknown cost/history unknown."
+    },
+    {
+      "branch": "queued revocation",
+      "status": "explicitly untested",
+      "minimum": "Pause or revise goal after queueing but before claim; no child may start under the revoked generation. Preserve old source and queued evidence."
+    },
+    {
+      "branch": "field acceptance",
+      "status": "not performed by this review",
+      "minimum": "Root-controlled browser and real 112 model/101 fixed-session acceptance remain separate from fixture chain checks and candidate packaging."
+    }
+  ],
+  "separateRootMaintenanceCompatibility": {
+    "status": "distinct r4 maintenance-control delta required before using r3 against this R8 lineage state; not CC application work",
+    "source": ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r3.mjs",
+    "sha256": "262cc8d3e637b7c86e25e6c816ea3b8adb47741946b1657e4cac0e72e500c3f2",
+    "bytes": 28063,
+    "references": [
+      ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r3.mjs:122",
+      ".jarvis-dev/maintenance/r43-upgrade-101-idle-control-r3.mjs:126",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:52",
+      "apps/api/src/runtime/project-supervisor-runtime.ts:68"
+    ],
+    "confirmedMismatch": "r3 requires every policy-window source to have a matching supervisor_consumed database row. The new explicit owner-lineage path at runtime:68 only sets consumedRunId/resultHash on the session and saves native-session-handoff-request. It does not insert the cancelled source into supervisor_consumed. When unknown history or the boundary requires a window for this legitimate signed stopped source, r3 classifies the window as invalidGoalBindings even after it is bound and work is settled. This is an over-conservative compatibility blocker, not proof of live work.",
+    "narrowBoundary": "A distinct Root-authored r4 may validate this explicit owner-lineage source category against its bound handoff, stop proof, signed source hash, policy, task and window/run, or follow a final application source-category contract if CC changes it. Do not fabricate a model-consumed row, globally exempt missing consumed sources, clear history, or relax the strict rejection of every non-complete intent/projection. The separate application old-session policy bug must also be fixed; control accommodation must not hide it.",
+    "unchangedCompatibility": "No goal-policy/intents/repository schema change was found in the R7-to-R8 focused source delta. Cancelled run status is already admitted by r3's run checks. No phase or execution behavior of the maintenance tool was reviewed as newly changed or executed here.",
+    "actualIdleProof": false
+  },
+  "originalReceiptVerification": {
+    "receipt": "artifacts/cc-supervisor-r43/maintenance-round8-collection-1792238894374.json",
+    "method": "Read local bytes only; compare SHA-256 of frozen-tree file and separately collected private local copy with receipt. All eight matched. No log bodies or private values copied into this report.",
+    "files": [
+      {
+        "path": "reports/r43-implementation-round8.json",
+        "bytes": 2934,
+        "sha256": "8633bb193c8b04df637aca9976530203c0b7c0e1a3bf5ffafecb6b64cd3dae30"
+      },
+      {
+        "path": "reports/r43-implementation-round8.md",
+        "bytes": 5692,
+        "sha256": "e4a7009d97cce86a163c0864ca6fe9dabcc70a69e37b7fc9c12d0acd9fb79f54"
+      },
+      {
+        "path": "reports/r43-round8-packages.json",
+        "bytes": 3685,
+        "sha256": "0bd6253217cae3b18d95854491962e5134808a7eaafd125ab550b73fb95437fe"
+      },
+      {
+        "path": "reports/r43-round8-logs/final-mechanisms.tap",
+        "bytes": 11083,
+        "sha256": "e83a38bf2254305fdaa2ced38fe3af222d5081957d6ba32bf378334dd8247756"
+      },
+      {
+        "path": "reports/r43-round8-logs/stop-final.tap",
+        "bytes": 448,
+        "sha256": "c3154876a7ed9391c1d653c9b51291e3693b843c4cf5a7af7c58323d56e6299b"
+      },
+      {
+        "path": "reports/r43-round8-logs/unknown-window-final.tap",
+        "bytes": 10397,
+        "sha256": "9a6bd8974c7b35848ad73aabacf78886ce6c08b2cf48bf2e5ce065be22d9b2cc"
+      },
+      {
+        "path": "reports/r43-round8-logs/typecheck-final-cut.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+      },
+      {
+        "path": "reports/r43-round8-logs/build-final.txt",
+        "bytes": 3400,
+        "sha256": "cbc8d71e1567ff17e97a02b5629f252238084e39579999589138480254d5db60"
+      }
+    ]
+  },
+  "publicProjection": {
+    "originalArtifact": {
+      "path": "artifacts/cc-supervisor-r43/round8-protocol-policy-source-review.json",
+      "sha256": "69ad4c443b6a2edc50a3d6db83fc9c609732c6d217b8ca2b327f9536cd5603d9",
+      "bytes": 14471
+    },
+    "removedFields": [
+      "scope.tree"
+    ],
+    "reason": "Omit local absolute source-review tree locator; findings and original fingerprints retained."
+  }
+}

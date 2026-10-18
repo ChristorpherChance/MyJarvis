@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "kind": "r7-supervision-static-compatibility-recovery-safe-summary-final",
+  "operationId": "aa39ab6e-d9c9-42ca-9617-7fa20f191170",
+  "fixedCutThrough": "2026-10-17T14:02:31.023Z",
+  "recoveryApplied": true,
+  "currentBuild": "20261017-cc-supervisor-r43-r7",
+  "newR44BuildDeployed": false,
+  "userReportedSymptom": "Project supervision page could not be opened after the R7 deployment.",
+  "initialLiveScope": {
+    "platformAndObserver": "active/R7",
+    "supervisorAPI": "HTTP200/sessionnull",
+    "consoleAPI": "HTTP200/six-items/valid-shape",
+    "overviewAPI": "HTTP200",
+    "exactUserFirstBrowserExceptionCaptured": false
+  },
+  "confirmedReleaseDefect": {
+    "oldOperationsJSAndCSS": "HTTP200/text-html/519bytes/current-index-hash instead of immutable module/style bytes",
+    "fieldBoundary": "This is a confirmed stale-document lazy-asset compatibility defect. The exact original end-user exception was not observed, and other rendering faults are not all excluded.",
+    "priorDeploymentHealthAcceptanceOmissionAcknowledged": true,
+    "causalScope": "An already-open R41 document can request old lazy module/preload dependencies after its current symlink has changed to R7. Health/API success did not test that old closure."
+  },
+  "closedGraph": {
+    "sourceRelease": "20261017-project-oversight-r41",
+    "targetRelease": "20261017-cc-supervisor-r43-r7",
+    "closureAssets": 25,
+    "alreadySame": 18,
+    "missing": 7,
+    "missingBytes": 851685,
+    "sameNameHashCollisions": 0,
+    "fixedArchiveManifestAndTargetHashesVerified": true
+  },
+  "actualRepair": {
+    "operationId": "aa39ab6e-d9c9-42ca-9617-7fa20f191170",
+    "preflightPassed": true,
+    "writeMode": "exclusive-create missing-only",
+    "createdCount": 7,
+    "createdBytes": 851685,
+    "createdAssets": [
+      {
+        "name": "DemoApp-BqArLHFo.js",
+        "bytes": 185044,
+        "sha256": "6edee98e1b3607643a8f5f5ec4d225d49f9765876dfceac0522cc5d7e9616a25",
+        "before": "missing"
+      },
+      {
+        "name": "KnowledgePage-CrrNMALd.js",
+        "bytes": 105346,
+        "sha256": "43d79b445740904d21e0792ccc82982bb6573446062d6f12ce7e9af6b7306c82",
+        "before": "missing"
+      },
+      {
+        "name": "MaterialManager-C2jU-A-7.js",
+        "bytes": 25939,
+        "sha256": "8ed277706d6e43dd62a49f462a27b0854d16aaae2623795fc869e71ee1971df4",
+        "before": "missing"
+      },
+      {
+        "name": "OperationsPage-DqwvsULR.css",
+        "bytes": 46777,
+        "sha256": "2fa190448c3e488547d5d1529bd620f8a2bf6933a74bfcfb27564bf092d05611",
+        "before": "missing"
+      },
+      {
+        "name": "OperationsPage-S8tWeD7W.js",
+        "bytes": 353240,
+        "sha256": "c9ef162315e680f844f9b5cf83bb4975e4214d7f54fa7d285118897a2c16163d",
+        "before": "missing"
+      },
+      {
+        "name": "index-Bd-erOE4.js",
+        "bytes": 2700,
+        "sha256": "2a00575c327c8145b818d5cc82e7be8e422e92f1d8b5b1ffaea49cf08387768a",
+        "before": "missing"
+      },
+      {
+        "name": "index-PS6BmzZD.js",
+        "bytes": 132639,
+        "sha256": "fdbd288ef3f262002182a56242c01188bc6c1a9019c4178a7a947be2b84c824d",
+        "before": "missing"
+      }
+    ],
+    "closureVerifiedAfter": 25,
+    "closureBytesVerified": 1758179,
+    "indexAndBothManifestsUnchanged": true,
+    "currentReleaseUnchanged": true,
+    "overwrites": 0,
+    "serviceOperations": 0,
+    "APIOrDatabaseChanges": 0,
+    "applicationSourceChanges": 0,
+    "explicitCompatibilityFilesOutsideOriginalR7Manifest": true,
+    "originalR7ManifestNotExpandedOrBackfilled": true,
+    "notARebuildRedeployOrServiceRestart": true
+  },
+  "publicOriginVerification": {
+    "afterAt": "2026-10-17T13:59:30.600Z",
+    "origin": "https://cc-jarvis.ikvein.com",
+    "passed": 29,
+    "total": 29,
+    "oldClosureAssets": 25,
+    "currentEntryAndNewOperationsAssets": 4,
+    "statusMIMEHashAndSizeAllPassed": true,
+    "allRows": [
+      {
+        "url": "/assets/ApiWorkbench-BU9U4-wP.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 24191,
+        "sha256": "c2a32540a003bc2efbdb3d98df0656648d4a46c4e72f9c5e14260f07bf5e81c9",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/ApiWorkbench-Dmp8PqAz.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 50856,
+        "sha256": "0ca4d25496e44e5b4d465868bd9dd1d030c7cb6fc3b07574409ba6de3226e549",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/App-Bw5WWsEu.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 42768,
+        "sha256": "c11aaa1ba905a437e0900d2e790f72fad68f2f4a3685d0a4a07854382e110443",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/DemoApp-BqArLHFo.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 185044,
+        "sha256": "6edee98e1b3607643a8f5f5ec4d225d49f9765876dfceac0522cc5d7e9616a25",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/DemoApp-L1CrooRu.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 87280,
+        "sha256": "3a0f4bf7b75a979321331804ceeaae100ab4e08b10b7fa8f7e7c11ba6ec6613c",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/EvidenceAssistantPanel-BWfAf0S7.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 8815,
+        "sha256": "157468b57f858ece5c109429acd1d21980776336e46f4dd1416908f40812a1c3",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/EvidenceAssistantPanel-DuoOicCv.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 1671,
+        "sha256": "ce29fab4b0c33a8ddb1b9f296a20e9a57b486265d013d634285341fb845e492c",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/KnowledgePage-CrrNMALd.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 105346,
+        "sha256": "43d79b445740904d21e0792ccc82982bb6573446062d6f12ce7e9af6b7306c82",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/KnowledgePage-DO5gJB2N.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 38457,
+        "sha256": "77db6669262c00f07767cbea1fd83ce587a2cd942c3c9523462a7b272510483a",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/MaterialManager-B-adSYOj.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 2834,
+        "sha256": "eb58679b215d72a22d2ebe0cd94e0041c16baaf99fc693f085293dc1a479aaf7",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/MaterialManager-C2jU-A-7.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 25939,
+        "sha256": "8ed277706d6e43dd62a49f462a27b0854d16aaae2623795fc869e71ee1971df4",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/NotificationPreferencesPanel-BT4-La1g.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 232114,
+        "sha256": "b8583cc9ce5e9eaf2fe857879854274a3822f2aaffed830314167003c44f8500",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/NotificationPreferencesPanel-CMPr2Z5F.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 2997,
+        "sha256": "2e673872eaffd25f2dc6a53a898335a4f98e86e2e94dbddf6749be4c5c07eb69",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/OperationsPage-DqwvsULR.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 46777,
+        "sha256": "2fa190448c3e488547d5d1529bd620f8a2bf6933a74bfcfb27564bf092d05611",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/OperationsPage-S8tWeD7W.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 353240,
+        "sha256": "c9ef162315e680f844f9b5cf83bb4975e4214d7f54fa7d285118897a2c16163d",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/RoomVoice-BAGOxt2c.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 85733,
+        "sha256": "8378efb880686b116dded6adfd5f5dcda53eb5dec1104dada8cdf7f58ce9475d",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/RoomVoice-Boq6QLI7.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 15592,
+        "sha256": "790e387b0261d59bd808204d997df1c579af65ff636259f8509d7672c94bee12",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/api-Chk_xhf3.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 1786,
+        "sha256": "cf309c095eb52e286c9d2d42b4bd77c44eea8ad9675d1892c9314623f92caa3e",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/client-OI5hagxP.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 222585,
+        "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/index-Bd-erOE4.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 2700,
+        "sha256": "2a00575c327c8145b818d5cc82e7be8e422e92f1d8b5b1ffaea49cf08387768a",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/index-Bn0_XvS3.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 35140,
+        "sha256": "f9d14b722b93870f3ed73250ac9cb00443914f1ad8144c1937873328c242ab62",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/index-C4A9K3Js.css",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 40695,
+        "sha256": "ca42460074cc8d01a856c3298d43a59d2917f2e041bccbd89f5e251202308036",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/index-PS6BmzZD.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 132639,
+        "sha256": "fdbd288ef3f262002182a56242c01188bc6c1a9019c4178a7a947be2b84c824d",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/offline-vault-g54LtOEF.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 10707,
+        "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/v1-client-CX0ITgRR.js",
+        "scope": "legacy-closure",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 2273,
+        "sha256": "5e92175b68bba52ee01d2446431e921fbb4730f68e64f5e4c5251a91e53f4d32",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/index-dN1MUL4D.js",
+        "scope": "current-entry-and-supervision",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 2700,
+        "sha256": "1aff914c125eb1d23201417bdfa8a95dad25d7887fa4d308eb94d57d1d123fe6",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/DemoApp-DFO5vBD_.js",
+        "scope": "current-entry-and-supervision",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 185044,
+        "sha256": "fe2b2774efe77733d7983212a890bead3cc6e36f965948f900733f021a27e7fd",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/OperationsPage-DXGqDr63.js",
+        "scope": "current-entry-and-supervision",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 377755,
+        "sha256": "2b768cb0cf07c58144657d3ab12c852c7fdfcfb867043ba0e19e4fdd42e92783",
+        "isHtml": false,
+        "ok": true
+      },
+      {
+        "url": "/assets/OperationsPage-CRKBQHI1.css",
+        "scope": "current-entry-and-supervision",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 51632,
+        "sha256": "2adc489d6dd6f45daf620794c2db4dafa8a394e1a0a63d150c44ad6bba54541c",
+        "isHtml": false,
+        "ok": true
+      }
+    ],
+    "actualLoggedInPageVerified": false
+  },
+  "separateRemainingLegacyReadback": {
+    "oldR41ManifestAssets": 27,
+    "priorOperationsClosure": 25,
+    "additionalAlreadyInR7SameHash": 2,
+    "additionalHTTPVerified": true,
+    "allOriginalR41AssetsAccountedFor": true,
+    "newMissingOutsideRepairedClosure": 0,
+    "evidence": {
+      "path": "artifacts/cc-supervisor-r43/r44-remaining-legacy-assets-readback.json",
+      "sha256": "a4660b58d737db547a8b4e9e8a5a10ec3de8129bca116ef28fa8f019b50c3c86",
+      "bytes": 858
+    }
+  },
+  "preservedFailuresAndTiming": [
+    "First public-origin diagnostic incorrectly applied the LAN CA to a public certificate and returned a certificate error. A distinct standard-TLS probe then confirmed the HTML-for-JS/CSS defect. The probe setup error is retained and is not a server outage.",
+    "The first platform decision sync was HTTP400 because Root omitted required risk/rollbackPlan. Distinct r2 completed the contract without changing the API. Original failed intent retained; the local selection intent preceded the repair while platform synchronization followed it.",
+    "The existing 304 R7 deployment/configuration qualification remains its historical cut. This compatibility repair does not modify that cut or call its old page-acceptance complete."
+  ],
+  "decision": {
+    "id": "79734e7e-7323-43da-9774-341f1f711ef2",
+    "selectedRevision": 1,
+    "implementationRevision": 2,
+    "implementationHash": "be11e8d0b570675f6f3165626ea3e89b5988ad887bc0ac3ab6da7158fa93d1a5",
+    "priorActionsPreserved": true,
+    "independentUserAcceptance": false
+  },
+  "userFieldAcceptance": {
+    "browserReachedLoginPage": true,
+    "usableOwnerLoginSessionAvailable": false,
+    "userAskedToLogin": true,
+    "userReplyNotReceivedAtCut": true,
+    "cookiesInjectedOrLoginBypassed": false,
+    "actualLoggedInPageVerified": false,
+    "refreshOnceRecommended": true
+  },
+  "pending": [
+    "After the owner logs in, verify the real project-supervision page and interactions; external resource verification does not replace logged-in browser acceptance.",
+    "Permanent release tooling must retain the previous immutable lazy-asset closure, reject same-name hash conflicts and verify old/new resource MIME/hash/size before switching. This permanent change is not implemented by this repair.",
+    "Missing asset404 behavior and user-visible lazy-load recovery/error guidance are not changed in application code.",
+    "Real configured model/101CC supervision, broader matrices, original74 and customer12 field acceptance remain unsigned."
+  ],
+  "usage": {
+    "newSupplierModelCalls": 0,
+    "internalUnknownTokens": null,
+    "internalUnknownCostUSD": null,
+    "financialConsumptionCap": null,
+    "recordOnly": true
+  },
+  "factoryPlan": 108,
+  "PG": 29,
+  "Env": 23,
+  "acceptedObjectives": 0,
+  "objectiveDenominator": 74,
+  "tenMinuteAutomation": "PAUSED",
+  "productAcceptance": false,
+  "evidenceReferences": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-supervision-page-initial-diagnostic.json",
+      "sha256": "621ea65fbedc2fb620dcb528bd2a39faffff631958903a7f71e714c2642a8c1c",
+      "bytes": 3328
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-supervision-static-asset-diagnostic.json",
+      "sha256": "26112127712787265e2b9fe80fe1c13ddc1a02088b68a918f06eddecf9e94327",
+      "bytes": 1078
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-supervision-static-public-origin-diagnostic.json",
+      "sha256": "ce50fb2a011ddf94724b2b477160351bd67acaa345ee3dd1255e5f60c96faf95",
+      "bytes": 783
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-supervision-legacy-asset-compatibility-graph.json",
+      "sha256": "25640def97333344a7e8c2bc40d72c6a7e36915a946c5aff5a65dade860ae0f4",
+      "bytes": 25500
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-supervision-old-asset-closure-independent-review.json",
+      "sha256": "d9a63c9de04b8d83adeeda9bcadcd6146ad849157aca4f58840c92c1301929b1",
+      "bytes": 15055
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-static-compatibility-r2-independent-source-review.json",
+      "sha256": "c4c80edc9abe0304704b9cd5a0b2491bc350dfdd5ece9a301e7e326736f503e8",
+      "bytes": 6619
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-preflight.json",
+      "sha256": "4fa6e4d2b5007101ba60643816b8fdee2aa645a60899b22dcd7acfe65df450be",
+      "bytes": 5253
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-static-compatibility-live-apply.json",
+      "sha256": "51d7b891c7462f26ad374195b9433c6aa236ac3295035278af5d2882cbe7101a",
+      "bytes": 5465
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-static-compatibility-http-after.json",
+      "sha256": "451caffccc8f107e9bf39924c800408cfb8bd9f25ee0118f4cc1b676326cdd0a",
+      "bytes": 9551
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-static-compatibility-selection-readback.json",
+      "sha256": "e0eeafc176fcdf22213b5b334b945c76f751536ccd1b1d471491525176e275db",
+      "bytes": 16816
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-static-compatibility-implementation-readback.json",
+      "sha256": "f3f0530657a4759a4abd4b5e416d5b26415373f593c6d331c7fd4c25a0cd64d2",
+      "bytes": 33100
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-decision-initial-refusal.json",
+      "sha256": "a572a138df7e2db6438acda909ce89917e81d931ff3ff71b2fc348666e5bc279",
+      "bytes": 457
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r44-remaining-legacy-assets-readback.json",
+      "sha256": "a4660b58d737db547a8b4e9e8a5a10ec3de8129bca116ef28fa8f019b50c3c86",
+      "bytes": 858
+    }
+  ],
+  "privacy": "Only bounded public technical facts and report fingerprints. No owner credentials, private configuration, raw conversation, cookie or native transcript."
+}

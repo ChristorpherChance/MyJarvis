@@ -1,0 +1,88 @@
+{
+  "kind": "r46-live-running-copy-local-source-followup",
+  "sourceOnly": true,
+  "status": "two-confirmed-copy-defects-for-later-narrow-CC-fix",
+  "fixedSource": {
+    "finalHead": "e8012e8629c496447c31be19d2025a003153d6d1",
+    "appHead": "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8"
+  },
+  "actualEvidence": {
+    "path": "artifacts/cc-supervisor-r43/r46-live-business-snapshot-first-real-click.json",
+    "sha256": "c6b4a780b38fd863216eeaa132cd6bd262bcd20165e3c93c55a4cadad76e4992",
+    "bytes": 6432,
+    "scope": "Root's original-tab ordinary click created one actual supervisor session and bound running task/run. This reviewer only read the saved local evidence; no browser/API action was made.",
+    "trackedSessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+    "trackedTaskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "trackedRunId": "b9229790af042425b3d06597221041302e71d7df"
+  },
+  "findings": [
+    {
+      "id": "active-headline-reuses-draft-summary",
+      "priority": "P2",
+      "confirmed": true,
+      "trigger": "A new supervisor is successfully started and its bound run has been claimed. The first paragraph still says the goal is saved but supervision is not enabled.",
+      "cause": "ProjectSupervisorRuntime.create line68 initializes summary to the draft message. The start/resume command line75 changes enabled/status/nextAction without replacing summary, and dispatch line82 saves running/runId without replacing it. ProjectWorkbenchPage line26 renders any nonempty session.summary as the current lead paragraph, ahead of the factual current-action row.",
+      "sourceLines": [
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 68
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 75
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 82
+        },
+        {
+          "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "line": 26
+        }
+      ],
+      "narrowFix": "Prefer a factual current-stage headline derived from the bound execution/session status: queued means waiting to be claimed, execution.running means claimed and executing, judging means analyzing feedback. Present persisted summary separately as the last judgment/recorded explanation when relevant. This small display change avoids rewriting historical summary, command receipts or the live session DB. Never infer claimed running solely from supervisor.status=running, because a just-dispatched run can still be queued.",
+      "minimumAcceptance": "Using a fixture with the exact observed contradictory draft-summary plus execution.state=running, render the actual workbench: lead current-stage text must say claimed/executing and must not present not-enabled as current truth. Also distinguish queued from running and preserve the old summary/history under its proper label. No new real native run is needed merely to test the copy."
+    },
+    {
+      "id": "active-disabled-button-keeps-start-label",
+      "priority": "P2",
+      "confirmed": true,
+      "trigger": "session.status is running, judging or dispatching with no pending kickoff. The main button is correctly disabled but its caption still says start advancing.",
+      "cause": "ProjectWorkbenchPage line17 computes active and line27 disables the shared submit button for active sessions. Its label branches only pending/no-session/paused/waiting_user, then fall back to the start caption, so all three active states use the wrong action wording.",
+      "sourceLines": [
+        {
+          "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "line": 17
+        },
+        {
+          "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "line": 27
+        }
+      ],
+      "narrowFix": "Add active-state captions such as waiting for executor, executing, or analyzing feedback using the same factual stage mapping as the lead paragraph. Keep the existing disabled predicate and unsent-draft explanation. Do not enable start/reply, inject stdin, create another task, or bypass pending recovery.",
+      "minimumAcceptance": "Render actual Button/composer for dispatching, queued, claimed running and judging. Active captions describe current activity, retain disabled=true and make no command. Existing fresh/draft/paused/waiting_user/pending captions and their shared type=submit behavior remain correct."
+    }
+  ],
+  "separateSavedWorkItemBoundary": "The old blocked work-item brief is persisted independent project history. Root has identified that its actual status needs a truthful versioned update based on new real work. Do not change its data, mark it completed, or rewrite history merely to make the page look consistent. This report neither performs nor claims that update.",
+  "impact": "Confirmed misleading current-state/action copy, not another failure to submit or evidence that the current real CC run stopped. The original live button P1 now has an actual successful click receipt; the full feedback/judgment/repair workflow remains in progress.",
+  "handoff": "Record these two bounded UI issues for the next authorized 101 CC source task after the current real test reaches an appropriate terminal boundary. No concurrent maintenance is requested by this report.",
+  "execution": {
+    "remote": 0,
+    "API": 0,
+    "browser": 0,
+    "applicationEdits": 0,
+    "tests": 0,
+    "model": 0,
+    "sessionDBChanges": 0,
+    "newMaintenanceStarted": false
+  },
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-running-copy-local-source-followup.json",
+      "sha256": "8c47fe9918dec56a56b1bb4676952f5d6e884f8faafdd870d904bc42996f2e65",
+      "bytes": 5441
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

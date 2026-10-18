@@ -1,0 +1,88 @@
+{
+  "kind": "r43-first-slice-and-explicit-continuation-safe-summary",
+  "at": "2026-10-17T07:36:58.190221+00:00",
+  "topology": {
+    "platform": "112",
+    "CCExecutionServer": "101"
+  },
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "firstRun": {
+    "id": "f08d5e58e75a0b634fe2e8803480cf9cc7212f67",
+    "platformStatus": "failed",
+    "platformSummary": "native final result was not recognized",
+    "signedAgent": true,
+    "originalResultPreserved": true,
+    "originalResultSHA256": "527e6010bf197fe858bde8457fe572ca95b5f6b3246dcca8cd2b520debd71b67",
+    "storedNativeFinal": {
+      "logId": 7831,
+      "textSHA256": "3b6dcf98f7f1f02e565fa3f307b5c7e5f2524f21abb0b62c30e5b6a7a966d27b",
+      "bytes": 4927,
+      "subtype": "success"
+    },
+    "implementationStatus": "partial; not accepted for deployment",
+    "CCImplementationCommit": "7ffb4baa987fc5d305d9658d083aa7d86943d2fb",
+    "CCReportCommit": "5a70ea0d35132ac8098b290565a67ca752b7f3b9",
+    "targetedTests": {
+      "passed": 8,
+      "total": 8,
+      "logSHA256": "a598d4d40e100188bf13358220e49a7f61e9ddc35e4e22dfe45adc4da2685e35",
+      "scope": "CC-returned protocol/Pi adapter and native-format subprocess fixture; no live supervisor AI or durable HTTP chain accepted"
+    },
+    "parentUsage": {
+      "inputTokens": 8683522,
+      "outputTokens": 21454,
+      "cacheReadTokens": 8541440,
+      "cacheWriteTokens": 0,
+      "totalTokens": 8704976
+    },
+    "nativeModelAggregateTokensIncludingSubagents": 28029420,
+    "nativeCumulativeCost": {
+      "costUSD": 19.139963999999992,
+      "costKind": "catalog-estimate",
+      "invoiceVerified": false,
+      "currency": "USD"
+    },
+    "rawPipeThresholdRootCauseConfirmed": false
+  },
+  "knownMissing": [
+    "real bound evidence-original collection and review",
+    "signed stop confirmation and safe same-session resume",
+    "goal change/decision crash reconciliation",
+    "real HTTP persistence/restart and live model/CC chain",
+    "live frontend events and multi-line criteria"
+  ],
+  "supervisorChoice": {
+    "selected": "one explicit bounded continuation in original task/native session",
+    "reason": "Preserves project context and all historical usage while CC repairs missing-terminal accounting and unfinished supervisor implementation. A central zero/incomplete report is not treated as zero actual usage.",
+    "alternative": "hold all development until complete accounting/recovery feature is released",
+    "alternativeTradeoff": "avoids temporary manual reconciliation, but blocks the CC implementation needed to provide that feature",
+    "window": {
+      "additionalParentTokens": 10000000,
+      "rounds": 1,
+      "timeoutSec": 1200,
+      "automaticRetry": false,
+      "billing": "record-only",
+      "costCapUSD": null
+    },
+    "priorCumulativeUsagePreserved": true,
+    "cumulativeRuntimeAccountingRepaired": false,
+    "runtimeConfigChange": {
+      "machine": "101 development agent only",
+      "oldMaxTokens": 500000,
+      "newMaxTokens": 10000000,
+      "centralRevision": 45,
+      "otherFieldsPreserved": true,
+      "oldRunPreserved": true,
+      "backupSavedPrivately": true
+    },
+    "currentRunId": "e3334033e872558cdcd58df125959032ac957306",
+    "exactNativeSessionResumed": true,
+    "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d"
+  },
+  "userReviewAndExperienceRequirements": "accepted and pending the next CC directive; live round2 was not interrupted or silently changed",
+  "productionRelease": false,
+  "rootProjectImplementationOrTests": false,
+  "oldTenMinuteHeartbeat": "PAUSED",
+  "independentProductAcceptance": false
+}

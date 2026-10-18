@@ -1,0 +1,194 @@
+{
+  "kind": "independent-local-source-review",
+  "scope": "R13 to R14 project-workbench API/coordinator delta; bounded known constraints and saved evidence, not whole-product acceptance",
+  "createdAt": "2026-10-17T17:00:16.969335+00:00",
+  "source": {
+    "finalHEAD": "8e646d8c2627294cf8e51ce216f55c286a2f31fc",
+    "appHEAD": "095b0e646a2889390a6751e2bedeb2bfecdee393",
+    "priorFinalHEAD": "6ab3e09b325a8f0f1868c8aeacb76c22d7060320"
+  },
+  "method": {
+    "localSourceAndSavedEvidenceOnly": true,
+    "applicationEdits": false,
+    "testsExecutedByReviewer": false,
+    "helperExecuted": false,
+    "networkOrAPIOrDaemon": false,
+    "browserAcceptance": false
+  },
+  "conclusion": {
+    "releaseQualified": false,
+    "confirmedRemainingP1Count": 1,
+    "reason": "Original prevalidation P1 has a reachable duplicate-criteria residual. R14 must not be deployed as fixing all reviewed kickoff defects. No other pure supervisor-create field-schema mismatch was found in this narrow comparison."
+  },
+  "confirmedP1": [
+    {
+      "id": "R14-KICKOFF-DUPLICATE-CRITERIA",
+      "family": "R13 prepared-before-full-prevalidation residual",
+      "priority": 1,
+      "locations": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/runtime/project-workbench-runtime.ts",
+          "lines": [
+            14,
+            27,
+            28,
+            29
+          ]
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "lines": [
+            19,
+            22,
+            68
+          ]
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "reason": "pending input is replayed as the original frozen request, not silently replaced by edited input"
+        }
+      ],
+      "trigger": "Ready model, registered ready executor/workspace and otherwise valid fresh kickoff with duplicate criteria, including duplicates made equal by trim.",
+      "sourceCausality": [
+        "Kickoff inputSchema accepts duplicates while supervisorCreateSchema requires new Set(criteria).size === criteria.length.",
+        "Kickoff writes prepared and creates the task before supervisor.create parses its stricter schema.",
+        "The rejected session creation leaves the original incomplete intent and task ownership. Same-command changed criteria conflicts with the frozen fingerprint; a new command is rejected as KICKOFF_PENDING; replay of the frozen input fails the same schema."
+      ],
+      "impact": "A user input error creates durable pending ownership from which the exposed normal kickoff flow cannot recover by correcting the input. This is the already identified prevalidation P1, not a new untested-matrix finding.",
+      "minimalFix": "Reuse the exported original pure supervisorCreateSchema for the exact generated create payload before the first durable intent/task side effect, preserving the uniqueness rule and every original guard. Do not remove uniqueness or rewrite prior intent/task history.",
+      "minimalEvidence": "One targeted real-route duplicate/trim-duplicate counterexample that demonstrates the current side effect, then verifies rejection leaves zero kickoff/task/session/run effects and corrected valid input can explicitly start. Preserve the existing 6/6 evidence; do not rerun unrelated UI/full matrices."
+    }
+  ],
+  "closedOriginalFindings": [
+    {
+      "id": "R13-EARLY-PREPARED-model-or-choice",
+      "status": "closed for the concrete reviewed modelReady and registered ready choice branches",
+      "evidence": "preflight runs before first write; saved real createApp test checks zero intents/tasks/session before model readiness and before copy registration, then registers the actual copy through the existing project command and explicitly starts once."
+    },
+    {
+      "id": "R13-SESSION-COMMIT-BEFORE-INTENT-PAUSE",
+      "status": "closed in the reviewed source and actual saved pause/stop/takeover tests",
+      "evidence": "Recovery always replays the fixed original supervisor.create command receipt and freezes that original revision. Before start it compares the current session binding, draft status and original revision; owner control changes reject CONTROL_CHANGED without dispatch. The hook is after actual session commit and before coordinator intent update; restart is exercised."
+    }
+  ],
+  "pureSchemaComparison": {
+    "onlyStricterDownstreamConstraint": "criteria uniqueness after trim",
+    "alignedFields": [
+      "goal trim/min1/max4000",
+      "criteria element trim/min1/max500 and count1..30",
+      "machineId min1/max200",
+      "workspace min1/max2000"
+    ],
+    "validGeneratedFields": [
+      "deterministic UUID commandId",
+      "expectedVersion literal 0",
+      "executor literal claude-code",
+      "deterministic UUID taskId fits min1/max200"
+    ],
+    "taskCreateSubset": "Generated title <=200 versus max300; goal <=4000 versus max20000; joined criteria <=15029 versus max20000; budget 1 and retryLimit 0 fit original task DTO. This is not an additional pure-field failure.",
+    "knownStateGuardBoundary": "Original taskBody also rejects delivered projects, company scope and observation-only machines (work-domains.ts:64-75,127-130), while workbench preflight directly checks archived/model/choice/revision. These are existing downstream state restrictions, not a second supervisorCreateSchema difference; no live affected record was inspected and no separate present-user blocker is asserted. Preserve these restrictions; do not relax them to make kickoff pass."
+  },
+  "preservedSemantics": {
+    "pendingContext": "Owner/project-scoped context exposes original command/input/fingerprint/stage/task/session/startRevision. Recovery uses exact frozen input and fixed stage command IDs, and does not adopt a new project revision or silently replace an old request.",
+    "ownership": "Incomplete intents retain pending task ownership; existing execution start/preflight/scheduler ownership guards remain. The original task-before-session saved test exercises refusal of scheduler/normal-start theft.",
+    "pausedAndUnknown": "Old paused/blocked tasks are not implicitly resumed by the new flow. Existing policies, unknown/incomplete accounting and signed-result reconciliation remain; no reset or synthetic complete ledger is introduced.",
+    "budget": "Task DTO budget:1 is a compatibility value; supervisor dispatch explicitly uses record-only and budgetUSD0, and the agent record-only path skips the currency cap. It is not a new one-dollar cap.",
+    "executorLabel": "Session executor literal claude-code is existing session metadata. The actual configured task executor/template engine remains bound for dispatch; the context codex choice alone is not proven to fail solely because of that label."
+  },
+  "savedEvidenceScope": {
+    "api": "final-api-route.tap records 6 passed, 0 failed: model/copy preflight plus explicit corrected setup; three session-cut owner pause/stop/takeover cases; existing cross-store task-stage recovery/ownership/signed fixture execution; legacy route resolution. These tests do not cover duplicate criteria.",
+    "component": "Production components are compiled and rendered by react-dom/server with an environment hook boundary; actual register-copy button/form handler is invoked and its command payload captured; actual params effect and queued/running/returned texts are checked. It is not browser/mobile or live HTTP from the component.",
+    "typesBuild": "Saved final typecheck and build outputs were read, not rerun by this reviewer.",
+    "limitations": [
+      "No full crash-cut matrix claimed.",
+      "No real supplier model, 101 product execution or current browser acceptance was performed by this reviewer.",
+      "Source closure of selected defects does not constitute whole user acceptance."
+    ]
+  },
+  "priorReview": {
+    "path": "artifacts/cc-supervisor-r43/r45-round13-workbench-api-independent-source-review.json",
+    "sha256": "35d923473750171c8b1bbc8abc33df9834397ac6bfd038629e005efcd5d6c270",
+    "bytes": 20982
+  },
+  "refs": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/runtime/project-workbench-runtime.ts",
+      "sha256": "9e759fab112c8aa9d7e23015be04dc2d287203811bcdf05b6f08b02994d6da90",
+      "bytes": 10107
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/runtime/project-supervisor-runtime.ts",
+      "sha256": "d08f387a10356284fc5c9a0f4835377c721a5e34599ef6c1c69723ba17effc65",
+      "bytes": 48782
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/v1/work-domains.ts",
+      "sha256": "a3f1b93631541f91278c3c66c310e6c51b72785918a6849960deaf5c3c9b4e3d",
+      "bytes": 25138
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/runtime/execution-runtime.ts",
+      "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0",
+      "bytes": 129697
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/src/runtime/agent-runner.ts",
+      "sha256": "1a7cb1f202d1ea337132c9242325caf4d3fbc625f30ef2df7765f13f77185286",
+      "bytes": 54554
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/test/project-workbench-r14.test.ts",
+      "sha256": "5cb61b7f523ecf4fbe01bdda1db34815f949414d83683ed50ea3999c012d23dd",
+      "bytes": 7123
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/api/test/project-workbench-r45.test.ts",
+      "sha256": "b6b7bbb5a77c76839be19bcacad55c182bff16f243bcbf0a035c80d546e214b4",
+      "bytes": 6420
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "sha256": "f1a3e0028fc52c8c15223c693ccf23e72e2076521dfde6e0ba0a80fecacb9f8c",
+      "bytes": 11693
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/scripts/test-r45-r14-components.mjs",
+      "sha256": "143b949076829d0199c3377b456e28fd3fa3017da3783dd89bade9d143acc22e",
+      "bytes": 5032
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/reports/r45-round14-implementation.json",
+      "sha256": "e633ca40378a50c3af1722df683edd0919e12224cfa269db3bb6840687ae71f9",
+      "bytes": 2812
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/reports/r45-round14-logs/final-api-route.tap",
+      "sha256": "4dede52fcf941cd51df95fe1085d3e082211bbffa163e5d71ded48dc2d4d66f1",
+      "bytes": 709
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/reports/r45-round14-logs/components-release.txt",
+      "sha256": "de78a654f0ae4f79bebbff0944d5156dd9c21a7bd08a9df2594e07d5978f0f53",
+      "bytes": 290
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/reports/r45-round14-logs/typecheck-release.txt",
+      "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+      "bytes": 193
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round14/reports/r45-round14-logs/build-final.txt",
+      "sha256": "ca9c83df9137b3f1250d8dc29aa1cabec27960bd37e8efdd87d5c07eef8ae1d7",
+      "bytes": 3400
+    }
+  ],
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-round14-api-independent-source-review.json",
+      "sha256": "861e1b2df55f970a016f9c0cfe0b3a2d50344f2220a6685193d8b4e5598d5b51",
+      "bytes": 11287
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

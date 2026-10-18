@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "kind": "r43-round6-protocol-grant-source-review",
+  "source": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round6",
+    "head": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+    "appCommit": "91fdeb1ab35d53c8f846f8bf82843649bd397cc1",
+    "observedClean": true
+  },
+  "scope": "Independent local source and existing public report review only. No app, tests, model, remote connection or HTTP requests executed; no source changes. Static closure is not runtime acceptance.",
+  "verdict": "PARTIAL_NOT_RELEASE_READY",
+  "findings": [
+    {
+      "id": "A-R6-01",
+      "priority": "P1-contract",
+      "status": "partial",
+      "title": "Formal incoming usage DTO still rejects explicit unknown observations",
+      "evidence": [
+        "docs/openapi-v1-planned.json:52387 ExecutionActualUsage.required is now empty",
+        "docs/openapi-v1-planned.json:53673-53675 ExecutionReportedUsage.required still contains inputTokens and outputTokens",
+        "docs/openapi-v1-planned.json:53728 ExecutionResultInput.usage references ExecutionReportedUsage",
+        "apps/api/src/runtime/execution-routes.ts:52 signed result Zod schema allows omitted token fields",
+        "apps/api/src/runtime/agent-runner.ts:230 startup/local check failure emits explicit unknown without token numbers",
+        "apps/api/src/runtime/agent-delivery-journal.ts:64 interrupted recovery emits explicit unknown without token numbers"
+      ],
+      "impact": "The published incoming DTO remains incompatible with the unknown body produced by startup/recovery. The actual signed Zod route accepts that shape; this review does not claim that existing HTTP necessarily rejects it. The signed partial test has token numbers and cannot establish unknown DTO compatibility.",
+      "narrowFix": "Make ExecutionReportedUsage use the same optional token and explicit unknown semantics as ExecutionActualUsage, preserve this in the contract generator, then verify a no-token unknown body against the formal DTO and the real signed delivery/journal ACK path."
+    }
+  ],
+  "reviewedChanges": [
+    {
+      "item": "Same child multi-phase init/final handling",
+      "status": "source-fixed-not-runtime-accepted",
+      "evidence": ["apps/api/src/runtime/agent-protocol.ts:20", "apps/api/src/runtime/agent-runner.ts:72", "apps/api/src/runtime/agent-runner.ts:75"],
+      "assessment": "A new init retains the preceding nonprovisional final and clears its duplicate/conflict state; parse accumulates completed phase usages. The old three-init/full-final counterexample is source-addressed. Unproven no-init conflicting finals are not promoted to a new finding."
+    },
+    {
+      "item": "Empty zero followed by activity without final",
+      "status": "source-fixed-not-runtime-accepted",
+      "evidence": ["apps/api/src/runtime/agent-protocol.ts:15", "apps/api/src/runtime/agent-protocol.ts:21", "apps/api/src/runtime/agent-protocol.ts:32"],
+      "assessment": "An empty zero is provisional; subsequent activity clears it and missing final returns FINAL_MISSING. It no longer supplies a completed zero final for this sequence."
+    },
+    {
+      "item": "Error final zero preserves observed partial usage",
+      "status": "source-fixed-with-limited-existing-test-evidence",
+      "evidence": ["apps/api/src/runtime/agent-runner.ts:72", "apps/api/test/agent-usage-conflict-r43.test.ts:3", "reports/r43-round6-logs/signed-partial-dto-final.tap:1"],
+      "assessment": "Final token values below retained messages become a partial lower bound, with totalCost cleared. Existing saved signed partial test reports 1/1; it is not an independent rerun or full node lifecycle acceptance."
+    },
+    {
+      "item": "ExecutionRequest supervisor/grant and billing checkpoint fields",
+      "status": "source-fixed-not-runtime-accepted",
+      "evidence": ["docs/openapi-v1-planned.json:52772", "docs/openapi-v1-planned.json:52786", "docs/openapi-v1-planned.json:52808", "docs/openapi-v1-planned.json:64209", "apps/api/src/runtime/execution-runtime.ts:302"],
+      "assessment": "Formal request now includes supervisor, continuationGrant, project-supervisor purpose and unknown-history acknowledgement; checkpoint schema and runtime both allow nativeCliVersion and session-cumulative costScope."
+    },
+    {
+      "item": "Startup/recoverInterrupted unknown and signed ACK",
+      "status": "source-fixed-route-compatible-formal-input-dto-partial",
+      "evidence": ["apps/api/src/runtime/agent-runner.ts:230", "apps/api/src/runtime/agent-delivery-journal.ts:64", "apps/api/src/runtime/execution-routes.ts:52", "apps/api/src/runtime/execution-runtime.ts:290", "apps/api/src/runtime/execution-runtime.ts:303", "apps/api/src/runtime/agent-delivery-journal.ts:61"],
+      "assessment": "Unknown is explicit, signed runtime accepts it, and journal ACK remains bound to delivery ID/run/kind/body SHA. Actual interrupted/startup HTTP-to-ACK recovery remains unverified; the formal incoming usage DTO issue is A-R6-01."
+    },
+    {
+      "item": "Grant result hash, unknown history and old task token boundary",
+      "status": "source-fixed-not-runtime-accepted",
+      "evidence": ["apps/api/src/runtime/project-supervisor-runtime.ts:23", "apps/api/src/runtime/project-supervisor-runtime.ts:66", "apps/api/src/runtime/execution-runtime.ts:186", "apps/api/src/runtime/execution-runtime.ts:200", "apps/api/src/runtime/execution-runtime.ts:201", "apps/api/src/runtime/execution-runtime.ts:206", "apps/api/src/runtime/execution-runtime.ts:207", "apps/api/src/runtime/execution-runtime.ts:168", "apps/api/src/runtime/execution-runtime.ts:235", "apps/api/src/runtime/execution-runtime.ts:356"],
+      "assessment": "Supervisor and grant source hashes now share JSON.stringify. API requires explicit acknowledgement of unknown history, persists and propagates it to request, and preflight lets a bound single-round grant use its independent token window even when task history is unknown or over the old limit. Claim and local pump both use that preflight. The grant window still has its intended 10M maximum; this is not the old history gate."
+    },
+    {
+      "item": "Release identity and packaging",
+      "status": "not-delivered",
+      "evidence": ["apps/api/src/runtime/cluster-runtime.ts:10", "apps/api/src/runtime/agent-runner.ts:150", "reports/r43-implementation-round6.json"],
+      "assessment": "Runtime and agent metadata use 20261017-cc-supervisor-r43-r3. Author report explicitly says no new packages, releaseReady false, no deployment or agent upgrade. Old R5 candidates do not establish a matched R6 deployable pair."
+    }
+  ],
+  "existingEvidenceLimits": {
+    "authorReportedTargeted": "10/10 reports/r43-round6-logs/final-targeted.tap",
+    "authorReportedSignedPartial": "1/1 reports/r43-round6-logs/signed-partial-dto-final.tap",
+    "authorReportedTypecheckBuild": "exit 0; original logs retained; not rerun by reviewer",
+    "notAccepted": [
+      "createApp real ExecutionRuntime two successive dispatch/claim/signed result/journal ACK runs",
+      "unknown and over-limit grant replay/concurrency/owner/CAS/source/restart matrix",
+      "startup and recoverInterrupted no-token unknown through formal DTO and signed HTTP ACK",
+      "two subsequent real adopted runs and consumed-source recovery",
+      "new matched runtime/archive bytes, node idle upgrade, deployment and field acceptance"
+    ]
+  },
+  "nextSmallestStep": "Close ExecutionReportedUsage unknown compatibility, then run the already-required real createApp/ExecutionRuntime succession, explicit unknown grant and restart ACK matrix before producing a new matched release pair. No further tests or deployment were performed in this review.",
+  "notes": [
+    "A temporary suspicion of canonical-vs-JSON grant hashing was withdrawn after checking project-supervisor-runtime.ts:23; no hash mismatch finding is asserted.",
+    "Awaiting-cost admission to supervisor judgment and goal-scoped continuing policy are covered by the separate correction/learning review, not duplicated here."
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "kind": "r43-round2-independent-local-source-review",
+  "reviewedAt": "2026-10-17T08:01:29.521Z",
+  "source": {
+    "commit": "c8e2689c4bd187d970aca15713adc69cbd1b3903",
+    "baseline": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+    "import": "Root imported the CC-produced baseline-to-commit patch into a separate local read-only review tree.",
+    "patchSHA256": "c28a2bc8a114b3f1b0ea21a1f7db00789555e02b31b4afdb75fa81fa4faa35bb",
+    "fingerprintProvenance": "Commit and patch fingerprint supplied by the Root artifact-import receipt; this reviewer did not re-fetch Git or run the patch."
+  },
+  "scope": {
+    "mode": "non-author local read-only source review",
+    "reviewerEditedProjectSource": false,
+    "reviewerRanTests": false,
+    "reviewerUsedNetwork": false,
+    "reviewerRanModelsOrDaemon": false,
+    "artifactWritten": "This review report only.",
+    "inspected": [
+      "apps/api/src/runtime/agent-runner.ts",
+      "apps/api/src/runtime/agent-protocol.ts",
+      "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "apps/api/src/runtime/project-supervisor-model.ts",
+      "apps/api/src/runtime/supervisor-evidence.ts",
+      "apps/api/src/runtime/supervisor-intents.ts",
+      "apps/api/src/runtime/execution-runtime.ts",
+      "apps/api/src/runtime/project-supervisor-routes.ts",
+      "apps/web/src/features/operations/ProjectSupervisorPanel.tsx"
+    ],
+    "limits": [
+      "Static source paths are not reproduced production failures.",
+      "The reported R2 limited tests were not rerun or independently accepted by this review.",
+      "No permission for dependency execution, artifact transport activation, deployment, or modification of the active CC task is inferred.",
+      "The accidental edits excluded from the CC commit/patch were not imported as product changes or treated as restored."
+    ]
+  },
+  "verdict": {
+    "status": "blocked-not-ready-for-deployment",
+    "independentProductAcceptance": false,
+    "p1Count": 6,
+    "p2RelatedCount": 1
+  },
+  "topology": {
+    "platformControlPlane": "112",
+    "projectExecutor": "101 agent and Claude Code",
+    "rule": "The supervisor issues scoped instructions and analyzes returned evidence; project development, tests, and authorized deployment are executed by CC. No platform deployment to 101 is authorized by this review."
+  },
+  "findings": [
+    {
+      "id": "R43-R2-P1-01",
+      "severity": "P1",
+      "title": "Supervisor-purpose CC prompt incorrectly restricts the project executor to read-only work",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 140
+        }
+      ],
+      "basis": "The new supervisor-purpose prompt imposes read-only directory work and excludes the execution-skills prompt used by the ordinary development branch.",
+      "impact": "The 101 executor is told not to perform the development, tests, or scoped deployment that the supervisor is intended to direct; fixed skill references are omitted from this branch.",
+      "repair": "Apply the no-tools/read-only role to the 112 supervisor model. Build the CC prompt from the frozen directive, directory/authority boundaries and frozen execution skills, permitting only the actual operations granted for that turn.",
+      "minimumValidation": "A native-format supervisor turn receives a scoped edit/test directive, changes only the authorized fixture file and produces the expected new artifact; a read-only directive remains read-only. Verify skill references are present without changing permissions."
+    },
+    {
+      "id": "R43-R2-P1-02",
+      "severity": "P1",
+      "title": "Protocol-error early return drops observed usage and masks timeout; the resulting supervisor receipt can be rejected",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 144
+        },
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 146
+        },
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 228
+        },
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 281
+        }
+      ],
+      "basis": "The parsed native result is available before the protocol-error branch, but that branch breaks before usage/checkpoint aggregation and before timeout/cancellation outcome selection. Supervisor results require an explicit usage observation in the central receiver.",
+      "impact": "A partial native stream with observed assistant usage but no final can lose that usage. A genuine timeout can become failed/protocol-error instead of timeout, omit its PROCESS_TIMEOUT observation, and be rejected by the central supervisor result contract when no usage object was retained.",
+      "repair": "Persist available partial usage and exact session/checkpoint facts before handling the protocol failure. Preserve process timeout/cancel as transport lifecycle facts and record the protocol failure separately. Always produce a contract-valid explicit known/unknown usage observation; do not invent zero complete usage or rewrite the old incomplete receipts.",
+      "minimumValidation": "Through the real runner and signed-result receiver fixture, emit assistant usage, then time out without a final. Preserve the observed lower-bound counts, unknown remainder, timeout/stop reason and protocol error; deliver the same receipt idempotently exactly once."
+    },
+    {
+      "id": "R43-R2-P1-03",
+      "severity": "P1",
+      "title": "The new universal final-event consumer rejects the existing no-output fixed validator before its configured post-validation runs",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 142
+        },
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 144
+        },
+        {
+          "path": "apps/api/src/runtime/agent-protocol.ts",
+          "line": 90
+        },
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 64
+        }
+      ],
+      "basis": "The runner now installs AgentProtocolConsumer for every engine. Its finish requires an execution.result for fixed programs. The existing project-autonomy-validation contract legitimately uses /usr/bin/true as the primary process, with actual validation performed by the separately configured post-validator.",
+      "impact": "A valid legacy fixed primary process produces no execution.result, so FINAL_MISSING stops the loop before the original fixed post-validation contract. This changes the behavior of unrelated closed/future fixed-purpose tasks.",
+      "repair": "Select a protocol contract by the fixed purpose and phase. Require a native final only for programs whose frozen contract emits one; retain the existing no-output primary plus separate validator path. Do not fabricate a final event, loosen the supervisor protocol, or replay historical fixed jobs.",
+      "minimumValidation": "An isolated existing-shape /usr/bin/true fixture reaches exactly one configured post-validator and records its real result. A fixed-purpose process that is required to emit a receipt must still reject a missing final."
+    },
+    {
+      "id": "R43-R2-P1-04",
+      "severity": "P1",
+      "title": "Journal-delivered stop confirmations and revised-goal recovery remain incompatible with the resume gates",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 225
+        },
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 283
+        },
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 180
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 45
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 46
+        }
+      ],
+      "basis": "A result carrying deliveryId for a centrally cancelled run is classified as late and saved as signed-agent-late-evidence/lateEvidenceOnly. Resume requires a normal signed-agent result without lateEvidenceOnly. Goal revision retains the old stopped run as the consumed source, but dispatch also requires its goalRevision to equal the newly revised goal.",
+      "impact": "The native durable journal's real stop confirmation cannot satisfy the normal resume condition. Revising a goal also leads to a source-goal mismatch instead of the promised explicit safe rebind.",
+      "repair": "Store a separately typed signed stop confirmation bound to the original agent, lease and stop request while retaining late business products as evidence only. Implement explicit new-goal authorization/rebind instead of claiming an old run belongs to the new goal. Preserve the exact original native session only where the new binding allows it.",
+      "minimumValidation": "Exercise pause, journal stop delivery, duplicate delivery, explicit resume, and goal revision across a restart. No next process starts before confirmation; an old or unrelated late report cannot resume work; the revised-goal directive executes once under its new authorization."
+    },
+    {
+      "id": "R43-R2-P1-05",
+      "severity": "P1",
+      "title": "Signed executor failures are nominally accepted but immediately rejected for lacking a successful feedback JSON",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 53
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 54
+        }
+      ],
+      "basis": "The supervisor accepts failed/round-limit outcomes and then unconditionally parses result.summary as the full successful supervisor-feedback schema. Real timeout, authentication, process/protocol failures normally contain diagnostic text rather than that JSON.",
+      "impact": "Operational failures are stopped at PROTOCOL_ERROR before the supervisor can analyze them or issue a valid adjusted instruction. Re-entering running for the same unconsumed result repeats the same rejection.",
+      "repair": "Keep normal CC feedback strict. Normalize trusted failures into a separate server-generated diagnostic envelope containing the bound exit/stop/failure/usage/protocol facts and evidence references, without pretending CC emitted valid feedback or succeeded. Permit a bounded supervisor decision on that envelope and record why it continues or waits.",
+      "minimumValidation": "Signed authentication failure, timeout and malformed-feedback fixtures reach a diagnostic judgment or an explicit configuration/input block without fabricated success. Repeated delivery causes one judgment, and a partial/failed judgment never dispatches."
+    },
+    {
+      "id": "R43-R2-P1-06",
+      "severity": "P1",
+      "title": "Evidence transport is not connected, and partial missing evidence can be filtered out before an achieved decision",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 228
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 55
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 56
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 58
+        },
+        {
+          "path": "apps/api/src/runtime/project-supervisor-model.ts",
+          "line": 84
+        }
+      ],
+      "basis": "The result producer does not yet collect or send original-evidence receipts. In the receiver path, only the verified subset replaces feedback.evidence; missing references are saved in an event but not included in modelInput. The final achieved gate checks merely that at least one original exists and the executor outcome is success. The model context cap is also smaller than an allowed maximum-size evidence item plus its metadata.",
+      "impact": "With no transport the complete loop cannot reach a supported result. With a partially populated receipt set, missing claimed evidence can disappear from the judgment context and a review can reach achieved using only the surviving subset. Large permitted receipts can instead fail the model-input boundary without a useful evidence recovery path.",
+      "repair": "After the required transport permission is actually granted, connect controlled no-follow source collection and signed receipts. Carry all declared, verified and missing references into the immutable judgment input. Require coverage of every necessary criterion and explicit handling of missing/conflicting evidence before achieved. Use a documented bounded original-reading/chunk contract or return insufficient evidence; never silently truncate or filter away a required gap.",
+      "minimumValidation": "Use signed receipts with two claimed files and one missing, tampered, or oversized file. The missing condition stays visible to the model and UI, the supervisor requests recovery rather than achieved, and valid bounded original content is actually read and cited."
+    }
+  ],
+  "relatedP2": [
+    {
+      "id": "R43-R2-P2-01",
+      "severity": "P2",
+      "relatedTo": "R43-R2-P1-02",
+      "title": "Pre-execution failures lack an explicit known/unknown usage observation for the dedicated supervisor receipt",
+      "source": [
+        {
+          "path": "apps/api/src/runtime/agent-runner.ts",
+          "line": 222
+        },
+        {
+          "path": "apps/api/src/runtime/execution-runtime.ts",
+          "line": 281
+        }
+      ],
+      "basis": "The outer execution catch emits a signed failure receipt without usage, while the dedicated central receiver requires usage. This includes template/workspace failures that occur before a model can start.",
+      "repair": "Retain a phase-specific pre-execution observation proving whether invocation began, with explicit unknown fields as appropriate. Do not use a universal catch that claims complete zero usage after an unobserved execution. Route the receipt through the real durable receiver fixture and preserve the original failure."
+    }
+  ],
+  "positiveScope": [
+    "The StringDecoder UTF-8 stream path preserves normal multibyte characters split across chunks; this review did not find a normal split-chunk corruption defect.",
+    "The new consumer no longer relies on retaining the initial 4MiB of diagnostic stdout to find a final event.",
+    "A supervisor SSE route, front-end subscription/fallback and real LF/CRLF criteria splitting are now present; the earlier claim that these were entirely absent no longer applies."
+  ],
+  "remainingUnverified": [
+    "No full TypeScript/build or real HTTP persistent supervisor fixture was executed by this reviewer.",
+    "No signed 101 agent end-to-end, trusted evidence upload, remote process-tree cancellation, restart/goal-revision matrix, or real supervisor model was independently validated.",
+    "The SSE route still polls local state; durable notification/outbox and browser reconnect/revocation effects were not accepted by this static review.",
+    "The new user-requested exception, correction and conditional experience-reuse chain remains R3 work; it is not an R2 regression or completed feature."
+  ],
+  "accounting": {
+    "policy": "record-only-no-spend-cap",
+    "supplierCallsMadeByThisReview": 0,
+    "internalTokenUsage": null,
+    "internalCostUSD": null
+  }
+}

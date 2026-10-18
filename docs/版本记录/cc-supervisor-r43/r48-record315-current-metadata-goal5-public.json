@@ -1,0 +1,219 @@
+{
+  "kind": "record315-current-metadata-and-goal5-dispatch",
+  "record": 315,
+  "asOf": "2026-10-18T05:25:06.815Z",
+  "item21": {
+    "kind": "r48-factory-item21-failed-activation-recovered-old-release-goal5-arrangement-readback",
+    "at": "2026-10-18T05:21:51.184Z",
+    "operationId": "7a31b8a3-219d-4e3a-8a47-75756cc0c044",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 21,
+      "hash": "0b0be5f69ce57e21de333f11800eebe0c21021e229129d1c49703aada572f871",
+      "status": "running"
+    },
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 3,
+      "hash": "050ae2f6a2822d5dd7b92c1e6e82987f7f93d077eef0386863b03e072e93e6d8",
+      "unchanged": true
+    },
+    "itemCommandId": "e2596d70-6d3d-4c54-a019-619fb8bb671e",
+    "businessPOSTs": 1,
+    "planWrites": 0,
+    "evidencePrefixPreserved": 24,
+    "addedEvidence": 2,
+    "signedGoal4SourceRun": "849c786a060978b838352af2e47b54bae8ce34cd",
+    "opsCandidateHEAD": "9e2e19f67c6b0b3f904a772fd8e96ff2e7cd2b63",
+    "linkedGoal5Evidence": {
+      "path": "artifacts/cc-supervisor-r43/r48-jarvis-release-sidecar-goal5-098e96ef-60a0-43fa-b523-40915f3f8165-readback.json",
+      "sha256": "d2019b34a4ca4fe4545a83ceb254b4e3c7001ef328c43199a615c5c77773bbf6",
+      "currentExecutionStatusNotAsserted": true
+    },
+    "failureAndRecoveryEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r48-sidecar4dab-failure-and-emergency-recovery-facts.json",
+      "sha256": "51a094c7f8efa7c480b721c9bd715d01b12815db8abf44b4666161f525866823"
+    },
+    "candidateActivationFailed": true,
+    "oldReleaseRecovered": true,
+    "liveDataRestored": false,
+    "sidecarExecuted": true,
+    "factorySession15Unchanged": true,
+    "factoryNoActiveCC": true,
+    "originalF9TaskRunBindingPreserved": true,
+    "otherFiveItemsAndGlobalFlagsPreserved": true,
+    "independentAcceptance": false,
+    "modelsOrExecutionStartedByPublisher": false,
+    "automaticRetry": false
+  },
+  "planB4": {
+    "kind": "r48-planB4-nextaction-only-readback",
+    "at": "2026-10-18T05:25:06.815Z",
+    "operationId": "ef0b782e-b3e9-4d76-8598-70a0badb3509",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 4,
+      "hash": "1a9b802605ec6ecceaf092ba91b2beaa215c773de0a08e1ebb09a551f00e2c91",
+      "previousHash": "050ae2f6a2822d5dd7b92c1e6e82987f7f93d077eef0386863b03e072e93e6d8",
+      "goalBasis": "plan",
+      "currentStepId": "C3",
+      "active": false
+    },
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 21,
+      "hash": "0b0be5f69ce57e21de333f11800eebe0c21021e229129d1c49703aada572f871",
+      "status": "running",
+      "unchanged": true
+    },
+    "commandId": "30556fe7-8107-4a9e-904d-6041b53eb95e",
+    "businessPOSTs": 1,
+    "changedFields": [
+      "nextAction",
+      "steps[C3].nextAction"
+    ],
+    "nextAction": "等待101CC权限返修回报→核源码→新operation发布并独立健康核验→自动判断既有报告→素材ZIP有限修复。",
+    "twelveStepsGoalsCriteriaBindingsPreserved": true,
+    "oldThreePlanRevisionsPreserved": true,
+    "allSixItemsHistoryAndEvidencePreserved": true,
+    "factorySession15AndF9Unchanged": true,
+    "autonomyAndGlobalPreserved": true,
+    "independentAcceptance": false,
+    "modelsOrExecutionStarted": false,
+    "automaticRetry": false
+  },
+  "opsDecision4": {
+    "kind": "r48-existing-ops-decision-failed-activation-and-metadata-correction-rev4",
+    "at": "2026-10-18T05:22:58.157Z",
+    "operationId": "ecc3fca5-05a5-4075-94f0-df76cb70ae6f",
+    "decision": {
+      "id": "3b003c1e-8098-45e9-8519-1bc660a50029",
+      "revision": 4,
+      "hash": "31d878c28740eb45b9f0ec28d9c0d1e07869e9032a4be9138026e20439f2776d",
+      "status": "implemented",
+      "chosenId": "isolated-bounded-sidecar"
+    },
+    "originalSelectionChoiceContextActionsHistoryPreserved": true,
+    "actionsAppended": 3,
+    "failedActivationOperation": "4dabdee3-4a20-4a90-92b6-2c18da605bbc",
+    "oldReleaseRecoveryAtSavedCut": "20261018-project-goals-r48",
+    "newR48r2Deployed": false,
+    "goal5": {
+      "operationId": "098e96ef-60a0-43fa-b523-40915f3f8165",
+      "runId": "10ee0a1e38a2ea6caef963ddaabfb0df38f16012",
+      "statusAtReceipt": "queued",
+      "receiptAt": "2026-10-18T05:16:21.559Z",
+      "currentStateNotAsserted": true
+    },
+    "businessPOSTs": 1,
+    "businessGETs": 2,
+    "metadataOnly": true,
+    "productionDeploymentClaim": false,
+    "activationAuthorized": false,
+    "PiFixedClaim": false,
+    "older9feacFailureCause": "unknown",
+    "costPolicy": "record-only",
+    "invoiceUSD": null,
+    "PiCostUSD": null,
+    "independentAcceptance": false,
+    "executionOrModelCalls": 0,
+    "automaticRetry": false
+  },
+  "goal5Dispatch": {
+    "kind": "r48-jarvis-release-sidecar-goal5-readback",
+    "at": "2026-10-18T05:16:21.559Z",
+    "operationId": "098e96ef-60a0-43fa-b523-40915f3f8165",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "sessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "sourceRunId": "849c786a060978b838352af2e47b54bae8ce34cd",
+    "sourceResultSHA256": "9a80d2b2682428cebdc42d7c6fd5d58a53996a476852d2bdb072e7e6c42d6711",
+    "reviseCommandId": "9ca55e5f-a478-4717-be6a-ddfe8dec2f21",
+    "startCommandId": "2f3f2dcf-c9a1-40bd-9df5-159ea2f17221",
+    "goalRevision": 5,
+    "after": {
+      "revision": 27,
+      "status": "running",
+      "enabled": true
+    },
+    "policy": {
+      "id": "183b5b89-c43a-412e-aa2e-49724ba15623",
+      "generation": 10,
+      "maxParentTokens": 10000000
+    },
+    "newRun": {
+      "id": "10ee0a1e38a2ea6caef963ddaabfb0df38f16012",
+      "status": "queued",
+      "maxRounds": 1,
+      "remainingTokens": 10000000,
+      "policyWindowId": "9d0f20ef4edd054a48209b5addc76f55179fe0ab80245ec5aa6eb6aaad023ebe"
+    },
+    "originalResultAndUsageRetained": true,
+    "factory15StillDisabledAndUnauthorized": true,
+    "businessPOSTs": 2,
+    "oldIntentRetried": false,
+    "sidecarImplementationOnly": true,
+    "releaseExecutedByThisHelper": false,
+    "nodeR7Unchanged": true,
+    "activationCauseClaimed": false,
+    "actualPiFixedClaim": false,
+    "independentAcceptance": false,
+    "automaticRetry": false,
+    "automaticPolling": false,
+    "authenticationLifecycle": "withPlatform transient create/revoke; product writes only revise/start"
+  },
+  "goal5SavedRunningObservation": {
+    "at": "2026-10-18T05:17:52.244Z",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "sessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+    "sessionRevision": 27,
+    "status": "running",
+    "enabled": true,
+    "goalRevision": 5,
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "runId": "10ee0a1e38a2ea6caef963ddaabfb0df38f16012",
+    "executionState": "running",
+    "resultReceived": false,
+    "runStatus": "running",
+    "resultSource": null,
+    "outcome": null,
+    "exitCode": null,
+    "resultHash": null,
+    "eventCursor": 59,
+    "sourceEditedByRoot": false
+  },
+  "scope": "This fixed record includes only goal5 dispatch and its saved running observation. Later terminal/source/fee/deployment results are deliberately excluded.",
+  "currentBaseline": "12factory capabilities plus5supervision requirements; old74 retained as history, no current acceptance denominator or pass count invented.",
+  "factorySession15DisabledAndF9Preserved": true,
+  "timer": "PAUSED",
+  "node101": "R7/config46 unchanged",
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-current-item21-7a31b8a3-219d-4e3a-8a47-75756cc0c044-readback.json",
+      "bytes": 1821,
+      "sha256": "39312bb13208d651d81a765f05f80cfacfc95de2da905450936c11d65caf3538"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-current-planB4-ef0b782e-b3e9-4d76-8598-70a0badb3509-readback.json",
+      "bytes": 1368,
+      "sha256": "a805d00390f19fc2b69bd7fcddb63932941282228005bc6c2d728e692ccb456c"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-sidecar-decision-implementation-rev4-readback.json",
+      "bytes": 1435,
+      "sha256": "196609c37df743279e00654a5a2d967e8253aee8a5c99ee76bce295424268a33"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-jarvis-release-sidecar-goal5-098e96ef-60a0-43fa-b523-40915f3f8165-readback.json",
+      "bytes": 1558,
+      "sha256": "d2019b34a4ca4fe4545a83ceb254b4e3c7001ef328c43199a615c5c77773bbf6"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-sidecar-goal5-first-result-window.json",
+      "bytes": 6442,
+      "sha256": "4bc8e63cc0021be6f8e4e54ef0b8b1392edf37c8c997ed47f9b60cb28b9b7b75"
+    }
+  ]
+}

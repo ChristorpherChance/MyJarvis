@@ -1,0 +1,75 @@
+{
+  "kind": "record311-goal3-formal-dispatch-public",
+  "asOf": "2026-10-18T04:23:58.074Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "sessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+  "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+  "goalRevision": 3,
+  "sourceRunId": "0f8be37abb584e8caa7a3094ec4d8dd34e1a5bd2",
+  "sourceResultSHA256": "0f1c6900cb044b2833ebc9651c52e2322df26d768cd42a447ae7c855bf5d26ab",
+  "initialDispatch": {
+    "id": "7f85cd04d6bd0ffc3b20f67855fe8447504b7da0",
+    "status": "queued",
+    "maxRounds": 1,
+    "remainingTokens": 10000000,
+    "policyWindowId": "71b82ecf48475022b800a0b6c89b42c37ea4828aee490e6e5a0e96a6f8c1f64d"
+  },
+  "firstClaim": {
+    "at": "2026-10-18T04:23:58.074Z",
+    "sessionRevision": 17,
+    "status": "running",
+    "enabled": true,
+    "goalRevision": 3,
+    "runId": "7f85cd04d6bd0ffc3b20f67855fe8447504b7da0",
+    "executionState": "running",
+    "resultReceived": false,
+    "eventCursor": 45
+  },
+  "scope": "101CC implements independent activate-only sidecar; this is Jarvis code/tool work, not factory ZIP repair or a112release",
+  "sidecarSourceReceived": false,
+  "newActivationAttempted": false,
+  "newActivationResult": null,
+  "factoryGoal2Dispatched": false,
+  "oldResultUsageAndFactory15Retained": true,
+  "technicalWindow": {
+    "maxRounds": 1,
+    "remainingTokensAtQueued": 10000000,
+    "automaticRetry": false,
+    "moneyCap": null,
+    "historyNotZeroed": true
+  },
+  "selectedControlContract": {
+    "monotonicTotalSeconds": 900,
+    "normalSeconds": 650,
+    "rollbackReserveSeconds": 250,
+    "snapshotMaxSeconds": 300,
+    "restoreMaxSeconds": 360,
+    "timeoutUsesRemaining": true,
+    "diskSpaceMinimum": "2*4449810934B+1GiB before stop; use larger valid new metadata if any",
+    "fullTenSQLiteBackupAndIsolatedRestore": true,
+    "privateFirstErrorAndRollbackSeparate": true,
+    "ownChildBoundedCleanup": true,
+    "originalToolsAndQualifiedPackageUnchanged": true,
+    "CCMustNotOperate112ServicesOrDeploy": true,
+    "onlySyntaxAndTwoSmallFakeControlFixtures": true
+  },
+  "sidecarScopeSelectedNotImplementedAtCut": true,
+  "oldFailureCauseKnown": false,
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-sidecar-decision-metadata-readback.json",
+      "bytes": 1071,
+      "sha256": "948cfb27615071d1257639f3c07b16a48c664414903249340bc795c491911d19"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-jarvis-release-sidecar-goal3-52f68928-5e6a-435e-93d3-88ea775f9100-readback.json",
+      "bytes": 1557,
+      "sha256": "dd67e5e59ba0d53f6c09b7c00fc98f6255075493fd9496b45e3d6d645a89dcbf"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-sidecar-goal3-first-claim.json",
+      "bytes": 4260,
+      "sha256": "8119ba794b16f5417cf3561bbd3e03ab7020d3fe520afc9c36f04373ff379fcc"
+    }
+  ]
+}

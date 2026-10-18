@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-system-log-retention-cleanup",
+  "at": "2026-10-18T09:32:18.760244+00:00",
+  "executed": true,
+  "complete": true,
+  "systemdVersion": "systemd 259 (259.5-0ubuntu3.4)",
+  "journalBefore": {
+    "ActiveState": "active",
+    "CanReload": "yes",
+    "MainPID": "406"
+  },
+  "jarvisBefore": {
+    "jarvis-platform.service": {
+      "ActiveState": "active",
+      "CanReload": "no",
+      "MainPID": "3973256"
+    },
+    "jarvis-observer.service": {
+      "ActiveState": "active",
+      "CanReload": "no",
+      "MainPID": "3973258"
+    }
+  },
+  "policy": {
+    "path": "/etc/systemd/journald.conf.d/99-jarvis-log-retention.conf",
+    "SystemMaxUse": "256M",
+    "MaxRetentionSec": "7day",
+    "semantics": "Both are maximums; the size cap can evict entries younger than seven days."
+  },
+  "deletedRotated": [
+    {
+      "path": "/var/log/syslog.1",
+      "allocatedBytes": 1842438144,
+      "inode": 14420532
+    },
+    {
+      "path": "/var/log/syslog.2.gz",
+      "allocatedBytes": 64987136,
+      "inode": 14419830
+    },
+    {
+      "path": "/var/log/auth.log.1",
+      "allocatedBytes": 118042624,
+      "inode": 14420534
+    },
+    {
+      "path": "/var/log/auth.log.2.gz",
+      "allocatedBytes": 3801088,
+      "inode": 14419972
+    },
+    {
+      "path": "/var/log/kern.log.1",
+      "allocatedBytes": 152944640,
+      "inode": 14420533
+    },
+    {
+      "path": "/var/log/kern.log.2.gz",
+      "allocatedBytes": 4050944,
+      "inode": 14419969
+    },
+    {
+      "path": "/var/log/boot.log.1",
+      "allocatedBytes": 32768,
+      "inode": 14422847
+    },
+    {
+      "path": "/var/log/boot.log.2",
+      "allocatedBytes": 65536,
+      "inode": 14423741
+    }
+  ],
+  "alreadyAbsent": [],
+  "logsReadAsContent": false,
+  "jarvisServicesRestarted": false,
+  "procFdScans": [
+    {
+      "processes": 261,
+      "fds": 2715,
+      "metadataErrors": 0
+    },
+    {
+      "processes": 261,
+      "fds": 2719,
+      "metadataErrors": 0
+    }
+  ],
+  "candidateCount": 8,
+  "candidateAllocatedBytes": 2186362880,
+  "journalAllocatedBefore": 4282789888,
+  "varLogAllocatedBefore": 6724562944,
+  "freeBytesBefore": 4318339072,
+  "estimatedReleaseBytes": 6200717312,
+  "effectiveConfigBefore": {},
+  "journaldReloadOnly": true,
+  "journalAfter": {
+    "ActiveState": "active",
+    "CanReload": "yes",
+    "MainPID": "406"
+  },
+  "jarvisAfter": {
+    "jarvis-platform.service": {
+      "ActiveState": "active",
+      "CanReload": "no",
+      "MainPID": "3973256"
+    },
+    "jarvis-observer.service": {
+      "ActiveState": "active",
+      "CanReload": "no",
+      "MainPID": "3973258"
+    }
+  },
+  "effectiveConfigAfter": {
+    "SystemMaxUse": "256M",
+    "MaxRetentionSec": "7day"
+  },
+  "policySHA256": "528487fc3e891391f47849eaa228802e2451800db96af66dd1039171438153c5",
+  "journalAllocatedAfter": 236507136,
+  "varLogAllocatedAfter": 491917312,
+  "freeBytesAfter": 8364613632,
+  "allocatedReleaseBytes": 6232645632,
+  "filesystemFreeDeltaBytes": 4046274560,
+  "globalFreeDeltaMayIncludeConcurrentMaintenance": true,
+  "officialJournalCommand": [
+    "journalctl",
+    "--rotate",
+    "--vacuum-size=256M",
+    "--vacuum-time=7d"
+  ]
+}

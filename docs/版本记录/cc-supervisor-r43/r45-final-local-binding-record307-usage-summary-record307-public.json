@@ -1,0 +1,170 @@
+{
+  "kind": "r45-final-local-binding-and-record307-usage-summary",
+  "createdAt": "2026-10-17T17:43:34.135623+00:00",
+  "localSavedEvidenceOnly": true,
+  "confirmedNewBlockers": [],
+  "release": "20261018-unified-projects-r45-r3",
+  "appHEAD": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+  "activateAndHealth": "exit0/phaseVerified with matching release/source/archive/manifest",
+  "dataSnapshotAndIsolatedRestore": {
+    "bytes": 4285618678,
+    "sqliteDatabasesChecked": 9,
+    "snapshotPassed": true,
+    "restorePassed": true,
+    "liveDataRestored": false
+  },
+  "node101Changed": false,
+  "factoryResumed": false,
+  "usage": {
+    "r13": {
+      "id": "source_f55b0b38bf086ed9748cf4e760908f46039dfc745855a7bbc773841b815ef682",
+      "sourceRecordId": "owner-maintenance:5aff7bd1-86ef-4b80-9725-1d435c16920d:native-parent-phase1",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "measurementStatus": "reported",
+      "measuredAt": "2026-10-17T16:07:24.422Z",
+      "inputTokens": 68734067,
+      "outputTokens": 25387,
+      "cacheReadTokens": 68659840,
+      "cacheWriteTokens": 0,
+      "totalTokens": 68759454,
+      "costUSD": null,
+      "costKind": "unavailable",
+      "costComplete": false
+    },
+    "r14": {
+      "id": "source_801c1e8ae66de32eb6452960c39cbee2cc762b2e2b2a842308b2de5c053adca6",
+      "sourceRecordId": "owner-maintenance:59884e54-3ed3-4ce9-bfd6-6bc97ddac43d:native-parent-phase1",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "measurementStatus": "reported",
+      "measuredAt": "2026-10-17T16:48:58.887Z",
+      "inputTokens": 56914285,
+      "outputTokens": 22114,
+      "cacheReadTokens": 56851584,
+      "cacheWriteTokens": 0,
+      "totalTokens": 56936399,
+      "costUSD": null,
+      "costKind": "unavailable",
+      "costComplete": false
+    },
+    "r15": {
+      "id": "source_a54a6927a8262c7d5fc634aa56d3b57cb2f3678d8feaf275ab3ab3964e46f9ed",
+      "sourceRecordId": "owner-maintenance:2cf108b5-2c6f-4692-9dbb-7ead64f10eb0:native-parent-incomplete",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "measurementStatus": "unknown",
+      "measuredAt": "2026-10-17T17:17:28.777Z",
+      "inputTokens": null,
+      "outputTokens": null,
+      "cacheReadTokens": null,
+      "cacheWriteTokens": null,
+      "totalTokens": null,
+      "costUSD": null,
+      "costKind": "unavailable",
+      "costComplete": false
+    },
+    "oldUnknownR11": {
+      "id": "source_bbc869757f96f2d25501565354b8123271f6b42933a898b5685817b4c815bfeb",
+      "sourceRecordId": "owner-maintenance:04ef0e21-a7e8-4163-9cab-5325bbb6f2cd:native-parent-incomplete",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "measurementStatus": "unknown",
+      "measuredAt": "2026-10-17T14:42:35.200Z",
+      "inputTokens": null,
+      "outputTokens": null,
+      "cacheReadTokens": null,
+      "cacheWriteTokens": null,
+      "totalTokens": null,
+      "costUSD": null,
+      "costKind": "unavailable",
+      "costComplete": false,
+      "originalSignedItemTokenFieldsAbsent": true,
+      "tokenCompleteness": "unknown; internal storage defaults are not observed zero usage"
+    }
+  },
+  "knownR13R14Subtotal": {
+    "inputTokens": 125648352,
+    "outputTokens": 47501,
+    "cacheReadTokens": 125511424,
+    "cacheWriteTokens": 0,
+    "totalTokens": 125695853,
+    "inputIncludesCache": true,
+    "doNotAddCacheAgain": true,
+    "excludesUnknownR15AndR11": true,
+    "overallTokenCompleteness": "incomplete"
+  },
+  "costUSD": null,
+  "costComplete": false,
+  "costKind": "unavailable; not supplier invoice",
+  "nativeR15": {
+    "status": "timeout",
+    "exitCode": 143,
+    "nativeFinalCount": 0,
+    "tokenCompleteness": "unknown",
+    "terminalSHA256": "da39ade6d63de94034b685ea82eeaa19b511fdaaf27679e2a7c17e71e689ce6d"
+  },
+  "configRevision": 46,
+  "targetTemplateSHA256": "4349a770e87b4dc93572f33437e2dd7bf56e7c19991a470fa88f7338ebe3547f",
+  "originalTask": {
+    "id": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+    "revision": 12,
+    "status": "blocked"
+  },
+  "global": {
+    "supervised": false,
+    "stopped": false
+  },
+  "tenMinuteAutomation": {
+    "persistedStatus": "PAUSED",
+    "sourceSHA256": "c768c50a9b36fa0846a0ed07e8c31f2ffa21015e3715fcd3b49d0d4a51e9fe90",
+    "unchangedAcrossReadback": true,
+    "runtimeSchedulerObserved": false
+  },
+  "supervisionRows": {
+    "rows": 24,
+    "unknown": 5,
+    "zero": 12,
+    "positive": 7
+  },
+  "acceptanceLimits": "Saved deployment health and ledger bindings only; browser/Git status and overall user acceptance are not inferred.",
+  "executionByReviewer": {
+    "API": false,
+    "remote": false,
+    "appOrTests": false
+  },
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-final-platform-and-triple-usage-readback-r2.json",
+      "sha256": "b6824431e585047a9b6d8ab873eab3408e6b5e15cab75ebd81058ea56e2fe9a3",
+      "bytes": 5973
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-activate.json",
+      "sha256": "c410974b74d1146ae8d4249519e411fc129ebea1d730e9e9c87cff1fc7f1ffb3",
+      "bytes": 2857
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-health.json",
+      "sha256": "5c9a4d3cc609a2ef9b07a53fc91103adbb8ffbc264d75d6a6d49b22789e9a47d",
+      "bytes": 1540
+    }
+  ],
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-final-local-binding-record307-usage-summary.json",
+      "sha256": "041bbd964b4fbb503b03f7be96a7a02846eb3dd1a06e681e417e11b8b0f71d6e",
+      "bytes": 5949
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

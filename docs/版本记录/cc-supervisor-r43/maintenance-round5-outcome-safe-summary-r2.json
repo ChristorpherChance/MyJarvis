@@ -1,0 +1,418 @@
+{
+  "kind": "r43-maintenance-round5-outcome-safe-summary-final-cut-r2",
+  "at": "2026-10-17T09:56:26.201602Z",
+  "fixedCut": true,
+  "operationId": "f7a378a4-f583-43b9-b349-a046f0dc443a",
+  "centralDispatched": false,
+  "dispatchSource": "owner-authorized-maintenance",
+  "terminal": true,
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "maintenance": {
+    "exitCode": 0,
+    "elapsedSeconds": 1389.5149503529537,
+    "stopReason": null,
+    "error": null,
+    "unitActiveState": "inactive",
+    "MainPID": "0",
+    "cgroupProcesses": 0,
+    "nativeTurns": 104,
+    "nativePermissionMode": "bypassPermissions",
+    "nativeVersion": "2.1.296",
+    "completeCLIReceiptQualifiedByRoot": true,
+    "originalControllerNativeFinalQualified": false,
+    "controllerAndTerminalCaptureHashesMatch": true,
+    "rawCaptureFingerprints": {
+      "stdout.raw": {
+        "size": 4021432,
+        "sha256": "38b0e6086ef9f9ed14f692970e8690568f33c28ed2f5c9a1373aedda0ab7c1c3"
+      },
+      "stderr.raw": {
+        "size": 189,
+        "sha256": "4f5e43276d49a2b76350c1feccd357429b98ee1f9703b3964a4c055f06167b3a"
+      }
+    }
+  },
+  "source": {
+    "startCommit": "607f4a62387311276dc214999c82850acf1a1139",
+    "checkpointCommit": "0f655fc0b418fce85637e6b256e2a4d3a1c7a734",
+    "applicationCommit": "94c1217ef8baa3ad0c0f729b4dd5bf756c9d5896",
+    "reportCommit": "8d73dc87f7224b3a730d709fdfd408fb4bf80e23",
+    "baseCommit": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+    "actualCollectedReportFiles": 10,
+    "actualCollectedReportBytes": 277240,
+    "tenCollectedFilesMatchReceiptAndRootProvidedCommitMaterial": true,
+    "comparisonScope": "Only the listed report/log files. Record agent did not invoke Git, inspect full tree independently, modify source, apply patches or run project tests.",
+    "collectedFiles": [
+      {
+        "path": "reports/r43-implementation-round5.json",
+        "sha256": "a49f4d0eac7ef066f136e347d9f813cb5add58ccd913d62f800a975049ac7fa9",
+        "bytes": 2803,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-implementation-round5.md",
+        "sha256": "2ddff3f33b3705982f14ce6cbe161ae0b57bbadf1d763f0fb81476ffe1d550df",
+        "bytes": 4842,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-packages.json",
+        "sha256": "79881949ab71b8dd9f730b4052fee33593f2e66b5243110f5c81ef93534f2889",
+        "bytes": 2389,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-logs/multiphase-final.tap",
+        "sha256": "cd6848b4800bf0c895da086c98952b1e63b97eab1e6f9c9bd48bd767c409edf5",
+        "bytes": 2308,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-logs/combined-final.tap",
+        "sha256": "587f59bc44645f1cfacfbea1bb5e8e776854ad42810acb6fd952b909cf03a28e",
+        "bytes": 6059,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-logs/adoption-privacy-final.tap",
+        "sha256": "47f3e361bcbb555130a3f1d4117682ebfec03d20f88be82d25475ec22235978a",
+        "bytes": 4197,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-logs/adoption-delta.tap",
+        "sha256": "53805167f8663c0d5f60c5910d527f4ee86be1a26c95bb8c37b5ec7bec721b20",
+        "bytes": 2595,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-quota-repro-focused.tap",
+        "sha256": "5e3fb45e74fce7c24925c2651ee4ced719a851bfcc0a81dadaec0ca6c778b686",
+        "bytes": 1488,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-quota-repro-original.tap",
+        "sha256": "9b20573c8089a7e92bc8c0ff71d3efe589adb3219312beee9988cda47ce09fbe",
+        "bytes": 247159,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      },
+      {
+        "path": "reports/r43-round5-logs/build-final-delta.txt",
+        "sha256": "179fdf26e20487cdc23d77766d5efefc0a8eb709abb35be900e95f14ac26c3b9",
+        "bytes": 3400,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      }
+    ],
+    "additionalCommittedLogRefs": [
+      {
+        "path": "reports/r43-round5-logs/typecheck-prepackage.txt",
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+        "bytes": 193,
+        "basis": "Root-provided exact-commit checkout material; not independently re-fetched by record agent"
+      },
+      {
+        "path": "reports/r43-round5-logs/platform-package-final.txt",
+        "sha256": "ccffbf1dcd8fdb7b56431200b9ec48c65c383b39c387d59ae91d38b676c2f7f3",
+        "bytes": 775,
+        "basis": "Root-provided exact-commit checkout material; not independently re-fetched by record agent"
+      },
+      {
+        "path": "reports/r43-round5-logs/node-package-final.txt",
+        "sha256": "bed0a5d22e54e8e4dc5be39a63be27d91df63418d212e2404003c8f2f5dc0353",
+        "bytes": 149,
+        "basis": "Root-provided exact-commit checkout material; not independently re-fetched by record agent"
+      }
+    ],
+    "patch": {
+      "path": "artifacts/cc-supervisor-r43/cc-maintenance-round5-1792230731381.patch",
+      "sha256": "cb4fee6b9705b86df7895d9ebd0942f0698d3f01aa878c888cd753f43925d61a",
+      "bytes": 990092
+    },
+    "patchCollection": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-collection-1792230731381.json",
+      "sha256": "76accd2e8c8db8bd98d90613bfd846419027df6e1811d20cce5d85fd3b227741",
+      "bytes": 6757
+    },
+    "remoteDirtyEntryCount": 8,
+    "remoteWorkspaceClean": false
+  },
+  "validation": {
+    "typecheck": {
+      "exitCodeReportedByCC": 0,
+      "scope": "complete npm workspace typecheck",
+      "log": {
+        "path": "reports/r43-round5-logs/typecheck-prepackage.txt",
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+        "bytes": 193,
+        "basis": "Root-provided exact-commit checkout material; not independently re-fetched by record agent"
+      }
+    },
+    "build": {
+      "exitCodeReportedByCC": 0,
+      "scope": "final source build",
+      "log": {
+        "path": "reports/r43-round5-logs/build-final-delta.txt",
+        "sha256": "179fdf26e20487cdc23d77766d5efefc0a8eb709abb35be900e95f14ac26c3b9",
+        "bytes": 3400,
+        "actualCollectedBytesMatch": true,
+        "RootProvidedCommitMaterialBytesMatch": true
+      }
+    },
+    "groups": [
+      {
+        "scope": "real child multiphase plus existing protocol targeted",
+        "tests": 8,
+        "passed": 8,
+        "failed": 0,
+        "exitCodeReportedByCC": 0,
+        "log": {
+          "path": "reports/r43-round5-logs/multiphase-final.tap",
+          "sha256": "cd6848b4800bf0c895da086c98952b1e63b97eab1e6f9c9bd48bd767c409edf5",
+          "bytes": 2308,
+          "actualCollectedBytesMatch": true,
+          "RootProvidedCommitMaterialBytesMatch": true
+        }
+      },
+      {
+        "scope": "affected combined tests",
+        "tests": 18,
+        "passed": 17,
+        "failed": 1,
+        "exitCodeReportedByCC": 1,
+        "log": {
+          "path": "reports/r43-round5-logs/combined-final.tap",
+          "sha256": "587f59bc44645f1cfacfbea1bb5e8e776854ad42810acb6fd952b909cf03a28e",
+          "bytes": 6059,
+          "actualCollectedBytesMatch": true,
+          "RootProvidedCommitMaterialBytesMatch": true
+        }
+      },
+      {
+        "scope": "adoption/privacy and existing HTTP tests",
+        "tests": 6,
+        "passed": 3,
+        "failed": 3,
+        "exitCodeReportedByCC": 1,
+        "log": {
+          "path": "reports/r43-round5-logs/adoption-privacy-final.tap",
+          "sha256": "47f3e361bcbb555130a3f1d4117682ebfec03d20f88be82d25475ec22235978a",
+          "bytes": 4197,
+          "actualCollectedBytesMatch": true,
+          "RootProvidedCommitMaterialBytesMatch": true
+        }
+      },
+      {
+        "scope": "last source delta tests",
+        "tests": 3,
+        "passed": 1,
+        "failed": 2,
+        "exitCodeReportedByCC": 1,
+        "log": {
+          "path": "reports/r43-round5-logs/adoption-delta.tap",
+          "sha256": "53805167f8663c0d5f60c5910d527f4ee86be1a26c95bb8c37b5ec7bec721b20",
+          "bytes": 2595,
+          "actualCollectedBytesMatch": true,
+          "RootProvidedCommitMaterialBytesMatch": true
+        }
+      }
+    ],
+    "countsNotCombined": true,
+    "fullGrantClaimRestartChainVerified": false,
+    "realModelAndNodeChainVerified": false,
+    "real112And101BrowserVerified": false,
+    "independentSourceReview": {
+      "protocol": {
+        "ref": {
+          "path": "artifacts/cc-supervisor-r43/round5-protocol-grant-source-review.json",
+          "sha256": "b056ec52c133215822e36b3ae10f1a4f58eafebb56ffc497090406539e4a2fe5",
+          "bytes": 14943
+        },
+        "P1": 5,
+        "P1Titles": [
+          "Server result validation rejects the new native checkpoint fields",
+          "The real Task ExecutionRequest DTO rejects every supervisor request and grant request",
+          "Unknown-history grant acknowledgement is lost before preflight",
+          "Error final with zero usage overwrites preceding observed assistant usage",
+          "Delivered platform identity mismatch and absent node switch executor block release"
+        ],
+        "scope": "non-author local static source and saved fixture/log inspection; no tests or models run"
+      },
+      "correctionLearning": {
+        "ref": {
+          "path": "artifacts/cc-supervisor-r43/round5-correction-learning-source-review.json",
+          "sha256": "fcc61a22172dc40570959876e07319a83d555635ab48e088b318fbf4ddd31776",
+          "bytes": 14999
+        },
+        "P1": 3,
+        "P1Titles": [
+          "The first adopted handoff never consumes its adoption binding, so the next continuation reuses the old run/version",
+          "Reconcile reports running for an already consumed source without restoring a reachable judgment state",
+          "Pi system prompt and response validator still disagree on experienceReferences"
+        ],
+        "scope": "non-author local static source and saved fixture/log inspection; no tests or models run"
+      },
+      "implementationAccepted": false,
+      "releaseReady": false
+    },
+    "productAcceptance": false,
+    "savedFailureInterpretation": {
+      "privacyUndefined": "Narrow fixture calls a helper with undefined path, requesting supervisorundefined; later guard assertions not reached. Not proof that private content was accepted.",
+      "adoptionZeroDispatch": "Replacement model returns empty object without valid action/directive. First pump only verifies adopted source; after reconcile the invalid judgment cannot authorize dispatch. Not proof that a valid model first handoff fails. Separate adoption/reconcile lifecycle P1 remain in source.",
+      "experienceMissingReference": "Fixture still uses run.agentVersion v1 and lacks result.executionMetadata; current exact nativeCliVersion is unknown and preseeded candidate is correctly excluded. Keep unknown version rejection.",
+      "quotaFocused": "Earlier reproduction remains at original source/time. Broader missing-usage waitingQuota expectation must not restore implicit-zero recovery; add credible known-usage positive separately.",
+      "oneErrorZeroUsage": "Review found an error/quota zero final may overwrite preceding nonzero assistant observations; inspected synthetic fixture is not asserted as the actual R5 occurrence."
+    }
+  },
+  "candidatePackages": {
+    "classification": "candidate only, not accepted for deployment",
+    "runtimeBuild": "20261017-cc-supervisor-r43",
+    "archiveVersion": "20261017-cc-supervisor-r43-r2",
+    "runtimeArchiveVersionMatch": false,
+    "producerPackagersExitCode": 0,
+    "platformFilesReported": 2113,
+    "platformArchiveSha256": "f39f5467213eac0627b0a8221e98d53af68df6ba28681d84bc5ba65d4a4bee6c",
+    "nodeBundleSha256": "d01ec1f8b04036c605c7bc77d7cf2b4887e3ac924d25d02dc2c1c0d0d4360f84",
+    "nodeManifestSha256": "c1a07067cef5670482294f2db2913e24e64f851feba88f4644417cb2a4d26fb9",
+    "archiveBytesIndependentlyCollectedAndVerified": false,
+    "metadataRef": {
+      "path": "reports/r43-round5-packages.json",
+      "sha256": "79881949ab71b8dd9f730b4052fee33593f2e66b5243110f5c81ef93534f2889",
+      "bytes": 2389,
+      "actualCollectedBytesMatch": true,
+      "RootProvidedCommitMaterialBytesMatch": true
+    },
+    "idleOnlyUpgradeExecuteImplemented": false
+  },
+  "usageSupplement": {
+    "basis": "Actual Root terminal native parent usage plus signed external ledger readback; original CC report remains unknown and immutable. Not a central controlled-run receipt or billed supplier amount.",
+    "bareInputTokens": 85247,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 32773760,
+    "inputIncludingCacheTokens": 32859007,
+    "outputTokens": 18114,
+    "totalParentTokens": 32877121,
+    "nativeCumulativeCatalogEstimateUSD": 116.88562199999981,
+    "priorRoundedCatalogEstimateUSD": "84.177032",
+    "roundedCurrentCatalogEstimateUSD": "116.885622",
+    "roundedEstimateDifferenceUSD": "32.708590",
+    "estimateDifferenceIsInvoice": false,
+    "costUSD": null,
+    "costKnown": false,
+    "signedExternalLedgerReadback": {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-usage-ledger-readback.json",
+      "sha256": "3327921748c946c78355b41473e72b6a087d9e6eef13e401dbff3e5f30e8c467",
+      "bytes": 778
+    },
+    "modelUsageAddedToParent": false,
+    "priorUnknownAttributionPreserved": true,
+    "internalCodexTokens": null,
+    "internalCodexCostUSD": null,
+    "originalCCUsageUnknownRetained": {
+      "parentCurrentTurnTokens": null,
+      "sessionModelUsage": null,
+      "catalogCostDeltaUSD": null,
+      "historicalCounterBaselineUSD": 84.1770319999999,
+      "counterIsInvoice": false
+    },
+    "ledger": {
+      "sourceRecordId": "owner-maintenance:f7a378a4-f583-43b9-b349-a046f0dc443a:native-parent-phase1",
+      "inputIncludingCache": 32859007,
+      "output": 18114,
+      "totalTokens": 32877121,
+      "costUSD": null,
+      "costKind": "unavailable",
+      "costComplete": 0,
+      "measurementStatus": "reported",
+      "source": "external-cli"
+    }
+  },
+  "remaining": [
+    "Protocol SOURCE 5P1: runtime checkpoint field mismatch, authoritative ExecutionRequest supervisor/grant DTO missing, unknown-history acknowledgement propagation, contradictory zero error-final usage, release identity/node executor gap.",
+    "Correction/learning SOURCE 3P1: adoption binding not consumed for later handoff, phase-unaware consumed-source reconcile can strand judgment, actual Pi system prompt/parser disagree on experienceReferences.",
+    "Saved combined/adoption/privacy failures remain, with narrow fixture causes separated from independent lifecycle source findings; no new test rerun claimed.",
+    "Four UI workflow holes, correction/decision projection linkage and actual model/CC signed metadata reuse remain unaccepted.",
+    "Full grant/claim/restart chain and genuine provider/node/browser use unverified; runtime/archive mismatch and idle-only prepare do not establish an accepted deployable release."
+  ],
+  "preserved": {
+    "formal112": "20261017-project-oversight-r41",
+    "R43Deployment": false,
+    "101ColdBackupBusinessStarted": false,
+    "factoryPlan": 108,
+    "PG": 29,
+    "Env": 23,
+    "acceptedObjectives": 0,
+    "objectiveDenominator": 74,
+    "supervisionItems": 6,
+    "autonomyRevision": 20,
+    "tenMinuteAutomation": "PAUSED",
+    "oldCentralConfigRevision": 45,
+    "oldBlockedTaskRevision": 12
+  },
+  "sources": [
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-terminal-native-observation.json",
+      "sha256": "c48fb7c66927ea04b1dd1814d19ed35a9e49ae81046177d10229aa8428575404",
+      "bytes": 7939
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-collection-1792230719823.json",
+      "sha256": "f0a29d6e9931b37ce6285aa5b4d5980476e0813e6eb9593216461e0356166b58",
+      "bytes": 7800
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-collection-1792230730426.json",
+      "sha256": "54812c383b7e699260a41138d498849426529ca0f9208183827b8a5347ba36cb",
+      "bytes": 11606
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-collection-1792230731381.json",
+      "sha256": "76accd2e8c8db8bd98d90613bfd846419027df6e1811d20cce5d85fd3b227741",
+      "bytes": 6757
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round5-usage-ledger-readback.json",
+      "sha256": "3327921748c946c78355b41473e72b6a087d9e6eef13e401dbff3e5f30e8c467",
+      "bytes": 778
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/round5-protocol-grant-source-review.json",
+      "sha256": "b056ec52c133215822e36b3ae10f1a4f58eafebb56ffc497090406539e4a2fe5",
+      "bytes": 14943
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/round5-correction-learning-source-review.json",
+      "sha256": "fcc61a22172dc40570959876e07319a83d555635ab48e088b318fbf4ddd31776",
+      "bytes": 14999
+    }
+  ],
+  "rawConversationIncluded": false,
+  "privatePathsIncluded": false,
+  "recordAgentActions": {
+    "localSavedArtifactReadAndSummary": true,
+    "remote": 0,
+    "API": 0,
+    "GitCommands": 0,
+    "modelCalls": 0,
+    "appEdits": 0,
+    "projectTests": 0,
+    "formalDocWrites": 0,
+    "ledgerAppends": 0
+  },
+  "priorSummaryPreserved": {
+    "path": "artifacts/cc-supervisor-r43/maintenance-round5-outcome-safe-summary.json",
+    "sha256": "f9526d90becaf2157d32067e19e66b515d7d157d27dbc1f1cef0492da4cb14aa",
+    "bytes": 13598
+  },
+  "nextWorkBoundary": "Any later R6 choice/start is excluded from this fixed R5 outcome cut; no future selection, dispatch or result prefilled."
+}

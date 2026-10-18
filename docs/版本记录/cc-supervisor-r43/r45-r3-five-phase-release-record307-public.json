@@ -1,0 +1,108 @@
+{
+  "kind": "r45-r3-five-phase-release-and-data-restore-summary",
+  "release": "20261018-unified-projects-r45-r3",
+  "priorRelease": "20261017-cc-supervisor-r44-r1",
+  "sourceCommit": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+  "phases": [
+    {
+      "phase": "stage",
+      "exitCode": 0,
+      "verified": true,
+      "seconds": 33.5550057888031,
+      "originalEvidence": {
+        "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-stage.json",
+        "sha256": "70087ac786fce18051c24ce61f9d76f26dc05cba805a04a378deb3d0e24ed780",
+        "bytes": 1460
+      }
+    },
+    {
+      "phase": "install",
+      "exitCode": 0,
+      "verified": true,
+      "seconds": 8.33028244972229,
+      "originalEvidence": {
+        "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-install.json",
+        "sha256": "a42671265470cd8a219e673b0f95f2f2c82bbd6b25597dbe7cf29588450036bf",
+        "bytes": 1448
+      }
+    },
+    {
+      "phase": "inspect",
+      "exitCode": 0,
+      "verified": true,
+      "seconds": 2.8357458114624023,
+      "originalEvidence": {
+        "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-inspect.json",
+        "sha256": "a0f1bc86f8abe71098627291a2d97562b064148e54c715786318fe9fe7b2be37",
+        "bytes": 1489
+      }
+    },
+    {
+      "phase": "activate",
+      "exitCode": 0,
+      "verified": true,
+      "seconds": 277.3915536403656,
+      "originalEvidence": {
+        "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-activate.json",
+        "sha256": "c410974b74d1146ae8d4249519e411fc129ebea1d730e9e9c87cff1fc7f1ffb3",
+        "bytes": 2857
+      }
+    },
+    {
+      "phase": "health",
+      "exitCode": 0,
+      "verified": true,
+      "seconds": 1.5988621711730957,
+      "originalEvidence": {
+        "path": "artifacts/cc-supervisor-r43/release-r45-r3/112-health.json",
+        "sha256": "5c9a4d3cc609a2ef9b07a53fc91103adbb8ffbc264d75d6a6d49b22789e9a47d",
+        "bytes": 1540
+      }
+    }
+  ],
+  "dataSnapshot": {
+    "status": "passed",
+    "operation": "snapshot-created",
+    "release": "20261018-unified-projects-r45-r3",
+    "scope": "primary",
+    "files": 63,
+    "directories": 58,
+    "bytes": 4285618678,
+    "manifestSha256": "09d92547e09209cb5e934496e1193aaa2d822700a96faf7dd32574a8c42f0b4f",
+    "sqliteDatabasesChecked": 9,
+    "sqliteIntegrity": "ok",
+    "completeTreeVerified": true,
+    "liveDirectoryModified": false,
+    "automaticRollback": false
+  },
+  "isolatedRestore": {
+    "status": "passed",
+    "operation": "isolated-restore-verified",
+    "release": "20261018-unified-projects-r45-r3",
+    "scope": "primary",
+    "files": 63,
+    "directories": 58,
+    "bytes": 4285618678,
+    "manifestSha256": "09d92547e09209cb5e934496e1193aaa2d822700a96faf7dd32574a8c42f0b4f",
+    "sqliteDatabasesChecked": 9,
+    "sqliteIntegrity": "ok",
+    "completeTreeVerified": true,
+    "liveDirectoryModified": false,
+    "automaticRollback": false
+  },
+  "health": {
+    "node": "112",
+    "release": "20261018-unified-projects-r45-r3",
+    "role": "primary",
+    "currentRelease": "20261018-unified-projects-r45-r3",
+    "platformService": "active",
+    "observerService": "active",
+    "observerBuild": "20261018-unified-projects-r45-r3",
+    "businessHealthy": true,
+    "healthBuild": "20261018-unified-projects-r45-r3",
+    "healthStatus": "ok"
+  },
+  "productionDataRestored": false,
+  "node101Changed": false,
+  "factoryResumed": false
+}

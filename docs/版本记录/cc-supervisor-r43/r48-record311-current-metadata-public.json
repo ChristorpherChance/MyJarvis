@@ -1,0 +1,84 @@
+{
+  "kind": "record311-current-metadata-public",
+  "asOf": "2026-10-18T04:23:58.074Z",
+  "projectGoal": "12factory capabilities+5oversight requirements remain current",
+  "goalBasis": "plan",
+  "plan": {
+    "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+    "revision": 3,
+    "hash": "050ae2f6a2822d5dd7b92c1e6e82987f7f93d077eef0386863b03e072e93e6d8",
+    "currentStepId": "C3",
+    "goalBasis": "plan",
+    "boundHistoricalRunId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a"
+  },
+  "supervisionItem": {
+    "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "revision": 18,
+    "hash": "be5459d74008283db5a40fa52f7d9e98e2aadec48f162ced42e7f22de989e22c",
+    "status": "blocked"
+  },
+  "items": 6,
+  "completedBriefs": 4,
+  "otherFiveItemsAndOldHistoryPreserved": true,
+  "old74": "Historical only; no current denominator or automatic acceptance",
+  "currentAcceptanceDenominator": null,
+  "currentVerifiedCount": null,
+  "importantDecision": {
+    "id": "84f0574e-e882-48a1-99f2-51e77989865c",
+    "revision": 10,
+    "hash": "8a2e1cce493278af15db51a6f574bcb76292191656ba8f11a75f6bb9ba25e801",
+    "previousHash": "507301fcad303bb50bd128bf53634fe81fa09c4ee87a958468bf1bbc48ad485a",
+    "actionsAppended": 1,
+    "originalActionsAndRevisionsPreserved": true
+  },
+  "priority": {
+    "id": "75dd172e-b694-456d-a2fb-663500dfee84",
+    "revision": 2,
+    "hash": "cc0e50945e2e4fa1deec86195435715941294618aac4b622431c02b8a6e0c796",
+    "status": "selected",
+    "chosenId": "diagnose-review-first",
+    "actions": [],
+    "changeOf": null,
+    "codeImplementedClaim": false,
+    "PiFixedClaim": false
+  },
+  "opsDecision": {
+    "id": "3b003c1e-8098-45e9-8519-1bc660a50029",
+    "revision": 2,
+    "hash": "ccac506784bdca4ccfcde18459795cf9d8791ec20d30790651dd21d75d78dfe5",
+    "status": "selected",
+    "chosenId": "isolated-bounded-sidecar",
+    "actions": [],
+    "changeOf": null
+  },
+  "opsSelectedNotImplemented": true,
+  "tenMinuteAutomation": "PAUSED",
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-important-decisions-metadata-readback.json",
+      "sha256": "9b3804dfb5c375f73b7faf07920a6a2862202414ca8883a1ed5c862481f2d1e8",
+      "bytes": 1548
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-metadata-planB2-item17-independent-local-audit.json",
+      "sha256": "9418c32eaa2e57eb5ebb4cb50d4c4680bdd63d12746093b184b16f7295d0961a",
+      "bytes": 3548
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-current-planB2-item17-09fe8673-ac78-4988-9aa8-47572d9e6d27-readback.json",
+      "sha256": "f85b77ea7329c0be90fa9c32e9904399864ac5f7c3da9104747c631220a8bdfe",
+      "bytes": 1377
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-current-planB3-item18-e530b122-a668-4522-9599-33786bc8e347-readback.json",
+      "bytes": 1510,
+      "sha256": "1caf238a4cebaaa7a0e3894f896840a19acd68e01e0c4f9ab82779595288ab10"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-sidecar-decision-metadata-readback.json",
+      "bytes": 1071,
+      "sha256": "948cfb27615071d1257639f3c07b16a48c664414903249340bc795c491911d19"
+    }
+  ],
+  "projection": "Public safe fields only; private directories and raw requests omitted. B3receipt sidecarPendingAtDraft retains its earlier cut; later goal3 dispatch is separate evidence."
+}

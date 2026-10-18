@@ -1,0 +1,47 @@
+{
+  "kind": "record309-two-failed-maintenance-terminal-projection",
+  "terminals": [
+    {
+      "round": 17,
+      "source": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-terminal-native-observation.json",
+        "sha256": "3b5b009e288729bb49398bf086c0c8fdda17f7fb64b657158b12087a461ecefa",
+        "bytes": 3288
+      },
+      "operationId": "67e2c02d-6114-4f99-98f6-6f75414b49ee",
+      "terminal": true,
+      "cgroupProcesses": 0,
+      "controllerExitCode": 1,
+      "elapsedSec": 466.05027317092754,
+      "nativeResultCount": 1,
+      "nativeFinalSubtype": "success",
+      "nativeFinalIsError": true,
+      "nativeTurns": 17,
+      "completeCLIReceiptQualified": false,
+      "nativeFinalPayloadWithheld": true,
+      "meaning": "subtype success does not override is_errortrue and CLIexit1; not product acceptance"
+    },
+    {
+      "round": 18,
+      "source": {
+        "path": "artifacts/cc-supervisor-r43/r46-round18-terminal-native-observation.json",
+        "sha256": "198f71b1f1925b2b738b907770654bca228bfc9f6f1f1ac406b0f0ab3071de56",
+        "bytes": 3266
+      },
+      "operationId": "bd8e5efc-eaca-4cd5-b8f6-b5a661de1290",
+      "terminal": true,
+      "cgroupProcesses": 0,
+      "controllerExitCode": 1,
+      "elapsedSec": 56.72154996404424,
+      "nativeResultCount": 1,
+      "nativeFinalSubtype": "success",
+      "nativeFinalIsError": true,
+      "nativeTurns": 1,
+      "completeCLIReceiptQualified": false,
+      "nativeFinalPayloadWithheld": true,
+      "meaning": "subtype success does not override is_errortrue and CLIexit1; not product acceptance"
+    }
+  ],
+  "noBlindThirdProviderAttempt": true,
+  "noNewDeployment": true
+}

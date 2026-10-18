@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-18T02:48:41.722Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "sessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+  "sessionRevision": 3,
+  "status": "running",
+  "enabled": true,
+  "goalRevision": 1,
+  "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+  "runId": "e23ccda816328df0f9e2073faca9bcbdc5c2674c",
+  "executionState": "running",
+  "resultReceived": false,
+  "runStatus": "running",
+  "resultSource": null,
+  "outcome": null,
+  "exitCode": null,
+  "resultHash": null,
+  "eventCursor": 20,
+  "events": [
+    {
+      "sequence": 20,
+      "kind": "instruction",
+      "decisionId": null,
+      "dispatchedRunId": "e23ccda816328df0f9e2073faca9bcbdc5c2674c"
+    },
+    {
+      "sequence": 19,
+      "kind": "dispatch-intent",
+      "decisionId": null,
+      "dispatchedRunId": null
+    },
+    {
+      "sequence": 18,
+      "kind": "command",
+      "decisionId": null,
+      "dispatchedRunId": null
+    },
+    {
+      "sequence": 17,
+      "kind": "goal",
+      "decisionId": null,
+      "dispatchedRunId": null
+    }
+  ],
+  "kind": "r48-formal-platform-dispatch-record310-public-projection",
+  "centralDispatched": true,
+  "ownerMaintenance": false,
+  "originalKickoff": {
+    "path": "artifacts/cc-supervisor-r43/r48-formal-jarvis-goal-transition-kickoff.json",
+    "sha256": "9199e8eb928a5447cc3a99bcd8221ada8ff0f6878071da2392788ea941a0f92a",
+    "bytes": 10184
+  },
+  "originalFirstClaim": {
+    "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-first-claim.json",
+    "sha256": "237bbcef72d768ae7829baa44e8244ecede187ec612142addfe4bf5991961ff1",
+    "bytes": 1180
+  },
+  "originalLatestSavedObservation": {
+    "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-goal-saved-result-check.json",
+    "sha256": "de953f947aeccbf18e3d7329fac20bf871bcfd899aa766ad44c1e175355b4a07",
+    "bytes": 1192
+  },
+  "projection": "仅身份、状态和事件；移除私有目录、原指令、认证及原始会话。"
+}

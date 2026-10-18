@@ -1,0 +1,135 @@
+{
+  "kind": "r52-f9-historical-report-saved-lineage-limited-review",
+  "at": "2026-10-18T10:15:44.608Z",
+  "scope": "LOCAL immutable saved results and original bytes only; no API, SSH, model, tests, source edits or new run",
+  "owner": {
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "supervisorSessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "nativeSessionId": "d482f9f6-f0a5-48fc-a603-20ccb5a919f4",
+    "workspace": "/home/superopen/All-Projects/msf-full-test-r42-6294520c"
+  },
+  "f9": {
+    "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+    "resultSHA256": "3e51e29803579eb75e7fc5c89124380d38c49e68111609f387bc0bb8168d83bf",
+    "source": "signed-agent",
+    "outcome": "success",
+    "exitCode": 0,
+    "raw": {
+      "bytes": 13574,
+      "sha256": "791e526b996aeb7b959ec7d675b4d72e424b7e2e74c2212c6c562f56be5320d4",
+      "private": true
+    },
+    "topLevelReceiptCount": 1,
+    "topLevelReceipt": {
+      "path": "artifacts/r46-supervision-recovery-facts-v3.json",
+      "bytes": 3967,
+      "sha256": "3492fe193c3005df2a80648ab45b90a5b4e265304b6287311fe93fe987d09561",
+      "exactDecodedAndSavedBytes": true
+    },
+    "reportAppearsOnlyInNestedIndex": true,
+    "nestedReport": {
+      "path": "reports/supervision-20261017-1843/report.json",
+      "bytes": 2549,
+      "sha256": "0833793777d6bdae9fbb79d78d9a31a2355a78bbf5191a6f9b45ecbac10db7df"
+    }
+  },
+  "historicalReport": {
+    "path": "reports/supervision-20261017-1843/report.json",
+    "bytes": 2549,
+    "sha256": "0833793777d6bdae9fbb79d78d9a31a2355a78bbf5191a6f9b45ecbac10db7df",
+    "round": "supervision-20261017-1843",
+    "finishedAt": "2026-10-17T18:48:25.865507+00:00",
+    "declaredBinding": {
+      "path": "reports/supervision-20261017-1843/binding.json",
+      "sha256": "c3ffa4cc7c4334f0c6bf7f45e9c25bc8105cf3f4319adf435a67395f31b9fe2a"
+    },
+    "counts": {
+      "vitestPassed": 207,
+      "vitestFailed": 0,
+      "vitestSkipped": 36
+    },
+    "sourceChangesCount": 0,
+    "sourceFixesExecuted": 0,
+    "repairRetestsExecuted": 0,
+    "independentAcceptance": false
+  },
+  "laterExactTopLevelCollections": [
+    {
+      "role": "r50-automatic-followup",
+      "runId": "d2c14227054efd4f2020a0818a30000d61e9edd8",
+      "resultSHA256": "77c64824cc4e1b72af9e25dcfeb9125e4ec80dae321a929d2eb101f643b953f5",
+      "source": "signed-agent",
+      "status": "succeeded",
+      "exitCode": 0,
+      "receiptOrdinal": 11,
+      "raw": {
+        "bytes": 47353,
+        "sha256": "1fbf90a00501df3646389ecc0a723775c47e3180c893e2ff75d410ab48c78b3c",
+        "private": true
+      },
+      "reportBytesIdentical": true
+    },
+    {
+      "role": "r52-goal10-current-reviewed-batch",
+      "runId": "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+      "resultSHA256": "def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003",
+      "source": "signed-agent",
+      "status": "succeeded",
+      "exitCode": 0,
+      "receiptOrdinal": 19,
+      "raw": {
+        "bytes": 89215,
+        "sha256": "71014d45b40a6467b829a96784852b2d2adf0c349bb39e4b3806b0577c1aa3c8",
+        "private": true
+      },
+      "reportBytesIdentical": true
+    }
+  ],
+  "policySkip": {
+    "path": "artifacts/goal4-db-preflight/selected-original-skip.json",
+    "bytes": 533,
+    "sha256": "5df0f4c81dcc215bc90da482d5949ad70f3ee849f9ddbfdf5939fbbe6a732ae9",
+    "suite": "PolicyService（集成，需 DB）",
+    "fullName": "PolicyService（集成，需 DB） postgres 未就绪",
+    "status": "skipped",
+    "sourcePath": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/server/src/modules/policy/policy.integration.test.ts",
+    "scope": "One selected postgres-not-ready skip record. The report total36 is all-suite skipped count; it is not 36 PolicyService cases and does not prove the two later selected cases ran in the old round."
+  },
+  "conclusions": {
+    "exactAssociationProved": "The f9 signed-agent persisted result carried the small derived-facts original which indexed the exact historical report SHA256; later same-project/task/native runs returned that report as a complete top-level original, including current G10 receipt19.",
+    "producerBindingNotProved": "The old report only references binding.json by SHA256. That file was not found in the examined saved receipt inventories or local matching originals. Report-producing run/native identity cannot be elevated from the nested f9 index.",
+    "f9IsRecoveryNotOriginalTestRun": true,
+    "noNewRunNeededForKnownAssociation": true,
+    "remainingEvidence": "If original producing-run identity is required, collect the exact already-existing reports/supervision-20261017-1843/binding.json matching c3ffa4cc7c4334f0c6bf7f45e9c25bc8105cf3f4319adf435a67395f31b9fe2a and any referenced source originals through the already dispatched read-only followup; do not rerun tests or fabricate the binding.",
+    "activeFollowupNotTouched": true
+  },
+  "limits": {
+    "signatureProvenance": "signed-agent is persisted central protocol provenance. Offline original HTTP signature headers were not supplied and are not independently reverified here.",
+    "nestedIndexIsNotFullOriginalReceipt": true,
+    "fullHistoricalLogSetRevalidated": false,
+    "fullFactoryOrProductAccepted": false
+  },
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-third-run-receipt-terminal-third.json",
+      "bytes": 2531,
+      "sha256": "1dd54b0455e28c5840f05781a3b5fd358c7f6b5ffd5da729651efd7a062e68e8"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-goal7-automatic-followup-saved-evidence-independent-review.json",
+      "bytes": 12367,
+      "sha256": "b3c85e46d7cedf7b5b7161e1ff50049f7eccfcedff3538425b84f703655f2b58"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r51-r1-factory-goal9-saved-originals-limited-review.json",
+      "bytes": 7684,
+      "sha256": "d8ea92ea6e21ca6a37fc93be404b529a742c1c3952b3138d6ca69867adde68ea"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-goal10-first-real-judgment-saved-binding.json",
+      "bytes": 1789,
+      "sha256": "3b9c54dad3d53d613acbf69b20750df279574788636d4d4de68454ba6cc13d39"
+    }
+  ]
+}

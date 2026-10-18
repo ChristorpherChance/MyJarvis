@@ -1,0 +1,101 @@
+{
+  "kind":"r43-round4-correction-learning-non-author-source-review",
+  "version":1,
+  "reviewedOn":"2026-10-17",
+  "status":"source-only-remaining-blockers-not-release-ready",
+  "source":{
+    "tree":"D:/AI/workspaces/MyJevis/.jarvis-dev/cc-supervisor-r43-round4",
+    "reportedCommit":"607f4a62387311276dc214999c82850acf1a1139",
+    "reportedBaseline":"5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+    "reportedExactPatch":{"path":"artifacts/cc-supervisor-r43/cc-maintenance-round4-1792228917412.patch","bytes":498404,"sha256":"c094fe304c239f1c8770ef4c7d633bbcace76634d76ba269fe97cd92e605de9e"},
+    "provenanceBoundary":"Root supplied the exact imported patch/commit identity. This reviewer directly read the local R4 source and fingerprinted the files below; no remote or executed-source verification was performed.",
+    "fingerprints":[
+      {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","bytes":26267,"sha256":"bccce1334c84e244817b626ef243cde1cdebc3dbe7b12ff31987f44f9e20efd4"},
+      {"path":"apps/api/src/runtime/supervisor-review.ts","bytes":3628,"sha256":"96da99d604cbda5b53c8851e627b00c534b0a57d55183e4342ad0b17ef59d584"},
+      {"path":"apps/api/src/runtime/project-supervisor-model.ts","bytes":6822,"sha256":"237e6b24b1209fa28115c1cb42fdfdffa62514de703a23e078578e33395306df"},
+      {"path":"apps/api/src/runtime/project-supervisor-routes.ts","bytes":2506,"sha256":"7183d6fad900c609f494033af30324355f4648b5276b4cb3add5c4d9198553b7"},
+      {"path":"apps/web/src/features/operations/ProjectSupervisorPanel.tsx","bytes":17907,"sha256":"d76d0443bd890ad7d05c15c292e7901c7684dd1a815dde6a472dc79b47b7e180"},
+      {"path":"apps/api/src/runtime/execution-routes.ts","bytes":13330,"sha256":"e8eca4687321b1064f4e4df91dabfa90389b3b458fbe88efd292628ce9819a75"},
+      {"path":"apps/api/src/runtime/execution-runtime.ts","bytes":122689,"sha256":"e67e936167c5a003146863ccfb135884583ecf292773be40f335e82f346c1f28"},
+      {"path":"apps/api/test/project-supervisor-r43.test.ts","bytes":8667,"sha256":"51ec02428e1f5399b6da2da7375223be2b262f7c7e76ce5b2c5782054222e705"}
+    ]
+  },
+  "scope":"Correction/learning and decision projection, human history UI, existing fixed-CC-session continuation, and actual executor-version provenance. The R2-prepared correction-learning checklist remains an acceptance specification, not an executed result.",
+  "executionBoundary":{
+    "appModified":false,"testsRun":false,"typecheckRun":false,"buildRun":false,"modelsCalled":false,"networkAccessed":false,"productionOperation":false,
+    "onlyFileWritten":"artifacts/cc-supervisor-r43/round4-correction-learning-source-review.json",
+    "reportedEvidenceNotRerun":"Root reports successful CC type/build exits, HTTP 3/3 using actual TCP/SQLite with explicit model/executor fixtures, an original combined 9/10 preserved, later protocol 5/5, and late-result slices 8/8 plus 4/4 separately. These are not combined into a fresh aggregate pass here. A subagent's 39-case runtime report was 37 pass/1 skip/1 failure, with quota AGENT_RESULT_REJECTED known only from a message and no raw log independently reproduced.",
+    "fixtureBoundary":"The source HTTP fixture mounts the supervisor routes with real identity/repository/SQLite and a local socket, but substitutes the execution runtime and model. It is not complete createApp DTO/actual runner/provider/CC or browser acceptance.",
+    "fieldBoundary":"No true model/CC end-to-end, browser, signed stop/grant/lineage field acceptance is established by this review. The maintenance terminal is not a central signed supervisor run. Root reports 112 is still R41 and the author explicitly does not call R4 release-ready."
+  },
+  "findingCounts":{"P0":0,"P1":3},
+  "findings":[
+    {
+      "id":"R4-CL-P1-01",
+      "priority":"P1",
+      "classification":"remaining-goal-blocker-existing-session-reachability",
+      "title":"The established fixed CC task cannot enter the supervisor runtime",
+      "refs":["apps/api/src/runtime/project-supervisor-runtime.ts:47","apps/api/src/runtime/project-supervisor-runtime.ts:50","apps/api/src/runtime/project-supervisor-routes.ts:10","apps/api/src/runtime/project-supervisor-routes.ts:13","apps/api/src/runtime/execution-runtime.ts:200","apps/web/src/features/operations/ProjectSupervisorPanel.tsx:31"],
+      "trigger":"The owner selects the existing 101 task whose executionRequest/native sessionId already records the fixed CC conversation and its historical usage.",
+      "sourceEvidence":"create rejects any task with executionRequest or sessionId as TAKEOVER_REQUIRED. command/correct require a supervisor session to already exist. The registered supervisor routes expose only view/create/commands/corrections; takeover releases an existing supervisor binding rather than adopting an old task. A continuation grant authorizes another run only after the supervisor has a consumed source; it does not create the missing binding. No inspected API or UI reconciles the existing task into a new supervisor session.",
+      "impact":"The requested existing fixed-CC conversation cannot use this supervisor loop through the implemented public path. A newly empty task can enter, but substituting it would omit the required existing lineage/accounting and is not an acceptable workaround.",
+      "narrowFix":"Add one explicit owner-authorized CAS/idempotent adoption/reconciliation operation for the current existing task/run/native session. Bind the signed terminal/source hash, workspace/machine/executor and original accounting into the new supervisor session, and teach the first supervised continuation to accept that specific reconciled lineage. Preserve the current fail-closed rejection for unreviewed histories; do not merely remove it or clear task/session fields.",
+      "neededEvidence":"Authorized exact-source API/persistence checks for a real existing executionRequest/sessionId, changed bindings and changed source hashes, followed separately by the actual existing-session CC continuation. A new empty-task fixture does not prove this case.",
+      "confidence":"high-static-reachability",
+      "regressionBoundary":"This is a still-unimplemented requirement already observed in R3, now confirmed on final R4. It is not falsely presented as a newly introduced R4 regression."
+    },
+    {
+      "id":"R4-CL-P1-02",
+      "priority":"P1",
+      "classification":"concrete-dataflow-blocker-learning-reachability",
+      "title":"Experience version conditions have no production source and automatic candidates stay permanently unselectable",
+      "refs":["apps/api/src/runtime/project-supervisor-runtime.ts:40","apps/api/src/runtime/project-supervisor-runtime.ts:62","apps/api/src/runtime/project-supervisor-runtime.ts:63","apps/api/src/runtime/project-supervisor-runtime.ts:67","apps/api/src/runtime/supervisor-review.ts:9","apps/api/src/runtime/execution-routes.ts:50","apps/api/src/runtime/execution-runtime.ts:141","apps/api/src/runtime/execution-runtime.ts:313","apps/api/test/project-supervisor-r43.test.ts:21","apps/api/test/project-supervisor-r43.test.ts:29"],
+      "trigger":"An actual signed execution result is consumed, a learning candidate is automatically captured, and a later supervisor judgment tries to select relevant experiences.",
+      "sourceEvidence":"The selector requires nonempty exact machineId/executor/version values on both record and current binding. Model input reads run.agentVersion, but a search of application .ts/.tsx source finds only that read and the event.agentVersion read in candidate projection: no production writer exists. The strict signed result DTO has no version field; getRun exposes the stored run/result without creating one. save/outcome also never copy an executor version into their events. Thus the current binding version is null and automatic candidates receive conditions.version=null plus unknownConditions=['executor-version']. The test supplies agentVersion:'v1' directly in its replacement execution map and pre-seeds another versioned candidate; it does not demonstrate the missing real provenance path.",
+      "impact":"Even if an automatic candidate is later verified, it cannot match a real next judgment through this source. The helper's version filter is correctly fail-closed, but actual version-qualified reuse remains unreachable rather than implemented by the passing fixture.",
+      "narrowFix":"Define which executor/runtime/native CLI version the condition means, collect it from the actual node as signed bounded metadata, persist it on the bound run and immutable outcome event, and propagate it to candidate provenance and future model context. Preserve unknown on missing evidence and continue to refuse reuse when unknown. Add a versioned correction path for previously captured unknown candidates rather than mutating provenance silently.",
+      "neededEvidence":"An authorized actual execution-runtime/result DTO path must carry a supplied signed version into getRun, outcome, capture metadata and subsequent model input without fixture-only properties. Check missing/mismatching version and counterexample rejection, then distinguish controlled fixture proof from provider/CC use.",
+      "confidence":"high-static-dataflow",
+      "notAClaim":"No recommendation to relax the unknown-version filter or infer a runtime version from an unrelated log line, model name or the helper fixture."
+    },
+    {
+      "id":"R4-CL-P1-03",
+      "priority":"P1",
+      "classification":"remaining-private-content-persistence-blocker",
+      "title":"Privacy rejection is partial and model decisions are persisted before it runs",
+      "refs":["apps/api/src/runtime/project-supervisor-runtime.ts:41","apps/api/src/runtime/project-supervisor-runtime.ts:54","apps/api/src/runtime/project-supervisor-runtime.ts:65","apps/api/src/runtime/supervisor-intents.ts:12","apps/api/src/runtime/supervisor-intents.ts:13","apps/api/src/runtime/project-decision-runtime.ts:61","apps/api/src/runtime/project-decision-runtime.ts:66"],
+      "trigger":"A correction narrative contains a known private path/private-access URL, or a model returns a decision whose narrative/directive contains an obvious credential rejected by publicInput.",
+      "sourceEvidence":"publicInput now rejects redactExecutionLog changes and one Chinese credential pattern, but omits the existing decision guard's private-path, private-access URL and other bounded public-summary checks. correct then appends the accepted text to the session/event/context. Separately finishJudgment awaits the model and calls intents.complete before current(s), binding and publicInput(decision). complete writes the raw result into both intent storage and append-only observations; a later privacy exception cannot undo those writes.",
+      "impact":"Known private reference counterexamples still enter durable correction history/model input. Even a decision recognized as private by the new guard has already been durably stored. A later decision-projection rejection protects that separate ledger, not the earlier supervisor or intent storage.",
+      "narrowFix":"Reuse a field-scoped shared public-narrative validator for corrections and model decisions, including the existing private-reference rules, before persisting their raw content. Validate legitimate workspace binding fields under their own policy. For rejected model output retain only a safe failure/observation summary, original hash/binding and actual usage evidence; do not keep its private plaintext in immutable observations or automatically retry the model.",
+      "neededEvidence":"Authorized isolated persistent tests with synthetic credential/private-reference strings must compare session/event/intent/observation counts and safe contents before/after rejection and after reopening. Never use real credentials or private originals in the report.",
+      "confidence":"high-static-order-and-dataflow",
+      "regressionBoundary":"The earlier completely absent correction guard has been partially repaired. This finding is narrowed to the remaining counterexamples and the actual write-before-check order, not a claim that no privacy improvement occurred."
+    }
+  ],
+  "previousR3FindingsReassessed":[
+    {"prior":"R3-CL-P1-01","status":"source-fix-present","evidence":"supervisor-review.ts:6 now preserves state:'blocked' as const. The author reports successful compilation; this reviewer did not run it."},
+    {"prior":"R3-CL-P1-02","status":"source-fix-present-limited-execution-evidence","evidence":"project-supervisor-runtime.ts:54 appends both correction scopes into correctionContext, and :62 freezes that context into new model input. Future-reference correction persistence/restart appears in the HTTP fixture. This does not establish all current/future execution interleavings or actual provider use."},
+    {"prior":"R3-CL-P1-03","status":"partially-fixed-with-specific-residual-P1","evidence":"A publicInput guard is now called before correction writes. The remaining issues are specified in R4-CL-P1-03."},
+    {"prior":"correction-command-replay-observation","status":"source-fix-present","evidence":"project-supervisor-runtime.ts:54 stores the exact response including correctionEffect; the HTTP source asserts equal replay responses."}
+  ],
+  "projectionAndUIAssessment":{
+    "implementedProgress":[
+      "save now queues selected event kinds into a persistent supervisor_projection table, and pump retries queued projections using eventId as commandId.",
+      "Correction/decision/review events call ProjectDecisionRuntime.record, wired in app.ts:202; outcome/correction/blocked events use experiences.capture. Candidates default to verified=false/status=inbox.",
+      "Before follow-up dispatch the code rechecks the frozen experience versions and decision context. Started or uncertain model intents are not silently re-invoked.",
+      "The UI adds a bounded one-use continuation grant form and retains correction drafts on failure. No browser behavior was executed here."
+    ],
+    "remainingImplementationGapsNotCountedAsNewRegression":[
+      {"refs":["apps/api/src/runtime/project-supervisor-runtime.ts:66"],"gap":"Decision projection is a lossy proposed record: changeOf=null, chosenId=null, one synthetic recorded option, empty advantages/disadvantages and no event-to-created-decision mapping. A correction is not linked to a previous ledger decision/version, and outcome does not append an implementation/action to that ledger. It must not be described as the complete decision selection/change/implementation chain."},
+      {"refs":["apps/api/src/runtime/project-supervisor-runtime.ts:67"],"gap":"Automatic candidate content retains a reason/summary, outcome and event/hash reference, but does not directly preserve the correctedFact/preferredOption or link a counterexample to the prior experience. counterexamples is always initialized empty. Capturing a candidate is real progress, not proof of a complete version/prerequisite/counterexample learning lifecycle."},
+      {"refs":["apps/api/src/runtime/project-supervisor-runtime.ts:68"],"gap":"Projection exceptions are swallowed and remain pending; no projected failure reason is exposed. Permanent invalid rows can continue to occupy the first 30 pending slots. This was not executed and is not counted as an additional P1."},
+      {"refs":["apps/web/src/features/operations/ProjectSupervisorPanel.tsx:12","apps/web/src/features/operations/ProjectSupervisorPanel.tsx:39","apps/web/src/features/operations/ProjectSupervisorPanel.tsx:56","apps/api/src/runtime/project-supervisor-runtime.ts:46"],"gap":"History still flattens time/kind/top-level text and does not expand nested original decision/feedback/evidence/learning details; only the latest reason is selected elsewhere. The API supplies the last 100 events without pagination. The correction button can select a target whose full historical judgment the UI does not display. This is an outstanding human-review UI gap; no DOM or accessibility claim is made."}
+    ]
+  },
+  "acceptanceDisposition":{
+    "releaseReady":false,"implementationAccepted":false,"independentProductAcceptance":false,"productionDeployedByReviewer":false,
+    "next":"Return the three concrete blockers and separately described chain/UI gaps to the authorized existing 101 CC workflow. Preserve all previous failed receipts and historical usage. Review the next exact source cut and obtain only affected missing evidence; do not rerun unrelated passing groups, invent field acceptance, start an empty replacement task or bypass authorization/accounting gates."
+  },
+  "privacyOfReport":"Public source references and bounded summaries only; no original chat, private configuration, credential, cookie, raw provider conversation or private recording."
+}

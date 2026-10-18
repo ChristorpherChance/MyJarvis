@@ -1,0 +1,157 @@
+{
+  "kind": "r46-round16-received-dual-package-verification",
+  "at": "2026-10-17T18:30:51.102731+00:00",
+  "sourceCommit": "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8",
+  "reportCommit": "e8012e8629c496447c31be19d2025a003153d6d1",
+  "runtimeBuild": "20261018-unified-projects-r46-r1",
+  "archiveVersion": "20261018-unified-projects-r46-r1",
+  "reportedArtifacts": [
+    {
+      "file": ".jarvis-dev/releases/r46-r1/platform/20261018-unified-projects-r46-r1.zip",
+      "bytes": 22746833,
+      "sha256": "f02201c96ed7de7bdecc2e77ebf0a7b9b8df0691ce78d2c4af4ac00d14274bbd"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/platform/20261018-unified-projects-r46-r1.zip.sha256",
+      "bytes": 103,
+      "sha256": "dfbeff3cccf84aba922c036ffc9ff2aa48fbc183427a589c74d05574ff00a8dc"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/platform/release-manifest.json",
+      "bytes": 440860,
+      "sha256": "3cb627ab6e32713131f6bf87fca2485e6475bb35a9b46082bb92967b6ddcf306"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/SHA256.json",
+      "bytes": 622,
+      "sha256": "11b00f1ed363efd99c83bf5144ff51563689969d00194df354aeb7a1ae6244fe"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/agent-supervisor.js",
+      "bytes": 3196,
+      "sha256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/jarvis-node.mjs",
+      "bytes": 984069,
+      "sha256": "f282a7823d386b70c6fe63a1ff6392533fa482972ee3284a70926a579010d58e"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/package.json",
+      "bytes": 92,
+      "sha256": "dc96d7f5167ea7dd8b03f7908b30cc7e028db9cb7a686a64405f76cb20914d44"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/prepare-development-node.mjs",
+      "bytes": 5967,
+      "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572"
+    },
+    {
+      "file": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/使用说明.md",
+      "bytes": 7945,
+      "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e"
+    }
+  ],
+  "platformPayloadFilesVerified": 2225,
+  "packagedTrackedSourceFilesComparedToExactGitBlob": 1837,
+  "originalControllerExitCode": 0,
+  "nativeCLIComplete": true,
+  "timeout143Preserved": false,
+  "actualTerminalAndMetadataAndCollectionBound": true,
+  "nodePayloadFilesVerified": 5,
+  "allPackagedAppSourceFilesVerifiedAgainstExactGitBlob": 306,
+  "platformClusterRuntimeBuildMarkerVerified": true,
+  "dualWorkerBuildContract": {
+    "platformWorkerCompilation": "TypeScript per-module emit",
+    "nodeWorkerCompilation": "esbuild standalone bundle target node24",
+    "bytesExpectedIdentical": false,
+    "sameEntrySourcePath": "apps/api/src/runtime/agent-supervisor.ts",
+    "entrySourceSHA256": "bcd78ab8213884dd6d4998ea605b5f326a1ea665a823c65ed2a7a3c9f42215c9",
+    "nodeWorkerSHA256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c",
+    "platformWorkerSHA256": "3202e01590ef2a3d133ab8cc701e4b8d676c03d0412f982648f3673d8eaa575a"
+  },
+  "nodeVersionInjectionRequired": false,
+  "nodeCompatibilityContract": {
+    "releaseVersionInjectionRequired": false,
+    "exactAcceptedR44FiveFiles": [
+      {
+        "file": "jarvis-node.mjs",
+        "bytes": 984069,
+        "sha256": "f282a7823d386b70c6fe63a1ff6392533fa482972ee3284a70926a579010d58e"
+      },
+      {
+        "file": "agent-supervisor.js",
+        "bytes": 3196,
+        "sha256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c"
+      },
+      {
+        "file": "prepare-development-node.mjs",
+        "bytes": 5967,
+        "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572"
+      },
+      {
+        "file": "使用说明.md",
+        "bytes": 7945,
+        "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e"
+      },
+      {
+        "file": "package.json",
+        "bytes": 92,
+        "sha256": "dc96d7f5167ea7dd8b03f7908b30cc7e028db9cb7a686a64405f76cb20914d44"
+      }
+    ],
+    "nodeCompatibleSourceCommit": "9b0a71273a103ca5c2f1db7a63f07969beeabc49",
+    "platformSourceCommit": "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8",
+    "builderSHA256": "189b49a029bd7f410944398bda56e81c625dec509a48a358465fcc32918eae60",
+    "entrySourceFiles": [
+      "apps/agent/src/index.ts",
+      "apps/api/src/runtime/agent-supervisor.ts"
+    ],
+    "copiedSourceFiles": {
+      "prepare-development-node.mjs": "scripts/prepare-development-node.mjs",
+      "使用说明.md": "docs/开发监督与双机接入.md"
+    },
+    "running101Agent": "R7/config46 unchanged; no install performed by this verifier",
+    "compiledReproducibilityClaimed": false,
+    "requiredSourceInputsVerifiedAgainstCandidateGitBlobs": [
+      "apps/agent/src/index.ts",
+      "apps/api/src/runtime/agent-supervisor.ts",
+      "docs/开发监督与双机接入.md",
+      "scripts/build-development-node-package.mjs",
+      "scripts/prepare-development-node.mjs"
+    ]
+  },
+  "legacySevenComparedToOriginalR41": 7,
+  "priorR7AssetsPreserved": 54,
+  "priorR44AssetsPreserved": 67,
+  "priorR45AssetsPreserved": 92,
+  "manifestSHA256": "3cb627ab6e32713131f6bf87fca2485e6475bb35a9b46082bb92967b6ddcf306",
+  "nodeProvenance": {
+    "path": ".jarvis-dev/releases/r46-r1/node-20261018-unified-projects-r46-r1/root-provenance.json",
+    "bytes": 786,
+    "sha256": "f14d816a6ab3c487989c0027ac846825b059c64437922bd9f926fd5abbb725c3"
+  },
+  "compiledReproducibilityClaimed": false,
+  "applicationExecutedByRoot": false,
+  "productionDeployed": false,
+  "historicalVerificationFailure": {
+    "scope": "Prior R9 Root verifier, not an R10 product failure",
+    "code": "DUAL_PACKAGE_WORKER_CHANGED",
+    "rootAssumptionCorrected": "The original packagers intentionally emit tsc modules for the platform and a standalone esbuild worker for the node. No product bytes were changed."
+  },
+  "historicalCollectorFailure": {
+    "scope": "Prior R9 patch collection only, no repeated patch attempt in R10",
+    "code": "REPORT_BOUNDARY",
+    "oversizedPatchWasExcludedWithoutWideningGuard": true,
+    "sevenOtherReportsCollected": true
+  },
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-received-dual-package-verification.json",
+      "sha256": "87a02ca3c07ff573a0917bdd45f2d4ba0342c8a644d5ae4300f8868b7d58ac93",
+      "bytes": 6338
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

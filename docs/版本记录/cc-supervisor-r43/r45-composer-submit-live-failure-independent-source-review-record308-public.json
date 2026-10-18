@@ -1,0 +1,108 @@
+{
+  "kind": "r45-composer-submit-live-failure-independent-source-review",
+  "mode": "LOCAL source confirmation of Root's actual browser reproduction; no tests executed here",
+  "source": {
+    "app": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+    "release": "20261018-unified-projects-r45-r3"
+  },
+  "confirmedP1": {
+    "id": "R45-COMPOSER-BUTTON-DOES-NOT-SUBMIT",
+    "refs": [
+      "apps/web/src/ui.tsx:2",
+      "apps/web/src/features/operations/common.tsx:2",
+      "apps/web/src/features/operations/common.tsx:5",
+      "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:18",
+      "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:22"
+    ],
+    "cause": "common re-exports the real ui.Button. ui.Button supplies type=button, with explicit caller props able to override it. The composer principal Button has neither type=submit nor an onClick handler. Its containing form uses onSubmit=submit. A valid enabled type=button does not trigger that form handler on click, so criteria validation, HTTP dispatch, busy state and success/error feedback never run.",
+    "rootObserved": "Root's real logged-in page has all fields valid, principal button enabled, inForm=true and actual type=button; clicking Start yields no request/state/feedback. This source chain independently matches that evidence.",
+    "affectedModes": [
+      "no session: initial kickoff",
+      "existing draft: start",
+      "paused: resume",
+      "waiting_user: reply",
+      "pending: replay the original kickoff input"
+    ],
+    "notAffectedByThisCause": "Pause/stop/takeover and data-detail controls have explicit click handlers. The existing FormDialog save uses an explicit type=submit at common.tsx:137.",
+    "minimumFix": "Set type=submit on this composer principal Button. Preserve the global Button default, so unrelated controls do not become accidental form submissions. Do not alter kickoff authority, CAS, pending binding, validation or executor behavior to fix a missing native HTML submit action."
+  },
+  "minimumRegression": {
+    "beforeAfter": "Retain a pre-fix failing check that uses the production composer AND production ui.Button/common export. Assert the actual rendered principal button within the composer has submit semantics, not merely that its label exists or that its disabled attribute is absent. After the one-location fix, the same assertion passes.",
+    "dependencyFit": "Existing React/react-dom/server and esbuild can perform a production SSR button-type assertion without introducing a DOM dependency. The declared web dependencies have no jsdom/happy-dom/testing-library. SSR is only the structural part of the proof, not a substitute for a DOM activation test.",
+    "actualClickProof": "Where an existing browser/DOM harness is available, mount the real form/button and activate the actual enabled button. Let native HTML click/form-submit and React onSubmit perform their normal chain. Observe one actual intended request/event; never stub Button, directly call submit/onSubmit, use requestSubmit as a substitute for button activation, or invent a fake default-action implementation and call it a browser test.",
+    "modeExpectations": [
+      {
+        "mode": "fresh kickoff",
+        "expected": "one workbench/kickoff POST and recorded receipt/state"
+      },
+      {
+        "mode": "draft / paused / waiting_user",
+        "expected": "same real button semantics; commands action start / resume / reply with current revision and applicable input"
+      },
+      {
+        "mode": "pending",
+        "expected": "kickoff POST uses the original pending command/input, even if displayed editable fields differ"
+      },
+      {
+        "mode": "active or otherwise disabled",
+        "expected": "button activation must not dispatch; existing unsent-draft and backend guards remain"
+      }
+    ],
+    "invalidInput": "Required-field and duplicate-condition failures should produce the real validation/visible error and zero unintended kickoff; they must not be bypassed to make the click test green.",
+    "rootFieldRetest": "After101CC repair, independent source/package review and Root publication, use the original page's ordinary Start click with the actual authorized goal. Verify DOM type=submit, one intended POST, visible receipt or truthful error, then queued/claim/CC feedback using real evidence. Only then evaluate the full user workflow; do not call previous read-only navigation acceptance an interaction pass. Other modes can remain isolated controlled fixtures instead of creating live production jobs just for coverage."
+  },
+  "minimalSameRoundUX": [
+    {
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:21"
+      ],
+      "change": "When no supervisor summary exists, say no judgment for THIS supervision goal yet, with existing project history retained. If a goal already exists, do not tell the user to first clarify it as if the entire project never started. Offer a direct open-existing-result/history action; reuse actual read-only record facts, not a guessed completion percentage."
+    },
+    {
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:22",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:25"
+      ],
+      "change": "For blocked/review/stopped/achieved states, show the real next allowed action or reason instead of a disabled generic Start. A minimal View issue / inspect repair arrangement action may open the existing relevant detail. Do not send reply automatically, cross owner stop/pause, or present a record-only next-step note as dispatched repair."
+    },
+    {
+      "refs": [
+        "apps/web/src/features/operations/ProjectSupervisorPanel.tsx:61",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:25"
+      ],
+      "change": "If actual feedback is hard to follow, expose one compact latest result/question, Jarvis reason and next action near the composer using the already available supervisor snapshot; evidence stays expandable. Do not rebuild the three old pages or unconditionally stack full panels."
+    }
+  ],
+  "priorReviewCorrection": {
+    "fact": "The previous bounded source reviews missed this existing composer native-submit defect. Their positive route/data/state findings remain their specific evidence, but their no-confirmed-UI-P1 conclusion must not be carried forward after this actual reproduction.",
+    "retain": [
+      {
+        "path": "artifacts/cc-supervisor-r43/r45-round14-ui-route-independent-source-review.json",
+        "sha256": "08ef13aeac5e88887bc3369118500defb634ea97ca7cc57bdf89f74400e57caa"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/r45-round15-ui-delta-independent-source-review.json",
+        "sha256": "64f3221704974a8efb16f52329fea7f5b15ae453c7d175fc895eba9adf13f10a"
+      }
+    ],
+    "evidenceGap": "Prior component checks inspected SSR wording, direct data-form handlers and params effects; they did not activate this real principal button or assert its final native type. Keep those original results and add this correction rather than rewriting them."
+  },
+  "execution": {
+    "applicationEdits": 0,
+    "tests": 0,
+    "model": 0,
+    "network": 0,
+    "remote": 0,
+    "browserActions": 0
+  },
+  "handoff": "101 CC implements and verifies the narrow correction. Root controls publication and the real original-page retry. This review does not predeclare repair, interaction success or whole-goal acceptance.",
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-composer-submit-live-failure-independent-source-review.json",
+      "sha256": "a40789edf85c3af63cd1cfe34b5d6bd2b5b859eeda157db609ab16a551aecad5",
+      "bytes": 7081
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

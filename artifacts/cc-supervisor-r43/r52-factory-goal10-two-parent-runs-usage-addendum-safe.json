@@ -1,0 +1,119 @@
+{
+  "kind": "r52-factory-goal10-two-unique-parent-runs-usage-addendum",
+  "at": "2026-10-18T10:12:59.849403+00:00",
+  "scope": "LOCAL saved signed parent result usage only; successful native result is not supervisor acceptance.",
+  "previousAddendum": {
+    "path": "artifacts/cc-supervisor-r43/r52-automatic-followup-parent-usage-and-result-hash-calibration-safe.json",
+    "bytes": 3631,
+    "sha256": "4405bf0d8d1409b2ea5b3573b0e972f23e434bc10ea35f4bbc2e5a71fd3c6a2d"
+  },
+  "baseline": {
+    "knownParentTokens": 108144584,
+    "catalogUSD": "67.046001",
+    "catalogMicroUSD": 67046001
+  },
+  "deduplication": {
+    "bothNewParentRunIdsAbsentFromPreviousAddendumChain": true,
+    "candidate7276AndAutomaticJarvis3c694NotAddedAgain": true,
+    "initial9531RunningSnapshotsNotCountedAsSeparateParents": true,
+    "same667fDuplicateSavedSnapshotNotCountedAgain": true
+  },
+  "uniqueParentRuns": [
+    {
+      "runId": "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+      "sourceResultSHA256": "def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003",
+      "savedRawFingerprint": {
+        "bytes": 89215,
+        "sha256": "71014d45b40a6467b829a96784852b2d2adf0c349bb39e4b3806b0577c1aa3c8"
+      },
+      "usage": {
+        "inputTokens": 395823,
+        "outputTokens": 3217,
+        "cacheReadTokens": 388864,
+        "cacheWriteTokens": 0,
+        "totalTokens": 399040
+      },
+      "usageComplete": true,
+      "producerCatalogCostComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogUSD": "0.309652",
+      "catalogMicroUSD": 309652,
+      "rawCostUSDDecimal": "0.3096519999999998",
+      "rawKnownCostUSDDecimal": "0.3096519999999998",
+      "cacheReadAlreadyIncludedInInput": true,
+      "nativeCumulativeExcluded": true
+    },
+    {
+      "runId": "667f4896820efb461c79185c662933a10f3ad180",
+      "sourceResultSHA256": "97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+      "savedRawFingerprint": {
+        "bytes": 42326,
+        "sha256": "1b95c02f40b4967cbbea0ef9e4747bbd8ffbcefaa8c80cfdf144be125efcc98b"
+      },
+      "usage": {
+        "inputTokens": 820951,
+        "outputTokens": 3026,
+        "cacheReadTokens": 811520,
+        "cacheWriteTokens": 0,
+        "totalTokens": 823977
+      },
+      "usageComplete": true,
+      "producerCatalogCostComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogUSD": "0.528565",
+      "catalogMicroUSD": 528565,
+      "rawCostUSDDecimal": "0.5285649999999986",
+      "rawKnownCostUSDDecimal": "0.5285649999999986",
+      "cacheReadAlreadyIncludedInInput": true,
+      "nativeCumulativeExcluded": true
+    }
+  ],
+  "added": {
+    "knownParentTokens": 1223017,
+    "catalogUSD": "0.838217",
+    "rawNewParentCostDecimalSum": "0.8382169999999984"
+  },
+  "knownCumulativeAfterAddendum": {
+    "knownParentTokens": 109367601,
+    "catalogUSD": "67.884218",
+    "catalogMicroUSD": 67884218
+  },
+  "latestFactoryStatus": {
+    "sessionRevision": 71,
+    "goalRevision": 10,
+    "currentRunId": "667f4896820efb461c79185c662933a10f3ad180",
+    "status": "waiting_user",
+    "enabled": false,
+    "currentDecisionAction": "wait_user",
+    "threeCriteriaMet": [
+      false,
+      false,
+      false
+    ],
+    "limitedOrWholeProductAcceptanceClaimed": false
+  },
+  "unknowns": {
+    "PiInternalTokens": null,
+    "PiInternalUSD": null,
+    "invoiceUSD": null,
+    "futureWork": null,
+    "otherHistoricalUnknownPartsPreserved": true
+  },
+  "feePolicy": {
+    "recordOnly": true,
+    "moneyCap": null,
+    "technicalSoftParentTokens": 10000000,
+    "softWindowNotHardCap": true,
+    "cacheIncludedInInputNotAddedAgain": true,
+    "nativeCumulativeNotAdded": true,
+    "catalogEstimateNotInvoice": true,
+    "tenMinuteAutomation": "PAUSED"
+  },
+  "executed": {
+    "API": 0,
+    "remote": 0,
+    "models": 0,
+    "applicationOrTests": 0,
+    "ledgerWrites": 0
+  }
+}

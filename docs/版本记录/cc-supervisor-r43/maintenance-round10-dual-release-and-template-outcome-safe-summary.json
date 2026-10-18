@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 1,
+  "kind": "r43-round10-dual-release-and-template-outcome-safe-summary-final",
+  "fixedCutThrough": "2026-10-17T13:41:30.253Z",
+  "operationId": "d3bd002f-e1b4-4ad3-bb0e-375155adb57c",
+  "terminal": true,
+  "exitCode": 0,
+  "elapsedSeconds": 653.5533716179198,
+  "timeout": false,
+  "cgroupProcesses": 0,
+  "nativeTurns": 28,
+  "subagents": 0,
+  "centralDispatched": false,
+  "completeCLIReceiptQualified": true,
+  "originalControllerNativeFinalQualified": false,
+  "appCommit": "2bd2e27b97b44f76567ccf6c6b90cfd9a8dc618b",
+  "reportCommit": "3c047fc203d8fc2e4aa16a13bedd317450175b5c",
+  "privateHistory": {
+    "commits": 27,
+    "bytes": 361230,
+    "sha256": "9670e60be0300fce034ef1dd065d4ae52d49b508af14ab46986ac2c6317e812d",
+    "publishedAsSourceHistoryThroughPR6": true,
+    "privateBundlePublished": false
+  },
+  "collectedReports": [
+    {
+      "logicalPath": "reports/r43-implementation-round10.json",
+      "bytes": 3383,
+      "sha256": "91beed02dbbb099d935c1b048d1b137b1e42c37cb2240d07e6ac0afc0d0add66",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    },
+    {
+      "logicalPath": "reports/r43-implementation-round10.md",
+      "bytes": 5244,
+      "sha256": "aa0441d0404c19d456930a8198cb504ff3dfaa08e132e4776b3d0102262d0e3b",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    },
+    {
+      "logicalPath": "reports/r43-round10-packages.json",
+      "bytes": 3907,
+      "sha256": "80d4420f7bb45a83f1dac57f056b6a2bdbdaa13608e81488a86c99646fceda7d",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    },
+    {
+      "logicalPath": "reports/r43-round10-logs/label-authority-before.tap",
+      "bytes": 1128,
+      "sha256": "2111baf9759dd4d4a3b101fb04695ddf92f5908e949e1d3ff6a6ed11925e877c",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    },
+    {
+      "logicalPath": "reports/r43-round10-logs/final-r7-affected.tap",
+      "bytes": 10883,
+      "sha256": "6adf43f94785d2629beb3eb493e81cd3ef760068b4d58ae2497aa2a21767383d",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    },
+    {
+      "logicalPath": "reports/r43-round10-logs/typecheck-final.txt",
+      "bytes": 193,
+      "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    },
+    {
+      "logicalPath": "reports/r43-round10-logs/build-final.txt",
+      "bytes": 3400,
+      "sha256": "ac67f4adfe53eb0cb19d7d284b1a617a8228c8be37bc677315696e8b0d405c19",
+      "collectedAndFixedReceivedTreeBytesEqual": true
+    }
+  ],
+  "collectedReportBytes": 28138,
+  "validation": {
+    "beforeFix": {
+      "pass": 0,
+      "fail": 1,
+      "scope": "Actual saved mismatch regression, real createApp signed fixture chain"
+    },
+    "focusedAfterFix": {
+      "pass": 1,
+      "fail": 0
+    },
+    "finalR7Affected": {
+      "pass": 2,
+      "total": 2,
+      "fail": 0
+    },
+    "completeTypecheckExitCode": 0,
+    "completeBuildExitCode": 0,
+    "overlapNotSummed": true,
+    "mechanism": "Real createApp/TaskDTO/supervisor/ExecutionRuntime/TCP paired signer/journal ACK and isolated SQLite with three finite native-format child rounds/two resumes. Model/native contents remain fixtures.",
+    "singleAssignedP1Closed": "Both label-only qualification producer and consumer removed. Unqualified proposal remains proposed/null-choice with unknown eligibility and explicit missing evidence, while actual authorized actions and correction/stage replay are retained.",
+    "independentReviews": "A and B found no new definite P1 in this narrow fixed delta; needs_more_work refers to other uncovered field/matrix work, not an invented failure."
+  },
+  "receivedPackages": {
+    "runtimeBuild": "20261017-cc-supervisor-r43-r7",
+    "archiveVersion": "20261017-cc-supervisor-r43-r7",
+    "zipPayloadFiles": 2163,
+    "trackedSourcesComparedToExactGitBlobs": 1823,
+    "nodePayloadFiles": 5,
+    "nodeBuildMarkerVerified": true,
+    "compiledReproducibilityClaimed": false,
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/round10-received-dual-package-verification-r2.json",
+      "sha256": "21ffce7ec89722412b49c7b2611a5dc2b1d7be2f4a9b3a823e719257843a0cda",
+      "bytes": 4000
+    }
+  },
+  "platform112": {
+    "release": "20261017-cc-supervisor-r43-r7",
+    "previousRelease": "20261017-project-oversight-r41",
+    "phases": "stage/install/inspect/activate/health all exit0",
+    "activateSeconds": 257.8287088871002,
+    "dataSnapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261017-cc-supervisor-r43-r7",
+      "scope": "primary",
+      "files": 60,
+      "directories": 57,
+      "bytes": 4223330806,
+      "manifestSha256": "e053ac14b5eaa2393075a3e06c07d303a27a3730f7015abb5c18fb24a74d210e",
+      "sqliteDatabasesChecked": 6,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "isolatedRestore": {
+      "status": "passed",
+      "operation": "isolated-restore-verified",
+      "release": "20261017-cc-supervisor-r43-r7",
+      "scope": "primary",
+      "files": 60,
+      "directories": 57,
+      "bytes": 4223330806,
+      "manifestSha256": "e053ac14b5eaa2393075a3e06c07d303a27a3730f7015abb5c18fb24a74d210e",
+      "sqliteDatabasesChecked": 6,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "health": {
+      "node": "112",
+      "release": "20261017-cc-supervisor-r43-r7",
+      "role": "primary",
+      "currentRelease": "20261017-cc-supervisor-r43-r7",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261017-cc-supervisor-r43-r7",
+      "businessHealthy": true,
+      "healthBuild": "20261017-cc-supervisor-r43-r7",
+      "healthStatus": "ok"
+    },
+    "liveProductionDataRestored": false,
+    "factoryResumed": false
+  },
+  "node101": {
+    "upgradeOperationId": "99637f02-cfcf-437b-b6fd-c703c7cddf30",
+    "phasesPassed": [
+      "preflight",
+      "stop-barrier",
+      "stage",
+      "activate",
+      "fresh-signed-heartbeat",
+      "inspect"
+    ],
+    "matchingCodeFiles": 5,
+    "nativePrivateBackupFiles": 167,
+    "nativePrivateBackupApproxMB": 49.8,
+    "nativeBackupAllHashesVerifiedByRoot": true,
+    "backupManifestSHA256": "28d81280e7b5e2f78d952b7a16e12194620301c4a5b9cda24cbc921f77b784c7",
+    "isolatedSQLiteIntegrity": "ok",
+    "originalIdentityNativeJournalHistoryPreserved": true,
+    "coldStandbyBusinessStarted": false,
+    "nativeModelInvokedByUpgrade": false
+  },
+  "templateTransition": {
+    "decisionId": "3b504ecc-3a0c-4297-9f99-1f62ef8bdc25",
+    "selectedRevision": 1,
+    "implementationRevision": 2,
+    "implementationHash": "4f3f67adfa49a940cd35997773d60a897f3821d8e7b0ae564830cfee6f1732f2",
+    "independentUserAcceptance": false,
+    "centralRevisionBefore": 45,
+    "centralRevisionAfter": 46,
+    "targetSHA256": "4349a770e87b4dc93572f33437e2dd7bf56e7c19991a470fa88f7338ebe3547f",
+    "sameTemplateId": true,
+    "sameAgentIdentity": true,
+    "originalTask12AndSourceHistoryPreserved": true,
+    "originalApplySuccess": false,
+    "originalApplyErrorCode": "SST_RESTART_UNCONFIRMED",
+    "originalApplyStatus": "FAILED-CLOSED",
+    "maintenanceState": "interrupted",
+    "originalStatePhase": "restart-intent",
+    "laterReadonlyFullQualification": {
+      "configurationAndRuntimeQualified": true,
+      "requestSHA256": "7262345811b6d712d97ef9fe16cb9bb9be9fe407fc8a2b969534f5d2a9619787",
+      "centralBlockingCounts": "all13zero",
+      "centralBeforeAfterTaskSourceHistoryStable": true,
+      "nodeBeforeAfterFullSnapshotEqual": true,
+      "samePairedKeyIdentity": true,
+      "configMetadataPreserved": true,
+      "candidateStagedSHA256": "54dfef8b5b22d9d3817101c1042c0c619a11a38d747e55cd7db02f5798cc43a3",
+      "sourceDerivedExpectedSavedSHA256": "68c2379066b64d9cc6818e7ce344ea57dd2dc23d5e9afe9ec162e77338dab492",
+      "actualSavedConfigSHA256": "68c2379066b64d9cc6818e7ce344ea57dd2dc23d5e9afe9ec162e77338dab492",
+      "rawAndCanonicalStrictlyEqual": true,
+      "nodeCodeBasePrivateIdentityNativeJournalGuardsPassed": true,
+      "MainPID": 59553,
+      "processIdentity": "328726a0-5495-4892-b0a6-2fa9de26242e:69655607",
+      "heartbeatBefore": "2026-10-17T13:40:08.806Z",
+      "heartbeatAfter": "2026-10-17T13:40:13.902Z",
+      "remoteMutations": 0,
+      "CAS": 0,
+      "stop": 0,
+      "restart": 0,
+      "stateWrites": 0,
+      "configWrites": 0,
+      "nativeInvoked": false,
+      "elapsedSecondsReportedByRoot": 6.851
+    },
+    "originalFailedApplyNotRewritten": true
+  },
+  "preservedFailuresAndCorrections": [
+    "Original native-recovery pin reader cap64 rejected the observed167 files. Scope observation retained; distinct independently reviewed three-literal cap256 reader-r2/control-r6 preserved all hash/private/lifecycle gates before the successful complete167 read/preflight. This is a Root observation-scope accommodation, not new product success.",
+    "Original same-ID preflight NUP_PATH_OWNER reflected a real root0755 config parent with user0600 file. A narrow Root helper correction retained ownership/mode checks; no permission broadening was done.",
+    "Actual-spec targetTemplateId contract supplement and local critical-path preparer failure were corrected in distinct r2; originals retained.",
+    "Apply changed central45 to46 and installed the node candidate, but restart confirmation/fail-stop raw-config pin refused. The original apply stays false/interrupted/restart-intent. Later unitactive/agentonline alone did not certify it.",
+    "Independent source analysis established the helper wrongly compared compact staged bytes with existing entrypoint formatted-save bytes and dropped the false restart-response error. That lost original restart error is not recoverable and must not be backfilled as a particular daemon fault.",
+    "A separate readonly qualifier derived the complete expected saved bytes from the original sealed candidate and frozen pure serializer, then verified raw/canonical/identity/metadata/full runtime gates twice. It did not sample current bytes into a new expected pin, write state, repeat CAS/restart, or turn the old failed receipt green."
+  ],
+  "usage": {
+    "parentBareInput": 21675,
+    "parentCacheRead": 18829568,
+    "parentOutput": 7154,
+    "parentTotal": 18858397,
+    "signedExternalLedgerReadback": true,
+    "costUSD": null,
+    "costComplete": false,
+    "nativeCatalogCumulativeEstimateUSD": 354.387585,
+    "priorCatalogEstimateUSD": 344.685576,
+    "catalogDifferenceEstimateUSD": 9.702009,
+    "invoice": false,
+    "CCOriginalUnknownRetained": true,
+    "internalUnknown": null,
+    "financialConsumptionCap": null
+  },
+  "sourcePublication": {
+    "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/6",
+    "state": "OPEN",
+    "isDraft": true,
+    "head": "3c047fc203d8fc2e4aa16a13bedd317450175b5c",
+    "mergedToMain": false,
+    "originalAttachedWorktreeNotReset": true,
+    "PRBodyUpdatedForActualConfiguration46Qualification": true
+  },
+  "remaining": [
+    "Actual configured Jarvis supplier model plus101 CC original same-task/session supervision and browser/mobile field acceptance have not been performed; login awaits user.",
+    "Pending-grant/business-runtime crash/replay/concurrency, independent awaiting-cost successor and broader goalRevision/restart matrices remain outside this acceptance scope.",
+    "Original74/customer12/full factory/document software delivery remain unsigned; no automatic acceptance added."
+  ],
+  "configurationAndRuntimeQualified": true,
+  "originalApplySuccess": false,
+  "formal112": "20261017-cc-supervisor-r43-r7",
+  "R43Deployed": true,
+  "productAcceptance": false,
+  "factoryPlan": 108,
+  "PG": 29,
+  "Env": 23,
+  "acceptedObjectives": 0,
+  "objectiveDenominator": 74,
+  "tenMinuteAutomation": "PAUSED",
+  "evidenceReferences": [
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round10-terminal-native-observation.json",
+      "sha256": "7f15d99b7fcd30d4b273ca254e4b3539fd122375b700bd09014e8d938c7eeed7",
+      "bytes": 7704
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/round10-final-delta-source-review.json",
+      "sha256": "333e16a1148f5f6632dfa9b0973b8f9c3384a2b605045affb506dbc46b5b3356",
+      "bytes": 10052
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/round10-experience-decision-source-review.json",
+      "sha256": "4957a9d294b19e94b00450fa6bc67ba44f490095681248bf5a2b740b21c8f1f7",
+      "bytes": 17200
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/round10-specified-history-publication-preflight.json",
+      "sha256": "68b36d3d0da117ab9bb297c5bd4bf3d65c9913f671d4704806a0a526ca3c7afc",
+      "bytes": 9204
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round10-usage-ledger-readback.json",
+      "sha256": "3b328a08ea073d0b595967e66e86ada4e7145c4a72be3a9c0636d2dbbb876489",
+      "bytes": 762
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/maintenance-round10-result-decision-readback.json",
+      "sha256": "bc2efdb8e1dc92ea99ce98b4899dc4b97de9e8b740c6c36b6aec09e90b01a6a0",
+      "bytes": 52633
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/round10-received-dual-package-verification-r2.json",
+      "sha256": "21ffce7ec89722412b49c7b2611a5dc2b1d7be2f4a9b3a823e719257843a0cda",
+      "bytes": 4000
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/112-activate.json",
+      "sha256": "963bae0721ad20e92accd4caedc3e26afa58828707b93465190016eee99969e9",
+      "bytes": 2418
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/112-health.json",
+      "sha256": "ebe9b2f3621d6814ad99094e4a2b0c6f5b9a6657e758da88afff2fb76906b467",
+      "bytes": 1105
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/101-stop-barrier.json",
+      "sha256": "20e4a921520cf4f408b55f38e8b91c3c1efa06afd0752353bb29204fb793452a",
+      "bytes": 10802
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/101-inspect.json",
+      "sha256": "a3674c822a3ee2b4bc70ab5d93108267f970de7a1ccf6b6328c67e756973785d",
+      "bytes": 10579
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/template-preflight-r2.json",
+      "sha256": "9b15bc1b2c7c089c980f4a23f6db593e669e7f5fab570db7950488d5f2d1776c",
+      "bytes": 4300
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+      "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+      "bytes": 4434
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+      "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+      "bytes": 2501
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+      "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+      "bytes": 10946
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r43-same-id-transition-readonly-qualification-independent-source-review.json",
+      "sha256": "2d6f19afac2d71fe245343c019992a0dd2a839ea27b0a73fb243a2fb62ffa083",
+      "bytes": 14170
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+      "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+      "bytes": 9612
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/same-id-template-transition-implementation-readback.json",
+      "sha256": "10eac7b9d9eae5c8970fd19ab50dcadc01fcd3d10aacbd1d905431cebbb84bd6",
+      "bytes": 33408
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r7/source-git-pr-config-update-readback.json",
+      "sha256": "65537b50c2a084f17458d2cc471adfc3c03f3afcda8cdd03314e5a32d9ad201f",
+      "bytes": 426
+    }
+  ],
+  "privacy": "Allowlisted factual summary. Native/chat/config values, authority text, absolute workspace/backup paths and private bundle are not published."
+}

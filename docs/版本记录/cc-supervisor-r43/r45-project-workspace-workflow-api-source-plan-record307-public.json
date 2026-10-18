@@ -1,0 +1,341 @@
+{
+  "kind": "r45-unified-project-workspace-workflow-api-source-plan",
+  "sourceHeadSuppliedByRoot": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+  "gitObjectIndependentlyVerified": false,
+  "scope": "LOCAL read-only source/contracts analysis for the unified project workspace request. No app edits, helper/remote/API/service/model/Git-network execution or application tests.",
+  "conclusion": "Reuse the existing supervisor execution and policy loop. A unified UI is enough for most viewing/explicit existing-session actions, but not a reliable goal-only first kickoff: add one small durable idempotent kickoff coordinator over existing task-create/supervisor-create/start kernels plus read-only context resolution. Do not build a new automation platform or claim a cross-SQLite transaction.",
+  "minimalUserFlow": [
+    {
+      "step": 1,
+      "user": "Select project; see its goal, current work, actual run/native session, block/next action and remaining independent acceptance.",
+      "server": "Read project, supervisor view, work console and actual bound task/run. Existing project has a supervisor: reuse this entity, no create/adopt/start on open."
+    },
+    {
+      "step": 2,
+      "user": "Describe target and choose a readable development server/workspace only if there is no unique valid existing choice. No taskID or native sessionID entry.",
+      "server": "Read-only context resolves project-owned managed tasks, registered nonproduction copies and configured project-supervisor executor. Unambiguous safe never-run draft can be explicitly reused; old paused/blocked/completed/history is not silently restarted or replaced."
+    },
+    {
+      "step": 3,
+      "user": "Explicitly start the described goal; show established scope and record-only cost policy with preserved unknown history.",
+      "server": "One fixed commandId/context binding goes through durable kickoff stages. It creates at most one needed never-run task and one supervisor draft, then calls original start/policy authorization only because start was explicitly requested. No hidden adopt or fake running."
+    },
+    {
+      "step": 4,
+      "user": "See Jarvis directive, actual CC response, decision and next step in one chronological view.",
+      "server": "Existing supervisor dispatch-intent -> execution request/outbox -> signed agent claim -> native invocation -> signed normal terminal/evidence -> strict model decision -> next bounded round. Native session is learned from real receipts and reused on next request, not synthesized or guessed."
+    },
+    {
+      "step": 5,
+      "user": "Supply requested information, send an explicit execution instruction, correct facts/preferences, or pause/stop from the same workspace.",
+      "server": "Read-only questions remain read-only. Existing reply is an execution command; use it only for explicit eligible next-turn instruction. Current live child has no general native stdin messaging API. Report queued or next-turn semantics honestly; do not say current CC received text without delivery proof."
+    },
+    {
+      "step": 6,
+      "user": "Review evidence and independent acceptance separately from Jarvis judged target met.",
+      "server": "Keep achieved/review/actual run outcome, human acceptance and actual package/deployment separate. Existing task accept records human attestation; existing package command records release metadata, not real ZIP creation or deployment."
+    }
+  ],
+  "existingAPI": [
+    {
+      "read": "GET /api/v1/projects[?cursor&limit] and /api/v1/projects/:id; GET /api/v1/tasks[?cursor&limit] and /api/v1/tasks/:id",
+      "use": "Project/task resolution must page all records, filter owner/scope/project; never select latest arbitrary task or require manual IDs.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/routes.ts",
+        "line": 51
+      }
+    },
+    {
+      "read": "GET /api/v1/execution/config, /capabilities, /agents; /runs and /runs/:id",
+      "use": "Resolve existing configured template and actual server/run. Ready metadata alone is not a dispatch or physical workspace proof. No re-pair or config write is needed in the main flow.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/execution-routes.ts",
+        "line": 39
+      }
+    },
+    {
+      "read": "GET /api/v1/projects/:id/supervisor; /events; /event-history; /events/:eventId",
+      "use": "Real session/policy/stop proof/events; SSE reread never creates or resumes. Existing event history supports >100.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-routes.ts",
+        "line": 10
+      }
+    },
+    {
+      "read": "GET /api/v1/projects/:id/supervision-work/console, /overview, /activity, /items/:itemId and /events",
+      "use": "Factual work/events/acceptance projections; ledger is not dispatcher.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/supervision-work-routes.ts",
+        "line": 14
+      }
+    },
+    {
+      "write": "POST /api/v1/tasks/commands/create",
+      "body": "{commandId,expectedVersion:0,scope,payload:{title,projectId,machineId,agent,mode:managed,goal,criteria,budget,retryLimit,worktree}}",
+      "semantics": "Only queued record; no execution receipt. sessionId optional in legacy contract but fresh kickoff must omit it. Runtime actual CLI session comes from trusted results.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/work-domains.ts",
+        "line": 28
+      }
+    },
+    {
+      "write": "POST /api/v1/projects/:id/supervisor",
+      "body": "{commandId,expectedVersion:0,goal,criteria:string[],machineId,executor:claude-code,workspace,taskId}",
+      "semantics": "Draft enabledfalse only; rejects any task executionRequest or native session with TAKEOVER_REQUIRED. One supervisor per project.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 67
+      }
+    },
+    {
+      "write": "POST /api/v1/projects/:id/supervisor/commands",
+      "body": "{commandId,expectedVersion:sessionRevision,action:start|resume|pause|stop|takeover|revise|reply|new_session,...typedActionFields}",
+      "semantics": "Explicit start/resume can authorizeContinuous with acknowledged unknown history and finite maxParentTokens. Pause/stop/takeover/revise revoke policy. Original CAS/version and stop proof gates must remain.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 72
+      }
+    },
+    {
+      "write": "POST /api/v1/projects/:id/supervisor/adopt",
+      "body": "{commandId,expectedVersion:0,goal,criteria,machineId,executor:claude-code,workspace,taskId,sourceRunId,expectedTaskRevision}",
+      "semantics": "Not read-only: creates enabled running session that inspects/model-judges a currently saved trusted signed terminal. Requires exact task/run/resultH/owner/project/machine/workspace/native session/nonprod copy. Must be a distinct explicit action, never implicit open or kickoff.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 68
+      }
+    },
+    {
+      "write": "POST /api/v1/projects/:id/supervisor/reconcile",
+      "body": "{commandId,expectedVersion,sourceRunId,expectedTaskRevision}",
+      "semantics": "May enable trusted terminal judgment; completed model intent reused, uncertain consumed model result blocks/requires owner resolution instead of blind replay.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 69
+      }
+    },
+    {
+      "write": "POST /api/v1/projects/:id/supervisor/corrections",
+      "semantics": "Exact event/hash + typed fact/preference/applyTo preserved. current_followup revokes/pauses and stops current run before later reauthorization; future_reference does not change the active execution.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 76
+      }
+    },
+    {
+      "write": "POST /api/v1/tasks/:id/continuation-grants",
+      "semantics": "Existing owner-only one-round bounded continuation grant; unknown history requires explicit acknowledgment, is never cleared. Prefer original continuous goal policy windows for ordinary supervisor continuation, not a per-turn approval UI.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/execution-routes.ts",
+        "line": 37
+      }
+    },
+    {
+      "write": "POST /api/v1/tasks/commands/accept and /package",
+      "semantics": "accept only validating state with actual declared artifact IDs/evidence; human_attestation. package requires completed/pass/artifacts and creates immutable release metadata, not actual packaging/deploy.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/work-domains.ts",
+        "line": 319
+      }
+    }
+  ],
+  "confirmedGapsForThisRequest": [
+    {
+      "gap": "Fresh first-use split across unrelated task form and supervisor form; manual taskID option and raw workspace required. No goal-only context resolver/kickoff route exists.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+        "line": 32
+      }
+    },
+    {
+      "gap": "Generic chat is not a project command controller. /api/chat/conversations stores central chat session; project supervisor model uses random ephemeral bounded conversation with no tools. Factory/monitor tools exposed there are read-only. A central chat conversation is not the 101 native CLI session.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/app.ts",
+          "line": 349
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-model.ts",
+          "line": 89
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/software-factory-runtime.ts",
+          "line": 136
+        }
+      ]
+    },
+    {
+      "gap": "reply sets enabledtrue and dispatching or running; treating any composer text or status query as reply could restart paused work and does not prove delivery to live CC. At present blocked/judging/review branches have strict eligible actions.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+        "line": 74
+      }
+    },
+    {
+      "gap": "adopt reports session running while source run is terminal; UI cannot use supervisor.status alone to say CC is currently executing. Main status must combine persisted supervisor phase and actual bound run status.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 68
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+          "line": 52
+        }
+      ]
+    },
+    {
+      "gap": "Task and supervisor/intents use separate SQLite stores. A frontend tasks.create then supervisor.create can leave an unbound queued task after interruption. Existing scheduleManaged may dispatch unowned queued tasks under old global/scoped supervision, so source ownership/reservation must close that interval.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/repository.ts",
+          "line": 28
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "line": 33
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/execution-runtime.ts",
+          "line": 328
+        }
+      ]
+    },
+    {
+      "gap": "Registered project copies are declarations; copies endpoint explicitly records filesystemAccessed:false. Context must not claim a physical remote workspace was created/verified from registration alone; agent checked workspace remains authoritative. Missing known safe copy should return concrete prerequisite, not fabricate a directory or session.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/work-domains.ts",
+          "line": 173
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/agent-runner.ts",
+          "line": 232
+        }
+      ]
+    }
+  ],
+  "smallImplementationSlice": {
+    "readOnlyResolution": "Extend existing supervisor GET with a safe context/allowedActions projection, or a small sibling GET /supervisor/context. No mutation/model call. Return projectVersion, current session/task/run versions, actual native session if known, allowed registered nonprod copies, eligible existing configured templates, explicit ambiguity/missing reasons, candidate binding hash. Reuse existing session first. User sees names/paths, internal IDs stay hidden.",
+    "explicitKickoff": "Add POST /supervisor/kickoff with fixed commandId, expected project/context binding, goal/criteria, selected machine/workspace/executor refs and explicit start choice. Current principal owns everything; body cannot supply another owner. Reuse existing task-create and supervisor-create/start validators as server kernels rather than loopback HTTP or duplicating execution logic.",
+    "idempotentStages": "Small durable kickoff intent keyed by actor/project/commandId plus request fingerprint and fixed child command IDs. Prevalidate ownership/copy/template/purpose/record-only/executor readiness and existing history before writing. Resolve -> task created/reused -> supervisor draft created/reused -> explicit start accepted. Persist exact receipts/IDs. On retry same command and same binding returns/reconciles previous stage; changed body rejects. Unknown dispatch/start result blocks/reconciles; no new nonce, task or session to get green.",
+    "crossStoreOwnership": "Do not claim one SQLite transaction. Pending kickoff reservation must be respected by supervisor ownership / normal scheduleManaged/start/preflight, including recovery from a committed task-create receipt before supervisor write. No queued orphan may run under unrelated old global supervision. No compensating deletion of task/history. A persisted incomplete stage is visible and repairable.",
+    "existingSessionRules": "Existing supervisor wins; opening returns it. Only an explicitly selected safe never-run task with same project/scope/machine/executor/workspace, no session/executionRequest/history can be reused for initial create. Paused/blocked/history never auto-start, hidden adopt, invisible resume or replacement task. Explicit authorized continuation goes through original resume/reconcile/adopt rules with CAS and evidence. Native new_session only through existing signed stop/handoff proof.",
+    "composer": "Keep simple visible text, but typed server action separates read-only status/question from execution instruction, requested-info reply, goal revision and pause/stop/resume. Server enforces eligibility; do not rely on labels or model prose as authority. Small first slice may keep read-only snapshot plus explicit Send instruction instead of introducing another free-form tool agent. If instruction submitted during active native invocation, either reject with truthful wait reason or persist an explicitly pending next-turn message with CAS and consumption; never promise live delivery without an implemented receipt.",
+    "authorizationAndCost": "Explicit start reuses original owner policy and finite technical round/time/token windows, record-only money and known/unknown/incomplete accounting. No extra per-round manual approval. Existing task-create budget remains a legacy required field; reuse validated server defaults internally for record-only task compatibility, never invent an amount as actual cost or expose a new financial cap. Do not alter old global supervision or 10-minute automation.",
+    "noNewLifecycleEngine": "Reuse original dispatch/outbox/claim/strict feedback/evidence/model decision/policy window/experience correction/notification loop. Keep independent acceptance and actual delivery separate. No new pairing, raw-session import, SSH controller, timer, autonomous platform or report-based fake completion."
+  },
+  "meaningfulRegressionScenarios": [
+    "Fresh project known safe copy/template, goal submitted once -> exactly1task+1draft+1authorized execution request; before start draft/not running, after queue still not claimed, only real claim shows running/native session later signed.",
+    "Same kickoff command body repeated, double click, response lost, restart after each stage -> exact original receipts/IDs, no extra task/run/session/model call; changed body/CAS conflict rejects.",
+    "Failure between task commit and supervisor binding while old global supervision enabled -> reserved task cannot be picked up by ordinary scheduler; history preserved and incomplete stage visible.",
+    "Existing supervisor or paused/blocked/history task -> opening and context reads produce0mutations,0model/CCcalls; explicit continue preserves same task/native session/workspace and unknown ledger, no old10min restart.",
+    "Status question in composer reads only; explicit instruction eligible waiting state may dispatch once. Running/judging/stop-pending instructions are truthfully rejected or pending with one consumption, never claimed delivered to current child.",
+    "Missing/ambiguous task or copy/template, wrong owner/company/production workspace, offline or unready executor, changed context/version -> concrete nonexecution blocker and retained input, no hidden fallback or guessed IDs.",
+    "Signed terminal -> normal Jarvis continue -> same native lineage; missing evidence/unknown usage/model uncertain remain blocked or incomplete, no0normalization as fact or auto-completion.",
+    "Stop requested vs signed stop confirmed, current-followup correction vs future-reference, supervisor achieved vs task human acceptance vs package/deployment metadata remain distinct in unified real component render.",
+    "Legacy project/task/supervision URLs resolve one workspace with correct drawer and back navigation; mixed known0/positive/unknown usage and >100history remain usable. UI IA details are separately reviewed by A."
+  ],
+  "verificationNotPerformed": [
+    "application edits or tests",
+    "remote/API/daemon/CLI/model/Git-network",
+    "actual new project/task/session/start or kickoff",
+    "browser/full operational lifecycle acceptance"
+  ],
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-routes.ts",
+      "bytes": 3106,
+      "sha256": "2e4884008e39f41053e3d04e0a030fa183c2efe474535c9ffc3649c210085586"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-runtime.ts",
+      "bytes": 48601,
+      "sha256": "ad866b1cc82506284e4f86c444e69dd6d5ca614055864b2bcb854628c757c1da"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-model.ts",
+      "bytes": 5854,
+      "sha256": "2f64f4ee1134a7f2552f86937e0bccd6bd312c0ab03981402769e49d8f741bd9"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/project-supervisor-contract.ts",
+      "bytes": 1370,
+      "sha256": "8f97267fe825ff93e065763405bd2b9354c6f7f0806cc2ec3ff9076a078aeb08"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/execution-routes.ts",
+      "bytes": 14568,
+      "sha256": "a5027305858a46ae873801facd4206f2c1ec9109557d5b89b6a370c6c78f2b1b"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 129697,
+      "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/agent-runner.ts",
+      "bytes": 54554,
+      "sha256": "1a7cb1f202d1ea337132c9242325caf4d3fbc625f30ef2df7765f13f77185286"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/supervision-work-routes.ts",
+      "bytes": 4605,
+      "sha256": "c0ce0cceeb9a4f709713f208ba0d921ec759b12b4e9414a52c43acf372df6a33"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/supervision-work-runtime.ts",
+      "bytes": 22670,
+      "sha256": "403f21a3b5a5c8feb675fc48d5d080630441542ddff6508aa65d37d7479f09a0"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/software-factory-runtime.ts",
+      "bytes": 16128,
+      "sha256": "c4eff1956b4b6d90f10ca6b67234179326bb52092f42d937b3cfc9cce2dff123"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/runtime/monitor-tools.ts",
+      "bytes": 2329,
+      "sha256": "dda74d8b382948792e6c52e067ddeb8dfb224b1105ccc346d1e3635805611f3d"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/work-domains.ts",
+      "bytes": 25138,
+      "sha256": "a3f1b93631541f91278c3c66c310e6c51b72785918a6849960deaf5c3c9b4e3d"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/repository.ts",
+      "bytes": 12896,
+      "sha256": "42df86773d63ca3e70ae9141ed1ef1cd08707f70614493df4adda08dc4fdc4dd"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/v1/routes.ts",
+      "bytes": 12307,
+      "sha256": "c5e8f56099a47b8573408b4f2ca70ca5ff0ddd362489ec36e6d49182cf9f875b"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/api/src/app.ts",
+      "bytes": 53967,
+      "sha256": "a7c7277d7b351e8bdf88c25cc08b8aad1f46d0cbc08db20d56ed79af24f4a65b"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "bytes": 26387,
+      "sha256": "d9ca2cbf6d38e1b8bccae83aee3fea629d899eae6a9689e672dabafd94f1711c"
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r44-round12/apps/web/src/v1-client.ts",
+      "bytes": 5711,
+      "sha256": "7cc541682f2379a56a467f89b1e0f31a3109ae23af2c68734f3b8c032789fb95"
+    }
+  ],
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-project-workspace-workflow-api-source-plan.json",
+      "sha256": "68b59f5e09d22fa25f1d8689c5a6be6142658a7f04b54efcb80807afcd2681d0",
+      "bytes": 22764
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

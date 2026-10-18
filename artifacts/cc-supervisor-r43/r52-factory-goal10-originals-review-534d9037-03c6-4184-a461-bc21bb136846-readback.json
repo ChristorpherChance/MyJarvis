@@ -1,0 +1,52 @@
+{
+  "kind": "r52-factory-goal10-originals-review-readback",
+  "at": "2026-10-18T10:06:37.576Z",
+  "operationId": "534d9037-03c6-4184-a461-bc21bb136846",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "sessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+  "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+  "sourceRunId": "8278fcb5a9258957994f510ff07690159d1f7f4d",
+  "sourceResultSHA256": "597800c94fbd91287d026476a010454a1f0bac07d5abf75382c53bcec17a20d2",
+  "reviseCommandId": "2f9d58ee-e519-49ea-958f-dc8e80db40ea",
+  "startCommandId": "0d00f656-3e42-4546-8d6e-11a2e02e314a",
+  "goalRevision": 10,
+  "after": {
+    "revision": 65,
+    "status": "running",
+    "enabled": true
+  },
+  "policy": {
+    "id": "68167a1c-fc57-47ef-85ea-8522d5c54ca7",
+    "generation": 19,
+    "maxParentTokens": 10000000
+  },
+  "newRun": {
+    "id": "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+    "status": "queued",
+    "maxRounds": 1,
+    "remainingTokens": 10000000,
+    "policyWindowId": "d30ec516b12e72758fcb3c676a0e9ca5f50aab3c5be060c5371c1b13ba1ab72b"
+  },
+  "originalResultAndUsageRetained": true,
+  "correctionContextPreserved": true,
+  "originalCorrectedDecisionRetained": true,
+  "sharedFullPrompt131072UTF8Only": true,
+  "priorGoal9Actual65536FailureRetained": true,
+  "same25ExistingOriginalsRequired": true,
+  "obsolete30000GateNotReintroduced": true,
+  "otherFiveItemsPlanAndGlobalControlPreserved": true,
+  "businessPOSTs": 2,
+  "oldIntentRetried": false,
+  "productionDeploymentAuthorized": false,
+  "nodeR7Unchanged": true,
+  "newGoalReadOnlyOriginalsReview": true,
+  "targetedTestAndMinimalCodeChangesAuthorized": false,
+  "readOnlyExistingArtifactsOnly": true,
+  "wholeProductRerunOrDeploymentAuthorized": false,
+  "newResultNaturalReviewOnly": true,
+  "oldPiIntentNotReplayed": true,
+  "independentAcceptance": false,
+  "automaticRetry": false,
+  "automaticPolling": false,
+  "authenticationLifecycle": "withPlatform transient create/revoke; product writes only revise/start"
+}

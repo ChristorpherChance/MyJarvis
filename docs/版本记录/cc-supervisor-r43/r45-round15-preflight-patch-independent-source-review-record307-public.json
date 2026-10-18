@@ -1,0 +1,236 @@
+{
+  "kind": "r45-round15-preflight-patch-independent-local-source-review",
+  "createdAt": "2026-10-17T17:25:53.559076+00:00",
+  "scope": "Exact R14 to fixed R15 application delta, saved new regression and failure evidence. Not an all-product or release acceptance.",
+  "source": {
+    "finalHEAD": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2",
+    "appHEAD": "6cfcdeec3d4daf45f430c8bf19011f55c4dc94f3",
+    "priorAppHEAD": "095b0e646a2889390a6751e2bedeb2bfecdee393",
+    "startHEAD": "8e646d8c2627294cf8e51ce216f55c286a2f31fc",
+    "reportCollectionFilesMatched": 13
+  },
+  "conclusion": {
+    "confirmedRemainingP1InReviewedDelta": 0,
+    "duplicateCriteriaDefectClosed": true,
+    "knownTaskEligibilityPrevalidationClosed": true,
+    "sourcePatchQualifiedForRootReleaseGates": true,
+    "wholeReleaseOrUserAcceptanceApproved": false,
+    "newNativeModelRunRequiredForMissingFinalReport": false,
+    "nativeOperationOutcome": "FAILED CLOSED: timeout900.7636966820573, exit143, no native final, cgroup0. This conclusion does not relabel the operation as successful."
+  },
+  "closedFinding": {
+    "id": "R14-KICKOFF-DUPLICATE-CRITERIA",
+    "sourceLocations": [
+      {
+        "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/src/runtime/project-workbench-runtime.ts",
+        "lines": [
+          7,
+          8,
+          27,
+          28
+        ]
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/src/v1/work-domains.ts",
+        "lines": [
+          75,
+          76,
+          77,
+          133,
+          135
+        ]
+      }
+    ],
+    "reason": [
+      "preflight invokes the unchanged exported original supervisorCreateSchema.parse with the same fixed create command/task IDs and exact goal/criteria/machine/workspace/executor before the first intent write. Its original trim and unique-criteria refinement remains intact.",
+      "New and incomplete kickoffs share this pure validation path; no task/session create is used as a validation probe. Duplicate input cannot reserve a new durable intent, so correcting the same command is valid because no original bad request was committed.",
+      "The original task project-state and managed-scope/observation-only checks are extracted into assertTaskCreationEligibility and called from both workbench preflight and taskBody. Archived/delivered/company/readOnly/readonly/company-role rules retain their original meaning. TaskBody still enforces them.",
+      "Eligibility extraction changes when project-state failure is evaluated relative to machine existence, but does not grant an execution capability or remove any original restriction."
+    ]
+  },
+  "preservedCode": {
+    "byteIdenticalAcrossPriorAndNewApp": [
+      "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "apps/api/src/runtime/execution-runtime.ts",
+      "apps/api/src/runtime/agent-runner.ts",
+      "apps/api/src/runtime/supervisor-goal-policy.ts",
+      "apps/api/src/v1/repository.ts"
+    ],
+    "meaning": "Original supervisor uniqueness, owner identity, policy/window, fingerprint/CAS, pending ownership, session-cut recovery revision, pause/stop/takeover, signed results and record-only unknown-cost behavior are not relaxed. R14 existing6/6 remain their original evidence, not claimed rerun."
+  },
+  "actualNewTest": {
+    "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/test/project-workbench-r15.test.ts",
+    "finalLog": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/preflight-verified.tap",
+    "savedResult": "1 passed,0 failed",
+    "productionBoundary": "Real createApp, isolated SQLite, real HTTP kickoff, original DTO/repository/supervisor and a locally paired execution fixture. Not a mirrored schema-only test.",
+    "assertions": [
+      "Duplicate criteria POST400; zero kickoff intents/tasks/session/runs; GET context.pending empty.",
+      "delivered/archived projects and valid DTO readOnly/company-role machine cases reject before side effects with the same zero assertions.",
+      "After restoring a legal fixture state, corrected criteria reuse the original commandId and succeed; exact repeat returns the same task, only one task and one queued run; session id exists."
+    ],
+    "limits": [
+      "No supplier model or native product executor is run by this regression.",
+      "Exact duplicates are tested; trim-equivalent duplicate closure is established by reuse of the unchanged trimmed schema, not a separate saved test case.",
+      "company scope and legacy readonly/company aliases are retained in the shared source predicate but are not falsely counted as valid Machine DTO fixture coverage."
+    ]
+  },
+  "earlyFailures": [
+    {
+      "log": "preflight-before.tap",
+      "classification": "real original defect",
+      "evidence": "Duplicate POST was rejected, but first zero assertion found one persisted kickoff intent (1 !=0). This is the requested before reproduction."
+    },
+    {
+      "log": "preflight-after.tap",
+      "classification": "invalid test fixture, not evidence that production guard was weakened",
+      "evidence": "CONTRACT_INVALID thrown from formal receipt validator while the fixture attempted unsupported Machine DTO fields. The original log is retained; no successful state mutation is inferred."
+    },
+    {
+      "log": "preflight-final.tap",
+      "classification": "immutable-scope fixture expectation error",
+      "evidence": "Expected403 but got200 after a fixture tried changing machine scope through ordinary ctx.update. repository.ts:72 explicitly preserves old.scope. Final test uses valid readOnly/company-role fixture changes instead. Original failure is retained."
+    }
+  ],
+  "UIOnlyDelta": "Duplicate trimmed condition lines produce a clear error before submitting a fresh kickoff; frozen pending input is still replayed without replacing it by draft edits. Main pending notice uses plain language; stage remains in raw context/detail. No UI interaction test was rerun for this minor delta.",
+  "savedBuildAndPackages": {
+    "types": "Saved complete API/Web typecheck output is present.",
+    "build": "Saved complete Web/API build output is present, including frontend preservation promotion and API tsc.",
+    "packageLogs": "Producer logs state original platform/node packagers succeeded; platform archive/runtime/source are R45r3/APP6cfc and86 old immutable assets verified; reported node bundle H is unchanged compatible R44/R7. These reports and package pins were reviewed; this reviewer did not download/rehash the actual ZIP or replace Root package/Git-blob checks.",
+    "reportGitBindingMissing": "reports/r45-round15-git.json is referenced but missing. Root actual finalHEAD, app commit, actual bundle import and subsequent package Git-blob/source matching can establish the binding without rerunning a model solely to create this administrative file."
+  },
+  "evidenceReliability": {
+    "fileIntegrity": "Every13 collected report/log file in the terminal-bound Root collection matches this imported Git tree by bytes/SHA256. Final source cut is pinned.",
+    "producerExecutionVsSavedFiles": "These establish saved evidence integrity, not independently that the original native tools executed every reported final command. If that provenance is needed, use one read of the already sealed native stdout, not a rerun.",
+    "minimumOptionalNativeSummary": [
+      "Bind operation2cf and existing stdout338332B/Hd3c6dc20b8d421e0f605ac806dc5b3a8d6883b22eb521c7cf3299bcbfe0bae7f to the terminal.",
+      "Allowlist only the final new regression, types, build and original two packager command classes. Pair tool_use_id with tool_result_id and actual exit/completion markers; provide output fragment hashes/bytes and any log hash already present.",
+      "For intermediate failures retain the before/after/final outcomes and fixture correction evidence, without exporting full command text, environment, user text or raw stream."
+    ],
+    "notRequired": "Do not require a successful CLI final to acknowledge a real existing source commit or package. Conversely do not turn timeout/nativeFinal0 into a complete usage item or native success."
+  },
+  "executionByReviewer": {
+    "localReadAndPureHashGitDiffOnly": true,
+    "applicationEdits": false,
+    "applicationTests": false,
+    "modelOrNative": false,
+    "networkOrAPIOrDaemon": false,
+    "packageOrReleaseExecuted": false
+  },
+  "remainingAcceptance": "Root actual package/source hashes and retained asset closure, controlled112 release, original logged-in tab/mobile browser and actual supplier-model101 product field flow remain separate release/user acceptance work. No broad old matrix is requested by this review.",
+  "refs": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/src/runtime/project-workbench-runtime.ts",
+      "sha256": "dbdc7e5e8b8b17f1e2999c0a092ab25941a543c870ca1e27e965f0a4d2b975a2",
+      "bytes": 10611
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/src/v1/work-domains.ts",
+      "sha256": "f18590786367b75ffb985cf5e94feb00814357a8ab461e76ec2c6859cfcea529",
+      "bytes": 25470
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/src/v1/repository.ts",
+      "sha256": "42df86773d63ca3e70ae9141ed1ef1cd08707f70614493df4adda08dc4fdc4dd",
+      "bytes": 12896
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/api/test/project-workbench-r15.test.ts",
+      "sha256": "3c55b0b681cb22620af672e264ee1cd642a306e8bd9beaea4f592baa643bc47f",
+      "bytes": 5957
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "sha256": "58bc61ea0c25d3df3776f6fd2306cf0b592e3db4ae8d8a79e4cc6fbaa1513398",
+      "bytes": 11919
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-implementation.json",
+      "sha256": "fb89ef3fa33ac76c6f74f71d19a8c48e88d99fdc864f3dc89a5030372bef553c",
+      "bytes": 1990
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-implementation.md",
+      "sha256": "64411a57e067a7c0e5134148115ebc9e62774bd6aaa732b22f23c9bd2dd1639d",
+      "bytes": 3705
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-packages.json",
+      "sha256": "47054b4389e5058c073df54691755b536054652e1cb0aa44c642e37747c89a2d",
+      "bytes": 3688
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-cost-ledger.json",
+      "sha256": "c26dbdb50acbb6b27c7c464365a0f07d8fec273131101a5ead63b6c177c50055",
+      "bytes": 422
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/build.txt",
+      "sha256": "57d04b1254a48221195cb72718dcbd7eea506b76bffe7e9e36088e802747f072",
+      "bytes": 3400
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/compat-readback.json",
+      "sha256": "252bb2690ac7523096d1a7a5a8ae48c2904ed2fc10852ccfefb91c9ce964f038",
+      "bytes": 129
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/node-package.txt",
+      "sha256": "bed0a5d22e54e8e4dc5be39a63be27d91df63418d212e2404003c8f2f5dc0353",
+      "bytes": 149
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/platform-package.txt",
+      "sha256": "5fa1d51aa78ec876c5a70e8c3f47abbf9d96de1d62bb0e1cd71f92f37830f52b",
+      "bytes": 783
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/preflight-after.tap",
+      "sha256": "bb1d63571105811ab0027c8832b7267216c5ab3b0e6b08734a4e1469e986b1fe",
+      "bytes": 1794
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/preflight-before.tap",
+      "sha256": "d74072e401f339868c7eedc427487ed2758ee19375884f1e579c18e0211dd92b",
+      "bytes": 1232
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/preflight-final.tap",
+      "sha256": "028a1d5f4d7810cdc4e63bacf60e60a8a7bfd5f36c1435bff6cf7a34115177aa",
+      "bytes": 1929
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/preflight-verified.tap",
+      "sha256": "8a8d13e5f6c54fb1b3b3b46eba3b55f35b73e86745bfb04598391573fd744905",
+      "bytes": 268
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r45-round15/reports/r45-round15-logs/typecheck.txt",
+      "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+      "bytes": 193
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-collection-1792257714226.json",
+      "sha256": "ca65679d458770451109d143dee4e50e97169b1c8b44847829ab0b9c7871f506",
+      "bytes": 5507
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-terminal-native-observation.json",
+      "sha256": "da39ade6d63de94034b685ea82eeaa19b511fdaaf27679e2a7c17e71e689ce6d",
+      "bytes": 2294
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-round14-api-independent-source-review.json",
+      "sha256": "861e1b2df55f970a016f9c0cfe0b3a2d50344f2220a6685193d8b4e5598d5b51",
+      "bytes": 11287
+    }
+  ],
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-round15-preflight-patch-independent-source-review.json",
+      "sha256": "f48d95a35d64ad79b0d5042a94d51339df3b0bfb4707b52ac0bbdfea225fcf51",
+      "bytes": 13221
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

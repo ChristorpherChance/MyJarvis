@@ -1,0 +1,54 @@
+# R54 工作台维护与开发接手补充
+
+<!-- jarvis-doc-meta {"version":"R54维护与接手补充","date":"2026-10-18","eyebrow":"112开发 / 真实互动 / 分层验收","subtitle":"R54工作台实现、验证、发布、现场边界及常规开发Git同步。","stats":[{"value":"R54","label":"112正式版本"},{"value":"真实阶段","label":"不虚构百分比"},{"value":"112开发","label":"源码与数据隔离"}]} -->
+
+R54让项目工作台直接呈现真实执行阶段、CC与贾维斯的近期互动，以及待安排、需处理和已结束的任务。本页覆盖贾维斯平台维护；软件工厂仍是独立受监管项目，没有为本次界面维护重新派发业务任务或调用供应商模型。
+
+**已发生切面：** 2026-10-18 14:34:34.993 UTC（北京时间22:34:34.993）。112正式平台已为 `20261018-simple-workbench-r54`，发布、独立健康、限定桌面/手机及按钮现场核对通过；常规开发目录已同步并导入真实Git历史。本轮没有新发业务命令。最终Git发布/合并及最后文档快进同步尚待各自实际回执，本页不提前确认。
+
+## 1 从哪里接着开发
+
+常规开发使用112普通账号的 `/home/superopen/All-Projects/MyJevis`。本次独立工作副本为 `/home/superopen/All-Projects/MyJevis-r54-workbench`；正式release、数据和常规开发入口继续隔离。APP为 `bc4fcd21e3cec9a3cfec92f492ee85304b90ff16`，增加独立激活脚本后的源码main为 `f8ac8a5648c16e4164dff6ced2d30f96024299b6`。
+
+[常规开发同步回执](../../artifacts/workbench-r54/daily-development-sync.json)已核3158个跟踪文件、773项更新和26件旧版本私备份；真实Git对象与index已导入，跟踪工作树干净。原337条账本作为新历史的完整前缀保持，`.migration-original`、私有运行数据、依赖与未知未跟踪文件未删除。不是以release整树覆盖，也没有通过reset/clean/checkout清理活动目录。上述是当时核验，开工前仍须检查实际HEAD和dirty。最终文档提交后的常规目录快进同步仍待Root回执，不能把本次源码同步当未来文档也已同步。
+
+先读根部 `CLAUDE.md`、`AGENTS.md` 与当前建设档案，再用 `npm run dev -- --check` 检查配置和端口；需要开发时才启动 `npm run dev`。API/前端为127.0.0.1的43140/45173，数据为账号home下 `~/.local/share/jarvis-dev-112`，使用白名单环境。此次同步只执行check，未启动开发服务。Linux开发入口、代理和隔离规则已经纳入源码；不要把正式3140/3141、生产数据库或模型配置接入开发数据。详见[112开发迁移使用说明](../112开发迁移使用说明.md)。同一需求只在选定工作副本推进，避免112与101并发覆盖。
+
+## 2 最小设计与源码入口
+
+界面使用真实阶段，不显示虚构百分比。任务queued但没有绑定run归“待安排”；真实run queued为“等待领取”，running为“正在执行”。失败、round-limit、等待处理的暂停归需处理。暂停尚无节点停止证明时显示等待确认，不冒节点已停；终态结果不能被旧过程日志覆盖。`achieved`须核对当前review与已签正常结果，不等于整个项目或独立验收完成。
+
+本人项目的 `GET /api/v1/projects/:id/workbench` 增加可选 `currentActivity`：项目/任务/run绑定、实际阶段、真实活动时间和最多12条有来源的互动，默认只显示最近3条。`updatedAt`取保存事件时间，不取GET现在时；`progress.percent`为null。旧接口缺少该字段时保兼容投影，不能拿无run的queued任务冒活跃。
+
+| 源码 | 维护职责 |
+| --- | --- |
+| `apps/api/src/runtime/project-workbench-activity.ts` | 纯阶段与互动投影、来源核对、任务分类 |
+| `apps/api/src/runtime/project-workbench-runtime.ts` | 已有本人项目GET接线；修正historicalActive误报 |
+| `apps/api/src/runtime/execution-runtime.ts` | owner-bound单run最近80条日志只读查询，不改派发/claim |
+| `apps/web/src/features/operations/ProjectWorkbenchPage.tsx` | 首屏三块、最近互动、任务分组与最小修订目标表单 |
+| `apps/web/src/supervisor-workbench-stream.ts` | SSE去重、生命周期与只读刷新 |
+| `apps/api/test/project-workbench-activity-r54.test.ts`、`scripts/test-r54-workbench.mjs` | 本次受影响定向验证 |
+
+既有执行流 `/api/v1/execution/runs/:id/events` 只对真正绑定的queued/running run订阅，前端根据log ID和状态变化重新GET，不直接渲染SSE原text。主管会话流继续提供修订提醒；15秒读取是兜底。换项目/run、鉴权失效和旧响应必须隔离。读取失败、断线或超过45秒的陈旧状态不能继续使执行按钮可用；点击时仍重新核对最后成功读取时间。达标后的修订目标表单只保存，不自动start。
+
+日志沿已有本人有权读取和脱敏层：允许真实assistant文本、工具名与安全描述、贾维斯指令及判断理由；thinking、用户prompt、工具参数/argv/env和工具结果正文不进入时间线，未知结构不作正文兜底。本人界面的过程详情与公开档案边界不同；公开报告不复制原聊天、凭据或私有环境。
+
+## 3 实际验证、失败保留与上线
+
+112保存的API/loop组11通过、UI组4通过；开发入口check、API/Web类型与构建通过。不重复计入已过组。API覆盖owner和错run、无run queued/round-limit、日志白名单、终态与暂停、GET无派发副作用及SQLite顺序/80条/owner隔离；UI覆盖刷新、鉴权/陈旧数据与修订不自动开始。
+
+准备阶段PATH误指受保护Node在测试前拒绝（0tests）；随后UI测试加载器从/tmp找不到React，API11已通过。只改测试临时路径3处后，UI与构建通过；普通账号读取生产assets又被权限拒绝，保原失败。最终从已保存的普通R53构建资产取兼容件，132项旧资产逐H核同，未放宽生产权限。最终APP与前一次源审仅测试路径3处差异，产品逻辑未顺带改变。见[源码审核](../../artifacts/workbench-r54/final-source-independent-review.json)、[最终源包核验](../../artifacts/workbench-r54/final-source-package-independent-verification.json)及[包结果](../../artifacts/workbench-r54/package-result.json)。
+
+交付包2327文件，ZIP SHA-256为 `f9eb4c09c06e6a1c2dc09889cdfd10b6ba062907ea7660c2ad4f4f0111eb0b97`，manifest为 `edb35ffb4bf1d0890fa46943e81718b2bf3aea9192dbb1a4c9f6b4fad65b3512`。全部载荷、源码对应与旧资产闭包独立核同；101节点五项输入未改，没有重新安装节点。
+
+[真实激活](../../artifacts/workbench-r54/activation-outcome.json)通过：完整快照与隔离恢复各4,607,605,238B、64文件59目录、10SQLite，manifest相同，配置权限保持，未回写live数据，也未触发回退。[独立健康与本人工作台读取](../../artifacts/workbench-r54/112-live-verification.json)核正式R54和双服务active；G10/S79 achieved、enabled=false，原run42c4保持，真实任务分组为活跃0、待安排3、需处理17、已结束7，业务命令0。该切面没有真实运行中的CC，不能据此宣称已现场验证新的运行中流或所有停止路径。见[保存证据独审](../../artifacts/workbench-r54/post-activation-and-live-independent-saved-review.json)。
+
+## 4 未完事项与最终封口
+
+[现场浏览器回执](../../artifacts/workbench-r54/browser-visible-readback.json)确认1280桌面当前焦点、最近真实互动和三组任务；主按钮打开并聚焦目标表单，“保存不开始”提示可见，表单可收起，执行中0筛选无伪任务，完成简报可展开。390×844手机documentWidth为384，无横向溢出，互动和任务筛选可见，随后已恢复视口。浏览器多动作工具60秒限时只影响自动化检查，未产生业务POST。当前是真实已结束/achieved状态；运行中流、鉴权、陈旧数据保护来自受控组，不冒新CC现场演练或完整产品验收。
+
+项目决定已保留选定→实施两版，版本2仅记录本轮实际实现与验证，`independentAcceptance=false`，工厂计划、事项和notes未改，见[决定回执](../../artifacts/workbench-r54/decision-implementation-readback.json)。
+
+**后续独立留证：** Git发布/合并和最后文档快进到112尚未在本cut完成，须各自真实回执。建设343仍是待追加输入，准备时账本342/head89a05b74；Root追加前重核真实next/head，通过原记录工具追加并生成日志。本地已生成本页与当前状态文档的同源HTML，没有调用建设记录append或日志render；实际记录执行以后续单独回执确认，不把准备说明误称最终未执行。
+
+R53有限闭环的32件原件、三标准与review207不重做。全工厂12＋5、客户产品、全局coverage28.2%旧失败与lines90/branches80门、其他infra/环境、完整产品及持续自治验收仍按原范围，不能从这次UI维护改写完成。十分钟跟进保持PAUSED；本轮未新增供应商模型或工厂run，内部编排与作者会话费用 **unknown**，不写零，费用只记录不设金额上限。参阅[R53接手补充](R53监管闭环维护与接手补充-20261018.md)。

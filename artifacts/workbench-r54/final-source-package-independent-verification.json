@@ -1,0 +1,280 @@
+{
+  "kind": "r54-final-source-and-package-independent-artifact-verification",
+  "accepted": true,
+  "sourceAccepted": true,
+  "packageAccepted": true,
+  "sourceCommit": "bc4fcd21e3cec9a3cfec92f492ee85304b90ff16",
+  "archiveSHA256": "f9eb4c09c06e6a1c2dc09889cdfd10b6ba062907ea7660c2ad4f4f0111eb0b97",
+  "manifestSHA256": "edb35ffb4bf1d0890fa46943e81718b2bf3aea9192dbb1a4c9f6b4fad65b3512",
+  "runtimeBuild": "20261018-simple-workbench-r54",
+  "scope": "Independent local saved artifact and Git-byte audit only. No application, test, build, browser, model, API or remote execution.",
+  "priorSourceReview": {
+    "path": "artifacts/workbench-r54/final-source-independent-review.json",
+    "bytes": 11434,
+    "sha256": "e708ec5353436100e59c077766190108c93f0ab2771b83ab3ffbd16914ded53b"
+  },
+  "testOnlyDelta": {
+    "priorCommit": "e9d9ad684c578b578cd76994f4b397b992b8d0a7",
+    "changedPaths": [
+      "scripts/test-r54-workbench.mjs"
+    ],
+    "old": {
+      "bytes": 9536,
+      "sha256": "d230b63687f6785dd5084f172ae3f5a01a30fe3bd7d6076c631471ecb10a9496"
+    },
+    "new": {
+      "bytes": 9569,
+      "sha256": "a56b624cbb71df049393de40fc56997207e3a0cdce097116e2080cebb65a9afb"
+    },
+    "threeLiteralForwardExact": true,
+    "casesAndAssertionsUnchanged": true
+  },
+  "artifacts": [
+    {
+      "path": ".jarvis-dev/releases/r54/20261018-simple-workbench-r54.zip",
+      "bytes": 25202545,
+      "sha256": "f9eb4c09c06e6a1c2dc09889cdfd10b6ba062907ea7660c2ad4f4f0111eb0b97"
+    },
+    {
+      "path": ".jarvis-dev/releases/r54/release-manifest.json",
+      "bytes": 460936,
+      "sha256": "edb35ffb4bf1d0890fa46943e81718b2bf3aea9192dbb1a4c9f6b4fad65b3512"
+    }
+  ],
+  "payload": {
+    "files": 2327,
+    "allSHA256SizeModesAndCRCVerified": true,
+    "embeddedManifestExact": true,
+    "safeUniquePathsNoLinks": true
+  },
+  "source": {
+    "all17ChangedPathsGitBlobExact": true,
+    "files": [
+      {
+        "path": ".gitignore",
+        "bytes": 643,
+        "sha256": "7f248a8cb9c82d95e54bd17b08544622cdc24fe9f78574bed6d61189762873a5"
+      },
+      {
+        "path": "README.md",
+        "bytes": 15297,
+        "sha256": "6ae5e86ec98a25b17582db49edc909cfe6ef2845fa38d7e15580aff0ba31ee94"
+      },
+      {
+        "path": "apps/api/src/runtime/cluster-runtime.ts",
+        "bytes": 11770,
+        "sha256": "6d33e7a6acb95076bb3d04dc8d45ae393c4c646c0600c2701e9fc11bbe415e11"
+      },
+      {
+        "path": "apps/api/src/runtime/execution-runtime.ts",
+        "bytes": 132209,
+        "sha256": "7873b278c159a357135d145954a87a1f933961c17e248c7b47de8a0afdf53285"
+      },
+      {
+        "path": "apps/api/src/runtime/project-workbench-activity.ts",
+        "bytes": 12168,
+        "sha256": "ac048fb556834b73ca1b2560128256b975a19638aa7cdafb2af152ca189abb13"
+      },
+      {
+        "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+        "bytes": 19070,
+        "sha256": "ee3147239232cb20a7d8eed4a8be4a9d75d4230ab5e9f5f856436521ee3f3bee"
+      },
+      {
+        "path": "apps/api/test/project-workbench-activity-r54.test.ts",
+        "bytes": 9778,
+        "sha256": "fed545137c67f0bd257b16c15da1a9189b69c92098dc41e4f6dd044ca6396a60"
+      },
+      {
+        "path": "apps/api/test/project-workbench-loop-r53.test.ts",
+        "bytes": 10602,
+        "sha256": "a6d55c6f74120db20f13653d6b907c1be4815dae8577b9234835cca516f79836"
+      },
+      {
+        "path": "apps/web/src/features/operations/OperationsPage.tsx",
+        "bytes": 2823,
+        "sha256": "e2f57ae54bbd2823464a8863050447f523b8f5aea3622bd31acc6b004844efa6"
+      },
+      {
+        "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 28766,
+        "sha256": "bca04ca6330e40dc6fa7cb70280e56f19fea5c316a2413a3c1a3557553c34122"
+      },
+      {
+        "path": "apps/web/src/features/operations/project-plan-workbench-view.ts",
+        "bytes": 9035,
+        "sha256": "8c574c9a2a83b3b9411c06a1b6548f360c8aaaa50dbbeec20e5eba674930e63f"
+      },
+      {
+        "path": "apps/web/src/features/operations/project-workbench.css",
+        "bytes": 5842,
+        "sha256": "4bf9134070e96c2b7d6c2fa7f61f5c9761430661582b8af1180bfe2bc1827f87"
+      },
+      {
+        "path": "apps/web/src/supervisor-workbench-stream.ts",
+        "bytes": 2836,
+        "sha256": "3aa58d94253bd09e3dcff79916a3fbb68ec729c35d8e8a928b1d55f2caa285bb"
+      },
+      {
+        "path": "apps/web/vite.config.ts",
+        "bytes": 460,
+        "sha256": "9c574bf9eb4ab7a3d854310b7c1e60ee06ab4174debfb5e4972bf9450a723712"
+      },
+      {
+        "path": "package.json",
+        "bytes": 1571,
+        "sha256": "b6cea8cf31981080e9c58f689c949ab0ae9e1800d2a6573a14351d01d7475b68"
+      },
+      {
+        "path": "scripts/dev-112.mjs",
+        "bytes": 6807,
+        "sha256": "b23b83428ad86b782bffd8603e210ce86d5d2b09274e95e0e2165a4e8c839b5d"
+      },
+      {
+        "path": "scripts/test-r54-workbench.mjs",
+        "bytes": 9569,
+        "sha256": "a56b624cbb71df049393de40fc56997207e3a0cdce097116e2080cebb65a9afb"
+      }
+    ],
+    "allPackagedTrackedBlobs": 1892,
+    "allAppSourceFiles": 311,
+    "allAppSourcesTrackedAndPresent": true,
+    "allPackagedScriptsAndPackageSourcesTrackedExact": true
+  },
+  "compiled": {
+    "typescriptSourceMapsVerified": 117,
+    "newApiCompiledMapsAndSymbolsPresent": true,
+    "runtimeLabelExact": true,
+    "freshRecompilationPerformed": false,
+    "note": "Map paths and saved compiler receipts establish bounded source correspondence; not an independent reproducible build."
+  },
+  "compatibility": {
+    "priorR53Archive": {
+      "path": ".jarvis-dev/releases/r53-r2/platform/20261018-supervision-closed-loop-r53.zip",
+      "bytes": 24818440,
+      "sha256": "93369604af8c03502c629bf8dfd904542454f32854a629fcd3d14aac891bf4a7"
+    },
+    "all132PriorAssetsByteExact": true,
+    "compatibleNodeFiveInputsUnchanged": [
+      "scripts/build-development-node-package.mjs",
+      "apps/agent/src/index.ts",
+      "apps/api/src/runtime/agent-supervisor.ts",
+      "scripts/prepare-development-node.mjs",
+      "docs/开发监督与双机接入.md"
+    ],
+    "node101Reinstall": false
+  },
+  "savedValidation": {
+    "receipts": [
+      {
+        "path": "artifacts/workbench-r54/validation-326dbffb-bf26-431f-ae26-66137c7abdd9.json",
+        "bytes": 4294,
+        "sha256": "461614e77082b21514a53410f87767ef02b01644717dba7c5ca641a8834df781"
+      },
+      {
+        "path": "artifacts/workbench-r54/validation-3379836f-37e6-4344-9832-5e7433bf6946.json",
+        "bytes": 3857,
+        "sha256": "0ae4e7085630d5fd40c776a759aaceb644d3236f895ea358b97015b8ee0d9867"
+      },
+      {
+        "path": "artifacts/workbench-r54/package-result.json",
+        "bytes": 1181,
+        "sha256": "e286cd62af4dc267c000c5f7673afcc00acbffc909b5559254d0d3354fdf8850"
+      },
+      {
+        "path": "artifacts/workbench-r54/test-loader-r2-correction-handoff.json",
+        "bytes": 1460,
+        "sha256": "256277658f53e3c13f04a7b21e0fcadd0eb84fbaec232026ff2781f613205093"
+      }
+    ],
+    "firstApiAndLoopStepExit0": true,
+    "firstUiLoaderFailurePreserved": true,
+    "secondUiStepExit0": true,
+    "linuxDevCheckExit0": true,
+    "apiWebTypesBuildExit0": true,
+    "firstOuterStatus": "failed due to UI loader",
+    "secondOuterStatus": "failed after successful validation, while reading production assets as ordinary uid",
+    "rawTestLogsIndependentlyRead": true,
+    "rawOriginalFingerprints": [
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/api-and-loop-tests.stdout",
+        "bytes": 1441,
+        "sha256": "e019d76e1077793512ef74f2b8ab413fcab695b227ff2408ef2bce4245392c8e"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/api-and-loop-tests.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/ui-stream-tests.stdout",
+        "bytes": 607,
+        "sha256": "1681ef26b1eae97036fecc2c9f9f159b89d6aea6b615e6bb4212c579232b8d9c"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/ui-stream-tests.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/linux-dev-entry-check.stdout",
+        "bytes": 366,
+        "sha256": "ba3e3d2282957033bd46de22e6b2e729ca15f2c18b28fe211847dfa36f286869"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/linux-dev-entry-check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/api-web-types-and-build.stdout",
+        "bytes": 3400,
+        "sha256": "74f2cecf4f2ec69fac823efaf432fb1c08fa15d2f49e27dc4d3f405482f1eac9"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r54-validation-originals/api-web-types-and-build.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "testCounts": {
+      "apiAndLoop": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "skipped": 0
+      },
+      "ui": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "provenanceLimit": "Eight saved raw originals independently match the two Root operation step fingerprints. This is saved-result auditing, not re-execution; actual browser acceptance remains separate."
+  },
+  "remaining": [
+    "Actual controlled deployment and independent health are separate.",
+    "Real desktop/mobile/browser command/stream acceptance remains separate.",
+    "Full factory/customer acceptance and ten-minute automation remain unchanged."
+  ],
+  "activationSource": {
+    "opsCommit": "f8ac8a5648c16e4164dff6ced2d30f96024299b6",
+    "path": "scripts/capture-activate-r54-sidecar.py",
+    "bytes": 26423,
+    "sha256": "520f817c0d674c51cd380a5e207636806f5c071834ef1dc0f863af800f543a8b",
+    "fourLiteralWholeInverseToR53": true,
+    "originalAlgorithmAndRecoveryPreserved": true,
+    "executedByReviewer": false
+  },
+  "localInitialRefusal": {
+    "code": "HEAD_BINDING",
+    "stage": "Before ZIP read; known sole OPS addition advanced HEAD",
+    "sourcePreserved": ".jarvis-dev/r54-review-local/verify-received-package.py",
+    "productFailure": false
+  },
+  "p0Findings": [],
+  "p1Findings": [],
+  "newModelCalls": 0,
+  "deployedByReviewer": false
+}

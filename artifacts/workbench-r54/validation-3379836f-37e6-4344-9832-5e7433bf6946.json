@@ -1,0 +1,101 @@
+{
+  "kind": "r54-isolated-112-validation-and-build",
+  "operationId": "3379836f-37e6-4344-9832-5e7433bf6946",
+  "sourceCommit": "bc4fcd21e3cec9a3cfec92f492ee85304b90ff16",
+  "status": "failed",
+  "steps": [
+    {
+      "name": "before-head",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0016837900038808584,
+      "stdoutBytes": 41,
+      "stdoutSHA256": "0f8b01acff5e757b1f8838435825535553e766c9bae0e1cde2226c08a45116cf",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundle-verify",
+      "exitCode": 0,
+      "elapsedSeconds": 0.003606691025197506,
+      "stdoutBytes": 190,
+      "stdoutSHA256": "37c6983d66f06184de678deaaf0e538d9588260c31095c0527f67de45ab8e519",
+      "stderrBytes": 126,
+      "stderrSHA256": "9f41d47d80ffb7d758e04a2416a919d2c023e8b7a40649e690fe822c6a54b5d1"
+    },
+    {
+      "name": "bundle-fetch",
+      "exitCode": 0,
+      "elapsedSeconds": 0.05755356198642403,
+      "stdoutBytes": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 169,
+      "stderrSHA256": "ca64968cabc16f83f4f8d97e526ec8398726157509714c3045c8703c239f56c1"
+    },
+    {
+      "name": "fetch-head",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0013924830127507448,
+      "stdoutBytes": 41,
+      "stdoutSHA256": "088e9a24fe3e98c4cbcb17acc44b939cd513cf28e3c0c28bc47dd732feba218f",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "source-update",
+      "exitCode": 0,
+      "elapsedSeconds": 0.009843113948591053,
+      "stdoutBytes": 131,
+      "stdoutSHA256": "9ebb3e33d16f6fbac46e5bfc4412181e6d1eb80253cd4f1785d0811f7d832de7",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bound-head",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0014406469417735934,
+      "stdoutBytes": 41,
+      "stdoutSHA256": "088e9a24fe3e98c4cbcb17acc44b939cd513cf28e3c0c28bc47dd732feba218f",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bound-clean",
+      "exitCode": 0,
+      "elapsedSeconds": 0.005180042935535312,
+      "stdoutBytes": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ui-stream-tests",
+      "exitCode": 0,
+      "elapsedSeconds": 0.19991059007588774,
+      "stdoutBytes": 607,
+      "stdoutSHA256": "1681ef26b1eae97036fecc2c9f9f159b89d6aea6b615e6bb4212c579232b8d9c",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "linux-dev-entry-check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.03874431608710438,
+      "stdoutBytes": 366,
+      "stdoutSHA256": "ba3e3d2282957033bd46de22e6b2e729ca15f2c18b28fe211847dfa36f286869",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "api-web-types-and-build",
+      "exitCode": 0,
+      "elapsedSeconds": 22.823071446968243,
+      "stdoutBytes": 3400,
+      "stdoutSHA256": "74f2cecf4f2ec69fac823efaf432fb1c08fa15d2f49e27dc4d3f405482f1eac9",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "error": "[Errno 13] Permission denied: '/opt/jarvis/current/apps/web/dist/assets'",
+  "privateOutput": "/home/superopen/All-Projects/MyJevis-r54-workbench/.r54-validation/3379836f-37e6-4344-9832-5e7433bf6946",
+  "automaticRetry": false
+}

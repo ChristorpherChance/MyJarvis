@@ -1,0 +1,78 @@
+{
+  "id": "JARVIS-20261018-R54-WORKBENCH-PROGRESS-AND-HANDOFF",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-18T14:34:34.993Z",
+  "title": "R54真实互动工作台已发布和现场核对，112常规开发Git历史已同步",
+  "objective": "让用户看见实际CC与贾维斯互动、真实运行阶段及任务安排，保持简明界面、数据隔离和验收分层。",
+  "changes": [
+    "实现owner-only currentActivity只读投影、当前run近期脱敏消息和真实任务分组；queued无run归待安排，round-limit归需处理。",
+    "首屏近期互动默认3条、完整按需展开；复用执行SSE去重刷新，15秒只读兜底，鉴权/陈旧/旧响应隔离；修订目标保存不自动start。",
+    "APP bc4fcd21e3cec9a3cfec92f492ee85304b90ff16及独立激活脚本main f8ac8a5648c16e4164dff6ced2d30f96024299b6已源包核验并发布112 R54；101节点输入未改。",
+    "112常规目录3158跟踪文件核同，773更新、26旧件私备份；真实Git对象和index导入，跟踪文件干净，原337账本完整前缀保留。",
+    "正式维护接手说明与三个当前状态块已整理；AGENTS及112说明仅更正无Git迁移历史与R54实际导入切面，旧块与并发342保留。",
+    "项目决定保留selected→implemented2两版，仅记本轮实现/验证/发布；independentAcceptance=false，工厂plan/items/notes未改。"
+  ],
+  "decisions": [
+    "复用真实run/log/event而非假百分比；达标须当前签名结果与review匹配，独立产品验收分列。",
+    "本人脱敏过程详情与公开档案分开，不公开原聊天、thinking、用户输入或工具参数。",
+    "保留路径/加载器/资产权限失败；只修测试临时路径并使用已核132旧资产，不放宽生产读取权限。",
+    "常规目录按跟踪文件核同和旧件私备份同步，不reset/clean/checkout覆盖；原件、私有运行数据、依赖和未知未跟踪文件保持。"
+  ],
+  "facts": [
+    "准备时规范账本仍342/head89a05b74824a7b73c4ef43509ad6351ba27e8cb21cfefeb8e177a4bd58553ef0；343只是候选，Root最终追加前重核。",
+    "14:22:49.028Z独立读取确认R54、双服务active、S79/G10 achieved且enabled=false，原42c4保持；任务活跃0/待安排3/需处理17/已结束7，业务命令0。",
+    "14:26:12.906068Z常规目录main f8ac真实对象和index核实，安全开发端口43140/45173可用、独立home数据及白名单环境；只check，未启动开发服务。",
+    "14:34:20.370018Z浏览器回执确认桌面三核心区、表单聚焦/保存不开始/折叠/完成简报/执行中0筛选和390×844无横溢；0业务POST，不冒新CC现场。最终Git发布及最后文档同步尚未在此cut完成。",
+    "本输入尚未追加记录；本地只通过既有文档编译器生成当前说明MD/HTML，不手改events或建设日志。Root最终追加与日志生成以单独回执为准。"
+  ],
+  "verification": [
+    "112 API与loop受影响组11通过、UI组4通过，Linux入口check与API/Web类型构建通过；保存原日志审核，不在本机重跑或重复累计。",
+    "首PATH在测试前拒绝；UI /tmp加载React失败后仅修3处测试路径；之后构建通过而普通账号读生产assets失败，原错误均保。",
+    "最终包2327文件及源码对应、CRC/大小/模式、132旧资产闭包全部核同；compatible节点五输入未变。",
+    "真实stage/install/inspect及激活通过；完整快照与隔离恢复均4607605238B/64文件59目录/10SQLite同manifest，权限保持，未恢复live数据。",
+    "独立健康与本人工作台读取通过；并非新运行中CC/SSE或全部停止路径的现场演练。",
+    "常规开发同步核3158跟踪文件与原337账本完整前缀，真实Git历史导入及tracked clean通过。",
+    "真实桌面和手机有限只读操作通过，自动化60秒限时不等于业务失败；当前没有运行中CC，流/陈旧/鉴权仍限定为受控验证。",
+    "三个当前块移除新增内容后逐byte恢复原全文；并发342及迁移/保留/旧目标与标准未覆盖。"
+  ],
+  "pending": [
+    "Git发布/合并与最后文档快进到112仍须本cut后各自真实回执，不在此记录预填。",
+    "完整工厂12+5、客户产品/全局coverage/其它infra环境与持续自治验收保持原待办；十分钟PAUSED不恢复。",
+    "运行中CC消息流、鉴权和停止路径的全部生产场景未新演练，不从终态页面只读操作推断。",
+    "费用只记录无金额cap，内部编排和作者会话unknown分列；不为补记录发新模型、工厂run或重复测试。"
+  ],
+  "lessons": [
+    "queued标签不是正在运行，读取时间不是进度更新时间；过程必须绑定真实run和日志来源。",
+    "阶段步骤通过与编排整体失败可以同时成立，应保存首次失败并明确后续修复边界。",
+    "导入真实Git对象、核对index与跟踪文件才建立真实基线；仅来源提交号或git init不能证明历史存在。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/workbench-r54/final-source-independent-review.json",
+    "artifacts/workbench-r54/final-source-package-independent-verification.json",
+    "artifacts/workbench-r54/validation-1d9ad628-f8d2-47a4-8f1c-07b9b0a88472.json",
+    "artifacts/workbench-r54/validation-326dbffb-bf26-431f-ae26-66137c7abdd9.json",
+    "artifacts/workbench-r54/validation-3379836f-37e6-4344-9832-5e7433bf6946.json",
+    "artifacts/workbench-r54/test-loader-r2-correction-handoff.json",
+    "artifacts/workbench-r54/package-result.json",
+    "artifacts/workbench-r54/112-stage.json",
+    "artifacts/workbench-r54/112-install.json",
+    "artifacts/workbench-r54/112-inspect.json",
+    "artifacts/workbench-r54/activation-outcome.json",
+    "artifacts/workbench-r54/112-live-verification.json",
+    "artifacts/workbench-r54/post-activation-and-live-independent-saved-review.json",
+    "artifacts/workbench-r54/daily-development-sync.json",
+    "artifacts/workbench-r54/daily-sync-independent-source-review.json",
+    "artifacts/workbench-r54/browser-visible-readback.json",
+    "artifacts/workbench-r54/decision-implementation-readback.json",
+    "docs/版本记录/R54工作台维护与接手补充-20261018.md",
+    "artifacts/workbench-r54/stream-disconnection-wording-scope-addendum-FINAL-v2.json"
+  ]
+}

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="贾维斯在112的日常开发入口、完整原件、验证证据与后续边界。">
-  <meta name="jarvis-source-sha256" content="fd8d8e03219ecfc5fd7b8dc49a5f223a0eb91446451c63159749a113316b7fcf">
+  <meta name="jarvis-source-sha256" content="b392d269e2aaea75635ed2185c1d3f56e2d027c211b82f99a5401d46eab8588f">
   <title>112 贾维斯平台开发使用说明</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -139,8 +139,8 @@ npm run build
 <p>语音、OCR、ASR 及相应 Linux Python 环境尚未专项验收，不能从前端和 API 健康通过推断这些功能已经可用。完整产品功能、生产发布和人工验收仍分别确认。</p>
 </section>
 <section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">Git 与项目规则</h2>
-<p>普通 <code>npm run dev</code>、类型检查和构建不要求项目具有 <code>.git</code>。本次源于发布包的目录不能自动视为保有完整 Git 历史，迁移本身也不代表已经初始化 Git 或提交。</p>
-<p>如后续建立本地 Git 基线，应先确认原件、私密目录和运行数据已被忽略，只显式选择已核对的公开源码与所需文档，检查暂存区后再提交；不要直接 <code>git add .</code>。新的本地首次提交具有自己的提交号，不能冒认为上游 R49-r1 提交。远端仓库、推送和外部凭据按后续明确授权处理。</p>
+<p>普通 <code>npm run dev</code>、类型检查和构建不要求项目具有 <code>.git</code>。初次迁移来自发布包，当时的目录没有 Git 历史，迁移本身也不代表已经初始化 Git 或提交。其后，2026-10-18 14:26:12.906068Z（北京时间22:26:12.906068）R54同步已在上述常规目录导入真实Git对象与index，main为 <code>f8ac8a5648c16e4164dff6ced2d30f96024299b6</code>，3158个跟踪文件逐项核同且跟踪工作树干净；这不是仅执行 <code>git init</code>。773项更新、26件旧版本私备份，原337条账本完整前缀保留；原件、私有运行路径、依赖和未知未跟踪文件未删除。开发入口仅完成安全配置和43140/45173端口检查，未启动开发服务或操作正式服务。见<a href="../artifacts/workbench-r54/daily-development-sync.json">实际同步回执</a>。本段是新的Git与源码状态切面，上文R49-r1导出说明仍保留初次迁移出处；后续实际任务须重新核对当前HEAD和dirty。</p>
+<p>对仍无Git的历史发布包副本，不能把目录中的来源提交号当作已有对象；如需建立基线，应先确认原件、私密目录和运行数据已被忽略，只显式选择已核对的公开源码与所需文档，检查暂存区后再提交，不要直接 <code>git add .</code>。新的本地首次提交具有自己的提交号，不能冒认为上游提交。当前常规目录已有真实历史，不应为“补历史”重新造首次提交或用reset/clean/checkout覆盖活动文件。远端仓库、推送和外部凭据按后续明确授权处理。</p>
 <p>部分工厂验收脚本要求被验项目存在真实 <code>.git</code>；<code>scripts/package-capture-release.mjs</code> 还会读取选定提交和 Git 对象并核对跟踪文件。仅初始化一个空仓库不会补齐这些前置条件。运行该类维护或发布脚本前，先核对它的目标项目、提交对象、输入范围与权限。</p>
 <p>活动目录根部需同时保留 <code>CLAUDE.md</code> 和 <code>AGENTS.md</code>，并确保 <code>AGENTS.md</code> 引用的当前建设档案、建设日志可读。原件树里的同名历史文件用于留存，后续开发按活动根部的现行规则执行。</p>
 </section>

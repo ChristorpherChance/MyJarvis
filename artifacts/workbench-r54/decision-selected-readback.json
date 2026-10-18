@@ -1,0 +1,144 @@
+{
+  "questionSummary": "把复杂项目监管页改成当前重点、最近互动和真实任务状态，并同步112常规开发源码。",
+  "context": {
+    "observedAt": "2026-10-18T14:34:34.203Z",
+    "goalSpecHash": null,
+    "sourceFingerprint": null,
+    "sourceVersion": "bc4fcd21e3cec9a3cfec92f492ee85304b90ff16",
+    "runId": null,
+    "taskId": null,
+    "machineId": null,
+    "objectives": [],
+    "constraints": [
+      "只读呈现不派发新工厂任务，十分钟暂停保持。",
+      "只显示已收到的绑定活动和清洗后的互动，不虚构进度百分比。",
+      "同步保原迁移树、私有数据和旧版本备份；费用只记未知不补零。"
+    ],
+    "situation": "事后登记本轮已实施方案；原界面复杂，历史状态容易冒活动任务。R54已上线112并读回，开发目录已导入真实Git对象和索引。下列选择与实施分别留版本，不冒选定时点发生在发布前。"
+  },
+  "options": [
+    {
+      "id": "more-panels",
+      "title": "继续增加并列监管面板",
+      "advantages": [
+        "复用旧布局"
+      ],
+      "disadvantages": [
+        "首屏更复杂，当前动作与历史难区分"
+      ],
+      "impact": "只更新贾维斯项目工作台及112开发源码基线，不新增工厂执行或提高产品完成率。",
+      "compliesWithGoals": "yes",
+      "withinAuthority": "yes",
+      "environmentEvidence": "available",
+      "missingEvidence": [],
+      "reversibility": "bounded",
+      "coveredObjectives": [],
+      "operationalImpact": 1
+    },
+    {
+      "id": "focus-and-details",
+      "title": "单一重点、最近互动与状态筛选，详情按需展开",
+      "advantages": [
+        "突出当前与下一步，能看真实交互和展开简报",
+        "保留已有高级控制和证据"
+      ],
+      "disadvantages": [
+        "活动流和失鲜操作保护需要额外核验"
+      ],
+      "impact": "只更新贾维斯项目工作台及112开发源码基线，不新增工厂执行或提高产品完成率。",
+      "compliesWithGoals": "yes",
+      "withinAuthority": "yes",
+      "environmentEvidence": "available",
+      "missingEvidence": [],
+      "reversibility": "bounded",
+      "coveredObjectives": [],
+      "operationalImpact": 1
+    }
+  ],
+  "chosenId": "focus-and-details",
+  "decisionRationale": "按用户简洁易用要求将高频内容置前，真实活动与历史分开；绑定不足及数据失鲜时不冒运行中或允许旧数据操作。采用有原件备份的源码同步和真实Git对象导入，保留112原件。",
+  "basisRefs": [
+    {
+      "reference": "artifacts/workbench-r54/final-source-package-independent-verification.json",
+      "sha256": "8d700a6ea740723917a3c4d9a825af8bba5cdcfbdc2f822f89a4b9ef333c687f",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/workbench-r54/112-live-verification.json",
+      "sha256": "2da736ccd2674c8f6f84cbad2e8e30679bae70e1f2bde8a6def80f60fd5d7249",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/workbench-r54/daily-development-sync.json",
+      "sha256": "0a4301b3f28e0b22aecfadfaf67bccdeceb50c9925de1dc39348d0c903f16684",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/workbench-r54/browser-visible-readback.json",
+      "sha256": "86c0354547dbb750bdcb24d76ceb7205054c7e63db4d095084b3c1bf3e444da5",
+      "kind": "observation"
+    }
+  ],
+  "risk": "low",
+  "affectedObjectives": [],
+  "rollbackPlan": {
+    "plan": "保留R54发布前完整快照及原程序，发生发布故障按独立恢复方案处理；源码旧件在112私备份中，未知用户文件不删除。",
+    "triggers": [
+      "服务健康失败",
+      "实际授权或数据绑定错误"
+    ],
+    "impact": "保留用户数据和历史，恢复操作另立实际计划；本轮未执行生产回退。",
+    "requiresNewExecutionPlan": true
+  },
+  "actions": [
+    {
+      "summary": "完成目标界面和失鲜保护，独立复核后部署并同步112。",
+      "at": "2026-10-18T14:34:34.203Z",
+      "state": "planned",
+      "evidenceRefs": []
+    }
+  ],
+  "status": "selected",
+  "origin": "ai",
+  "id": "baba4018-e7b9-435e-8131-323fdaa40f95",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "revision": 1,
+  "createdAt": "2026-10-18T14:34:34.769Z",
+  "updatedAt": "2026-10-18T14:34:34.769Z",
+  "changeOf": null,
+  "changeOfRevision": null,
+  "supersededBy": null,
+  "recommendation": {
+    "algorithm": "bounded-evidence-r1",
+    "chosenId": null,
+    "status": "ambiguous",
+    "candidates": [
+      {
+        "id": "more-panels",
+        "eligible": true,
+        "reasons": [],
+        "rank": [
+          1,
+          1
+        ]
+      },
+      {
+        "id": "focus-and-details",
+        "eligible": true,
+        "reasons": [],
+        "rank": [
+          1,
+          1
+        ]
+      }
+    ],
+    "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+    "independentAcceptance": false,
+    "usesPaidModel": false
+  },
+  "selfReported": true,
+  "independentAcceptance": false,
+  "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "revisionReason": "记录当时的问题与选择",
+  "hash": "a34449d44c429d0d6a26d8d8db0462d4750f0a9f4641c5c691c92e46fa80ffc4"
+}

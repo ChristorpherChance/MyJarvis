@@ -1,0 +1,84 @@
+{
+  "complete": true,
+  "at": "2026-10-18T14:13:57.460984+00:00",
+  "readOnly": true,
+  "units": {
+    "jarvis-platform.service": {
+      "ActiveState": "active",
+      "FragmentPath": "/etc/systemd/system/jarvis-platform.service",
+      "MainPID": "363638",
+      "User": "jarvis",
+      "Group": "jarvis"
+    },
+    "jarvis-control.service": {
+      "ActiveState": "active",
+      "FragmentPath": "/etc/systemd/system/jarvis-control.service",
+      "MainPID": "2051",
+      "User": "jarvis-control",
+      "Group": "jarvis-control"
+    }
+  },
+  "controllerConfigPath": "/etc/jarvis-control/config.json",
+  "controllerPublicConfiguration": {
+    "nodeId": "112",
+    "state": "/var/lib/jarvis-ops-controller/jobs",
+    "queue": "/var/lib/jarvis-ops-queue",
+    "sshConfig": "/etc/jarvis-control/ssh_config",
+    "nodes": [
+      {
+        "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+        "nodeId": "101",
+        "alias": "ops-101",
+        "address": "192.168.10.101",
+        "name": "101 · 平台冷备"
+      },
+      {
+        "machineId": "fd4b32f6-2fc7-409e-a8d3-3774035181e6",
+        "nodeId": "112",
+        "alias": "ops-112",
+        "address": "192.168.10.112",
+        "name": "112 · 平台主机"
+      },
+      {
+        "machineId": "ab2acde7-b833-4d26-a2ed-292397008b11",
+        "nodeId": "116",
+        "alias": "ops-116",
+        "address": "192.168.10.116",
+        "name": "116 · 项目服务器"
+      },
+      {
+        "machineId": "445c34a6-486c-475d-8e91-903cd7e55ce5",
+        "nodeId": "gz",
+        "alias": "ops-gz",
+        "address": "8.163.127.192",
+        "name": "广州云服务器"
+      },
+      {
+        "machineId": "8933b929-fe0d-42e2-b3fd-19dfd0e27862",
+        "nodeId": "jp",
+        "alias": "ops-jp",
+        "address": "8.209.253.19",
+        "name": "日本云服务器"
+      }
+    ]
+  },
+  "queueOwnership": {
+    "uid": 0,
+    "gid": 0,
+    "mode": "0o755"
+  },
+  "nodeConfigIdentity": {
+    "machineId": "fd4b32f6-2fc7-409e-a8d3-3774035181e6",
+    "hostname": "superopen-ProDesk-i7"
+  },
+  "nodeConfigKeys": [
+    "hostname",
+    "machineId",
+    "nodeId",
+    "powerEnabled",
+    "services",
+    "version"
+  ],
+  "serviceOperations": 0,
+  "modelCalls": 0
+}

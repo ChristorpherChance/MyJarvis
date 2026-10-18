@@ -1,0 +1,49 @@
+{
+  "kind": "r54-regular-development-sync-independent-static-review",
+  "noProvenP0OrP1": true,
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/r54-sync-daily-development.mjs",
+      "bytes": 6495,
+      "sha256": "52283446d7d0bfdbcbf7ff20ed8e8e405abab993bf88b37563bc5aef29f04919"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r54-deliver-ops-source.mjs",
+      "bytes": 1491,
+      "sha256": "585be66dd23baf3be13764a3d2f4b980b10dcd943b318447b05e321ab5728d55"
+    }
+  ],
+  "scope": "Local source review only; neither helper nor any remote command was executed by reviewer.",
+  "checks": [
+    "Fixed ordinary UID1000 and regular development path, separate from /opt production; existing .git or symlink refuses before copying.",
+    "Independent source HEAD must be f8ac8a5 and APPbc4 must be ancestor; tracked dirty source refuses.",
+    "Every selected destination is preflighted against its actual previous inventory SHA256, with separate exact old dev-helper H. A newly occupied unknown path refuses rather than overwrites.",
+    "A second per-file before-H check precedes private backup; each replaced old file is privately saved and its H verified. Replacement is via a new temporary file and atomic rename, not in-place hardlink mutation.",
+    "Old entire ledger must be a byte prefix of qualified source before and after; no JSONL reconstruction or raw-line merge.",
+    "Migration private backup is owner-only0700; no delete/cleanup of unknown paths, runtime data or dependencies.",
+    "Git init/local object fetch/update-ref/read-tree without -u only creates Git objects and index. There is no reset, checkout or clean and no Git working-tree replacement.",
+    "The only runtime command is dev --check: occupied ports can refuse, but no dev server or production service is started.",
+    "Deferred ops source delivery binds old APPbc4/clean checkout, exact bundle H and imported targetf8; only fast-forward merge in the independent source directory, not regular user data or production."
+  ],
+  "recommendedSmallGuards": [
+    {
+      "status": "Sent to Root; not claimed present in this pinned source",
+      "topic": "Direct source blob binding",
+      "detail": "Current target SHA256 derives from source physical bytes plus clean git status. For literal all-files Git-blob binding independent of index flags, compare SHA1(blob header + bytes) to each existing ls-tree object ID, then derive target SHA256 from those same bytes."
+    },
+    {
+      "status": "Sent to Root; not claimed present in this pinned source",
+      "topic": "Final destination race check",
+      "detail": "Repeat safe-path and old-H check immediately before os.replace, in addition to existing preflight and pre-backup check. Concurrent external writers still require an observed quiet synchronization window; no ordinary user-space rename promises atomic compare-and-swap against an uncooperative editor."
+    }
+  ],
+  "limits": [
+    "No sync completion, Git import, new dev --check or production result is asserted.",
+    "The script preserves the paths outside its qualified tracked target inventory; it does not claim all user data is Git-clean.",
+    "All backup evidence and existing user/history/runtime directories must remain retained.",
+    "Root must run the ops delivery and synchronization serially after the ongoing activation session ends."
+  ],
+  "networkOrAPI": false,
+  "applicationTestsRun": false,
+  "canonicalDocsWritten": false
+}

@@ -1,0 +1,41 @@
+apps/api/src/app.ts(175,692): error TS2345: Argument of type '{ runId: string; actorId: string; provider: string; model: string; projectId: string | undefined; taskId: string | undefined; machineId: string | undefined; executorId: string | undefined; ... 13 more ...; ledgerRecorded?: boolean; }' is not assignable to parameter of type '{ runId: string; actorId: string; provider: string; model: string; inputTokens: number; outputTokens: number; cacheReadTokens?: number | undefined; cacheWriteTokens?: number | undefined; ... 12 more ...; measuredAt?: string | undefined; }'.
+  Types of property 'inputTokens' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+apps/api/src/runtime/execution-runtime.ts(59,30): error TS18048: 'supervision' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(163,310): error TS2532: Object is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(168,1623): error TS2532: Object is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(201,173): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...anonymousParameters: SQLInputValue[]): Record<string, SQLOutputValue> | undefined', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'SQLInputValue'.
+      Type 'undefined' is not assignable to type 'SQLInputValue'.
+  Overload 2 of 2, '(namedParameters: Record<string, SQLInputValue>, ...anonymousParameters: SQLInputValue[]): Record<string, SQLOutputValue> | undefined', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'Record<string, SQLInputValue>'.
+      Type 'undefined' is not assignable to type 'Record<string, SQLInputValue>'.
+apps/api/src/runtime/execution-runtime.ts(201,504): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(...anonymousParameters: SQLInputValue[]): Record<string, SQLOutputValue> | undefined', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'SQLInputValue'.
+      Type 'undefined' is not assignable to type 'SQLInputValue'.
+  Overload 2 of 2, '(namedParameters: Record<string, SQLInputValue>, ...anonymousParameters: SQLInputValue[]): Record<string, SQLOutputValue> | undefined', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'Record<string, SQLInputValue>'.
+      Type 'undefined' is not assignable to type 'Record<string, SQLInputValue>'.
+apps/api/src/runtime/execution-runtime.ts(207,160): error TS2532: Object is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(208,673): error TS18048: 'grant' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(210,886): error TS18048: 'grant' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(211,123): error TS18048: 'grant' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(224,35): error TS2532: Object is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(224,1068): error TS2532: Object is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,2275): error TS18048: 'totals.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,2295): error TS18048: 'output.usage.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,2320): error TS18048: 'totals.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,2341): error TS18048: 'output.usage.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,2610): error TS18048: 'output.usage.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,2635): error TS18048: 'output.usage.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,3643): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,3699): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,3756): error TS18048: 'totals.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,3776): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,3790): error TS18048: 'totals.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,3811): error TS18048: 'u.outputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,4036): error TS18048: 'u.inputTokens' is possibly 'undefined'.
+apps/api/src/runtime/execution-runtime.ts(358,4050): error TS18048: 'u.outputTokens' is possibly 'undefined'.

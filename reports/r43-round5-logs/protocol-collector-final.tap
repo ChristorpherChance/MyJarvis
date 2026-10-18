@@ -1,0 +1,72 @@
+TAP version 13
+# (node:3730940) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: one real OS child three initialized phases retain main report and sum parent phase usage not cost counters
+ok 1 - one real OS child three initialized phases retain main report and sum parent phase usage not cost counters
+  ---
+  duration_ms: 63.774827
+  type: 'test'
+  ...
+# Subtest: zero provisional followed by activity without complete successor retains partial and errors at EOF
+ok 2 - zero provisional followed by activity without complete successor retains partial and errors at EOF
+  ---
+  duration_ms: 58.724949
+  type: 'test'
+  ...
+# Subtest: same phase contradictory complete finals remain rejected
+ok 3 - same phase contradictory complete finals remain rejected
+  ---
+  duration_ms: 37.027582
+  type: 'test'
+  ...
+# Subtest: real child emits more than 4MiB of valid native events then a short final event
+ok 4 - real child emits more than 4MiB of valid native events then a short final event
+  ---
+  duration_ms: 590.45747
+  type: 'test'
+  ...
+# Subtest: real finite child preserves initialization and activity after a provisional zero-turn final
+ok 5 - real finite child preserves initialization and activity after a provisional zero-turn final
+  ---
+  duration_ms: 50.700526
+  type: 'test'
+  ...
+# Subtest: final event permits stable-key reserialization but rejects conflicting finals and absence
+ok 6 - final event permits stable-key reserialization but rejects conflicting finals and absence
+  ---
+  duration_ms: 0.947882
+  type: 'test'
+  ...
+# Subtest: provisional empty zero-turn result is superseded only after native initialization; substantive conflicts remain errors
+ok 7 - provisional empty zero-turn result is superseded only after native initialization; substantive conflicts remain errors
+  ---
+  duration_ms: 0.567794
+  type: 'test'
+  ...
+# Subtest: protocol line cap, UTF-8 split reconstruction and supervisor-specific strict schema
+ok 8 - protocol line cap, UTF-8 split reconstruction and supervisor-specific strict schema
+  ---
+  duration_ms: 9.354095
+  type: 'test'
+  ...
+# Subtest: collects a bounded referenced fixture and returns evidence accepted by the existing signed-result resolver
+ok 9 - collects a bounded referenced fixture and returns evidence accepted by the existing signed-result resolver
+  ---
+  duration_ms: 21.981791
+  type: 'test'
+  ...
+# Subtest: rejects symlink traversal, hidden/private paths, content secrets, mismatches, and oversized fixtures before returning bytes
+ok 10 - rejects symlink traversal, hidden/private paths, content secrets, mismatches, and oversized fixtures before returning bytes
+  ---
+  duration_ms: 17.703878
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1331.406093

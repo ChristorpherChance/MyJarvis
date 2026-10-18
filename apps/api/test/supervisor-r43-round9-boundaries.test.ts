@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {randomUUID} from 'node:crypto';
+import {createApp} from '../src/app.js';
+import type {PiService} from '../src/pi.js';
+import {ExecutionAgent} from '../src/runtime/agent-runner.js';
+import type {ExecutionTemplate} from '../src/runtime/execution-types.js';
+
+async function fixture(){
+ const dir=await mkdtemp(join(tmpdir(),'r43-r9-real-chain-')),root=join(dir,'workspaces'),workspace=join(root,'project'),bin=join(dir,'bin');await mkdir(workspace,{recursive:true});await mkdir(bin);
+ const script=join(bin,'finite-child.cjs');
+ await writeFile(script,`const fs=require('node:fs');const args=process.argv.slice(2),resume=args.indexOf('--resume'),count=fs.existsSync('round.txt')?Number(fs.readFileSync('round.txt','utf8'))+1:1;if(count===1&&resume>=0||count>1&&(resume<0||args[resume+1]!=='fixture-session'))process.exit(42);fs.writeFileSync('child-'+count+'.ran','yes');fs.writeFileSync('round.txt',String(count));console.log(JSON.stringify({type:'system',subtype:'init',session_id:'fixture-session',claude_code_version:'2.1.296'}));console.log(JSON.stringify({type:'result',session_id:'fixture-session',result:JSON.stringify({state:'progress',summary:'finite real child round '+count,question:'',options:[],recommendedOption:null,evidence:[],nextSuggestion:''}),usage:{input_tokens:6000000,output_tokens:4000001},total_cost_usd:0}));`);
+ let modelCalls=0;const pi={initialize:async()=>{},health:(scenario?:string)=>({configured:scenario==='project-supervisor',activeRuns:0}),dispose:async()=>{},run:async()=>{const round=modelCalls++;return {status:'complete',text:JSON.stringify({action:'continue',directive:`continue with distinct bounded step ${round+1}`,reason:'inspect additional bound evidence',selectedOption:null,criteria:[],experienceReferences:[]})}}} as unknown as PiService;
+ const app=await createApp({dataDir:dir,pi,webDir:join(dir,'none'),pythonExecutable:join(dir,'none'),whisperModelDirectory:join(dir,'none')});let agent:ExecutionAgent|undefined;
+ const setup=async()=>{
+  const response=await app.app.inject({method:'POST',url:'/api/auth/setup',payload:{password:'R43-round9-finite-fixture'}});assert.equal(response.statusCode,200,response.body);const headers={cookie:String(response.headers['set-cookie']).split(';')[0]};
+  const command=async(domain:string,name:string,payload:any,expectedVersion=0)=>{const result=await app.app.inject({method:'POST',url:`/api/v1/${domain}/commands/${name}`,headers,payload:{commandId:randomUUID(),expectedVersion,scope:'personal',payload}});assert.equal(result.statusCode,200,result.body);return result.json().data};
+  const machine=await command('machines','register',{name:'isolated R43 node',role:'development fixture',category:'workstation',ram:64,always:false,readOnly:false});
+  const project=await command('projects','register',{name:'R43 real chain fixture',description:'finite isolated integration',goal:'exercise signed finite child dispatch',milestones:['first','next'],copies:[{machineId:machine.id,path:workspace,environment:'development',branch:'fixture'}]});
+  const task=await command('tasks','create',{title:'R43 finite supervisor fixture',projectId:project.id,machineId:machine.id,agent:'fixture-supervisor',mode:'managed',goal:'execute bounded fixture',criteria:'signed finite child result',budget:10,retryLimit:0,worktree:workspace});
+  const template:ExecutionTemplate={id:'fixture-supervisor',machineId:machine.id,engine:'claude',program:process.execPath,args:[script,'--print','{prompt}','--output-format','stream-json'],workspaceRoot:root,maxRounds:1,timeoutSec:20,leaseSec:30,budgetCurrency:'USD',purpose:'project-supervisor',supervision:{billing:'record-only',maxTokens:10_000_000,maxRecoveryAttempts:0,retryDelaySec:60,repairValidation:false,fallbackExecutorIds:[]}};
+  const config=await app.app.inject({method:'PUT',url:'/api/v1/execution/config',headers,payload:{expectedVersion:0,templates:[template],probes:[],wol:[]}});assert.equal(config.statusCode,200,config.body);
+  const ticket=await app.app.inject({method:'POST',url:'/api/v1/execution/tickets',headers,payload:{machineId:machine.id,capabilities:[template.id]}});assert.equal(ticket.statusCode,200,ticket.body);
+  await app.app.listen({host:'127.0.0.1',port:0});const address=app.app.server.address();assert.ok(address&&typeof address==='object');agent=new ExecutionAgent({apiUrl:`http://127.0.0.1:${address.port}`,machineId:machine.id,pairingTicket:ticket.json().data.ticket,workspaceRoots:[root],templates:[template],deliveryDirectory:join(dir,'journal')});await agent.pair();agent.metrics=()=>({cpuPercent:1,memoryPercent:1,memoryUsedGB:1,memoryTotalGB:64,load1:0,uptimeSec:1});await agent.heartbeat();
+  const base=`/api/v1/projects/${project.id}/supervisor`;const created=await app.app.inject({method:'POST',url:base,headers,payload:{commandId:randomUUID(),expectedVersion:0,goal:'inspect two bounded evidence steps',criteria:['real signed child results'],machineId:machine.id,executor:'claude-code',workspace,taskId:task.id}});assert.equal(created.statusCode,200,created.body);
+  const started=await app.app.inject({method:'POST',url:base+'/commands',headers,payload:{commandId:randomUUID(),expectedVersion:created.json().data.revision,action:'start',authorizeContinuous:true,acknowledgeUnknownHistory:true,maxParentTokens:1000}});assert.equal(started.statusCode,200,started.body);
+  return {dir,root,workspace,app:app.app,execution:app.execution,v1:app.v1,projectSupervisor:app.projectSupervisor,agent,headers,base,taskId:task.id};
+ };
+ try{return await setup()}catch(error){await agent?.stop();await app.app.close();await rm(dir,{recursive:true,force:true});throw error;}
+}
+async function waitForQueued(f:any){for(let i=0;i<200;i++){const queued=f.execution.listRuns().find((run:any)=>run.status==='queued');if(queued)return queued;await new Promise(r=>setTimeout(r,10));}assert.fail('real supervisor dispatch did not enqueue a run');}
+
+test('real signed usage over ten million opens only a finite policy window for the next child',async()=>{
+ const f=await fixture();try{const first=await waitForQueued(f);await f.agent.runOnce();for(let i=0;i<100;i++){const value=f.execution.getRun(first.id);if(value?.status==='succeeded')break;await new Promise(r=>setTimeout(r,20));}const completed=f.execution.getRun(first.id);assert.equal(completed.status,'succeeded',JSON.stringify({completed,runs:f.execution.listRuns(),session:(await f.app.inject({method:'GET',url:f.base,headers:f.headers})).json()}));assert.equal(completed.result.source,'signed-agent');assert.equal(completed.result.usage.totalTokens,10_000_001);assert.equal(f.v1.read('tasks',f.taskId,'server-admin')!.executionResult.usage.totalTokens,10_000_001);
+  await f.projectSupervisor.pump();await f.projectSupervisor.pump();const next=await waitForQueued(f);assert.notEqual(next.id,first.id);assert.equal(next.supervisor.sessionId,(await f.app.inject({method:'GET',url:f.base,headers:f.headers})).json().data.session.id);assert.ok(next.supervisor.policyWindowId,'the >10M cumulative usage boundary must be satisfied by the real signed owner policy window');const session=(await f.app.inject({method:'GET',url:f.base,headers:f.headers})).json().data;assert.equal(session.goalPolicy.maxRounds,1);assert.equal(session.goalPolicy.retryCount,0);assert.equal(session.goalPolicy.active,true);await f.agent.runOnce();const nextResult=f.execution.getRun(next.id);assert.equal(nextResult.status,'succeeded',JSON.stringify(nextResult));assert.equal(await readFile(join(f.workspace,'round.txt'),'utf8'),'2');assert.equal(f.execution.getRun(first.id).result.usage.totalTokens,10_000_001);assert.equal(f.execution.listRuns().length,2);assert.ok((f.agent.deliveryStatus() as any).deliveries.acknowledged>=2);
+ }finally{await f.agent.stop();await f.app.close();await rm(f.dir,{recursive:true,force:true});}
+});
+
+test('pause revokes a real queued run before the paired agent can claim or start its child',async()=>{
+ const f=await fixture();try{const queued=await waitForQueued(f);assert.equal(queued.status,'queued');const view=(await f.app.inject({method:'GET',url:f.base,headers:f.headers})).json().data;const paused=await f.app.inject({method:'POST',url:f.base+'/commands',headers:f.headers,payload:{commandId:randomUUID(),expectedVersion:view.session.revision,action:'pause'}});assert.equal(paused.statusCode,200,paused.body);assert.equal(f.execution.getRun(queued.id).status,'cancelled');assert.equal(f.v1.read('tasks',f.taskId,'server-admin')!.status,'paused');assert.equal(await f.agent.runOnce(),null);await assert.rejects(readFile(join(f.workspace,'child-1.ran')));const after=(await f.app.inject({method:'GET',url:f.base,headers:f.headers})).json().data;assert.equal(after.session.status,'paused');assert.equal(after.goalPolicy.active,false);assert.equal(f.execution.listRuns().length,1);
+ }finally{await f.agent.stop();await f.app.close();await rm(f.dir,{recursive:true,force:true});}
+});

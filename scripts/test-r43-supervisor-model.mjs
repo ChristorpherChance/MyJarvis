@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createProjectSupervisorModel} from '../apps/api/src/runtime/project-supervisor-model.ts';
+const input={goal:'fixture',criteria:['A'],feedback:{evidence:[{path:'artifacts/a.txt',sha256:'a'.repeat(64)}]}};
+const decision={action:'review',directive:'',reason:'fixture only',selectedOption:null,criteria:[{criterion:'A',met:true,evidence:input.feedback.evidence}]};
+const pi=(text,status='complete')=>({health:()=>({configured:true}),run:async value=>{assert.equal(value.boundedJob,true);assert.equal(value.ephemeral,true);assert.equal(value.sessionPath,null);assert.equal(value.purpose,'project-supervisor');assert.equal(value.scenario,'project-supervisor');return {text,status};}});
+test('missing configured model blocks without invoking run',async()=>{let called=false;await assert.rejects(createProjectSupervisorModel({health:()=>({configured:false}),run:async()=>{called=true;}})(input),/MODEL_NOT_CONFIGURED/);assert.equal(called,false);});
+test('complete strict decision accepted through bounded no-session adapter',async()=>{assert.deepEqual(await createProjectSupervisorModel(pi(JSON.stringify(decision)))(input),decision);});
+test('partial cancelled and unknown model statuses rejected',async()=>{for(const status of ['partial','cancelled','unknown'])await assert.rejects(createProjectSupervisorModel(pi(JSON.stringify(decision),status))(input),/MODEL_RUN_FAILED/);});
+test('fences malformed and overlong outputs rejected',async()=>{for(const value of ['```json\n'+JSON.stringify(decision)+'\n```','not JSON','x'.repeat(16001)])await assert.rejects(createProjectSupervisorModel(pi(value))(input),/MODEL_REVIEW_INVALID/);});
+test('missing criterion and foreign evidence rejected',async()=>{for(const criteria of [[],[{criterion:'B',met:true,evidence:input.feedback.evidence}],[{criterion:'A',met:true,evidence:[{path:'artifacts/other',sha256:'b'.repeat(64)}]}],[{criterion:'A',met:true,evidence:[]}]])await assert.rejects(createProjectSupervisorModel(pi(JSON.stringify({...decision,criteria})))(input),/MODEL_REVIEW_INVALID/);});

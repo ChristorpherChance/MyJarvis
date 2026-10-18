@@ -1,0 +1,11 @@
+# R51r1候选封存
+
+APP e5cc87f15c800a021e5dca58dedc71db022123d0；平台20261018-project-goals-r51-r1，runtime/archive一致，2289载荷逐H核同，120件R50旧assets及历史闭包保持。ZIP H231a82a26ff6b5de0af3087338cedc7ba0bf772e4ee509f8dee359ee252a5dda，manifest H5ff92b272de82e7801a74c5d030ee080d0594da8fb747b45ee2acc10aa849ae6。
+
+封包后ops从b320原R50源只四literal派生：expectedR50/releaseR51r1/APP上述完整H/ZIP上述完整H；其余字节包括预算/lock/readiness/ownership/完整backup-restore/rollback不变，未执行。派生H2eb88fd77857218c3d574f7542f2d29219444d499e93508abcb14dc3688714e8。
+
+唯一新组真实PiService.run+原生SDK离线driver通过，6受控driver/0网络；不是实际provider接受。types/API-Web build及packager各一次通过。原R51 adapter组、Factory两case、旧intent和3891回包均未重跑。
+
+建设记录工具本次拒绝PRIVATE_VALUE_NOT_ALLOWED，原日志保留，未绕过、修改guard或改Root规范ledger历史。本文件及docs/R51r1真实Pi入口容量修复.md保本轮独立记录，正式日志未声称追加成功。
+
+未部署/服务/recovery/真实DB/101R7/config46/真实Pi探测。SDK另加systemPrompt/provider总Token未知null，32K/4096原声明不变，旧费用unknown不归零。Root后继独审发布与实际新判断、全产品验收另做。

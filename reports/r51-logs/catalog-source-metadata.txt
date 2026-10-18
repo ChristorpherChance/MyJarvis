@@ -1,0 +1,2 @@
+307:    config.providers[definition.id]={name:definition.name,baseUrl,api:definition.api,models:catalog.models.map(m=>({...m,input:['text'],reasoning:false,contextWindow:32768,maxTokens:4096,cost:{input:0,output:0,cacheRead:0,cacheWrite:0}}))};
+485:        model: ephemeral ? {...selectedModel,maxTokens:Math.min(selectedModel.maxTokens,4096)} : selectedModel,

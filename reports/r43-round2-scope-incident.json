@@ -1,0 +1,12 @@
+{
+  "incident": "Delegated frontend worker mistakenly followed repository default construction-record instruction instead of current user prohibition",
+  "addedRecordId": "JARVIS-CHANGE-20261017-R43-WEB-ROUND2",
+  "files": ["docs/建设记录/events.jsonl", "docs/贾维斯建设日志.md"],
+  "location": "isolated development copy only; no production directory accessed",
+  "action": "Worker stopped immediately; no further construction commands authorized",
+  "restoreAttempt": "git restore --source=HEAD -- docs/建设记录/events.jsonl docs/贾维斯建设日志.md",
+  "restoreResult": "denied by permission gate; not bypassed",
+  "remainingState": "These two files remain modified and are explicitly excluded from round2 commit and delivery patch",
+  "requiredNextAction": "User approval naming these two files to discard ONLY this unintended round2 change, then verify byte equality to HEAD",
+  "honesty": "Do not report formal ledger untouched in the independent working copy; production ledger was not accessed"
+}

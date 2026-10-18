@@ -1,0 +1,30 @@
+✔ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (2497.707364ms)
+✔ real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections (307.928821ms)
+✔ experience enters actual model input and is rechecked at real dispatch boundary (222.62244ms)
+✔ real HTTP history cursor pages all events beyond the top 100 (513.426652ms)
+✔ model wait correction invalidates old return: zero follow-up dispatch and one model call (78.969296ms)
+✖ supervisor important state uses existing durable owner notice channel once across recovery scans and restart (148.716148ms)
+✔ qualified frozen followup projects selected, real action facts and correction change with stable stage replay (100.698035ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4780.27574
+
+✖ failing tests:
+
+test at apps/api/test/supervisor-notices-round9.test.ts:1:604
+✖ supervisor important state uses existing durable owner notice channel once across recovery scans and restart (148.716148ms)
+  Error: 成员档案不存在或已停用
+      at IdentityRuntime.profile (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/src/runtime/identity.ts:88:23)
+      at NotificationRuntime.current (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/src/runtime/notifications.ts:67:143)
+      at NotificationRuntime.list (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/src/runtime/notifications.ts:104:99)
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/supervisor-notices-round9.test.ts:2:1768)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    code: 'PROFILE_NOT_FOUND',
+    statusCode: 404
+  }

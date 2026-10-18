@@ -14,6 +14,14 @@ export interface SupervisionWorkOverview {
  independentProgress:{automaticAcceptance:false;statement:string};
 }
 export interface SupervisionWorkDetail {item:SupervisionWorkItem;history:SupervisionWorkItem[];historyTruncated:boolean;evidenceVerification:'references-only'}
+export interface SupervisionActivity {items:(SupervisionChange&{title:string;summary:string})[];hasMore:boolean;nextBefore:number|null}
+export interface SupervisionConsole extends SupervisionWorkOverview {
+ reportedAt:string;project:{id:string;name:string;goal:string};
+ runtime:{running:number;queued:number;runningRunIds:string[];scope:'bound-persisted-task-runs';unavailable:boolean;autonomyStatus:string|null;reason:string;revision:number|null};
+ acceptance:{available:boolean;total:number|null;accepted:number|null;pending?:boolean;source:'independent-objectives'};
+ plan:{revision:number;currentStepId:string|null;steps:{id:string;title:string;state:string;goal:string;nextAction:string}[]}|null;
+ attention:{total:number;items:{id:string;kind:'approval'|'task';title:string;reason:string;route:string}[];truncated:boolean};activity:SupervisionActivity;
+}
 export type SupervisionWorkBody=Pick<SupervisionWorkItem,'title'|'status'|'summary'|'nextAction'|'blocker'|'stepId'|'taskId'|'runId'|'completionSummary'|'validationScope'|'evidenceRefs'>;
 export const supervisionWorkBase=(projectId:string)=>`/api/v1/projects/${encodeURIComponent(projectId)}/supervision-work`;
 export const loadSupervisionWork=(projectId:string,signal?:AbortSignal)=>v1Request<{data:SupervisionWorkOverview}>(supervisionWorkBase(projectId)+'/overview',{signal});
@@ -49,12 +57,13 @@ export function subscribeSupervisionWork(projectId:string|null,listener:Listener
     own.cursor=data.sequence;emit({type:'refresh',reason:'change',change:data});
    }catch{/* A reconnect ready message triggers an authoritative read. */}
   });
+  source.onopen=()=>{if(own.state==='connecting'||own.state==='reconnecting'){own.state='live';emit({type:'connection',state:'live'});}};
   source.addEventListener('session-expired',()=>{
    if(connections.get(streamKey)!==own)return;
    clearSupervisionStreams();
    globalThis.window?.dispatchEvent(new Event('jarvis:auth-required'));
   });
-  source.onerror=()=>{if(own.state==='reconnecting')return;own.state='reconnecting';emit({type:'connection',state:'reconnecting'});emit({type:'refresh',reason:'disconnect'})};
+  source.onerror=()=>{const closed=source.readyState===2;if(closed){if(own.state==='closed')return;own.state='closed';emit({type:'connection',state:'closed'});emit({type:'refresh',reason:'disconnect'});return;}if(own.state==='reconnecting')return;own.state='reconnecting';emit({type:'connection',state:'reconnecting'});emit({type:'refresh',reason:'disconnect'});};
  }
  connection.listeners.add(registered);listener({type:'connection',state:connection.state});
  const own=connection;

@@ -1,0 +1,1120 @@
+diff --git a/apps/api/src/runtime/cluster-runtime.ts b/apps/api/src/runtime/cluster-runtime.ts
+index 540cbf8..04cf7bd 100644
+--- a/apps/api/src/runtime/cluster-runtime.ts
++++ b/apps/api/src/runtime/cluster-runtime.ts
+@@ -7,7 +7,7 @@ import { defineTool, type ToolDefinition } from '@earendil-works/pi-coding-agent
+ import { Type } from 'typebox';
+ import { IdentityRuntime, RuntimeAccessError, type RuntimePrincipal } from './identity.js';
+ 
+-export const PLATFORM_BUILD = '20261018-project-goals-r50';
++export const PLATFORM_BUILD = '20261018-project-goals-r51';
+ const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/);
+ const absolutePath = z.string().min(1).max(1000).refine(value => resolve(value) === value, 'Absolute path required');
+ const baseUrl = z.string().url().refine(value => { const u = new URL(value); return u.protocol === 'https:' && !u.username && !u.password && !u.search && !u.hash && u.pathname === '/'; });
+diff --git a/apps/api/src/runtime/project-supervisor-model.ts b/apps/api/src/runtime/project-supervisor-model.ts
+index cf535da..2f0a2e4 100644
+--- a/apps/api/src/runtime/project-supervisor-model.ts
++++ b/apps/api/src/runtime/project-supervisor-model.ts
+@@ -134,15 +134,15 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
+   return async (input: any): Promise<any> => {
+     const health = pi.health('project-supervisor');
+     if (!health.configured) throw error(NOT_CONFIGURED);
+-    input=boundedSupervisorModelInput(input).input;
+-    if (utf8Bytes(JSON.stringify(input)) > 30_000) throw error('MODEL_CONTEXT_INCOMPLETE');
++    const projected=boundedSupervisorModelInput(input);
++    input=projected.input;
+     const usageReferences:{usageId:string;runId:string;model:string|null}[]=[];
+     const runInput: PiRunInput = {
+       conversationId: `supervisor-${randomUUID()}`,
+       actorId: input?.binding?.ownerId ?? 'server-admin',
+       member: { name: 'project-supervisor', preferences: '' },
+       sessionPath: null,
+-      text: `${PROJECT_SUPERVISOR_CONTRACT}\n\nUntrusted supervisor input JSON:\n${JSON.stringify(input)}`,
++      text: projected.text,
+       onEvent: (event,data) => {
+         // Pi's existing measured usage event is the only model/run attribution source.
+         if(event!=='usage'||data?.actorId!==runInput.actorId||data?.conversationId!==runInput.conversationId||data?.projectId!==input?.binding?.projectId||data?.taskId!==input?.binding?.taskId||data?.source!==`supervisor:${input?.binding?.goalRevision}:${input?.binding?.runId}`)return;
+diff --git a/apps/api/src/runtime/supervisor-model-input.ts b/apps/api/src/runtime/supervisor-model-input.ts
+index 4cb81a9..85b65b0 100644
+--- a/apps/api/src/runtime/supervisor-model-input.ts
++++ b/apps/api/src/runtime/supervisor-model-input.ts
+@@ -1,4 +1,8 @@
+ import {createHash} from 'node:crypto';
++import {PROJECT_SUPERVISOR_CONTRACT} from './project-supervisor-contract.js';
++export const SUPERVISOR_PROMPT_MAX_UTF8_BYTES=64*1024;
++const separator='\n\nUntrusted supervisor input JSON:\n';
++const prepared=new WeakMap<object,ReturnType<typeof supervisorModelProjection>>();
+ const hash=(bytes:string)=>createHash('sha256').update(bytes,'utf8').digest('hex');
+ const reasons=new Set(['skill-not-supervisor-lesson','unmatched','archived','deprecated','superseded','counterexample-recorded','unknown-condition','project-mismatch','condition-mismatch','unverified','selected-cap-exceeded']);
+ const metric=(value:unknown)=>{const raw=JSON.stringify(value??null);return {UTF8bytes:Buffer.byteLength(raw),sha256:hash(raw),count:Array.isArray(value)?value.length:value==null?0:1};};
+@@ -9,7 +13,9 @@ export function supervisorModelProjection(frozen:any){
+  const {experienceAudit,...required}=frozen;
+  const input={...required,experienceExclusions:metadata,experienceExclusionCount:frozen.experienceExclusionCount??exclusions.length};
+  const components={goal:metric(input.goal),criteria:metric(input.criteria),corrections:metric(input.corrections),originals:metric(input.originals),selected:metric(input.experienceReferences),exclusions:metric(metadata),other:metric(Object.fromEntries(Object.entries(input).filter(([k])=>!['goal','criteria','corrections','originals','experienceReferences','experienceExclusions'].includes(k)))),total:metric(input)};
+- const diagnostic={components,binding:frozen.binding?{goalRevision:Number.isSafeInteger(frozen.binding.goalRevision)?frozen.binding.goalRevision:null,sourceRunSHA256:typeof frozen.binding.runId==='string'?hash(frozen.binding.runId):null,resultHash:/^[a-f0-9]{64}$/.test(frozen.binding.resultHash)?frozen.binding.resultHash:null}:null,frozenSHA256:hash(JSON.stringify(frozen))};
+- return {input,diagnostic,complete:components.total.UTF8bytes<=30000};
++ const text=PROJECT_SUPERVISOR_CONTRACT+separator+JSON.stringify(input);
++ const prompt={UTF8bytes:Buffer.byteLength(text,'utf8'),sha256:hash(text),count:1};
++ const diagnostic={components,prompt,limitUTF8bytes:SUPERVISOR_PROMPT_MAX_UTF8_BYTES,binding:frozen.binding?{goalRevision:Number.isSafeInteger(frozen.binding.goalRevision)?frozen.binding.goalRevision:null,sourceRunSHA256:typeof frozen.binding.runId==='string'?hash(frozen.binding.runId):null,resultHash:/^[a-f0-9]{64}$/.test(frozen.binding.resultHash)?frozen.binding.resultHash:null}:null,frozenSHA256:hash(JSON.stringify(frozen))};
++ return {input,text,diagnostic,complete:prompt.UTF8bytes<=SUPERVISOR_PROMPT_MAX_UTF8_BYTES};
+ }
+-export function boundedSupervisorModelInput(frozen:any){const projected=supervisorModelProjection(frozen);if(!projected.complete)throw Object.assign(new Error('MODEL_CONTEXT_INCOMPLETE'),{code:'MODEL_CONTEXT_INCOMPLETE',contextDiagnostic:projected.diagnostic});return projected;}
++export function boundedSupervisorModelInput(frozen:any){const cached=prepared.get(frozen);const projected=cached&&hash(JSON.stringify(frozen))===cached.diagnostic.components.total.sha256?cached:supervisorModelProjection(frozen);if(!projected.complete)throw Object.assign(new Error('MODEL_CONTEXT_INCOMPLETE'),{code:'MODEL_CONTEXT_INCOMPLETE',contextDiagnostic:projected.diagnostic});prepared.set(projected.input,projected);return projected;}
+diff --git a/apps/api/test/supervisor-prompt-budget-r51.test.ts b/apps/api/test/supervisor-prompt-budget-r51.test.ts
+new file mode 100644
+index 0000000..5d7185d
+--- /dev/null
++++ b/apps/api/test/supervisor-prompt-budget-r51.test.ts
+@@ -0,0 +1,6 @@
++import test from 'node:test';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {supervisorModelProjection,boundedSupervisorModelInput,SUPERVISOR_PROMPT_MAX_UTF8_BYTES} from '../src/runtime/supervisor-model-input.js';import {createProjectSupervisorModel} from '../src/runtime/project-supervisor-model.js';import {workbenchBlockerSummary} from '../../web/src/features/operations/project-plan-workbench-view.js';
++test('R51 production full prompt shared 64KiB budget, boundary and original bytes preserved without actual Pi',async()=>{const hash=(s:string)=>createHash('sha256').update(s,'utf8').digest('hex');const decision={action:'stop',directive:'',reason:'fixture',selectedOption:null,criteria:[],experienceReferences:[]};let calls=0,expectText='',status='complete';const pi:any={health:()=>({configured:true}),run:async(i:any)=>{calls++;assert.equal(i.text,expectText);return {status,text:JSON.stringify(decision)};}};const adapter=createProjectSupervisorModel(pi);
++const base={goal:'真实形状受控目标',criteria:['原criterion逐字'],originals:Array.from({length:13},(_,i)=>({path:`artifacts/fixture-${i}.txt`,sha256:'a'.repeat(64),verified:true,content:'完整原件中文'+i})),experienceReferences:[],experienceExclusions:Array.from({length:40},(_,i)=>({experienceId:'excluded-'+i,revision:1,hash:'b'.repeat(64),reason:'unverified',content:'不得进模型的排除正文'})),corrections:[],binding:{goalRevision:9,runId:'controlled',resultHash:'c'.repeat(64)}};
++function sized(bytes:number){const value=structuredClone(base);value.padding='';const initial=Buffer.byteLength(JSON.stringify(supervisorModelProjection(value).input));assert.ok(initial<bytes);value.padding='x'.repeat(bytes-initial);assert.equal(Buffer.byteLength(JSON.stringify(supervisorModelProjection(value).input)),bytes);return value;}
++for(const size of [31000,44830]){const frozen=sized(size),before=JSON.stringify(frozen),p=boundedSupervisorModelInput(frozen),again=boundedSupervisorModelInput(p.input);assert.equal(again,p);assert.equal(JSON.stringify(frozen),before);assert.equal(p.diagnostic.components.total.UTF8bytes,size);assert.equal(p.diagnostic.prompt.UTF8bytes,Buffer.byteLength(p.text));assert.equal(p.diagnostic.prompt.sha256,hash(p.text));assert.deepEqual(p.input.originals,frozen.originals);for(let i=0;i<13;i++)assert.deepEqual(Buffer.from(p.input.originals[i].content),Buffer.from(frozen.originals[i].content));expectText=p.text;assert.deepEqual(await adapter(p.input),decision);}
++const edge=structuredClone(base);edge.goal+='多字节\n"\\';edge.padding='';const initial=Buffer.byteLength(supervisorModelProjection(edge).text);edge.padding='x'.repeat(65536-initial);const p=boundedSupervisorModelInput(edge);assert.equal(Buffer.byteLength(p.text),65536);expectText=p.text;await adapter(edge);const before=calls;await assert.rejects(adapter({...edge,padding:edge.padding+'中'}),/MODEL_CONTEXT_INCOMPLETE/);assert.equal(calls,before);status='partial';await assert.rejects(adapter(edge),/MODEL_RUN_FAILED/);assert.equal(SUPERVISOR_PROMPT_MAX_UTF8_BYTES,65536);assert.equal(workbenchBlockerSummary('MODEL_CONTEXT_INCOMPLETE'),'报告资料超过本轮审阅容量，待调整');assert.equal(workbenchBlockerSummary('其他阻塞'),'其他阻塞');console.log(JSON.stringify({scope:'controlled 31K/44830B synthetic13-originals, not Factory input/provider',acceptedInputJSONBytes:[31000,44830],exactFullPromptBoundary:65536,overLimitZeroPi:true,partialRejected:true,originalsByteIdentical:true,tokenEstimate:null}));});
+diff --git a/apps/web/src/features/operations/ProjectWorkbenchPage.tsx b/apps/web/src/features/operations/ProjectWorkbenchPage.tsx
+index 886e35f..ab57bf0 100644
+--- a/apps/web/src/features/operations/ProjectWorkbenchPage.tsx
++++ b/apps/web/src/features/operations/ProjectWorkbenchPage.tsx
+@@ -6,7 +6,7 @@ import ProjectSupervisorPanel from './ProjectSupervisorPanel';
+ import ProjectSupervisionWorkPanel from './ProjectSupervisionWorkPanel';
+ import './project-workbench.css';
+ import {ProjectDataDetails} from './ProjectDataDetails';
+-import {planWorkbenchView,planGoalGroups,planStageGroups,currentGoalEvents,type WorkbenchPlan} from './project-plan-workbench-view';
++import {planWorkbenchView,planGoalGroups,planStageGroups,currentGoalEvents,workbenchBlockerSummary,type WorkbenchPlan} from './project-plan-workbench-view';
+ import {subscribeSupervisionWork,type SupervisionStreamMessage} from '../../supervision-work-client';
+ export function ProjectWorkbenchPage(props:Props){const {data,navigate,target}=props;const path=target?.split('?')[0]??'projects',id=path.split('/')[1],params=new URLSearchParams(target?.split('?')[1]??'');if(!id)return <><h1>项目</h1>{params.has('unresolvedTask')&&<Note tone="warn">旧任务链接尚未匹配到有权项目，请选择项目后查看详情；没有跳到其他项目。</Note>}<ProjectsPage {...props} target="projects"/></>;const project=data.projects.find(p=>p.id===decodeURIComponent(id));if(!project)return <Empty title="项目未找到或尚未载入" detail="请刷新项目资料或返回选择，不会自动打开其他项目。"/>;return <EntityWorkbench {...props} key={project.id} projectId={project.id} projectName={project.name} params={params}/>;}
+ export function EntityWorkbench(props:Props&{projectId:string;projectName:string;params:URLSearchParams}){
+@@ -36,7 +36,7 @@ export function EntityWorkbench(props:Props&{projectId:string;projectName:string
+  async function control(action:'pause'|'stop'|'takeover'){if(!session)return;setBusy(true);try{await v1Request(`/api/v1/projects/${encodeURIComponent(projectId)}/supervisor/commands`,{method:'POST',body:JSON.stringify({commandId:crypto.randomUUID(),expectedVersion:session.revision,action})});setNotice('控制请求已记录；停止确认与请求分开核对');await load();}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
+  return <div className="project-workbench"><header><Button kind="ghost" onClick={()=>navigate('projects')}>← 全部项目</Button><select aria-label="切换项目" value={projectId} onChange={e=>navigate('projects/'+encodeURIComponent(e.target.value))}>{data.projects.map(p=><option value={p.id} key={p.id}>{p.name}</option>)}</select><Button kind="ghost" onClick={()=>{void navigator.clipboard?.writeText(location.origin+location.pathname+'#'+new URLSearchParams({view:'projects/'+projectId,theme:data.theme}).toString());setNotice('项目稳定链接已复制')}}>复制项目链接</Button></header><h1>{projectName}</h1>{error&&<Note tone="warn">{error}</Note>}{notice&&<p role="status">{notice}</p>}
+  <section className="project-workbench-brief"><div className="workbench-status-line"><strong>{currentAction}</strong><Button type="button" kind="ghost" onClick={()=>void load()}>只读刷新</Button><small>{stream==='closed'?'实时未连接':stream==='live'?'实时已连接':'实时连接中'} · 最近读取 {readAt?new Date(readAt).toLocaleTimeString('zh-CN'):'待核'}</small></div>
+- <dl className="workbench-loop"><div><dt>项目当前阶段</dt><dd>{planView?.current?`${planView.current.id} · ${planView.current.title} · ${planView.currentLabel}`:'当前阶段待核'}</dd></div><div><dt>最近指令</dt><dd>{short(lastInstruction?.directive,'当前目标指令待核')}</dd></div><div><dt>CC回应 / 执行</dt><dd>{short(latestResult,'当前目标回应待核')} · {currentAction}</dd></div><div><dt>当前主管判断</dt><dd>{unresolved?short(unresolved,'当前阻塞待核'):currentDecision?short(currentDecision.summary??currentDecision.decision?.reason,'判断待核'):'当前目标尚无已绑定判断'}{session?.status==='achieved'&&<small> · 仅本轮标准，不代表工厂完整验收</small>}</dd></div><div><dt>项目下一步</dt><dd>{short(nextStep,'项目下一步待核')}</dd></div><div><dt>阻塞 / 本人待办</dt><dd>{short(unresolved,ownerQuestion||'暂无已保存阻塞；独验仍待核')}{ownerQuestion&&<Button type="button" kind="ghost" onClick={()=>{const detail=document.getElementById('workbench-question-details');if(detail instanceof HTMLDetailsElement){detail.open=true;detail.scrollIntoView({block:'nearest'});}}}>查看问题全文 / 全部选项</Button>}</dd></div></dl>
++ <dl className="workbench-loop"><div><dt>项目当前阶段</dt><dd>{planView?.current?`${planView.current.id} · ${planView.current.title} · ${planView.currentLabel}`:'当前阶段待核'}</dd></div><div><dt>最近指令</dt><dd>{short(lastInstruction?.directive,'当前目标指令待核')}</dd></div><div><dt>CC回应 / 执行</dt><dd>{short(latestResult,'当前目标回应待核')} · {currentAction}</dd></div><div><dt>当前主管判断</dt><dd>{unresolved?short(workbenchBlockerSummary(unresolved),'当前阻塞待核'):currentDecision?short(currentDecision.summary??currentDecision.decision?.reason,'判断待核'):'当前目标尚无已绑定判断'}{session?.status==='achieved'&&<small> · 仅本轮标准，不代表工厂完整验收</small>}</dd></div><div><dt>项目下一步</dt><dd>{short(nextStep,'项目下一步待核')}</dd></div><div><dt>阻塞 / 本人待办</dt><dd>{short(workbenchBlockerSummary(unresolved),ownerQuestion||'暂无已保存阻塞；独验仍待核')}{ownerQuestion&&<Button type="button" kind="ghost" onClick={()=>{const detail=document.getElementById('workbench-question-details');if(detail instanceof HTMLDetailsElement){detail.open=true;detail.scrollIntoView({block:'nearest'});}}}>查看问题全文 / 全部选项</Button>}</dd></div></dl>
+  <details className="workbench-plan-details"><summary>完整目标、标准与阶段</summary><p>{plan?.title||'计划待核'}</p>{goalGroups.map(group=><section key={group.title}><h3>{group.title}</h3>{group.lines.map((line,index)=><p key={index}>{line}</p>)}</section>)}{stageGroups.map(group=><section key={group.title}><h3>{group.title}</h3><ol>{group.steps.map(step=><li key={step.id}><strong>{step.id} · {step.title}</strong> · {step.state||'待核'}<p>{step.goal}</p><ul>{step.criteria?.map((criterion,index)=><li key={index}>{criterion}</li>)}</ul></li>)}</ol></section>)}<p>项目原目标：{context?.project.goal}</p><p>本轮目标：{session?.goal}</p><ul>{session?.criteria?.map((criterion:string,index:number)=><li key={index}>{criterion}</li>)}</ul><p>独立产品验收待验证，不按目标或阶段数推算。</p></details>
+  <details id="workbench-question-details"><summary>本轮全文、原件绑定与上次判断</summary><p>本轮判断：{currentDecision?.decision?.reason??'当前目标尚无已绑定判断'}</p>{eventView.previousDecision&&<p>上次判断（历史，非当前）：{eventView.previousDecision.decision?.reason??eventView.previousDecision.summary??'待核'}</p>}<p>本轮说明：{session?.summary}</p><p>本轮最近回应：{latestResult||'待核'}</p><p>本轮下一步（非项目后续阶段）：{session?.nextAction||'待核'}</p><p>原问题：{latestFeedback?.question||'暂无'}</p><ul>{latestFeedback?.options?.map((option:string,index:number)=><li key={index}>{option}</li>)}</ul><p>原阻塞：{unresolved}</p><p>来源绑定仅登记，不代表原件已独验。</p><pre>{JSON.stringify(context?.arrangement??{},null,2)}</pre></details></section>
+  {!context?.choices?.length&&<Button kind="ghost" onClick={()=>{setDataOpen(true);setDataTab('copies')}}>登记开发目录 / 完善项目资料</Button>}{pending&&<Note tone="warn">原登记尚未完成，继续核对将使用原目标和执行绑定。原目标：{pending.input.goal}。继续将使用原绑定，不采用下方改动；如需改变目标请先核对原请求。</Note>}<form className="project-workbench-composer" onSubmit={submit}>{!session?<><label>本项目要达成什么<textarea required value={goal} onChange={e=>{setGoal(e.target.value);request.current=null}}/></label><label>怎样客观确认达成（每行一项）<textarea required value={criteria} onChange={e=>{setCriteria(e.target.value);request.current=null}}/></label><label>执行服务器 / AI能力 / 已登记副本<select required value={choice} onChange={e=>{setChoice(e.target.value);request.current=null}}><option value="">请选择已核能力</option>{context?.choices.map((c:any,i:number)=><option key={i} value={i}>{data.machines.find(m=>m.id===c.machineId)?.name??c.machineId} · {c.executorId} · {c.workspace}{c.ready?'':'（未就绪）'}</option>)}</select></label>{context?.missing?.map((m:string)=><p key={m}>{m}</p>)}</>:<label>给项目AI的文字指令<textarea value={text} onChange={e=>setText(e.target.value)} placeholder={active?'当前轮正在执行；文字保留草稿，尚未发送':'说明下一步或回答确需本人信息'}/></label>}<label><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/>确认只在本目标/副本授权内持续推进，可随时暂停；历史未知用量仍保留未知，不清账</label>{!unavailable&&<Button type="submit" disabled={busy||!context||active&&!pending||(!pending&&!session&&(!selected?.ready||context.modelReady===false))||!pending&&!!session&&!['draft','paused','waiting_user'].includes(session.status)}>{pending?'继续登记 / 核对原请求':phaseLabel??(!session?'开始推进':session.status==='paused'?'继续推进':session.status==='waiting_user'?'发送指令':'开始推进')}</Button>}{unavailable&&<div><p>{session.status==='achieved'?'本次监督已判定达标；继续新目标须明确修订标准。':session.status==='stopped'?'本次监督已停止；普通文字不会恢复。':'当前状态需要先核对原因或补充决定；普通文字不会直接派发。'}</p><Button type="button" kind="ghost" onClick={()=>setAuditOpen(true)}>查看原因 / 对账 / 修订目标</Button></div>}{active&&<p>当前轮不支持即时stdin注入。此输入仅保留草稿，未送达CC。</p>}</form>
+diff --git a/apps/web/src/features/operations/project-plan-workbench-view.ts b/apps/web/src/features/operations/project-plan-workbench-view.ts
+index a1cc4a1..b0295fb 100644
+--- a/apps/web/src/features/operations/project-plan-workbench-view.ts
++++ b/apps/web/src/features/operations/project-plan-workbench-view.ts
+@@ -1,3 +1,4 @@
++export function workbenchBlockerSummary(value:unknown){return typeof value==='string'&&value.includes('MODEL_CONTEXT_INCOMPLETE')?'报告资料超过本轮审阅容量，待调整':value;}
+ export interface WorkbenchPlanStep {id:string;title:string;goal?:string;criteria?:string[];state?:string;nextAction?:string|null}
+ export interface WorkbenchPlan {projectId:string;title:string;goal:string;currentStepId:string|null;nextAction:string|null;steps:WorkbenchPlanStep[];latestResult?:{summary?:string|null}|null}
+ export function planWorkbenchView(plan:WorkbenchPlan|null){
+diff --git "a/docs/R51\345\256\214\346\225\264Prompt\345\256\271\351\207\217\345\200\231\351\200\211.md" "b/docs/R51\345\256\214\346\225\264Prompt\345\256\271\351\207\217\345\200\231\351\200\211.md"
+new file mode 100644
+index 0000000..b0067e5
+--- /dev/null
++++ "b/docs/R51\345\256\214\346\225\264Prompt\345\256\271\351\207\217\345\200\231\351\200\211.md"
+@@ -0,0 +1,11 @@
++# R51 完整Prompt 64KiB候选 · 未部署
++
++起点HEAD745936fe9083ddf1e27622466afcb09e8bce71ef/APP5e171acbf924e678e0bce52788fec7d45ea0d963核同。Root反馈R50已上线健康，仅作主管事实；本轮不访问112或Factory工作区、不重goal8/run2079/RH7f6及旧intent/Pi/费用。Factory first4ba 11317B与后继d2 44830B前置拒绝是主管诊断，非provider错误；本轮不冒读取原输入。
++
++唯一共享SUPERVISOR_PROMPT_MAX_UTF8_BYTES=64*1024，runtime和adapter都以原contract＋固定分隔文本＋完整JSON.stringify(projected input)同一text计量/发送。WeakMap只接受本函数构造且当前input H未变的已准备对象，避免二次投影产生新hash/口径；改输入则重新完整构建。诊断补完整prompt bytes/H及limit，不回传原文。必需原件/criteria/corrections/selected、冻结审计/source/resultH与排除元数据保留；超65536明确MODEL_CONTEXT_INCOMPLETE且0调用，响应16KB及strict六键、review/experience/citation/abortpartial等门不变。
++
++Pi现有源码catalog声明contextWindow32768/maxTokens4096，ephemeral输出上限4096保持，未读取凭据/配置或探测provider。字节不换算Token、不保证provider接受；本轮精确Token预测unknown，无新tokenizer，也不据缺预测永久拒合法44KB。实际partial或非complete仍拒绝。首屏仅MCI映射为“报告资料超过本轮审阅容量，待调整”，原码/诊断保详情，blocked不变。
++
++一组生产接线受控fixture通过：31K和44830B JSON/13原件形状、多字节转义完整prompt恰65536、超限0调用、原件逐byte保持、partial拒绝及中文映射。均为构造数据，不是Factory两case重跑或实际Pi接受证据。API/Web types和build各一次通过。
++
++R51同源平台ZIP/manifest/sha与封包后四literal派生ops分列，保R50全部120 assets及更早闭包。b320原sidecar仅EXPECTED/RELEASE/APP/ZIP_HASH改变，原预算/lock/readiness/ownership/完整snapshot+restore/rollback门不改，R7/config46保持。Root后继独审发布、新绑定实际判断与整体验收另验；费用只记无金额cap，历史unknown及十分钟PAUSED保持。
+diff --git "a/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl" "b/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl"
+index 14b2bc7..a6aaf34 100644
+--- "a/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl"
++++ "b/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl"
+@@ -304,3 +304,4 @@
+ {"id":"JARVIS-20261018-R49R1-PACKAGE-SEAL","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"R49r1精确APP包与四literal后ops封存，未部署","objective":"保留同源构建原件与资源闭包，分列APP/包/后ops，不冒浏览器或真实Pi验收。","changes":["APP03a1c8be794102b908479c4f9890d6bcc714c3f7，原packager一次成功生成20261018-project-goals-r49-r1 ZIP/manifest/sha，runtime与archive一致。","2271载荷作者逐件大小/H核同，113件R49 assets与旧104闭包保持；从99418原sidecar只四literal派生新ops，原源和工具不改。"],"decisions":[],"facts":[],"verification":["ZIP H3228ba66ed5c94e080987fce6dbf706396677e1af0f9089553e602d2b2c5a451；manifest Hc14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15。","派生ops H17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd，四literal差异及AST核验通过，不运行sidecar。"],"pending":["Root截图合同及planB6原文未在本副本取得，合成SSR不替代真实1691字原件或1280×720/移动布局验收。","Root独审发布与浏览器、后继Pi判断另验，未部署/服务/恢复/真实DB或业务模型操作，旧费用未知保持。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"artifacts/r49-r1/platform/release-manifest.json","sha256":"c14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15","bytes":449890},{"path":"scripts/capture-activate-r49-r1-sidecar.py","sha256":"17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd","bytes":26413}],"formatVersion":1,"recordedAt":"2026-10-18T06:50:07.881Z","previousHash":"9e29177af3f6caf96194fd09c3edb5f58342d18da7521fb8fe09f672fe645ec9","hash":"d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab"}
+ {"id":"JARVIS-20261018-R50-MODEL-INPUT-BUDGET","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"监管Pi输入最小排除投影与UTF8整体预算候选，未部署","objective":"保完整私有审计及必需语义，避免排除正文无差别进入Pi，不重旧intent/模型或跨Factory工作区。","changes":["runtime私有intent冻结完整experienceAudit/全部排除与snapshotHash，Pi只最小ID/版本/H/固定原因/数量；排除非候选。","selected改保完整正文/条件/证据与授权，不再截断成verified；必需goal/criteria/corrections/originals/selected不静默损失，30K终门仍严格。","生产构建及adapter同一投影；固定组件bytes/H/count与intent/inputH/goal/sourceRunH/resultH诊断，必需超限明确block，不存raw/provider/chat/env。"],"decisions":[],"facts":["起点59091c2与APP03a1c8b核同；冻结17116 sidecar原H保持，APP包后四pin派生另列。","旧goal7/run87ed/RHc82f和MODEL_CONTEXT_INCOMPLETE/费用/未知不重放不修改；旧各组件实际bytes未知，不倒填根因。"],"verification":["唯一生产投影/adapter组受控通过：正常、100长多字节排除、必需超限0调用、完整selected、反例及stale拒绝；不是实际Pi或旧goal7组件bytes证明。","受影响API types及API/Web真实build各一次通过；R49r1所有载荷和120旧assets原H校验继承，未重旧组或业务测试。"],"pending":["Root独审发布、新绑定真实Pi判断、完整产品验收未做；不碰112服务/recovery/真实DB/nodeR7/配置。","Factory其它工作区及goal6不读取变更，技术窗口/retry0与十分钟PAUSED保持。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"apps/api/src/runtime/supervisor-model-input.ts","sha256":"b93cc21e8cedc499c8ebb88ee034aac010e281e0673f6a46dfa6292e6c768f19","bytes":2314},{"path":"apps/api/test/supervisor-input-budget-r50.test.ts","sha256":"92f40c89fbb31ba133b4b555417c6696318e02592060a1aa1084026f00d32909","bytes":4129},{"path":"docs/R50监管输入字节预算.md","sha256":"b8df6e718bd93a1cc020e755c421d3ae8afb0fdce1bd0ed9baadb04cb821b410","bytes":2542}],"formatVersion":1,"recordedAt":"2026-10-18T07:57:32.839Z","previousHash":"d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab","hash":"4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d"}
+ {"id":"JARVIS-20261018-R50-PACKAGE-SEAL","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"R50预算投影APP包及后ops封存，未部署","objective":"分列APP/包/后ops原件和组件诊断，不冒真实Pi或完整产品验收。","changes":["APP5e171acbf924e678e0bce52788fec7d45ea0d963；原packager一次成功，2277载荷逐H核同，120件R49r1旧assets及更早闭包保留。","从17116原源仅四literal派生R50/priorR49r1/真实APP/ZIPH，原工具/权限/预算/备份恢复门不变，未执行。"],"decisions":[],"facts":["仅本轮合成预算组件bytes/H实测，旧goal7各组件大小未知，旧失败/消费/费用不重写。","源码/受控验证/发布/后继真实判断/全产品验收分别记录，十分钟PAUSED，Factory其它工作区不动。"],"verification":["ZIP H885a4c474542f52defbf9f81ecfc555485dc6956afbced4f13ab3b2efd40b2da；manifest H487de422dcb796540f1d7608d2143f361f74e53ae6dd7cd1fdb277f55d351212。","派生ops Hb3207527dc813bdf7ba9e627202d8443f274232ad48a611b1d0824fb16a0ffc6，四literal差异与AST通过。"],"pending":["Root独审、受控112部署、新绑定实际Pi与产品独验另做；本轮无provider/业务/服务/recovery/真实DB/node或配置操作。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"artifacts/r50/platform/release-manifest.json","sha256":"487de422dcb796540f1d7608d2143f361f74e53ae6dd7cd1fdb277f55d351212","bytes":451070},{"path":"scripts/capture-activate-r50-sidecar.py","sha256":"b3207527dc813bdf7ba9e627202d8443f274232ad48a611b1d0824fb16a0ffc6","bytes":26413}],"formatVersion":1,"recordedAt":"2026-10-18T07:58:47.210Z","previousHash":"4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d","hash":"41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86"}
++{"id":"JARVIS-20261018-R51-FULL-PROMPT-BUDGET","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"完整prompt共享64KiB上限候选，原件与安全门保持","objective":"容纳受控44KB完整报告，统一runtime/adapter计量发送，不省必需上下文或探测provider。","changes":["共享65536B UTF8终门计contract/分隔文本/完整JSON；已准备input同H才复用同text，避免double projection。","完整原件/criteria/corrections/selected/冻结审计与来源H保持，超限明确block零Pi；安全prompt bytes/H/limit诊断。","首屏仅MCI中文短映射，原码/blocked及详情不变；响应16KB与所有strict/授权门不放宽。"],"decisions":[],"facts":["起点745936f/APP5e171ac核同；旧goal8/run2079/RH7f6原账失败不重放不归零，Factory其它工作区不读取修改。","真实d2前置拒绝44830B来自主管诊断，不是provider错误；本轮fixture构造非原件重现，Token预测unknown。"],"verification":["唯一生产接线受控组通过31K/44830B十三原件形状、多字节/转义64KiB恰边界、超限0调用、逐byte原件、partial拒绝和映射。","API/Web types与真实build各一次通过，未重旧组/Factory两case/实际Pi。","只读原pi.ts安全catalog源码声明32768 Token/4096输出，原门不改，不读取凭据或用字节换算Token。"],"pending":["Root独审发布及新绑定真实Pi、全产品验收未做；不碰112DB/服务/nodeR7/config46，十分钟PAUSED。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"apps/api/src/runtime/supervisor-model-input.ts","sha256":"2a11540a3c4052d03c83ed656957d20529237a3c6ac043f94c41063a00a20ea4","bytes":2984},{"path":"apps/api/test/supervisor-prompt-budget-r51.test.ts","sha256":"7cd121151e05174966339bc0c3145dfc0342bcb7fdb2912ee9935c04981374a9","bytes":3552},{"path":"docs/R51完整Prompt容量候选.md","sha256":"1013efe6d8773267d315167aec8011cda793bf5af3d30fad50a831fe466d437a","bytes":2165}],"formatVersion":1,"recordedAt":"2026-10-18T08:34:02.404Z","previousHash":"41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86","hash":"f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824"}
+diff --git "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html" "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html"
+index 06b66a0..3a5d771 100644
+--- "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html"
++++ "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html"
+@@ -4,7 +4,7 @@
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。">
+-  <meta name="jarvis-source-sha256" content="146b11a5d72744606979e1b97d91a10a537bd5ab9b654c92b19d61e23202ea88">
++  <meta name="jarvis-source-sha256" content="6aba784f992f45b1db09ffe53b227d51c45ee1e77982cf6e6e55cd2053cb6343">
+   <title>贾维斯建设日志</title>
+   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+   <style>
+@@ -42,7 +42,7 @@
+     <p class="sidebar-label">目录与查找</p>
+     <label class="search-label" for="search">按关键词筛选章节</label>
+     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+-    <div class="search-status" id="search-status" aria-live="polite">共 306 章 · Ctrl / ⌘ + K 查找</div>
++    <div class="search-status" id="search-status" aria-live="polite">共 307 章 · Ctrl / ⌘ + K 查找</div>
+     <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</a>
+ <a class="toc-link level-3" href="#section-1-1" data-parent="1">本次改变</a>
+ <a class="toc-link level-3" href="#section-1-2" data-parent="1">决策与原因</a>
+@@ -2439,7 +2439,13 @@
+ <a class="toc-link level-3" href="#section-306-2" data-parent="306">事实与边界</a>
+ <a class="toc-link level-3" href="#section-306-3" data-parent="306">验证结果</a>
+ <a class="toc-link level-3" href="#section-306-4" data-parent="306">待办与未确认事项</a>
+-<a class="toc-link level-3" href="#section-306-5" data-parent="306">证据与当时指纹</a></nav>
++<a class="toc-link level-3" href="#section-306-5" data-parent="306">证据与当时指纹</a>
++<a class="toc-link level-2" href="#section-307" data-parent="307">JARVIS-20261018-R51-FULL-PROMPT-BUDGET · 完整prompt共享64KiB上限候选，原件与安全门保持</a>
++<a class="toc-link level-3" href="#section-307-1" data-parent="307">本次改变</a>
++<a class="toc-link level-3" href="#section-307-2" data-parent="307">事实与边界</a>
++<a class="toc-link level-3" href="#section-307-3" data-parent="307">验证结果</a>
++<a class="toc-link level-3" href="#section-307-4" data-parent="307">待办与未确认事项</a>
++<a class="toc-link level-3" href="#section-307-5" data-parent="307">证据与当时指纹</a></nav>
+     <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+   </aside>
+   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+@@ -2451,11 +2457,11 @@
+         <h1 id="document-title">贾维斯建设日志</h1>
+         <p class="subtitle">保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。</p>
+         <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+-        <div class="stats"><div class="stat"><strong>306 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
++        <div class="stats"><div class="stat"><strong>307 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
+       </header>
+       <article class="article">
+         <div class="intro"><p>本页由 <a href="%E5%BB%BA%E8%AE%BE%E8%AE%B0%E5%BD%95/events.jsonl">建设记录原始账本</a> 生成。详细维护方式见 <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">建设档案</a>。历史回顾以现有文档为依据，不补写缺失的决定动机或现场验收。日期时间为 ISO 格式，Z 表示 UTC；中国时间加八小时。证据指纹记录当时文件内容，后续文件可能另有更新。</p>
+-<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86。</p>
++<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824。</p>
+ </div>
+         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+         <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</h2>
+@@ -17368,6 +17374,39 @@
+ <li><a href="../scripts/capture-activate-r50-sidecar.py">scripts/capture-activate-r50-sidecar.py</a> · SHA-256：b3207527dc813bdf7ba9e627202d8443f274232ad48a611b1d0824fb16a0ffc6</li>
+ </ul>
+ <p>记录指纹：41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86；前一条：4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d。</p>
++</section>
++<section class="doc-section" data-section="307"><h2 id="section-307" tabindex="-1">JARVIS-20261018-R51-FULL-PROMPT-BUDGET · 完整prompt共享64KiB上限候选，原件与安全门保持</h2>
++<p>发生时间：2026-10-18；记录时间：2026-10-18T08:34:02.404Z；项目：贾维斯；类型：validation。</p>
++<p>目标：容纳受控44KB完整报告，统一runtime/adapter计量发送，不省必需上下文或探测provider。</p>
++<p>状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收</p>
++<h3 id="section-307-1" tabindex="-1">本次改变</h3>
++<ul>
++<li>共享65536B UTF8终门计contract/分隔文本/完整JSON；已准备input同H才复用同text，避免double projection。</li>
++<li>完整原件/criteria/corrections/selected/冻结审计与来源H保持，超限明确block零Pi；安全prompt bytes/H/limit诊断。</li>
++<li>首屏仅MCI中文短映射，原码/blocked及详情不变；响应16KB与所有strict/授权门不放宽。</li>
++</ul>
++<h3 id="section-307-2" tabindex="-1">事实与边界</h3>
++<ul>
++<li>起点745936f/APP5e171ac核同；旧goal8/run2079/RH7f6原账失败不重放不归零，Factory其它工作区不读取修改。</li>
++<li>真实d2前置拒绝44830B来自主管诊断，不是provider错误；本轮fixture构造非原件重现，Token预测unknown。</li>
++</ul>
++<h3 id="section-307-3" tabindex="-1">验证结果</h3>
++<ul>
++<li>唯一生产接线受控组通过31K/44830B十三原件形状、多字节/转义64KiB恰边界、超限0调用、逐byte原件、partial拒绝和映射。</li>
++<li>API/Web types与真实build各一次通过，未重旧组/Factory两case/实际Pi。</li>
++<li>只读原pi.ts安全catalog源码声明32768 Token/4096输出，原门不改，不读取凭据或用字节换算Token。</li>
++</ul>
++<h3 id="section-307-4" tabindex="-1">待办与未确认事项</h3>
++<ul>
++<li>Root独审发布及新绑定真实Pi、全产品验收未做；不碰112DB/服务/nodeR7/config46，十分钟PAUSED。</li>
++</ul>
++<h3 id="section-307-5" tabindex="-1">证据与当时指纹</h3>
++<ul>
++<li><a href="../apps/api/src/runtime/supervisor-model-input.ts">apps/api/src/runtime/supervisor-model-input.ts</a> · SHA-256：2a11540a3c4052d03c83ed656957d20529237a3c6ac043f94c41063a00a20ea4</li>
++<li><a href="../apps/api/test/supervisor-prompt-budget-r51.test.ts">apps/api/test/supervisor-prompt-budget-r51.test.ts</a> · SHA-256：7cd121151e05174966339bc0c3145dfc0342bcb7fdb2912ee9935c04981374a9</li>
++<li><a href="../docs/R51%E5%AE%8C%E6%95%B4Prompt%E5%AE%B9%E9%87%8F%E5%80%99%E9%80%89.md">docs/R51完整Prompt容量候选.md</a> · SHA-256：1013efe6d8773267d315167aec8011cda793bf5af3d30fad50a831fe466d437a</li>
++</ul>
++<p>记录指纹：f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824；前一条：41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86。</p>
+ </section>
+       </article>
+       <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.md">打开源文档</a></footer>
+diff --git "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md" "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md"
+index 1738120..908c660 100644
+--- "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md"
++++ "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md"
+@@ -1,10 +1,10 @@
+ # 贾维斯建设日志
+ 
+-<!-- jarvis-doc-meta {"version":"建设记录 1.0","date":"2026-10-18","eyebrow":"建设过程 / 验证证据 / 经验沉淀","subtitle":"保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。","stats":[{"value":"306 条","label":"已归档记录"},{"value":"追加保存","label":"旧记录保留原文"},{"value":"事实分层","label":"实现 · 验证 · 上线 · 验收"}]} -->
++<!-- jarvis-doc-meta {"version":"建设记录 1.0","date":"2026-10-18","eyebrow":"建设过程 / 验证证据 / 经验沉淀","subtitle":"保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。","stats":[{"value":"307 条","label":"已归档记录"},{"value":"追加保存","label":"旧记录保留原文"},{"value":"事实分层","label":"实现 · 验证 · 上线 · 验收"}]} -->
+ 
+ 本页由 [建设记录原始账本](建设记录/events.jsonl) 生成。详细维护方式见 [建设档案](贾维斯建设档案.md)。历史回顾以现有文档为依据，不补写缺失的决定动机或现场验收。日期时间为 ISO 格式，Z 表示 UTC；中国时间加八小时。证据指纹记录当时文件内容，后续文件可能另有更新。
+ 
+-历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86。
++历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824。
+ 
+ ## JARVIS\-RETRO\-20261002\-01 · V4：家庭管家与设备规划基线
+ 
+@@ -16124,3 +16124,40 @@
+ - [scripts/capture\-activate\-r50\-sidecar\.py](../scripts/capture-activate-r50-sidecar.py) · SHA-256：b3207527dc813bdf7ba9e627202d8443f274232ad48a611b1d0824fb16a0ffc6
+ 
+ 记录指纹：41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86；前一条：4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d。
++
++## JARVIS\-20261018\-R51\-FULL\-PROMPT\-BUDGET · 完整prompt共享64KiB上限候选，原件与安全门保持
++
++发生时间：2026-10-18；记录时间：2026-10-18T08:34:02.404Z；项目：贾维斯；类型：validation。
++
++目标：容纳受控44KB完整报告，统一runtime/adapter计量发送，不省必需上下文或探测provider。
++
++状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收
++
++### 本次改变
++
++- 共享65536B UTF8终门计contract/分隔文本/完整JSON；已准备input同H才复用同text，避免double projection。
++- 完整原件/criteria/corrections/selected/冻结审计与来源H保持，超限明确block零Pi；安全prompt bytes/H/limit诊断。
++- 首屏仅MCI中文短映射，原码/blocked及详情不变；响应16KB与所有strict/授权门不放宽。
++
++### 事实与边界
++
++- 起点745936f/APP5e171ac核同；旧goal8/run2079/RH7f6原账失败不重放不归零，Factory其它工作区不读取修改。
++- 真实d2前置拒绝44830B来自主管诊断，不是provider错误；本轮fixture构造非原件重现，Token预测unknown。
++
++### 验证结果
++
++- 唯一生产接线受控组通过31K/44830B十三原件形状、多字节/转义64KiB恰边界、超限0调用、逐byte原件、partial拒绝和映射。
++- API/Web types与真实build各一次通过，未重旧组/Factory两case/实际Pi。
++- 只读原pi\.ts安全catalog源码声明32768 Token/4096输出，原门不改，不读取凭据或用字节换算Token。
++
++### 待办与未确认事项
++
++- Root独审发布及新绑定真实Pi、全产品验收未做；不碰112DB/服务/nodeR7/config46，十分钟PAUSED。
++
++### 证据与当时指纹
++
++- [apps/api/src/runtime/supervisor\-model\-input\.ts](../apps/api/src/runtime/supervisor-model-input.ts) · SHA-256：2a11540a3c4052d03c83ed656957d20529237a3c6ac043f94c41063a00a20ea4
++- [apps/api/test/supervisor\-prompt\-budget\-r51\.test\.ts](../apps/api/test/supervisor-prompt-budget-r51.test.ts) · SHA-256：7cd121151e05174966339bc0c3145dfc0342bcb7fdb2912ee9935c04981374a9
++- [docs/R51完整Prompt容量候选\.md](../docs/R51%E5%AE%8C%E6%95%B4Prompt%E5%AE%B9%E9%87%8F%E5%80%99%E9%80%89.md) · SHA-256：1013efe6d8773267d315167aec8011cda793bf5af3d30fad50a831fe466d437a
++
++记录指纹：f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824；前一条：41e35ea4741edaf974e7113a2038cf8d69204e22588defc67cbddf4d48d72a86。
+diff --git a/reports/r51-logs/api-build.txt b/reports/r51-logs/api-build.txt
+new file mode 100644
+index 0000000..d488286
+--- /dev/null
++++ b/reports/r51-logs/api-build.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/api@0.1.0 build
++> tsc -p tsconfig.json --outDir .dist-next
++
+diff --git a/reports/r51-logs/api-types.txt b/reports/r51-logs/api-types.txt
+new file mode 100644
+index 0000000..665ddaf
+--- /dev/null
++++ b/reports/r51-logs/api-types.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/api@0.1.0 typecheck
++> tsc --noEmit -p tsconfig.json
++
+diff --git a/reports/r51-logs/assets.json b/reports/r51-logs/assets.json
+new file mode 100644
+index 0000000..71e59e6
+--- /dev/null
++++ b/reports/r51-logs/assets.json
+@@ -0,0 +1,726 @@
++{
++  "oldPayloadsVerified": 2277,
++  "assets": [
++    {
++      "path": "apps/web/dist/assets/api-Chk_xhf3.js",
++      "size": 1786,
++      "sha256": "cf309c095eb52e286c9d2d42b4bd77c44eea8ad9675d1892c9314623f92caa3e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/ApiWorkbench-BU9U4-wP.css",
++      "size": 24191,
++      "sha256": "c2a32540a003bc2efbdb3d98df0656648d4a46c4e72f9c5e14260f07bf5e81c9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/ApiWorkbench-Dmp8PqAz.js",
++      "size": 50856,
++      "sha256": "0ca4d25496e44e5b4d465868bd9dd1d030c7cb6fc3b07574409ba6de3226e549",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/App-Bw5WWsEu.js",
++      "size": 42768,
++      "sha256": "c11aaa1ba905a437e0900d2e790f72fad68f2f4a3685d0a4a07854382e110443",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/client-OI5hagxP.js",
++      "size": 222585,
++      "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BGspGo2n.js",
++      "size": 186426,
++      "sha256": "8f28fbdd3429d375b0b77acf70d9c09ef091dd2a7338f9dcf0bdff5e1fedd7f4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BjNIZnjT.js",
++      "size": 185044,
++      "sha256": "3c0e936dc454387fb8ecc118b7ca21291bfd822a9b539419f496ab4188e92d14",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Bkbv5Ons.js",
++      "size": 186058,
++      "sha256": "0f070546ae77fefa831fd06be336c83f5d1bd78ccc3b523b561ac620870a756d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BqArLHFo.js",
++      "size": 185044,
++      "sha256": "6edee98e1b3607643a8f5f5ec4d225d49f9765876dfceac0522cc5d7e9616a25",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-C2xJPBSV.js",
++      "size": 186046,
++      "sha256": "1999f260fd3dfb306cb32b7bab9959cf85a0cdb01313a5808ea108100e588107",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-C8pWeWn4.js",
++      "size": 185044,
++      "sha256": "f6e46f702b1a6e9da220b83b181752025ec95e9505972f3555b87d30831edee9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CEqDwIn0.js",
++      "size": 185755,
++      "sha256": "3d999e39ce9a245521b204d5fc358fc1cfed717066c257e52d38d7c4b26856fe",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CtFYN7Wp.js",
++      "size": 186058,
++      "sha256": "1fa2aa685de146d93fb4f9346a113f6634eebdb8db231345437b19a58094d344",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CxDa9fQX.js",
++      "size": 185044,
++      "sha256": "4bbfce0108c3bfddb6609cca1e33b44335ec3a24641ad9e5465d3d545068617a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CYjB9jpI.js",
++      "size": 185044,
++      "sha256": "ff5f69a775e4b941ea5b31c1d174cdd3c038ef8c2b3eb5330e122057b5c3e79e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CySQ6cmX.js",
++      "size": 186058,
++      "sha256": "1c72c2e64489581878a8a668674b6de762c2052b5a5b626a0f5a2684c977df40",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Dc9Q7TVE.js",
++      "size": 186058,
++      "sha256": "617803e0f6e036d7ea10c0a679f45467bede7e78721ef53d6d99e6f500b1b454",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-DFO5vBD_.js",
++      "size": 185044,
++      "sha256": "fe2b2774efe77733d7983212a890bead3cc6e36f965948f900733f021a27e7fd",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-L1CrooRu.css",
++      "size": 87280,
++      "sha256": "3a0f4bf7b75a979321331804ceeaae100ab4e08b10b7fa8f7e7c11ba6ec6613c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-SyS9LJyM.js",
++      "size": 186058,
++      "sha256": "abf9fec25f039162d63ab7c941abac8c7745a8f3430fb0c5da9318b7d03a1c6b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-ZXK0_h2J.js",
++      "size": 185044,
++      "sha256": "8c7ee87d787685542d9259c7d17bbd10d25debd596bb790e83c12323cf51594f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-B9NToAGp.js",
++      "size": 8815,
++      "sha256": "e69003cad109d9e27198dd08b029d12c26bd0bf97d073cd449b76b7221e27740",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-BWfAf0S7.js",
++      "size": 8815,
++      "sha256": "157468b57f858ece5c109429acd1d21980776336e46f4dd1416908f40812a1c3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-DuoOicCv.css",
++      "size": 1671,
++      "sha256": "ce29fab4b0c33a8ddb1b9f296a20e9a57b486265d013d634285341fb845e492c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-Gxi7GIkS.js",
++      "size": 8815,
++      "sha256": "95e3eb5dfd29e0014d948f1fbcbc3fcdd60af6505a193dc9cc5724bd8c6a359d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-7k36TmbJ.js",
++      "size": 132639,
++      "sha256": "cc78a95e738e46c89aeeb74803a7b516f8228985d649e859b12dab127dcbf20f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-B3HKuLzG.js",
++      "size": 2700,
++      "sha256": "c3163f3e9def0fe0371c80381b91c7b4aaa43e6919732d089ea83df235d8bc68",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BC9IJeJP.js",
++      "size": 2700,
++      "sha256": "4a1306154eca0bb91077ed6f81eba8ebea79aefc6f16ffea01042a9a3fad0a4f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bd-erOE4.js",
++      "size": 2700,
++      "sha256": "2a00575c327c8145b818d5cc82e7be8e422e92f1d8b5b1ffaea49cf08387768a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bh9bR11H.js",
++      "size": 132639,
++      "sha256": "18d0a77117dc2a7079cdb7b9778102aa3b4eef5ce96944d7a2dcd709b71fa891",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BMxX7Uy-.js",
++      "size": 132639,
++      "sha256": "de57abdbb2dc0d4271d621992e303d4d2cd3dda9ba1b9e8c1e69423c4d8c560a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bn0_XvS3.css",
++      "size": 35140,
++      "sha256": "f9d14b722b93870f3ed73250ac9cb00443914f1ad8144c1937873328c242ab62",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BOK2KYgE.js",
++      "size": 132639,
++      "sha256": "bbbb12556a5a0dcbc19f7fe117095133e3b08b79d9d23a018818192351e064a5",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BPqbihwj.js",
++      "size": 2700,
++      "sha256": "a1b50c3117a1b3d33387289e45771fbcbe86036aa31a39d07618cb28578bbc6f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bt3Uhcrq.js",
++      "size": 132639,
++      "sha256": "2160c3d11bffabfd139b28c6a33bd5e98e71bf1185e668e6e12638bb8dc422b7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Btf2sgPH.js",
++      "size": 132639,
++      "sha256": "87ecba8e25e5cb2eaf446bc6d218ef9622cb0516d90fafd7317773c0429d3d6e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BUR4f3cz.js",
++      "size": 2700,
++      "sha256": "07c378acf1d63a823105e10386fceb84dc04186eb82f2d2427022e123cba7fa7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BWW6DgEo.js",
++      "size": 2700,
++      "sha256": "0afc7f5b3e195ee3b0a1c09addd88d1f2e0d1809972dc45a93004b3d1637b64f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BY6ONzcm.js",
++      "size": 132639,
++      "sha256": "d04df7ec73b5df5a1014fce88da11ad5459e7fda59e91386e4ea54d3dffaa002",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-C4A9K3Js.css",
++      "size": 40695,
++      "sha256": "ca42460074cc8d01a856c3298d43a59d2917f2e041bccbd89f5e251202308036",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CfFWULd2.js",
++      "size": 132639,
++      "sha256": "c77c1b21768fa3c4fe81f604af0ddb691af8ee8296d0edbdec6f966341e0a157",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CM4cqeLV.js",
++      "size": 132639,
++      "sha256": "a6da79934113e0da456a214763ad7ce154760189292d26e9a335d4f6b8ae1911",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Cna248pL.js",
++      "size": 2700,
++      "sha256": "e84fbfe8145d3c30e676fa05b1b684b1e93b77630ef5abaf6679ccd84788c21b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CP2KzcLD.js",
++      "size": 132639,
++      "sha256": "dff121d289b65751e66dd6ad2326b6162acd018dec6a63143065233e0efb664e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CvsSKgv3.js",
++      "size": 132639,
++      "sha256": "362d868daf02d1b54e3ec9fb1e1cf3360702365f7f7c1330c10379a6d48bd003",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Cyo_cLt3.js",
++      "size": 132639,
++      "sha256": "3cbb39961b61531b158ab9bf4e9344b3746cde292310247652321ea1a0cd8c13",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DAdKF6t6.js",
++      "size": 2700,
++      "sha256": "e42cd01faa768cb2af385197b2bb80e3c27a952686e50c2087536139e704b9d6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DaRI1A8S.js",
++      "size": 2700,
++      "sha256": "c77fa4e9e5c541377eb99fbc4300a3e8a3edc4f5fe47cd5a9d90a69b15eb5d34",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Ddh4n_em.js",
++      "size": 2700,
++      "sha256": "14d712ade0dab462314fe1292dff0dade260a4495c4d10bbeb85f1b62d7287d3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DgeLu-8j.js",
++      "size": 2700,
++      "sha256": "46af2097133f28ea859d3ce6b7d4e3d8d83a4f4f85eac3b7e47aa88a3f375196",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DirT-lzL.js",
++      "size": 2700,
++      "sha256": "339b84adb78d74377947e0970dba59811816782963c2c0c01d522b066494d339",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-dN1MUL4D.js",
++      "size": 2700,
++      "sha256": "1aff914c125eb1d23201417bdfa8a95dad25d7887fa4d308eb94d57d1d123fe6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-GrlWu2q3.js",
++      "size": 2700,
++      "sha256": "0766628ffa91be29992d789916169638cc8e3cd1192f3afbd7c85fe0642c96a7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-It7MDlfH.js",
++      "size": 132639,
++      "sha256": "3b40e4141a66dfb81bd8802c54ee35f09cba49a4bea3af9c9e7521e6b8a7f2aa",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-L1mh8oeb.js",
++      "size": 132639,
++      "sha256": "147f70e10d9bb8826eea2073382293eace23ddbbf3356b15af03c459a9170e20",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-PS6BmzZD.js",
++      "size": 132639,
++      "sha256": "fdbd288ef3f262002182a56242c01188bc6c1a9019c4178a7a947be2b84c824d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-qDG0eH8A.js",
++      "size": 2700,
++      "sha256": "a0994f3fabde1d8f2cc5847f52b95999a696c69efffc9294c203a33f6aa16048",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-B9NdCIHy.js",
++      "size": 105346,
++      "sha256": "ab28547dd07dbb61fae77377f299e5360a189c9c1d3634a9ac8486998bab3a62",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bahhxq9H.js",
++      "size": 105346,
++      "sha256": "5983e4c6e895a5f965d338a37e9dd69e502665ff5fe39f653822b9df0a435bf7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bd9cyBWd.js",
++      "size": 105346,
++      "sha256": "d24a10af81b1f2d6a1112e98b37f686e3b549582a7095e5acddff82b9763084e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bf6wBYBw.js",
++      "size": 105346,
++      "sha256": "da95a3e00cb4d097126922b0c36bedd0843c95293c19a59144c803f91523e206",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-BOdeK6FX.js",
++      "size": 105346,
++      "sha256": "f537d99f80fb14809c35884cd14705f4e72676832badf7ac1ab6006030d4ff39",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bpq8f1ds.js",
++      "size": 105346,
++      "sha256": "c690b5d713ee02443be6a17ec7d0b3d90fd4e5467295f3802031dd5c54ba3b84",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-C72O-0zk.js",
++      "size": 105346,
++      "sha256": "7c8bb9b7cfaa789003984b16f22927077ae840e51070a7d1d39e7d0761a38e9e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CcUY24pM.js",
++      "size": 105346,
++      "sha256": "6112a4afe3d8318c1199d1a840c66b24b2a73a47ebcbd6aed64ed38c97e6da6b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CkTZVpVT.js",
++      "size": 105346,
++      "sha256": "7782cf9f6113b44c1c0774658b60546ed6a7f1743d6709aaaf2358210f2529d8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CoG1rh-n.js",
++      "size": 105346,
++      "sha256": "acc9ba5cfb73447c021edd3d03de2782dc953a55fb6c270f9f9b9178d4a1f5d2",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CrrNMALd.js",
++      "size": 105346,
++      "sha256": "43d79b445740904d21e0792ccc82982bb6573446062d6f12ce7e9af6b7306c82",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-D5w3tZSc.js",
++      "size": 105346,
++      "sha256": "0181e8b649a9589f0293a9d78966d8842667fbf896af63e90a55b64a3c5cf020",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-DO5gJB2N.css",
++      "size": 38457,
++      "sha256": "77db6669262c00f07767cbea1fd83ce587a2cd942c3c9523462a7b272510483a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Dy0AfEMD.js",
++      "size": 105346,
++      "sha256": "536254533a94ae4f1383799565eadc3f9770f1698904cca31e87077259fed1b4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-DzxKXEBt.js",
++      "size": 105346,
++      "sha256": "24546506629cd71529332a10ff8e50c8ab922c651160c801de49e585959e7473",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-jjOkZEhU.js",
++      "size": 105346,
++      "sha256": "e2fcb2fe2bcea5cf5460e0110141ed1c31ef01257eceb12617c9edf1aea161a1",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-B-adSYOj.css",
++      "size": 2834,
++      "sha256": "eb58679b215d72a22d2ebe0cd94e0041c16baaf99fc693f085293dc1a479aaf7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-BSE7EDoo.js",
++      "size": 25939,
++      "sha256": "7e20ce1468c07ef98e74b371bfefa690d03152ca0e61e0314f3191cd25f0035a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-BSJ0JW-p.js",
++      "size": 25939,
++      "sha256": "fabfe45557faa8f9b66009dcf49c8c281d87a37b51471ea808c121d69a6db54c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-C2jU-A-7.js",
++      "size": 25939,
++      "sha256": "8ed277706d6e43dd62a49f462a27b0854d16aaae2623795fc869e71ee1971df4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-CDIXPyOs.js",
++      "size": 25939,
++      "sha256": "6510ac0b01ce5556b04972eaa15a116689a092e73063fd73bbea2563139528e0",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D_p8XfbM.js",
++      "size": 25939,
++      "sha256": "adedcb05720125ded83352b4cbb818ab7686c236dd3e8f8ad3e2c6b30ac84947",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D-9IUbUb.js",
++      "size": 25939,
++      "sha256": "e32214bb0323bd33b6eb1ac1da96bfd2c678a6b63a1f7092bf26800a844c7e56",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D8NtBV_6.js",
++      "size": 25939,
++      "sha256": "38ed8affb8c7f29b91c710c553fe0472cd5884d625c43f0fd69b0a44faf59b03",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-Dck92uDK.js",
++      "size": 25939,
++      "sha256": "6f02cd3b58c4e333dec54a8eb2c44ca13f1c88e200a2e823d7322f24bd502065",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DMhr_St1.js",
++      "size": 25939,
++      "sha256": "4c99267f5d6e2ba4c4545f26e56cdfb628aac34466b6a843c4c96e402df8266b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DoJ982dN.js",
++      "size": 25939,
++      "sha256": "4ba788a05c866ec89b913173e92bf711b0be1d99303204e8de3cbbf455ba1004",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DU5_jGCS.js",
++      "size": 25939,
++      "sha256": "b80bea2295103e519e08ab003e7cde6337f7cc07aec7dfd68acf4d5379d7c819",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DYLehZft.js",
++      "size": 25939,
++      "sha256": "a019a3edb475a501e042d477b25b24f23f32222a0fdbce639ae293ff0b778e5f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-egK1debn.js",
++      "size": 25939,
++      "sha256": "98736d8e37849b9e95b47d93f3315b3f5a83a7df047daefd775d06994c26d039",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-so6Lr4DI.js",
++      "size": 25939,
++      "sha256": "8a071c07708692166eadf5919f9236bb9889c782128819fb3e42859fd6c42f02",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-wuVXStul.js",
++      "size": 25939,
++      "sha256": "293480fb899074fed21e77a4408571ff046ec1dc4523ed5555f7c776c683ca14",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-BT4-La1g.js",
++      "size": 232114,
++      "sha256": "b8583cc9ce5e9eaf2fe857879854274a3822f2aaffed830314167003c44f8500",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-C9BkAmZa.js",
++      "size": 233143,
++      "sha256": "b04358703e63d1b4cb9c529a5e89896199a8fb6782f0090dc5a0d4ab1137720b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-CMPr2Z5F.css",
++      "size": 2997,
++      "sha256": "2e673872eaffd25f2dc6a53a898335a4f98e86e2e94dbddf6749be4c5c07eb69",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-LzUl84_X.js",
++      "size": 233415,
++      "sha256": "0ec578b7bf2301d7d8e88d7696690a8d0a9ccefc9423df8dca60a862ab2d5ab5",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offline-vault-g54LtOEF.js",
++      "size": 10707,
++      "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offlineCapture-CTF5MCW4.css",
++      "size": 4717,
++      "sha256": "81ca3809012e895c9c7ecbf96fa695ca1e0485e917be83737e3d0ef9fbe655a8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offlineCapture-Dp37MnGd.js",
++      "size": 26587,
++      "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-1WgeqKb3.js",
++      "size": 368891,
++      "sha256": "3f0552a20c0bfe23b7e1aa7e6bbb160636108ae2f51c251ae406f27dd003bf9c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-9zmXoABQ.js",
++      "size": 391313,
++      "sha256": "5e7a4e3b8afd7e923c6adc514651e41bfcaa44918b87dc6e1306deb7ff52de4e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BnMPRN5w.js",
++      "size": 383927,
++      "sha256": "06a6cdc492d41e17a59092c6e30056d0e1aff9a84da84f01d86efdf815479ccc",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BrEOh5vG.css",
++      "size": 52837,
++      "sha256": "a3e916c69fd6cb6af73f513b68bbfb0467a62631f251cb65ea37b431c1a13801",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BSSnywsR.js",
++      "size": 400137,
++      "sha256": "7453c368848897fd4fdf0ada276e76615b987781501a8ab329e3b16ac1770ffe",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BVMKKxYv.js",
++      "size": 396677,
++      "sha256": "fa6ec9999d8241fe5fe2bed69338799b64d4adfd5efb58573fd7ea8183c135d4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-C4HGN7pt.js",
++      "size": 371928,
++      "sha256": "4be291bc28157d739dfe5739f48b7262a5bf22c304f10c6acca5bd4ffc4eb72c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CpaZZ68b.css",
++      "size": 54005,
++      "sha256": "39a394144ed99d0be56d52917d5fb78d54a0c5fc75a0aa96846c18036c4fec06",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CRKBQHI1.css",
++      "size": 51632,
++      "sha256": "2adc489d6dd6f45daf620794c2db4dafa8a394e1a0a63d150c44ad6bba54541c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CrpXyVjM.js",
++      "size": 377067,
++      "sha256": "bf0675cb1360df857c0853f8f6b0c946a3e27cb023de4beed1d5224f1aadb256",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CRRRJkKB.js",
++      "size": 370510,
++      "sha256": "8ffa64a416981d768b2b64c035cac7ae7d57a1f22856dd5ddac22c27d02c27c9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-D62v5whk.js",
++      "size": 390569,
++      "sha256": "dc953d5763c98904ab3266d8a4ecca5d0fe9cba40711f08e55788ef48fd8ad33",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-D87eoche.js",
++      "size": 383927,
++      "sha256": "014b25c346170df5d7ca93b38ad4d0aae3ac200febc97069df35d60a63682955",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DqwvsULR.css",
++      "size": 46777,
++      "sha256": "2fa190448c3e488547d5d1529bd620f8a2bf6933a74bfcfb27564bf092d05611",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DXGqDr63.js",
++      "size": 377755,
++      "sha256": "2b768cb0cf07c58144657d3ab12c852c7fdfcfb867043ba0e19e4fdd42e92783",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-IkdwqqX8.js",
++      "size": 402078,
++      "sha256": "c05899bd82cc27053edb12c316dbad5d5b08996b3322a0855acd6f20cc71fda8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-q5MPL812.js",
++      "size": 390387,
++      "sha256": "ea850d77aa4fd3d136ee3127bfb45c9a5bcd9ff81b902f2c52b175156c7845a1",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-s2jqT4-3.js",
++      "size": 377742,
++      "sha256": "ec7ac650a8f7db2a243f0bdf4d204420d57dc97d13706fab848ccf2540926498",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-S8tWeD7W.js",
++      "size": 353240,
++      "sha256": "c9ef162315e680f844f9b5cf83bb4975e4214d7f54fa7d285118897a2c16163d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-BAGOxt2c.js",
++      "size": 85733,
++      "sha256": "8378efb880686b116dded6adfd5f5dcda53eb5dec1104dada8cdf7f58ce9475d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-Boq6QLI7.css",
++      "size": 15592,
++      "sha256": "790e387b0261d59bd808204d997df1c579af65ff636259f8509d7672c94bee12",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-CO_NVOaj.js",
++      "size": 85733,
++      "sha256": "f6555f6dd86c7263fd8a929b20b27ce62ac46a36bc09ad59cd06680ea50c3dfd",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-DgLk029p.js",
++      "size": 85733,
++      "sha256": "dd94a50e0bd124ea07f72ab4d4fec9c293b4ea18660328a8c6d148129906352d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/v1-client-CX0ITgRR.js",
++      "size": 2273,
++      "sha256": "5e92175b68bba52ee01d2446431e921fbb4730f68e64f5e4c5251a91e53f4d32",
++      "mode": 420
++    }
++  ],
++  "allPriorClosurePreserved": true
++}
+diff --git a/reports/r51-logs/catalog-source-metadata.txt b/reports/r51-logs/catalog-source-metadata.txt
+new file mode 100644
+index 0000000..bdc8ea9
+--- /dev/null
++++ b/reports/r51-logs/catalog-source-metadata.txt
+@@ -0,0 +1,2 @@
++307:    config.providers[definition.id]={name:definition.name,baseUrl,api:definition.api,models:catalog.models.map(m=>({...m,input:['text'],reasoning:false,contextWindow:32768,maxTokens:4096,cost:{input:0,output:0,cacheRead:0,cacheWrite:0}}))};
++485:        model: ephemeral ? {...selectedModel,maxTokens:Math.min(selectedModel.maxTokens,4096)} : selectedModel,
+diff --git a/reports/r51-logs/construction.txt b/reports/r51-logs/construction.txt
+new file mode 100644
+index 0000000..7c35521
+--- /dev/null
++++ b/reports/r51-logs/construction.txt
+@@ -0,0 +1 @@
++{"executed":true,"added":["JARVIS-20261018-R51-FULL-PROMPT-BUDGET"],"reused":[],"records":307,"headHash":"f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824","path":"docs/建设记录/events.jsonl","render":{"markdown":"docs/贾维斯建设日志.md","records":307,"headHash":"f7373d41a93e9106a50751a3f865668064d64e17598e6b1de71ce92bb97a2824","html":"docs/贾维斯建设日志.html"}}
+diff --git a/reports/r51-logs/prompt-budget.tap b/reports/r51-logs/prompt-budget.tap
+new file mode 100644
+index 0000000..bbbe457
+--- /dev/null
++++ b/reports/r51-logs/prompt-budget.tap
+@@ -0,0 +1,10 @@
++{"scope":"controlled 31K/44830B synthetic13-originals, not Factory input/provider","acceptedInputJSONBytes":[31000,44830],"exactFullPromptBoundary":65536,"overLimitZeroPi":true,"partialRejected":true,"originalsByteIdentical":true,"tokenEstimate":null}
++✔ R51 production full prompt shared 64KiB budget, boundary and original bytes preserved without actual Pi (21.596252ms)
++ℹ tests 1
++ℹ suites 0
++ℹ pass 1
++ℹ fail 0
++ℹ cancelled 0
++ℹ skipped 0
++ℹ todo 0
++ℹ duration_ms 481.739258
+diff --git a/reports/r51-logs/web-build.txt b/reports/r51-logs/web-build.txt
+new file mode 100644
+index 0000000..ce6898d
+--- /dev/null
++++ b/reports/r51-logs/web-build.txt
+@@ -0,0 +1,41 @@
++
++> @jarvis/web@0.1.0 build:stage
++> tsc --noEmit && vite build --outDir .dist-next
++
++vite v7.3.6 building client environment for production...
++transforming...
++✓ 208 modules transformed.
++rendering chunks...
++computing gzip size...
++.dist-next/index.html                                          0.52 kB │ gzip:   0.37 kB
++.dist-next/offline-capture.html                                0.66 kB │ gzip:   0.40 kB
++.dist-next/offline-capture-shell-manifest.json                 1.14 kB │ gzip:   0.51 kB
++.dist-next/offline-capture-sw.js                               4.15 kB
++.dist-next/assets/EvidenceAssistantPanel-DuoOicCv.css          1.67 kB │ gzip:   0.66 kB
++.dist-next/assets/MaterialManager-B-adSYOj.css                 2.83 kB │ gzip:   0.85 kB
++.dist-next/assets/NotificationPreferencesPanel-CMPr2Z5F.css    3.00 kB │ gzip:   1.04 kB
++.dist-next/assets/offlineCapture-CTF5MCW4.css                  4.72 kB │ gzip:   1.58 kB
++.dist-next/assets/RoomVoice-Boq6QLI7.css                      15.59 kB │ gzip:   3.79 kB
++.dist-next/assets/ApiWorkbench-BU9U4-wP.css                   24.19 kB │ gzip:   5.90 kB
++.dist-next/assets/index-Bn0_XvS3.css                          35.14 kB │ gzip:   6.58 kB
++.dist-next/assets/KnowledgePage-DO5gJB2N.css                  38.46 kB │ gzip:   6.91 kB
++.dist-next/assets/index-C4A9K3Js.css                          40.70 kB │ gzip:   8.49 kB
++.dist-next/assets/OperationsPage-CpaZZ68b.css                 54.01 kB │ gzip:   9.18 kB
++.dist-next/assets/DemoApp-L1CrooRu.css                        87.28 kB │ gzip:  15.90 kB
++.dist-next/assets/api-Chk_xhf3.js                              1.79 kB │ gzip:   0.99 kB
++.dist-next/assets/v1-client-CX0ITgRR.js                        2.27 kB │ gzip:   1.27 kB
++.dist-next/assets/index-CGJFQ6li.js                            2.70 kB │ gzip:   1.37 kB
++.dist-next/assets/EvidenceAssistantPanel-B9NToAGp.js           8.82 kB │ gzip:   3.72 kB
++.dist-next/assets/offline-vault-g54LtOEF.js                   10.71 kB │ gzip:   4.36 kB
++.dist-next/assets/MaterialManager-CZeJeVWa.js                 25.94 kB │ gzip:   9.20 kB
++.dist-next/assets/offlineCapture-Dp37MnGd.js                  26.59 kB │ gzip:   9.59 kB
++.dist-next/assets/App-Bw5WWsEu.js                             42.77 kB │ gzip:  13.79 kB
++.dist-next/assets/ApiWorkbench-Dmp8PqAz.js                    50.86 kB │ gzip:  16.83 kB
++.dist-next/assets/RoomVoice-CO_NVOaj.js                       85.73 kB │ gzip:  29.68 kB
++.dist-next/assets/KnowledgePage-By6eNnF5.js                  105.35 kB │ gzip:  32.84 kB
++.dist-next/assets/index-CFOTlxn1.js                          132.64 kB │ gzip:  43.44 kB
++.dist-next/assets/DemoApp-Dhz16znu.js                        186.43 kB │ gzip:  58.67 kB
++.dist-next/assets/client-OI5hagxP.js                         222.59 kB │ gzip:  69.34 kB
++.dist-next/assets/NotificationPreferencesPanel-LzUl84_X.js   233.42 kB │ gzip:  79.85 kB
++.dist-next/assets/OperationsPage-DuT_6MdK.js                 400.28 kB │ gzip: 118.89 kB
++✓ built in 6.11s
+diff --git a/reports/r51-logs/web-types.txt b/reports/r51-logs/web-types.txt
+new file mode 100644
+index 0000000..bc7832e
+--- /dev/null
++++ b/reports/r51-logs/web-types.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/web@0.1.0 typecheck
++> tsc --noEmit
++

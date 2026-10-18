@@ -1,0 +1,18 @@
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (2356.043129ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4159.693847
+
+✖ failing tests:
+
+test at apps/api/test/execution-stop-lineage-r43.test.ts:1:436
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (2356.043129ms)
+  TypeError: Cannot read properties of undefined (reading 'result')
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/execution-stop-lineage-r43.test.ts:3:4204)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)

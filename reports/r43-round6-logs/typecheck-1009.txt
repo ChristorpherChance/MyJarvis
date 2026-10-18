@@ -1,0 +1,26 @@
+
+> jarvis-platform@0.1.0 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @jarvis/api@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+src/runtime/project-supervisor-runtime.ts(65,1160): error TS2339: Property 'adoptionSourceRunId' does not exist on type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(65,1203): error TS2339: Property 'adoptionSourceRunId' does not exist on type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(65,1228): error TS1117: An object literal cannot have multiple properties with the same name.
+src/runtime/project-supervisor-runtime.ts(65,1292): error TS2339: Property 'adoptionTaskRevision' does not exist on type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(66,713): error TS2339: Property 'adoptionSourceRunId' does not exist on type 'SupervisorSession'.
+src/runtime/project-supervisor-runtime.ts(66,763): error TS2339: Property 'adoptionTaskRevision' does not exist on type 'SupervisorSession'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api
+npm error workspace @jarvis/api@0.1.0
+npm error location /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api
+npm error command failed
+npm error command sh -c tsc --noEmit -p tsconfig.json
+
+
+> @jarvis/web@0.1.0 typecheck
+> tsc --noEmit
+

@@ -36,28 +36,29 @@ export function classifyCliFailure(message:string,code?:string):CliFailure {
 }
 
 /** Claude reports whole-session spend on resume. Subtract only a matching native checkpoint. */
-export function roundCliUsage(engine:ExecutionTemplate['engine'],usage:ActualUsage|undefined,sessionId:string|undefined,totalCost:number|undefined,prior:CliBillingCheckpoint|undefined,policy?:CliSupervisionPolicy,resumedSessionId?:string):{usage?:ActualUsage;checkpoint?:CliBillingCheckpoint}{
+export function roundCliUsage(engine:ExecutionTemplate['engine'],usage:ActualUsage|undefined,sessionId:string|undefined,totalCost:number|undefined,prior:CliBillingCheckpoint|undefined,policy?:CliSupervisionPolicy,resumedSessionId?:string,nativeCliVersion?:string):{usage?:ActualUsage;checkpoint?:CliBillingCheckpoint}{
  if(!usage)return {};
  let value={...usage};let checkpoint:CliBillingCheckpoint|undefined;
  if(engine==='claude'&&sessionId&&totalCost!==undefined&&Number.isFinite(totalCost)&&totalCost>=0){
   const baseline=prior?.engine==='claude'&&prior.sessionId===sessionId?prior.costUSD:undefined;
-  checkpoint={engine:'claude',sessionId,costUSD:Math.max(totalCost,baseline??0)};
+  checkpoint={engine:'claude',sessionId,costUSD:Math.max(totalCost,baseline??0),...(nativeCliVersion?{nativeCliVersion}:{}),costScope:'session-cumulative'};
   // A resumed session without a cost baseline cannot be priced safely.
   if(baseline===undefined&&resumedSessionId===sessionId||baseline!==undefined&&totalCost<baseline){delete value.costUSD;delete value.costKind;}
   else{value.costUSD=totalCost-(baseline??0);value.costKind='catalog-estimate';}
   // A compatible gateway model outside Claude's catalogue can report a zero estimate
   // despite real usage. It is unpriced evidence, not permission for unlimited priced rounds.
-  if(totalCost===0&&(value.totalTokens??value.inputTokens+value.outputTokens)>0&&policy?.billing!=='subscription'&&!/^(?:anthropic\/)?claude[-_]/i.test(value.model??'')){delete value.costUSD;delete value.costKind;}
- }else if(engine==='codex'&&policy?.inputUSDPerMillion!==undefined&&policy.outputUSDPerMillion!==undefined){value.costUSD=(value.inputTokens*policy.inputUSDPerMillion+value.outputTokens*policy.outputUSDPerMillion)/1000000;value.costKind='catalog-estimate';}
+  if(totalCost===0&&(value.totalTokens??((value.inputTokens??0)+(value.outputTokens??0)))>0&&policy?.billing!=='subscription'&&!/^(?:anthropic\/)?claude[-_]/i.test(value.model??'')){delete value.costUSD;delete value.costKind;}
+ }else if(engine==='codex'&&policy?.inputUSDPerMillion!==undefined&&policy.outputUSDPerMillion!==undefined&&typeof value.inputTokens==='number'&&typeof value.outputTokens==='number'){value.costUSD=(value.inputTokens*policy.inputUSDPerMillion+value.outputTokens*policy.outputUSDPerMillion)/1000000;value.costKind='catalog-estimate';}
  if(engine==='claude'&&value.costUSD===undefined&&policy&&['priced','record-only'].includes(policy.billing)&&value.usageComplete===true){
   const inputRate=policy.inputUSDPerMillion,outputRate=policy.outputUSDPerMillion;
   const count=(n:unknown)=>Number.isSafeInteger(n)&&Number(n)>=0;
   const rate=(n:unknown)=>typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=1000;
-  if(rate(inputRate)&&rate(outputRate)&&count(value.inputTokens)&&count(value.outputTokens)&&(value.totalTokens===undefined||value.totalTokens===value.inputTokens+value.outputTokens)){
+  if(rate(inputRate)&&rate(outputRate)&&count(value.inputTokens)&&count(value.outputTokens)&&(value.totalTokens===undefined||value.totalTokens===value.inputTokens!+value.outputTokens!)){
    // Explicit owner prices are an estimate, never an invoice or a replacement
    // for a reliable native session delta. Normalized Claude input already includes caches.
-   value.costUSD=(value.inputTokens*inputRate!+value.outputTokens*outputRate!)/1000000;value.costKind='catalog-estimate';
+   value.costUSD=(value.inputTokens!*inputRate!+value.outputTokens!*outputRate!)/1000000;value.costKind='catalog-estimate';
   }
  }
+ if(engine==='claude'&&resumedSessionId){const match=/^(\d+)\.(\d+)\.(\d+)$/.exec(nativeCliVersion??'');const cumulative=!!match&&(Number(match[1])>2||Number(match[1])===2&&(Number(match[2])>1||Number(match[2])===1&&Number(match[3])>=277));if(!cumulative||usage.usageComplete!==true){delete value.costUSD;delete value.costKind;value.costComplete=false;checkpoint=undefined;}}
  return {usage:value,...(checkpoint?{checkpoint}:{})};
 }

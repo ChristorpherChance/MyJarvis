@@ -95,7 +95,7 @@ function translate(action: string, payload: Values, data: DemoData, records: Rec
       command = 'capture'; body = { title: p.title, content: p.content, kind: p.kind, source: p.source, ...fields(p,['conditions','summary']),...(p.tags!==undefined?{tags:textList(p.tags)}:{}),...(optional(p.projectId??p.project)?{projectId:p.projectId??p.project}:{}), ...(optional(p.terminalId ?? p.machine) ? { terminalId: p.terminalId ?? p.machine } : {}) };
     } else if(command==='update'){body={experienceId:id,...fields(p,['title','content','source','kind','conditions','summary']),tags:textList(p.tags),...(optional(p.projectId??p.project)?{projectId:p.projectId??p.project}:{}),...(optional(p.terminalId??p.machine)?{terminalId:p.terminalId??p.machine}:{})};
     } else if(command==='archive'){body={experienceId:id,reason:payload.reason??p.reason};
-    } else if (command === 'verify') body = { experienceId: id, evidence: payload.evidence, conditions: p.conditions };
+    } else if (command === 'verify') body = { experienceId: id, evidence: payload.evidence, conditions: p.conditions,...(p.machineId?{machineId:p.machineId}:{}),...(p.executor?{executor:p.executor}:{}),...(p.nativeVersion?{nativeVersion:p.nativeVersion}:{}) };
     else if (command === 'merge') body = { experienceId: id, baseId: payload.baseId, reason: payload.reason };
     else if (command === 'publish' || command === 'version') { command = command === 'publish' ? 'skill-publish' : command; body = { experienceId: id, ...fields(p, ['version', 'content', 'conditions', 'evidence']) }; }
     else if (command === 'reuse') body = { experienceId: id, version: payload.version ?? record?.version, ...(optional(payload.taskId) ? { taskId: payload.taskId } : { projectId: payload.projectId }) };
@@ -107,6 +107,11 @@ function translate(action: string, payload: Values, data: DemoData, records: Rec
 
 /** A retry of an uncertain network outcome reuses its receipt ID and immutable input snapshot. */
 export async function executeLiveOperation(action: string, payload: Record<string, unknown>, data: DemoData, records: Record<V1Domain, V1Record[]>): Promise<unknown> {
+  if(action==='op.experience'&&['counterexample','revoke-verification','supersede'].includes(String(payload.command))){
+    const id=String(payload.id||''),record=records.experiences.find(r=>r.id===id);if(!record)throw new V1Error('记录已不可访问，请刷新后重试。',404,'NOT_FOUND');
+    const command=String(payload.command),body={commandId:typeof payload.commandId==='string'?payload.commandId:crypto.randomUUID(),experienceId:id,expectedVersion:payload.expectedVersion??record.revision,scope:payload.recordScope??record.scope??'personal',reason:payload.reason,evidence:payload.evidence,...(command==='supersede'?{replacementId:payload.replacementId}:{})};
+    const response=await fetch(`/api/v1/experiences/${encodeURIComponent(id)}/supervisor/${command}`,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}),result=await response.json().catch(()=>null);if(!response.ok)throw new V1Error(result?.error?.message||`经验操作未完成（${response.status}）`,response.status,result?.error?.code||'REQUEST_FAILED');return result;
+  }
   const operation = translate(action, payload, data, records);
   const key = stable(operation);
   if (payload.commandId !== undefined) {

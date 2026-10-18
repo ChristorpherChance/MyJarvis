@@ -1,0 +1,136 @@
+TAP version 13
+# (node:3737437) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: durable logs are redacted before disk, restored after close, and removed only after matching confirmation
+ok 1 - durable logs are redacted before disk, restored after close, and removed only after matching confirmation
+  ---
+  duration_ms: 38.367603
+  type: 'test'
+  ...
+# Subtest: transient delivery failure keeps the exact body, retries finitely with backoff, and permanent failures block
+ok 2 - transient delivery failure keeps the exact body, retries finitely with backoff, and permanent failures block
+  ---
+  duration_ms: 6.905249
+  type: 'test'
+  ...
+# Subtest: duplicate final bodies share one delivery and changed final evidence is refused
+ok 3 - duplicate final bodies share one delivery and changed final evidence is refused
+  ---
+  duration_ms: 4.94188
+  type: 'test'
+  ...
+# Subtest: restart without any usage checkpoint sends explicit unknown instead of null or fabricated zero
+ok 4 - restart without any usage checkpoint sends explicit unknown instead of null or fabricated zero
+  ---
+  duration_ms: 5.829736
+  type: 'test'
+  ...
+# Subtest: restart never starts a native process and preserves unknown cost while retaining observed partial tokens
+ok 5 - restart never starts a native process and preserves unknown cost while retaining observed partial tokens
+  ---
+  duration_ms: 5.582837
+  type: 'test'
+  ...
+# Subtest: concurrent node ownership and wrong identity fail closed
+ok 6 - concurrent node ownership and wrong identity fail closed
+  ---
+  duration_ms: 4.702488
+  type: 'test'
+  ...
+# Subtest: bounded log spool reserves capacity for a terminal record instead of silently dropping progress
+ok 7 - bounded log spool reserves capacity for a terminal record instead of silently dropping progress
+  ---
+  duration_ms: 5.072603
+  type: 'test'
+  ...
+# Subtest: Chinese pending logs count UTF8 bytes rather than Unicode characters against the payload cap
+ok 8 - Chinese pending logs count UTF8 bytes rather than Unicode characters against the payload cap
+  ---
+  duration_ms: 3.272638
+  type: 'test'
+  ...
+# Subtest: Linux stale owner with a reused PID is distinguished by boot and process-start identity
+ok 9 - Linux stale owner with a reused PID is distinguished by boot and process-start identity
+  ---
+  duration_ms: 4.263774
+  type: 'test'
+  ...
+# Subtest: near-full UTF8 spool accepts a large legal final and drains bounded serialized log batches
+ok 10 - near-full UTF8 spool accepts a large legal final and drains bounded serialized log batches
+  ---
+  duration_ms: 15328.689416
+  type: 'test'
+  ...
+# Subtest: control-character logs split by serialized JSON bytes and oversized final evidence is visibly refused
+ok 11 - control-character logs split by serialized JSON bytes and oversized final evidence is visibly refused
+  ---
+  duration_ms: 19.651419
+  type: 'test'
+  ...
+# (node:3737438) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: one real OS child three initialized phases retain main report and sum parent phase usage not cost counters
+ok 12 - one real OS child three initialized phases retain main report and sum parent phase usage not cost counters
+  ---
+  duration_ms: 42.687922
+  type: 'test'
+  ...
+# Subtest: zero provisional followed by activity without complete successor retains partial and errors at EOF
+ok 13 - zero provisional followed by activity without complete successor retains partial and errors at EOF
+  ---
+  duration_ms: 41.791944
+  type: 'test'
+  ...
+# Subtest: same phase contradictory complete finals remain rejected
+ok 14 - same phase contradictory complete finals remain rejected
+  ---
+  duration_ms: 38.538204
+  type: 'test'
+  ...
+# (node:3737443) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: R43 quota result carries partial usage without inventing zero and accumulates phase costs once
+ok 15 - R43 quota result carries partial usage without inventing zero and accumulates phase costs once
+  ---
+  duration_ms: 1.863207
+  type: 'test'
+  ...
+# (node:3737484) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections
+ok 16 - real HTTP/SQLite correction is append-only, idempotent, isolated and restart-readable with durable projections
+  ---
+  duration_ms: 240.376572
+  type: 'test'
+  ...
+# Subtest: experience enters actual model input and is rechecked at real dispatch boundary
+not ok 17 - experience enters actual model input and is rechecked at real dispatch boundary
+  ---
+  duration_ms: 80.235363
+  type: 'test'
+  location: '/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:1:5641'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'experienceId')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/project-supervisor-r43.test.ts:29:1349)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: model wait correction invalidates old return: zero follow-up dispatch and one model call
+ok 18 - model wait correction invalidates old return: zero follow-up dispatch and one model call
+  ---
+  duration_ms: 86.456581
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 17
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15821.26973

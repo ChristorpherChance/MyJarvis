@@ -1,0 +1,29 @@
+✖ owner continuous policy survives successful decisions, awaiting-cost/unknown windows and pause revokes before claim (39.051435ms)
+✔ awaiting-cost signed adoption is analyzed once; failed consumed intent reconciles to review-required without another call (39.610471ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 394.716924
+
+✖ failing tests:
+
+test at apps/api/test/supervisor-policy-context.test.ts:1:483
+✖ owner continuous policy survives successful decisions, awaiting-cost/unknown windows and pause revokes before claim (39.051435ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/supervisor-policy-context.test.ts:2:2484)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

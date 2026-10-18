@@ -51,6 +51,12 @@ import {ProjectSupervisionPlanRuntime} from './runtime/project-supervision-plan-
 import {registerProjectSupervisionPlanRoutes} from './runtime/project-supervision-plan-routes.js';
 import {SupervisionWorkRuntime} from './runtime/supervision-work-runtime.js';
 import {registerSupervisionWorkRoutes} from './runtime/supervision-work-routes.js';
+import {ProjectSupervisorRuntime} from './runtime/project-supervisor-runtime.js';
+import {ProjectWorkbenchRuntime} from './runtime/project-workbench-runtime.js';
+import {registerProjectWorkbenchRoutes} from './runtime/project-workbench-routes.js';
+import {registerProjectSupervisorRoutes} from './runtime/project-supervisor-routes.js';
+import {createProjectSupervisorModel} from './runtime/project-supervisor-model.js';
+import {registerExperienceSupervisorRoutes} from './runtime/experience-supervisor-routes.js';
 import {registerProjectAutonomyRoutes} from './runtime/project-autonomy-routes.js';
 import {ProjectDecisionRuntime} from './runtime/project-decision-runtime.js';
 import {registerProjectDecisionRoutes} from './runtime/project-decision-routes.js';
@@ -169,7 +175,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   const machine=(id:string)=>v1!.read('machines',id,ACTOR)??devices().find(d=>d.id===id);
   const power=new PowerRuntime(identity.db,()=>v1!.list('machines',ACTOR));
   let autonomy:ProjectAutonomyRuntime|undefined;
-  const execution=new ExecutionRuntime(v1,{powerReading:(agent,raw)=>power.accept(agent,raw),directory:join(options.dataDir,'execution'),machine,stopped,actorId:ACTOR,runPi:development.run,piReady:()=>pi.health('development').configured,supervised:()=>executionPolicy()?.supervise===true,taskSupervised:taskId=>autonomy?.supervisesTask(taskId)??false,autoWake:()=>executionPolicy()?.autoWake===true,preflight:input=>governance.preflight(input),beforeExecution:input=>governance.reserveExecution(input),afterExecution:input=>governance.releaseExecution(input),onExternalUsage:input=>governance.importUsage(input),onUsage:input=>{if(input.usage.ledgerRecorded)return;governance.executionUsage({...input.usage,runId:'execution_'+input.runId,actorId:ACTOR,provider:input.usage.provider??input.agentId??'executor',model:input.usage.model??'cli-reported',projectId:input.projectId,taskId:input.taskId,machineId:input.machineId,executorId:input.executorId,usageId:`execution_${input.runId}`,measuredAt:input.at});}});
+  const execution=new ExecutionRuntime(v1,{powerReading:(agent,raw)=>power.accept(agent,raw),directory:join(options.dataDir,'execution'),machine,stopped,actorId:ACTOR,runPi:development.run,piReady:()=>pi.health('development').configured,supervised:()=>executionPolicy()?.supervise===true,taskSupervised:taskId=>autonomy?.supervisesTask(taskId)??false,autoWake:()=>executionPolicy()?.autoWake===true,preflight:input=>governance.preflight(input),beforeExecution:input=>governance.reserveExecution(input),afterExecution:input=>governance.releaseExecution(input),onExternalUsage:input=>governance.importUsage(input),onUsage:input=>{if(input.usage.ledgerRecorded)return;if(input.usage.inputTokens===undefined||input.usage.outputTokens===undefined)return;governance.executionUsage({...input.usage,inputTokens:input.usage.inputTokens,outputTokens:input.usage.outputTokens,runId:'execution_'+input.runId,actorId:ACTOR,provider:input.usage.provider??input.agentId??'executor',model:input.usage.model??'cli-reported',projectId:input.projectId,taskId:input.taskId,machineId:input.machineId,executorId:input.executorId,usageId:`execution_${input.runId}`,measuredAt:input.at});}});
   startupCleanup.push(()=>execution.close());
   autonomy=new ProjectAutonomyRuntime(v1,execution,{directory:join(options.dataDir,'project-autonomy'),actorId:ACTOR,stopped});
   startupCleanup.push(()=>autonomy?.close());
@@ -194,8 +200,13 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
     try{let current=job;while(['queued','running'].includes(current.status)){input.signal.throwIfAborted();await new Promise(resolve=>setTimeout(resolve,100));current=voice.job(job.id,p);}input.signal.throwIfAborted();if(current.status!=='complete')throw new RuntimeAccessError(String(current.result.code??'TTS_FAILED'),String(current.result.message??'播报合成未完成'),502);return {jobId:job.id,audioUrl:String(current.result.audioUrl),mime:String(current.result.mime),seconds:Number(current.result.seconds),turn:current.turn};}finally{input.signal.removeEventListener('abort',stop);if(input.signal.aborted)try{voice.cancel(job.id,p);}catch{/* Revoked identities cannot fetch or replay the job. */}}
   }});
   startupCleanup.push(()=>notifications?.close());
-  const supervisionWork=new SupervisionWorkRuntime(v1,execution,{directory:join(options.dataDir,'project-supervision-work'),identity,notifications,plans:supervisionPlans});
+  const supervisionWork=new SupervisionWorkRuntime(v1,execution,{directory:join(options.dataDir,'project-supervision-work'),identity,notifications,plans:supervisionPlans,autonomy:projectId=>autonomy?.get(projectId)});
   startupCleanup.push(()=>supervisionWork.close());
+  const projectSupervisor=new ProjectSupervisorRuntime(v1,execution,{directory:join(options.dataDir,'project-supervisor'),identity,stopped,modelReady:()=>pi.health('project-supervisor').configured,model:createProjectSupervisorModel(pi),decisions:projectDecisions,notifications});
+  startupCleanup.push(()=>projectSupervisor.close());
+  const projectWorkbench=new ProjectWorkbenchRuntime(v1,projectSupervisor,execution,identity,join(options.dataDir,'project-workbench'),{brief:(projectId,p)=>supervisionWork.brief(projectId,p)});
+  startupCleanup.push(()=>projectWorkbench.close());
+  app.addHook('onClose',async()=>projectWorkbench.close());
   const learningSummary:DomainHandler={domain:'learning',commands:['companion-summary'],execute:(_command,p,ctx)=>{const record=ctx.create('learning',{kind:'practice',profile:'me',memberProfileId:p.profileId,type:'language',title:p.title,minutes:Math.floor(p.activeSeconds/60),activeSeconds:p.activeSeconds,rounds:p.rounds,answers:p.rounds.map((r:any)=>r.answer),corrections:p.rounds.filter((r:any)=>r.correction).map((r:any)=>r.correction),score:null,source:'pi-text-companion',assessmentStatus:'text-feedback',lessonId:p.id,time:ctx.now,status:'recorded',createdAt:ctx.now,updatedAt:ctx.now});ctx.emit('learning',record.id,'practice-recorded',{source:'pi-text-companion',rounds:p.rounds.length});return record;}};
   companion=new CompanionRuntime(identity,pi,notifications,{onLearning:(p,s)=>v1!.execute(learningSummary,'companion-summary',{commandId:'companion_'+s.id,expectedVersion:0,scope:'private',payload:{id:s.id,profileId:p.profileId,title:s.title,rounds:s.rounds,activeSeconds:s.activeSeconds}},p.actorId,()=>undefined).data.id});
   startupCleanup.push(()=>companion?.close());
@@ -403,6 +414,11 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   registerProjectDecisionRoutes(app,projectDecisions,identity);
   registerProjectSupervisionPlanRoutes(app,supervisionPlans,identity);
   registerSupervisionWorkRoutes(app,supervisionWork,identity);
+  registerProjectSupervisorRoutes(app,projectSupervisor,identity);
+  registerProjectWorkbenchRoutes(app,projectWorkbench,identity);
+  registerExperienceSupervisorRoutes(app,v1,identity);
+  app.addHook('preClose',async()=>projectSupervisor.close());
+  projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
   knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');
@@ -413,7 +429,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   // Stop SDK streams before Fastify waits for existing SSE connections to close.
   app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();supervisionWork.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
   app.addHook('onClose',async()=>{supervisionPlans.close();projectDecisions.close();web?.close();identity.close();billing.close();governance.close();store.close();});
-  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy};
+  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy,projectSupervisor,projectWorkbench};
   }catch(error){
     try{await startupApp?.close();}catch{/* Preserve the initialization error. */}
     for(const close of startupCleanup.reverse())try{await close();}catch{/* Other handles must still be released. */}

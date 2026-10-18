@@ -1,0 +1,11 @@
+# R51r1 真实Pi入口容量修复 · 候选未部署
+
+起点HEAD99a0ecad68f59271c0c0d24192f0bf9501268174/APP53806ff7eee4f8ae541001b222b40d6005c2a45c核同。仅pi.ts真实run入口输入门：purpose=project-supervisor使用共享SUPERVISOR_PROMPT_MAX_UTF8_BYTES，对完整runInput.text按UTF8计量；其它purpose原32000字符与非空门保持。purpose授权、ephemeral/session、privacy/selection/partial、模型与输出、strict解析等其它门不动。原R51 runtime/adapter组件不改不重测。
+
+新增唯一受控组真正调用生产PiService.run和原生SDK，将底层streamSimple driver注册为离线fixture，禁止global fetch。ASCII31000/44830与多字节恰65536可达driver，超界/其它purpose32001/空白在driver前拒绝；其它purpose32000仍可达，length部分输出不能complete，生产adapter调用真实Pi run后同样拒绝MODEL_RUN_FAILED。1组通过、6 driver调用、0网络请求。fixture只替换初始化/认证刷新以注入离线runtime，不假pi.run绕过入口，不冒真实provider已接受。
+
+现catalog32768 Token/4096输出与SDK系统prompt保持；64KiB只计runInput.text，不是Token数，不保证另加systemPrompt后的实际provider总上下文。精确provider Token未知null，不用fixture零usage推业务费用为零。原goal9/335、自动3891回包及账失败保原，不修旧回包/重intent，不读取Factory其它工作区。
+
+API/Web types及真实build各一次通过。先APP提交后封20261018-project-goals-r51-r1 ZIP/manifest/sha；保R50全120资产及历史闭包。封包后只从b320 R50原sidecar四literal派生expectedR50/releaseR51r1/真实APP/实际ZIP H，其余预算/权限/全backup+restore门原byte，APP与后ops来源分列。
+
+本轮不部署、112服务/recovery/DB、101 R7/config46或真实Pi/provider/Factory测试。Root仍112 R50为主管反馈，本轮未查现场。费用只记无金额cap/unknown不归零，十分钟PAUSED。Root独审与后继真实判断、发布和全产品验收另做。

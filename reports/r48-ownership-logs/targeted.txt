@@ -1,0 +1,10 @@
+test_candidate_and_rollback_preserve_original_metadata_and_byte_hashes (__main__.Ownership.test_candidate_and_rollback_preserve_original_metadata_and_byte_hashes) ... ok
+test_chown_or_metadata_verification_failure_refuses_before_replace (__main__.Ownership.test_chown_or_metadata_verification_failure_refuses_before_replace) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.003s
+
+OK
+{"fixture": "forward-and-rollback", "metadata": {"uid": 1000, "gid": 1000, "mode": 416}, "candidateSHA256": "eb422d636b91b240e7388b3cc818b34a0744637e37f8a03987142ee4cda97d3c", "rollbackSHA256": "0e83afdf36b814b32c4a20c8c0c4a7c92900d8cbe65cb2b6ac7aaabd96ac3d33", "actual112PermissionsVerified": false}
+{"fixture": "chown", "replaceCalled": false, "originalSHA256": "9e64f54ccb8eb5784189123f33d4f3f1d05e69505b8666080cf19cb72a80d087", "metadata": {"uid": 1000, "gid": 1000, "mode": 416}}
+{"fixture": "verify", "replaceCalled": false, "originalSHA256": "9e64f54ccb8eb5784189123f33d4f3f1d05e69505b8666080cf19cb72a80d087", "metadata": {"uid": 1000, "gid": 1000, "mode": 416}}

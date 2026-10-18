@@ -1,0 +1,30 @@
+STOP_FIXTURE_REPO_ERROR {"fields":[{"path":"/executionRequest","rule":"additionalProperties"},{"path":"/executionRequest/template/purpose","rule":"enum"},{"path":"/executionRequest/purpose","rule":"enum"}]}
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (918.714631ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2719.850474
+
+✖ failing tests:
+
+test at apps/api/test/execution-stop-lineage-r43.test.ts:1:436
+✖ real paired long child pause waits for signed termination then explicit new-session lineage preserves task history (918.714631ms)
+  AssertionError [ERR_ASSERTION]: {"data":{"session":{"id":"1bf7d2cc-ec3a-4a6c-8d2c-aa6b3b04e5a2","projectId":"9c41f6ac-6d4a-4e0b-9385-f93ee1cb8833","ownerId":"server-admin","scope":"personal","revision":3,"goalRevision":1,"goal":"bounded stop","criteria":["stop proof"],"machineId":"5939e557-7141-48b0-bc5a-55af99b95242","executor":"claude-code","workspace":"/tmp/r43-stop-chain-bbmkO7/work/project","taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","runId":null,"status":"blocked","summary":"目标已保存，尚未启用","blocker":"接口返回校验未通过，操作未提交","nextAction":"主管按当前授权派发单轮CC","enabled":false,"consumedRunId":null,"resultHash":null,"directive":"bounded stop","rounds":0,"dispatchIntentId":"dispatch:1bf7d2cc-ec3a-4a6c-8d2c-aa6b3b04e5a2:1:2"},"stop":{"requested":false,"confirmed":false,"sourceRunId":null,"state":"unknown"},"goalPolicy":{"sessionId":"1bf7d2cc-ec3a-4a6c-8d2c-aa6b3b04e5a2","ownerId":"server-admin","projectId":"9c41f6ac-6d4a-4e0b-9385-f93ee1cb8833","taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","goalRevision":1,"goalHash":"71e94854f62d319bfc6cc9bb6ba091e38883c85ef638cb5afb2c9ddae560042e","machineId":"5939e557-7141-48b0-bc5a-55af99b95242","workspace":"/tmp/r43-stop-chain-bbmkO7/work/project","executorId":"stop-cc","nativeSessionId":null,"acknowledgeUnknownHistory":true,"maxParentTokens":1000,"timeoutSec":1200,"policyId":"e756b3ee-cd73-49a7-942f-c40e0ab7412c","generation":1,"active":true,"maxRounds":1,"retryCount":0,"billing":"record-only"},"policyHistory":[{"at":"2026-10-17T11:30:37.317Z","reason":"owner-authorized","policy":{"sessionId":"1bf7d2cc-ec3a-4a6c-8d2c-aa6b3b04e5a2","ownerId":"server-admin","projectId":"9c41f6ac-6d4a-4e0b-9385-f93ee1cb8833","taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","goalRevision":1,"goalHash":"71e94854f62d319bfc6cc9bb6ba091e38883c85ef638cb5afb2c9ddae560042e","machineId":"5939e557-7141-48b0-bc5a-55af99b95242","workspace":"/tmp/r43-stop-chain-bbmkO7/work/project","executorId":"stop-cc","nativeSessionId":null,"acknowledgeUnknownHistory":true,"maxParentTokens":1000,"timeoutSec":1200,"policyId":"e756b3ee-cd73-49a7-942f-c40e0ab7412c","generation":1,"active":true,"maxRounds":1,"retryCount":0,"billing":"record-only"}}],"events":[{"sequence":4,"kind":"blocked","eventId":"36233ff0-2252-4ca9-97de-bd46e1709f6a","at":"2026-10-17T11:30:37.326Z","revision":3,"goalRevision":1,"decisionContextRevision":0,"taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","runId":null,"machineId":"5939e557-7141-48b0-bc5a-55af99b95242","nativeSessionId":null,"decisionId":null,"instructionId":null,"reason":"接口返回校验未通过，操作未提交","previousHash":"fdd7d9ba154046171c6901ef72c5f078eb3d09fa02442e3066dae9d4ec2f7ab2","hash":"068e9ae175914a5a1fe1a0a185d472d71d0c0b65827837d76718f5a923afb394"},{"sequence":3,"kind":"dispatch-intent","eventId":"985eb522-84a1-4b19-8e7d-87a7e775f588","at":"2026-10-17T11:30:37.319Z","revision":2,"goalRevision":1,"decisionContextRevision":0,"taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","runId":null,"machineId":"5939e557-7141-48b0-bc5a-55af99b95242","nativeSessionId":null,"decisionId":null,"instructionId":null,"intentId":"dispatch:1bf7d2cc-ec3a-4a6c-8d2c-aa6b3b04e5a2:1:2","previousHash":"2c2e65ee226c0086d285133b781c423967e15a7bbe50c43aa0a14b8cae06fd3f","hash":"fdd7d9ba154046171c6901ef72c5f078eb3d09fa02442e3066dae9d4ec2f7ab2"},{"sequence":2,"kind":"command","eventId":"c292425b-13fa-48d3-9163-0b1d1b464a59","at":"2026-10-17T11:30:37.317Z","revision":2,"goalRevision":1,"decisionContextRevision":0,"taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","runId":null,"machineId":"5939e557-7141-48b0-bc5a-55af99b95242","nativeSessionId":null,"decisionId":null,"instructionId":null,"action":"start","directive":null,"stopRequested":false,"previousHash":"d51ea6879faaffcd567d6d1208225d94a3c5de5131d0614202dadbb59684f23f","hash":"2c2e65ee226c0086d285133b781c423967e15a7bbe50c43aa0a14b8cae06fd3f"},{"sequence":1,"kind":"goal","eventId":"d4e0ef69-8497-419e-a2f1-85ea812e460f","at":"2026-10-17T11:30:37.313Z","revision":1,"goalRevision":1,"decisionContextRevision":0,"taskId":"9e7be4d6-95db-4d31-83a7-3ed7f2b87606","runId":null,"machineId":"5939e557-7141-48b0-bc5a-55af99b95242","nativeSessionId":null,"decisionId":null,"instructionId":null,"id":"1bf7d2cc-ec3a-4a6c-8d2c-aa6b3b04e5a2","projectId":"9c41f6ac-6d4a-4e0b-9385-f93ee1cb8833","ownerId":"server-admin","scope":"personal","goal":"bounded stop","criteria":["stop proof"],"executor":"claude-code","workspace":"/tmp/r43-stop-chain-bbmkO7/work/project","status":"draft","summary":"目标已保存，尚未启用","blocker":"","nextAction":"本人明确开始监管","enabled":false,"consumedRunId":null,"resultHash":null,"directive":"bounded stop","rounds":0,"previousHash":"","hash":"d51ea6879faaffcd567d6d1208225d94a3c5de5131d0614202dadbb59684f23f"}],"eventCursor":4,"hasEarlierEvents":false,"independentAcceptance":false,"notice":"贾维斯判定达标不代表独立产品验收或人工签收；原标准保持不变。"}}
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api/test/execution-stop-lineage-r43.test.ts:3:3537)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

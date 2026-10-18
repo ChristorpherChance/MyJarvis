@@ -36,6 +36,22 @@ test('versioned plans persist hash-linked history, idempotent receipts and disti
   const db=new DatabaseSync(join(f.directory,'supervision-plans.sqlite'));try{assert.throws(()=>db.exec('DELETE FROM supervision_plan_revisions'),/immutable/);}finally{db.close();}
  }finally{await f.close();}
 });
+test('R48 explicit goal replacement preserves legacy history and never inherits its acceptance denominator',async()=>{
+ const f=await fixture();try{
+  f.profile.spec.objectives=Array.from({length:74},(_,i)=>({id:'old-'+i}));f.profile.verifiedObjectiveIds=[];
+  const profileBefore=JSON.stringify(f.profile),tasksBefore=JSON.stringify([...f.records]),old=f.runtime.create('p',create(),admin);
+  const oldView=f.runtime.get('p',admin.actorId,old.planId)!;assert.equal(oldView.independentProgress?.totalObjectives,74);
+  assert.throws(()=>f.runtime.create('p',create({goalBasis:'plan'}),admin),/明确替代/);
+  const next=f.runtime.create('p',create({goalBasis:'plan',supersedesPlanId:old.planId,supersedesRevision:old.revision,goal:'当前自有目标',steps:[{...body().steps[0],title:'既有成果核验'},{...body().steps[0],id:'repair',title:'后续真实修复'}]}),admin);
+  f.restart();const view=f.runtime.get('p',admin.actorId)!;
+  assert.equal(view.planId,next.planId);assert.equal(view.goal,'当前自有目标');assert.equal(view.steps[1].title,'后续真实修复');assert.equal(view.steps[1].state,'planned');
+  assert.equal(view.independentProgress?.available,false);assert.equal(view.independentProgress?.totalObjectives,null);assert.equal(view.independentProgress?.verifiedObjectives,null);assert.equal(view.independentAcceptance,false);
+  assert.deepEqual(f.runtime.get('p',admin.actorId,old.planId),oldView);assert.equal(JSON.stringify(f.profile),profileBefore);assert.equal(JSON.stringify([...f.records]),tasksBefore);
+  const revision=f.runtime.revise('p',next.planId,{...body(),commandId:randomUUID(),expectedVersion:1,reason:'保留自身目标来源'},admin);assert.equal(revision.goalBasis,'plan');assert.equal(f.runtime.get('p',admin.actorId)!.independentProgress?.totalObjectives,null);
+  const compatible=f.runtime.create('p',create({supersedesPlanId:next.planId,supersedesRevision:2}),admin);assert.equal(f.runtime.get('p',admin.actorId,compatible.planId)!.independentProgress?.totalObjectives,74);
+ }finally{await f.close();}
+});
+
 test('project ownership, administrator writes and actual task/run binding prevent cross-project disclosure',async()=>{
  const f=await fixture();try{
   assert.throws(()=>f.runtime.create('p',create(),{...admin,administrator:false}),/管理员/);

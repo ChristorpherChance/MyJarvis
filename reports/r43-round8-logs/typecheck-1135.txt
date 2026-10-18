@@ -1,0 +1,23 @@
+
+> jarvis-platform@0.1.0 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @jarvis/api@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+src/runtime/project-supervisor-runtime.ts(47,229): error TS2339: Property 'experienceSourceEventId' does not exist on type '{}'.
+src/runtime/project-supervisor-runtime.ts(47,285): error TS2339: Property 'binding' does not exist on type '{}'.
+src/runtime/project-supervisor-runtime.ts(47,751): error TS2339: Property 'executionMetadata' does not exist on type '{}'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api
+npm error workspace @jarvis/api@0.1.0
+npm error location /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/api
+npm error command failed
+npm error command sh -c tsc --noEmit -p tsconfig.json
+
+
+> @jarvis/web@0.1.0 typecheck
+> tsc --noEmit
+

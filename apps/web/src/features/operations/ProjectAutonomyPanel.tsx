@@ -26,7 +26,7 @@ interface Autonomy {
 }
 type Command='start'|'pause'|'cancel';
 type PlanRunView={runId:string;taskId?:string;status:string;source?:string|null;outcome?:string|null;exitCode?:number|null;validationExitCode?:number|null;lateEvidenceOnly?:boolean;stopRequested?:boolean;summary?:string|null;fixedReport?:ProjectReportFixedReport|null};
-type SupervisionPlanView={projectId:string;planId:string;revision:number;mode:'development'|'acceptance';title:string;goal:string;currentStepId:string|null;nextAction:string|null;latestResult:PlanRunView|null;independentProgress?:{available:boolean;totalObjectives:number|null;verifiedObjectiveIds:string[]|null}|null;steps:{id:string;title:string;goal:string;state:string;nextAction:string|null;activeRunIds:string[];runs:PlanRunView[];latestResult:PlanRunView|null}[]};
+type SupervisionPlanView={projectId:string;planId:string;revision:number;goalBasis?:'legacy-autonomy'|'plan';supersedesPlanId?:string|null;supersedesRevision?:number|null;mode:'development'|'acceptance';title:string;goal:string;currentStepId:string|null;nextAction:string|null;latestResult:PlanRunView|null;independentProgress?:{available:boolean;totalObjectives:number|null;verifiedObjectiveIds:string[]|null}|null;steps:{id:string;title:string;goal:string;state:string;nextAction:string|null;activeRunIds:string[];runs:PlanRunView[];latestResult:PlanRunView|null}[]};
 const planStepLabel=(value:string)=>({'running':'执行中','queued':'等待执行','execution-finished':'执行结束，待独立验收','needs-attention':'有问题待处理','awaiting-execution':'等待执行','planned':'待安排','stopped':'已停止','unavailable':'绑定暂不可读'}[value]??'待核对');
 const guide='/api/v1/project-autonomy/guide';
 const statuses:Record<string,string>={ready:'待启动',configured:'待启动',draft:'待启动',running:'监督中',active:'监督中',paused:'已暂停',blocked:'已阻塞',waitingBudget:'等待预算',waitingQuota:'等待预算',completed:'监督已结束',cancelled:'已停止',stopped:'已停止','waiting-prerequisite':'等待真实条件','validating-prerequisite':'固定复验中',pending:'待执行',queued:'待执行',worker:'开发修复中',executing:'执行中',validating:'独立验证中',reviewing:'独立评阅中',passed:'独立验证通过',failed:'未通过',waitingUser:'等待输入',waitingResource:'等待节点'};
@@ -127,8 +127,9 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
  const machine=machines.find(m=>m.id===state?.config.machineId)?.name??state?.config.machineId;
  const acceptanceFirst=!!planState||hasBaseline(baselines,projectId),budget=acceptanceFirst&&baselines?.latest?baselines.latest.projectBudget:state?.budget;
  const reportSnapshot=baselines&&!(planState&&baselineError)?baselines:{projectId,latest:null,main:null,total:0};
- const reportRequired=required.length||(planState?.independentProgress?.available?planState.independentProgress.totalObjectives??0:0);
- const reportVerified=verified?[...verified]:planState?.independentProgress?.available?planState.independentProgress.verifiedObjectiveIds:null;
+ const ownGoals=planState?.goalBasis==='plan'&&!!planState.supersedesPlanId;
+ const reportRequired=ownGoals?0:required.length||(planState?.independentProgress?.available?planState.independentProgress.totalObjectives??0:0);
+ const reportVerified=ownGoals?null:verified?[...verified]:planState?.independentProgress?.available?planState.independentProgress.verifiedObjectiveIds:null;
  const reportStale=planState?!!planError:!!error||!!baselineError||!!planError;
  const reportMode=planState?.mode??(hasBaseline(baselines,projectId)?'acceptance':'development');
  const planCurrent=planState?.steps.find(s=>s.id===planState.currentStepId);
@@ -170,7 +171,8 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
   {administrator===true&&<ProjectSupervisionWorkPanel key={projectId} projectId={projectId} navigate={navigate}/>}
   {baselineError&&<Note tone="warn">{baselineError}</Note>}
   {planError&&<Note tone="warn">{planError}</Note>}
-  <ProjectReportPanel snapshot={reportSnapshot} navigate={navigate} mode={reportMode} factory={reportSnapshot.main?.workspace==='/home/superopen/All-Projects/msf'} plan={planState?{title:planState.title,intro:planState.goal,steps:planState.steps.map(s=>({title:s.title,detail:s.goal}))}:undefined} work={reportWork} required={reportRequired} verifiedIds={reportVerified} stale={reportStale} readAt={readAt} refresh={()=>void load(administrator===null,true)} loading={loading||busy!==null}/>
+  <ProjectReportPanel snapshot={reportSnapshot} navigate={navigate} mode={reportMode} factory={reportSnapshot.main?.workspace==='/home/superopen/All-Projects/msf'} plan={planState?{title:planState.title,intro:planState.goal,steps:planState.steps.map(s=>({title:s.title,detail:s.goal}))}:undefined} work={reportWork} acceptancePending={ownGoals} required={reportRequired} verifiedIds={reportVerified} stale={reportStale} readAt={readAt} refresh={()=>void load(administrator===null,true)} loading={loading||busy!==null}/>
+  {planState&&<section aria-label="当前目标与阶段"><h3>当前计划：{planState.title}</h3><p>{planState.goal}</p>{ownGoals&&<p>使用本计划自身目标；原自治目标已被替代，仅保留历史。独立验收：待验证（尚无新目标证据映射）。</p>}<p>当前阶段：{planCurrent?.title??'尚未指定'} · {planCurrent?planStepLabel(planCurrent.state):'待安排'}</p><ol>{planState.steps.map(step=><li key={step.id}><strong>{step.title}</strong> · {planStepLabel(step.state)}<p>{step.goal}</p>{step.nextAction&&<p>下一步：{step.nextAction}</p>}</li>)}</ol></section>}
   {planState&&<details className="project-autonomy-history"><summary>计划记录 · {planState.revision} 次修订</summary><p>{planState.mode==='acceptance'?'测试验收':'持续开发'} · 每次安排保留版本，执行结束后仍须独立验收。</p>{planState.steps.map(step=><p key={step.id}><strong>{step.title}</strong> · {planStepLabel(step.state)}{step.latestResult?.fixedReport&&` · 检查 ${step.latestResult.fixedReport.checks.filter(c=>c.executed&&c.status==='pass').length} 通过 / ${step.latestResult.fixedReport.checks.filter(c=>c.status==='fail').length} 失败 / ${step.latestResult.fixedReport.checks.filter(c=>!c.executed||c.status==='unknown').length} 待验`}</p>)}</details>}
   {acceptanceFirst&&baselines&&<details className="project-autonomy-history"><summary>检查详情 · 主线与历史候选</summary><ProjectBaselinePanel snapshot={baselines} navigate={navigate}/></details>}
   <details className={acceptanceFirst?'project-autonomy-history':'project-autonomy-unfolded'} open={acceptanceFirst?undefined:true}><summary hidden={!acceptanceFirst}>验收目标 · 费用与用量</summary>
@@ -178,18 +180,18 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
    {(error||commandError)&&<p className="project-autonomy-error" role="alert">{commandError||error}</p>}{notice&&<p className="project-autonomy-caption" role="status">{notice}</p>}
    {!state?<>{loading?<p className="project-autonomy-caption" role="status">正在读取项目监督…</p>:!error&&<Empty title="尚未配置专项监督" detail="登记目标、执行环境和费用策略后，可在这里启动、暂停或停止。这里不使用模拟进度。"/>}</>:<>
     {!acceptanceFirst&&oldOverview}
-    {acceptanceFirst&&<dl className="project-autonomy-guidance"><div><dt>必需目标独立验收</dt><dd><strong>{verified?`${verified.size} / ${required.length}`:'待报告'}</strong><small>按必需目标的独立证据计数，固定检查不改写此计数</small></dd></div><div><dt>当前安排</dt><dd>核验现有成果，再按证实缺陷分批修复<small>当前任务可在上方直接查看</small></dd></div></dl>}
+    {acceptanceFirst&&<dl className="project-autonomy-guidance"><div><dt>必需目标独立验收</dt><dd><strong>{ownGoals?'待验证':verified?`${verified.size} / ${required.length}`:'待报告'}</strong><small>{ownGoals?'新目标尚无独立验收证据映射，不借用旧目标分母':'按必需目标的独立证据计数，固定检查不改写此计数'}</small></dd></div><div><dt>当前安排</dt><dd>核验现有成果，再按证实缺陷分批修复<small>当前任务可在上方直接查看</small></dd></div></dl>}
     <div className="project-autonomy-summary">
      <div><span>{acceptanceFirst?(baselines?.latest?'项目累计已知费用':'旧监督累计已知费用'):'累计已知费用'}</span><strong>{dollars(budget?.spentUSD,4)}</strong><small>{state.config.costPolicy==='record-only'?'费用只记录，不设上限':'上限 '+dollars(state.config.maxUSD)}</small>{spentPercent!==null&&<div className="project-autonomy-budget-bar" role="meter" aria-label="累计费用预算使用" aria-valuemin={0} aria-valuemax={state.config.maxUSD??undefined} aria-valuenow={budget?.spentUSD!}><i style={{width:`${spentPercent}%`}}/></div>}</div>
      <div><span>{acceptanceFirst&&!baselines?.latest?'旧监督累计 Token':'累计 Token'}</span><strong>{number(budget?.usedTokens)}</strong><small>{state.config.costPolicy==='record-only'?'持续统计，不设消费额度':'上限 '+number(state.config.maxTokens)}</small>{tokenPercent!==null&&<div className="project-autonomy-budget-bar" role="meter" aria-label="累计Token预算使用" aria-valuemin={0} aria-valuemax={state.config.maxTokens??undefined} aria-valuenow={budget?.usedTokens!}><i style={{width:`${tokenPercent}%`}}/></div>}</div>
     </div>
     {(budget?.unknownCostCount??0)>0&&<Note tone="warn">{number((budget?.unknownCostCount??0))} 笔费用尚未确定，未按零计算。</Note>}
-    {state.status==='completed'&&(!verified||verified.size<required.length)&&<Note tone="warn">监督已结束，仍有目标未取得当前独立验收记录，不能据此宣布产品交付完成。</Note>}
+    {!ownGoals&&state.status==='completed'&&(!verified||verified.size<required.length)&&<Note tone="warn">监督已结束，仍有目标未取得当前独立验收记录，不能据此宣布产品交付完成。</Note>}
     {!acceptanceFirst&&oldControls}
     {!acceptanceFirst&&technicalDetails}
    </>}
   </Panel>
   </details>
-  {acceptanceFirst?<details className="project-autonomy-history project-autonomy-old-development"><summary>旧开发监督记录 · {label(state?.status??'unknown')}</summary>{oldOverview}{technicalDetails}{workPackages}{recentEvents}</details>:<>{workPackages}{recentEvents}</>}
+  {acceptanceFirst?<details className="project-autonomy-history project-autonomy-old-development"><summary>{ownGoals?'已被替代 · 旧目标与开发监督历史':'旧开发监督记录'} · {label(state?.status??'unknown')}</summary>{oldOverview}{technicalDetails}{workPackages}{recentEvents}</details>:<>{workPackages}{recentEvents}</>}
  </section>;
 }

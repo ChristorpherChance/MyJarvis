@@ -1,8 +1,15 @@
 import type { CommandEnvelope, Domain } from '../v1/types.js';
 import type { CommandReceipt } from '../v1/repository.js';
 
-export interface ActualUsage { inputTokens:number; outputTokens:number; cacheReadTokens?:number;cacheWriteTokens?:number;totalTokens?:number;provider?:string;model?:string; /** True only when every round has a native final usage receipt; false retains partial observations. */ usageComplete?:boolean; costUSD?:number; /** Known observed fee lower bound, even when other rounds are unpriced; never fabricated zero. */ knownCostUSD?:number; /** False means costUSD is unknown; knownCostUSD may retain a partial observation. */ costComplete?:boolean; costKind?:'provider-reported'|'catalog-estimate'; /** Internal SDK result only; node protocol cannot assert this flag. */ ledgerRecorded?:boolean }
+export interface ActualUsage { inputTokens?:number; outputTokens?:number; cacheReadTokens?:number;cacheWriteTokens?:number;totalTokens?:number;provider?:string;model?:string; /** True only when every round has a native final usage receipt; false retains partial observations. */ usageComplete?:boolean; costUSD?:number; /** Known observed fee lower bound, even when other rounds are unpriced; never fabricated zero. */ knownCostUSD?:number; /** False means costUSD is unknown; knownCostUSD may retain a partial observation. */ costComplete?:boolean; costKind?:'provider-reported'|'catalog-estimate';measurementStatus?:'reported'|'partial'|'unknown'; /** Internal SDK result only; node protocol cannot assert this flag. */ ledgerRecorded?:boolean }
+export interface ExecutionMetadata {nativeCliVersion?:string;agentBuild:string;programSha256:string;invocationId:string}
+export interface ExecutionTerminationProof {invocationId:string;supervisorPid:number;childPid:number;processGroupId:number;childExitObserved:boolean;stdioClosed:boolean;groupEmpty:boolean;observedAt:string;platform:'linux'|'win32';method:'process-group-probe'}
+export interface NativePhase {index:number;usageComplete:boolean;summarySha256:string;outcome:'success'|'failed'|'cancelled'|'budget-exhausted'|'timeout'|'awaiting-cost'|'round-limit'}
+
+export interface ContinuationGrantInput {commandId:string;expectedVersion:number;taskId:string;ownerId:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;sourceRunId?:string;acknowledgeUnknownHistory?:boolean;policyId?:string;policyGeneration?:number;policyWindowId?:string}
+export interface ContinuationGrant {grantId:string;commandId:string;ownerId:string;taskId:string;projectId:string;machineId:string;workspace:string;sourceRunId:string;sourceResultHash:string;expectedTaskVersion:number;historyAcknowledgedUnknown?:boolean;policyId?:string;policyGeneration?:number;policyWindowId?:string;maxRounds:1;timeoutSec:number;retryCount:0;maxParentTokens:number;createdAt:string;status:'pending'|'consumed';consumedRunId?:string}
 export type FixedValidationPurpose='project-autonomy-validation'|'project-candidate-validation';
+export type ExecutionPurpose=FixedValidationPurpose|'project-supervisor';
 export function isFixedValidationPurpose(value:unknown):value is FixedValidationPurpose{return value==='project-autonomy-validation'||value==='project-candidate-validation';}
 /** Canonical usage only for the two strictly pinned, validated no-model protocols. */
 export function fixedValidationUsage():ActualUsage{return {inputTokens:0,outputTokens:0,cacheReadTokens:0,cacheWriteTokens:0,totalTokens:0,provider:'fixed-validator',model:'not-applicable',usageComplete:true,costUSD:0,knownCostUSD:0,costComplete:true,costKind:'provider-reported'};}
@@ -26,8 +33,8 @@ export interface ExecutionTemplate {
  validation?:{program:string;args:string[];timeoutSec:number};
  /** Explicit continuation/recovery authorization; credentials stay in the native CLI. */
  supervision?:CliSupervisionPolicy;
- /** Strictly pinned no-model validation protocols; candidate validation is a separate manual R27 scope. */
- purpose?:FixedValidationPurpose;
+ /** Strictly pinned execution purpose; supervisor is isolated from validation and generic templates. */
+ purpose?:ExecutionPurpose;
 }
 export interface CliSupervisionPolicy {
  /** Record-only observes spend without making a USD reservation or blocking unpriced rounds. Per-task token/process bounds still apply. */
@@ -35,7 +42,7 @@ export interface CliSupervisionPolicy {
  repairValidation:boolean;fallbackExecutorIds:string[];
  inputUSDPerMillion?:number;outputUSDPerMillion?:number;
 }
-export interface CliBillingCheckpoint {engine:'codex'|'claude';sessionId:string;costUSD:number}
+export interface CliBillingCheckpoint {engine:'codex'|'claude';sessionId:string;costUSD:number;nativeCliVersion?:string;costScope?:'session-cumulative'}
 export interface CliRecovery {kind:'quota'|'network'|'authentication'|'permission'|'unknown';automatic:boolean;attempts:number;retryAt?:string;nextExecutorId?:string}
 export interface ExecutionValidation {exitCode:number;observedVersion?:string;summary?:string;/** Original JSON emitted only by the configured fixed validation process. */autonomyReportJson?:string;autonomyReportSha256?:string}
 export interface ExecutionNodeConfig {
@@ -47,6 +54,27 @@ export interface ExecutionNodeConfig {
  /** Explicit local file allowlist; remote configuration never adds files to it. */
  serviceLogs?:{sourceId:string;path:string;fromStart?:boolean;offset?:number;streamId?:string;fileIdentity?:string;discarding?:boolean}[];
  hardwareReadings?:{sourceId:string;field:'gpuPercent'|'powerWatts';path:string}[];
+}
+export interface PolicyWindow {windowId:string;policyId:string;generation:number;maxParentTokens:number;timeoutSec:number;acknowledgeUnknownHistory:boolean}
+export interface ProjectSupervisorController {
+ /** Current authorization for this task; when supplied, runId must match the active run. */
+ allows:(taskId:string,runId?:string)=>boolean;
+ /** Whether this task is bound to a supervisor session, including when paused. */
+ owns?:(taskId:string)=>boolean;
+ /** Derive one finite server-registered child window only at an actual boundary. */
+ authorizeWindow?:(input:ProjectSupervisorDispatchInput)=>PolicyWindow|undefined;
+ /** Bind a derived window before a queued request can be claimed. Must be idempotent for the same pair. */
+ bindWindow?:(windowId:string,runId:string)=>void;
+ /** Revalidate window ownership against the current policy before any claim or lease renewal. */
+ validateWindow?:(taskId:string,runId:string,windowId:string)=>boolean;
+ /** Notify the supervisor that a signed terminal result was committed. */
+ terminal:(runId:string)=>void;
+}
+export interface SupervisorAdoptionBinding {sessionId:string;ownerId:string;taskId:string;sourceRunId:string;sourceResultHash:string;projectId:string;machineId:string;workspace:string;nativeSessionId?:string|null;expectedTaskRevision:number}
+export interface ProjectSupervisorDispatchInput {
+ sessionId:string;goalRevision:number;supervisorRevision:number;taskId:string;expectedTaskRevision:number;
+ consumedRunId?:string|null;resultHash?:string|null;grantId?:string;resumeStopped?:boolean;newSession?:boolean;handoffSummary?:string;adoptionBinding?:SupervisorAdoptionBinding;directive:string;goal:string;criteria:string;
+ machineId:string;executorId:string;workspace:string;ownerId:string;
 }
 export interface ExecutionRuntimeOptions {
  powerReading?:(agent:{machineId:string;capabilities?:string[]},raw:unknown)=>import('./power-runtime.js').CpuPowerSample|undefined;
@@ -69,6 +97,7 @@ export interface ClaimedRun {
  binding?:Record<string,any>; validation?:ExecutionTemplate['validation'];
  skillSnapshots?:ExecutionSkillSnapshot[];skillSnapshotsHash?:string;
  sessionBilling?:CliBillingCheckpoint;remainingTokens?:number;handoff?:{executorId:string;summary:string};
- purpose?:FixedValidationPurpose;
+ supervisor?:{sessionId:string;goalRevision:number;supervisorRevision:number;expectedTaskRevision:number;consumedRunId:string|null;resultHash:string|null;fingerprint?:string;policyWindowId?:string};
+ purpose?:ExecutionPurpose;terminationProof?:ExecutionTerminationProof;
 }
 export type ExecutionDispatcher=(domain:Domain,command:string,envelope:CommandEnvelope,actorId:string)=>Promise<CommandReceipt|undefined>;

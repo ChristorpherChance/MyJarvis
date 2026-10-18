@@ -1,0 +1,938 @@
+diff --git a/apps/api/src/runtime/cluster-runtime.ts b/apps/api/src/runtime/cluster-runtime.ts
+index 9f0269a..8f8a3d9 100644
+--- a/apps/api/src/runtime/cluster-runtime.ts
++++ b/apps/api/src/runtime/cluster-runtime.ts
+@@ -7,7 +7,7 @@ import { defineTool, type ToolDefinition } from '@earendil-works/pi-coding-agent
+ import { Type } from 'typebox';
+ import { IdentityRuntime, RuntimeAccessError, type RuntimePrincipal } from './identity.js';
+ 
+-export const PLATFORM_BUILD = '20261018-project-goals-r51-r1';
++export const PLATFORM_BUILD = '20261018-project-goals-r52';
+ const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/);
+ const absolutePath = z.string().min(1).max(1000).refine(value => resolve(value) === value, 'Absolute path required');
+ const baseUrl = z.string().url().refine(value => { const u = new URL(value); return u.protocol === 'https:' && !u.username && !u.password && !u.search && !u.hash && u.pathname === '/'; });
+diff --git a/apps/api/src/runtime/supervisor-model-input.ts b/apps/api/src/runtime/supervisor-model-input.ts
+index 85b65b0..b7894aa 100644
+--- a/apps/api/src/runtime/supervisor-model-input.ts
++++ b/apps/api/src/runtime/supervisor-model-input.ts
+@@ -1,6 +1,6 @@
+ import {createHash} from 'node:crypto';
+ import {PROJECT_SUPERVISOR_CONTRACT} from './project-supervisor-contract.js';
+-export const SUPERVISOR_PROMPT_MAX_UTF8_BYTES=64*1024;
++export const SUPERVISOR_PROMPT_MAX_UTF8_BYTES=128*1024;
+ const separator='\n\nUntrusted supervisor input JSON:\n';
+ const prepared=new WeakMap<object,ReturnType<typeof supervisorModelProjection>>();
+ const hash=(bytes:string)=>createHash('sha256').update(bytes,'utf8').digest('hex');
+diff --git a/apps/api/test/pi-supervisor-entry-r52.test.ts b/apps/api/test/pi-supervisor-entry-r52.test.ts
+new file mode 100644
+index 0000000..a4a8044
+--- /dev/null
++++ b/apps/api/test/pi-supervisor-entry-r52.test.ts
+@@ -0,0 +1,4 @@
++import test from 'node:test';import assert from 'node:assert/strict';import {mkdtemp,mkdir,rm} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';import {ModelRuntime} from '@earendil-works/pi-coding-agent';import {createAssistantMessageEventStream} from '@earendil-works/pi-ai/utils/event-stream';import {PiService} from '../src/pi.js';import {createProjectSupervisorModel} from '../src/runtime/project-supervisor-model.js';import {boundedSupervisorModelInput,supervisorModelProjection} from '../src/runtime/supervisor-model-input.js';
++test('R52 real PiService.run 128KiB complete prompt reaches offline driver with required semantics unchanged',async()=>{const dir=await mkdtemp(join(tmpdir(),'r52-entry-'));const oldFetch=globalThis.fetch;let requests=0,drivers=0,partial=false;globalThis.fetch=async()=>{requests++;throw Error('fixture network forbidden');};const runtime=await ModelRuntime.create({authPath:join(dir,'fixture-auth.json'),modelsPath:null,refreshOnCreate:false});const decision={action:'stop',directive:'',reason:'fixture',selectedOption:null,criteria:[],experienceReferences:[]};runtime.registerProvider('offline-entry',{baseUrl:'http://127.0.0.1:1',apiKey:'fixture-only',api:'offline-entry',models:[{id:'fixture',name:'offline',reasoning:false,input:['text'],cost:{input:0,output:0,cacheRead:0,cacheWrite:0},contextWindow:32768,maxTokens:4096}],streamSimple:()=>{drivers++;const stream=createAssistantMessageEventStream();const message:any={role:'assistant',api:'offline-entry',provider:'offline-entry',model:'fixture',content:[{type:'text',text:JSON.stringify(decision)}],stopReason:partial?'length':'stop',timestamp:Date.now(),usage:{input:0,output:0,cacheRead:0,cacheWrite:0,totalTokens:0,cost:{input:0,output:0,cacheRead:0,cacheWrite:0,total:0}}};queueMicrotask(()=>{stream.push({type:'start',partial:message});stream.push({type:'done',reason:partial?'length':'stop',message} as any);stream.end();});return stream;}});const pi:any=new PiService(dir,{} as any);pi.runtime=runtime;pi.provider='offline-entry';pi.model='fixture';pi.authenticatedProviders=new Set(['offline-entry']);pi.configured=true;pi.initialize=async()=>{};pi.refreshConfigured=async()=>{};await mkdir(pi.cwd,{recursive:true});await mkdir(pi.agentDir,{recursive:true});
++let sequence=0;const input=(text:string,supervisor=true)=>({text,actorId:'server-admin',conversationId:'entry-'+(++sequence),member:{name:'fixture',preferences:''},sessionPath:null,boundedJob:true,ephemeral:true,...(supervisor?{purpose:'project-supervisor',scenario:'project-supervisor'}:{}),onEvent:()=>{},onSessionPath:()=>{}});
++try{const frozen:any={goal:'受控原目标',criteria:['原标准'],corrections:[{reason:'完整纠错'}],experienceReferences:[],experienceExclusions:Array.from({length:49},(_,i)=>({experienceId:'excluded-'+i,revision:1,hash:'a'.repeat(64),reason:'unverified'})),originals:Array.from({length:25},(_,i)=>({path:'artifacts/fixture-'+i+'.txt',sha256:'b'.repeat(64),verified:true,content:'原件全文'+i})),binding:{goalRevision:11,runId:'controlled',resultHash:'c'.repeat(64)},padding:''};const size=Buffer.byteLength(supervisorModelProjection(frozen).text);frozen.padding='x'.repeat(81717-size);const initial=JSON.stringify(frozen),projected=boundedSupervisorModelInput(frozen);assert.equal(Buffer.byteLength(projected.text),81717);assert.deepEqual(projected.input.originals,frozen.originals);assert.deepEqual(projected.input.corrections,frozen.corrections);assert.equal(JSON.stringify(frozen),initial);assert.deepEqual(await createProjectSupervisorModel(pi)(projected.input),decision);const edge=structuredClone(frozen);edge.goal+='多字节';edge.padding='';edge.padding='x'.repeat(131072-Buffer.byteLength(supervisorModelProjection(edge).text));const boundary=boundedSupervisorModelInput(edge);assert.equal(Buffer.byteLength(boundary.text),131072);assert.deepEqual(await createProjectSupervisorModel(pi)(boundary.input),decision);const before=drivers;await assert.rejects(createProjectSupervisorModel(pi)({...edge,padding:edge.padding+'中'}),/MODEL_CONTEXT_INCOMPLETE/);await assert.rejects(pi.run(input('中'.repeat(43690)+'abc')),/PI_INPUT_INVALID/);await assert.rejects(pi.run(input('a'.repeat(32001),false)),/PI_INPUT_INVALID/);await assert.rejects(pi.run(input('   ')),/PI_INPUT_INVALID/);await assert.rejects(pi.run({...input('fixture'),sessionPath:'not-null'}),/PI_INPUT_INVALID/);assert.equal(drivers,before);assert.equal((await pi.run(input('a'.repeat(32000),false))).status,'complete');partial=true;await assert.rejects(createProjectSupervisorModel(pi)(projected.input),/MODEL_RUN_FAILED/);assert.equal(requests,0);console.log(JSON.stringify({scope:'controlled synthetic81717B/25originals/49exclusions, real PiService.run and native offline SDK driver; not actual Factory or provider',completePromptAccepted:81717,multibyteBoundaryUTF8:131072,overLimitZeroDriver:true,otherPurpose32000Preserved:true,partialRejected:true,originalsAndCorrectionsPreserved:true,providerTotalTokens:null,driverCalls:drivers,networkRequests:requests}));}finally{await pi.dispose();globalThis.fetch=oldFetch;await rm(dir,{recursive:true,force:true});}});
+diff --git "a/docs/R52\344\270\273\347\256\241\345\256\214\346\225\264\350\275\275\350\215\267\346\226\271\346\241\210\344\270\216\344\272\244\344\273\230.md" "b/docs/R52\344\270\273\347\256\241\345\256\214\346\225\264\350\275\275\350\215\267\346\226\271\346\241\210\344\270\216\344\272\244\344\273\230.md"
+new file mode 100644
+index 0000000..3679bb1
+--- /dev/null
++++ "b/docs/R52\344\270\273\347\256\241\345\256\214\346\225\264\350\275\275\350\215\267\346\226\271\346\241\210\344\270\216\344\272\244\344\273\230.md"
+@@ -0,0 +1,21 @@
++# R52主管完整载荷方案与交付 · 候选未部署
++
++## 选择与实际实现
++
++起点HEAD7ad29ad297d9fe1102b82a5eb194d35f667ec87b，APP e5cc87f15c800a021e5dca58dedc71db022123d0核同。仅Jarvis当前副本新增本轮文件，不reset既有dirty/index，不触Factory工作区/task843/goal9/源码/会话/派发。Jarvis8821与Factory诊断来源不跨绑。
++
++主管给出的完整prompt81717B、JSON79581B、25原件57431B、纠错1360B及49排除8283B说明现65536门在Pi前拒绝，不是provider错或没交原件；本轮未持有/重读这些业务原文，不重旧intent。选择最小共享常量131072B方案，不再要求CC猜overhead或用索引/分批摘要冒完整。runtime/adapter/PiService.run原链均引用同一SUPERVISOR_PROMPT_MAX_UTF8_BYTES，唯值64*1024→128*1024；完整contract+separator+serialized input口径不变，必要语义/原件/纠错/selected/49条排除审计不删截。
++
++其它purpose原32000字符、所有用途非空、purpose/session/ephemeral/privacy/source/stale/strict六键/experience/criteria/citation/partial/response16KB、签名和授权门源码不改。原catalog32768 Token与4096输出声明不改；字节不是Token，SDK另加系统prompt/provider总Token适配unknown，不声称真实配置可接收或已证明不容，不探测provider/tokenizer。若实际provider拒绝需另按真实新结果处理，不自动重试或伪造通过。
++
++## 实际验证
++
++唯一新增组调用生产bounded projection→adapter→真实PiService.run→原生SDK离线driver；只替换初始化/认证刷新并注册受控streamSimple，无真实供应商。构造81717B完整text/25原件/49排除与纠错、131072B多字节精确边界可达driver；超界0新增driver，非主管32001/空白/session错误仍拒，非主管32000保持，length partial不能合法判断。1组通过/4driver/0network；原64KiB组不重跑，不冒实际Factory输入重现或provider接受。
++
++API/Web types及真实build各一次exit0，stdout/stderr分别原样保存，空stderr明确0B不是缺失，不捏失败。旧原测试源、goal9/335/3891失败和费用不改。Root规范ledger本轮不写；本文是本轮独立建设记录，无绕隐私拒绝。技术窗口/费用记录策略保持，unknown不归零。
++
++## 同源交付和后继
++
++先APP提交，再原packager封20261018-project-goals-r52 ZIP/manifest/checksum；核R51r1全部126 assets与旧120等闭包，R7兼容不伪造新节点版本。封包后从2eb88原sidecar仅EXPECTED/RELEASE/APP/ZIP_HASH四literal派生：priorR51r1/releaseR52/实际APP/包H。预算650+250、ownership、lock、readiness、完整snapshot/isolatedrestore/rollback余字节保持，APP与后ops提交分列。
++
++本轮未部署112、未操作正式DB/101R7/config46/容器或Factory代码，无实际Pi/供应商probe。Root当前112 R51r1健康是主管事实，不冒本轮执行。Root后继独审、发布、新绑定真实判断及产品验收分别确认。
+diff --git a/reports/r52-logs/api-build.stderr.txt b/reports/r52-logs/api-build.stderr.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/reports/r52-logs/api-build.stdout.txt b/reports/r52-logs/api-build.stdout.txt
+new file mode 100644
+index 0000000..d488286
+--- /dev/null
++++ b/reports/r52-logs/api-build.stdout.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/api@0.1.0 build
++> tsc -p tsconfig.json --outDir .dist-next
++
+diff --git a/reports/r52-logs/api-types.stderr.txt b/reports/r52-logs/api-types.stderr.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/reports/r52-logs/api-types.stdout.txt b/reports/r52-logs/api-types.stdout.txt
+new file mode 100644
+index 0000000..665ddaf
+--- /dev/null
++++ b/reports/r52-logs/api-types.stdout.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/api@0.1.0 typecheck
++> tsc --noEmit -p tsconfig.json
++
+diff --git a/reports/r52-logs/assets.json b/reports/r52-logs/assets.json
+new file mode 100644
+index 0000000..8e6acc7
+--- /dev/null
++++ b/reports/r52-logs/assets.json
+@@ -0,0 +1,762 @@
++{
++  "allPriorPayloadsVerified": 2289,
++  "assets": [
++    {
++      "path": "apps/web/dist/assets/api-Chk_xhf3.js",
++      "size": 1786,
++      "sha256": "cf309c095eb52e286c9d2d42b4bd77c44eea8ad9675d1892c9314623f92caa3e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/ApiWorkbench-BU9U4-wP.css",
++      "size": 24191,
++      "sha256": "c2a32540a003bc2efbdb3d98df0656648d4a46c4e72f9c5e14260f07bf5e81c9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/ApiWorkbench-Dmp8PqAz.js",
++      "size": 50856,
++      "sha256": "0ca4d25496e44e5b4d465868bd9dd1d030c7cb6fc3b07574409ba6de3226e549",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/App-Bw5WWsEu.js",
++      "size": 42768,
++      "sha256": "c11aaa1ba905a437e0900d2e790f72fad68f2f4a3685d0a4a07854382e110443",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/client-OI5hagxP.js",
++      "size": 222585,
++      "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BGspGo2n.js",
++      "size": 186426,
++      "sha256": "8f28fbdd3429d375b0b77acf70d9c09ef091dd2a7338f9dcf0bdff5e1fedd7f4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BjNIZnjT.js",
++      "size": 185044,
++      "sha256": "3c0e936dc454387fb8ecc118b7ca21291bfd822a9b539419f496ab4188e92d14",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Bkbv5Ons.js",
++      "size": 186058,
++      "sha256": "0f070546ae77fefa831fd06be336c83f5d1bd78ccc3b523b561ac620870a756d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BqArLHFo.js",
++      "size": 185044,
++      "sha256": "6edee98e1b3607643a8f5f5ec4d225d49f9765876dfceac0522cc5d7e9616a25",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-C2xJPBSV.js",
++      "size": 186046,
++      "sha256": "1999f260fd3dfb306cb32b7bab9959cf85a0cdb01313a5808ea108100e588107",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-C8pWeWn4.js",
++      "size": 185044,
++      "sha256": "f6e46f702b1a6e9da220b83b181752025ec95e9505972f3555b87d30831edee9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CEqDwIn0.js",
++      "size": 185755,
++      "sha256": "3d999e39ce9a245521b204d5fc358fc1cfed717066c257e52d38d7c4b26856fe",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CtFYN7Wp.js",
++      "size": 186058,
++      "sha256": "1fa2aa685de146d93fb4f9346a113f6634eebdb8db231345437b19a58094d344",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CxDa9fQX.js",
++      "size": 185044,
++      "sha256": "4bbfce0108c3bfddb6609cca1e33b44335ec3a24641ad9e5465d3d545068617a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CYjB9jpI.js",
++      "size": 185044,
++      "sha256": "ff5f69a775e4b941ea5b31c1d174cdd3c038ef8c2b3eb5330e122057b5c3e79e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CySQ6cmX.js",
++      "size": 186058,
++      "sha256": "1c72c2e64489581878a8a668674b6de762c2052b5a5b626a0f5a2684c977df40",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Dc9Q7TVE.js",
++      "size": 186058,
++      "sha256": "617803e0f6e036d7ea10c0a679f45467bede7e78721ef53d6d99e6f500b1b454",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-DFO5vBD_.js",
++      "size": 185044,
++      "sha256": "fe2b2774efe77733d7983212a890bead3cc6e36f965948f900733f021a27e7fd",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Dhz16znu.js",
++      "size": 186426,
++      "sha256": "5e947ba27a539e8d4f761ac7c9097b79f817e65fe1de6782663ad49bd3117ffc",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-L1CrooRu.css",
++      "size": 87280,
++      "sha256": "3a0f4bf7b75a979321331804ceeaae100ab4e08b10b7fa8f7e7c11ba6ec6613c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-SyS9LJyM.js",
++      "size": 186058,
++      "sha256": "abf9fec25f039162d63ab7c941abac8c7745a8f3430fb0c5da9318b7d03a1c6b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-ZXK0_h2J.js",
++      "size": 185044,
++      "sha256": "8c7ee87d787685542d9259c7d17bbd10d25debd596bb790e83c12323cf51594f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-B9NToAGp.js",
++      "size": 8815,
++      "sha256": "e69003cad109d9e27198dd08b029d12c26bd0bf97d073cd449b76b7221e27740",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-BWfAf0S7.js",
++      "size": 8815,
++      "sha256": "157468b57f858ece5c109429acd1d21980776336e46f4dd1416908f40812a1c3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-DuoOicCv.css",
++      "size": 1671,
++      "sha256": "ce29fab4b0c33a8ddb1b9f296a20e9a57b486265d013d634285341fb845e492c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-Gxi7GIkS.js",
++      "size": 8815,
++      "sha256": "95e3eb5dfd29e0014d948f1fbcbc3fcdd60af6505a193dc9cc5724bd8c6a359d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-7k36TmbJ.js",
++      "size": 132639,
++      "sha256": "cc78a95e738e46c89aeeb74803a7b516f8228985d649e859b12dab127dcbf20f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-B3HKuLzG.js",
++      "size": 2700,
++      "sha256": "c3163f3e9def0fe0371c80381b91c7b4aaa43e6919732d089ea83df235d8bc68",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BC9IJeJP.js",
++      "size": 2700,
++      "sha256": "4a1306154eca0bb91077ed6f81eba8ebea79aefc6f16ffea01042a9a3fad0a4f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bd-erOE4.js",
++      "size": 2700,
++      "sha256": "2a00575c327c8145b818d5cc82e7be8e422e92f1d8b5b1ffaea49cf08387768a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bh9bR11H.js",
++      "size": 132639,
++      "sha256": "18d0a77117dc2a7079cdb7b9778102aa3b4eef5ce96944d7a2dcd709b71fa891",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BMxX7Uy-.js",
++      "size": 132639,
++      "sha256": "de57abdbb2dc0d4271d621992e303d4d2cd3dda9ba1b9e8c1e69423c4d8c560a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bn0_XvS3.css",
++      "size": 35140,
++      "sha256": "f9d14b722b93870f3ed73250ac9cb00443914f1ad8144c1937873328c242ab62",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BOK2KYgE.js",
++      "size": 132639,
++      "sha256": "bbbb12556a5a0dcbc19f7fe117095133e3b08b79d9d23a018818192351e064a5",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BPqbihwj.js",
++      "size": 2700,
++      "sha256": "a1b50c3117a1b3d33387289e45771fbcbe86036aa31a39d07618cb28578bbc6f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bt3Uhcrq.js",
++      "size": 132639,
++      "sha256": "2160c3d11bffabfd139b28c6a33bd5e98e71bf1185e668e6e12638bb8dc422b7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Btf2sgPH.js",
++      "size": 132639,
++      "sha256": "87ecba8e25e5cb2eaf446bc6d218ef9622cb0516d90fafd7317773c0429d3d6e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BUR4f3cz.js",
++      "size": 2700,
++      "sha256": "07c378acf1d63a823105e10386fceb84dc04186eb82f2d2427022e123cba7fa7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BWW6DgEo.js",
++      "size": 2700,
++      "sha256": "0afc7f5b3e195ee3b0a1c09addd88d1f2e0d1809972dc45a93004b3d1637b64f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BY6ONzcm.js",
++      "size": 132639,
++      "sha256": "d04df7ec73b5df5a1014fce88da11ad5459e7fda59e91386e4ea54d3dffaa002",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-C4A9K3Js.css",
++      "size": 40695,
++      "sha256": "ca42460074cc8d01a856c3298d43a59d2917f2e041bccbd89f5e251202308036",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CfFWULd2.js",
++      "size": 132639,
++      "sha256": "c77c1b21768fa3c4fe81f604af0ddb691af8ee8296d0edbdec6f966341e0a157",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CFOTlxn1.js",
++      "size": 132639,
++      "sha256": "714039b8e8e90ccee160f34238e8cb277cb79f900300e2857ffabccef668fc1d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CGJFQ6li.js",
++      "size": 2700,
++      "sha256": "92ee30873a9d19e23fbda7462865ad4d591fea6063ac36603f311522f3985af3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CM4cqeLV.js",
++      "size": 132639,
++      "sha256": "a6da79934113e0da456a214763ad7ce154760189292d26e9a335d4f6b8ae1911",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Cna248pL.js",
++      "size": 2700,
++      "sha256": "e84fbfe8145d3c30e676fa05b1b684b1e93b77630ef5abaf6679ccd84788c21b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CP2KzcLD.js",
++      "size": 132639,
++      "sha256": "dff121d289b65751e66dd6ad2326b6162acd018dec6a63143065233e0efb664e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CvsSKgv3.js",
++      "size": 132639,
++      "sha256": "362d868daf02d1b54e3ec9fb1e1cf3360702365f7f7c1330c10379a6d48bd003",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Cyo_cLt3.js",
++      "size": 132639,
++      "sha256": "3cbb39961b61531b158ab9bf4e9344b3746cde292310247652321ea1a0cd8c13",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DAdKF6t6.js",
++      "size": 2700,
++      "sha256": "e42cd01faa768cb2af385197b2bb80e3c27a952686e50c2087536139e704b9d6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DaRI1A8S.js",
++      "size": 2700,
++      "sha256": "c77fa4e9e5c541377eb99fbc4300a3e8a3edc4f5fe47cd5a9d90a69b15eb5d34",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Ddh4n_em.js",
++      "size": 2700,
++      "sha256": "14d712ade0dab462314fe1292dff0dade260a4495c4d10bbeb85f1b62d7287d3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DgeLu-8j.js",
++      "size": 2700,
++      "sha256": "46af2097133f28ea859d3ce6b7d4e3d8d83a4f4f85eac3b7e47aa88a3f375196",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DirT-lzL.js",
++      "size": 2700,
++      "sha256": "339b84adb78d74377947e0970dba59811816782963c2c0c01d522b066494d339",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-dN1MUL4D.js",
++      "size": 2700,
++      "sha256": "1aff914c125eb1d23201417bdfa8a95dad25d7887fa4d308eb94d57d1d123fe6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-GrlWu2q3.js",
++      "size": 2700,
++      "sha256": "0766628ffa91be29992d789916169638cc8e3cd1192f3afbd7c85fe0642c96a7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-It7MDlfH.js",
++      "size": 132639,
++      "sha256": "3b40e4141a66dfb81bd8802c54ee35f09cba49a4bea3af9c9e7521e6b8a7f2aa",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-L1mh8oeb.js",
++      "size": 132639,
++      "sha256": "147f70e10d9bb8826eea2073382293eace23ddbbf3356b15af03c459a9170e20",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-PS6BmzZD.js",
++      "size": 132639,
++      "sha256": "fdbd288ef3f262002182a56242c01188bc6c1a9019c4178a7a947be2b84c824d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-qDG0eH8A.js",
++      "size": 2700,
++      "sha256": "a0994f3fabde1d8f2cc5847f52b95999a696c69efffc9294c203a33f6aa16048",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-B9NdCIHy.js",
++      "size": 105346,
++      "sha256": "ab28547dd07dbb61fae77377f299e5360a189c9c1d3634a9ac8486998bab3a62",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bahhxq9H.js",
++      "size": 105346,
++      "sha256": "5983e4c6e895a5f965d338a37e9dd69e502665ff5fe39f653822b9df0a435bf7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bd9cyBWd.js",
++      "size": 105346,
++      "sha256": "d24a10af81b1f2d6a1112e98b37f686e3b549582a7095e5acddff82b9763084e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bf6wBYBw.js",
++      "size": 105346,
++      "sha256": "da95a3e00cb4d097126922b0c36bedd0843c95293c19a59144c803f91523e206",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-BOdeK6FX.js",
++      "size": 105346,
++      "sha256": "f537d99f80fb14809c35884cd14705f4e72676832badf7ac1ab6006030d4ff39",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bpq8f1ds.js",
++      "size": 105346,
++      "sha256": "c690b5d713ee02443be6a17ec7d0b3d90fd4e5467295f3802031dd5c54ba3b84",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-By6eNnF5.js",
++      "size": 105346,
++      "sha256": "618c0151fadddedc0ae5eb5de5384b6b2617464d329b8f4942e971c9c2b404aa",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-C72O-0zk.js",
++      "size": 105346,
++      "sha256": "7c8bb9b7cfaa789003984b16f22927077ae840e51070a7d1d39e7d0761a38e9e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CcUY24pM.js",
++      "size": 105346,
++      "sha256": "6112a4afe3d8318c1199d1a840c66b24b2a73a47ebcbd6aed64ed38c97e6da6b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CkTZVpVT.js",
++      "size": 105346,
++      "sha256": "7782cf9f6113b44c1c0774658b60546ed6a7f1743d6709aaaf2358210f2529d8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CoG1rh-n.js",
++      "size": 105346,
++      "sha256": "acc9ba5cfb73447c021edd3d03de2782dc953a55fb6c270f9f9b9178d4a1f5d2",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CrrNMALd.js",
++      "size": 105346,
++      "sha256": "43d79b445740904d21e0792ccc82982bb6573446062d6f12ce7e9af6b7306c82",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-D5w3tZSc.js",
++      "size": 105346,
++      "sha256": "0181e8b649a9589f0293a9d78966d8842667fbf896af63e90a55b64a3c5cf020",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-DO5gJB2N.css",
++      "size": 38457,
++      "sha256": "77db6669262c00f07767cbea1fd83ce587a2cd942c3c9523462a7b272510483a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Dy0AfEMD.js",
++      "size": 105346,
++      "sha256": "536254533a94ae4f1383799565eadc3f9770f1698904cca31e87077259fed1b4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-DzxKXEBt.js",
++      "size": 105346,
++      "sha256": "24546506629cd71529332a10ff8e50c8ab922c651160c801de49e585959e7473",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-jjOkZEhU.js",
++      "size": 105346,
++      "sha256": "e2fcb2fe2bcea5cf5460e0110141ed1c31ef01257eceb12617c9edf1aea161a1",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-B-adSYOj.css",
++      "size": 2834,
++      "sha256": "eb58679b215d72a22d2ebe0cd94e0041c16baaf99fc693f085293dc1a479aaf7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-BSE7EDoo.js",
++      "size": 25939,
++      "sha256": "7e20ce1468c07ef98e74b371bfefa690d03152ca0e61e0314f3191cd25f0035a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-BSJ0JW-p.js",
++      "size": 25939,
++      "sha256": "fabfe45557faa8f9b66009dcf49c8c281d87a37b51471ea808c121d69a6db54c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-C2jU-A-7.js",
++      "size": 25939,
++      "sha256": "8ed277706d6e43dd62a49f462a27b0854d16aaae2623795fc869e71ee1971df4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-CDIXPyOs.js",
++      "size": 25939,
++      "sha256": "6510ac0b01ce5556b04972eaa15a116689a092e73063fd73bbea2563139528e0",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-CZeJeVWa.js",
++      "size": 25939,
++      "sha256": "44090f767a4ecd4fb63d3653f5cb0eb43be21fd698803dbe8f5d18309370b234",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D_p8XfbM.js",
++      "size": 25939,
++      "sha256": "adedcb05720125ded83352b4cbb818ab7686c236dd3e8f8ad3e2c6b30ac84947",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D-9IUbUb.js",
++      "size": 25939,
++      "sha256": "e32214bb0323bd33b6eb1ac1da96bfd2c678a6b63a1f7092bf26800a844c7e56",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D8NtBV_6.js",
++      "size": 25939,
++      "sha256": "38ed8affb8c7f29b91c710c553fe0472cd5884d625c43f0fd69b0a44faf59b03",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-Dck92uDK.js",
++      "size": 25939,
++      "sha256": "6f02cd3b58c4e333dec54a8eb2c44ca13f1c88e200a2e823d7322f24bd502065",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DMhr_St1.js",
++      "size": 25939,
++      "sha256": "4c99267f5d6e2ba4c4545f26e56cdfb628aac34466b6a843c4c96e402df8266b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DoJ982dN.js",
++      "size": 25939,
++      "sha256": "4ba788a05c866ec89b913173e92bf711b0be1d99303204e8de3cbbf455ba1004",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DU5_jGCS.js",
++      "size": 25939,
++      "sha256": "b80bea2295103e519e08ab003e7cde6337f7cc07aec7dfd68acf4d5379d7c819",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DYLehZft.js",
++      "size": 25939,
++      "sha256": "a019a3edb475a501e042d477b25b24f23f32222a0fdbce639ae293ff0b778e5f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-egK1debn.js",
++      "size": 25939,
++      "sha256": "98736d8e37849b9e95b47d93f3315b3f5a83a7df047daefd775d06994c26d039",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-so6Lr4DI.js",
++      "size": 25939,
++      "sha256": "8a071c07708692166eadf5919f9236bb9889c782128819fb3e42859fd6c42f02",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-wuVXStul.js",
++      "size": 25939,
++      "sha256": "293480fb899074fed21e77a4408571ff046ec1dc4523ed5555f7c776c683ca14",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-BT4-La1g.js",
++      "size": 232114,
++      "sha256": "b8583cc9ce5e9eaf2fe857879854274a3822f2aaffed830314167003c44f8500",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-C9BkAmZa.js",
++      "size": 233143,
++      "sha256": "b04358703e63d1b4cb9c529a5e89896199a8fb6782f0090dc5a0d4ab1137720b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-CMPr2Z5F.css",
++      "size": 2997,
++      "sha256": "2e673872eaffd25f2dc6a53a898335a4f98e86e2e94dbddf6749be4c5c07eb69",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-LzUl84_X.js",
++      "size": 233415,
++      "sha256": "0ec578b7bf2301d7d8e88d7696690a8d0a9ccefc9423df8dca60a862ab2d5ab5",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offline-vault-g54LtOEF.js",
++      "size": 10707,
++      "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offlineCapture-CTF5MCW4.css",
++      "size": 4717,
++      "sha256": "81ca3809012e895c9c7ecbf96fa695ca1e0485e917be83737e3d0ef9fbe655a8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offlineCapture-Dp37MnGd.js",
++      "size": 26587,
++      "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-1WgeqKb3.js",
++      "size": 368891,
++      "sha256": "3f0552a20c0bfe23b7e1aa7e6bbb160636108ae2f51c251ae406f27dd003bf9c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-9zmXoABQ.js",
++      "size": 391313,
++      "sha256": "5e7a4e3b8afd7e923c6adc514651e41bfcaa44918b87dc6e1306deb7ff52de4e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BnMPRN5w.js",
++      "size": 383927,
++      "sha256": "06a6cdc492d41e17a59092c6e30056d0e1aff9a84da84f01d86efdf815479ccc",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BrEOh5vG.css",
++      "size": 52837,
++      "sha256": "a3e916c69fd6cb6af73f513b68bbfb0467a62631f251cb65ea37b431c1a13801",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BSSnywsR.js",
++      "size": 400137,
++      "sha256": "7453c368848897fd4fdf0ada276e76615b987781501a8ab329e3b16ac1770ffe",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BVMKKxYv.js",
++      "size": 396677,
++      "sha256": "fa6ec9999d8241fe5fe2bed69338799b64d4adfd5efb58573fd7ea8183c135d4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-C4HGN7pt.js",
++      "size": 371928,
++      "sha256": "4be291bc28157d739dfe5739f48b7262a5bf22c304f10c6acca5bd4ffc4eb72c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CpaZZ68b.css",
++      "size": 54005,
++      "sha256": "39a394144ed99d0be56d52917d5fb78d54a0c5fc75a0aa96846c18036c4fec06",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CRKBQHI1.css",
++      "size": 51632,
++      "sha256": "2adc489d6dd6f45daf620794c2db4dafa8a394e1a0a63d150c44ad6bba54541c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CrpXyVjM.js",
++      "size": 377067,
++      "sha256": "bf0675cb1360df857c0853f8f6b0c946a3e27cb023de4beed1d5224f1aadb256",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CRRRJkKB.js",
++      "size": 370510,
++      "sha256": "8ffa64a416981d768b2b64c035cac7ae7d57a1f22856dd5ddac22c27d02c27c9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-D62v5whk.js",
++      "size": 390569,
++      "sha256": "dc953d5763c98904ab3266d8a4ecca5d0fe9cba40711f08e55788ef48fd8ad33",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-D87eoche.js",
++      "size": 383927,
++      "sha256": "014b25c346170df5d7ca93b38ad4d0aae3ac200febc97069df35d60a63682955",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DqwvsULR.css",
++      "size": 46777,
++      "sha256": "2fa190448c3e488547d5d1529bd620f8a2bf6933a74bfcfb27564bf092d05611",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DuT_6MdK.js",
++      "size": 400279,
++      "sha256": "44fa353fe0e45530c9c057956c359f1af43764efab25d2617b0173f630fe47cc",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DXGqDr63.js",
++      "size": 377755,
++      "sha256": "2b768cb0cf07c58144657d3ab12c852c7fdfcfb867043ba0e19e4fdd42e92783",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-IkdwqqX8.js",
++      "size": 402078,
++      "sha256": "c05899bd82cc27053edb12c316dbad5d5b08996b3322a0855acd6f20cc71fda8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-q5MPL812.js",
++      "size": 390387,
++      "sha256": "ea850d77aa4fd3d136ee3127bfb45c9a5bcd9ff81b902f2c52b175156c7845a1",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-s2jqT4-3.js",
++      "size": 377742,
++      "sha256": "ec7ac650a8f7db2a243f0bdf4d204420d57dc97d13706fab848ccf2540926498",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-S8tWeD7W.js",
++      "size": 353240,
++      "sha256": "c9ef162315e680f844f9b5cf83bb4975e4214d7f54fa7d285118897a2c16163d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-BAGOxt2c.js",
++      "size": 85733,
++      "sha256": "8378efb880686b116dded6adfd5f5dcda53eb5dec1104dada8cdf7f58ce9475d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-Boq6QLI7.css",
++      "size": 15592,
++      "sha256": "790e387b0261d59bd808204d997df1c579af65ff636259f8509d7672c94bee12",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-CO_NVOaj.js",
++      "size": 85733,
++      "sha256": "f6555f6dd86c7263fd8a929b20b27ce62ac46a36bc09ad59cd06680ea50c3dfd",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-DgLk029p.js",
++      "size": 85733,
++      "sha256": "dd94a50e0bd124ea07f72ab4d4fec9c293b4ea18660328a8c6d148129906352d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/v1-client-CX0ITgRR.js",
++      "size": 2273,
++      "sha256": "5e92175b68bba52ee01d2446431e921fbb4730f68e64f5e4c5251a91e53f4d32",
++      "mode": 420
++    }
++  ],
++  "olderClosurePreserved": true
++}
+diff --git a/reports/r52-logs/pi-entry.stderr.txt b/reports/r52-logs/pi-entry.stderr.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/reports/r52-logs/pi-entry.stdout.txt b/reports/r52-logs/pi-entry.stdout.txt
+new file mode 100644
+index 0000000..9c4bf70
+--- /dev/null
++++ b/reports/r52-logs/pi-entry.stdout.txt
+@@ -0,0 +1,10 @@
++{"scope":"controlled synthetic81717B/25originals/49exclusions, real PiService.run and native offline SDK driver; not actual Factory or provider","completePromptAccepted":81717,"multibyteBoundaryUTF8":131072,"overLimitZeroDriver":true,"otherPurpose32000Preserved":true,"partialRejected":true,"originalsAndCorrectionsPreserved":true,"providerTotalTokens":null,"driverCalls":4,"networkRequests":0}
++✔ R52 real PiService.run 128KiB complete prompt reaches offline driver with required semantics unchanged (144.798529ms)
++ℹ tests 1
++ℹ suites 0
++ℹ pass 1
++ℹ fail 0
++ℹ cancelled 0
++ℹ skipped 0
++ℹ todo 0
++ℹ duration_ms 2080.864537
+diff --git a/reports/r52-logs/web-build.stderr.txt b/reports/r52-logs/web-build.stderr.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/reports/r52-logs/web-build.stdout.txt b/reports/r52-logs/web-build.stdout.txt
+new file mode 100644
+index 0000000..35a445a
+--- /dev/null
++++ b/reports/r52-logs/web-build.stdout.txt
+@@ -0,0 +1,41 @@
++
++> @jarvis/web@0.1.0 build:stage
++> tsc --noEmit && vite build --outDir .dist-next
++
++vite v7.3.6 building client environment for production...
++transforming...
++✓ 208 modules transformed.
++rendering chunks...
++computing gzip size...
++.dist-next/index.html                                          0.52 kB │ gzip:   0.37 kB
++.dist-next/offline-capture.html                                0.66 kB │ gzip:   0.40 kB
++.dist-next/offline-capture-shell-manifest.json                 1.14 kB │ gzip:   0.51 kB
++.dist-next/offline-capture-sw.js                               4.15 kB
++.dist-next/assets/EvidenceAssistantPanel-DuoOicCv.css          1.67 kB │ gzip:   0.66 kB
++.dist-next/assets/MaterialManager-B-adSYOj.css                 2.83 kB │ gzip:   0.85 kB
++.dist-next/assets/NotificationPreferencesPanel-CMPr2Z5F.css    3.00 kB │ gzip:   1.04 kB
++.dist-next/assets/offlineCapture-CTF5MCW4.css                  4.72 kB │ gzip:   1.58 kB
++.dist-next/assets/RoomVoice-Boq6QLI7.css                      15.59 kB │ gzip:   3.79 kB
++.dist-next/assets/ApiWorkbench-BU9U4-wP.css                   24.19 kB │ gzip:   5.90 kB
++.dist-next/assets/index-Bn0_XvS3.css                          35.14 kB │ gzip:   6.58 kB
++.dist-next/assets/KnowledgePage-DO5gJB2N.css                  38.46 kB │ gzip:   6.91 kB
++.dist-next/assets/index-C4A9K3Js.css                          40.70 kB │ gzip:   8.49 kB
++.dist-next/assets/OperationsPage-CpaZZ68b.css                 54.01 kB │ gzip:   9.18 kB
++.dist-next/assets/DemoApp-L1CrooRu.css                        87.28 kB │ gzip:  15.90 kB
++.dist-next/assets/api-Chk_xhf3.js                              1.79 kB │ gzip:   0.99 kB
++.dist-next/assets/v1-client-CX0ITgRR.js                        2.27 kB │ gzip:   1.27 kB
++.dist-next/assets/index-CGJFQ6li.js                            2.70 kB │ gzip:   1.37 kB
++.dist-next/assets/EvidenceAssistantPanel-B9NToAGp.js           8.82 kB │ gzip:   3.72 kB
++.dist-next/assets/offline-vault-g54LtOEF.js                   10.71 kB │ gzip:   4.36 kB
++.dist-next/assets/MaterialManager-CZeJeVWa.js                 25.94 kB │ gzip:   9.20 kB
++.dist-next/assets/offlineCapture-Dp37MnGd.js                  26.59 kB │ gzip:   9.59 kB
++.dist-next/assets/App-Bw5WWsEu.js                             42.77 kB │ gzip:  13.79 kB
++.dist-next/assets/ApiWorkbench-Dmp8PqAz.js                    50.86 kB │ gzip:  16.83 kB
++.dist-next/assets/RoomVoice-CO_NVOaj.js                       85.73 kB │ gzip:  29.68 kB
++.dist-next/assets/KnowledgePage-By6eNnF5.js                  105.35 kB │ gzip:  32.84 kB
++.dist-next/assets/index-CFOTlxn1.js                          132.64 kB │ gzip:  43.44 kB
++.dist-next/assets/DemoApp-Dhz16znu.js                        186.43 kB │ gzip:  58.67 kB
++.dist-next/assets/client-OI5hagxP.js                         222.59 kB │ gzip:  69.34 kB
++.dist-next/assets/NotificationPreferencesPanel-LzUl84_X.js   233.42 kB │ gzip:  79.85 kB
++.dist-next/assets/OperationsPage-DuT_6MdK.js                 400.28 kB │ gzip: 118.89 kB
++✓ built in 6.18s
+diff --git a/reports/r52-logs/web-types.stderr.txt b/reports/r52-logs/web-types.stderr.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/reports/r52-logs/web-types.stdout.txt b/reports/r52-logs/web-types.stdout.txt
+new file mode 100644
+index 0000000..bc7832e
+--- /dev/null
++++ b/reports/r52-logs/web-types.stdout.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/web@0.1.0 typecheck
++> tsc --noEmit
++

@@ -1,0 +1,158 @@
+{
+  "kind": "record317-factory-limited-report-and-judgment-safe-projection",
+  "asOf": "2026-10-18T06:46:14.073Z",
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-factory-goal3-compact-report-public-receipt.json",
+      "bytes": 4000,
+      "sha256": "d8b4d644e81521aa3d694e6864b4f608efa145666b5d47d8e5cf3c08652b5f69"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-factory-judgment-c33f3a15-c0ab-4e85-bec3-eb82cf41077f.json",
+      "bytes": 1971,
+      "sha256": "b004d77075761dc07b07868fb93a83d7fb0c4426078f23e9b4c71abdb62931d3"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-factory-goal3-signed-report-and-judgment-saved-review.json",
+      "bytes": 6101,
+      "sha256": "1c1765af2c09f371112c267ecf1046d64ef3dffb28e65a1933aee3dde146a37c"
+    }
+  ],
+  "signedReport": {
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "supervisorSessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+    "goalRevision": 3,
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "runId": "c3901605cb60fb6c2508871d9172700076ae8093",
+    "nativeSessionId": "d482f9f6-f0a5-48fc-a603-20ccb5a919f4",
+    "source": "signed-agent",
+    "outcome": "success",
+    "nativeExitCode": 0,
+    "sourceResultSHA256": "c25c9564defee259e17c8328a46108a4c3855fd88bdc929328555760e28886f0",
+    "evidence": {
+      "path": "artifacts/r49-factory-zip-report-only-facts.json",
+      "bytes": 3956,
+      "sha256": "72ef909e309be6af7b63a2932d70492d51ede08df794a2d477cd955bc2764d68"
+    },
+    "feedbackExactSevenKeys": true,
+    "feedbackTypesAndLimitsChecked": true,
+    "questionIsEmptyString": true,
+    "feedbackState": "ready_for_review",
+    "usage": {
+      "inputTokens": 603458,
+      "outputTokens": 3597,
+      "cacheReadTokens": 592256,
+      "cacheWriteTokens": 0,
+      "totalTokens": 607055,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "usageComplete": true,
+      "costUSD": 0.4420630000000001,
+      "costKind": "catalog-estimate",
+      "knownCostUSD": 0.4420630000000001,
+      "costComplete": true,
+      "inputIncludesCache": true,
+      "cacheNotAddedAgain": true,
+      "invoiceUSD": null,
+      "internalPiUsagePrice": null,
+      "totalIncludingUnknownChargesIsKnown": false
+    },
+    "nativeSessionCumulativeObservation": {
+      "costUSD": 5.376302000000002,
+      "costScope": "session-cumulative",
+      "notAdditionalRunCost": true,
+      "notPiCost": true
+    },
+    "reportScope": {
+      "reportedReadOnly": true,
+      "remoteCommandsIndependentlyAudited": false,
+      "reportedHistoricalPositive": 2,
+      "reportedHistoricalNegative": 10,
+      "reportedHistoricalFail": 0,
+      "reportedHistoricalSkip": 0,
+      "noNewTestsClaimed": true,
+      "notFullSoftwareDelivery": true,
+      "innerReportNewTaskRunNativeRemainUnknown": true,
+      "outerActualSignedRunBindingPreserved": true
+    },
+    "newModelJudgment": {
+      "ref": {
+        "path": "artifacts/cc-supervisor-r43/r49-factory-judgment-c33f3a15-c0ab-4e85-bec3-eb82cf41077f.json",
+        "bytes": 1971,
+        "sha256": "b004d77075761dc07b07868fb93a83d7fb0c4426078f23e9b4c71abdb62931d3"
+      },
+      "sessionRevision": 25,
+      "status": "achieved",
+      "enabled": false,
+      "modelIntentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:3:0:c3901605cb60fb6c2508871d9172700076ae8093:c25c9564defee259e17c8328a46108a4c3855fd88bdc929328555760e28886f0",
+      "decisionId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:3:0:c3901605cb60fb6c2508871d9172700076ae8093:c25c9564defee259e17c8328a46108a4c3855fd88bdc929328555760e28886f0",
+      "reviewEvent": {
+        "sequence": 83,
+        "eventId": "fa1e41e1-e720-48af-89a3-bfaf23dcee96",
+        "hash": "c8c01bd41d0f25f0dbfde9f4865d7582782f5ea6c81fe68e632eb392f9091836"
+      },
+      "action": "review",
+      "criteriaCount": 2,
+      "criteriaMatchCurrentGoalVerbatim": true,
+      "criteriaAllMet": true,
+      "allCitationsOnlyCurrentVerifiedReport": true,
+      "experienceReferences": [],
+      "excludedCandidatesNotAdopted": true,
+      "independentAcceptance": false,
+      "completeProductAccepted": false
+    },
+    "oldResultsOrIntentsReplayed": false
+  },
+  "independentSavedInspection": {
+    "confirmedBlockingMismatch": 0,
+    "currentResultAndEvidenceBindingPassed": true,
+    "feedbackExactSevenKeysAndEmptyQuestionPassed": true,
+    "newReport3956BytesBelow4096": true,
+    "oldFacts3844BytesAndHRetained": true,
+    "newReportTenIndexEntriesAgreeWithPriorSealedIndexes": true,
+    "localPhysicalOriginalsHsizeMatched": 8,
+    "indexedMemberOriginalBinsNotReceived": 2,
+    "twoMemberHashesMatchedToReceivedZipMemberBytes": true,
+    "sampleArchives": {
+      "store": {
+        "bytes": 139,
+        "sha256": "8a7967f6551844f592f9e43541d70edc0b29fb2bf83e74028ed5b45360ae1122"
+      },
+      "deflate": {
+        "bytes": 141,
+        "sha256": "f3e6af7247814f4712bd5c6bed2c4e04f503edab82f56e3aaf76ee9a3bb984e8"
+      },
+      "member": {
+        "path": "资料/说明.md",
+        "bytes": 9,
+        "sha256": "8c80ef8e2ad113b669061172aee60ee4b4d8f0adb5898ca70d797f400cb36b06"
+      },
+      "scope": "Material read samples, not release archives; local ZIP artifact inspection, not parser tests."
+    },
+    "priorParserHashRetained": "384f49ff1c6b77ccc0e5d16b3029c82c7acb611af18016066d255b3a8d6bbb50",
+    "reportedHEADSameAsPriorFact": "bb334abfbfcd815090170f006b2636201aafbdb1",
+    "savedLoaderDiffOnlyFile": "doc/tests/material-zip.cjs",
+    "sourceOperationReadOnlyIsReportedNotFullCommandAudit": true
+  },
+  "actualJudgment": {
+    "kind": "r49-factory-new-goal3-judgment-observation",
+    "at": "2026-10-18T06:39:07.070Z",
+    "operationId": "c33f3a15-c0ab-4e85-bec3-eb82cf41077f",
+    "session": {
+      "id": "b98926a6-c143-4e69-be44-ee767858c8fc",
+      "revision": 25,
+      "goalRevision": 3,
+      "status": "achieved",
+      "enabled": false,
+      "summary": "已提供报告正文及其已验证路径/SHA，足以审阅本轮两项有限报告标准。正文将历史结果、本轮只读整理、未完成验收及建议性下一步分开记录。嵌套原件只有索引，不能据此宣称其均经本主管独立验证；签名原件缺失也不支持签名已核验或完整交付完成的结论。",
+      "blocker": "",
+      "nextAction": "按本次只读整理范围审阅：所供已验证报告记录了测试装载器有限修复、历史命令退出码、2项正例与10项负例，以及STORE/DEFLATE两个中文路径样本的原件路径、大小和指纹，可供R49主管继续核对。两项当前标准在报告与原件引用层面满足；这不表示已独立检查报告索引的全部原件、重新执行测试或完成产品验收。报告明确保留coverage、基础设施、browser和完整交付验收未完成，后继安排仅为另行授权后的建议。本轮到此，不自动执行建议、回放旧运行、修改源码、重跑测试或部署。报告未提供本轮原生签名原件，新task/run/native标识仍为unknown；不得把已验证报告哈希或本次审阅冒充签名核验。保留历史失败与费用unknown，独立产品及人工验收仍须另行完成。",
+      "modelIntentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:3:0:c3901605cb60fb6c2508871d9172700076ae8093:c25c9564defee259e17c8328a46108a4c3855fd88bdc929328555760e28886f0",
+      "decisionId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:3:0:c3901605cb60fb6c2508871d9172700076ae8093:c25c9564defee259e17c8328a46108a4c3855fd88bdc929328555760e28886f0"
+    },
+    "fullProductAccepted": false
+  },
+  "qualificationScope": "新签名外层来源与3956B报告绑定已核，两项report-only criteria逐字通过；模型只引用已核小报告，不冒全部嵌套原件已由主管独验。两member.bin未独立收件，内容H由已保存ZIP实际成员对应。未重测试/改码/部署；完整工厂及客户交付仍待验。",
+  "fullProductAccepted": false,
+  "factoryCurrentRunActive": false
+}

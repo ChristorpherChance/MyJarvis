@@ -1,0 +1,168 @@
+{
+  "kind": "r45-round13-ui-route-source-review",
+  "mode": "LOCAL independent source and saved-evidence review; no application execution",
+  "cut": {
+    "baseline": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+    "appHEAD": "f1fdec236fa9e3f901fee02aa9ca4b623a5e2d0a",
+    "finalHEAD": "6ab3e09b325a8f0f1868c8aeacb76c22d7060320"
+  },
+  "conclusion": {
+    "confirmedP1Count": 2,
+    "fullUnifiedWorkflowReleaseReady": false,
+    "reason": "The single entity workbench and navigation are implemented, but new-project copy registration is unreachable and the primary execution state is inferred from supervisor workflow rather than actual task/run state. These are reachable implementation defects, separate from missing browser/mobile acceptance.",
+    "currentImplementedScope": "One top-level Projects entry and project entity first screen; explicit context/kickoff/command calls; running input remains unsent draft; old supervisor/task/record panels mount only in collapsed details. Existing projects with a registered eligible copy can reach the new kickoff form, subject to independent API findings and later actual acceptance. This is not full project-management capability preservation or release approval."
+  },
+  "confirmedP1": [
+    {
+      "id": "R13-UI-NEW-PROJECT-SETUP-UNREACHABLE",
+      "title": "New project has no reachable work-copy registration or project management details",
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:8",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:18",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:20",
+        "apps/web/src/features/operations/work.tsx:23",
+        "apps/web/src/features/operations/work.tsx:30",
+        "apps/web/src/features/operations/work.tsx:31",
+        "apps/web/src/features/operations/work.tsx:34",
+        "apps/api/src/v1/work-domains.ts:160",
+        "apps/api/src/runtime/project-workbench-runtime.ts:23"
+      ],
+      "trigger": "Create an ordinary project through the new project list, or open an existing project that has no registered eligible copy.",
+      "evidence": "Registration defaults copies to an empty array. The new entity form exclusively selects context.choices, and context derives choices from existing project.copies. The original addCopy/edit/environment/milestone/decision-management controls remain solely inside ProjectsPage's selected-project Dialog. ProjectsPage is now rendered only for the list with target='projects', so selected has no project id; cards and create receipts instead navigate to EntityWorkbench, which does not mount those management controls. Its three detail sections only mount supervisor, tasks and supervision-work panels, none of which provides copy registration. Existing tab=copies/decisions/autonomy URLs reach the entity but their tab intent is not consumed. This is more than an optional advanced redesign: a fresh project cannot supply the workspace prerequisite from this UI.",
+      "minimumFix": "Expose a compact on-demand project details component within the same entity workspace, reusing existing version-protected edit/copies/environment/milestone/decision actions. At minimum, make registered server/workspace copy setup reachable when no choice exists, then refresh context. Preserve legacy tab intent by opening the corresponding detail rather than rendering two full panels on the first screen. Do not guess a path, remove copy validation, or route back to a separate project surface.",
+      "minimumVerification": "A real component/navigation interaction starting from project creation with copies=[] can open and submit copy registration through the existing command contract, refresh choices, and reach explicit kickoff without manual task id. Existing ?tab=copies/decisions links reach the same project's usable details. No model/native call is needed for this narrow regression."
+    },
+    {
+      "id": "R13-UI-EXECUTION-STATE-FROM-SUPERVISOR",
+      "title": "Primary workbench state labels a queued request as an attached executor and hides old task state when no supervisor exists",
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:13",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:17",
+        "apps/api/src/runtime/project-workbench-runtime.ts:23",
+        "apps/api/src/runtime/project-supervisor-runtime.ts:82",
+        "apps/api/src/runtime/execution-runtime.ts:208",
+        "apps/api/src/runtime/execution-runtime.ts:209"
+      ],
+      "trigger": "After a successful supervisor dispatch has inserted a queued run, before any agent claims it; also when opening a project with historical active/paused/blocked tasks but no supervisor session.",
+      "evidence": "supervisorDispatch updates task.status/executionStatus to queued and returns runId. Supervisor advance immediately sets its own session.status='running' on that enqueue receipt. The new first screen ignores context.tasks executionStatus/runId and maps session.running to 'executor attached to the current run'. The same display remains until supervisor processing catches up after a terminal result. With no supervisor session, it unconditionally says not started/no active execution despite the context returning existing task facts. Thus the user cannot distinguish request, claim, actual execution and returned result from the primary display.",
+      "minimumFix": "Derive the execution row from the current bound task/run facts, separately from the supervisor's judging/dispatch workflow. queued must remain queued; only a current claimed/running run may say running; terminal evidence should say returned/awaiting judgment as appropriate. For no supervisor but existing tasks, show their actual state and explicit association/reconciliation next step without auto-adopt, auto-start or new-task history washing. Use existing task executionStatus/runId or a narrowly added read-only runtime fact; no change to execution authority is needed.",
+      "minimumVerification": "Render actual context contracts for queued-but-unclaimed, claimed/running, terminal-before-supervisor-pump, and no-supervisor-with-old-blocked/paused/running cases. Verify no running wording is produced from enqueue alone and no action occurs during read/mount. Existing SSR running fixture does not distinguish these cases."
+    }
+  ],
+  "additionalConcreteRouteDefects": [
+    {
+      "priority": "P2",
+      "id": "R13-UI-LIST-QUERY-ROUTE",
+      "refs": [
+        "apps/web/src/project-route.ts:9",
+        "apps/web/src/project-route.ts:13",
+        "apps/web/src/DemoApp.tsx:29",
+        "apps/web/src/DemoApp.tsx:30"
+      ],
+      "evidence": "The resolver returns projects?unresolvedTask=missing or projects?intent=new-task, but Shell takes target.split('/')[0] without stripping query. The candidate becomes projects?..., so initial/hash navigation renders overview, and navigate rejects the route entirely. The explicit project selection/unresolved-task notice in ProjectWorkbenchPage:8 is consequently unreachable for these outputs. A known task can later resolve after asynchronous data arrival; an unresolved task remains affected.",
+      "minimumFix": "Parse path/query once and use the query-free first path segment consistently for route validation/render/group selection. Test resolver output through the Shell routing decision, including missing task and tasks/new without project, not only string equality."
+    },
+    {
+      "priority": "P2",
+      "id": "R13-UI-SAME-PROJECT-TASK-FOCUS",
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:8",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:10",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:20"
+      ],
+      "evidence": "EntityWorkbench is keyed only by project.id and tasksOpen initializes from params.has('task') only once. Navigating from projects/p to a tasks/t link for that same project updates params but leaves a previously closed task detail closed and TasksPage unmounted. A direct cold task deep link opens the detail, and an already-open task detail updates correctly; those narrower cases must not be confused with same-project navigation from a closed detail.",
+      "minimumFix": "React to a changed task-focus route by explicitly opening the task detail and preserving the requested task. Preserve explicit user closure until a new focus request rather than reopening on every unrelated poll."
+    }
+  ],
+  "implementedAndSourceConfirmed": [
+    "DemoApp ROUTES/GROUPS/common navigation now expose one Projects entry; project cards and newly created project receipts route to a project entity.",
+    "A shared resolver handles initial hash, navigate and hashchange/popstate. Known tasks resolve using actual task.projectId/project, not an arbitrary project. Task filter parsing strips query in TasksPage:49/53, so the report does not allege a query-as-project-id bug there.",
+    "The first screen does not eagerly stack the two old panels. Audit, task and records panels are on-demand mounts; CSS includes a narrow-screen grid fallback, but no actual mobile browser proof was supplied.",
+    "The main submit is disabled while supervisor is running/judging/dispatching; text is clearly an unsent local draft rather than a claimed native stdin delivery. Read-only loading does not itself call start/adopt/reply.",
+    "Paused continuation and waiting-user reply are explicit submit paths. Other blocked/review/stopped states do not silently resume via the main composer. API authority/replay and cross-store safety are independently reviewed by B."
+  ],
+  "savedVerificationActuallyReviewed": {
+    "routeAndCreateApp": "Saved final-targeted.tap reports 2/2 pass. The route test exercises the resolver function only. The createApp case uses a registered-copy fixture, real SQLite/task handler/HTTP agent/one signed native-format child and a deterministic model fixture, including task-commit recovery and subsequent pause/replay. It does not execute the project UI or prove supplier-model/browser acceptance.",
+    "productionComponent": "test-r45-workbench-render.mjs bundles the real ProjectWorkbenchPage but replaces useState/useEffect/useRef with a preloaded hook boundary; react-dom/server renders six session states. Assertions check broad visible phrases and a disabled marker. Effects, route changes, copy registration, actual submit/control events and queued-vs-claimed runtime facts are not exercised.",
+    "reportBoundaries": "The implementation report truthfully lists browser/mobile/history interactions, advanced details and further crash/state matrices as incomplete. Initial renderer/type failures and later successful outputs are retained. Those missing matrices alone are not classified as P1 here, nor are saved types/build results rerun or treated as product acceptance."
+  },
+  "advancedDetailsAssessment": "Deferring a polished advanced form is not by itself release blocking. Removing the only reachable copy/project-management actions is blocking because it prevents the agreed first-project workflow and hides capabilities needed to maintain existing projects. The pure advanced new-task auto-open omission and newest completion brief remaining in an expandable panel are additional scope gaps, not separately escalated as confirmed P1 in this bounded review.",
+  "filePins": [
+    {
+      "path": "apps/web/src/DemoApp.tsx",
+      "sha256": "9956d5597efb4dc5fe2543008ef0ff00153934a4ae1401c6ac44417e5bba8e8e"
+    },
+    {
+      "path": "apps/web/src/project-route.ts",
+      "sha256": "76777ee586eec6011bb0ad18228b88bfb91666b50980ec677779ad8e95eb64a1"
+    },
+    {
+      "path": "apps/web/src/project-route.test.ts",
+      "sha256": "c30a58b5ea0e375e509ebc9889595b714c1d2ee10d26fa0b8b6fe19dada088aa"
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "sha256": "f70460e1b5031e4950446e5c85a41b6dda03f4d4510e54ca68dee17d9dbf4ca1"
+    },
+    {
+      "path": "apps/web/src/features/operations/work.tsx",
+      "sha256": "f927259caaa65801d1e0db190b2f8a0f820a1df0f575545bab40ed44ad8e8fbc"
+    },
+    {
+      "path": "apps/web/src/features/operations/OperationsPage.tsx",
+      "sha256": "50dbe9db4b56f23224f78f5700250cd438cf11279d41f7b3fd2aecce91559f17"
+    },
+    {
+      "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+      "sha256": "c2c3918691a6321f47a03b983e67e05431296e6d1cd5c21d96e5edb43480f72a"
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "sha256": "d08f387a10356284fc5c9a0f4835377c721a5e34599ef6c1c69723ba17effc65"
+    },
+    {
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0"
+    },
+    {
+      "path": "apps/api/src/v1/work-domains.ts",
+      "sha256": "a3f1b93631541f91278c3c66c310e6c51b72785918a6849960deaf5c3c9b4e3d"
+    },
+    {
+      "path": "scripts/test-r45-workbench-render.mjs",
+      "sha256": "f279cdacc76d099e975ccc26cc9dd99b942bb8582c1b17970326a722d792a6d3"
+    },
+    {
+      "path": "reports/r45-round13-implementation.json",
+      "sha256": "d60bb08d1ff1cd7763066093886784035dc16097510e239b290ec854cb6b5075"
+    },
+    {
+      "path": "reports/r45-round13-logs/final-targeted.tap",
+      "sha256": "8faa786506630869c304192328c7af6b07217f1398755f99730f05133fc7c592"
+    },
+    {
+      "path": "reports/r45-round13-logs/workbench-render-final.txt",
+      "sha256": "d27bbc1e5db6717f2986ba557572ee76db503bbf05a612f9f23244ce2d400cbc"
+    }
+  ],
+  "execution": {
+    "appSourceEdits": 0,
+    "testsRun": 0,
+    "buildsRun": 0,
+    "appCommandsRun": 0,
+    "network": 0,
+    "remote": 0,
+    "model": 0,
+    "services": 0
+  },
+  "handoff": "Keep the real successful R13 terminal, app/report/package evidence and all unknown accounting. Give the two confirmed UI defects and the two narrow route defects to the original CC for a bounded continuation; do not claim that browser absence alone invalidates a source implementation, or that this source review authorizes deployment.",
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-round13-ui-route-source-review.json",
+      "sha256": "2ff1a25e14be5894da686dccefef444a030e4fbccbab23106aff545ac2bbe931",
+      "bytes": 13757
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

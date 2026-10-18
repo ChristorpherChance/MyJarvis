@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-worker-context-main607-meta-r2-main-actual-start-observation",
+  "at": "2026-10-16T09:09:45.518550+00:00",
+  "action": "start",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/run-r37-pg4-qa-worker-context-main607-meta-r2-once.mjs",
+    "sha256": "66984418bb8796d85fd0e23d9f7d2a426b4daf458e70880f206e782e90c450dc",
+    "bytes": 19207
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-context.json",
+    "sha256": "d917360ce8ec4e850de9ff6270156e00540b799381f58be5d83562d7617675c2"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-specific-main-entry-independent-local-review-final.json",
+    "sha256": "914721ba8fdd01dd0dd7da6e181551e7069a8b96241d5c2602c3f20e4f441de0"
+  },
+  "outer": {
+    "path": ".jarvis-dev/maintenance/run-r37-qa-worker-context-meta-r2-reviewed-main.py",
+    "sha256": "2773afdcc713df7360bda6e7faf22cc54845420b7006c83231041ae2a80d104c",
+    "bytes": 13766
+  },
+  "intent": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-start-root-outer-intent.json",
+    "sha256": "702bcbed40d01800b98f2ac0f59c1c498d862585d432ce5978f547488a160b11",
+    "bytes": 1158
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 34.17199999978766,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-start-root-outer-console.json",
+    "sha256": "9f53c45c26de66864c52cafcb7d038cd402b9b5e7a9d3d570588cc1064a38182",
+    "bytes": 192788
+  },
+  "result": {
+    "schemaVersion": 1,
+    "kind": "r33-pg4-qa-startup-entry-result",
+    "action": "start",
+    "status": "owner-state-unknown",
+    "ready": false,
+    "sourceAdmissionObserved": true,
+    "producerObservationComplete": true,
+    "sourceRechecksAttempted": true,
+    "maximumSourceReads": 1,
+    "maximumStarts": 1,
+    "maximumChecks": 1,
+    "automaticRetry": false,
+    "currentResourceScopeClosedVerified": false,
+    "actualPG4Qualified": false,
+    "productAccepted": false,
+    "executionNonceCreatedByEntry": false,
+    "errorCode": null,
+    "privateResult": {
+      "path": ".jarvis-dev/maintenance/pg4-r37-worker-context-meta-r2-entry-private-start-outcome-1792141785239-0c20aceb-86a7-4e1d-8a5f-4ed76eb91130.json",
+      "sha256": "c03c597833ca3af021228992b3c635b4676f3e7c1a6ff1fb9828d925a4558bb4",
+      "bytes": 291939
+    }
+  },
+  "resultParseError": null,
+  "transportError": null,
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualStartForCheck": null,
+  "conservativeNextCheckNotBefore": "2026-10-16T09:26:45.518550+00:00",
+  "independentSavedEvidenceAudit": null,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

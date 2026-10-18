@@ -1,0 +1,86 @@
+{
+  "kind": "r42-terminal-item-and-blocked-notification-qualified-readback",
+  "at": "2026-10-17T06:26:43.391Z",
+  "taskId": "a42f1bcf-f063-40f8-8469-6972ea520de8",
+  "runId": "64ed8add701473f69c2dcbec8164bc874b6bad59",
+  "terminal": true,
+  "checks": {
+    "otherFiveItemsPreserved": true,
+    "planPreserved": true,
+    "autonomyPreserved": true,
+    "globalPreserved": true,
+    "executorConfigPreserved": true,
+    "oldRevisionPrefixPreserved": true,
+    "oneItemRevisionAdded": true,
+    "oneProgressEventAdded": true,
+    "original74AcceptedZero": true,
+    "noActiveRun": true,
+    "oneMatchingBlockedNotification": true
+  },
+  "item": {
+    "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "revision": 9,
+    "hash": "9fc0fc6f2555ac8a3dca2b4aaf67d8d9e284fa8025271c7a89bc2ca08f934f94",
+    "status": "blocked",
+    "summary": "101 cc本次测试已结束并收回报告：432项中430通过、1失败、1跳过，完整回归未通过。构建、类型、lint及规则检查通过；浏览器、覆盖率与沙箱仍有缺口。",
+    "nextAction": "依据回传日志处理存储直链编码断言与两项材料检查工具错误，再补浏览器、覆盖率和独立沙箱环境。此单次测试已收尾，十分钟跟进继续暂停，未新派发修复或部署。",
+    "blocker": "存储直链断言失败；前端覆盖率工具缺失，后端未产出覆盖报告；原型与补充检查受浏览器依赖或工具错误阻塞，真实页面/业务AI和完整沙箱未验。",
+    "validationScope": "独立核237核心原件、74命令222日志引用和3份Vitest报告。主原型30组仅2组纯逻辑27断言通过，28组阻塞；补充19组无有效通过。Root重读原主目录及测试副本各617源文件均未变，7项本轮资源当前不存在。平台单轮round-limit，exit0不算产品通过，旧后置验证器未调用；74签收仍0。"
+  },
+  "run": {
+    "status": "round-limit",
+    "source": "signed-agent",
+    "exitCode": 0,
+    "rounds": 1,
+    "validation": null,
+    "usage": {
+      "inputTokens": 3103505,
+      "outputTokens": 21119,
+      "cacheReadTokens": 3014016,
+      "cacheWriteTokens": 0,
+      "totalTokens": 3124624,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "usageComplete": true,
+      "costUSD": 3.4082480000000004,
+      "costKind": "catalog-estimate",
+      "knownCostUSD": 3.4082480000000004,
+      "costComplete": true
+    }
+  },
+  "counts": {
+    "total": 6,
+    "planned": 1,
+    "running": 0,
+    "blocked": 1,
+    "completed": 4
+  },
+  "runtime": {
+    "running": 0,
+    "queued": 0,
+    "runningRunIds": [],
+    "scope": "bound-persisted-task-runs",
+    "unavailable": false,
+    "autonomyStatus": "blocked",
+    "reason": "REPAIR_ATTEMPTS_EXHAUSTED",
+    "revision": 20
+  },
+  "latestSequence": 48,
+  "matchingPersistedNotifications": 1,
+  "tenMinuteFollowup": "PAUSED",
+  "onlyOneItemCAS": true,
+  "productionDeploymentPerformed": false,
+  "report": {
+    "path": "docs/版本记录/cc-full-test-r42/test-results.json",
+    "sha256": "1bd4a7cd44a4549de6dfa6c1838b3335480396ad60e8cd5023fcf6abc3a13210"
+  },
+  "originalPublisherReceipt": {
+    "path": "artifacts/cc-full-test-r42/terminal-item-readback.json",
+    "sha256": "6599cb79e6aeeef5e69d5ac8d339aafeebdce0074496d65a3b2c201ef911e169",
+    "bytes": 3061
+  },
+  "correction": "The item CAS committed successfully. The first post-write check incorrectly expected summary notification; blocked items intentionally publish blocker. Original failed check remains preserved; this read-only check matched exactly one blocker notification. No command replay.",
+  "notificationBodyField": "blocker",
+  "newWriteCommands": 0,
+  "originalCASOnlyOnce": true
+}

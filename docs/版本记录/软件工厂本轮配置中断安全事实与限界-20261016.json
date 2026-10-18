@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-worker-context-main607-meta-r2-check-failed-safe-facts",
+  "at": "2026-10-16T09:32:55.688046+00:00",
+  "actualCheck": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-main-actual-check-observation-1792142832453-d4c1672c-d284-4acd-920a-73bd8f7436d1.json",
+    "sha256": "786ba851457ededff795b8d89add7adcdeaf43b16bc02ec031afd8aed9d647c6",
+    "bytes": 3041
+  },
+  "checkSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-check-saved-evidence-independent-local-review-final.json",
+    "sha256": "c5bbee7f1986fb206e802de150361f62bcbfeea946920010d4ddcdd12a5fd613",
+    "bytes": 17019
+  },
+  "checkState": "failed",
+  "firstFailure": {
+    "phase": "framework-context-validation",
+    "errorCode": "R33_PG4_DRIVER_NORMALIZED_CONFIG_CHANGED",
+    "errno": null,
+    "exceptionClass": "Error",
+    "origin": "source-bound-driver",
+    "driverInputBindingVerified": true
+  },
+  "specificConfigDifferenceKnown": false,
+  "privateDriverReportPinOnly": {
+    "path": "/var/lib/jarvis-development/101/r37-pg4-qa-worker-context-main607-meta-r2/553bb40c754c687be8195cc4c027863c/work/retained-pg4-driver-result.json",
+    "sha256": "b03b40d48559186ee3cac5aa9928adcc4afd4e860043fd4527e4ee2b933358ac",
+    "bytes": 9046
+  },
+  "driverErrorBytesRead": false,
+  "unitAtCHECK": {
+    "LoadState": "not-found",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0"
+  },
+  "ownerAndStopIdentityHistoricallyPresent": true,
+  "stateSHA256": "6e53a30579e3bea92bfa2878daf3880d64def3c59494be166d194f9597012b45",
+  "originalTerminal5PinsComplete": true,
+  "original5BytesRead": false,
+  "sourceBoundReadbackOnly": true,
+  "checkOpportunitiesClosed": true,
+  "startOpportunitiesClosed": true,
+  "newCurrentResourceScopeClosedVerified": false,
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "caseCounts": {
+    "passed": 0,
+    "businessFailed": 0,
+    "incomplete": 4
+  },
+  "original74": {
+    "passed": 0,
+    "total": 74
+  },
+  "privateProjectionBoundary": "A Root local projection printed an over-broad originalRecords filename-key list only; no Env, Inspect, argv, FD target, Base64 or raw error body was written to public evidence. Subsequent projection uses allowlisted counters and fingerprints."
+}

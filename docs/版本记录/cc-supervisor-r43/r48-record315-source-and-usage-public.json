@@ -1,0 +1,160 @@
+{
+  "kind": "record315-formal-ops-source-and-usage",
+  "record": 315,
+  "asOf": "2026-10-18T05:25:06.815Z",
+  "goal3": {
+    "kind": "r48-formal-goal3-compact-report-received",
+    "at": "2026-10-18T04:30:51.052305+00:00",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "supervisorSessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+    "goalRevision": 3,
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "runId": "7f85cd04d6bd0ffc3b20f67855fe8447504b7da0",
+    "source": "signed-agent",
+    "outcome": "success",
+    "nativeExitCode": 0,
+    "sourceResultSHA256": "00cf65b695783a452dd1527ffa3110692043cb5fe82ef3898ae45ccb56e8a376",
+    "evidence": {
+      "path": "artifacts/r48-activation-sidecar-facts.json",
+      "sha256": "c750a6b09aa85c5f6e50394806c108d931a2b05832dd11f79810724bf4ccd32a",
+      "bytes": 3207
+    },
+    "feedbackExactSevenKeys": true,
+    "questionIsEmptyString": true,
+    "reportRawUTF8CanonicalBase64HsizeChecked": true,
+    "authorClaimsIndependentlyVerified": false,
+    "usage": {
+      "inputTokens": 4875734,
+      "outputTokens": 13188,
+      "cacheReadTokens": 4848640,
+      "cacheWriteTokens": 0,
+      "totalTokens": 4888922,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "usageComplete": true,
+      "costUSD": 2.8894899999999986,
+      "costKind": "catalog-estimate",
+      "knownCostUSD": 2.8894899999999986,
+      "costComplete": true,
+      "invoiceUSD": null,
+      "internalPiUsagePrice": null
+    },
+    "supervisorAutomaticReview": "MODEL_REVIEW_INVALID",
+    "productionDeployed": false,
+    "productAccepted": false,
+    "oldResultsOrIntentsReplayed": false
+  },
+  "goal4": {
+    "kind": "r48-formal-goal4-compact-report-received",
+    "at": "2026-10-18T04:47:19.506336+00:00",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "supervisorSessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+    "goalRevision": 4,
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "runId": "849c786a060978b838352af2e47b54bae8ce34cd",
+    "source": "signed-agent",
+    "outcome": "success",
+    "nativeExitCode": 0,
+    "sourceResultSHA256": "9a80d2b2682428cebdc42d7c6fd5d58a53996a476852d2bdb072e7e6c42d6711",
+    "evidence": {
+      "path": "artifacts/r48-sidecar-readiness-facts.json",
+      "sha256": "5560226032b5a4a405933964d36e01e80c9764d69eb6d8889819cb9eb07ebc11",
+      "bytes": 3066
+    },
+    "feedbackExactSevenKeys": true,
+    "questionIsEmptyString": true,
+    "reportRawUTF8CanonicalBase64HsizeChecked": true,
+    "authorClaimsIndependentlyVerified": false,
+    "usage": {
+      "inputTokens": 6846214,
+      "outputTokens": 8755,
+      "cacheReadTokens": 6821504,
+      "cacheWriteTokens": 0,
+      "totalTokens": 6854969,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "usageComplete": true,
+      "costUSD": 3.7531769999999973,
+      "costKind": "catalog-estimate",
+      "knownCostUSD": 3.7531769999999973,
+      "costComplete": true,
+      "invoiceUSD": null,
+      "internalPiUsagePrice": null
+    },
+    "supervisorAutomaticReview": "MODEL_REVIEW_INVALID",
+    "productionDeployed": false,
+    "productAccepted": false,
+    "oldResultsOrIntentsReplayed": false
+  },
+  "sourceCommits": {
+    "goal3": "a37b57d9734d4ef3011974bb1041d6d0e7607578",
+    "goal4": "9e2e19f67c6b0b3f904a772fd8e96ff2e7cd2b63"
+  },
+  "verificationRange": [
+    "Goal3 two unique fake control cases; initial/final saved logs byteidentical, not four tests.",
+    "Goal4 two unique fake readiness cases, normal/rollback subcases; no real service, complete activation or filesystem access qualification.",
+    "The goal4 finite source pass closed two then-targeted findings but missed configuration uid/gid preservation; immutable prior pass is limited by the appended incident finding."
+  ],
+  "usage": {
+    "knownFiveCCParentTotalTokens": 27930217,
+    "cacheAlreadyIncludedInInput": true,
+    "catalogEstimateUSD": 17.751339999999992,
+    "invoiceUSD": null,
+    "costPolicy": "record-only without monetary cap",
+    "sixDistinctPiBindingsUsagePrice": null,
+    "goal5UsageAndPriceAtThisCut": null,
+    "goal3": {
+      "inputTokens": 4875734,
+      "outputTokens": 13188,
+      "cacheReadTokens": 4848640,
+      "cacheWriteTokens": 0,
+      "totalTokens": 4888922,
+      "costUSD": 2.8894899999999986,
+      "costKind": "catalog-estimate",
+      "invoiceUSD": null
+    },
+    "goal4": {
+      "inputTokens": 6846214,
+      "outputTokens": 8755,
+      "cacheReadTokens": 6821504,
+      "cacheWriteTokens": 0,
+      "totalTokens": 6854969,
+      "costUSD": 3.7531769999999973,
+      "costKind": "catalog-estimate",
+      "invoiceUSD": null
+    }
+  },
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-goal3-compact-report-public-receipt.json",
+      "bytes": 1458,
+      "sha256": "d66b831b69f5e3a2c371783395e4cee5940d8b510a6e63e36a8b8e7aaa21a9cd"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-goal4-compact-report-public-receipt.json",
+      "bytes": 1456,
+      "sha256": "0c56690156093e30c42c361dfec1780321ef53906197f38dc00a41dfc2c8dd72"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-goal3-two-fixture-saved-range-independent-review.json",
+      "bytes": 4742,
+      "sha256": "f3f0c034597aa0283854d73cd01b4a795797d3aaf2d66ca366c6aeb21ee23635"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-goal3-sidecar-independent-source-review.json",
+      "bytes": 9886,
+      "sha256": "d6b6895a8f91f7be603fc3e4beb227a79ed3eff6457a1290634b87cc7aba9002"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-goal4-two-readiness-fixture-saved-range-review.json",
+      "bytes": 3167,
+      "sha256": "175c38d1e0e23d4d2dd46f27fcbff857b5fad50e62bfd7f36983f3beb9f2dcee"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-ops-goal4-sidecar-independent-source-review.json",
+      "bytes": 10441,
+      "sha256": "12a63253a66e2ef3a04a46d56f6dd4ac5d20e4473e1cfe980f64b9f434c7d974"
+    }
+  ],
+  "noNewProductAcceptance": true
+}

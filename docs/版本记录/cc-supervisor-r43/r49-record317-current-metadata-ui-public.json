@@ -1,0 +1,212 @@
+{
+  "kind": "record317-current-metadata-ui-repair-safe-projection",
+  "asOf": "2026-10-18T06:46:14.073Z",
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-live-first-screen-rejection-r2.json",
+      "bytes": 903,
+      "sha256": "7fc1c7ecb166f79cec992c3ea99969e220bdc3c6807a7e4861e30312884fd111"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-jarvis-formal-goal7-e77b2de9-f49e-4f31-8c96-224126990f5c-readback.json",
+      "bytes": 1577,
+      "sha256": "4e2fbb039e642ef6dc9f81da753b56c86948817522eac3b40522a30bc457bacb"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-current-item24-c6991f47-e677-4b68-8307-23898a8ab3f0-readback.json",
+      "bytes": 1256,
+      "sha256": "073e8cb88d0b7d5d27554ae8a4e59b7374fb9f5b9bacb88d02ca81f48d292959"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-current-planB7-d5aaf6f1-0252-47be-b027-cf442caa996b-readback.json",
+      "bytes": 1208,
+      "sha256": "c05210c18a2a706615b8c1113171887956cc05b6f29b8e6ef8d8178fd7f2d34c"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-item24-rolling-evidence-r2.json",
+      "bytes": 2253,
+      "sha256": "bfdab21b71c7278c135488aa8dcfc54185babd4116375d5a1a990cca8f951769"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-current-item24-2a9f4ac8-b111-4e32-91c5-6feb2f848818-failure.json",
+      "bytes": 364,
+      "sha256": "16c9d11c9f2aa12b23dea0194de0c63d6f1ce11be47c4b8bb428c787c8b09794"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-metadata-persisted-projection-r3-local-correction.json",
+      "bytes": 3293,
+      "sha256": "2d2183465a4fdecb98e806c935cc831535cfcd9ebf8dc68ea6a6ac309e0dab7c"
+    }
+  ],
+  "firstScreenAcceptance": {
+    "kind": "r49-live-first-screen-acceptance-failed",
+    "release": "20261018-project-goals-r49",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "viewport": {
+      "width": 1274,
+      "height": 714
+    },
+    "screenshot": {
+      "path": "artifacts/cc-supervisor-r43/screenshots/r49-factory-current-goals.jpg",
+      "bytes": 102102,
+      "sha256": "08a4cddc48bd4a264b973a361e6e17f819672de6de5605a0f412d4d6e57772e3"
+    },
+    "finding": "plan.goal整段目标及通用横幅占据首屏；阶段和闭环摘要被挤至屏下，未达到简明要求。",
+    "UIAccepted": false,
+    "sourceRepairRequestedThroughJarvis": true,
+    "fullProductAccepted": false,
+    "lastReadVisible": "2026-10-18T06:37:19Z",
+    "recordedAt": "2026-10-18T06:44:18.587382+00:00",
+    "screenshotCaptureExactTime": null,
+    "timestampScope": "lastReadVisible是截图显示的最近读取时间；截图精确采集时间未另存。"
+  },
+  "goal7Dispatch": {
+    "kind": "r49-jarvis-formal-goal7-readback",
+    "at": "2026-10-18T06:42:45.659Z",
+    "operationId": "e77b2de9-f49e-4f31-8c96-224126990f5c",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "sessionId": "4123716c-17e4-44f5-bac9-5e4617d8e8d8",
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "sourceRunId": "9e0c0ce05d8ec0f07bf3711a32d0e35aec4c8dd2",
+    "sourceResultSHA256": "a8c5940d3b6b617983f305dd3a5186580b3a6893577071c5a7d256d4fd9a68e2",
+    "reviseCommandId": "264ed1eb-9d64-4276-b53f-d10046872122",
+    "startCommandId": "34fc4bbf-778e-4902-a6ee-199c49c2d8af",
+    "goalRevision": 7,
+    "after": {
+      "revision": 37,
+      "status": "running",
+      "enabled": true
+    },
+    "policy": {
+      "id": "db0d0f06-f5db-4c65-8b64-5ff303264b99",
+      "generation": 14,
+      "maxParentTokens": 10000000
+    },
+    "newRun": {
+      "id": "87ed35491efc3e832c6285f8b5556c947c27a9e9",
+      "status": "queued",
+      "maxRounds": 1,
+      "remainingTokens": 10000000,
+      "policyWindowId": "8291988836e9aa22c9533e9be96b25d55c117a1154693872529bf2cf5f1a0efa"
+    },
+    "originalResultAndUsageRetained": true,
+    "factory25AchievedDecisionAndDormantPolicyPreserved": true,
+    "businessPOSTs": 2,
+    "oldIntentRetried": false,
+    "contractAndVisibleFlowImplementationOnly": true,
+    "releaseExecutedByThisHelper": false,
+    "nodeR7Unchanged": true,
+    "activationCauseClaimed": false,
+    "actualPiFixedClaim": false,
+    "independentAcceptance": false,
+    "automaticRetry": false,
+    "automaticPolling": false,
+    "authenticationLifecycle": "withPlatform transient create/revoke; product writes only revise/start"
+  },
+  "goal7SavedRunningObservation": {
+    "fingerprint": {
+      "bytes": 8782,
+      "sha256": "eaf822ab57b48a3f7281e3ea039d9873571b04f0fee4af9752c08b64c282ac39"
+    },
+    "runId": "87ed35491efc3e832c6285f8b5556c947c27a9e9",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "status": "running",
+    "savedObservationScope": "item24写入前Root实际GET原件，不是仅凭queued派发猜执行中。"
+  },
+  "item24": {
+    "kind": "r49-item24-ui-repair-scope-readback",
+    "at": "2026-10-18T06:45:54.668Z",
+    "operationId": "c6991f47-e677-4b68-8307-23898a8ab3f0",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 24,
+      "hash": "e01ba4acd7a50498e0509c64614dc31e72f2ce8fd6580871d66bf2e52373b991",
+      "status": "running",
+      "stepId": "C2",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "runId": "c3901605cb60fb6c2508871d9172700076ae8093"
+    },
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 6,
+      "hash": "a8bf563721475e65fd7e52a82759914c1307d1e01f3a833e6000191c1ccd213e",
+      "unchanged": true
+    },
+    "commandId": "4687c7d4-9af8-47fc-9aa4-bed67ba47d30",
+    "businessPOSTs": 1,
+    "evidencePrefixPreserved": 29,
+    "replacedRollingTailCount": 1,
+    "oldRollingPreservedInAggregateAndHistory": true,
+    "factoryCurrentGoalLimitedAchieved": true,
+    "factoryActive": false,
+    "jarvisUIRepairRun": "87ed35491efc3e832c6285f8b5556c947c27a9e9",
+    "UIAccepted": false,
+    "fullProductAccepted": false,
+    "independentAcceptance": false,
+    "otherFiveItemsPlanConfigGlobalAutonomyPreserved": true,
+    "executionsOrModelsStarted": false,
+    "automaticRetry": false
+  },
+  "planB7": {
+    "kind": "r49-planB7-ui-repair-scope-readback",
+    "at": "2026-10-18T06:46:14.073Z",
+    "operationId": "d5aaf6f1-0252-47be-b027-cf442caa996b",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 7,
+      "hash": "3a91a27884da85739b9d5a3859055fc3623ba80bcf918949804d32695bcd5a6a",
+      "previousHash": "a8bf563721475e65fd7e52a82759914c1307d1e01f3a833e6000191c1ccd213e",
+      "currentStepId": "C2",
+      "goalBasis": "plan",
+      "active": false
+    },
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 24,
+      "hash": "e01ba4acd7a50498e0509c64614dc31e72f2ce8fd6580871d66bf2e52373b991",
+      "unchanged": true
+    },
+    "commandId": "b7cde8f0-cedb-473f-92f6-f16e26af78ef",
+    "businessPOSTs": 1,
+    "changedFields": [
+      "currentStepId",
+      "nextAction",
+      "steps[C2].nextAction"
+    ],
+    "twelveStepsGoalsCriteriaTaskRunBindingsPreserved": true,
+    "oldSixPlanVersionsPreserved": true,
+    "allSixItemsHistoryAndEvidencePreserved": true,
+    "limitedFactoryGoalAchievedNotWholeProduct": true,
+    "UIAccepted": false,
+    "independentAcceptance": false,
+    "executionsOrModelsStarted": false,
+    "automaticRetry": false
+  },
+  "controlCorrections": {
+    "prebind": "Root本机LF字面断言遇Windows CRLF，preIO/无远端；distinct正文绑定后继续，未当线上故障。",
+    "preCAS": {
+      "kind": "r49-item24-update-failed",
+      "operationId": "2a9f4ac8-b111-4e32-91c5-6feb2f848818",
+      "attempted": false,
+      "commandId": null,
+      "privateFailure": {
+        "bytes": 114,
+        "sha256": "712763cc1d8697d4b44f5af3dfdecba88d29526e4d779f36d6ac21e629fb1f3b"
+      },
+      "readOnlyReconciliationRequired": false,
+      "newPOSTAllowed": false,
+      "automaticRetry": false
+    },
+    "projection": "作者误将steps动态readmodel纳比较，写前拒；distinct-r3仅持久SK投影，版本/H/全部12目标标准与绑定门保，freshop成功。",
+    "oldFailuresRetained": true,
+    "oldOperationReplayed": false
+  },
+  "scope": "item24 running是Jarvis建设goal7首屏返修；主task/run仍Factory843/c390报告来源，Factory25已有限达标/disabled且无活动Factoryrun。C2需返修，C3有限判断不等于全产品达标。",
+  "UIAccepted": false,
+  "goal7ResultIncluded": false,
+  "futureR49r1Accepted": false,
+  "independentAcceptance": false
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-current-main607-fixed-metadata-r2-actual-observation",
+  "at": "2026-10-16T08:00:36.968756+00:00",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/read-r37-pg4-current-main607-fixed-metadata-r2-once.mjs",
+    "sha256": "dedc39feead035e99b0facc88befed9f706f7191ddbc4080c9d3a9781933874f"
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-current-main607-fixed-metadata-r2-entry-context.json",
+    "sha256": "c04fdb9be16d013cd0b77097108b0d1469376d369ddd6e4cb1df4d0fa748081e"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-current-main607-fixed-metadata-r2-entry-independent-local-review-final.json",
+    "sha256": "066dda41e8761ee03fee070ba6d5276e2707aafcd5cfb1dffcf745b2341298d4"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 50.25,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-current-main607-fixed-metadata-r2-operator-outcome.json",
+    "sha256": "dd1aa303a1f08232680f8730ba5bc7abd776a6c1a96c7c7285aefb28210e9852",
+    "bytes": 196024
+  },
+  "result": {
+    "kind": "r37-pg4-current-main607-fixed-metadata-r2-entry-result",
+    "ready": true,
+    "errorCode": null,
+    "actualCurrentScopeObserved": true,
+    "privateOutcome": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-current-main607-fixed-metadata-r2-outcome-1792137636392-9274ed90-377d-401a-9be6-8069a2470c01.json",
+      "sha256": "9276dbb2233f389546449554d3e901b0a566f0bd10c68078455961ad2a8793d7",
+      "bytes": 9523638
+    },
+    "once": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-current-main607-fixed-metadata-r2-read-once.json",
+      "sha256": "d23db888f2341203e04224f4731a27c0f0f00d86946a30884014e127a6d4e62d",
+      "bytes": 148020
+    },
+    "rawCurrentTransport": {
+      "path": ".jarvis-dev/maintenance/pg4-r37-main607-meta-r2-current-private-1792137622164-070c4453-d564-4fd2-b842-32fb09a4c1d6.json",
+      "sha256": "0e9460229bee33b1f792c6834cc114f939e5806490407b439a007a08f1159ce3",
+      "bytes": 10651029
+    },
+    "sourceBytesStable": true,
+    "maximumReaderRuns": 1,
+    "maximumScopeReads": 1,
+    "maximumWholeReads": 2,
+    "expectedRootRoutes": 9,
+    "automaticRetry": false,
+    "executionNonce": null,
+    "currentResourceScopeClosedVerified": true,
+    "actualPG4Qualified": false,
+    "evidence": null
+  },
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": true,
+  "savedEvidenceIndependentlyAudited": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

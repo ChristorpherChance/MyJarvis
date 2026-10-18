@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "kind": "exact-tool-input-report-cut-recovery",
+  "atUTC": "2026-10-17T12:15:51.2261196Z",
+  "cause": "Reviewer enriched an already referenced report in place. This changed the path fingerprint after the first cut had been used. The exact initial bytes have now been recovered and the enriched final retained at a distinct path.",
+  "source": "Exact initial AddFile custom_tool_call input retained in this task local rollout; the public report bytes were decoded from its JSON literal and patch addition lines, not reconstructed from memory.",
+  "sourceToolCallId": "call_68aab338cbfe412d9ffecc3216d38c0c",
+  "creationInputSha256": "9538aa58749a9db73439fd0480a8c74f8d769f1869f9204eb771ca4a572322af",
+  "expectedReference": "artifacts/cc-supervisor-r43/maintenance-round8-outcome-safe-summary.json#refs",
+  "original": {
+    "path": "artifacts/cc-supervisor-r43/round8-experience-decision-source-review.json",
+    "sha256": "a580e3445d538dd471f38f727db97ee60f9bd0ea425c406be85c978779e6cc9f",
+    "bytes": 15276,
+    "restoredOnlyAfterStrictHashAndSizeMatch": true,
+    "readbackMatched": true
+  },
+  "final": {
+    "path": "artifacts/cc-supervisor-r43/round8-experience-decision-source-review-final.json",
+    "sha256": "cab0335384885929ab31adab24c81d145a666c8f56e8af52ec370134b82df43d",
+    "bytes": 21893,
+    "preservedWithCreateNew": true,
+    "readbackMatched": true
+  },
+  "oldReferencesOrDecisionsEdited": false,
+  "applicationFilesChanged": false,
+  "remoteOrApiUsed": false,
+  "projectTestsRun": false,
+  "privateConversationOrEnvironmentRepublished": false,
+  "futureSealingRule": "Treat both cuts as immutable; any later correction or enrichment must use a distinct path and an explicit relation to the prior fingerprint."
+}

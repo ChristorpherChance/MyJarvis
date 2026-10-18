@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-16T04:13:52.466Z",
+  "main607Decision": {
+    "id": "25580b0e-1a6a-466a-8a49-df3a3f42f9f3",
+    "revision": 1,
+    "status": "selected",
+    "hash": "b9d152316c6df979a49481e59513331f36f8f78955f1b8b801e19fe6ff5c904d",
+    "independentAcceptance": false
+  },
+  "change14Decision": {
+    "id": "08a56fc9-d742-4927-b337-151c85f81478",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "da613a4cc20d62570d567aff78191c0de95a822c93818e29bbec717faf09914f",
+    "independentAcceptance": false
+  },
+  "items": [
+    {
+      "id": "4fbfd87a-fe71-461b-b1a6-bc847308b43f",
+      "title": "继续定位前置问题与当前范围核查",
+      "status": "running",
+      "revision": 5,
+      "hash": "ac2cfccb081b8a689cc4ae01e4bc5ecd7c223f1bdac8ff36b7c7293c75cd16ad",
+      "summary": "14处变化已逐项取得并核对：集中网页与开发文档，未直接修改四用例回调；作者仍未知，新增功能未验收。",
+      "nextAction": "准备固定607现状的新保护入口，先完整保护和当前资源收口，再恢复四用例；目录再变化即拒绝。",
+      "completionSummary": "",
+      "validationScope": ""
+    },
+    {
+      "id": "a24cdb77-77e1-476f-acf4-2240a48befa5",
+      "title": "核清诊断结果与当前目录变化",
+      "status": "completed",
+      "revision": 3,
+      "hash": "3216103977c0b8e965ee0d63993a44797599975097c950fed64655f0feaacb59",
+      "summary": "目录诊断及14处变化核对完成：607文件、5新增9修改0删除；全部变化原件双读一致，已完成限定影响分析。",
+      "nextAction": "按新选择继续固定607现状的保护与当前资源核查，不执行新增网页功能。",
+      "completionSummary": "目录变化已核清：5新增、9修改、593不变；14个原件双读和保存独审通过。改动涉及模板核对、设计覆盖、原型关联及AI评审界面，作者未定位，新增功能未验收。接下来用固定607现状保护继续前置核查。",
+      "validationScope": "仅目录观察、14定点原字节、保存独审与静态影响分析；没有运行新增界面、模型或四用例，完整保护和当前资源收口尚未通过。"
+    }
+  ],
+  "counts": {
+    "total": 6,
+    "planned": 3,
+    "running": 1,
+    "blocked": 0,
+    "completed": 2
+  },
+  "latestSequence": 13,
+  "matchingPersistedNotifications": 2,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "notesWritten": false,
+  "actualPlan": 83,
+  "PG4Layer": 29,
+  "EnvLayer": 23,
+  "new607BaselineSelected": true,
+  "new607ProtectionImplemented": false,
+  "new607FullProtectionQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false
+}

@@ -1,0 +1,104 @@
+{
+  "kind": "record309-usage-separated-scopes",
+  "businessThreeNativeParents": {
+    "scope": "Three business native-parent run usage records; maintenance R16/R17, supervisor Pi and internal Codex are separate.",
+    "perRun": [
+      {
+        "runId": "b9229790af042425b3d06597221041302e71d7df",
+        "inputTokensIncludingCacheRead": 1992470,
+        "outputTokens": 16781,
+        "cacheReadTokensIncludedInInput": 1916928,
+        "totalTokens": 2009251,
+        "directoryEstimateUSD": 2.501507,
+        "actualBillUSD": null
+      },
+      {
+        "runId": "2ad1cb1529b3a73622aefea6a7a232542e9c050b",
+        "inputTokensIncludingCacheRead": 432359,
+        "outputTokens": 3761,
+        "cacheReadTokensIncludedInInput": 422528,
+        "totalTokens": 436120,
+        "directoryEstimateUSD": 0.354444,
+        "actualBillUSD": null
+      },
+      {
+        "runId": "f9a65af6886f00fcf98d9b54455e7f706f3e303a",
+        "inputTokensIncludingCacheRead": 576214,
+        "outputTokens": 4734,
+        "cacheReadTokensIncludedInInput": 566016,
+        "totalTokens": 580948,
+        "directoryEstimateUSD": 0.452348,
+        "actualBillUSD": null
+      }
+    ],
+    "parentTotals": {
+      "inputTokensIncludingCacheRead": 3001043,
+      "outputTokens": 25276,
+      "cacheReadTokensIncludedInInput": 2905472,
+      "totalTokens": 3026319
+    },
+    "cacheReadIsIncludedInInputNotAddedAgain": true,
+    "directoryEstimateUSD": 3.308299,
+    "directoryEstimateIsInvoice": false,
+    "actualBillUSD": null,
+    "supervisorPiTokens": null,
+    "supervisorPiCostUSD": null,
+    "internalCodexTokens": null,
+    "internalCodexCostUSD": null,
+    "originalDerivedReportUsageUnknownPreserved": true,
+    "policy": "record-only; no monetary spending cap; unknown usage/prices remain null rather than zero"
+  },
+  "failedMaintenanceParents": [
+    {
+      "round": 17,
+      "itemFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-item.json",
+        "sha256": "7308c6df9ceb5aa781d47741a78a197c2b6f787dfff41c8f7bbe3def03e5b28a",
+        "bytes": 861
+      },
+      "POSTFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round17-failed-final-usage-post-receipt.json",
+        "sha256": "685837668e2a8760d0004214c6315f6febb89a2cbf53f281bbf85a3abe369851",
+        "bytes": 2122
+      },
+      "measurementStatus": "reported",
+      "inputTokensIncludingCacheRead": 14675981,
+      "outputTokens": 4836,
+      "cacheReadIncludedInInput": 14651392,
+      "cacheWriteTokens": 0,
+      "totalTokens": 14680817,
+      "costUSD": null,
+      "statusCode": 200,
+      "acceptedItems": 1,
+      "duplicate": false,
+      "reportedZeroDoesNotProveZeroActualCost": false
+    },
+    {
+      "round": 18,
+      "itemFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round18-failed-final-usage-item.json",
+        "sha256": "7ec6e4e76eeb2d5ac0d809e2fd157a195b069817feba35e41df1f1c52079c30e",
+        "bytes": 837
+      },
+      "POSTFingerprint": {
+        "path": "artifacts/cc-supervisor-r43/r46-round18-failed-final-usage-post-receipt.json",
+        "sha256": "fc4ed12b88197b28756473eb2208a1f4d754b22ffd95f62c4ca1a24b731e7afa",
+        "bytes": 2122
+      },
+      "measurementStatus": "reported",
+      "inputTokensIncludingCacheRead": 0,
+      "outputTokens": 0,
+      "cacheReadIncludedInInput": 0,
+      "cacheWriteTokens": 0,
+      "totalTokens": 0,
+      "costUSD": null,
+      "statusCode": 200,
+      "acceptedItems": 1,
+      "duplicate": false,
+      "reportedZeroDoesNotProveZeroActualCost": true
+    }
+  ],
+  "PiAndInternalUnknownRemainNull": true,
+  "noMonetaryCap": true,
+  "directoryEstimateIsInvoice": false
+}

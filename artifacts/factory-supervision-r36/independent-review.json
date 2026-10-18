@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-16 03:00:23 UTC",
+  "kind": "factory-supervision-r36-independent-source-review",
+  "reviewer": "offline_capture_vault",
+  "scope": "Local non-author static source review of supervision work ledger, owner SSE, notification delivery, frontend client/panel/context and final HTTP5xx/detail-refresh deltas",
+  "result": "no-open-P0-P1-in-reviewed-source",
+  "remainingP0P1": 0,
+  "remainingReviewFindings": 0,
+  "sourceRefs": [
+    {
+      "path": "apps/api/src/runtime/supervision-work-runtime.ts",
+      "sha256": "37d5c3df8d5d1298238cd2bfcf457947c5419c23efdaeb67dc41888854ff7a03",
+      "bytes": 18046
+    },
+    {
+      "path": "apps/api/src/runtime/supervision-work-routes.ts",
+      "sha256": "0090ab1811a53082e567d2c7baeecc3ac2e612b2448965c77c02a685563e0355",
+      "bytes": 4229
+    },
+    {
+      "path": "apps/api/src/runtime/notifications.ts",
+      "sha256": "8c3a1d33d61df371e856d8fcfce1cefca27d00a31a394554a26c6c37885f3f46",
+      "bytes": 40493
+    },
+    {
+      "path": "apps/api/src/v1/repository.ts",
+      "sha256": "42df86773d63ca3e70ae9141ed1ef1cd08707f70614493df4adda08dc4fdc4dd",
+      "bytes": 12896
+    },
+    {
+      "path": "apps/api/test/supervision-work.test.ts",
+      "sha256": "e094309a6dbf0fb0241169fca7c83db88720ba9e7c8ba1d5ef755c5b4b746a79",
+      "bytes": 14446
+    },
+    {
+      "path": "apps/web/src/supervision-work-client.ts",
+      "sha256": "e344bdc97b9d1f94bc42696cf97a3d4b5a135c7ed6db6ef4e3356a87d3e5f632",
+      "bytes": 5744
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+      "sha256": "fd9dac7109ba2ed13a87e9249b6b45d82e4fcb19a23822e26b893628500f21de",
+      "bytes": 14318
+    },
+    {
+      "path": "apps/web/src/features/operations/supervision-work-view.ts",
+      "sha256": "f70afc09771d6bc0bfb70616e024eafaa23b04ec76cef1fd51a7dc6e5273e74d",
+      "bytes": 2825
+    },
+    {
+      "path": "apps/web/src/features/operations/supervision-work-view.test.ts",
+      "sha256": "4168748b889756790aea84c0c4e6dde4e7c65e596227333c11182bde9e70360a",
+      "bytes": 6248
+    },
+    {
+      "path": "apps/web/src/demo/context.tsx",
+      "sha256": "8968ca4160441da7b9c0c36e66787e28a13e09a9f484aa2023591fbd983f8191",
+      "bytes": 19338
+    },
+    {
+      "path": "apps/web/src/NotificationCenter.tsx",
+      "sha256": "62c6b5c87d90e25442236572582511f831eb700abe30671933b266cb18c9d426",
+      "bytes": 8170
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectAutonomyPanel.tsx",
+      "sha256": "d52936e65f81dd856eec9ac3cf356548e6dcb2944888b92fd6426551c229d3d7",
+      "bytes": 35487
+    },
+    {
+      "path": "apps/web/src/features/operations/work.tsx",
+      "sha256": "56074c61c87080ec9925bf5d039443511ea2e1e6b3c3a8ffe5465d4adfdccb73",
+      "bytes": 41553
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.css",
+      "sha256": "0b545c407882f3dd353c289f48d510db0c009d206ba0bd1f2023caa0b49832de",
+      "bytes": 2391
+    }
+  ],
+  "sourceRefsPhysicalHashesMatchedReviewedFreeze": true,
+  "evidenceRead": [
+    {
+      "path": "artifacts/capture-r36/supervision-work-api-local.json",
+      "sha256": "1b24766d071c33d9a408ceab13f9d5d77ca654398045b52ceb1c6afb6eef76ae",
+      "bytes": 3668
+    },
+    {
+      "path": "artifacts/supervision-r36/frontend-cut-attempt-1.json",
+      "sha256": "f245949bc662dea2c29acc4baf261569e15ef43113a00e626c97d2741aa6d7c3",
+      "bytes": 3234
+    },
+    {
+      "path": "artifacts/supervision-r36/frontend-p1-attempt-2.json",
+      "sha256": "a8fb893cf572952690fd63cc9df6d839b5b6722b7e2fa932b5ba064361a60764",
+      "bytes": 1780
+    }
+  ],
+  "findings": [
+    {
+      "id": "R36-REVIEW-1",
+      "severity": "P1",
+      "status": "closed-by-static-review",
+      "files": [
+        {
+          "path": "apps/api/src/runtime/supervision-work-routes.ts",
+          "line": 9
+        },
+        {
+          "path": "apps/api/src/runtime/notifications.ts",
+          "line": 127
+        }
+      ],
+      "problem": "An invalid or revoked member cookie could fall back to a separate valid administrator cookie, including the notification route carrying the new private supervision briefs.",
+      "fix": "Both route-local principal helpers disable administrator fallback whenever a member cookie is present."
+    },
+    {
+      "id": "R36-REVIEW-2",
+      "severity": "P1",
+      "status": "closed-by-static-review",
+      "files": [
+        {
+          "path": "apps/web/src/supervision-work-client.ts",
+          "line": 52
+        },
+        {
+          "path": "apps/web/src/demo/context.tsx",
+          "line": 62
+        }
+      ],
+      "problem": "SSE session revocation did not immediately invalidate frontend state; notification refresh could reuse a pending pre-revocation request.",
+      "fix": "Current-stream session-expired closes and clears streams and emits auth-required to invalidate private epochs. Late old-stream expiry is ignored. Notification change handling queues a fresh read after the previous flight."
+    },
+    {
+      "id": "R36-REVIEW-3",
+      "severity": "P1",
+      "status": "closed-by-static-review",
+      "files": [
+        {
+          "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+          "line": 57
+        },
+        {
+          "path": "apps/web/src/features/operations/supervision-work-view.ts",
+          "line": 20
+        }
+      ],
+      "problem": "HTTP500/502/503 was treated as a definitive non-commit, allowing changed content to receive a new command ID after a possibly committed create.",
+      "fix": "Only explicit rejection statuses clear uncertainty. Other failures retain the exact body and command ID, and changed content is blocked while the receipt remains unknown."
+    },
+    {
+      "id": "R36-REVIEW-4",
+      "severity": "P2",
+      "status": "closed-by-static-review",
+      "files": [
+        {
+          "path": "apps/api/src/runtime/supervision-work-routes.ts",
+          "line": 23
+        }
+      ],
+      "problem": "An initial replay could close before heartbeat assignment and still leave a newly created interval.",
+      "fix": "Heartbeat is created only while the stream remains open."
+    },
+    {
+      "id": "R36-REVIEW-5",
+      "severity": "P2",
+      "status": "closed-by-static-review",
+      "files": [
+        {
+          "path": "apps/api/src/runtime/supervision-work-runtime.ts",
+          "line": 84
+        }
+      ],
+      "problem": "Durable replay used the latest task status with an older source event time and could present historical execution events as completed briefs.",
+      "fix": "Replayed execution notices use the persisted event type and a generic execution-update label. Current execution facts remain separately projected."
+    },
+    {
+      "id": "R36-REVIEW-6",
+      "severity": "P2",
+      "status": "closed-by-static-review",
+      "files": [
+        {
+          "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+          "line": 41
+        },
+        {
+          "path": "apps/web/src/features/operations/ProjectSupervisionWorkPanel.tsx",
+          "line": 42
+        }
+      ],
+      "problem": "A newer overview invalidated an expanded cached detail without reloading it; a first old detail response arriving after an overview update had the same gap.",
+      "fix": "The effect watches overview and details, reloading stale loaded details. Detail requests are deduplicated by epoch/item/revision and late responses cannot lower the stored detail revision.",
+      "fixAuthor": "Root",
+      "runtimeVerification": "Not run by this reviewer; fresh browser verification remains separate."
+    }
+  ],
+  "checked": [
+    "Owner/current-principal checks precede work reads, writes and SSE access; SSE payload carries metadata without titles or brief bodies.",
+    "One owner EventSource is shared by context and project panels; cursor reads stay owner-bound and reconnects trigger authoritative reads.",
+    "Work revision, command receipt and event outbox share a transaction; expectedVersion enforces CAS and command fingerprints reject different-body reuse.",
+    "Notification IDs are deterministic per owner and immutable source event, making replay after the cross-database crash boundary idempotent.",
+    "Known private path segments and exact credential basenames are refused. Evidence references are neither opened nor declared verified.",
+    "Work-item completion remains separate from independent product acceptance. The ledger does not dispatch tasks or alter original objective counts."
+  ],
+  "authorEvidenceSummary": {
+    "api": "Six new unique groups each have a passing cut. The initial five-group cut retained 2 pass / 3 fail; only the failed three were rerun after correction, plus one new owner-stream group. No single all-six passing run is claimed.",
+    "frontend": "The original two new groups passed once; the final HTTP5xx correction added one targeted pure submission lifecycle group that passed once without rerunning the original two.",
+    "finalRootDetailDelta": "Reviewed statically at panel fd9dac7109ba2ed13a87e9249b6b45d82e4fcb19a23822e26b893628500f21de; not covered by the earlier author pure-group executions.",
+    "executionByReviewer": "No author tests or typechecks rerun."
+  },
+  "notPerformedByReviewer": [
+    "tests",
+    "typecheck",
+    "build",
+    "application execution",
+    "browser execution",
+    "model invocation",
+    "network/API requests",
+    "remote access",
+    "production mutation",
+    "private business data reads",
+    "source modifications"
+  ],
+  "independentRuntimeQualification": false,
+  "product74Accepted": false,
+  "factoryPG4QualifiedByThisReview": false,
+  "productionReleasedByThisReview": false,
+  "limitations": [
+    "Static source review cannot substitute for the fresh build, real browser checks, deployment health or现场 acceptance.",
+    "Author test results are attributed to the linked bounded reports rather than reviewer executions.",
+    "The previously closed PG4 diagnostic and execution opportunities were not reopened."
+  ],
+  "cost": {
+    "modelRequestsByReviewer": 0,
+    "externalProviderCostUSD": 0,
+    "internalAssistantUsage": "not available",
+    "internalAssistantCostUSD": null,
+    "policy": "record-only; unknown internal usage and price remain separate"
+  }
+}

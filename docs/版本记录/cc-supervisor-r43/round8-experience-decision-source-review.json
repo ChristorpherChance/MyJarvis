@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "reviewKind": "independent-local-source-and-collected-evidence-review",
+  "reviewerScope": "B: experience context, project decision lifecycle and related supervisor UI wiring",
+  "cut": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round8",
+    "head": "f9efea4a2955fb4093babd5b46cb10af6df1bd29",
+    "appCommit": "104676128894a59ffb1d273a48781c1e701f0cdb",
+    "reportedRuntimeBuild": "20261017-cc-supervisor-r43-r5",
+    "collection": "artifacts/cc-supervisor-r43/maintenance-round8-collection-1792238894374.json"
+  },
+  "verdict": {
+    "releaseApproved": false,
+    "confirmedP1": 2,
+    "reason": "Decision projection has two deterministic command/branch failures. Fixing those alone does not supply missing real option eligibility evidence or complete actual-action and notification wiring.",
+    "sourceReviewIsNotFieldAcceptance": true
+  },
+  "boundaries": {
+    "applicationFilesChanged": false,
+    "applicationTestsExecuted": false,
+    "networkOrProductApiUsed": false,
+    "daemonOrNativeExecutorStarted": false,
+    "browserUsed": false,
+    "productionDeployed": false,
+    "newModelCostIncurredByReview": false,
+    "privateValuesOrRawConversationRepublished": false
+  },
+  "confirmedFindings": [
+    {
+      "id": "R8-B-P1-1",
+      "priority": "P1",
+      "title": "Record/change and select reuse one idempotency command, so the selected projection cannot commit",
+      "refs": [
+        {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 82},
+        {"path": "apps/api/src/runtime/project-decision-runtime.ts", "line": 115},
+        {"path": "apps/api/src/runtime/project-decision-runtime.ts", "line": 119}
+      ],
+      "trigger": "An event has projectionSelection and its record/change returned a proposed decision.",
+      "cause": "Both record/change and select receive commandId=e.eventId under the same actor. ProjectDecisionRuntime keys commands by actor/id while its fingerprint includes operation and input. Select therefore always conflicts with the preceding stored command.",
+      "result": "The catch recovers the original proposal by its source basis reference, inserts the event link and allows the projection to complete. The existing-link branch never retries selection. Subsequent instruction/result projection only accepts selected or implemented decisions, so its action record is skipped.",
+      "minimalChange": "Use deterministic, distinct, valid UUID command identities per event and operation, and make the phase state/replay resume through select rather than equating a proposal link with full lifecycle completion. Preserve CAS and all original history. Selection must still pass the real eligibility guard.",
+      "verificationNeeded": "Bound real selected event -> committed selected revision -> real dispatch receipt -> signed result action, including replay and restart without duplicate revisions/actions."
+    },
+    {
+      "id": "R8-B-P1-2",
+      "priority": "P1",
+      "title": "Correction targeting an existing decision calls the record entry that explicitly rejects changeOf",
+      "refs": [
+        {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 82},
+        {"path": "apps/api/src/runtime/project-decision-runtime.ts", "line": 152},
+        {"path": "apps/api/src/runtime/project-decision-runtime.ts", "line": 186}
+      ],
+      "trigger": "A correction resolves its original event/current decision to an existing ProjectDecision.",
+      "cause": "The branch uses change only when prior exists AND kind is not correction; the actual correction falls through to record(changeOf=prior.id). The record entry rejects every non-null changeOf before recording a command.",
+      "result": "The durable projection remains pending; it cannot produce the required linked change proposal or later supersession. Initial-goal correction without an existing projected decision does not exercise this branch.",
+      "minimalChange": "Route a correction with an existing decision through change with the exact prior revision. Preserve the original revision and defer supersession until a valid new selection; never overwrite old facts or label a proposal as implemented.",
+      "verificationNeeded": "An actual selected/implemented source decision, owner correction to its exact event/hash, CAS conflict preservation, linked proposed change, valid selection/supersession, replay/restart, and immutable previous action evidence."
+    }
+  ],
+  "realOptionEligibilityBoundary": {
+    "status": "confirmed-source-contract-limitation",
+    "refs": [
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 19},
+      {"path": "apps/api/src/runtime/project-supervisor-model.ts", "line": 36},
+      {"path": "apps/api/src/runtime/project-supervisor-model.ts", "line": 45},
+      {"path": "apps/api/src/runtime/supervisor-review.ts", "line": 43},
+      {"path": "apps/api/src/runtime/supervisor-review.ts", "line": 46},
+      {"path": "apps/api/src/runtime/project-decision-runtime.ts", "line": 68},
+      {"path": "apps/api/src/runtime/project-decision-runtime.ts", "line": 131},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 83}
+    ],
+    "facts": [
+      "The actual strict executor feedback schema accepts options only as string[].",
+      "The actual model adapter accepts exactly action/directive/reason/selectedOption/criteria/experienceReferences; selectedOption is string|null. It cannot express structured option goal/authority/environment/reversibility evidence.",
+      "deriveDecisionProjection converts string options to unknown eligibility, nonempty missingEvidence and empty coveredObjectives, and freezes context.objectives as an empty array.",
+      "The ProjectDecision recommendation/AI selection guard correctly rejects these options. Merely fixing the duplicate command identifier will expose DECISION_EVIDENCE_REQUIRED instead of making a real AI selected branch reachable.",
+      "Instruction/result projection currently writes actions only when the projected ledger record is selected or implemented. A true dispatched instruction can therefore lack a ledger action even while the independently stored supervisor instruction event exists."
+    ],
+    "minimalRequirement": "Keep unsupported alternatives proposed. Make any supported selected branch consume actual source-bound structured eligibility and goal facts; do not manufacture yes/available, erase missingEvidence, set human origin for AI, or weaken the guard. Preserve the actual dispatch/result action evidence independently even when decision eligibility remains unresolved. Test both a genuinely eligible source branch and an unqualified branch."
+  },
+  "experienceContext": {
+    "sourceImprovementsConfirmed": [
+      "The selected/excluded/reminder context is now frozen as a full context hash and rechecked after model return and at dispatch, including the empty-selected case. New records and exclusion/cap changes are represented by the recomputed context rather than selected references alone.",
+      "Top-level verified plus matching verifiedContent/verifiedConditions/evidence remains the authority gate. Unknown conditions, project/machine/executor/native-version mismatch, archived/deprecated/superseded state and counterexamples remain exclusions.",
+      "Only the first five eligible records are selected; other eligible records now retain selected-cap-exceeded as an exclusion/reminder reason.",
+      "Exact selected record revision/hash checks remain in addition to the context hash."
+    ],
+    "refs": [
+      {"path": "apps/api/src/runtime/supervisor-review.ts", "line": 10},
+      {"path": "apps/api/src/runtime/supervisor-review.ts", "line": 31},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 46},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 47},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 75},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 78},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 81}
+    ],
+    "notClaimed": "The saved affected HTTP test changes an already selected experience; it does not establish the excluded/new/empty/cap concurrent-change matrix. Missing cases do not by themselves prove the new implementation wrong.",
+    "focusedRemainingCases": [
+      "Change an excluded record so it becomes qualified, or record a new qualified lesson, after the model input was frozen and before dispatch.",
+      "Start with no selected references, then add/qualify one; change the sixth/capped record or its ranking identity.",
+      "Apply counterexample/deprecate/supersede or native version change at the freeze boundary; assert zero stale dispatch and no duplicate model invocation.",
+      "The current outcome-generated candidate is filtered by source marker during recheck. Exercise owner modification/verification of that same-source record before dispatch to establish that the self-generated candidate exclusion cannot hide a newly authoritative change. This is a focused unverified branch, not a reported reproduced failure."
+    ]
+  },
+  "correctionPauseSemantics": {
+    "refs": [
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 70},
+      {"path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx", "line": 39},
+      {"path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx", "line": 63}
+    ],
+    "current_followup": "Explicitly increments decision context revision, revokes the old goal policy, disables and pauses the session, cancels an active run and discards old model/dispatch intents. The UI describes the active round safe stop. The paused resume UI explicitly creates a new continuous authorization, including acknowledging unknown history.",
+    "future_reference": "Appends the correction without revoking the active policy or pausing the current loop.",
+    "classification": "The current_followup behavior is an explicit pause/revoke-old-authorization contract, not independently reported as an accidental cost/permission regression. The full correction -> actual stop proof -> legitimate reauthorization -> new dispatch lifecycle is still unaccepted. It must not clear historical usage or turn unknown cost into zero."
+  },
+  "uiAndNotificationWiring": {
+    "confirmedSource": [
+      "The supervision route and project selector reach ProjectOversightPage and mount the real ProjectSupervisorPanel in live mode.",
+      "The panel uses project-scoped authenticated API calls, exact event/hash correction, fact/preference correctionType and current_followup/future_reference applyTo.",
+      "The authenticated event-history route and visible load-earlier button reach records beyond the latest 100. The saved HTTP pagination test exercises this API path.",
+      "Project-scoped SSE refresh and timed fallback reload exist. This is panel refresh, not background notification delivery.",
+      "The reminders link reaches settings/policy and the existing live NotificationPreferencesPanel. Existing supervision-work/task durable notifications remain connected."
+    ],
+    "refs": [
+      {"path": "apps/web/src/features/operations/ProjectOversightPage.tsx", "line": 11},
+      {"path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx", "line": 17},
+      {"path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx", "line": 20},
+      {"path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx", "line": 37},
+      {"path": "apps/web/src/features/operations/ProjectSupervisorPanel.tsx", "line": 67},
+      {"path": "apps/api/src/runtime/project-supervisor-routes.ts", "line": 12},
+      {"path": "apps/api/src/runtime/project-supervisor-routes.ts", "line": 19},
+      {"path": "apps/api/src/runtime/project-supervisor-runtime.ts", "line": 27},
+      {"path": "apps/api/src/runtime/supervision-work-runtime.ts", "line": 116},
+      {"path": "apps/api/src/runtime/supervision-work-runtime.ts", "line": 118}
+    ],
+    "remainingFeature": "The new private supervisor judgment/wait-user/question/status events have no direct notification adapter/outbox call. The existing supervision-work runtime consumes repository task/work events, not these private supervisor events. Related task notifications cannot prove a supervisor judgment notification was emitted. Connect the narrow event family to the existing durable notification path with stable event identity and owner/project scope; do not build a separate notification system.",
+    "notVerified": "Browser rendering, interactions, delivery preferences on a real signed-in account, background/mobile notification delivery and actual 112-model/101-CC operation were not exercised by this review."
+  },
+  "savedTestEvidence": {
+    "readNotExecutedByReviewer": true,
+    "reportedAndSavedCounts": [
+      {"path": "reports/r43-round8-logs/final-mechanisms.tap", "tests": 7, "pass": 7, "fail": 0},
+      {"path": "reports/r43-round8-logs/stop-final.tap", "tests": 3, "pass": 3, "fail": 0},
+      {"path": "reports/r43-round8-logs/unknown-window-final.tap", "tests": 1, "pass": 1, "fail": 0}
+    ],
+    "scope": "Saved logs report real HTTP/SQLite/TCP signatures/runner/child/journal mechanisms with deterministic model/native-format fixtures; they do not establish real supplier or site acceptance. Build/typecheck/package exit 0 are author-reported saved evidence, not fresh reviewer runs.",
+    "specificLimits": [
+      "The correction regression targets an initial goal event without an existing decision; it asserts a proposed projection, not an existing selected decision changeOf/supersession lifecycle.",
+      "The experience HTTP regression changes a selected reference only; the author report explicitly retains excluded/new/empty matrix work.",
+      "The author report explicitly retains selected instruction/result actions plus correction/changeOf full integration and browser/controlled field acceptance.",
+      "The real history cursor regression and new UI entrance close the earlier lack of discoverable >100 access in source/fixture scope; no browser acceptance is inferred."
+    ],
+    "testSourceRefs": [{"path": "apps/api/test/project-supervisor-r43.test.ts", "line": 28}, {"path": "apps/api/test/project-supervisor-r43.test.ts", "line": 29}, {"path": "apps/api/test/project-supervisor-r43.test.ts", "line": 30}]
+  },
+  "minimalR9Handoff": [
+    "Fix the two exact projection command/branch defects with CAS-safe, replayable per-phase identities.",
+    "Keep real unqualified options proposed; establish a true source-bound eligible option/goal branch and independently preserve performed instruction/result facts.",
+    "Add the narrow full decision lifecycle and concurrent experience-context boundary cases using actual HTTP/domain/SQLite paths, not an assertion of proposal creation alone.",
+    "Connect important private supervisor state/question events to the existing durable notification system; verify owner scope/idempotency and retain exact safe evidence.",
+    "Retain current_followup pause/revoke semantics and demonstrate stop -> explicit legitimate reauthorization -> continuation without clearing history."
+  ]
+}

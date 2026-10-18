@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-two-recovery-points-readonly-retention-plan",
+  "readOnly": true,
+  "executed": false,
+  "complete": true,
+  "startedAt": "2026-10-18T09:30:44.055486+00:00",
+  "finishedAt": "2026-10-18T09:31:12.743002+00:00",
+  "currentRelease": "20261018-project-goals-r51-r1",
+  "selectionPolicy": "latest-two-full-recoverable-snapshot-manifest-createdAt; successful or terminal-rollback deployments both eligible",
+  "selectionEvidenceLimit": "Manifest bytes/receipt bindings and all manifest-listed regular file types/sizes only; no payload SHA256 rehash and no new SQLite probes/backups",
+  "retainedSnapshots": [
+    {
+      "capture": "capture-activate-sidecar-c6e2f76b-401d-4c85-9465-5798f7e297ca",
+      "createdAt": "2026-10-18T09:05:00.922803+00:00",
+      "release": "20261018-project-goals-r51-r1",
+      "manifestSHA256": "a557d47f2abd5bc49f41d0e27f735a42edb52345e9772cd610a9a2645fa25aca",
+      "activationSHA256": "c1330d9e80218ed1e866a8641b3ae2e35032ce6d789f8a500b4b1309802b231f",
+      "activationFailedSHA256": null,
+      "listedFiles": 64,
+      "listedDirectories": 59,
+      "logicalBytes": 4524517878,
+      "sqliteDatabasesChecked": 10,
+      "snapshotAndRestoreReceiptsBound": true,
+      "terminalActivationOrRollback": true,
+      "payloadContentRehashed": false
+    },
+    {
+      "capture": "capture-activate-sidecar-be313536-1589-4ab4-94b2-9e2987f34769",
+      "createdAt": "2026-10-18T08:10:44.031128+00:00",
+      "release": "20261018-project-goals-r50",
+      "manifestSHA256": "2ce3e9c2daf0dc2822124af9ee323ceca4c28aad5da004a6bf97cfc62d4dad11",
+      "activationSHA256": "13b7b98ecc15dce5289c4a12232cdbf9758cc019fc8f263817ab3cf1907d85c6",
+      "activationFailedSHA256": null,
+      "listedFiles": 64,
+      "listedDirectories": 59,
+      "logicalBytes": 4508682742,
+      "sqliteDatabasesChecked": 10,
+      "snapshotAndRestoreReceiptsBound": true,
+      "terminalActivationOrRollback": true,
+      "payloadContentRehashed": false
+    }
+  ],
+  "retainedReleaseReferences": [
+    {
+      "release": "20261018-project-goals-r49-r1",
+      "allocatedBytes": 275578880,
+      "reasons": [
+        "required-by-retained-capture:capture-activate-sidecar-be313536-1589-4ab4-94b2-9e2987f34769"
+      ]
+    },
+    {
+      "release": "20261018-project-goals-r50",
+      "allocatedBytes": 275648512,
+      "reasons": [
+        "required-by-retained-capture:capture-activate-sidecar-be313536-1589-4ab4-94b2-9e2987f34769",
+        "required-by-retained-capture:capture-activate-sidecar-c6e2f76b-401d-4c85-9465-5798f7e297ca"
+      ]
+    },
+    {
+      "release": "20261018-project-goals-r51-r1",
+      "allocatedBytes": 276615168,
+      "reasons": [
+        "active-symlink:/opt/jarvis/current",
+        "current-live-release",
+        "live-process-reference",
+        "required-by-retained-capture:capture-activate-sidecar-c6e2f76b-401d-4c85-9465-5798f7e297ca"
+      ]
+    }
+  ],
+  "activationLockHeld": false,
+  "locksHeldCount": 0,
+  "candidateGroups": {
+    "old-snapshot-payload": {
+      "directories": 15,
+      "allocatedBytes": 63267360768
+    },
+    "isolated-restore-check": {
+      "directories": 6,
+      "allocatedBytes": 26465546240
+    },
+    "old-pre-upgrade-data": {
+      "directories": 47,
+      "allocatedBytes": 44276768768
+    },
+    "old-migration-data": {
+      "directories": 3,
+      "allocatedBytes": 241614848
+    },
+    "historical-release": {
+      "directories": 65,
+      "allocatedBytes": 17569841152
+    }
+  },
+  "candidateAllocatedBytes": 151821131776,
+  "heldCandidateDirectories": 0,
+  "heldReasonCounts": {},
+  "controlAllocatedBytes": 149426597888,
+  "allReleasesAllocatedBytes": 18397687808,
+  "errors": [],
+  "preservation": [
+    "Old snapshot manifest.json and capture root activation/failed/rollback/node-before/previous-release evidence remain at their original paths; deletion targets are only exact payload/data/check directories",
+    "No production data, current release, project originals or SSH credentials are targets",
+    "capture-standby-voice and other unclassified control materials are retained pending a separate role/scope check"
+  ],
+  "executionRequirements": [
+    "Acquire the existing root-owned capture-activate.lock nonblocking before any mutation; if busy stop/defer",
+    "Re-read current symlink and retained manifest/activation hashes; recompute latest-two selection if a newer complete snapshot appeared",
+    "Verify exactly two retained snapshot contents/SQLite recovery with the pinned current recovery helper under an explicit bounded root execution; this planner did not run it",
+    "Recheck every exact allowlist directory identity (ns strings), realpath, same device, mounts and live cwd/exe/fd/maps/argv references immediately before deletion",
+    "Do not follow internal symlinks; remove only exact allowlisted directory trees with a symlink-safe fd-based remover",
+    "Keep small historical manifests/activation/node-before/previous-release/doc evidence and publish actual per-item deletion/after-free results; do not create a new backup"
+  ],
+  "privatePlanSHA256": "6643767cc71ee6c867f1430d7fd5daaa70681547ad48bdec7d1999202ce6a00c"
+}

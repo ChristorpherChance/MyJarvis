@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-worker-context-api-normalization-independent-local-source-conclusion",
+  "at": "2026-10-16T10:10:13.422689+00:00",
+  "scope": "LOCAL finite static review of exactly three retained Vitest 2.1.9 bodies, driver9bfd and this batch C4bba/final502a input bindings; no reviewed function or module executed",
+  "status": "source-defect-proven-direct-guard-correction-supported-not-runtime-qualified",
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-needed-export-binding-original-99a767d7e1a4c8c0a524b48ce64b8536f4bad62baf65f1fe723f19c16f87cd98.bin",
+      "sha256": "99a767d7e1a4c8c0a524b48ce64b8536f4bad62baf65f1fe723f19c16f87cd98",
+      "bytes": 2474
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-necessary-vitest-creator-original-46b1b0faedd7050c3e3132eae84f1803f05a046fe1aecf7a6d09f0ab86f11d5b.bin",
+      "sha256": "46b1b0faedd7050c3e3132eae84f1803f05a046fe1aecf7a6d09f0ab86f11d5b",
+      "bytes": 358970
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-pg4-needed-export-binding-original-2021c4cb5a3bce03fc9ef17a95740db7287f20d863bed8b24f3589b71f26ace3.bin",
+      "sha256": "2021c4cb5a3bce03fc9ef17a95740db7287f20d863bed8b24f3589b71f26ace3",
+      "bytes": 231473
+    },
+    {
+      "path": "scripts/factory-pg4-qa-startup-driver-r37-worker-context.mjs",
+      "sha256": "9bfd4b546c29a0ab052a564037ecdaececf355d4e3ea815abc89c22ed3108c12",
+      "bytes": 37137
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-execution-source-contract.json",
+      "sha256": "4bba7be8b0a8afd858ba3efb1001095394fabbeadb4c50996d58edb3c4d74113",
+      "bytes": 177877
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-original-final-driver-input-502acab6b1f1ce6cc73c09b30e61289a4652a95e368bb00886bf1e1c06ce16e4.json",
+      "sha256": "502acab6b1f1ce6cc73c09b30e61289a4652a95e368bb00886bf1e1c06ce16e4",
+      "bytes": 252150
+    }
+  ],
+  "physicalRefCount": 6,
+  "moduleBinding": {
+    "manifestCount": 13,
+    "nodeEntryManifestIndex": 0,
+    "creatorInternalPluginSourceIndex": 1,
+    "resolverInternalPluginSourceIndex": 2,
+    "actualFinalInputAndCModuleTuplesEqual": true,
+    "actualFinalInputAndCInternalSourcesEqual": true,
+    "entryRelativeReexportsMatchCreatorAndResolverChunkNames": true,
+    "sourceBytesAndSizesMatchPinnedManifest": true
+  },
+  "staticChain": [
+    {
+      "bodySHA256": "99a767d7e1a4c8c0a524b48ce64b8536f4bad62baf65f1fe723f19c16f87cd98",
+      "lines": [
+        5,
+        7
+      ],
+      "fact": "vitest/node reexports createVitest from cli-api.DqsSTaIi.js; resolveApiServerConfig/resolveConfig come from resolveConfig.rBxzbVsl.js"
+    },
+    {
+      "bodySHA256": "2021c4cb5a3bce03fc9ef17a95740db7287f20d863bed8b24f3589b71f26ace3",
+      "lines": [
+        7739,
+        7770
+      ],
+      "fact": "ui=false/api=false produces {middlewareMode:true}; re-normalizing that object preserves middlewareMode:true and adds no port"
+    },
+    {
+      "bodySHA256": "46b1b0faedd7050c3e3132eae84f1803f05a046fe1aecf7a6d09f0ab86f11d5b",
+      "lines": [
+        11270,
+        11304,
+        11399,
+        11400,
+        11421
+      ],
+      "fact": "VitestPlugin normalizes API in config and configResolved, makes server middlewareMode=true/ws=false/hmr=false, then calls ctx.setServer"
+    },
+    {
+      "bodySHA256": "2021c4cb5a3bce03fc9ef17a95740db7287f20d863bed8b24f3589b71f26ace3",
+      "lines": [
+        8151,
+        8152
+      ],
+      "fact": "resolveConfig always sets resolved.api to object spread of normalized API plus internal randomUUID token"
+    },
+    {
+      "bodySHA256": "46b1b0faedd7050c3e3132eae84f1803f05a046fe1aecf7a6d09f0ab86f11d5b",
+      "lines": [
+        10454,
+        10456,
+        11450,
+        11467
+      ],
+      "fact": "setServer assigns resolved to ctx.config; createVitest explicitly calls server.listen only when ctx.config.api.port is truthy"
+    },
+    {
+      "bodySHA256": "9bfd4b546c29a0ab052a564037ecdaececf355d4e3ea815abc89c22ed3108c12",
+      "lines": [
+        105,
+        178,
+        182
+      ],
+      "fact": "driver supplies api=false/ui=false/watch=false but rejects normalized truthy ctx.config.api via !c.api"
+    }
+  ],
+  "conclusion": {
+    "oldNoApiPredicateIncompatibleWithExactPinnedNormalNormalization": true,
+    "apiObjectIsSufficientRejectingPredicateIfReached": true,
+    "actualShortCircuitFirstFailingPredicateKnown": false,
+    "originalRuntimeNormalizedConfigSnapshotAvailable": false,
+    "otherTwentyAtomicConditionsQualified": false,
+    "canChooseDirectNarrowGuardCorrectionWithoutNewOnsiteConfigOnlyDiagnostic": true,
+    "separateConfigOnlyDiagnosticNowNecessaryToProveThisSourceDefect": false,
+    "noImplementationOrExecutionPerformedByThisReview": true
+  },
+  "minimumCandidate": {
+    "replaceOnly": "!c.api",
+    "acceptOnlyNormalizedDisabledShape": "non-null API object with exact own enumerable keys middlewareMode and token; middlewareMode===true; token is internal UUID-format string; no port, host, strictPort or other option keys",
+    "tokenValuePublishedOrPinned": false,
+    "preserve": [
+      "api:false/ui:false/watch:false original createVitest options",
+      "all other normalized-context predicates",
+      "reporter-object and builtin-plugin guards",
+      "original module manifest/worker-context deferral policy",
+      "original source/fresh/SQL/fixture/closure requirements"
+    ],
+    "listenerClaimBoundary": "pinned Vitest explicit listen and watch-only API setup branches remain disabled; this is not an independent observation of all network sockets or transitive side effects"
+  },
+  "remainingLimits": [
+    "No actual ctx.config snapshot is recovered; other earlier or later guards can still fail.",
+    "This proves one source-level defect, not complete or exclusive historical runtime causation.",
+    "No new guard has been implemented or executed; no SOURCE/ENTRY/runtime ABI/case/product acceptance is granted.",
+    "Existing closed opportunities, source pins and failures remain unchanged."
+  ],
+  "localAuditPreparationLimit": {
+    "oneInitialLineProjectionFailed": "IndexError from requesting setServer line range in the shorter resolver body; corrected to the actual creator body without executing reviewed source",
+    "productFailure": false
+  },
+  "verification": {
+    "sourceRefsInitialFinalRawHashesAndSizesMatched": true,
+    "rootAndWorkRawBytesEqual": true,
+    "missingWorkCopiesWrittenWithExclusiveCreate": 3,
+    "reviewedFunctionsExecuted": 0,
+    "actualModuleImports": 0,
+    "testsRun": 0,
+    "remoteCalls": 0,
+    "apiRequests": 0,
+    "modelCalls": 0
+  },
+  "actualFrameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false
+}

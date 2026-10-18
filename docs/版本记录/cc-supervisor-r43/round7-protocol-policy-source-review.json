@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "kind": "r43-round7-protocol-policy-source-review",
+  "status": "three-confirmed-source-blockers-not-release-ready",
+  "source": {
+    "tree": ".jarvis-dev/cc-supervisor-r43-round7",
+    "head": "f8d23de7e4f5a9a2f456e03e402316d9a0f9eb8c",
+    "applicationCut": "c78e5072359975a00c8ed839697f9a2f392d266e",
+    "previousFinal": "e5c5754c625ffd28285074fb166f0ac416c593ed",
+    "headVerifiedLocally": true,
+    "authorReport": "reports/r43-implementation-round7.json"
+  },
+  "boundary": {
+    "independentNonAuthorLocalSourceAndSavedEvidenceReview": true,
+    "applicationEdits": 0,
+    "applicationBuildOrTestCommandsRun": 0,
+    "modelOrNativeCalls": 0,
+    "networkRemoteApiOrServiceOperations": 0,
+    "newSubagentsSpawned": false,
+    "packageOrDeploymentAccepted": false,
+    "privateTranscriptOrConfigQuoted": false,
+    "scope": "Formal unknown-usage input, actual createApp chain mechanisms, goal policy/window grant admission and recovery, consumed reconciliation and awaiting-cost continuation. No broader application or old-test-family audit."
+  },
+  "findings": [
+    {
+      "id": "R7-A-P1-01",
+      "priority": "P1",
+      "title": "Every internally authorized policy-window request loses the field required at first claim",
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "line": 207,
+      "relatedLines": [168,186,206,210,235],
+      "evidence": "Line 206 derives an authorized finite policy window and persists an internal grant with policyWindowId. Line 207 copies grantId/maxParentTokens/sourceRunId/sourceResultHash/historyAcknowledgedUnknown into request.continuationGrant, but omits grant.policyWindowId. The same request.supervisor does include that ID. Line 168 requires continuationGrant.policyWindowId === supervisor.policyWindowId and validates the bound window. The comparison is therefore undefined versus the actual hash for every such request. claim():235 and the local pump both use that preflight.",
+      "impact": "The first genuine unknown-history, over-cumulative-token or listed-terminal-boundary continuation that reaches this policy path is queued but cannot be claimed. The claimed continuous original-goal path is not operational at its critical boundary.",
+      "narrowFix": "Carry the already validated policyWindowId into request.continuationGrant, through the formal request and claim representation, retaining exact source, current generation and bound-window validation. The formal ExecutionRequest continuationGrant schema already allows this field; do not remove preflight's policy equality or revocation checks.",
+      "whySavedTestsMissIt": "execution-createapp-chain.test.ts:26,34 uses a 1000-token template and three 5-token child results, never requiring a boundary grant. supervisor-policy-context.test.ts:2 replaces supervisorDispatch with a stub that directly authorizes/binds a window, bypassing the real request construction and preflight."
+    },
+    {
+      "id": "R7-A-P1-02",
+      "priority": "P1",
+      "title": "An exact replay cannot recover a policy grant committed before the business request",
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "line": 206,
+      "relatedLines": [179,180,181,187,194,196,198,209,210],
+      "evidence": "The policy path calls grantContinuation, whose separate transaction commits the grant at line 187 before the repository request transaction at line 209. If the process exits or the business request fails after grant persistence but before request commit, the next exact durable dispatch intent still has no matching runtime/business request at lines 196/198. The same policy source/decision/context yields the same window ID (supervisor-goal-policy.ts:14), but line 206 rejects any existing grant command_id for that window, including the exact pending unconsumed grant. grantContinuation's existing idempotent replay at lines 180-181 is never reached.",
+      "impact": "A recoverable persistence cut permanently blocks the authorized window instead of reconstructing the same request. It does not cause duplicate execution, but it breaks restart/replay continuation under the original authority.",
+      "narrowFix": "Recover and validate the exact matching pending grant/window for the deterministic request, reusing its original ID after checking request hash, owner/task CAS, source/result hash, policy generation and consumption binding. Reject genuinely different or already bound requests. Complete the existing cross-store recovery path without minting another window or blindly retrying a child/model.",
+      "importantCorrectionToInitialMessage": "Lines 196 and 198 do explicitly call bindWindow while recovering an already committed runtime/business request. An initial truncated-read suspicion that those branches lacked bindWindow was withdrawn and is not a finding. The confirmed cut here is specifically grant committed while no business request exists."
+    },
+    {
+      "id": "R7-A-P1-03",
+      "priority": "P1",
+      "title": "Real awaiting-cost task state is rejected before its authorized successor can use a window",
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "line": 200,
+      "relatedLines": [201,206,317],
+      "evidence": "result():317 maps a real signed outcome awaiting-cost to task.status=waitingUser and executionStatus=awaiting-cost. R7 supervisor runtime:59,73 now accepts and analyzes that signed source and can produce continue. But supervisorDispatch():200 permits a consumed task only when its status is validating/failed/blocked/paused/cancelled, excluding waitingUser. It fails SUPERVISOR_SOURCE_INVALID before reaching the awaiting-cost policy/grant branch at line 206.",
+      "impact": "The R6 admission-to-judgment problem is partly repaired, but the real cost-unknown source still cannot reach an authorized successor through ExecutionRuntime. Helper tests with a stub executor cannot prove this path works.",
+      "narrowFix": "Align the consumed-task state admission with the already verified awaiting-cost signed source, source hash, task CAS and current goal/window authorization. Permit only the specific trustworthy cost-boundary case, rather than broadly authorizing every waitingUser task. Keep unknown cost/history and original failure evidence; do not relabel the source success or fill zero usage.",
+      "whySavedTestsMissIt": "supervisor-reconcile-r43.test.ts:2 seeds waitingUser/awaiting-cost but provides a stub supervisorDispatch and only asserts no dispatch after a failed model. supervisor-policy-context.test.ts:2 likewise uses a stub executor, so neither invokes ExecutionRuntime line 200."
+    }
+  ],
+  "r6IssueDisposition": [
+    {
+      "item": "Formal incoming unknown usage",
+      "status": "source-fixed-not-unknown-HTTP-lifecycle-accepted",
+      "evidence": "docs/openapi-v1-planned.json ExecutionReportedUsage at line 53716 has no required inputTokens/outputTokens, and describes independently optional token observations including unknown/partial at 53773-53782. ExecutionResultInput:53833 references it. ExecutionActualUsage remains optional-token. This removes R6's published incoming DTO mismatch.",
+      "limit": "This reviewer parsed/read the schema, not an application validator execution. The saved createApp chain sends numeric input/output and does not prove startup/recovery no-token unknown through formal DTO, signed HTTP and journal ACK."
+    },
+    {
+      "item": "Consumed model-intent reconcile",
+      "status": "source-fixed-with-focused-synthetic-evidence",
+      "evidence": "project-supervisor-runtime.ts:60 now checks supervisor_consumed. A complete persisted model intent resumes judging, while absent/incomplete/uncertain results produce disabled review_required rather than resetting to running or calling the provider again. command():65 permits explicit owner resolution of started/uncertain model intents. supervisor-reconcile-r43.test.ts:2 and saved reconcile-awaiting-cost.tap prove the failed-model synthetic branch calls once, dispatches zero and remains disabled after reconcile.",
+      "limit": "Complete-intent replay plus actual createApp/ExecutionRuntime restart matrix remains unverified. No provider idempotency is inferred."
+    },
+    {
+      "item": "Awaiting-cost adoption reaches analysis",
+      "status": "source-fixed-for-analysis-successor-still-blocked",
+      "evidence": "project-supervisor-runtime.ts:59,73 now accepts awaiting-cost in both adoption verification and normal consumption; :74 creates conservative failure diagnostics for non-success feedback. The focused saved test confirms the model receives binding.outcome=awaiting-cost once. Actual continuation remains blocked by R7-A-P1-03."
+    },
+    {
+      "item": "Original-goal continuous policy implementation",
+      "status": "implemented-in-source-critical-real-boundary-blocked",
+      "evidence": "project-supervisor-runtime.ts:21,48-51,65 provides an authenticated explicit authorizeContinuous command and owner/project/task/goal revision/hash/machine/workspace/executor/native-session policy binding. supervisor-goal-policy.ts:9-16 persists policy generations/history and deterministic per-source/decision/context finite windows; revoke invalidates generations. execution-runtime.ts:206 derives an internal single-use grant from this authority without requiring another owner click.",
+      "limit": "This is a meaningful implementation of the R6 gap, not a mere proposal. Its actual boundary path is blocked by the three findings; helper persistence/validation success is not full chain acceptance."
+    }
+  ],
+  "savedCreateAppEvidence": {
+    "source": "apps/api/test/execution-createapp-chain.test.ts:14-40",
+    "log": "reports/r43-round7-logs/createapp-chain-final.tap",
+    "savedResult": "1/1 passed; three real finite child processes and two successors, same task/native session, resume flags false/true/true",
+    "realMechanisms": [
+      "createApp and its production V1 repository/Task DTO, execution configuration and supervisor routes are used; owner setup/commands use Fastify inject, not a replacement execution object (:18-33)",
+      "The app listens on a real loopback TCP port; ExecutionAgent pairs and signs its heartbeat/claim/log/result requests with actual execution runtime handling (:28-29,34)",
+      "An actual finite local child writes a round counter/argv files and emits native-format init/result; it enforces the expected original/resume session flags (:16)",
+      "A real private delivery journal is used; the test checks signed-agent source/session/token readings, at least three acknowledged deliveries, no pending deliveries/logs, and Task DTO validity (:34-37)"
+    ],
+    "explicitFixtures": [
+      "PiService is deterministic and replaced at :17. This is not a genuine supplier model call or real deployed 112 supervisor model.",
+      "The native CLI is a finite fixture child running under process.execPath, not the actual 101 product CC. Hardware metrics are also fixed fixture values.",
+      "The source test has a diagnostic direct-result fallback only on a non-succeeded run; the saved passing assertions still require the observed succeeded run and actual journal confirmations. It does not assert full platform field acceptance."
+    ],
+    "uncoveredBranches": [
+      "No source has unknown token history or cumulative usage at/beyond the configured template maximum; three runs total only 15 known tokens against a 1000-token template.",
+      "No actual policy-window internal grant request, first claim, explicit owner grant, replay/concurrent/CAS cut or ExecutionRuntime restart is tested.",
+      "No real queued claim after pause/goal revision, full stop child0 proof, new native lineage, 20-round checkpoint or stalled sequence is exercised."
+    ],
+    "finalVersionTiming": "The saved chain log's three executionMetadata.agentBuild values are r43-r3, while final source agent-runner.ts:150 and cluster-runtime.ts:10 use r43-r4. This records a verification-time identity difference, not a new claimed code defect. It limits treating that saved run as acceptance of every final-cut byte."
+  },
+  "policyCoverageAndLimits": [
+    {
+      "item": "Known over-limit and unknown-history finite windows",
+      "source": "execution-runtime.ts:186,206-207; supervisor-goal-policy.ts:4,11,14",
+      "assessment": "Unknown remains explicitly acknowledged in policy/grant rather than zero; finite maxParentTokens<=10M, timeout<=1200, one round/zero retry and record-only money remain bounded. R7-A-P1-01 and 03 prevent the real supported successor paths. Saved helper tests do not hit production dispatch/preflight."
+    },
+    {
+      "item": "Claim revocation and current generation",
+      "source": "project-supervisor-runtime.ts:49-55,64,67; supervisor-goal-policy.ts:13,15-16; execution-runtime.ts:168,235",
+      "assessment": "Pause/stop/takeover/revise/current correction revoke policy generation; dispatch and claim call current supervisor/window validation. supervisor-policy-context.test.ts asserts validateWindow becomes false after pause, but its claim step is a stub assertion, not actual ExecutionRuntime.claim. The claimed zero-new-execution full chain remains unverified."
+    },
+    {
+      "item": "Replay and restart",
+      "source": "supervisor-goal-policy.ts:14-16; supervisor-goal-policy.test.ts:2; execution-runtime.ts:194-210",
+      "assessment": "Helper policy DB close/reopen preserves a bound window and rejects different directives/run binding. ExecutionRuntime recovers existing runtime/business requests and rebinds their window at 196/198. The pre-business pending-grant cut remains blocked as R7-A-P1-02. No real multi-store ExecutionRuntime/journal restart matrix is saved."
+    },
+    {
+      "item": "20 rounds and stalled progress",
+      "source": "project-supervisor-runtime.ts:72,78",
+      "assessment": "At >=20, a current active policy permits further finite windows without another owner grant; there is no distinct recorded 20-round objective-progress checkpoint in this source. Identical continue directive and three consecutive non-success outcomes cause STALLED. These are technical heuristics, not proof of objective progress, achieved criteria or actual stop. No saved 20-round/stalled full chain was supplied; this is an implementation/verification limit rather than an additional asserted P1."
+    }
+  ],
+  "evidenceIntegrity": {
+    "collection": "artifacts/cc-supervisor-r43/maintenance-round7-collection-1792235203216.json",
+    "allSevenNamedFiles": "Each fixed-tree file and its locally preserved collected original matched the collection's exact size/SHA256. No remote collection was repeated.",
+    "files": [
+      {"path":"reports/r43-implementation-round7.json","bytes":2700,"sha256":"b110aceb372bcff094c89a1614e2d4d15ae28e391cea50e4ee41312fb3fc5f65"},
+      {"path":"reports/r43-implementation-round7.md","bytes":6136,"sha256":"21626caef5bb48d8b6e88dcb20c87c42af081475573d3d8b6a6f8bc405dabeda"},
+      {"path":"reports/r43-round7-packages.json","bytes":2777,"sha256":"95bb756f3af85ddf850c3432d88aa75dc511fed6c318f4c589c15d6466ab2b55"},
+      {"path":"reports/r43-round7-logs/createapp-chain-final.tap","bytes":9904,"sha256":"92c10350454710f324ba19b9b1b768c92caf5bab203651754852a8f9d6dfd40a"},
+      {"path":"reports/r43-round7-logs/final-affected.tap","bytes":1305,"sha256":"cdf20afdd5bd256776507c339a8588afada400f0a8943dd47fa382aba595a6f4"},
+      {"path":"reports/r43-round7-logs/typecheck-final.txt","bytes":193,"sha256":"7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"},
+      {"path":"reports/r43-round7-logs/build-final.txt","bytes":3400,"sha256":"67f817a60351ff356c0732d1c97ac422b211dfcd86dc030b33dd778890033922"}
+    ],
+    "otherSavedFocusedResultsRead": [
+      "reports/r43-round7-logs/reconcile-awaiting-cost.tap:1/1",
+      "reports/r43-round7-logs/policy-context-final.tap:2/2",
+      "reports/r43-round7-logs/final-affected.tap:10/10"
+    ],
+    "testsRerunByReviewer": false
+  },
+  "nextNarrowCcScope": [
+    "Propagate policyWindowId and demonstrate the first real policy-window request can pass formal Task/request validation, queued preflight, signed agent claim/result and journal ACK.",
+    "Make exact pending-window grant recovery idempotent at the pre-business cut, preserving original grant, source, generation, task CAS and single execution identity; cover that cut with the already-required real replay/restart matrix.",
+    "Admit the verified awaiting-cost source's actual waitingUser task state under the correct bounded authority, then exercise judgment and genuine ExecutionRuntime successor; preserve unknown cost/history.",
+    "Keep the new formal incoming usage and consumed reconciliation fixes. Do not rerun unrelated old families to substitute for the missing targeted paths, and do not label candidate packages as deployment or supplier-model acceptance."
+  ],
+  "releaseDisposition": {
+    "sourceReady": false,
+    "syntheticMechanismChainPassedWithinScope": true,
+    "realSupplierModelAnd101CcAccepted": false,
+    "r4CandidatesExistAccordingToAuthor": true,
+    "candidatesIndependentlyAcceptedByThisReport": false,
+    "productionDeployedOrApproved": false
+  }
+}

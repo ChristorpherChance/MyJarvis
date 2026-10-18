@@ -1,0 +1,53 @@
+{
+  "kind": "r46-live-test-started-item-readback",
+  "at": "2026-10-17T18:44:45.414Z",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "itemId": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+  "previousRevision": 10,
+  "revision": 11,
+  "hash": "dd774be30ccbafd42b0a6ecd54c8e936f3fa6a6a2a8c37bcbc24b8530a90f0c9",
+  "status": "running",
+  "summary": "入口缺陷已修复并上线112 R46r1；本人原页面普通点击已真正提交，软件工厂新测试任务与执行轮已claim并运行。完整测试仍在进行，尚未收到本次新结果；上次测试结论保留为历史，不混算为本轮通过。",
+  "blocker": "",
+  "nextAction": "等待本次完整测试实际回包，收集报告与证据，再反馈真实问题并安排修复；未收到结果前不声称完成。十分钟跟进继续暂停。",
+  "stepId": "autonomy",
+  "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+  "runId": "b9229790af042425b3d06597221041302e71d7df",
+  "counts": {
+    "total": 6,
+    "planned": 1,
+    "running": 1,
+    "blocked": 0,
+    "completed": 4
+  },
+  "latestSequence": 65,
+  "historyPreserved": true,
+  "evidencePrefixPreserved": true,
+  "otherFiveItemsPreserved": true,
+  "originalCompletedBriefsPreserved": 4,
+  "existingItemReused": true,
+  "factoryTestDispatched": true,
+  "testResultReceived": false,
+  "testComplete": false,
+  "independentAcceptance": false,
+  "newProblemTaskCreated": false,
+  "planOr74OrTimerWritten": false,
+  "noAutomaticRetry": true,
+  "evidence": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-business-snapshot-first-real-click.json",
+      "sha256": "c6b4a780b38fd863216eeaa132cd6bd262bcd20165e3c93c55a4cadad76e4992",
+      "bytes": 6432
+    }
+  ],
+  "inputSHA256": "afcd2c5c94ab26c1984938523d6e4cbb8e4c5ed0e1b8378311d901975155cdd7",
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-started-item-readback.json",
+      "sha256": "9f088a502298d9b7d88844edcf0d7f0ebe927455268c02f91f737583579cdcef",
+      "bytes": 1796
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

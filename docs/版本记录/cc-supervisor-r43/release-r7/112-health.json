@@ -1,0 +1,34 @@
+{
+  "kind": "r43-r7-managed-release-original-tool-phase-receipt",
+  "phase": "health",
+  "node": "112",
+  "release": "20261017-cc-supervisor-r43-r7",
+  "exitCode": 0,
+  "wallSeconds": 0.4588449001312256,
+  "response": {
+    "node": "112",
+    "release": "20261017-cc-supervisor-r43-r7",
+    "role": "primary",
+    "currentRelease": "20261017-cc-supervisor-r43-r7",
+    "platformService": "active",
+    "observerService": "active",
+    "observerBuild": "20261017-cc-supervisor-r43-r7",
+    "businessHealthy": true,
+    "healthBuild": "20261017-cc-supervisor-r43-r7",
+    "healthStatus": "ok"
+  },
+  "evidence": {
+    "stdout": {
+      "path": ".jarvis-dev/maintenance/r43-release-private/r7-112-health-stdout.txt",
+      "sha256": "239160c7dabb9b60ec3c0d0f0c8ba3d493b583730d5b63b60e67a77bd7c462b3",
+      "size": 334
+    },
+    "stderr": {
+      "path": ".jarvis-dev/maintenance/r43-release-private/r7-112-health-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "originalToolUnchanged": true,
+  "businessSwitchRequested": false
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-actual-driver-worker-context-failure-safe-facts",
+  "at": "2026-10-16T06:58:26.835015+00:00",
+  "actualRead": {
+    "path": "artifacts/software-factory/goals-r29/r37-one-driver-report-r2-diagnostic-actual-observation-1792133726063-b694df34-d695-4f7a-8921-0508f8f6a07b.json",
+    "sha256": "9b80e88f17c879095c5dfc24deb481c89969c9d224b10b39fd228c736cd64e7a",
+    "bytes": 2552
+  },
+  "originalReport": {
+    "sha256": "2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a",
+    "bytes": 2066
+  },
+  "privateMessage": {
+    "sha256": "0ba923c8c323c4eb00cbb88051c34a87475a0e5e83251c6cfc04d1021750aaa5",
+    "bytes": 382,
+    "retainedBytes": 382,
+    "truncated": false,
+    "rawTextPubliclyExported": false
+  },
+  "observedFailure": {
+    "phase": "module-import",
+    "operationClass": "fixed-manifest-vitest-runners-entry",
+    "fixedManifestIndex": 2,
+    "entrySHA256": "3276eddc378f604738661e561131b1ac8eacee927dc7b551e54b862a5b73b39c",
+    "entryBytes": 8959,
+    "errorClass": "Error",
+    "nodeCode": null,
+    "errno": null,
+    "classification": "VITEST_INTERNAL_WORKER_STATE_UNAVAILABLE",
+    "sourceBoundStage": true
+  },
+  "frozenManifestModules": 13,
+  "fixtureLaunchAttempted": false,
+  "startsAttempted": 0,
+  "preFixtureGateVerified": false,
+  "candidateMayHaveExecuted": null,
+  "interpretation": {
+    "statement": "Node-host validation imported the fixed vitest/runners entry before a Vitest worker context existed. The retained message matches the same-version getWorkerState rejection.",
+    "kind": "source-and-observed-message-supported-inference",
+    "doesNotAuthenticateEveryTransitiveRuntimeFile": true,
+    "notBusinessCaseFailure": true
+  },
+  "primarySources": [
+    {
+      "url": "https://raw.githubusercontent.com/vitest-dev/vitest/v2.1.9/packages/vitest/src/runtime/utils.ts",
+      "scope": "getWorkerState requires globalThis worker state"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/vitest-dev/vitest/v2.1.9/packages/vitest/src/public/runners.ts",
+      "scope": "exports worker runtime runners"
+    },
+    {
+      "url": "https://v2.vitest.dev/advanced/api",
+      "scope": "Node API is vitest/node; createVitest creates context before test start"
+    }
+  ],
+  "readEntryClosed": true,
+  "savedEvidenceIndependentlyAudited": false,
+  "fixImplemented": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "newSupplierModelCalls": 0
+}

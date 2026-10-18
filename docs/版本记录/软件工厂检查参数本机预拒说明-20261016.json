@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-qa-check-local-cli-hash-refusal",
+  "at": "2026-10-16T05:52:35.557594+00:00",
+  "originalToolChunk": "ec400e",
+  "rawToolOutputFile": null,
+  "exitCode": 1,
+  "elapsedSeconds": 0.350765,
+  "cause": "Root copied a truncated 51-character ENTRY hash; original ENTRY bytes/hash unchanged. Outer rejected first local review read before Node invocation.",
+  "correctEntrySHA256": "b146d8eadad65fbf3b2988b6ad84ec08e9085915e9ce4ef1a9365e9fd1073dda",
+  "sourceOuterSHA256": "7e7480cd382dd0e8ae7965bf2e7fd2b90bf2dcf4b077f958005ea5df4eda58cb",
+  "checkOnceAndOutcomesAbsent": [
+    ".jarvis-dev/maintenance/factory-r37-pg4-qa-first-error-main607-entry-check-once.json",
+    ".jarvis-dev/maintenance/factory-r37-pg4-qa-first-error-main607-entry-check-outcome.json",
+    ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-check-operator-outcome.json"
+  ],
+  "parentJournalStillExactStartSnapshot": true,
+  "parentReceiptCount": 1,
+  "nodeInvocationOccurred": false,
+  "remoteCheckOccurred": false,
+  "checkOpportunityConsumed": false,
+  "startStillClosed": true,
+  "productFailure": false,
+  "actualPG4Qualified": false
+}

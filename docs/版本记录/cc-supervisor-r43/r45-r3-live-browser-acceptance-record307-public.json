@@ -1,0 +1,78 @@
+{
+  "kind": "r45-r3-live-browser-acceptance",
+  "date": "2026-10-18",
+  "release": "20261018-unified-projects-r45-r3",
+  "origin": "https://cc-jarvis.ikvein.com",
+  "browser": "original authenticated owner tab 5, in-app browser 2",
+  "mode": "production read-only navigation; no mock responses or authentication injection",
+  "checks": [
+    {
+      "id": "one-project-entry",
+      "passed": true,
+      "observed": "One desktop Project entry; old tasks URL renders 2 projects, 8 copies and 27 tasks."
+    },
+    {
+      "id": "entity-workbench",
+      "passed": true,
+      "observed": "Jarvis and factory share goal, judgement, actual AI action, blocker and next step; criteria, registered execution choices and explicit Start. Blocked historical tasks were not resumed."
+    },
+    {
+      "id": "project-details",
+      "passed": true,
+      "observed": "Project info, registered development copy and original decision revision3/history open inside the same project."
+    },
+    {
+      "id": "legacy-task-focus",
+      "passed": true,
+      "observed": "Old tasks/ac662885 deep link opens Jarvis and the exact blocked task dialog. Closing and switching to factory works."
+    },
+    {
+      "id": "completed-briefs",
+      "passed": true,
+      "observed": "Factory history expands 6 actual supervision items, 4 completed briefs with verification scope, and access to 26 original tasks."
+    },
+    {
+      "id": "legacy-supervision",
+      "passed": true,
+      "observed": "Old supervision/70ec link renders Software Factory and the same workbench. Address bar retains the legacy URL; forced URL rewriting is not claimed."
+    },
+    {
+      "id": "mobile",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 384,
+      "mainWidth": 384,
+      "overrideReset": true,
+      "observed": "Goal, criteria, execution choice, Start and collapsed details visible; no horizontal overflow."
+    },
+    {
+      "id": "console",
+      "passed": true,
+      "errorsCapturedSince": "2026-10-17T17:30:00Z",
+      "errorCount": 0,
+      "scope": "original tab only"
+    }
+  ],
+  "browserConnectionTimeoutsRecovered": true,
+  "connectionTimeoutsNotClassifiedAsApplicationFailures": true,
+  "finalURL": "https://cc-jarvis.ikvein.com/#theme=stark&view=supervision%2F70ec346f-6520-46ed-abed-22cac770a3e4&board=all",
+  "productionStartReplyOrPauseSent": false,
+  "nativeOrSupplierModelInvoked": false,
+  "limitations": [
+    "Production browser verification was read-only. Command writes, new-project flow and partial recovery use saved isolated native integration evidence; no new production kickoff was performed.",
+    "No actual supplier-model/101 CC round, full factory acceptance or customer delivery was accepted by these UI checks."
+  ],
+  "result": "limited live navigation and responsive UI checks passed",
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-r3-live-browser-acceptance.json",
+      "sha256": "df2620e9bab0a83b8f2089e8e8a7b4b38132e6dc908925c08df1ea7baa966d80",
+      "bytes": 2566
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

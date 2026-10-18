@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-context-sentinel-main607-meta-r2-main-actual-start-observation",
+  "at": "2026-10-16T12:20:23.628425+00:00",
+  "action": "start",
+  "operator": {
+    "path": ".jarvis-dev/maintenance/run-r37-pg4-qa-context-sentinel-main607-meta-r2-once.mjs",
+    "sha256": "8f1953c2b01584bf7d2310c004a18b65c046e23ecb2d1da34e20d62b5286c0ab",
+    "bytes": 19225
+  },
+  "context": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-context.json",
+    "sha256": "ba3c5879d217b3ed3ccbf29356f1fe40d56e2e738966f00cb5f6aea244cd1ac8"
+  },
+  "entryReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-specific-main-entry-independent-local-review-final.json",
+    "sha256": "971be61640fc2ac963123d927743f1446f417f85ae88e79d88aa1c49b2a81f56"
+  },
+  "outer": {
+    "path": ".jarvis-dev/maintenance/run-r37-qa-context-sentinel-meta-r2-reviewed-main.py",
+    "sha256": "98f87bffc343c0df6400f62c37b5ca2f7746015e3be279839e3cf98f24572b97",
+    "bytes": 13769
+  },
+  "intent": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-start-root-outer-intent.json",
+    "sha256": "da37c20657d271518ee37d6d23993fcb98b1738f6bfbf3c078a102efb582f592",
+    "bytes": 1168
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 33.54699999978766,
+  "operatorConsoleRef": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-start-root-outer-console.json",
+    "sha256": "5760c8f79a0ff72ce325a5af142cb6454c0099f7a6f142e62f3ab94b19bf7de0",
+    "bytes": 211008
+  },
+  "result": {
+    "schemaVersion": 1,
+    "kind": "r33-pg4-qa-startup-entry-result",
+    "action": "start",
+    "status": "owner-state-unknown",
+    "ready": false,
+    "sourceAdmissionObserved": true,
+    "producerObservationComplete": true,
+    "sourceRechecksAttempted": true,
+    "maximumSourceReads": 1,
+    "maximumStarts": 1,
+    "maximumChecks": 1,
+    "automaticRetry": false,
+    "currentResourceScopeClosedVerified": false,
+    "actualPG4Qualified": false,
+    "productAccepted": false,
+    "executionNonceCreatedByEntry": false,
+    "errorCode": null,
+    "privateResult": {
+      "path": ".jarvis-dev/maintenance/pg4-r37-context-sentinel-meta-r2-entry-private-start-outcome-1792153223384-b8b32860-1d0e-4257-85b4-5caff5831a28.json",
+      "sha256": "68226f4407ec03c5ce5e40efb812940035b230808a336a39605d2015b7fbf2b5",
+      "bytes": 319466
+    }
+  },
+  "resultParseError": null,
+  "transportError": null,
+  "entryInvocations": 1,
+  "automaticRetry": false,
+  "actualStartForCheck": null,
+  "conservativeNextCheckNotBefore": "2026-10-16T12:37:23.628425+00:00",
+  "independentSavedEvidenceAudit": null,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

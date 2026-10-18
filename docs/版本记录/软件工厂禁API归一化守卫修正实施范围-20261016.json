@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-normalized-api-single-driver-implementation-safe-facts",
+  "at": "2026-10-16T10:21:44.755912+00:00",
+  "source": {
+    "path": "scripts/factory-pg4-qa-startup-driver-r37-normalized-api.mjs",
+    "sha256": "0fd0414f84fd7c34135c01b61b9c0e0c6756de616d38ffdc88c3e5f52dc8bb05",
+    "bytes": 37845
+  },
+  "previousSource": {
+    "path": "scripts/factory-pg4-qa-startup-driver-r37-worker-context.mjs",
+    "sha256": "9bfd4b546c29a0ab052a564037ecdaececf355d4e3ea815abc89c22ed3108c12",
+    "bytes": 37137
+  },
+  "sourceReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-normalized-api-driver-independent-local-source-review-final.json",
+    "sha256": "6824badae9b8f7a67bb0adb7eea8b7db86eb13fbd45a88853329877709f19a02",
+    "bytes": 14471
+  },
+  "rootVerifiedPhysicalRefsBothRoots": 17,
+  "rootWholeByteInverseRestoresOld": true,
+  "editCount": 2,
+  "edits": [
+    "新增严格禁API归一对象判定",
+    "仅替换原联合门中的API谓词"
+  ],
+  "normalizedAPIRequirement": {
+    "exactOwnKeys": [
+      "middlewareMode",
+      "token"
+    ],
+    "middlewareMode": true,
+    "internalValueCheck": "UUIDv4-format-string-only-value-never-published",
+    "noPortHostStrictPortOrExtraKeys": true,
+    "noSymbolsAccessorsOrNonEnumerableFields": true,
+    "plainDataObjectOnly": true
+  },
+  "unchanged": [
+    "其余20个配置原子条件",
+    "上下文、真实reporter和内置plugin门",
+    "13模块字节合同及12host导入、1source-only分列",
+    "原api:false/ui:false/watch:false选项",
+    "callbacks/hooks/SQL/fixture/fresh/首错私存/源复核/close/CLI"
+  ],
+  "targeted": {
+    "executions": 1,
+    "groupsPassed": 1,
+    "groupsFailed": 0,
+    "realPinnedPureNormalizerExtracted": true,
+    "actualVitestModuleOrBootstrapExecuted": false,
+    "rawStdout": {
+      "path": "artifacts/software-factory/goals-r29/r37-normalized-api-driver-targeted-attempt-1.stdout.txt",
+      "sha256": "d57d7b0ce0732382cae53162eb0c5fa4286855691e550d37e3aeee8657622c89",
+      "bytes": 236
+    },
+    "rawStderr": {
+      "path": "artifacts/software-factory/goals-r29/r37-normalized-api-driver-targeted-attempt-1.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "originalReportingErrorPreserved": true,
+    "reportingCorrectionOnlyNoRerun": true
+  },
+  "driverSourceIndependentlyQualified": true,
+  "actualOriginalContextRecovered": false,
+  "otherTwentyConditionsActuallyQualified": false,
+  "newOnsiteConfigOnlyDiagnosticPerformed": false,
+  "completeQAFamilyQualified": false,
+  "actualDATA": null,
+  "actualENTRY": null,
+  "newQAActuallyExecuted": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "remoteCalls": 0,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false,
+  "costs": {
+    "policy": "record-only-no-limit",
+    "knownAmount": null,
+    "internalTokensAndAmountUnknownSeparately": true
+  }
+}

@@ -1,0 +1,358 @@
+{
+  "kind": "r52-goal11-independent-application-delta-source-review",
+  "scope": "LOCAL fixed received Git commit blobs, physical source and saved report/log bytes only; no new SSH metadata observation, app/test/build/provider/model/network execution. B separately qualifies packages.",
+  "cut": {
+    "BASE": "7ad29ad297d9fe1102b82a5eb194d35f667ec87b",
+    "APP": "0ae044826235fd7f7908db786dc2b186fdebf984",
+    "HEAD": "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+    "release": "20261018-project-goals-r52",
+    "fixedTree": ".jarvis-dev/cc-supervisor-r52-final",
+    "cleanAtReview": true,
+    "commitCountAfterBase": 2,
+    "receivedBundleBytes": 37760,
+    "receivedBundleSHA256": "37dd06974c8c5b09649079813421b6a6bb8e765b2dea58fdab7cf04241adf16f"
+  },
+  "conclusion": {
+    "confirmedP0": 0,
+    "confirmedP1": 0,
+    "remainingReleaseBlockingSourceFindings": 0,
+    "limitedSourceReviewComplete": true,
+    "limitedDeltaSourceReviewPassed": true,
+    "sourceEligibleForRootSeparateNewPurposeRelease": true,
+    "separatePackageAndFreshReleaseQualificationStillRequired": true,
+    "actualProvider128KiBAccepted": false,
+    "actualFactory81717PromptReplayedOrValidatedHere": false,
+    "deployedByThisReview": false,
+    "wholeFactoryProductAccepted": false
+  },
+  "minimalProductionDelta": {
+    "files": [
+      "apps/api/src/runtime/cluster-runtime.ts",
+      "apps/api/src/runtime/supervisor-model-input.ts"
+    ],
+    "projector": {
+      "path": "apps/api/src/runtime/supervisor-model-input.ts",
+      "bytes": 2985,
+      "sha256": "07aa482313e198f0f5361053df7346d81b88160a4994af884d41cbaa1e84b974"
+    },
+    "oldLimitUTF8bytes": 65536,
+    "newLimitUTF8bytes": 131072,
+    "singleConstantWholeByteExactTransform": true,
+    "buildLabelOnlyOtherProductionChange": true,
+    "noWebProductionChange": true,
+    "noAgentSourceChange": true
+  },
+  "realCallChain": {
+    "chain": "app.ts model injection -> project-supervisor-runtime.ts bounded frozen input -> project-supervisor-model.ts bounded projection + same projected.text -> actual PiService.run purpose-sensitive UTF8 gate -> original SDK session.prompt",
+    "sharedConstant": "SUPERVISOR_PROMPT_MAX_UTF8_BYTES",
+    "projectedText": "Same trusted PROJECT_SUPERVISOR_CONTRACT + separator + JSON.stringify(input); measured complete text and text submitted by adapter are unchanged in construction. Only limit value changes.",
+    "PiService": {
+      "ref": {
+        "path": "apps/api/src/pi.ts",
+        "bytes": 50817,
+        "sha256": "e71cbf000fea2f70d6418823a2056767fc646816a93088e27840a760e37d6b0f"
+      },
+      "line": 414,
+      "wholeByteSameAsR51r1": true,
+      "supervisorGate": "Buffer.byteLength(input.text,utf8)>shared constant",
+      "otherPurposeGate": "Original text.length>32000 retained",
+      "whitespaceAndBoundedEphemeralPurposeSessionGuardsUnchanged": true
+    },
+    "mandatorySemantics": "Frozen private input/full experience audit remains. Required goal, criteria, corrections, selected references, original content and all binding/version/source fields are not truncated or summarized. Exclusions remain existing minimal metadata with full audit privately retained.",
+    "strictAndAuthorityPreserved": [
+      "six exact decision keys and experience reference enumeration/disposition/reason/verified rules",
+      "review exact unique complete criteria, all met=true and exact verified citation pairs",
+      "evidence path/type/link/UTF8/hash/count/size gates",
+      "stale experience snapshot/counterexample/authorization/goal/run/task/native/source checks",
+      "persistent intent single consumption and no paid retry/replay",
+      "policy/window/grant/claim/revoke/stop and signed result/ACK/journal protocol",
+      "usage unknown handling and original monetary policy"
+    ],
+    "inheritedWholeByteReferences": [
+      {
+        "path": "apps/api/src/pi.ts",
+        "bytes": 50817,
+        "sha256": "e71cbf000fea2f70d6418823a2056767fc646816a93088e27840a760e37d6b0f"
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-model.ts",
+        "bytes": 12524,
+        "sha256": "9d612d2ebbf98f04af29f126cb3854257e04ddea0020f10b3164391ef35a515d"
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-contract.ts",
+        "bytes": 2227,
+        "sha256": "09f2b47cdc25abf1260e06876f55e62130e900affac672527a6b426d9b3ccf08"
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "bytes": 50483,
+        "sha256": "55d7eecff1de4f904dbfc319fe798dd1f7aa0aa93c0b926a3a1b701363bc7668"
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-intents.ts",
+        "bytes": 2819,
+        "sha256": "26865ed66027076d72c8f61f7c516a807248f7cad3513fb454975f982ab737fe"
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-review.ts",
+        "bytes": 9955,
+        "sha256": "ebe9b050b602ddc013c0cc821194b9a7ff0df097f1f30c97be170d38fb4da79c"
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-evidence.ts",
+        "bytes": 4476,
+        "sha256": "e61475eb266a3170a817b17919cc002006a663c63c108bdfc9087c1fdfd5bb9e"
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-evidence-collector.ts",
+        "bytes": 3766,
+        "sha256": "e8dcee86f919b5501127c158d000758f31b16d47fbcf00a00ad3c3af95bacff8"
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-goal-policy.ts",
+        "bytes": 6310,
+        "sha256": "d5ae5f13444ceddb906850e170486ab9139baaddf47a0febafb447fb620f64fa"
+      },
+      {
+        "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+        "bytes": 12823,
+        "sha256": "b4aa39c356b1175b75b14deadb2e3a9d0f27f61bb1beec3e35c6137644e44ded"
+      },
+      {
+        "path": "apps/api/src/runtime/execution-runtime.ts",
+        "bytes": 131800,
+        "sha256": "d8c36cb859060e271c84946b5427c627658491923f6092c916ed21f0ab4eb3e4"
+      },
+      {
+        "path": "apps/api/src/runtime/execution-routes.ts",
+        "bytes": 14568,
+        "sha256": "a5027305858a46ae873801facd4206f2c1ec9109557d5b89b6a370c6c78f2b1b"
+      },
+      {
+        "path": "apps/api/src/app.ts",
+        "bytes": 54529,
+        "sha256": "f6cbad578cf6f6d4ad74b659a0a8152f6d2a2c1d10b9553a65217fdb37e2a421"
+      },
+      {
+        "path": "docs/建设记录/events.jsonl",
+        "bytes": 1531848,
+        "sha256": "86e9f48881bfdeca31bbf3cebf78a65b8d5dc3b77ca518ba864f2bee782c43ca"
+      },
+      {
+        "path": "docs/贾维斯建设日志.md",
+        "bytes": 1768210,
+        "sha256": "3c14e406c2e0763a6dadcf388ff313f9ca8dbc42d9344ec12f3854cd5daec440"
+      },
+      {
+        "path": "docs/贾维斯建设日志.html",
+        "bytes": 2208985,
+        "sha256": "ee76c06050359017107ca83d215fd922bbc257429f8efa9ceca945d1f31b1a9b"
+      },
+      {
+        "path": "scripts/capture-managed-release.py",
+        "bytes": 14393,
+        "sha256": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504"
+      },
+      {
+        "path": "scripts/capture-release-recovery.py",
+        "bytes": 20925,
+        "sha256": "1f74cb9fea17d5f3a964675fc2909e79bbf5d00b65a59146af9eb1e86d128179"
+      }
+    ]
+  },
+  "controlledSavedTest": {
+    "source": {
+      "path": "apps/api/test/pi-supervisor-entry-r52.test.ts",
+      "bytes": 5175,
+      "sha256": "e6fb7de4cb3cb0609aefa55f8d81120a94bb15d73472767d3c6d98f9c1082e33"
+    },
+    "TAP": {
+      "path": "reports/r52-logs/pi-entry.stdout.txt",
+      "bytes": 633,
+      "sha256": "fcc3a98ca5fb36d4f5e850de18d062c04d346846d300710b064a5c47f54f9c67"
+    },
+    "stderr": {
+      "path": "reports/r52-logs/pi-entry.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "groups": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "driverCalls": 4,
+    "fetchRequests": 0,
+    "productionMethods": "boundedSupervisorModelInput -> createProjectSupervisorModel -> actual PiService.run -> actual SDK offline ModelRuntime/registerProvider stream driver",
+    "fixtureBoundary": "Only initialization/refresh/auth route/provider fixture are supplied. PiService.run and adapter are real methods. All fixture text/identity/auth/usage are synthetic.",
+    "cases": [
+      "Controlled complete text81717B with25synthetic originals/49exclusion metadata and correction reaches driver; frozen source unchanged and original/correction arrays deepEqual.",
+      "Controlled multilingual goal plus padding yields complete prompt exactly131072B and reaches driver.",
+      "Adapter +3UTF8 bytes rejects MODEL_CONTEXT_INCOMPLETE with0extra driver; direct Pi text131073B rejects PI_INPUT_INVALID.",
+      "Non-supervisor32001, whitespace and non-null supervisor session reject beforedriver; non-supervisor32000 remains accepted.",
+      "SDK length stop cannot produce valid model decision and adapter rejects MODEL_RUN_FAILED."
+    ],
+    "scopeLimits": [
+      "The81717 case is controlled construction with padding, not the actual Factory25-original bytes or old intent replay.",
+      "Controlled stop result is not review/allcriteria/claim/restart/authorization validation; those unchanged production guards inherit prior source review, not new fixture coverage.",
+      "No live configured provider, tokenizer or full provider envelope acceptance test. contextWindow32768 Token and output4096 declarations unchanged; UTF8bytes are not tokens.",
+      "Old64KiB test group remains saved but was not rerun or counted as new coverage."
+    ],
+    "providerTotalTokens": null,
+    "syntheticUsageZeroIsNotActualFreeModelClaim": true
+  },
+  "sidecar": {
+    "source": {
+      "path": "scripts/capture-activate-r52-sidecar.py",
+      "bytes": 26413,
+      "sha256": "736e5c25043e4355a24be50ff2194a07291a8a6b719fdd20733b8eaaa3d3b309"
+    },
+    "base": {
+      "path": "scripts/capture-activate-r51-r1-sidecar.py",
+      "bytes": 26413,
+      "sha256": "2eb88fd77857218c3d574f7542f2d29219444d499e93508abcb14dc3688714e8"
+    },
+    "fourNamedLiterals": [
+      {
+        "name": "EXPECTED",
+        "old": "20261018-project-goals-r50",
+        "new": "20261018-project-goals-r51-r1"
+      },
+      {
+        "name": "RELEASE",
+        "old": "20261018-project-goals-r51-r1",
+        "new": "20261018-project-goals-r52"
+      },
+      {
+        "name": "APP",
+        "old": "e5cc87f15c800a021e5dca58dedc71db022123d0",
+        "new": "0ae044826235fd7f7908db786dc2b186fdebf984"
+      },
+      {
+        "name": "ZIP_HASH",
+        "old": "231a82a26ff6b5de0af3087338cedc7ba0bf772e4ee509f8dee359ee252a5dda",
+        "new": "18b66d384c64d4b8e2a0a02aae4e2f8353504db6b0680367acb961d8a362586b"
+      }
+    ],
+    "wholeByteTransformAndInverseExact": true,
+    "ASTParseOnly": true,
+    "normal650Rollback250Overall900LockConfigMetadataReadinessSnapshotRestoreChildCleanupRollbackBodyUnchanged": true,
+    "managedAndRecoveryWholeHashesUnchanged": true,
+    "executed": false
+  },
+  "evidenceOrigin": {
+    "description": "Received controlled Git bundle contains full commit blobs and saved logs. Local physical files and all21 non-package index entries match size/SHA exactly; no extra remote held-FD metadata or second acquisition is claimed. This is not missing evidence.",
+    "index": {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-exact-index-report-277796b5-60cf-4e77-97e6-345d975f3732/artifact-index.json",
+      "bytes": 4636,
+      "sha256": "c7ac5530f2bf90d33f2572f5124c1367f7cc67a1b11ba931b5b13fa2059b08e1"
+    },
+    "nonPackageCount": 21,
+    "allNonPackagePhysicalBytesMatchIndexAndGit": true,
+    "newRemoteFileMetadataOrRecollectClaim": false,
+    "physicalFacts": {
+      "path": "artifacts/cc-supervisor-r43/r52-source-review-physical-facts.json",
+      "bytes": 11451,
+      "sha256": "e308049d63db195a55ebe476bf65d56e9d6b3d007cdc7a7f86d5c3160d09aefc"
+    },
+    "savedLogs": [
+      {
+        "path": "reports/r52-logs/pi-entry.stdout.txt",
+        "bytes": 633,
+        "sha256": "fcc3a98ca5fb36d4f5e850de18d062c04d346846d300710b064a5c47f54f9c67"
+      },
+      {
+        "path": "reports/r52-logs/pi-entry.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "reports/r52-logs/api-types.stdout.txt",
+        "bytes": 64,
+        "sha256": "55ea586aa490ce93a098c95bde0732c397242e590fec5b8d9f8fec31b61c8b1d"
+      },
+      {
+        "path": "reports/r52-logs/api-types.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "reports/r52-logs/api-build.stdout.txt",
+        "bytes": 71,
+        "sha256": "2d6c05ac08c27220e314ad5b600caacd3a40c8ef58522c164f31598e1e2522d4"
+      },
+      {
+        "path": "reports/r52-logs/api-build.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "reports/r52-logs/web-types.stdout.txt",
+        "bytes": 47,
+        "sha256": "f5a86bc53ee1616b4ad49800b67ed0fef011afeaff9a8eb36324aaba960d47f1"
+      },
+      {
+        "path": "reports/r52-logs/web-types.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "reports/r52-logs/web-build.stdout.txt",
+        "bytes": 3049,
+        "sha256": "6c804cdeeadda4a0d2996f684e762c452a1bb21662589f4c746db4b69d3f1417"
+      },
+      {
+        "path": "reports/r52-logs/web-build.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "reports/r52-logs/package.stdout.txt",
+        "bytes": 749,
+        "sha256": "a131d86f5097b222d48d5efabd5e2485d148de485a39e37dee06d74a9b51a446"
+      },
+      {
+        "path": "reports/r52-logs/package.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "fullAuthorReport": {
+      "path": "reports/r52-full-delivery.json",
+      "bytes": 2573,
+      "sha256": "ff970496a2eb53bb5658fabe5d83d4ac0bd0127287423e64ae492d460cb11069"
+    },
+    "deliveryDoc": {
+      "path": "docs/R52主管完整载荷方案与交付.md",
+      "bytes": 2967,
+      "sha256": "916d79cc0d6f4fa9d78246d1133cb505a739377f104fd832ddf4ecece8a629aa"
+    },
+    "testExitScope": "Saved TAP explicitly completes1/1. Types/APIbuild logs contain invocation headers and empty stderr; author signed delivery states once/exit0. These files alone do not provide standalone per-command exit receipts. Web build log contains completed Vite output. Reviewer reruns none."
+  },
+  "canonicalRecordsAndUI": {
+    "candidateJournalAndGeneratedLogsWholeSameAsBase": true,
+    "RootCurrentCanonicalMayIncludeConcurrent330Through332OrLater": true,
+    "candidateCC308NotToOverwriteRootCanonical": true,
+    "newStandaloneCandidateDocIsNotRootCanonicalAppend": true,
+    "webFilesUnchanged": 192,
+    "UIRealBrowserNewReleaseNotAcceptedHere": true,
+    "oldFailedR51FindingAndR51r1EvidenceRemainIntact": true
+  },
+  "remainingBoundaries": [
+    "Source pass is confined to this2-file production delta and inherited byte-identical guards, not release, browser, live-provider or whole-product acceptance.",
+    "Root must independently bind actual current configuration/release/space/retention freeze and a fresh operation before activation; retained R51r1 recovery material must not be removed by concurrent cleanup.",
+    "Any new actual provider refusal remains a real new result; do not automatically retry old model intent or claim Token fit from byte cap.",
+    "All original failed runs/criteria/cost history retained; native cumulative not re-added, Pi/internal/unknown amounts stay unknown."
+  ],
+  "actionsExecuted": {
+    "localGitReadAndByteHash": true,
+    "sidecarASTParseOnly": true,
+    "appTestsOrBuilds": false,
+    "providerOrModel": false,
+    "networkAPIorSSH": false,
+    "sourceMutation": false,
+    "deployment": false,
+    "canonicalDocsOrLedgerWrite": false
+  },
+  "privacy": "Safe paths/counts/hashes, enum/status and synthetic-fixture classification only. No raw prompt/chat/provider response/config/key/base64 original content copied."
+}

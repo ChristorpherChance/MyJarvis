@@ -1,0 +1,134 @@
+{
+  "kind": "r43-round3-protocol-non-author-source-review",
+  "version": 1,
+  "status": "source-reviewed-blockers-remain",
+  "cut": {
+    "reportedCCHead": "d5d418b7e9dc0c638c9c914b3a9a5913523e9633",
+    "importedBaselinePatchBytes": 360442,
+    "importedBaselinePatchSHA256": "f6c5d5abbe2b82bfc9216c6caae8e9eff32feee4a8e28e9349ea4ca074215a4f",
+    "scope": "LOCAL read-only inspection of imported R3 runner, protocol, terminal observation, receipt and stop/resume contracts",
+    "appSourceModifiedByReviewer": false,
+    "testsExecutedByReviewer": false,
+    "networkOrModelCallsByReviewer": 0
+  },
+  "actualExecutionBoundary": {
+    "source": "Root-provided signed terminal and current supervision metadata",
+    "runId": "ab0f0356cbd906bbbc9a1f1de7366d56408213b0",
+    "terminal": "round-limit",
+    "exitCode": 0,
+    "nativeTurns": 54,
+    "nativeNeedsMoreWork": true,
+    "reportedParentTokens": 10960354,
+    "costComplete": false,
+    "installedAgentWasOldConsumer": true,
+    "isEvidenceOfNewConsumerRuntimeFailure": false,
+    "priorTwoRunsStillIncomplete": true,
+    "currentRuntimeTokensUsed": 10960354,
+    "currentConfiguredMaxTokens": 10000000,
+    "nodeAcknowledgedAndNoChildren": "reported by Root; not rechecked by this audit",
+    "resumeAttemptedByReviewer": false,
+    "policyChangedByReviewer": false,
+    "historyResetOrReplacementTaskCreated": false
+  },
+  "sourceAddressedItems": [
+    {
+      "item": "主管CC工作指令不再固定只读，并恢复冻结技能",
+      "sourceRefs": ["apps/api/src/runtime/agent-runner.ts:141"],
+      "result": "addressed-in-source-only",
+      "boundary": "允许绑定非生产副本内修改、调试和受控测试；未凭此宣称真实CC运行或效果验收。"
+    },
+    {
+      "item": "受保护/usr/bin/true自治前导不再强求native final",
+      "sourceRefs": ["apps/api/src/runtime/agent-runner.ts:143", "apps/api/src/runtime/agent-runner.ts:153"],
+      "result": "addressed-in-source-only",
+      "boundary": "用途分支允许继续进入真正固定validator；未运行旧自治或据此恢复其授权。"
+    },
+    {
+      "item": "协议异常先保部分观察，取消/超时分类优先",
+      "sourceRefs": ["apps/api/src/runtime/agent-terminal-observation.ts:1", "apps/api/src/runtime/agent-terminal-observation.ts:2", "apps/api/src/runtime/agent-runner.ts:145", "apps/api/src/runtime/agent-runner.ts:150", "apps/api/src/runtime/agent-runner.ts:170"],
+      "result": "partially-addressed-in-source",
+      "boundary": "不再因protocolError在pricing前立即break；但未启动/无checkpoint回执的生产合同仍见F02，且helper测试不替代runner/HTTP验证。"
+    },
+    {
+      "item": "绑定签名停止确认可区别于一般迟到证据",
+      "sourceRefs": ["apps/api/src/runtime/execution-runtime.ts:283", "apps/api/src/runtime/execution-runtime.ts:291"],
+      "result": "branch-added-not-end-to-end-accepted",
+      "boundary": "完整的真实子树停止→签名回执→journal ACK→显式resume尚未由本审验收；缺usage会在该分支之前被F02拒绝。"
+    }
+  ],
+  "boundedLogObservation": {
+    "readRangeOnly": [9182, 9190],
+    "rawTextExported": false,
+    "rawSnapshotPathAndSHA256RetainedPrivately": true,
+    "sourceSnapshotUnchangedByRead": true,
+    "sequence": [
+      {"ids": [9182, 9183], "type": "system", "subtype": "task_notification"},
+      {"ids": [9184], "type": "system", "subtype": "init"},
+      {"ids": [9185], "type": "result", "subtype": "success", "numTurns": 0, "durationMs": 31, "durationApiMs": 0, "parentUsageFieldsAllZero": true, "resultCharacters": 0, "nativeReportedCostUSD": 49.26846499999998},
+      {"ids": [9186], "type": "system", "subtype": "init"},
+      {"ids": [9187], "channel": "stderr", "textNotExported": true},
+      {"ids": [9188], "type": "assistant"},
+      {"ids": [9189], "type": "system", "subtype": "informational"},
+      {"ids": [9190], "type": "user", "meaning": "tool response envelope; body not exported"}
+    ],
+    "sameExpectedNativeSessionInSelectedJsonEvents": true,
+    "sameOSProcessOrSingleNativeInvocationProven": false,
+    "costInterpretation": "49.26846499999998只记录为恢复时native估算checkpoint；不是完整R2费用归属、完整本轮费用或供应商账单。",
+    "phaseBoundary": "同session、重复init、零turns均不足以授权重置final；不得据此直接放宽不同final冲突拒绝。"
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "priority": "P1",
+      "title": "final后出现新native活动仍可能把早期零回包作为完整用量",
+      "sourceRefs": ["apps/api/src/runtime/agent-protocol.ts:35", "apps/api/src/runtime/agent-protocol.ts:65", "apps/api/src/runtime/agent-protocol.ts:74", "apps/api/src/runtime/agent-protocol.ts:90", "apps/api/src/runtime/agent-runner.ts:68", "apps/api/src/runtime/agent-runner.ts:69"],
+      "staticTrigger": "若所观察的empty-final→reinit→assistant序列进入同一个consumer，它锁住早期零final，init不分阶段。若后来有不同final会拒冲突；若无另一个final，finish把旧零final排在后来partial usage之后，parseAgentOutput据其覆盖为usageComplete=true/0。",
+      "scopeOfProof": "这是可直接从R3源码推出的条件路径，不证明现场同一OS进程或已安装新consumer发生此错误。",
+      "minimumFix": "保留不同final冲突拒绝；为final之后的新init/assistant活动提供显式歧义状态，不把旧零final认作该活动的完整回执。只有绑定native invocation/根进程启动关闭及stdout归属的实证阶段边界，才能分别创建消费者或消费不同阶段。",
+      "minimumVerification": "一个受控child发送零final后继续init/usage，必须不complete-zero；另一组由两个明确启动/close的invocation分别消费同session；真正runner保留原阶段诊断和未知费用。先证边界，不额外调用模型为补记录。"
+    },
+    {
+      "id": "F02",
+      "priority": "P2",
+      "title": "启动前与无checkpoint重启回执仍缺usage，停止/后续claim会被ACK合同阻断",
+      "sourceRefs": ["apps/api/src/runtime/agent-runner.ts:224", "apps/api/src/runtime/agent-runner.ts:225", "apps/api/src/runtime/agent-delivery-journal.ts:64", "apps/api/src/runtime/execution-runtime.ts:281", "apps/api/src/runtime/execution-runtime.ts:283"],
+      "staticTrigger": "模板hash/本地范围等启动前失败及无checkpoint重启cancelled仍不带usage；中央先check(usage!==undefined)，后面的unknown规范化和停止确认分支不可达，400会使result delivery不ACK。",
+      "minimumFix": "可信未启动/未观测失败和重启停止合同明确发送unknown、完整性false；或中央在校验前按这个受限合同规范化。不能用known complete零代替未知。",
+      "minimumVerification": "真实ExecutionAgent→签名HTTP→持久journal→ACK，覆盖模板不匹配、无checkpoint重启、取消停止并重开库；核只有一份回执/费用且后续claim不因旧delivery堵死。"
+    },
+    {
+      "id": "F03",
+      "priority": "P1",
+      "title": "可选Token合同未贯通生产类型与用量账本",
+      "sourceRefs": ["apps/api/src/runtime/execution-types.ts:4", "apps/api/src/app.ts:175", "apps/api/src/runtime/governance.ts:118", "apps/api/tsconfig.json:1", "apps/api/src/runtime/usage-ledger.ts:24", "scripts/usage-ledger-contract.cjs:43"],
+      "staticTrigger": "ActualUsage的inputTokens/outputTokens已改为optional，app仍spread传给要求两个number的governance.executionUsage，strict类型合同不兼容。新增measurementStatus=partial也未被原账本汇总和DTO状态集完整消费，不能只改node入口。",
+      "scopeOfProof": "类型和枚举接线不相容由源码可见；本审未运行tsc，未提供或伪称真实编译失败退出码。partial状态进入账本的具体结果仍须对应fixture验证。",
+      "minimumFix": "在生产onUsage/账本边界统一显式unknown与已知partial语义及类型、DTO、汇总；已知部分Token保留，缺失字段和费用保持未知，不通过强断言或默认0掩盖。",
+      "minimumVerification": "许可允许后实际API类型编译；再通过签名HTTP分别入完整、部分、未知回执，读回原件、DTO和总账，确认部分不漏计、未知不冒0、同号不重复。"
+    },
+    {
+      "id": "F04",
+      "priority": "P2",
+      "title": "超时可进入判断但模型continue无法通过续轮源终态门",
+      "sourceRefs": ["apps/api/src/runtime/project-supervisor-runtime.ts:55", "apps/api/src/runtime/project-supervisor-runtime.ts:60", "apps/api/src/runtime/execution-runtime.ts:180"],
+      "staticTrigger": "主管接受timeout/budget-exhausted并允许continue，执行器续轮源允许集仍只有succeeded/failed/round-limit或签名停止确认，后续派发必SUPERVISOR_SOURCE_INVALID。",
+      "minimumFix": "统一可消费和可续接终态合同，保签名、hash、会话、目标版本和stop约束；若超时须人工处理，就在判断层明确禁止continue，不能保存可继续决定后再静默失败。",
+      "minimumVerification": "真实runtime fixture覆盖timeout→诊断→模型受控continue→同task/session新run；另测取消需独立签名停止确认、旧目标和迟到结果不得续派。"
+    }
+  ],
+  "reportedVerificationBoundary": {
+    "reportedRound3HelperCases": "4/4 reported by CC; not rerun by this auditor",
+    "inspectedScript": "scripts/test-r43-round3.mjs",
+    "firstCaseActuallyExercises": "真实有限Node子进程→AgentProtocolConsumer→直接调用terminalOutcome/incompleteUsage",
+    "otherCasesActuallyExercise": "更正事件、缺件和经验匹配helper",
+    "doesNotExercise": ["executeAgentRounds", "ExecutionAgent lifecycle", "agent journal ACK", "authenticated result HTTP", "production governance ledger", "actual stop/resume", "full API type build"],
+    "existingProtocolFixtureBoundary": "agent-protocol.test.ts主要是fixed引擎；其UTF-8用例名不等于已实际切分多字节并贯通runner。"
+  },
+  "pendingBoundaries": [
+    "已知Token累计10960354超过当前10000000；不尝试明知会BUDGET_EXHAUSTED的resume，不清历史、不新建任务冲洗。后继需要合法且留证的续轮授权机制。",
+    "npm执行及原件回传许可仍pending；没有用户答复，不绕过自动审查门。",
+    "本报告不安装新consumer、不重启agent、不修改活跃或已终态任务，不把静审及helper通过写成现场产品验收。"
+  ],
+  "implementationAccepted": false,
+  "productionDeployed": false
+}

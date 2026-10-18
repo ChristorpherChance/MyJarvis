@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-root-isolated-postgres-and-ci-service-validation",
+  "operationId": "89d1b4af-400e-45f4-838b-faed3ace2d16",
+  "status": "passed",
+  "errorCode": null,
+  "scope": "synthetic CI mechanism with new isolated PostgreSQL; not HTTP, target server suite, fullPG4, 74 or customer delivery",
+  "harnessSHA256": "cea6e99d076bf788b75dbfa74733185fa65285397424a8017eda77e078aed497",
+  "dependencyManifestSHA256": "d1d33cdd2b8b56326b887f7710311afb07390347a2ab3201dc287a61d0d4f771",
+  "sourcePinsSHA256": "c17ee12aa7450c3e74cfb58ec17aa6d4dc898c9c4a4db964a38511ad5482cfe9",
+  "compiledPinsSHA256": "eca8dcd18038ecaec4cfb6784b1f65da66f15d28f41595d55e7439eac15ad84a",
+  "fixtureIndexSHA256": "2bb8989d21b561224608027b5721b11ffde2734f2c0af0b01b6cfe61246e402b",
+  "postgresProbeSHA256": "4ccce07f5da37b2b708e34111e8e565c2d1576a6f56c52e5fd25e686c7b1bc33",
+  "postgresImage": "postgres@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+  "ciImage": "node@sha256:a5f4366e834695d5f363b920c104953a535d3a9864d1bdf74566a0ebe01daee5",
+  "postgresRuntime": {
+    "uid": 70,
+    "gid": 70,
+    "dataCapacityMiB": 256,
+    "tmpCapacityMiB": 16,
+    "runCapacityMiB": 8,
+    "leaseMaximumSeconds": 1200,
+    "readOnlyRoot": true,
+    "capabilities": 0,
+    "noNewPrivileges": true,
+    "configuredOnlyNewDatabase": true,
+    "createdContainerCIDAvailable": true,
+    "loopbackPortVerified": true
+  },
+  "harnessStatus": "passed",
+  "harnessReport": {
+    "sha256": "73b53f0b2afcfa70f5d221f2fbad4af65f12f19d7d4c1663ee786c701160d2fd",
+    "bytes": 24759,
+    "private": true
+  },
+  "sourceAndCompiledPinsStable": true,
+  "processRecords": [
+    {
+      "phase": "private-acl",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.797,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "715dc8493c36579a5b116995100f635e3572fdf8703e708ef1a08d943b36774e",
+          "bytes": 7,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "4f2b6b3ed9201ca459db2dd042e0a137c4e58bfe8e15a068e45ad8535fa5b1ef",
+          "bytes": 382,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "baseline-container-ids",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.641,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "351564535d57284e150bc228f5108e357ec9c49f450599b7a2938cdff5cbc92e",
+          "bytes": 845,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-private-postgres",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 1.875,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "bcf5be5a85503bc93736123331864e8fa80254b4c07c5574a804a21e333ac23b",
+          "bytes": 65,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-loopback-binding",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.313,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "a507b16e6b8d5f60d75faaa08ae2e25c5cb7fd4f9016537c1e0bc147edc52612",
+          "bytes": 57,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-readiness",
+      "exitCode": 2,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.875,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "16ee3d174b642b39bda2af4b9be5ba53306922e073f3f9750a7f4b458cdfde1a",
+          "bytes": 29,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-readiness",
+      "exitCode": 2,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.672,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "16ee3d174b642b39bda2af4b9be5ba53306922e073f3f9750a7f4b458cdfde1a",
+          "bytes": 29,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-readiness",
+      "exitCode": 2,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.641,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "16ee3d174b642b39bda2af4b9be5ba53306922e073f3f9750a7f4b458cdfde1a",
+          "bytes": 29,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-readiness",
+      "exitCode": 2,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 1.078,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "16ee3d174b642b39bda2af4b9be5ba53306922e073f3f9750a7f4b458cdfde1a",
+          "bytes": 29,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-readiness",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.25,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "f65a06d12c78be4ce11dc662c4ebf525a1da13786331065f0fe973c6df5ddd29",
+          "bytes": 39,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "real-service-harness",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 89.5,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "b9e1e67d2406f17b50c2e46a69a4df675e99de6b299c2475fcd30f4ba7e1f594",
+          "bytes": 89,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "new-pg-private-log-snapshot",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.14,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "b18f6e58ad859ce9e8047ff57905dd646a20d66c55cf57ed9baf426bef76e18d",
+          "bytes": 3788,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e9167830d4682e43fc38e912c829deffecae2b4a2894488dddd60b95e0d4f95c",
+          "bytes": 2396,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "exact-new-postgres-remove",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 0.86,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "bcf5be5a85503bc93736123331864e8fa80254b4c07c5574a804a21e333ac23b",
+          "bytes": 65,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    },
+    {
+      "phase": "after-container-ids",
+      "exitCode": 0,
+      "timedOut": false,
+      "outputLimited": false,
+      "seconds": 1.375,
+      "streams": [
+        {
+          "role": "stdout",
+          "sha256": "351564535d57284e150bc228f5108e357ec9c49f450599b7a2938cdff5cbc92e",
+          "bytes": 845,
+          "private": true
+        },
+        {
+          "role": "stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "private": true
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "attempted": true,
+    "exactContainerAbsent": true,
+    "beforeCount": 13,
+    "afterCount": 13,
+    "newResidualContainerCount": 0,
+    "qualified": true,
+    "removeExitCode": 0,
+    "newResidualIdsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "seconds": 103.282,
+  "automaticRetry": false,
+  "otherNewContainersAutomaticallyDeleted": false,
+  "modelRequests": 0,
+  "knownExternalModelCost": 0,
+  "internalTokens": null,
+  "internalCost": null,
+  "original74Accepted": false,
+  "customerProductDelivered": false,
+  "productionChanged": false
+}

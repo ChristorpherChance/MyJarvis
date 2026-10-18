@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-context-sentinel-all-five-retained-failed-D-local-compatibility-analysis",
+  "at": "2026-10-16T12:49:46.138337+00:00",
+  "scope": "Only actual state allowed metadata/report list/pins and frozen D source/headers inspected. No retained five report body read; no D/helper/reader/AST/test/remote invocation.",
+  "actualState": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-state.json-69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410.json",
+    "sha256": "69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410",
+    "bytes": 24672
+  },
+  "holderActual": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-actual-observation-1792154625512-389d44b3-0b8d-47a5-a264-e7d7d1cdedcd.json",
+    "sha256": "4617ea0b66f9ad0f5ae08af6fa53d3bb0e5d3f183bdd85f8a2bac95acd447fc0",
+    "bytes": 4275
+  },
+  "observed": {
+    "stateStatus": "failed",
+    "reportsType": "list",
+    "reportCount": 5,
+    "orderedNamesMatch": true,
+    "retainedCount": 5,
+    "missingCount": 0,
+    "firstFailure": {
+      "phase": "driver",
+      "errorCode": "PG4_R33_UNKNOWN",
+      "exceptionClass": "OtherException",
+      "origin": null,
+      "driverInputBindingVerified": null
+    },
+    "firstFailureFieldPresence": {
+      "origin": false,
+      "driverInputBindingVerified": false
+    },
+    "fiveReportMetadata": [
+      {
+        "name": "pg4-vitest-result.json",
+        "retained": true,
+        "sha256": "1612e615a44b75c966ad0ffc7b5145130425467811357ca2d4f595d7afaeff77",
+        "bytes": 6698,
+        "originalPinEqualsRetained": true,
+        "sourceWasReadTwice": true,
+        "nativeMetadata9Integers": true,
+        "uidGid1000RegularNlink1NoWritableOtherGroup": true,
+        "sourceSizeMatchesRetained": true
+      },
+      {
+        "name": "pg4-hook-result.json",
+        "retained": true,
+        "sha256": "4c5f01ba3e6659f8d0955ba8249664ab0a54a15fee9594bc40e319f64c39757e",
+        "bytes": 1252,
+        "originalPinEqualsRetained": true,
+        "sourceWasReadTwice": true,
+        "nativeMetadata9Integers": true,
+        "uidGid1000RegularNlink1NoWritableOtherGroup": true,
+        "sourceSizeMatchesRetained": true
+      },
+      {
+        "name": "pg4-startup-frame.json",
+        "retained": true,
+        "sha256": "1b906686cb4fa3751e06b9de83ebbb4c12396fbb135abf50026f4838b1c9276f",
+        "bytes": 8576,
+        "originalPinEqualsRetained": true,
+        "sourceWasReadTwice": true,
+        "nativeMetadata9Integers": true,
+        "uidGid1000RegularNlink1NoWritableOtherGroup": true,
+        "sourceSizeMatchesRetained": true
+      },
+      {
+        "name": "pg4-driver-result.json",
+        "retained": true,
+        "sha256": "c0ee9d17148e9d7afe4674abc38e5ac41dab95d5247ff8b6d45731bee05bcc98",
+        "bytes": 8720,
+        "originalPinEqualsRetained": true,
+        "sourceWasReadTwice": true,
+        "nativeMetadata9Integers": true,
+        "uidGid1000RegularNlink1NoWritableOtherGroup": true,
+        "sourceSizeMatchesRetained": true
+      },
+      {
+        "name": "pg4-fixture-start-intent.json",
+        "retained": true,
+        "sha256": "a434d87a45cb725c4c8e509faaca6621446e721970797238071cc8507fc4d721",
+        "bytes": 693,
+        "originalPinEqualsRetained": true,
+        "sourceWasReadTwice": true,
+        "nativeMetadata9Integers": true,
+        "uidGid1000RegularNlink1NoWritableOtherGroup": true,
+        "sourceSizeMatchesRetained": true
+      }
+    ],
+    "fiveReportContentsUnknown": true,
+    "originalTerminalRetainedPinTableComparedHere": false
+  },
+  "definiteRefusals": [
+    {
+      "source": ".jarvis-dev/maintenance/seal-r37-qa-context-sentinel-meta-r2-D-after-terminal-local.py",
+      "lines": "270-277",
+      "code": "STRICT_INCOMPLETE_FIRST_ERROR_REQUIRED",
+      "reason": "failed status unconditionally enters incomplete branch; it requires source-bound-driver origin, driverInputBindingVerified:true and1..4missing. Actual has0missing and absent origin/binding fields. No helper execution is needed to establish refusal."
+    },
+    {
+      "source": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-meta-r2.py",
+      "line": 126,
+      "code": "PG4_D_NORMAL_REPORT_STATE_CHANGED",
+      "reason": "Even if pureDATAhelper selected normal-five, current host observer requires completed-unqualified and firstFailure:null. Actual failed plus nonnull failure is a separate definite downstream refusal."
+    }
+  ],
+  "otherConsumerBoundaries": {
+    "caller572f": "assertPG4R37ReportPolicy accepts normal-five only with exactly5kept/0missing and original state/records hashes; main terminal gate accepts failed. It does not impose the observer126 success-only state guard.",
+    "thin2384": "Source/context/ENTRY/caller/observer/host/scope H and one-reader limits are strict. New observer bytes cannot be passed under old host/program H.",
+    "observerRemainingGates": "Original state/protocol/source tuple and original actor/stop/create/intent/tool/control chain, five source/copy pairs with originalmeta/rawH/size/base64,2SQL slots, optional error provenance and current4/47FD/socketACK/whole gates remain required. Their real runtime success is not concluded by this analysis.",
+    "modeMeaning": "Keep the two existing names normal-five/incomplete-first-error. Five present reports describe completeness, not framework/callback success; original failed status and firstFailure must remain unchanged."
+  },
+  "notHelperOnly": true,
+  "narrowestSourceCandidate": {
+    "normalFiveBranch": "In a distinct successor, select existing normal-five from exact ordered5retained/0missing and original pin/metadata checks. Preserve completed-unqualified=>firstFailure:null. A separate explicit failed+all5 path must retain original nonnull failure/status without inventing origin or driverInputBindingVerified and without grading reports or callbacks. Existing strict incomplete1..4missing path remains unchanged.",
+    "files": [
+      "Distinct pureDATAhelper successor for full-five failed branch and future/newD source pins",
+      "Distinct observer successor for only corresponding full-five failed state predicate",
+      "Distinct caller sibling with own SELF/observer path and new host derivation; unchanged scope/BASE/protocol/methods",
+      "One static host derived from new observer; no algorithm or lifecycle changes",
+      "Distinct thin/outer siblings with only reviewed caller/observer/host/source pointers",
+      "D-only NULL/proof/author/SOURCE interface; no seven-source QA rewrite"
+    ],
+    "criticalReviewRoleSplit": "Keep original DReview6da2349e tied to original aggregate59bc/current MAIN DATAcb846/q.activation.closureReview and C708 provenance. Add separate futureDReview for new caller/observer/host and future D activation.sourceReview. Replacing PINS.DReview wholesale would definitely fail original mainData/activation binding gates.",
+    "original672639600And708Prefix": "Original executionC708 and its entire ordered prefix remain unchanged; append new D-only source/review refs. Do not rewrite original C.sources.closureReader, original MAIN/START/source family or original activation.",
+    "unchangedResourceScope": "Same already-run attempt/newBASE resource names, original worker969b/driver592d/Cefb binding; owner/stop/current4/SQL/first-secondary/47FD/socketACK/9routes/native/build/HUP/fixed607a952 gates unchanged. No auto-baseline reset.",
+    "nextDecision": "Root should select a distinct D-only SOURCE compatibility purpose; independent SOURCE then actual DATA and concrete ENTRY before any sole new D observation. Do not trial-call frozen e18 or old once."
+  },
+  "actualDExecuted": false,
+  "reportBodiesRead": false,
+  "driverRootCause": null,
+  "caseResults": null,
+  "ABI": null,
+  "sourceChanged": false,
+  "newModeCreated": false,
+  "subjectFunctionsExecuted": 0,
+  "ASTOrSyntaxChecks": 0,
+  "testsRun": 0,
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "modelCalls": 0,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "sourceRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-actual-observation-1792154625512-389d44b3-0b8d-47a5-a264-e7d7d1cdedcd.json",
+      "sha256": "4617ea0b66f9ad0f5ae08af6fa53d3bb0e5d3f183bdd85f8a2bac95acd447fc0",
+      "bytes": 4275
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-state.json-69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410.json",
+      "sha256": "69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410",
+      "bytes": 24672
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r37-qa-context-sentinel-meta-r2-D-after-terminal-local.py",
+      "sha256": "e18e469a9d52a94742cb06cba5371c84a705bfa38586ed2ded06d67116c03c28",
+      "bytes": 41276
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r37-pg4-qa-context-sentinel-main607-meta-r2-current-once.mjs",
+      "sha256": "23845514325ab31e735f67127f0b592049856dff352f2add27e07e3a87471fdd",
+      "bytes": 15932
+    },
+    {
+      "path": "scripts/verify-factory-pg4-qa-current-scope-r37-context-sentinel-meta-r2.mjs",
+      "sha256": "572f2e89914e1fa5f6f9c4296126fcc90b83bbfac7d26271ca6c4de1ea2b47a9",
+      "bytes": 24064
+    },
+    {
+      "path": "scripts/factory-pg4-qa-current-scope-observer-r37-context-sentinel-meta-r2.py",
+      "sha256": "9ce6c9704d025e5e1117a20e7a9e954f84e5e132dcbf688f91fcc951509b28cd",
+      "bytes": 33789
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-complete-null-interface.json",
+      "sha256": "5333c15a6639fdba18ffd6e15159acc82d2911a0c22ec00cb936b1a66d0ebff9",
+      "bytes": 96585
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-current-resource-scope-independent-local-source-review-final.json",
+      "sha256": "6da2349ead3c2b5e56a401ca40ea17479e91d0e452a2b97634d99998f5349e94",
+      "bytes": 181382
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-complete-family-source-review-aggregate-final.json",
+      "sha256": "59bc4d51cf8936a0db0489b2844eebe9ab36081b77a7f2aa4a0a48c24a124fa9",
+      "bytes": 360431
+    }
+  ],
+  "sourceRefsCount": 9,
+  "sourceRefsInitialAndFinalEqual": true
+}

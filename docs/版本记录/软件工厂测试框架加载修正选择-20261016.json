@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-worker-context-module-policy-root-selection",
+  "selection": "fixed-worker-only-source-byte-verification-with-explicit-deferred-runtime-export-check",
+  "basis": {
+    "actualReadSHA256": "9b80e88f17c879095c5dfc24deb481c89969c9d224b10b39fd228c736cd64e7a",
+    "originalReportSHA256": "2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a",
+    "originalReportBytes": 2066,
+    "messageSHA256": "0ba923c8c323c4eb00cbb88051c34a87475a0e5e83251c6cfc04d1021750aaa5",
+    "savedReviewSHA256": "9b03bf3938af891882d2256ce3854d31f9569dbc84699523a54d60e672eef648",
+    "driverSHA256": "911aee0fbae9ea05963332a9f9e68fe5378ef75f95f8ef494f8945a4b504004a",
+    "sourceContractSHA256": "344b5a6bb4fd15efea8b11b7f5cefe224c726749908cf51304269fc061bd85d2"
+  },
+  "fixedSingleTuple": {
+    "specifier": "vitest/runners",
+    "manifestIndex": 2,
+    "sha256": "3276eddc378f604738661e561131b1ac8eacee927dc7b551e54b862a5b73b39c",
+    "bytes": 8959,
+    "resolvedPathMustEqualFrozenContract": true,
+    "exportsMustEqualFrozenContract": true,
+    "exports": [{"name":"VitestTestRunner","type":"function"}]
+  },
+  "requiredBehavior": [
+    "Preserve every exact field and byte check for all thirteen manifest modules.",
+    "After byte verification, defer host dynamic import only for the complete fixed single tuple. An inconsistent tuple is an error, never a fallback.",
+    "The other twelve entries retain their original dynamic import and export checks; later ten entries have not yet been exercised in this actual attempt.",
+    "Place the deferred item separately from actually loaded host modules; explicitly false actualImportReturned, exportTypesVerified and workerExecutionVerified, with sourceBytesVerified true and expected exports retained.",
+    "Keep frameworkABIQualified false and actualWorkerTestRunnerInstance null. A source-only item cannot qualify ABI or execution.",
+    "Keep vitest/node createVitest, every config/plugin/reporter/hook/callback/SQL/fixture and default runner policy unchanged.",
+    "Do not inject a fake worker global, add setupFiles or a custom runner, or ignore any import error.",
+    "Prepare only one new driver successor, its minimal inverse and one necessary targeted group; full QA family integration requires a later explicit source choice.",
+    "Do not execute a new QA until complete current protection and resource closure independently qualify. Do not reset main607 or replay any closed opportunity."
+  ],
+  "alternatives": [
+    {"id":"keep-host-import","state":"rejected","reason":"The observed host import fails before fixture start because the worker state is unavailable."},
+    {"id":"fixed-single-defer","state":"selected","reason":"Preserves byte identity and makes the context limitation explicit while leaving actual worker behavior to real Vitest execution."},
+    {"id":"fake-worker-global","state":"rejected","reason":"Would manufacture the context being qualified and misrepresent runtime evidence."}
+  ],
+  "implementationAuthorizedLocalOnly": true,
+  "implemented": false,
+  "actualWorkerExecutionVerified": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "modelsInvoked": false
+}

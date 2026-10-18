@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-16T04:03:15.159Z",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "items": [
+    {
+      "id": "4fbfd87a-fe71-461b-b1a6-bc847308b43f",
+      "title": "继续定位前置问题与当前范围核查",
+      "revision": 4,
+      "status": "blocked",
+      "hash": "2372938cfd3b201ad9e6ee9954117fcb98e66cdd20c84ffdb74071df73a21ad7",
+      "summary": "已定位当前目录变化：602变为607文件，新增5项、修改9项、删除0项；目录身份相同，内容和元数据均变化。",
+      "completionSummary": "",
+      "validationScope": ""
+    },
+    {
+      "id": "a24cdb77-77e1-476f-acf4-2240a48befa5",
+      "title": "核清诊断结果与当前目录变化",
+      "revision": 2,
+      "status": "completed",
+      "hash": "1d10f47ba47b23008067b818519d5d75e0ac9b90d548072df84d58c057adf11b",
+      "summary": "已完成历史诊断核对和本次有限目录观察，607文件两帧一致；已列明相对旧602清单的5新增、9修改、0删除。",
+      "completionSummary": "本次目录诊断完成：两帧读取一致，目录身份保持，内容、文件数和元数据发生变化。已列明5新增、9修改、0删除，未修改593份；阻塞从通用指纹拒绝定位到具体清单差异，变更来源和正确性尚未确认。",
+      "validationScope": "仅固定目录只读观察、保存证据独审和旧保存清单比较；未接纳新保护基准，未取得当前资源收口、四用例或74目标验收。"
+    }
+  ],
+  "counts": {
+    "total": 6,
+    "planned": 3,
+    "running": 0,
+    "blocked": 1,
+    "completed": 2
+  },
+  "latestSequence": 11,
+  "matchingPersistedNotifications": 2,
+  "original74AcceptanceChanged": false
+}

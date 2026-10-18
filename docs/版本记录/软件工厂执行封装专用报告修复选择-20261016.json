@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-worker-artifact-result-local-repair-selection",
+  "at": "2026-10-16T13:20:43.687349+00:00",
+  "goal": "Preserve actual four-case results and fix the worker result-channel contract without repeating those cases merely for logs.",
+  "observedCause": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-report-domain-originals-safe-facts.json",
+    "sha256": "16940a52b4e3b2942ca14411744eb8452db454e2da49f1ad921fd7529c3514d8",
+    "bytes": 17716
+  },
+  "savedCurrentScope": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-saved-evidence-independent-local-review-final.json",
+    "sha256": "e2208d32a2fa9d28ef269538b3d463dd45cdef15a01e142dce4d261bc939a06a",
+    "bytes": 53528
+  },
+  "frozenWorker": {
+    "path": "scripts/factory-pg4-qa-startup-worker-r37-context-sentinel-meta-r2.py",
+    "sha256": "969bd623208ef892b72acdcd9c144a5f91421895e2ef03f589979f67bc7b6930",
+    "bytes": 95729
+  },
+  "alternatives": [
+    {
+      "id": "unchanged",
+      "benefit": "No new source",
+      "limitation": "Actual prefixed stdout fails the single-JSON parser despite successful framework execution."
+    },
+    {
+      "id": "last-line-json",
+      "benefit": "Small parser change",
+      "limitation": "Promotes a text tail to the result protocol and introduces ambiguous diagnostic-output framing."
+    },
+    {
+      "id": "strict-retained-driver-artifact",
+      "benefit": "Use the dedicated original report with existing trusted file, double-read, metadata, hash and source binding; keep stdout as diagnostic capture.",
+      "limitation": "Needs a bounded worker source fork, explicit independent report-retention evidence and targeted new checks."
+    }
+  ],
+  "selected": "strict-retained-driver-artifact",
+  "selectedOnly": true,
+  "implementationCompleted": false,
+  "newWorkerPath": "scripts/factory-pg4-qa-startup-worker-r37-artifact-result-r1.py",
+  "constraints": [
+    "Original worker969/driver592 and all closed attempts remain unchanged.",
+    "Reuse existing read_evidence/retain_reports and source/attempt/protocol/diagnosticVersion checks; make independent report-retention binding explicit, never default true.",
+    "Actual tool exit/timeout/status, code!=0 failure and source-bound firstFailure/private failure must remain authoritative; do not infer business pass from exit0.",
+    "No generic stdout slicing/fallback; actual stdout and stderr remain exact retained diagnostic evidence.",
+    "All SQL, resources, limits, privilege, source/runtime, current/whole/unknown and private retention gates remain unchanged.",
+    "Only a LOCAL source fork and one necessary new targeted group. No old test, QA, model, remote or production release.",
+    "Future integration and runtime qualification require separate new source/data/entry; do not activate this source."
+  ],
+  "actualNewQA": false,
+  "actualPG4Qualified": false,
+  "original74Changed": false,
+  "codeExecutedProducerNullsPreserved": true,
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "modelCalls": 0,
+  "costs": {
+    "policy": "record-only/no cap",
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

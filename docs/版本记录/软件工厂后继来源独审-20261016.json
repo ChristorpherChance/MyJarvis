@@ -1,0 +1,608 @@
+{
+  "schemaVersion": 1,
+  "kind": "r33-pg4-incomplete-driver-current-r2-independent-local-review",
+  "at": "2026-10-16T03:09:36.993478+00:00",
+  "reviewer": "offline_capture_shell; non-author of R37 current-r2 source and correction",
+  "scope": "LOCAL static SOURCE only: all six source bodies, static decoded embedded byte authority, original 27 refs, corrected 29 refs, old-source whole-byte comparison and six exact supporting epoch refs. No subject import/execution.",
+  "staticPreparationReady": true,
+  "remainingP0P1": 0,
+  "callerSHA256": "9695d73a0f34c852122b28fb224be2ea54e48309d21c3741df85b2facc4c2095",
+  "observerSHA256": "eecf8aa8e09453bf649b2684165b201c7af973d396b7c18257b1e59e68ae9b42",
+  "hostProgramSHA256": "67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf",
+  "dataHelperSHA256": "447e91a98faa83118030394a844873a126f83da4b2761466b9939fc14e486dd1",
+  "sourceOutputs": {
+    "observer": {
+      "path": "scripts/factory-pg4-incomplete-driver-current-scope-observer-r33-r2.py",
+      "sha256": "eecf8aa8e09453bf649b2684165b201c7af973d396b7c18257b1e59e68ae9b42",
+      "bytes": 34967
+    },
+    "caller": {
+      "path": "scripts/read-factory-pg4-incomplete-driver-current-scope-r33-r2.mjs",
+      "sha256": "9695d73a0f34c852122b28fb224be2ea54e48309d21c3741df85b2facc4c2095",
+      "bytes": 25879
+    },
+    "thin": {
+      "path": ".jarvis-dev/maintenance/read-r33-pg4-incomplete-driver-current-r2-once.mjs",
+      "sha256": "a8a1e00bd55a81ddc26f5e5c919ff8921af993f6fac53257e4bda931403d509d",
+      "bytes": 16051
+    },
+    "outer": {
+      "path": ".jarvis-dev/maintenance/run-r33-pg4-incomplete-driver-current-r2-reviewed-once.py",
+      "sha256": "b8d00ea9cb406229f4e0f98aabf83ba02e3482de9392820f21d18d05ecd4b399",
+      "bytes": 17388
+    },
+    "dataHelper": {
+      "path": ".jarvis-dev/maintenance/seal-r33-pg4-incomplete-driver-current-r2-actual-data.py",
+      "sha256": "447e91a98faa83118030394a844873a126f83da4b2761466b9939fc14e486dd1",
+      "bytes": 26939
+    },
+    "host": {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-host-source-67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf.py",
+      "sha256": "67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf",
+      "bytes": 90896
+    }
+  },
+  "author": {
+    "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-correction-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+    "sha256": "371f35d9bb9f469fc00b6784cb2ade193049fb378415a45a008a216be26e58ea",
+    "bytes": 14630
+  },
+  "originalCompletedAuthor": {
+    "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+    "sha256": "c4d0b30279e6cf4a5c8f650c336a4cd418447aab948faaad0d3e259eb70bdee6",
+    "bytes": 11439
+  },
+  "nullInterface": {
+    "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-corrected-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+    "sha256": "d65e06c9ab5e3c00263da2b0206de2081117891f23baf2a8b2db1a3dc468510d",
+    "bytes": 4636
+  },
+  "originalIncorrectNull": {
+    "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+    "sha256": "b429cfa96894f30a3cd60f4cb0e5eb976ddf40ca162ec1b0ea6c2484f63a3be4",
+    "bytes": 4636
+  },
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/prepare-r33-incomplete-driver-current-r2-local.py",
+      "sha256": "ac6bb0ca98e2a8d1e0e5e34b6686611189510775450028848cccfcca4edb6df6",
+      "bytes": 16333
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-local-source-author-1791988810122-d5c4d570-db61-4c3c-87cc-696dfc10f143.json",
+      "sha256": "bcd3fec0e0e8465aa053778e8494979b852df545259b5907acb7844e441c9710",
+      "bytes": 18799
+    },
+    {
+      "path": "scripts/factory-pg4-incomplete-driver-current-scope-observer-r33-r1.py",
+      "sha256": "7b60f16bfd5f46ce6a9174e7fd0499e22e856a822010873b1244ce4f6b41a43f",
+      "bytes": 34967
+    },
+    {
+      "path": "scripts/read-factory-pg4-incomplete-driver-current-scope-r33-r1.mjs",
+      "sha256": "04f2c47db87f13e2b92916a8a87252697026017271612950f5976adadad113fe",
+      "bytes": 23698
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r33-pg4-incomplete-driver-current-r1-once.mjs",
+      "sha256": "ac2907791ee106eebc2c24305524ec7daffc528fa25845c648ae73f6ac0276de",
+      "bytes": 15803
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r33-pg4-incomplete-driver-current-r1-reviewed-once.py",
+      "sha256": "ef79171b6c1515e3284cc58767323a538f6786e7d7b82e8b64a3a3d5ac17d014",
+      "bytes": 16548
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r33-pg4-incomplete-driver-current-r1-actual-data.py",
+      "sha256": "5fa0b5202240f451441e7d71ddb4be0ee402d142555e1ed359fa01b27c622d64",
+      "bytes": 26941
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-host-source-34c20a6b21e40366bb878e561c10184a30e6103e3829c3fca45db182bbf2512f.py",
+      "sha256": "34c20a6b21e40366bb878e561c10184a30e6103e3829c3fca45db182bbf2512f",
+      "bytes": 90896
+    },
+    {
+      "path": "scripts/verify-factory-current-main602-single-entry-protection-contract-r33-meta-r4.mjs",
+      "sha256": "097a643a52c060293ccba337e50a41ba07458127afb43dd100943c6a001117d8",
+      "bytes": 46176
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-single-entry-protection-activation.json",
+      "sha256": "9871cc07c11cf4ffbb0c54229430afa0fbebb695c2fdd935b2eadbc9dc6d3dba",
+      "bytes": 3343
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-driver-diagnostics-main-metadata-root-selection-1791993436652-6c1829fa-25b8-4a34-8c22-1d0340836399.json",
+      "sha256": "f152567697ed959af0d3c07644c85ed6eab587752cfa9489b1ec47df52eaf320",
+      "bytes": 6197
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-null-interface-1791988697833-07ba5477-31af-40b9-9f5c-a6a3f896a684.json",
+      "sha256": "152bbe45abead3418b1a11c5cfeec8f778c8f6cdc60229cd61696db3a6062bf8",
+      "bytes": 2370
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-local-source-author-1791993686694-fa7211f3-fa3e-4de3-a421-7eb0d2aaffe0.json",
+      "sha256": "5bd37a6c23db5715f479501fa6601541b6e816458f0b3c02065703988f6c5f9f",
+      "bytes": 12439
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-actual-data-seal.json",
+      "sha256": "58541a0c1c64e509ea76da950c5903c29cf3cacaf57bd4fc17f72f3565e32ca5",
+      "bytes": 2242
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-whole-source-contract-8b97925e-f794-470c-8290-651ff5c58eed.json",
+      "sha256": "1655247b63da8fd40b0e12dce003276c4551f3cc9591c1c92d33f083c6fc4494",
+      "bytes": 5650
+    },
+    {
+      "path": "scripts/factory-pg4-incomplete-driver-current-scope-observer-r33-r2.py",
+      "sha256": "eecf8aa8e09453bf649b2684165b201c7af973d396b7c18257b1e59e68ae9b42",
+      "bytes": 34967
+    },
+    {
+      "path": "scripts/read-factory-pg4-incomplete-driver-current-scope-r33-r2.mjs",
+      "sha256": "9695d73a0f34c852122b28fb224be2ea54e48309d21c3741df85b2facc4c2095",
+      "bytes": 25879
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r33-pg4-incomplete-driver-current-r2-once.mjs",
+      "sha256": "a8a1e00bd55a81ddc26f5e5c919ff8921af993f6fac53257e4bda931403d509d",
+      "bytes": 16051
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r33-pg4-incomplete-driver-current-r2-reviewed-once.py",
+      "sha256": "b8d00ea9cb406229f4e0f98aabf83ba02e3482de9392820f21d18d05ecd4b399",
+      "bytes": 17388
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r33-pg4-incomplete-driver-current-r2-actual-data.py",
+      "sha256": "447e91a98faa83118030394a844873a126f83da4b2761466b9939fc14e486dd1",
+      "bytes": 26939
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-host-source-67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf.py",
+      "sha256": "67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf",
+      "bytes": 90896
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-exact-source-inverse-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+      "sha256": "f1d1482b82d73c3da4ff8a53c70bd4c46850e2f8512e26f125b4f90bd8e6f79e",
+      "bytes": 8644
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+      "sha256": "b429cfa96894f30a3cd60f4cb0e5eb976ddf40ca162ec1b0ea6c2484f63a3be4",
+      "bytes": 4636
+    },
+    {
+      "path": ".jarvis-dev/maintenance/complete-r33-incomplete-driver-current-r2-local-seals.py",
+      "sha256": "2cc272dbb4c66af54a7971c29159e8f58b7fcfc25ecf4999a6a8a2ca22c9df7f",
+      "bytes": 16168
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+      "sha256": "c4d0b30279e6cf4a5c8f650c336a4cd418447aab948faaad0d3e259eb70bdee6",
+      "bytes": 11439
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-corrected-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+      "sha256": "d65e06c9ab5e3c00263da2b0206de2081117891f23baf2a8b2db1a3dc468510d",
+      "bytes": 4636
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-correction-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+      "sha256": "371f35d9bb9f469fc00b6784cb2ade193049fb378415a45a008a216be26e58ea",
+      "bytes": 14630
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-inventory-contract.json",
+      "sha256": "0f82090b3d0561bdc93c84e45739772df7883ac33f11aaee01a8a562584a9259",
+      "bytes": 1911
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-physical-independent-local-source-review-1791994306392-d69d5845-19c7-4c90-8c6a-45c9c84f07d3.json",
+      "sha256": "78ceb03e026c6d1032f93c12ec70ec4ec4f11c28d07abb90db7e280a381f30e7",
+      "bytes": 15472
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-consumer-independent-local-source-review-1791994306392-d69d5845-19c7-4c90-8c6a-45c9c84f07d3.json",
+      "sha256": "620eb3db8231807822ade9fda9ab4c26f1e0bf9a90db672e91020986242214b8",
+      "bytes": 15201
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-adapter-independent-local-source-review-1791994306392-d69d5845-19c7-4c90-8c6a-45c9c84f07d3.json",
+      "sha256": "1eb50c80344b837890262f66f42801e4d00a8d6141841a22009346465817ed74",
+      "bytes": 15199
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-actual-observation-1791992601711-3849ad1c-6b78-4584-8dc5-293ac5b52902.json",
+      "sha256": "38e8e62452527f49cea25683cbf6a5a155ca618dba57df49a92546c1112fedb8",
+      "bytes": 7114
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-saved-evidence-independent-local-review-1791992708993-5e1aac9a-517d-4d6c-9163-a0707f38389e.json",
+      "sha256": "9d67aee428779ad0ea3436769f6a356bf1de92d18333f113f930e6dfbd46de6f",
+      "bytes": 23493
+    }
+  ],
+  "reviewedSupportingRefs": [
+    {
+      "path": "artifacts/factory-resume-r37/original-failure-cut.json",
+      "sha256": "0bd1e2043095124243f833e293f31a4ba39d5468c5deb8259ff121bb26e293be",
+      "bytes": 3058
+    },
+    {
+      "path": "artifacts/factory-resume-r37/prepare-attempt-1.json",
+      "sha256": "cb7d21d4ea8f325af7122b45d4d5f6b380db4b8c335fc1a29ef42acf5c46a91a",
+      "bytes": 843
+    },
+    {
+      "path": "artifacts/factory-resume-r37/local-preflight.json",
+      "sha256": "75e7938a8c40fa4bbc33c953bef273bd020e8a295be7f15cb003e51fc42cf2cd",
+      "bytes": 5252
+    },
+    {
+      "path": "artifacts/factory-resume-r37/null-bindings-correction.json",
+      "sha256": "5d8a148b110ddf707047fbe72794363e99bf5bb9bfef0cfa3c4f3130a6b34337",
+      "bytes": 3323
+    }
+  ],
+  "allReviewedRefs": [
+    {
+      "path": ".jarvis-dev/maintenance/prepare-r33-incomplete-driver-current-r2-local.py",
+      "sha256": "ac6bb0ca98e2a8d1e0e5e34b6686611189510775450028848cccfcca4edb6df6",
+      "bytes": 16333
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-local-source-author-1791988810122-d5c4d570-db61-4c3c-87cc-696dfc10f143.json",
+      "sha256": "bcd3fec0e0e8465aa053778e8494979b852df545259b5907acb7844e441c9710",
+      "bytes": 18799
+    },
+    {
+      "path": "scripts/factory-pg4-incomplete-driver-current-scope-observer-r33-r1.py",
+      "sha256": "7b60f16bfd5f46ce6a9174e7fd0499e22e856a822010873b1244ce4f6b41a43f",
+      "bytes": 34967
+    },
+    {
+      "path": "scripts/read-factory-pg4-incomplete-driver-current-scope-r33-r1.mjs",
+      "sha256": "04f2c47db87f13e2b92916a8a87252697026017271612950f5976adadad113fe",
+      "bytes": 23698
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r33-pg4-incomplete-driver-current-r1-once.mjs",
+      "sha256": "ac2907791ee106eebc2c24305524ec7daffc528fa25845c648ae73f6ac0276de",
+      "bytes": 15803
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r33-pg4-incomplete-driver-current-r1-reviewed-once.py",
+      "sha256": "ef79171b6c1515e3284cc58767323a538f6786e7d7b82e8b64a3a3d5ac17d014",
+      "bytes": 16548
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r33-pg4-incomplete-driver-current-r1-actual-data.py",
+      "sha256": "5fa0b5202240f451441e7d71ddb4be0ee402d142555e1ed359fa01b27c622d64",
+      "bytes": 26941
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-host-source-34c20a6b21e40366bb878e561c10184a30e6103e3829c3fca45db182bbf2512f.py",
+      "sha256": "34c20a6b21e40366bb878e561c10184a30e6103e3829c3fca45db182bbf2512f",
+      "bytes": 90896
+    },
+    {
+      "path": "scripts/verify-factory-current-main602-single-entry-protection-contract-r33-meta-r4.mjs",
+      "sha256": "097a643a52c060293ccba337e50a41ba07458127afb43dd100943c6a001117d8",
+      "bytes": 46176
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-single-entry-protection-activation.json",
+      "sha256": "9871cc07c11cf4ffbb0c54229430afa0fbebb695c2fdd935b2eadbc9dc6d3dba",
+      "bytes": 3343
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-driver-diagnostics-main-metadata-root-selection-1791993436652-6c1829fa-25b8-4a34-8c22-1d0340836399.json",
+      "sha256": "f152567697ed959af0d3c07644c85ed6eab587752cfa9489b1ec47df52eaf320",
+      "bytes": 6197
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r1-null-interface-1791988697833-07ba5477-31af-40b9-9f5c-a6a3f896a684.json",
+      "sha256": "152bbe45abead3418b1a11c5cfeec8f778c8f6cdc60229cd61696db3a6062bf8",
+      "bytes": 2370
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-local-source-author-1791993686694-fa7211f3-fa3e-4de3-a421-7eb0d2aaffe0.json",
+      "sha256": "5bd37a6c23db5715f479501fa6601541b6e816458f0b3c02065703988f6c5f9f",
+      "bytes": 12439
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-actual-data-seal.json",
+      "sha256": "58541a0c1c64e509ea76da950c5903c29cf3cacaf57bd4fc17f72f3565e32ca5",
+      "bytes": 2242
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-whole-source-contract-8b97925e-f794-470c-8290-651ff5c58eed.json",
+      "sha256": "1655247b63da8fd40b0e12dce003276c4551f3cc9591c1c92d33f083c6fc4494",
+      "bytes": 5650
+    },
+    {
+      "path": "scripts/factory-pg4-incomplete-driver-current-scope-observer-r33-r2.py",
+      "sha256": "eecf8aa8e09453bf649b2684165b201c7af973d396b7c18257b1e59e68ae9b42",
+      "bytes": 34967
+    },
+    {
+      "path": "scripts/read-factory-pg4-incomplete-driver-current-scope-r33-r2.mjs",
+      "sha256": "9695d73a0f34c852122b28fb224be2ea54e48309d21c3741df85b2facc4c2095",
+      "bytes": 25879
+    },
+    {
+      "path": ".jarvis-dev/maintenance/read-r33-pg4-incomplete-driver-current-r2-once.mjs",
+      "sha256": "a8a1e00bd55a81ddc26f5e5c919ff8921af993f6fac53257e4bda931403d509d",
+      "bytes": 16051
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r33-pg4-incomplete-driver-current-r2-reviewed-once.py",
+      "sha256": "b8d00ea9cb406229f4e0f98aabf83ba02e3482de9392820f21d18d05ecd4b399",
+      "bytes": 17388
+    },
+    {
+      "path": ".jarvis-dev/maintenance/seal-r33-pg4-incomplete-driver-current-r2-actual-data.py",
+      "sha256": "447e91a98faa83118030394a844873a126f83da4b2761466b9939fc14e486dd1",
+      "bytes": 26939
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-host-source-67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf.py",
+      "sha256": "67141e5897474a5d2c7d189d2240911a12d4879a1ec50de92299cd33a57a5ccf",
+      "bytes": 90896
+    },
+    {
+      "path": "artifacts/factory-resume-r37/original-failure-cut.json",
+      "sha256": "0bd1e2043095124243f833e293f31a4ba39d5468c5deb8259ff121bb26e293be",
+      "bytes": 3058
+    },
+    {
+      "path": "artifacts/factory-resume-r37/prepare-attempt-1.json",
+      "sha256": "cb7d21d4ea8f325af7122b45d4d5f6b380db4b8c335fc1a29ef42acf5c46a91a",
+      "bytes": 843
+    },
+    {
+      "path": "artifacts/factory-resume-r37/local-preflight.json",
+      "sha256": "75e7938a8c40fa4bbc33c953bef273bd020e8a295be7f15cb003e51fc42cf2cd",
+      "bytes": 5252
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-exact-source-inverse-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+      "sha256": "f1d1482b82d73c3da4ff8a53c70bd4c46850e2f8512e26f125b4f90bd8e6f79e",
+      "bytes": 8644
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+      "sha256": "b429cfa96894f30a3cd60f4cb0e5eb976ddf40ca162ec1b0ea6c2484f63a3be4",
+      "bytes": 4636
+    },
+    {
+      "path": ".jarvis-dev/maintenance/complete-r33-incomplete-driver-current-r2-local-seals.py",
+      "sha256": "2cc272dbb4c66af54a7971c29159e8f58b7fcfc25ecf4999a6a8a2ca22c9df7f",
+      "bytes": 16168
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-completed-1792119797717-9179f2fd-8d2b-4d66-88a9-41699d664004.json",
+      "sha256": "c4d0b30279e6cf4a5c8f650c336a4cd418447aab948faaad0d3e259eb70bdee6",
+      "bytes": 11439
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-corrected-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+      "sha256": "d65e06c9ab5e3c00263da2b0206de2081117891f23baf2a8b2db1a3dc468510d",
+      "bytes": 4636
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-correction-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+      "sha256": "371f35d9bb9f469fc00b6784cb2ade193049fb378415a45a008a216be26e58ea",
+      "bytes": 14630
+    },
+    {
+      "path": "artifacts/factory-resume-r37/null-bindings-correction.json",
+      "sha256": "5d8a148b110ddf707047fbe72794363e99bf5bb9bfef0cfa3c4f3130a6b34337",
+      "bytes": 3323
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-inventory-contract.json",
+      "sha256": "0f82090b3d0561bdc93c84e45739772df7883ac33f11aaee01a8a562584a9259",
+      "bytes": 1911
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-physical-independent-local-source-review-1791994306392-d69d5845-19c7-4c90-8c6a-45c9c84f07d3.json",
+      "sha256": "78ceb03e026c6d1032f93c12ec70ec4ec4f11c28d07abb90db7e280a381f30e7",
+      "bytes": 15472
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-consumer-independent-local-source-review-1791994306392-d69d5845-19c7-4c90-8c6a-45c9c84f07d3.json",
+      "sha256": "620eb3db8231807822ade9fda9ab4c26f1e0bf9a90db672e91020986242214b8",
+      "bytes": 15201
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-current-main602-meta-r4-adapter-independent-local-source-review-1791994306392-d69d5845-19c7-4c90-8c6a-45c9c84f07d3.json",
+      "sha256": "1eb50c80344b837890262f66f42801e4d00a8d6141841a22009346465817ed74",
+      "bytes": 15199
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-actual-observation-1791992601711-3849ad1c-6b78-4584-8dc5-293ac5b52902.json",
+      "sha256": "38e8e62452527f49cea25683cbf6a5a155ca618dba57df49a92546c1112fedb8",
+      "bytes": 7114
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-main602-driver-diagnostic-r1-saved-evidence-independent-local-review-1791992708993-5e1aac9a-517d-4d6c-9163-a0707f38389e.json",
+      "sha256": "9d67aee428779ad0ea3436769f6a356bf1de92d18333f113f930e6dfbd46de6f",
+      "bytes": 23493
+    }
+  ],
+  "originalAuthorRefCount": 27,
+  "correctedAuthorRefCount": 29,
+  "sourceRefsInitialFinalStable": true,
+  "allSixWholeByteForwardIndependentlyVerified": true,
+  "staticLiteralFragmentCount": 16,
+  "hostOnlyExactObserverSubstitution": true,
+  "sourceCodeImported": false,
+  "subjectFunctionsExecuted": false,
+  "resourceCount": 4,
+  "resourceRoles": [
+    "postgres",
+    "pg4-runner",
+    "internal-network",
+    "postgres-data"
+  ],
+  "retainedReportCount": 1,
+  "missingReportCount": 4,
+  "knownActorCount": 2,
+  "attempt": "454f612e7c27a68f5197006b99aa4f7d",
+  "purpose": "incomplete-driver-current-scope-meta-r4",
+  "findings": [],
+  "closedFindings": [
+    {
+      "id": "FACTORY-R37-NULL-BINDINGS-001",
+      "priority": 1,
+      "problem": "The completed null interface named r2 paths but retained r1 DATA-helper SHA/size and three source-review header SHA values. Consumers would reject that advertised interface.",
+      "resolution": "Distinct corrected null and author-correction seals change exactly five leaf values. The six generated sources and original incorrect/failed seals remain byte-identical.",
+      "changedPointers": [
+        "/dataHelper/sha256",
+        "/dataHelper/bytes",
+        "/sourceReviewRequiredHeader/callerSHA256",
+        "/sourceReviewRequiredHeader/observerSHA256",
+        "/sourceReviewRequiredHeader/hostProgramSHA256"
+      ],
+      "correctedNull": {
+        "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-null-interface-corrected-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+        "sha256": "d65e06c9ab5e3c00263da2b0206de2081117891f23baf2a8b2db1a3dc468510d",
+        "bytes": 4636
+      },
+      "authorCorrection": {
+        "path": "artifacts/software-factory/goals-r29/r33-pg4-incomplete-driver-current-r2-local-source-author-correction-1792120036116-260d689f-5d37-4a3c-b418-ef91e9217fc3.json",
+        "sha256": "371f35d9bb9f469fc00b6784cb2ade193049fb378415a45a008a216be26e58ea",
+        "bytes": 14630
+      },
+      "preservedFailureAndCorrectionCut": {
+        "path": "artifacts/factory-resume-r37/null-bindings-correction.json",
+        "sha256": "5d8a148b110ddf707047fbe72794363e99bf5bb9bfef0cfa3c4f3130a6b34337",
+        "bytes": 3323
+      }
+    }
+  ],
+  "reviewedBoundaries": {
+    "explicitWholeCaptureIndexBinding": [
+      "attempt",
+      "purpose",
+      "caller",
+      "observer",
+      "hostProgramSHA256",
+      "parametersSHA256",
+      "wholeConsumer",
+      "wholeActivation",
+      "wholeActivationSHA256",
+      "sourceContract",
+      "runContext"
+    ],
+    "wholeCaptureBeforeAndAfterIndexed": true,
+    "rawWholeTransportWrittenBeforeParseUnchanged": true,
+    "captureIndexSaveFailurePreservesPrimaryAndAddsSecondary": true,
+    "indexPersistenceNotGuaranteedOrClaimed": true,
+    "successRequiresTwoNonNullIndexesAndCaptureAvailable": true,
+    "alwaysDrainsAfterProtectionOnce": true,
+    "fullSourceRecheckBeforeAndAfter": true,
+    "sourceWorkerStarterDriverContractPinsAndOriginal136RecordsPreserved": true,
+    "ownerStopActorIdentitiesAndNotOriginalKernelExitProofPreserved": true,
+    "currentFourResourceNamesIdentitiesAndTwoLabelCensusesPreserved": true,
+    "fullPBeforeAndAfterRequired": true,
+    "unknownPIDsAndFDReadsDoNotBecomeExitsOrAbsence": true,
+    "getdents47AndPIDFDModuleHostBytesUnchanged": true,
+    "nativeEnrichmentIncludesOwnerStopUnitAndContainerCGroups": true,
+    "socketAndACKChecksRequired": true,
+    "windowsNamedAndHeldStatDomainsSeparateAndBirthtimeCrossChecked": true,
+    "outerOnceNoReplaceAndRawConsoleBeforeParse": true,
+    "dataHelperPureLocalDataOnly": true,
+    "dataHelperAllPrerequisitesBeforeExclusiveOutputs": true,
+    "noNewBusinessOrModelInvocation": true
+  },
+  "epochReview": {
+    "selection": {
+      "path": "artifacts/software-factory/goals-r29/r33-driver-diagnostics-main-metadata-root-selection-1791993436652-6c1829fa-25b8-4a34-8c22-1d0340836399.json",
+      "sha256": "f152567697ed959af0d3c07644c85ed6eab587752cfa9489b1ec47df52eaf320",
+      "bytes": 6197
+    },
+    "activation": {
+      "path": ".jarvis-dev/maintenance/r33-current-main602-meta-r4-single-entry-protection-activation.json",
+      "sha256": "9871cc07c11cf4ffbb0c54229430afa0fbebb695c2fdd935b2eadbc9dc6d3dba",
+      "bytes": 3343
+    },
+    "explicitNewMetadataSHA256": "7565aff1d4cf39ee3308001d5ef51479980e4c6949b8da0f00323e7bf52840f6",
+    "oldMetadataSHA256Retained": "ac7131117c9782bbdb3a064568d3d4b6ce42f952eebbe9e80e84c907625dec06",
+    "mainContentSHA256": "11446020cbec373e92ab22293352bde874b18e82cca11f3a5757454dc9b9e212",
+    "mainFiles": 602,
+    "mainBytes": 18083755,
+    "rootIdentity": {
+      "device": 66306,
+      "inode": 14417953
+    },
+    "newEpochExplicitlySelectedNotOldPinReplacement": true,
+    "twoSavedMainFramesAndExistingIndependentAuditRead": true,
+    "perFileMetadataRowsAbsent": true,
+    "aggregateMetadataHashNotIndependentlyRecomputedHere": true,
+    "specificChangedFile": null,
+    "specificChangedField": null,
+    "writerIdentity": null,
+    "oldRefusalConjunctStillUnknown": true,
+    "oldFailedEpochRemainsUnqualified": true,
+    "freshWholeProtectionNotPerformed": true
+  },
+  "sourceRefsConsumerPolicy": {
+    "machineSourceRefsOnlyUseExistingConsumerAllowlist": true,
+    "supportRefsOutsideAllowlistRetainedSeparately": true,
+    "consumerReadinessDoesNotImplyActualDataExists": true
+  },
+  "limits": {
+    "maximumReaderRuns": 1,
+    "maximumScopeReads": 1,
+    "maximumWholeReads": 2,
+    "expectedRootRoutes": 9,
+    "automaticRetry": false,
+    "rootAlarmSeconds": 240,
+    "sshTimeoutSeconds": 270,
+    "outerTimeoutSeconds": 1200
+  },
+  "unperformed": [
+    "DATA helper execution",
+    "actual DATA preparation/review",
+    "specific ENTRY review",
+    "old 454/start/check/current-r1/diagnostic execution or reuse",
+    "tests or old test matrix",
+    "API requests",
+    "remote operations",
+    "current resource observation",
+    "model calls",
+    "production release"
+  ],
+  "actualDataReviewed": false,
+  "actualDataInput": null,
+  "entryReview": null,
+  "entryReady": false,
+  "remoteOperationsPerformed": false,
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "testsExecuted": false,
+  "exportsExecuted": false,
+  "modelsInvoked": false,
+  "newExecutionNonceCreated": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "normalQAQualified": false,
+  "productAccepted": false,
+  "cost": {
+    "policy": "record-only-no-cap",
+    "providerModelCalls": 0,
+    "knownAmountUSD": null,
+    "internalAssistantTokens": null,
+    "internalAssistantCostUSD": null,
+    "spendCap": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-16T10:57:26.125Z",
+  "driverDecision": {
+    "id": "f0be5267-55f0-4536-a25a-b98d9d6a2614",
+    "revision": 3,
+    "status": "implemented",
+    "hash": "f5ec10aba5165e80ec8f6abb1aa9bb3818b4c72f93ce487d774393b397877ecb",
+    "independentAcceptance": false
+  },
+  "driverNewActionState": "performed-start-only",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 97,
+    "hash": "46028376ef81625ab04317c60a633ebe062218dcc417484f1a54e8c4a0559794",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "取得本轮实际结果后，核对四个用例、错误记录和资源收尾；将通过项与未完成项分别列明，再继续剩余交付验证。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 15,
+    "hash": "a03daa0cbc1adaa6eda15fc7ccb71067c0a8fb9b73c627ef620ccb33783290be",
+    "summary": "已接入配置核对修正，新一轮四个关键用例验证已启动，正在等待实际结果。用例是否通过仍待独立核对。",
+    "nextAction": "取得本轮实际结果后，核对四个用例、错误记录和资源收尾；将通过项与未完成项分别列明，再继续剩余交付验证。",
+    "blocker": "本轮验证尚无独立终态结果，四个用例暂不计为通过。",
+    "validationScope": "新family/A/D/P四头和SOURCE-DATA/late DATA/具体ENTRY逐实体与机器字段核对通过，旧C639/A50 ordered前缀保留，复用严格禁API归一对象守卫修正。Root唯一START32.829秒exit0，仅启动ACK loaded/active/running；owner/stop/state及实际模块/框架信息unknown。START SAVED独审856632e0/45280及Root67引用通过：A原wire553756B/4内嵌witness/16组metadata9保144原整数与32超JSsafe；原JP单START及9control/6tool/8provided绑定。fresh22份=6原stdout+16parsed，native243全读两扫，build244=243+1boundEXIT与245=244+1boundEXIT/poll17、0未知；proof至JP694ms为source-bound，非kerneltrace/新HUP实测。固定607/a952未改。当前不重START/A/轮询，唯一CHECK不得早于11:03:01.751142Z。terminal5只SOURCE已核22引用，实际DATA/ENTRY/原五byte读取须真CHECK后；作者与审者各自3AST+1syntax重复如实分列。四用例0通过0业务失败4未完成、74 0/74；五步/25tasks/自治/global/R22/PG29Env23/notes保原，0新模型/发布。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 28,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "sourceFamilyIntegrated": true,
+  "actualStart": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-main-actual-start-observation-1792147561751-e82b80e5-fa59-4a0b-95f1-77a2d4420adb.json",
+    "sha256": "091624bfbb0003e79606cff31e3f5bdce8ddc349956d1939390541b048e7df67",
+    "bytes": 2821
+  },
+  "actualStartSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-start-saved-evidence-independent-local-review-final.json",
+    "sha256": "856632e05aea732cf8a122273f1f51e10b0e7518d1a404934af4fb32c730aa21",
+    "bytes": 45280
+  },
+  "actualStartInvocations": 1,
+  "automaticRetry": false,
+  "checkNotBefore": "2026-10-16T11:03:01.751142Z",
+  "limitedActualStartIndependentlyQualified": true,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

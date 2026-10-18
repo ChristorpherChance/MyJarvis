@@ -1,0 +1,321 @@
+{
+  "kind": "r46-round16-api-and-saved-evidence-independent-source-review",
+  "at": "2026-10-17T18:32:26.756571+00:00",
+  "reviewer": "Root independent local source reviewer B",
+  "scope": "Exact R15 final to R16 final delta, workbench read-only brief/auth graph, blocked action mounting and saved report/CLI evidence. UI/privacy and actual package verification are separate reviews.",
+  "pins": {
+    "operationId": "f8cea7ce-a681-4a5f-be9e-12e025dfc934",
+    "baseFinal": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2",
+    "appCommit": "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8",
+    "finalCommit": "e8012e8629c496447c31be19d2025a003153d6d1",
+    "producerReportCommit": "fca3c21b2d75767723541027727587ae3e2c2f60",
+    "platformBuild": "20261018-unified-projects-r46-r1"
+  },
+  "conclusion": {
+    "confirmedP1": [],
+    "sourceBlockerObserved": false,
+    "limitedSourceAndSavedEvidenceQualified": true,
+    "liveClickVerifiedByThisReview": false,
+    "fullSupervisionLoopAccepted": false,
+    "deploymentOrPackageApprovedByThisReview": false
+  },
+  "findings": [
+    {
+      "id": "B1",
+      "status": "confirmed-source-compatible",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/app.ts",
+          "bytes": 54529,
+          "sha256": "f6cbad578cf6f6d4ad74b659a0a8152f6d2a2c1d10b9553a65217fdb37e2a421",
+          "line": 207
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/project-workbench-runtime.ts",
+          "bytes": 10711,
+          "sha256": "6df59ca111caf82ec6d9a9f069ce7286cd9f3f5e47644473e6d944cb78de5e0c",
+          "line": 26
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/supervision-work-runtime.ts",
+          "bytes": 23567,
+          "sha256": "6223a960781d48ae505c13da650816c7ebd6a7872b068b21114a034ec1cf092a",
+          "line": 72
+        }
+      ],
+      "detail": "createApp injects supervisionWork.brief into workbench context. This added method checks current administrator/me and project ownership, then executes one SELECT of current item revisions scoped by both project and owner. Its referenced sequence column exists in the original table definition. Fields pass existing safeSummary. It does not call overview/console/activity/pump, command/create/revise, write, task dispatch, model or supervisor policy mutation. Returned currentSupervisionAccepted remains false."
+    },
+    {
+      "id": "B2",
+      "status": "confirmed-source-compatible",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/project-workbench-routes.ts",
+          "bytes": 1236,
+          "sha256": "1d24cb86859c76d2a8239bd8cc7effa035ef5c0343d3e2f9d01675e614a8863f",
+          "line": 2
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/project-workbench-runtime.ts",
+          "bytes": 10711,
+          "sha256": "6df59ca111caf82ec6d9a9f069ce7286cd9f3f5e47644473e6d944cb78de5e0c",
+          "line": 22
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "bytes": 48782,
+          "sha256": "d08f387a10356284fc5c9a0f4835377c721a5e34599ef6c1c69723ba17effc65",
+          "line": 65
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/execution-runtime.ts",
+          "bytes": 129697,
+          "sha256": "c82ae1f863c1d9320770b472336a3cc84195cb54b7fa80866b38e1beafcfcec0",
+          "line": 141
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/supervisor-goal-policy.ts",
+          "bytes": 6310,
+          "sha256": "d5ae5f13444ceddb906850e170486ab9139baaddf47a0febafb447fb620f64fa",
+          "line": 10
+        }
+      ],
+      "detail": "Existing GET workbench route derives the authenticated principal. context project checks remain; supervisor view, run/config/readiness lookups and policy/history getters are read-only. No new pump or create/start/adopt side effect was added to GET context. Existing independent background pumps are not caused or authorized by this read."
+    },
+    {
+      "id": "B3",
+      "status": "original-submit-P1-closed-in-source",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "bytes": 12806,
+          "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+          "line": 27
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/ui.tsx",
+          "bytes": 2792,
+          "sha256": "4751a07fc37ef2d6618ca9ef4f17174c5b89c00f539a9a98923fab9a635aa482",
+          "line": 2
+        }
+      ],
+      "detail": "Only the composer primary action now explicitly passes type=submit; production shared Button default stays type=button. Existing onSubmit and request/CAS/pending/authorization branches are unchanged. For blocked/review_required/stopped/achieved, unavailable shows type=button with only setAuditOpen(true); no automatic resume/start. Existing audit child mount performs GET and SSE/fallback GET only; POST calls remain explicit user handlers."
+    },
+    {
+      "id": "B4",
+      "status": "limited-evidence-qualified",
+      "refs": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/scripts/test-r46-submit.mjs",
+          "bytes": 4266,
+          "sha256": "5909ed529b78992cba5c003a412d9586e6642b9e5f05417b3529361d40aac7c7",
+          "line": 2
+        }
+      ],
+      "detail": "The retained before log is an actual assertion failure on production shared Button type=button. The later test bundles the real production component and shared Button and renders via react-dom/server with a hook/API state boundary; it asserts rendered submit/non-submit attributes, saved brief text, and four unavailable states. It does not click a DOM button, submit an actual browser form or call a real backend. UX-final is a retained SyntaxError from an over-escaped regular expression in the test script; the fixed Git script and subsequent UX-verified saved pass are distinct evidence, not a claim that the failing log passed. Repeated 283-byte pass logs are not independent browser runs."
+    },
+    {
+      "id": "B5",
+      "status": "evidence-binding-confirmed",
+      "detail": "All 16 collected report/log files match the public collection hash/size and actual accepted Git-tree bytes. git.json records a prior report cut fca3, while Root accepted final e801 is the later seal commit; this review binds to actual final e801 rather than rewriting the earlier cut. Saved types/build show successful output. Packaging logs and 92 prior-assets readback are producer evidence only; the actual ZIP/manifest/source/node contracts remain Root strict verification work."
+    }
+  ],
+  "unchangedCriticalFiles": [
+    "apps/api/src/runtime/project-supervisor-runtime.ts",
+    "apps/api/src/runtime/project-workbench-routes.ts",
+    "apps/api/src/runtime/project-supervisor-routes.ts",
+    "apps/api/src/runtime/supervisor-goal-policy.ts",
+    "apps/api/src/runtime/execution-runtime.ts",
+    "apps/web/src/ui.tsx",
+    "apps/web/src/features/operations/ProjectSupervisorPanel.tsx"
+  ],
+  "limitsAndNextAcceptance": [
+    "brief selects up to 100 latest current work items; it is a compact saved-work summary, not all historical facts or independent product acceptance. Original detailed records remain separate.",
+    "No browser/DOM click or real provider to signed 101 execution to result/problem/repair loop was run by this reviewer or proved by SSR. Root must use the original workbench after qualified deployment to complete the user-requested real test.",
+    "No extra backend integration test was executed here; read-only conclusion follows the exact source call graph, not an invented test pass."
+  ],
+  "savedNativeAndUsage": {
+    "terminal": true,
+    "controllerExitCode": 0,
+    "elapsedSec": 1141.7445686199935,
+    "cgroupProcesses": 0,
+    "nativeResultCount": 1,
+    "subtype": "success",
+    "is_error": false,
+    "turns": 44,
+    "controllerAndTerminalCaptureHashesMatch": true,
+    "controllerNativeFinalQualifiedOriginal": false,
+    "sealQualifiedAsCompleteCLIReceipt": true,
+    "centralDispatched": false,
+    "sourceRecordId": "owner-maintenance:f8cea7ce-a681-4a5f-be9e-12e025dfc934:native-parent-phase1",
+    "inputTokensIncludingCache": 38999385,
+    "outputTokens": 10269,
+    "totalTokens": 39009654,
+    "cacheReadTokensAlreadyIncluded": 38232320,
+    "costUSD": null,
+    "costKind": "unavailable",
+    "cumulativeNativeUSDIsNotCurrentChargeOrInvoice": true,
+    "signedPostSavedReceipt": {
+      "statusCode": 200,
+      "acceptedItems": 1,
+      "recorded": true,
+      "duplicate": false
+    },
+    "r15UnknownNotOverwritten": true,
+    "usageLedgerGETNotPerformedByThisReview": true
+  },
+  "evidenceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-collection-1792261720843.json",
+      "bytes": 6822,
+      "sha256": "d05ee0534fa60ea68e12a09f505c4aac06707ad13d0e09f02b0bbfef606641d6"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-terminal-native-observation.json",
+      "bytes": 3294,
+      "sha256": "1efb6e6e63701757a974ba8862958f73ed3190f9840d3230968575212fa8f5ff"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-usage-item.json",
+      "bytes": 843,
+      "sha256": "d5a834693dd25a83be4de0a4fbb6510c87a6307ddf43d594ab57f8f8a0a96abf"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-usage-post-receipt.json",
+      "bytes": 2110,
+      "sha256": "5b903e6919e22050d00de9c6f5b449200a37e21cb0c8ead478b9752b2b592681"
+    }
+  ],
+  "collectedEvidence": [
+    {
+      "path": "reports/r46-round16-cost-ledger.json",
+      "size": 347,
+      "sha256": "93f248036d8da71f1304489263ffdf0c9a775133ee2cf03144c5cd89f21f2033",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-git.json",
+      "size": 628,
+      "sha256": "aec4f9d1ee79c0a3ead25e15b53749db4c78549b504f39017b14dcba5079caa6",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-implementation.json",
+      "size": 2481,
+      "sha256": "9b5f900627bb7b86a7b7de666bcddca0a56044623b75e69b546d05f17bf6c818",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-implementation.md",
+      "size": 4842,
+      "sha256": "4d6610f7c955a5444b0ee5db74f78ba4771dfb3759e82cdc9e183ef6dad2034a",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/build.txt",
+      "size": 3400,
+      "sha256": "4e955631c6f3834ace5fe1ad1e2ca8c42083e5dd49ba104c68658ba47327b422",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/compat-readback.json",
+      "size": 140,
+      "sha256": "d9b4d4320e391403d6e3e814ca2ed3879395adb3a1e68ca48692f9c3da66fb39",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/node-package.txt",
+      "size": 149,
+      "sha256": "bed0a5d22e54e8e4dc5be39a63be27d91df63418d212e2404003c8f2f5dc0353",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/platform-package.txt",
+      "size": 783,
+      "sha256": "6714ccb64bc276641a7ec7542a9fad41aee27f639e286d0e4c415c29ccd9cda6",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/prior-assets.json",
+      "size": 14720,
+      "sha256": "dd290a30f3104b929b045f14c5f1bdf13090876e3d16d47530841cbc33047ef9",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/submit-after.txt",
+      "size": 283,
+      "sha256": "dbc791ec4ef3e01bd7d80a2027db503564e840628069897eaf6417047b15bea3",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/submit-before.txt",
+      "size": 547,
+      "sha256": "762105fdaf972ecc452c18c3efb80a521c4b733910b8f891167cd477499bd8c7",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/submit-final.txt",
+      "size": 283,
+      "sha256": "dbc791ec4ef3e01bd7d80a2027db503564e840628069897eaf6417047b15bea3",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/submit-ux-final.txt",
+      "size": 5842,
+      "sha256": "1aaea264e0b6fc5dae7eb839e215dc7836206cdfa0f68e39a691e165a88e8e57",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/submit-ux-verified.txt",
+      "size": 283,
+      "sha256": "dbc791ec4ef3e01bd7d80a2027db503564e840628069897eaf6417047b15bea3",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-logs/typecheck.txt",
+      "size": 193,
+      "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    },
+    {
+      "path": "reports/r46-round16-packages.json",
+      "size": 5743,
+      "sha256": "651159e9a36e52b37903ce93a0c59517047d6fb075723473049b5f7871a01015",
+      "receiptHashSizeMatches": true,
+      "fixedGitTreeBytesMatch": true
+    }
+  ],
+  "actionsByReviewer": {
+    "localSourceAndSavedReportReads": true,
+    "appSourceEdits": false,
+    "applicationOrHelperExecution": false,
+    "testsOrBuilds": false,
+    "networkApiSshDaemonModel": false,
+    "privateRawStreamExport": false,
+    "oldArtifactOverwrite": false
+  },
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-api-and-evidence-independent-source-review.json",
+      "sha256": "f90b2e3995082f181a38913ad7ab2975727d2e1201777b26e866a596cb1e6c1d",
+      "bytes": 14104
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

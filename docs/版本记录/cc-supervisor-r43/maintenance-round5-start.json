@@ -1,0 +1,58 @@
+{
+  "kind": "r43-owner-authorized-maintenance-development",
+  "operationId": "f7a378a4-f583-43b9-b349-a046f0dc443a",
+  "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "nativeSessionId": "a58a280d-2f26-47bc-980b-097187bb137d",
+  "workspace": "/home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89",
+  "previousCentralRunId": "ab0f0356cbd906bbbc9a1f1de7366d56408213b0",
+  "dispatchSource": "owner-authorized-maintenance",
+  "centralDispatched": false,
+  "controlledRunId": null,
+  "phase": "started",
+  "directiveSHA256": "7c9b23bf22a30bb48e9bf2096c1cdef25f5da368367995a6599937d0e95012de",
+  "controllerSHA256": "6eb8e0be720fc1c7763ad323e03f245d98552f275d408c471980a8175668654d",
+  "at": "2026-10-17T09:28:22.595Z",
+  "timeoutSec": 1440,
+  "retry": 0,
+  "costPolicy": "record-only/no-money-cap; preserve original known and unknown cumulative ledger",
+  "authority": "User explicitly authorized all101 Jarvis permissions and instructed completion of the agreed supervisor development.",
+  "started": {
+    "operationId": "f7a378a4-f583-43b9-b349-a046f0dc443a",
+    "unit": "jarvis-cc-maint-r43-f7a378a4-f583-43b9-b349-a046f0dc443a.service",
+    "unitState": {
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "3682349",
+      "ControlGroup": "/system.slice/jarvis-cc-maint-r43-f7a378a4-f583-43b9-b349-a046f0dc443a.service"
+    },
+    "before": {
+      "head": "607f4a62387311276dc214999c82850acf1a1139",
+      "status": "M reports/r43-round2-logs/agent-protocol-node-test.tap\n?? .r43-tools/\n?? reports/r43-round2-changes.patch\n?? reports/r43-round4-changes.patch\n?? reports/r43-round4-git.json\n?? reports/r43-round4-logs/agent-protocol-final.tap\n?? reports/r43-round4-logs/api-typecheck-final.txt\n?? reports/r43-round4-logs/cli-supervision-final.tap",
+      "agentPID": 3422716,
+      "agentProcessIdentity": [
+        "328726a0-5495-4892-b0a6-2fa9de26242e",
+        "67499918"
+      ],
+      "programSHA256": "24972e3bc859fab2b46ed4c1e51f7d6130f06d3bd550811a114640de3370d0de",
+      "directiveSHA256": "7c9b23bf22a30bb48e9bf2096c1cdef25f5da368367995a6599937d0e95012de",
+      "environmentPrivateOn101": true,
+      "environmentValuesExported": false
+    },
+    "dispatchSource": "owner-authorized-maintenance",
+    "centralDispatched": false,
+    "controlledRunId": null,
+    "started": true,
+    "noAutomaticRetry": true,
+    "rawEvidencePrivate": true
+  },
+  "unchangedReadback": {
+    "centralConfig": true,
+    "task": true,
+    "lastRun": true
+  },
+  "nodeConfigurationExpectedUnchanged": true,
+  "nodeConfigurationAfterReadback": false,
+  "platform112Released": false
+}

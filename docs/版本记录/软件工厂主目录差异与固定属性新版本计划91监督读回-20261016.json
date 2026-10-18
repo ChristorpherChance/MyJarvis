@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-16T07:38:18.374Z",
+  "mainDiagnosticDecision": {
+    "id": "342fe80f-5795-4c54-8efe-1c44e872d414",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "93a0de60b5ba50e415e7c13777b161bd07721f2fd875977ec26096c736befa72",
+    "independentAcceptance": false
+  },
+  "fixedMetadataVersionDecision": {
+    "id": "db8b2ca6-1b13-47df-8848-772a486eea72",
+    "revision": 1,
+    "status": "selected",
+    "hash": "59003516161037e477f6df5ca99378c466ede4b815af0f0f8ad3a29cfdfca555",
+    "independentAcceptance": false
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 91,
+    "hash": "b0e0171ee9f924624b470861d0cfcfab5f5e1c607091cf398ff7cb95decda7b0",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "完成新固定属性保护版本的最窄来源及独立入口资格，Root只执行一次新的完整保护与3164当前资源核查；通过后再集成已审driver并复验四用例。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 9,
+    "hash": "89af1ebf6bf304a08e372e0b9f7b26baf4df99445cb34907128d91b440ca8ec5",
+    "summary": "主目录607个文件内容全部相同，变化集中在4个文件属性，独立核对已完成。已选择新的固定属性保护版本，继续核清环境收尾；四个用例尚未复验。",
+    "nextAction": "完成新固定属性保护版本的最窄来源及独立入口资格，Root只执行一次新的完整保护与3164当前资源核查；通过后再集成已审driver并复验四用例。",
+    "blocker": "新固定属性保护来源与3164当前资源收尾尚未合格；已审driver尚未完整集成和现场复验。",
+    "validationScope": "有界main实际及保存独审、完整607内容和4项属性差异已核。旧607-v1拒绝保持；新固定属性版本仅选择，不签作者、功能、fullP、资源收尾或用例通过。四用例0通过0业务失败4未完成，原74签收不变。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 22,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "newMainDiagnosticActuallyObserved": true,
+  "savedMainAndMetadataComparisonIndependentlyQualified": true,
+  "newFixedMetadataVersionSelected": true,
+  "newFixedMetadataProtectionImplemented": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

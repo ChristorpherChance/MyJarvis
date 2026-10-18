@@ -1,0 +1,213 @@
+{
+  "kind": "r46-live-supervision-initial-readback",
+  "at": "2026-10-17T18:05:43.152Z",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "projectRevision": 46,
+  "session": null,
+  "taskCount": 26,
+  "pendingCount": 0,
+  "modelReady": true,
+  "choices": [
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    },
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    },
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    },
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    },
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    },
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    },
+    {
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "executorId": "msf-101-claude",
+      "ready": true
+    }
+  ],
+  "execution": {
+    "state": "unknown",
+    "resultReceived": false,
+    "taskStatus": null,
+    "historicalActive": [],
+    "historicalBlocked": [
+      {
+        "id": "26fcca31-5033-4e3e-8087-80d1074e0bdc",
+        "title": "FM-001 · 101 完整隔离测试与证据真实性审计 · 环境修复后第二轮",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "017135ffc91eb6f9f2655bcd200ad8f38ae93676",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "29adb04a-81b2-49ba-b622-0a42166cba48",
+        "title": "FA-01 · 开发修复 2",
+        "status": "failed",
+        "executionStatus": "timeout",
+        "runId": "e5fa0b814c994194896e292d1d2297ff06274608",
+        "runStatus": "timeout",
+        "resultReceived": true
+      },
+      {
+        "id": "a731f64c-23d8-458b-930a-3503a60dffdc",
+        "title": "FA-01 · 开发修复 3",
+        "status": "failed",
+        "executionStatus": "timeout",
+        "runId": "d37133ca872bc9f0a33263584e3019e7dd5a3ed5",
+        "runStatus": "timeout",
+        "resultReceived": true
+      },
+      {
+        "id": "e9942a1f-d8d0-4995-8246-e284990e0dea",
+        "title": "AV-01 · 现有main成果：隔离构建与基础测试",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "edd530589f3adc669a313dcfc6207fa536afb3cb",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "c1aa17fb-89f1-4c99-bd59-378d24fcde4f",
+        "title": "FA-01 · 候选基线核验 80e4ff1a",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "1270b64e58032d91585307d19d4a9be04f204eab",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "8120b229-471d-4f43-b009-aa742756dc50",
+        "title": "FA-01 · 候选基线核验 7f0f0ac9",
+        "status": "paused",
+        "executionStatus": "cancelled",
+        "runId": "67182e98ed3a2801d9506fbd97da2be938833d4a",
+        "runStatus": "cancelled",
+        "resultReceived": true
+      },
+      {
+        "id": "9bf0e718-172a-4948-b17b-e4d6f5f52033",
+        "title": "AV-01 · 现有main成果：隔离构建与基础测试",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "5a6621b745daefaaf1ec56004ce26a28245b677b",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "98ee355a-6912-46c1-b551-df4ba7ac6030",
+        "title": "AT-01 · 当前主线：全量测试与交付包检查",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "e5ca06dfe49f0e3692b90b0fa9f0120ebc58e849",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "bf43cd17-453d-428f-81c3-2a0020726a31",
+        "title": "AT-01R · 当前主线：报告修复后完整复验",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "f4b26c4c95047ff24f2f5eff7a21ec7d14c579a2",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "580888fe-8edc-40a0-b6a3-46124d119870",
+        "title": "AT-02 · 测试准备修复与超时定位",
+        "status": "blocked",
+        "executionStatus": "round-limit",
+        "runId": "5c8034046a05b0db89edebbb0e2c6876efb5882f",
+        "runStatus": "round-limit",
+        "resultReceived": true
+      },
+      {
+        "id": "456b2038-a782-4da2-b2d8-d3b291aba8ed",
+        "title": "AT-01R · R26 定点修复候选独立完整复验",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "a11ac3a06c0f14e9f85bc897c8a766d41e165f24",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "5b0b27b2-43ad-4153-bff4-63cb4387e024",
+        "title": "AT-03R · R27集中修复候选固定完整复验",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "44cfcd018b8e12c78928b9bb1a5eabd4fb93705a",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "bd55cfd8-33bb-4699-8de5-d43b73e46642",
+        "title": "AT-03R · R28集中修复候选固定完整复验",
+        "status": "failed",
+        "executionStatus": "failed",
+        "runId": "08ce8722e39ea5750857342cdaadc939ebb26d66",
+        "runStatus": "failed",
+        "resultReceived": true
+      },
+      {
+        "id": "c45462b0-6a28-433c-af8c-d656bd1d2ad3",
+        "title": "R29 · 真实测试与放行证据门修复",
+        "status": "blocked",
+        "executionStatus": "round-limit",
+        "runId": "d9f1095aae0edc1b848487b1b567f3be29f25f3b",
+        "runStatus": "round-limit",
+        "resultReceived": true
+      },
+      {
+        "id": "a42f1bcf-f063-40f8-8469-6972ea520de8",
+        "title": "R42 · 101 cc 软件工厂当前版完整测试与结果回传",
+        "status": "blocked",
+        "executionStatus": "round-limit",
+        "runId": "64ed8add701473f69c2dcbec8164bc874b6bad59",
+        "runStatus": "round-limit",
+        "resultReceived": true
+      }
+    ]
+  },
+  "observedUI": {
+    "startClickedOnce": true,
+    "fieldsValid": true,
+    "button": {
+      "type": "button",
+      "inForm": true,
+      "disabled": false
+    },
+    "stateChangeObserved": false
+  },
+  "businessGETs": 1,
+  "businessMutations": 0,
+  "authenticationLifecycle": "existing withPlatform transient login created and revoked; no cookie exported",
+  "noAutomaticRetry": true,
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-supervision-initial-readback.json",
+      "sha256": "728b13a30695f3d7acc12c2149eb00552d566b725ebefc8502289f750892dc47",
+      "bytes": 7902
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

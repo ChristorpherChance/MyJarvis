@@ -1,0 +1,43 @@
+{
+  "kind": "r51-two-verified-disposable-restores-cleanup",
+  "operationId": "634d8dd1-cd12-4b92-8ca4-cfcfc0877916",
+  "qualified": true,
+  "transportExitCode": 0,
+  "transportTimeout": false,
+  "result": {
+    "ok": true,
+    "operationId": "634d8dd1-cd12-4b92-8ca4-cfcfc0877916",
+    "deletedOldOperationIds": [
+      "92e47840-13f4-469e-a7b4-18c6a5728f1a",
+      "be313536-1589-4ab4-94b2-9e2987f34769"
+    ],
+    "deletedFiles": 128,
+    "logicalBytesRemoved": 9003910124,
+    "freeBytesBefore": 4640231424,
+    "freeBytesAfter": 13644333056,
+    "actualFreeBytesChange": 9004101632,
+    "retainedSnapshotsCompleteAndUnchanged": true,
+    "currentConfigAndReleasePreserved": true,
+    "retainedManifestSHA256": [
+      "4a5b942fcab0ba6abfba9452727d5b239d086ceada1eea9b3d15415cb8434c8a",
+      "2ce3e9c2daf0dc2822124af9ee323ceca4c28aad5da004a6bf97cfc62d4dad11"
+    ],
+    "sqliteRechecked": false,
+    "liveDataOrServicesTouched": false,
+    "automaticRetry": false,
+    "elapsedSeconds": 43.42917994002346
+  },
+  "rawPrivateFingerprints": {
+    "ssh.stdout": {
+      "bytes": 708,
+      "sha256": "51a7115291ae7294f016102b8bf37fa8df00de2f4d94cc1fe5af58973b12e254"
+    },
+    "ssh.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "noAutomaticRetry": true,
+  "oldFailureChanged": false,
+  "liveDataOrServiceActions": 0
+}

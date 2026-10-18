@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "kind": "r38-real-devci-source-bounded-public-projection",
+  "at": "2026-10-16T14:40:32.884169+00:00",
+  "draftCut": true,
+  "originalSourceReport": {
+    "path": "artifacts/software-factory/goals-r29/r38-real-devci-independent-local-source-review-final.json",
+    "sha256": "9ca291801dd5234b047058d1cf108c6547268b6392947521caac03ad18403e39",
+    "bytes": 32487
+  },
+  "sourceReviewStatus": "passed-limited-manual-REST-CI-SOURCE-after-two-P1-and-fact-tristate-corrections",
+  "staticSourceReady": true,
+  "remainingP0P1": 0,
+  "target": "MSF apps/server OBJ035 limited manual REST/real repository-CI/quality-merge slice; not Jarvis R36 apps/api",
+  "finalSourceCount": 10,
+  "closedSourceFindings": [
+    {
+      "id": "R38-P1-REPORTS-HOST-DISK",
+      "severity": "P1",
+      "closedBySource": true,
+      "resolution": "No host RW reports mount. Fixed32MiB/1024inode tmpfs, trusted UID0 cap0/NNP idle210s lease, UID1000 fixed recipe and collector, readonly source/dependency mounts,300s host deadline plus finally forced removal20s."
+    },
+    {
+      "id": "R38-P1-GIT-IMPLICIT-FETCH",
+      "severity": "P1",
+      "closedBySource": true,
+      "resolution": "Every real child receives GIT_NO_LAZY_FETCH=1; missing objects take the existing CI_GIT_FAILED closed path."
+    },
+    {
+      "id": "R38-P2-EXECUTION-FACT-TRISTATE",
+      "severity": "P2",
+      "closedBySource": true,
+      "resolution": "Not dispatched=false; dispatch/transport/timeout unknown=null; exit0=true; non-invocation nonzero with exact complete original reports and positive test count=true. Qualification still requires exit0 and all strong gates."
+    }
+  ],
+  "savedVerificationCuts": {
+    "originalTargeted": {
+      "receipt": {
+        "path": ".jarvis-dev/workspaces/msf-targets-r38-real-devci/artifacts/targeted-attempt-1-receipt.json",
+        "sha256": "70247e3f767685f30d39e9389cfe37aa4763e813e88eb52109d1a0c18f6cb00f",
+        "bytes": 874
+      },
+      "groups": 1,
+      "passed": 1,
+      "failed": 0,
+      "sourceCut": {
+        "path": ".jarvis-dev/workspaces/msf-targets-r38-real-devci/artifacts/targeted-attempt-1-source-cut.json",
+        "sha256": "530cba0dab7ef96fa13763d4cfa73180568ce7c3cf8121dc94ab625d5593ecc0",
+        "bytes": 526
+      },
+      "realGitChildAndFiles": true,
+      "dockerAndNTFSACL": "controlled, not actual qualification"
+    },
+    "twoP1Targeted": {
+      "receipt": {
+        "path": ".jarvis-dev/workspaces/msf-targets-r38-real-devci/artifacts/p1-boundaries-attempt-1-receipt.json",
+        "sha256": "21a17760e56c9445595ebd6c9986729110caf28d44686978218a4825f4c75198",
+        "bytes": 927
+      },
+      "groups": 1,
+      "passed": 1,
+      "failed": 0,
+      "actualChildNoLazyFetchEnvironment": true,
+      "collectorFilesystemAndDockerLifecycle": "controlled-no-daemon"
+    },
+    "finalTristateCompile": {
+      "receipt": {
+        "path": ".jarvis-dev/workspaces/msf-targets-r38-real-devci/artifacts/server-emit-tristate-attempt-1-receipt.json",
+        "sha256": "f25d19981522cf2b2a55f761b45f92ebe6ac9934187c6c0c588bc479e91ed047",
+        "bytes": 621
+      },
+      "exitCode": 0,
+      "testsRerun": 0
+    },
+    "initialTypecheckFailure": "Two old direct-constructor compatibility errors retained in original author cut; no separate original subprocess receipt was created. Later compatibility and final emit results remain separate.",
+    "originalViteWarningPreserved": true,
+    "reviewerRepeatedAnyGroup": false
+  },
+  "qualification": {
+    "SOURCEOnly": true,
+    "actualDockerCIQualified": false,
+    "actualPostgresIntegrationQualified": false,
+    "actualHttpIntegrationQualified": false,
+    "targetServerSuiteQualified": false,
+    "autonomousFactoryQualified": false,
+    "realGitBranchMergePushImplemented": false,
+    "frameworkABIQualified": false,
+    "actualPG4Qualified": false,
+    "full74Accepted": false,
+    "customerProductAccepted": false,
+    "productionDeployed": false
+  },
+  "authorityBoundary": {
+    "manualRESTOnly": true,
+    "authorizedAutopilotExecutionBridgeConnected": false,
+    "RootSelectedScope": "Keep the manual REST slice now; do not widen to arbitrary AI actors.",
+    "minimumFutureBridge": "Reuse actual active run/authorization.unitCi/approved plan/task revision/runToken and project binding, rechecked with the task lock; no new per-attempt human approval. This bridge is not implemented or accepted here."
+  },
+  "scopeLimits": [
+    "Source review and original saved targeted groups/compile are separate; this projection does not repeat them.",
+    "Two P1 fixes are SOURCE closure, not actual Docker quota/cleanup or partial-clone network counterexample execution.",
+    "Manual REST only; approved autonomous unitCi bridge, real Git merge/push and full factory delivery remain unimplemented."
+  ],
+  "actualFutureResults": {
+    "actualCI": null,
+    "actualPostgresIntegration": null,
+    "actualServiceHTTP": null,
+    "platformPlan": null,
+    "items": null,
+    "decisions": null,
+    "notifications": null
+  },
+  "rawSourceCodeOrPrivateConfigurationIncluded": false
+}

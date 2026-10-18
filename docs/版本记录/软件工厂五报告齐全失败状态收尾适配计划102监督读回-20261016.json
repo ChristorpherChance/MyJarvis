@@ -1,0 +1,110 @@
+{
+  "at": "2026-10-16T13:04:00.122Z",
+  "kind": "r37-context-sentinel-failed-five-current-selection-plan102-readback",
+  "input": {
+    "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-selection-plan102-safe-input.json",
+    "sha256": "e78e4abac53f4af3f7a944c8a8338a1812eef6f9f632ed64e52361b8ca506d3f"
+  },
+  "receipts": {
+    "decision": {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-selection-plan102-decision-receipt.json",
+      "sha256": "bebdc3ec5c2925cf4c92eff83846db3b1c80017b7c802a29b1a345d4345c5845",
+      "bytes": 10016
+    },
+    "item": {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-selection-plan102-item-receipt.json",
+      "sha256": "b6594bb3e611e7dd4dde2fd6b5f79db107fd116196ec43a9227b3cb4b9cd1f0f",
+      "bytes": 2782
+    },
+    "plan": {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-selection-plan102-plan-receipt.json",
+      "sha256": "ce24ff05326192b13e2ad2468bee7503fbb3756a84ba4a96b352fde297fa090a",
+      "bytes": 100
+    }
+  },
+  "decision": {
+    "id": "43f250e8-7103-403f-96ec-36b3eefeaa6d",
+    "revision": 1,
+    "hash": "47324da089b3947ad242d8d622396bdf7700e2a1c03ed7815e3ec9206e1473f5",
+    "status": "selected",
+    "independentAcceptance": false,
+    "actionsState": "planned-only"
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 102,
+    "hash": "c6efba458814ba4dc6e35ea331ea996101021860f24a8933c29004011b174c2b",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "完成仅收尾读取入口的最小适配和独立来源、实际参数、具体入口核对，再唯一读取五份报告正文与当前资源收尾证据；据真实报告核对四个用例结果。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 20,
+    "hash": "45ae8a1c260771d3f1b58151e4feaf1daf62c1da7de5215ecb288c32e519766d",
+    "summary": "五份报告均已留存，正在适配失败状态的独立收尾核查。四个用例结果仍待核对。",
+    "nextAction": "完成仅收尾读取入口的最小适配和独立来源、实际参数、具体入口核对，再唯一读取五份报告正文与当前资源收尾证据；据真实报告核对四个用例结果。",
+    "blocker": "五份报告正文尚未读取；原收尾读取门与本轮失败且五报告齐全的状态不兼容，新适配尚未完成来源和具体入口核对。",
+    "validationScope": "五个终态原件唯一实际读取4617ea0b并由a81380c6独审保存；原state reports是LIST5/5retained/0missing，摘要更正84e198保历史。当前仅依据070522兼容分析与843ddf选择D-only失败五报告收尾适配，尚未SOURCE/实际DATA/ENTRY或新D读取，报告正文未读。原C708/历史DReview6da与futureDReview分列，旧机会关闭；四case0通过0业务失败4待核对，74为0/74，当前closure/ABI/产品仍false。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 33,
+  "matchingPersistedNotifications": 1,
+  "directEvidenceCount": 6,
+  "oldEvidenceIndex": {
+    "path": "docs/版本记录/软件工厂监督事项截至计划101完整证据索引-20261016.json",
+    "sha256": "64508d13551230e758565d87e562eb1dd778136531ad07d435d4d5f9239749c7",
+    "bytes": 9138
+  },
+  "oldEvidenceCountPreservedInExactOrder": 29,
+  "oldEvidencePreservedViaImmutableIndexAndPlatformHistory": true,
+  "literalOldDirectArrayPrefixClaimed": false,
+  "reportsListCount": 5,
+  "retainedReports": 5,
+  "missingReports": 0,
+  "reportBodiesRead": false,
+  "producerStatus": "failed",
+  "newDSelected": true,
+  "newDSourceQualified": false,
+  "newDActualDATA": null,
+  "newDENTRY": null,
+  "newDExecuted": false,
+  "oldC708AndHistoricalDReviewPreserved": true,
+  "futureDReviewSeparate": true,
+  "oldDriverDecisionUnchanged": {
+    "id": "9a5aac95-08cd-4db5-89b5-fd39554263c7",
+    "revision": 3,
+    "hash": "9b21994615f640948e6503c0591670d003601df90ad3c523730875eef78a0f85",
+    "status": "implemented",
+    "independentAcceptance": false
+  },
+  "allOriginalFiveStepCriteriaTaskRunTitlesGoalsPreserved": true,
+  "oldAutonomyGlobalExecutionConfigAnd25TasksUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "protectedStateBeforeSHA256": "d8256586d978812f72caf90f0c3d7f8a85700317547416dc1f230517a6c06911",
+  "protectedStateAfterSHA256": "d8256586d978812f72caf90f0c3d7f8a85700317547416dc1f230517a6c06911",
+  "cases": {
+    "passed": 0,
+    "businessFailed": 0,
+    "uncompleted": 4
+  },
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0,
+  "internalComputePrice": null,
+  "internalComputeCost": null,
+  "unknownIsNotZero": true,
+  "productionRelease": false,
+  "automaticRetry": false
+}

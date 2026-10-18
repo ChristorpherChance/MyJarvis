@@ -1,0 +1,240 @@
+{
+  "kind": "r46-live-business-supervision-snapshot",
+  "label": "first-real-click",
+  "startedAt": "2026-10-17T18:41:57.782Z",
+  "finishedAt": "2026-10-17T18:41:58.669Z",
+  "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+  "projectRevision": 46,
+  "goal": {
+    "present": true,
+    "bytes": 619,
+    "sha256": "d3e2628bc3b44a637402f695505e27f63bac113356f14ba4c57a2d571857d4dd"
+  },
+  "session": {
+    "id": "b98926a6-c143-4e69-be44-ee767858c8fc",
+    "revision": 3,
+    "goalRevision": 1,
+    "status": "running",
+    "runId": "b9229790af042425b3d06597221041302e71d7df",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "enabled": true,
+    "rounds": 1,
+    "blocker": {
+      "present": false,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "code": null
+    },
+    "goal": {
+      "present": true,
+      "bytes": 1380,
+      "sha256": "213df51013c384c7965731585e8429dc7b8056dce059f2265d7ad3a82fd79c38"
+    },
+    "summary": {
+      "present": true,
+      "bytes": 30,
+      "sha256": "530fa61e1f09813cfffc5f2096fa1b748b857c62dff82a867ad484087428368d"
+    },
+    "nextAction": {
+      "present": true,
+      "bytes": 35,
+      "sha256": "e0d158b4f613eab8eca932432270362fc1c2682c896c5e02895e925bdf9121d5"
+    }
+  },
+  "execution": {
+    "state": "running",
+    "resultReceived": false,
+    "taskStatus": "running",
+    "historicalActiveCount": 1,
+    "historicalBlockedCount": 15
+  },
+  "taskCount": 27,
+  "pendingCount": 0,
+  "modelReady": true,
+  "eventCursor": 4,
+  "hasEarlierEvents": false,
+  "events": [
+    {
+      "sequence": 4,
+      "eventId": "267c9731-3be8-4a96-99c2-8c87c22854bf",
+      "kind": "instruction",
+      "unknownKindFingerprint": null,
+      "revision": 3,
+      "goalRevision": 1,
+      "eventHash": "d3761e61fc2c41720b6d18e9f9bec83a09224f6f144bffa601b3a149049a878c",
+      "runId": "b9229790af042425b3d06597221041302e71d7df",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "decisionAction": null,
+      "decisionCriteria": null,
+      "decisionEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "feedbackState": null,
+      "feedbackEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "actualOutcome": null,
+      "summary": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "decisionReason": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "instruction": {
+        "present": true,
+        "bytes": 1380,
+        "sha256": "213df51013c384c7965731585e8429dc7b8056dce059f2265d7ad3a82fd79c38"
+      },
+      "bodyPublic": false
+    },
+    {
+      "sequence": 3,
+      "eventId": "7e4e0e54-69ca-40a3-934a-85cddb3500b9",
+      "kind": "dispatch-intent",
+      "unknownKindFingerprint": null,
+      "revision": 2,
+      "goalRevision": 1,
+      "eventHash": "eb1066a5aec3578cb38871d4eb871e7aa08412a89bc444e7b79e34f19c58dc65",
+      "runId": null,
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "decisionAction": null,
+      "decisionCriteria": null,
+      "decisionEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "feedbackState": null,
+      "feedbackEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "actualOutcome": null,
+      "summary": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "decisionReason": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "instruction": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "bodyPublic": false
+    },
+    {
+      "sequence": 2,
+      "eventId": "381f8062-0481-499c-94e9-c08e862ad6ab",
+      "kind": "command",
+      "unknownKindFingerprint": null,
+      "revision": 2,
+      "goalRevision": 1,
+      "eventHash": "70a0f25d1096bee1b17413a39a4884014e35176eaa07229ab923bd2eca78558b",
+      "runId": null,
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "decisionAction": null,
+      "decisionCriteria": null,
+      "decisionEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "feedbackState": null,
+      "feedbackEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "actualOutcome": null,
+      "summary": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "decisionReason": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "instruction": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "bodyPublic": false
+    },
+    {
+      "sequence": 1,
+      "eventId": "66c1b9fb-94be-48a9-8c2f-3f39e2a3aab6",
+      "kind": "goal",
+      "unknownKindFingerprint": null,
+      "revision": 1,
+      "goalRevision": 1,
+      "eventHash": "43d5d98f0e0574e3bea4941c111c2c105064bc1595c188697a693cfa83d24f68",
+      "runId": null,
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "decisionAction": null,
+      "decisionCriteria": null,
+      "decisionEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "feedbackState": null,
+      "feedbackEvidence": {
+        "count": 0,
+        "items": [],
+        "truncated": false
+      },
+      "actualOutcome": null,
+      "summary": {
+        "present": true,
+        "bytes": 30,
+        "sha256": "530fa61e1f09813cfffc5f2096fa1b748b857c62dff82a867ad484087428368d"
+      },
+      "decisionReason": {
+        "present": false,
+        "bytes": 0,
+        "sha256": null
+      },
+      "instruction": {
+        "present": true,
+        "bytes": 1380,
+        "sha256": "213df51013c384c7965731585e8429dc7b8056dce059f2265d7ad3a82fd79c38"
+      },
+      "bodyPublic": false
+    }
+  ],
+  "independentAcceptance": false,
+  "readOnly": true,
+  "textBodiesPublic": false,
+  "businessGETs": 1,
+  "businessMutations": 0,
+  "authenticationLifecycle": "existing withPlatform transient login created and revoked; no cookie exported",
+  "noAutomaticRetry": true,
+  "noPolling": true,
+  "source": "actual workbench GET; no UI click or model invocation performed by helper",
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-live-business-snapshot-first-real-click.json",
+      "sha256": "c6b4a780b38fd863216eeaa132cd6bd262bcd20165e3c93c55a4cadad76e4992",
+      "bytes": 6432
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "kind": "r43-round3-correction-learning-non-author-source-review",
+  "version": 1,
+  "reviewedOn": "2026-10-17",
+  "status": "static-review-blocked-for-acceptance",
+  "reviewerRole": "LOCAL non-author supervisor review; no implementation or execution role",
+  "source": {
+    "reviewTree": "D:/AI/workspaces/MyJevis/.jarvis-dev/cc-supervisor-r43-round3",
+    "reportedAuthorCommit": "d5d418b7e9dc0c638c9c914b3a9a5913523e9633",
+    "reportedBaseline": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+    "reportedPatchBytes": 360442,
+    "reportedPatchSHA256": "f6c5d5abbe2b82bfc9216c6caae8e9eff32feee4a8e28e9349ea4ca074215a4f",
+    "provenanceBoundary": "Commit, baseline and patch identity supplied by the root review task; this reviewer directly read and fingerprinted the listed local R3 files. No network or remote commit verification was performed.",
+    "files": [
+      {"path":"AGENTS.md","bytes":3945,"sha256":"171ebaf1a3e418a6a829dccf067bd978138ce6300aa97fe76a5cd31b24bd8a9f"},
+      {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","bytes":21791,"sha256":"dc88559152ee2288d0253236dc46ea1711af17fce18a03297ecf0ab09169ea16"},
+      {"path":"apps/api/src/runtime/supervisor-review.ts","bytes":3409,"sha256":"49d270d1d3992222a19b1e22829afceb26cbd16dfb26b86c60f4d0eab234ae16"},
+      {"path":"apps/api/src/runtime/supervisor-intents.ts","bytes":2819,"sha256":"26865ed66027076d72c8f61f7c516a807248f7cad3513fb454975f982ab737fe"},
+      {"path":"apps/api/src/runtime/project-supervisor-model.ts","bytes":6822,"sha256":"237e6b24b1209fa28115c1cb42fdfdffa62514de703a23e078578e33395306df"},
+      {"path":"apps/api/src/runtime/project-supervisor-routes.ts","bytes":2506,"sha256":"7183d6fad900c609f494033af30324355f4648b5276b4cb3add5c4d9198553b7"},
+      {"path":"apps/web/src/features/operations/ProjectSupervisorPanel.tsx","bytes":16633,"sha256":"0101581cbe03f5ff3e7ca4ebdebea4233e608f8231ea1180da66c2c0d7071072"}
+    ]
+  },
+  "checklist": {
+    "path": "artifacts/cc-supervisor-r43/correction-learning-acceptance-checklist.json",
+    "bytes": 9481,
+    "sha256": "14e7c5bd8e930fda6b57bf24905f3c76af11e3295e0246c169bdbca07bee606c",
+    "boundary": "The checklist itself was prepared against R2. This report applies its acceptance conditions to the directly read R3 source, without changing its not-run fixture results."
+  },
+  "executionBoundary": {
+    "evidenceLevel": "static",
+    "applicationSourceModified": false,
+    "onlyOutputWritten": "artifacts/cc-supervisor-r43/round3-correction-source-review.json",
+    "testsExecutedByReviewer": 0,
+    "typecheckExecutedByReviewer": false,
+    "modelsCalledByReviewer": 0,
+    "networkCallsByReviewer": 0,
+    "httpFixturesExecuted": false,
+    "databaseFixturesExecuted": false,
+    "runnerOrCCChainExecuted": false,
+    "productionDeployed": false,
+    "implementationAccepted": false,
+    "independentProductAcceptance": false,
+    "reportedExistingTests": "Author reports 4/4 in scripts/test-r43-round3.mjs. Source inspection confirms one real bounded child emitting partial native usage before timeout and three helper-level cases. This is not supervisor HTTP, actual runner/CC, model or complete persistent lifecycle coverage; no tests were rerun here.",
+    "productionAndApprovalBoundary": "Root reports current 112 production is R41 and R3 is not deployed. Prior npm execution and original agent channel actions were rejected by automatic approval review and remain pending explicit user response. Root additionally reports the R3 task is ended with no active run, a live 10M technical threshold versus centrally known usage of 10960354, and unknown historical usage still unknown. No further dispatch, clearing of historical usage, or replacement-task workaround is authorized by this review."
+  },
+  "findingCounts": {"P1":3,"P0":0},
+  "findings": [
+    {
+      "id": "R3-CL-P1-01",
+      "priority": "P1",
+      "classification": "concrete-source-blocker",
+      "title": "Failure feedback widens state to string and cannot satisfy the declared feedback union",
+      "checklistCases": ["CL-07-private-evidence-and-independent-acceptance"],
+      "refs": [
+        {"path":"apps/api/src/runtime/supervisor-review.ts","line":6},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":14},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":56},
+        {"path":"apps/api/tsconfig.json","line":1}
+      ],
+      "trigger": "The API compiler checks project-supervisor-runtime.ts with the current strict tsconfig, which includes src/**/*.ts.",
+      "sourceEvidence": "failureFeedback has no return annotation or const assertion. Its returned mutable object property state is inferred as string. advance declares feedback as z.infer<typeof supervisorFeedbackSchema>, whose state is the literal union progress|needs_decision|blocked|ready_for_review, then directly assigns failureFeedback(result) in the catch branch.",
+      "impact": "This specific newly wired assignment is statically incompatible and blocks a typed API build of the current source. Directly importing supervisor-review.ts in helper tests does not typecheck this assignment.",
+      "narrowFix": "Preserve the blocked literal in failureFeedback, for example state: 'blocked' as const, or give the helper an explicit compatible feedback return type while retaining its diagnostic extension. Keep the failure diagnostic and do not cast the whole result to any.",
+      "validationRequiredFromAuthor": "Run the appropriate authorized API typecheck/build against this exact fixed source and retain the actual result. No compiler command was executed by this reviewer.",
+      "confidence": "high-static-inference; compiler-failure-not-executed",
+      "notAClaim": "Not presented as a newly discovered general absence of full type verification: the author already disclosed that gap. This finding identifies the exact incompatible source assignment."
+    },
+    {
+      "id": "R3-CL-P1-02",
+      "priority": "P1",
+      "classification": "concrete-source-blocker",
+      "title": "A future_reference correction is saved but never supplied to future supervisor judgments",
+      "checklistCases": ["CL-04-late-model-after-correction","CL-05-learning-candidate-provenance"],
+      "refs": [
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":49},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":57},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":60},
+        {"path":"apps/web/src/features/operations/ProjectSupervisorPanel.tsx","line":54}
+      ],
+      "trigger": "The owner submits an accepted correction with applyTo=future_reference and the supervisor later prepares another model judgment.",
+      "sourceEvidence": "correct only appends input to correctionContext inside the current_followup branch. The future_reference branch only increments the session revision and saves the correction event/command receipt. modelInput.corrections is constructed exclusively from s.correctionContext; no code loads saved correction events for this purpose. Neither createProjectSupervisorModel nor the intent layer supplies that missing correction.",
+      "impact": "The UI offers future reference and the server acknowledges that scope, but later judgments have no access to the corrected fact, option or rationale. The recorded human correction cannot inform that implemented path, so the same disproved judgment can recur without the correction context.",
+      "narrowFix": "Persist future-reference corrections in a separately scoped durable context, or include them in the persistent correction context with an explicit effective boundary, then freeze them into newly prepared eligible judgment inputs. Preserve the already frozen input of the current round and maintain the original event/hash linkage.",
+      "validationRequiredFromAuthor": "Using authorized persistent-runtime fixtures, submit future_reference before a subsequent run and after an in-flight judgment begins; prove subsequent eligible model input contains the correction exactly once after restart, while the current frozen input and execution remain unchanged.",
+      "confidence": "high-static-dataflow",
+      "notAClaim": "Not a claim of inevitable deadlock: current(s) rejects a stale in-flight revision, but a later pump can consume an already complete intent. The defect is missing future correction context, independent of that recovery behavior."
+    },
+    {
+      "id": "R3-CL-P1-03",
+      "priority": "P1",
+      "classification": "concrete-source-blocker",
+      "title": "The correction endpoint persists private text before any privacy guard and can forward it to the model",
+      "checklistCases": ["CL-07-private-evidence-and-independent-acceptance"],
+      "refs": [
+        {"path":"apps/api/src/runtime/supervisor-review.ts","line":4},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":36},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":49},
+        {"path":"apps/api/src/runtime/project-supervisor-runtime.ts","line":57},
+        {"path":"apps/api/src/runtime/project-supervisor-routes.ts","line":13},
+        {"path":"apps/api/src/runtime/project-decision-runtime.ts","line":61},
+        {"path":"apps/api/src/runtime/project-decision-runtime.ts","line":125}
+      ],
+      "trigger": "An otherwise authorized, version-matching correction contains an obvious credential pattern, a private-access URL or a private configuration reference in reason, correctedFact or preferredOption.",
+      "sourceEvidence": "correctionInput checks object keys, types and lengths, but does not inspect these string contents for private data. correct persists the complete input in the append-only correction event, and current_followup also stores it in correctionContext and directive. advance subsequently copies correctionContext into modelInput. The route calls correct directly; the separate decision publicSummary guard is only called inside ProjectDecisionRuntime and is not on this path.",
+      "impact": "Known private-content counterexamples accepted by the new API become durable audit data rather than being rejected before writes. Current-followup corrections can then send that content to the model and use it in a later directive. Strictly rejecting an unknown raw-thought field does not protect private strings in accepted fields.",
+      "narrowFix": "Factor the established public-summary/private-reference rejection policy into a shared validator and invoke it on accepted correction fields before starting any write or cancellation side effect. Return a stable 4xx business error, retain the client draft and preserve the unmodified session/event/command state on rejection. Do not silently replace a correction after hashing it.",
+      "validationRequiredFromAuthor": "Use synthetic private-content counterexamples only in an isolated authorized full-HTTP fixture; compare session, event, command, candidate and dispatch counts before/after rejection, including restart. Do not put real credentials or private originals in the report.",
+      "confidence": "high-static-dataflow",
+      "notAClaim": "This is bounded to absent handling of known private-content patterns on the new correction path, not a claim that any finite validator provides universal privacy detection."
+    }
+  ],
+  "checklistStaticAssessment": [
+    {"case":"CL-01-owner-scope","status":"partial-static-only","observed":"access requires a current administrator profile me and reads the project by actor; correct checks the owner and searches target events only in that supervisor session. Binding separately requires project/task scope agreement. No authenticated identity or cross-scope fixture was executed; candidate linkage is part of the disclosed unimplemented capture path."},
+    {"case":"CL-02-cas-idempotency-restart","status":"partial-static-only","observed":"correct runs inside BEGIN IMMEDIATE, checks expectedVersion and target hash, and persists command fingerprint plus response data. A replay with changed body/project is rejected by its fingerprint. No persistent restart/concurrency fixture was executed; replay effect-field discrepancy is recorded below without promoting it to P1."},
+    {"case":"CL-03-decision-change-is-not-effect-rollback","status":"partial-static-only","observed":"Existing events are protected by no-update/no-delete triggers. Current correction changes authorization/directive and requests cancellation without editing the prior run text or executing compensation. Resume inspects a signed terminal result. This source does not prove real process stopping or actual external rollback. ProjectDecisionRuntime projection remains a disclosed implementation gap."},
+    {"case":"CL-04-late-model-after-correction","status":"partial-static-only-with-finding","observed":"Model results are completed into intent storage before current(s) gates session mutation; current correction invalidates the session revision, pauses and removes its model intent binding. Started/uncertain model intents are not silently called again. Future-reference context is missing as described in R3-CL-P1-02. No late-promise/restart/process fixture was executed."},
+    {"case":"CL-05-learning-candidate-provenance","status":"disclosed-implementation-gap","observed":"No automatic correction-to-experiences.capture or structured candidate provenance chain is implemented here. The selector helper assumes supervisorLearning metadata exists. It cannot establish that a real candidate was captured, validated or reused."},
+    {"case":"CL-06-skill-version-and-counterexample","status":"partial-static-only","observed":"The helper filters exact machine/executor/version, skips counterexample/superseded records and checks frozen revision/hash before applying a judgment. Model response validation forbids adopting unverified references. Existing execution-skills retains fixed-version snapshots and verifies their content/conditions/evidence. Real supervisor reuse and its full metadata lifecycle remain disclosed gaps, not newly demonstrated regressions."},
+    {"case":"CL-07-private-evidence-and-independent-acceptance","status":"static-blocker","observed":"New correction text bypasses the separate decision privacy guard (R3-CL-P1-03). Independently, review requires success plus declared evidence completeness and verified originals; model review validation checks every input criterion and exact available evidence pairs. All supervisor review events keep independentAcceptance=false. No actual original channel/HTTP/field acceptance was performed."}
+  ],
+  "disclosedImplementationGapsNotCountedAsNewRegressions": [
+    "Supervisor decisions and corrections are not projected into ProjectDecisionRuntime.",
+    "Automatic experiences.capture from actual supervisor outcomes/corrections is not implemented.",
+    "The complete stop/resume/revise/restart lifecycle is not fully implemented or verified.",
+    "Real next-model experience reuse and its metadata lifecycle are not demonstrated.",
+    "Version/scope-bound cost bookkeeping is incomplete; unknown cost is not established as zero.",
+    "Invalid native sessions do not have a completed new-lineage handling path.",
+    "Complete type and authenticated HTTP coverage are not present. R3-CL-P1-01 narrows one specific incompatible assignment rather than re-reporting that broad absence."
+  ],
+  "lowerPriorityObservationsNotP1Findings": [
+    {"refs":["apps/api/src/runtime/project-supervisor-runtime.ts:44","apps/api/src/runtime/project-supervisor-runtime.ts:49"],"observation":"The initial correction response includes correctionEffect, but remember stores s without that field, so same-command replay returns a different response shape. Store and replay the exact response object. Session/event deduplication alone is not an identical HTTP receipt contract."},
+    {"refs":["apps/api/src/runtime/supervisor-review.ts:4","apps/api/src/runtime/project-supervisor-routes.ts:7"],"observation":"Malformed correction input throws a plain Error; this route only translates BusinessError, RuntimeAccessError and ZodError. The intended 400 validation response is not supplied by this path. This belongs to the disclosed incomplete HTTP contract and was not executed."},
+    {"refs":["apps/web/src/features/operations/ProjectSupervisorPanel.tsx:12","apps/web/src/features/operations/ProjectSupervisorPanel.tsx:37","apps/web/src/features/operations/ProjectSupervisorPanel.tsx:54","apps/api/src/runtime/project-supervisor-runtime.ts:41"],"observation":"The history formatter usually renders time and kind but does not expand nested decision/feedback/correction details; only the latest matching decision reason is selected elsewhere. The API also exposes only the latest 100 events without pagination. These limit human review of older target judgments and need a separate history/detail contract; no DOM behavior was tested."}
+  ],
+  "recommendation": "Do not accept or deploy this R3 cut as the completed correction/learning loop. Have the authorized 101 CC address the three source blockers and preserve the separately disclosed gaps. Obtain exact-source authorized type/HTTP/persistence/late-result evidence before claiming those acceptance levels; this static report provides none of those execution receipts.",
+  "safetyOfReport": "Contains public source references, fingerprints and bounded findings only; no raw chat, private configuration, credentials, cookies or original model conversation content."
+}

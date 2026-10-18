@@ -1,0 +1,50 @@
+{
+  "kind": "record321-final-safe-summary",
+  "record": 321,
+  "asOf": "2026-10-18T07:54:23.091Z",
+  "newDeployment": true,
+  "release": "20261018-project-goals-r49-r1",
+  "factoryAllAccepted": false,
+  "automaticReviewStillBlocked": true,
+  "itemRevision": 26,
+  "planRevision": 9,
+  "currentStep": "C4",
+  "factoryStatus": "blocked",
+  "jarvisRepairGoal": 8,
+  "jarvisRepairStatus": "running",
+  "R50Deployed": false,
+  "whatChanged": "R49r1上线与独立健康、简明首屏及12＋5/当前后续分组已实查，文字派发→回报→失败调整真实可见。数据库同两用例仍未跑，自动审阅未通过，完整自动流程未签。",
+  "platformCurrentText": {
+    "summary": "现行12项工厂能力和5项监管已清楚展示。101已两次回报数据库隔离入口失败，两用例尚未运行；已停止盲试并安排查明连接约定。",
+    "blocker": "数据库初始化连接仍异常，两用例未跑；监管自动审阅输入超限也待修，未达到本组或完整工厂验收。",
+    "nextAction": "先核对镜像真实启动与连接约定，再据实安排入口修复；监管自动审阅返修已另交101，核验后继续判断和复验。",
+    "validationScope": "已核目标12+5及当前六/后续六阶段无刷新可见、R49r1上线与独立健康。goal5/6均0测试2未跑，资源清理目前仅签名回报及索引，未冒原日志全独验。"
+  },
+  "next": "核实际镜像启动/连接约定，再做有据的入口修复和同两例回归；另核goal8输入安全预算修复源码和新证据，之后才决定新发布。",
+  "cost": {
+    "knownParentTokens": 68722968,
+    "cacheReadIncludedInInput": true,
+    "catalogEstimateUSD": 45.246465,
+    "notInvoice": true,
+    "invoiceUSD": null,
+    "PiInternalTokens": null,
+    "PiInternalUSD": null,
+    "R50NewTokens": null,
+    "R50NewUSD": null,
+    "moneyCap": null,
+    "technicalWindowTokens": 10000000,
+    "technicalWindowIsHardPerCallCap": false,
+    "nativeCumulativeNotDoubleAdded": true,
+    "otherThreadTerminalAndMigrationCostsNotMixed": true
+  },
+  "preservedHistory": "Root318至320迁移与AI环境块/全部台账前缀保留；旧317工厂cut和所有失败不倒填。",
+  "pending": [
+    "实际两例数据库运行及保存原件/隔离资源清理独验。",
+    "R50输入投影修复、独审、包、发布和新判断尚未完成。",
+    "完整工厂、独立产品、客户原始需求交付使用和成熟全自动仍待验。",
+    "手机完整交互、需本人问题短句/计划读取提示与备份重复副本留存策略待后续。"
+  ],
+  "publicEvidenceIsSafeProjection": true,
+  "rawPrivateContentsIncluded": false,
+  "modelsTestsOrRemoteRepeatedForThisRecord": false
+}

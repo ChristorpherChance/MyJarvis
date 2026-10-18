@@ -1,0 +1,165 @@
+{
+  "kind": "r37-context-sentinel-failed-five-current-closed-plan103-readback",
+  "at": "2026-10-16T13:23:02.457Z",
+  "decision": {
+    "id": "43f250e8-7103-403f-96ec-36b3eefeaa6d",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "31c75f45695813c6e7d4fe7568912f1dc222ea34e923dbc8edcdf58c9a391e60",
+    "independentAcceptance": false,
+    "scope": "D-reading-implementation-only",
+    "oldActionsExactPrefix": true
+  },
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 103,
+    "hash": "ebd25e0df70cf7fe4322e4030273f80c6f77481de9997a636c9b48b4ef7fd721",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "保留已通过的四个用例原报告，补齐日志与独立验收依据；针对已定位的单JSON封装契约异常选择最小修正，不重跑四个已通过用例。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 21,
+    "hash": "732a886c1ff4a99be17e7ad9f5b07f360675d6e12f2b0583ba43de8f49e0df10",
+    "summary": "原始报告显示4个用例通过，资源收尾已核；执行封装解析异常已定位，独立验收依据仍需补齐。",
+    "nextAction": "保留已通过的四个用例原报告，补齐日志与独立验收依据；针对已定位的单JSON封装契约异常选择最小修正，不重跑四个已通过用例。",
+    "blocker": "四用例原报告已通过；执行封装仍因stdout非单JSON契约失败，框架ABI及完整PG4独立验收依据尚未齐。",
+    "validationScope": "原始报告15项中选定4项执行且4通过、0失败、0未完成，11非选定跳过；beforeAll/afterAll双pass、unhandled0。bootstrap真实30迁移，前后18业务表原rowText及schema同；after-hooks不是第二次迁移执行。D唯一54.532s实际及e2208d32保存独审确认本次四资源与五报告收尾，前后whole44=12raw32parsed，afterBuild首256listed/255read/1绑定EXIT17保真实分母，非kerneltrace。producer failed首错driver/PG4_R33_UNKNOWN/OtherException保原；实际8992B stdout前有56B单行前缀，整体json.loads offset0失败，末尾JSON与retained driver原body/resultRef匹配。JSONDecodeError仅为本机解析原bytes所见类，前缀生产者未独立归属。四用例报告域通过不等框架ABI/独立PG4/74签收；原C708/历史DReview6da/9a3/全部旧cut与机会保持，不重四pass，只补日志与独立依据。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 34,
+  "matchingPersistedNotifications": 1,
+  "directEvidenceCount": 12,
+  "priorSixEvidenceExactOrderedPrefixPreserved": true,
+  "old29EvidenceStillPreservedInImmutableIndex": true,
+  "newEvidence": [
+    {
+      "path": "docs/版本记录/软件工厂失败五报告收尾适配来源独审-20261016.json",
+      "sha256": "b97d73da2b96cdac57adacbf7a13aa415952b955836a5fde1c63df91a02c62e5",
+      "bytes": 28768
+    },
+    {
+      "path": "docs/版本记录/软件工厂失败五报告收尾实际参数安全事实-20261016.json",
+      "sha256": "9985d0b257eac0fc82a14ae0c622c20c020f0d0e3b4c55a60e715467c0c0d402",
+      "bytes": 3048
+    },
+    {
+      "path": "docs/版本记录/软件工厂失败五报告收尾具体入口核对-20261016.json",
+      "sha256": "92a905817057ab846fdce1178616494caf0e0b6b627d305984de42100eea18f2",
+      "bytes": 1775
+    },
+    {
+      "path": "docs/版本记录/软件工厂本轮四资源与五报告独立收尾读取-20261016.json",
+      "sha256": "2186a52c5dc8e32550b644ff2df855ae2f797b6265b24238812f2e64c61f61a8",
+      "bytes": 2598
+    },
+    {
+      "path": "docs/版本记录/软件工厂本轮四资源与五报告收尾保存独审-20261016.json",
+      "sha256": "e2208d32a2fa9d28ef269538b3d463dd45cdef15a01e142dce4d261bc939a06a",
+      "bytes": 53528
+    },
+    {
+      "path": "docs/版本记录/软件工厂四用例原报告通过与封装解析失败真实原因-20261016.json",
+      "sha256": "16940a52b4e3b2942ca14411744eb8452db454e2da49f1ad921fd7529c3514d8",
+      "bytes": 17716
+    }
+  ],
+  "reportFactsSummary": {
+    "domain": "original report facts, not independent PG4/ABI/74 acceptance",
+    "selectedExpected": 4,
+    "selectedExecuted": 4,
+    "selectedPassed": 4,
+    "selectedFailed": 0,
+    "selectedIncomplete": 0,
+    "nonselectedSkipped": 11,
+    "totalTests": 15,
+    "hooks": {
+      "beforeAll": "pass",
+      "afterAll": "pass",
+      "selectedPassed": 4,
+      "unhandledErrorCount": 0
+    },
+    "SQL18BusinessRowsOriginalTextsExactlyEqual": true,
+    "bootstrapMigrationsExecuted": 30,
+    "afterHooksMigrationsExecuted": 0,
+    "producerStatus": "failed",
+    "workerFirstFailure": {
+      "phase": "driver",
+      "errorCode": "PG4_R33_UNKNOWN",
+      "originalExceptionClassSummary": "OtherException",
+      "errno": null
+    },
+    "stdoutSingleJSONContract": {
+      "toolExitCode": 0,
+      "stdoutBytes": 8992,
+      "prefixBytes": 56,
+      "wholeStdoutIsOneJSON": false,
+      "terminalJSONMatchesRetainedBodyOnAllCommonKeys": true,
+      "prefixProducerIndependentlyAttributed": false,
+      "JSONDecodeErrorClassDomain": "local parsing of saved bytes, not the original generic class field"
+    },
+    "currentResourceScopeClosedVerified": true,
+    "frameworkABIQualified": false,
+    "actualPG4Qualified": false,
+    "full74Accepted": false,
+    "productAccepted": false
+  },
+  "VitestTestCountsAreNotIndependentBusinessCaseQualification": true,
+  "currentResourceScopeClosedVerified": true,
+  "savedCurrentScopeQualified": true,
+  "reportFactsReviewed": true,
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "cases": {
+    "reportDomain": {
+      "selectedPassed": 4,
+      "selectedFailed": 0,
+      "selectedIncomplete": 0,
+      "nonselectedSkipped": 11
+    },
+    "independentAcceptance": {
+      "accepted": 0,
+      "pendingQualification": 4
+    }
+  },
+  "original74AcceptanceChanged": false,
+  "allOriginalFiveStepCriteriaTaskRunTitlesGoalsPreserved": true,
+  "oldAutonomyGlobalConfig25TasksAndOldDriverDecisionUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "protectedBeforeSHA256": "d8256586d978812f72caf90f0c3d7f8a85700317547416dc1f230517a6c06911",
+  "protectedAfterSHA256": "d8256586d978812f72caf90f0c3d7f8a85700317547416dc1f230517a6c06911",
+  "newSupplierModelCalls": 0,
+  "internalComputePrice": null,
+  "internalComputeCost": null,
+  "productionRelease": false,
+  "automaticRetry": false,
+  "receipts": {
+    "implementation": {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-closed-plan103-implementation-receipt.json",
+      "sha256": "a208c63c3caf43e8131228e83df02939b8ac4b7d06f805c9aeba120d7e143472",
+      "bytes": 12224
+    },
+    "item": {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-closed-plan103-item-receipt.json",
+      "sha256": "4b12a048b4b93b598585d9e81bf6c9c13b25944bc2a34176a6295d6e88500bf1",
+      "bytes": 4398
+    },
+    "plan": {
+      "path": "artifacts/factory-resume-r37/context-sentinel-failed-five-current-closed-plan103-plan-receipt.json",
+      "sha256": "c478cb2e79ada97ebfdd8abb146bc4493919fc43cd5ba7caf1a3cad017b7efd1",
+      "bytes": 100
+    }
+  }
+}

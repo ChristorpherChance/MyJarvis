@@ -1,0 +1,1864 @@
+{
+  "kind": "r42-root-collected-current-software-factory-test-results",
+  "at": "2026-10-17T06:25:36.061001+00:00",
+  "taskId": "a42f1bcf-f063-40f8-8469-6972ea520de8",
+  "runId": "64ed8add701473f69c2dcbec8164bc874b6bad59",
+  "collectionAttemptComplete": true,
+  "terminal": true,
+  "summary": "101 cc本次测试已结束并收回报告；432项Vitest中430通过、1失败、1跳过，完整回归未通过。",
+  "verdict": {
+    "completeRegressionPassed": false,
+    "fullMatrixExecuted": false,
+    "productAccepted": false,
+    "original74Accepted": 0,
+    "original74Total": 74
+  },
+  "execution": {
+    "node": "101",
+    "executorId": "msf-101-claude",
+    "agentId": "0b5aea06-47e1-4f4b-a32e-969417915c9c",
+    "status": "round-limit",
+    "outcome": "round-limit",
+    "exitCode": 0,
+    "rounds": 1,
+    "source": "signed-agent",
+    "verification": "executor-observed-not-human-accepted",
+    "startedAt": "2026-10-17T06:05:40.028Z",
+    "endedAt": "2026-10-17T06:22:06.297Z",
+    "postValidation": null,
+    "postValidationExecuted": false,
+    "postValidationBoundary": "现有后置验证器固定旧主目录，未在此次运行中调用；不能认证独立测试副本。"
+  },
+  "source": {
+    "workspace": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+    "inputFiles": 617,
+    "inputBytes": 18357681,
+    "gitHead": "c8494d00083c5e0e9ff968891261a95977349679",
+    "gitHeadAloneIsNotActualInput": true,
+    "testCopyAndOriginal617FileReadbackUnchanged": true,
+    "manifest": {
+      "path": "artifacts/cc-full-test-r42/source-final-manifest.json",
+      "sha256": "656376582b0f2344a848a3e2bedc1461e962dbb4df70fd169811ea9dd7e21b44",
+      "bytes": 111240
+    }
+  },
+  "testSummary": {
+    "vitest": {
+      "total": 432,
+      "passed": 430,
+      "failed": 1,
+      "skipped": 1,
+      "knownConcreteSandboxCasesNotExecuted": 6
+    },
+    "byGroup": {
+      "shared-tests": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 0,
+        "unit": "registered assertions",
+        "knownNotRegistered": 0
+      },
+      "server-tests": {
+        "total": 414,
+        "passed": 412,
+        "failed": 1,
+        "skipped": 1,
+        "notExecuted": 0,
+        "unit": "registered assertions",
+        "knownNotRegistered": 6
+      },
+      "web-script-tests": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 0,
+        "unit": "registered assertions",
+        "knownNotRegistered": 0
+      }
+    },
+    "prototype": {
+      "plannedSuites": 30,
+      "attemptedSuites": 30,
+      "passedSuites": 2,
+      "blockedSuites": 28,
+      "executedAssertions": 27,
+      "passedAssertions": 27,
+      "browserAssertionsExecuted": 0
+    },
+    "supplementalPrototype": {
+      "attemptedEntries": 19,
+      "passedEntries": 0,
+      "onlyMissingPlaywright": 17,
+      "missingPlaywrightAndApiReadError": 1,
+      "onlyApiReadError": 1,
+      "errorsOverlapAndMustNotBeAddedAs20Entries": true
+    },
+    "checksPassed": [
+      "shared/server/web各包构建",
+      "shared/server/web各包类型检查",
+      "lint",
+      "依赖方向",
+      "错误码一致性"
+    ],
+    "rootPnpmWrappersExecuted": false,
+    "rootPnpmWrapperBoundary": "101没有pnpm；使用已安装依赖的各叶子脚本，未冒根递归包装器实测。"
+  },
+  "failures": [
+    {
+      "type": "test-assertion",
+      "file": "apps/server/src/modules/platform/storage.service.test.ts",
+      "line": 68,
+      "summary": "未设代理时的MinIO直链不符合断言要求的对象键编码。观察到断言失败，未据此先认定实现或断言哪方有错。"
+    },
+    {
+      "type": "test-harness",
+      "entries": [
+        "supplemental-material-release",
+        "supplemental-material-zip"
+      ],
+      "summary": "两项材料检查在断言前出现api.read is not a function；不是两个业务用例失败。"
+    }
+  ],
+  "blockedOrUnverified": [
+    "后端覆盖率：失败运行未产出覆盖原报告，不能宣布达到90/80门槛；配置本来仅覆盖evidence/policy/material。",
+    "前端覆盖率：缺少@vitest/coverage-v8；普通脚本3项通过。",
+    "Docker沙箱：仅注册1个跳过占位；另6个具体用例未执行，未单独配置隔离Docker daemon。",
+    "原型主矩阵30组：2组纯逻辑共27断言通过；1组缺历史资产、27组在Playwright加载前阻塞，浏览器断言0。",
+    "前端3项仅帮助函数；真实页面、登录和重启持久化未验。",
+    "后端13项HTTP E2E使用隔离服务，但其测试入口不证明真实认证中间件和浏览器链路。",
+    "业务AI使用mock/fake/本地回退，真实供应商AI流程未验。",
+    "固定服务/恢复/性能探针缺隔离前置未执行；恢复脚本按本次测试边界未运行。",
+    "chat-reference入口保守未读未执行，不能计覆盖。"
+  ],
+  "coverage": {
+    "shared": {
+      "lines": 96.82,
+      "branches": 94.73,
+      "functions": 85.71,
+      "statements": 96.82,
+      "configuredThresholds": {
+        "lines": 90,
+        "branches": 80
+      },
+      "thresholdPassed": true,
+      "scope": "src/**/*.ts except generated error-codes.ts and enums.ts; configuration also instruments test files; not entire product"
+    },
+    "server": {
+      "lines": null,
+      "branches": null,
+      "thresholdPassed": null,
+      "reason": "Coverage enabled but Vitest emitted no coverage directory after assertion failure; no rerun",
+      "configuredScope": [
+        "src/modules/evidence/**",
+        "src/modules/policy/**",
+        "src/modules/material/**"
+      ],
+      "configuredThresholds": {
+        "lines": 90,
+        "branches": 80
+      },
+      "excluded": "**/*.module.ts"
+    },
+    "web": {
+      "lines": null,
+      "branches": null,
+      "thresholdPassed": null,
+      "reason": "Added coverage attempt failed loading @vitest/coverage-v8; exact noncoverage script separately ran 3 tests. No install or lock changes."
+    }
+  },
+  "cleanup": {
+    "exactCreatedContainers": 3,
+    "exactCreatedNetwork": 1,
+    "exactCreatedAnonymousVolumes": 3,
+    "allSevenCurrentlyAbsent": true,
+    "sourceByteChanges": 0,
+    "anyRootCleanupMutation": false,
+    "processKernelTraceProved": false,
+    "oldResourcesFullInventoryVerified": false
+  },
+  "usage": {
+    "ccExecutorReported": {
+      "inputTokens": 3103505,
+      "outputTokens": 21119,
+      "cacheReadTokens": 3014016,
+      "cacheWriteTokens": 0,
+      "totalTokens": 3124624,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "usageComplete": true,
+      "costUSD": 3.4082480000000004,
+      "costKind": "catalog-estimate",
+      "knownCostUSD": 3.4082480000000004,
+      "costComplete": true
+    },
+    "catalogEstimateIsNotSupplierInvoice": true,
+    "internalCodexTokens": null,
+    "internalCodexAmount": null,
+    "productAiRealProviderAcceptance": false
+  },
+  "collection": {
+    "originalReports": [
+      {
+        "name": "reports/r42-full-test.json",
+        "sha256": "79087c91cfbc02b434a4f343c9708b27d2d0b505c0f9775bf4d370a6dc30f6e7",
+        "bytes": 458751,
+        "rawRetainedPrivately": true
+      },
+      {
+        "name": "reports/r42-full-test.md",
+        "sha256": "a3f4ef1d250afeee9c5aba7700aee85e11b0de41596e20ab689fc3f9037a2465",
+        "bytes": 10903,
+        "rawRetainedPrivately": true
+      }
+    ],
+    "coreFilesCollected": 237,
+    "coreBytesCollected": 408251,
+    "commandLogReferencesVerified": 222,
+    "commandsRecorded": 74,
+    "all1672ProducerArtifactBytesIndependentlyCollected": false,
+    "privacy": "原报告与命令日志含本轮合成服务配置，原字节私存；公开只提供本摘要及指纹，不复制配置值。"
+  },
+  "commands": [
+    {
+      "id": "environment",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:07:10.031054+00:00",
+      "endedAt": "2026-10-17T06:07:10.047227+00:00",
+      "durationSeconds": 0.016,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/environment.stdout.log",
+      "stderr": "reports/r42-logs/environment.stderr.log",
+      "stdoutSha256": "cee6d2b507f4281957f0b8a1669cce5ac4b7aefb1e6f574f6fc6ea7e8d2558fe",
+      "stderrSha256": "368a92acbc934bd9a30dac7a6dec1959b88727fd7548ce3758001f140c4cf577",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "isolation-capability",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:07:58.785641+00:00",
+      "endedAt": "2026-10-17T06:07:58.900397+00:00",
+      "durationSeconds": 0.115,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/isolation-capability.stdout.log",
+      "stderr": "reports/r42-logs/isolation-capability.stderr.log",
+      "stdoutSha256": "acb75ece7ef646aaa8f5c6a2c86171736fbbc5d99be3182063813ec816eccc08",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "resource-create",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:09:11.387870+00:00",
+      "endedAt": "2026-10-17T06:09:12.054925+00:00",
+      "durationSeconds": 0.667,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/resource-create.stdout.log",
+      "stderr": "reports/r42-logs/resource-create.stderr.log",
+      "stdoutSha256": "df9f50655f0d9e02656d379c334d730eba392990f9a6db03e7ec67f8daf87377",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "resource-readiness",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:09:25.915474+00:00",
+      "endedAt": "2026-10-17T06:09:26.079958+00:00",
+      "durationSeconds": 0.164,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/resource-readiness.stdout.log",
+      "stderr": "reports/r42-logs/resource-readiness.stderr.log",
+      "stdoutSha256": "2a39f4ac48c2965aaeac449ad538b8617f4eb07172ec37c1de7bafd79e78a041",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "shared-build",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/packages/shared",
+      "startedAt": "2026-10-17T06:10:08.340169+00:00",
+      "endedAt": "2026-10-17T06:10:11.821801+00:00",
+      "durationSeconds": 3.482,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/shared-build.stdout.log",
+      "stderr": "reports/r42-logs/shared-build.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "shared-tests",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/packages/shared",
+      "startedAt": "2026-10-17T06:10:16.034552+00:00",
+      "endedAt": "2026-10-17T06:10:17.820489+00:00",
+      "durationSeconds": 1.786,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/shared-tests.stdout.log",
+      "stderr": "reports/r42-logs/shared-tests.stderr.log",
+      "stdoutSha256": "aac85f491c5a73abd449f9263d37c0dcbb440a33e6802c1b0ec5cae4fc0834d8",
+      "stderrSha256": "6a013b71d94eadb16a930c32d667b41cd78de87ee97381f3cb81ed13fbe986e3",
+      "testCounts": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 0,
+        "unit": "registered assertions",
+        "knownNotRegistered": 0
+      }
+    },
+    {
+      "id": "lint",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:10:22.066513+00:00",
+      "endedAt": "2026-10-17T06:10:31.270800+00:00",
+      "durationSeconds": 9.204,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/lint.stdout.log",
+      "stderr": "reports/r42-logs/lint.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "error-codes",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:10:35.371761+00:00",
+      "endedAt": "2026-10-17T06:10:35.436186+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/error-codes.stdout.log",
+      "stderr": "reports/r42-logs/error-codes.stderr.log",
+      "stdoutSha256": "4d51d3ed2a6851a73465d29322265ff1fb425cdbc0b83536487b9fa212e49b92",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "server-build",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/server",
+      "startedAt": "2026-10-17T06:10:54.550622+00:00",
+      "endedAt": "2026-10-17T06:11:08.425568+00:00",
+      "durationSeconds": 13.875,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/server-build.stdout.log",
+      "stderr": "reports/r42-logs/server-build.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "web-tests",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/web",
+      "startedAt": "2026-10-17T06:11:14.118950+00:00",
+      "endedAt": "2026-10-17T06:11:14.584008+00:00",
+      "durationSeconds": 0.465,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/web-tests.stdout.log",
+      "stderr": "reports/r42-logs/web-tests.stderr.log",
+      "stdoutSha256": "883955b30e96b45b284bfcfec3729eed60687d31a560478463783c1133175588",
+      "stderrSha256": "22af9acab93e32dd83e17493f546bbd9b19014f69d0a5b076a272ebe4d021dc7",
+      "testCounts": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 3,
+        "reason": "coverage provider fails before discovery; exact script executed separately, not a retry of a successful group"
+      }
+    },
+    {
+      "id": "dependencies",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:11:18.679007+00:00",
+      "endedAt": "2026-10-17T06:11:26.725987+00:00",
+      "durationSeconds": 8.047,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/dependencies.stdout.log",
+      "stderr": "reports/r42-logs/dependencies.stderr.log",
+      "stdoutSha256": "e5a0fc5d5bfc1430e469d9f72e32d5fff13bfbd727ad0c4efced5717507fff63",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "shared-typecheck",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/packages/shared",
+      "startedAt": "2026-10-17T06:11:29.448193+00:00",
+      "endedAt": "2026-10-17T06:11:31.471553+00:00",
+      "durationSeconds": 2.023,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/shared-typecheck.stdout.log",
+      "stderr": "reports/r42-logs/shared-typecheck.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "migrate",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/server",
+      "startedAt": "2026-10-17T06:11:49.462982+00:00",
+      "endedAt": "2026-10-17T06:11:50.028501+00:00",
+      "durationSeconds": 0.565,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/migrate.stdout.log",
+      "stderr": "reports/r42-logs/migrate.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "ec8163619e02a0fec7ab9e68c1f097b62ac6e0b9ec8a35b4bc9c8e75a221c4fa",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "web-build",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/web",
+      "startedAt": "2026-10-17T06:11:55.837622+00:00",
+      "endedAt": "2026-10-17T06:12:11.974119+00:00",
+      "durationSeconds": 16.136,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/web-build.stdout.log",
+      "stderr": "reports/r42-logs/web-build.stderr.log",
+      "stdoutSha256": "2a44c87d16b8fe9843ab6087c0c32ed1dc9018ad19e89b0766052e2f191763e9",
+      "stderrSha256": "40ef9629c5f3ce2711ca28a4b62bb4dccf65d3a3aacc105c34589d5bdc4ab61a",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "test-isolation-preflight",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:13:10.258080+00:00",
+      "endedAt": "2026-10-17T06:13:10.523026+00:00",
+      "durationSeconds": 0.265,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/test-isolation-preflight.stdout.log",
+      "stderr": "reports/r42-logs/test-isolation-preflight.stderr.log",
+      "stdoutSha256": "e2ac1e58ba272e6a60906ee929dba0f96e7c5aab1051a9ff612460a0b6c3e25d",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "server-tests",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/server",
+      "startedAt": "2026-10-17T06:13:25.670905+00:00",
+      "endedAt": "2026-10-17T06:14:42.770733+00:00",
+      "durationSeconds": 77.1,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/server-tests.stdout.log",
+      "stderr": "reports/r42-logs/server-tests.stderr.log",
+      "stdoutSha256": "d3e93ce5bf7db3089314eca4e6dfeff34838b6de34820c138c066ccb9af6fae3",
+      "stderrSha256": "0bef24a5032fbcb04e0735a1a9767c216aaef27fd96442957c1529c207210ef4",
+      "testCounts": {
+        "total": 414,
+        "passed": 412,
+        "failed": 1,
+        "skipped": 1,
+        "notExecuted": 0,
+        "unit": "registered assertions",
+        "knownNotRegistered": 6
+      }
+    },
+    {
+      "id": "web-script-tests",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/web",
+      "startedAt": "2026-10-17T06:13:37.372426+00:00",
+      "endedAt": "2026-10-17T06:13:38.720015+00:00",
+      "durationSeconds": 1.347,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/web-script-tests.stdout.log",
+      "stderr": "reports/r42-logs/web-script-tests.stderr.log",
+      "stdoutSha256": "e579fb28b292b83766922e5baa9aaf7d8ba6ccf7779f1116b4441baead91ff71",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 0,
+        "unit": "registered assertions",
+        "knownNotRegistered": 0
+      }
+    },
+    {
+      "id": "server-typecheck",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/server",
+      "startedAt": "2026-10-17T06:13:42.789249+00:00",
+      "endedAt": "2026-10-17T06:13:56.670919+00:00",
+      "durationSeconds": 13.882,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/server-typecheck.stdout.log",
+      "stderr": "reports/r42-logs/server-typecheck.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "web-typecheck",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c/apps/web",
+      "startedAt": "2026-10-17T06:14:00.283650+00:00",
+      "endedAt": "2026-10-17T06:14:19.670305+00:00",
+      "durationSeconds": 19.387,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/web-typecheck.stdout.log",
+      "stderr": "reports/r42-logs/web-typecheck.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "prototype-tests",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:14:45.616161+00:00",
+      "endedAt": "2026-10-17T06:14:45.730556+00:00",
+      "durationSeconds": 0.114,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-tests.stdout.log",
+      "stderr": "reports/r42-logs/prototype-tests.stderr.log",
+      "stdoutSha256": "5bcd45215b5681cb70c02dcdf7bc14a53e7560f6a8607cbb5523ec59cde63b96",
+      "stderrSha256": "878b09794bdb421b0d9ac07d3eb0212311ce5d1d3c5c73cda54334b078215868",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "suiteAttempts": 1,
+        "blockedSuites": 1,
+        "reason": "syntax precondition missing; original runner stopped; remaining 29 suites launched individually"
+      }
+    },
+    {
+      "id": "prototype-logic",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.086245+00:00",
+      "endedAt": "2026-10-17T06:15:51.200720+00:00",
+      "durationSeconds": 0.114,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-logic.stdout.log",
+      "stderr": "reports/r42-logs/prototype-logic.stderr.log",
+      "stdoutSha256": "636543f2cf046df8da5e8f5db1bf150523bea6951ba1dfde7ce0b65b1aa2c28a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": 19,
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 0
+      }
+    },
+    {
+      "id": "prototype-task-data",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.258529+00:00",
+      "endedAt": "2026-10-17T06:15:51.322859+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-task-data.stdout.log",
+      "stderr": "reports/r42-logs/prototype-task-data.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "d25a0c621fe4f508127cd4734647c518bd22057529510f63743a8d5ebc74716a",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-design-catalog",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.379895+00:00",
+      "endedAt": "2026-10-17T06:15:51.444509+00:00",
+      "durationSeconds": 0.065,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-design-catalog.stdout.log",
+      "stderr": "reports/r42-logs/prototype-design-catalog.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9c1e1046269baff5a0058238588d3f68935bc5242e054eb317caf15b39807444",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-customer-prototype",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.501705+00:00",
+      "endedAt": "2026-10-17T06:15:51.566056+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-customer-prototype.stdout.log",
+      "stderr": "reports/r42-logs/prototype-customer-prototype.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "13c5eed9e3008c23458e7fd3e900ffdd1efdef723360d0a45b439a99f9799faa",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-customer-authority-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.623055+00:00",
+      "endedAt": "2026-10-17T06:15:51.687479+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-customer-authority-boundary.stdout.log",
+      "stderr": "reports/r42-logs/prototype-customer-authority-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "bc6353d453ffd6600d875f572f616a6c59e5a0d14588e667e1cc7656006268a6",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-customer-state-kernel",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.745135+00:00",
+      "endedAt": "2026-10-17T06:15:51.809445+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-customer-state-kernel.stdout.log",
+      "stderr": "reports/r42-logs/prototype-customer-state-kernel.stderr.log",
+      "stdoutSha256": "1160dc618c92436980b51ff15500382cee42e922aa9b73fb9ea58c1baf8310dd",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": 0
+      }
+    },
+    {
+      "id": "prototype-customer-route-matrix",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.866334+00:00",
+      "endedAt": "2026-10-17T06:15:51.930578+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-customer-route-matrix.stdout.log",
+      "stderr": "reports/r42-logs/prototype-customer-route-matrix.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "7e2ee7194b815546a6c8b41bc4beb135a0d791b38c805bede87bcce077051305",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-customer-privacy-projection",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:51.988070+00:00",
+      "endedAt": "2026-10-17T06:15:52.052474+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-customer-privacy-projection.stdout.log",
+      "stderr": "reports/r42-logs/prototype-customer-privacy-projection.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "b96bae9f118b4f67569162a56de6ce12b07ae25c96888b9449f070b112439000",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-prototype-commands",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.109385+00:00",
+      "endedAt": "2026-10-17T06:15:52.173657+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-prototype-commands.stdout.log",
+      "stderr": "reports/r42-logs/prototype-prototype-commands.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "bc09665640d731c708ba19329ddb1bfc98bab476e86f4c41b5830b33c31a453f",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-prototype-effects-integration",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.232471+00:00",
+      "endedAt": "2026-10-17T06:15:52.296720+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-prototype-effects-integration.stdout.log",
+      "stderr": "reports/r42-logs/prototype-prototype-effects-integration.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "5af86920a37565fae46ea9005ea8e60ab5e047090a272c2c6bbd85d2e09128fa",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-design-baseline",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.358350+00:00",
+      "endedAt": "2026-10-17T06:15:52.422602+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-design-baseline.stdout.log",
+      "stderr": "reports/r42-logs/prototype-design-baseline.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "49a7b2e50c955069e978d433df2dea6304f86ee2d7abf6f093045b6616c8101d",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-design-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.479835+00:00",
+      "endedAt": "2026-10-17T06:15:52.544293+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-design-boundary.stdout.log",
+      "stderr": "reports/r42-logs/prototype-design-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a631f779454bb9e7c8e1f8567fe248687bf804ebd91b1def44b308d444db103b",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-prototype-content",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.601006+00:00",
+      "endedAt": "2026-10-17T06:15:52.665379+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-prototype-content.stdout.log",
+      "stderr": "reports/r42-logs/prototype-prototype-content.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9e72504b3c5c53b17c68b606d695139045957ee74f56ed32a8402cdaa576d9bd",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-ui-scoring",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.722409+00:00",
+      "endedAt": "2026-10-17T06:15:52.786653+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-ui-scoring.stdout.log",
+      "stderr": "reports/r42-logs/prototype-ui-scoring.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "4b6fa07bd326089053793cce20b905ecee517158a1a2691e723568babad19eb9",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-selftest",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.842745+00:00",
+      "endedAt": "2026-10-17T06:15:52.907168+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-selftest.stdout.log",
+      "stderr": "reports/r42-logs/prototype-selftest.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "179edebc4aedf748ad656e8e1be28fd26d0225f5448506ce742d8a3783ddaa2d",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-selftest-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:52.964406+00:00",
+      "endedAt": "2026-10-17T06:15:53.032271+00:00",
+      "durationSeconds": 0.068,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-selftest-boundary.stdout.log",
+      "stderr": "reports/r42-logs/prototype-selftest-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "fe10c5de701e8933650373e8423e9afd410121cc93ea552c1c523e6d967a7a7d",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-build-artifact",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.099291+00:00",
+      "endedAt": "2026-10-17T06:15:53.163586+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-build-artifact.stdout.log",
+      "stderr": "reports/r42-logs/prototype-build-artifact.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "f948ae0e2452ebc440dd2d3c8124472b91a3ee499ad374a52bdcdada8a6eab94",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-merge-basis",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.221181+00:00",
+      "endedAt": "2026-10-17T06:15:53.285482+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-merge-basis.stdout.log",
+      "stderr": "reports/r42-logs/prototype-merge-basis.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "91f5310f6374cc650683806eef5442ab44834680aa9c19c92273b9e732e74a8d",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-contract-hardening",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.342525+00:00",
+      "endedAt": "2026-10-17T06:15:53.406823+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-contract-hardening.stdout.log",
+      "stderr": "reports/r42-logs/prototype-contract-hardening.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9ba3822652d68fbfb6fa41b17ee6dd2b59be6c84a183a933509e9e14dd32102a",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-main-integration-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.463762+00:00",
+      "endedAt": "2026-10-17T06:15:53.528133+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-main-integration-boundary.stdout.log",
+      "stderr": "reports/r42-logs/prototype-main-integration-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "d0d0ea56a4e31b5e7dab675391f2cc612fe77b355d5f2d8affb450f3edd1fb49",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-attention-auto",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.588483+00:00",
+      "endedAt": "2026-10-17T06:15:53.652958+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-attention-auto.stdout.log",
+      "stderr": "reports/r42-logs/prototype-attention-auto.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "3aafaf892af93f5971fcc993c9c68acd042b50bb466a5b425b8b9c1039ebba32",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-autopilot-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.710161+00:00",
+      "endedAt": "2026-10-17T06:15:53.774644+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-autopilot-boundary.stdout.log",
+      "stderr": "reports/r42-logs/prototype-autopilot-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "b6e725535b4a0941cbf9df15c840c3914c8d72a5678bb38813891d50d49e34cf",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-review-cases",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.831724+00:00",
+      "endedAt": "2026-10-17T06:15:53.896129+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-review-cases.stdout.log",
+      "stderr": "reports/r42-logs/prototype-review-cases.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "bc7b11805beed65108fa715300107e5d8d12be23f9d7f5b112c7897579233bbb",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:53.953677+00:00",
+      "endedAt": "2026-10-17T06:15:54.018013+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-boundary.stdout.log",
+      "stderr": "reports/r42-logs/prototype-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e4f8ed96845c9c50d9aa3a55aa549625199372d482f90fe4cda2786d27566d0b",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-failure-matrix",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:54.075328+00:00",
+      "endedAt": "2026-10-17T06:15:54.139570+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-failure-matrix.stdout.log",
+      "stderr": "reports/r42-logs/prototype-failure-matrix.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "19190c4af94df976e0c8a82cbc488c1637a9ac71101c561d5e8e09e9df915bf0",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-workflow",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:54.197044+00:00",
+      "endedAt": "2026-10-17T06:15:54.261619+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-workflow.stdout.log",
+      "stderr": "reports/r42-logs/prototype-workflow.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "16e3e0f7b8e778c7f7619f735a3ae244ab638e11bb4852e86845a4264b8fefb7",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-regression",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:54.318606+00:00",
+      "endedAt": "2026-10-17T06:15:54.382900+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-regression.stdout.log",
+      "stderr": "reports/r42-logs/prototype-regression.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "8361fcc4b56722d4ceb62c45482a601a209bf579390d3ccb852dab44f8c17f0b",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-visual",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:54.438995+00:00",
+      "endedAt": "2026-10-17T06:15:54.503450+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-visual.stdout.log",
+      "stderr": "reports/r42-logs/prototype-visual.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "7c5f27d8824894425e80c5b49165d8f4b06dca251b04b9907f09f2b33cac91bf",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "prototype-design-visual",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:15:54.560945+00:00",
+      "endedAt": "2026-10-17T06:15:54.625510+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/prototype-design-visual.stdout.log",
+      "stderr": "reports/r42-logs/prototype-design-visual.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "6b9538bad09e5846de7ba0cee5dd9b46740c164f010d75a2c883389e7a4d0e93",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "coverage-and-runtime-evidence",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:16:12.614914+00:00",
+      "endedAt": "2026-10-17T06:16:12.679899+00:00",
+      "durationSeconds": 0.065,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/coverage-and-runtime-evidence.stdout.log",
+      "stderr": "reports/r42-logs/coverage-and-runtime-evidence.stderr.log",
+      "stdoutSha256": "4e0ba1432e3101bcb2199ea2a579ea259d1c3555f2374a71dcaf2df06a1780d4",
+      "stderrSha256": "a44269eeb6504ac508d68eb18b25d40d48a8d860210321ce67218c93d689b979",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "persistence-snapshot",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:16:46.709948+00:00",
+      "endedAt": "2026-10-17T06:16:46.874464+00:00",
+      "durationSeconds": 0.164,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/persistence-snapshot.stdout.log",
+      "stderr": "reports/r42-logs/persistence-snapshot.stderr.log",
+      "stdoutSha256": "ab243e27ac4c89a20e7b92902fa500ce227c3534fc6865dd82bc32df61d8186e",
+      "stderrSha256": "e80e9513f9e7b90057b044c5cd8a9f3851f1464bc9aa27b7984eeac5236c3f18",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "synthetic-state-inventory",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:17:25.416845+00:00",
+      "endedAt": "2026-10-17T06:17:25.631741+00:00",
+      "durationSeconds": 0.215,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/synthetic-state-inventory.stdout.log",
+      "stderr": "reports/r42-logs/synthetic-state-inventory.stderr.log",
+      "stdoutSha256": "bfbf80c5672354fa8991db3906a9b5d6bb6258665e146c470ad4903513993beb",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "resource-cleanup",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:17:52.021161+00:00",
+      "endedAt": "2026-10-17T06:17:52.335978+00:00",
+      "durationSeconds": 0.315,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/resource-cleanup.stdout.log",
+      "stderr": "reports/r42-logs/resource-cleanup.stderr.log",
+      "stdoutSha256": "9ac4b7947420e39b4d8271bcdb10a746ca88a2f535579c369353413296301184",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "source-after",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:18:13.001949+00:00",
+      "endedAt": "2026-10-17T06:18:13.116717+00:00",
+      "durationSeconds": 0.115,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/source-after.stdout.log",
+      "stderr": "reports/r42-logs/source-after.stderr.log",
+      "stdoutSha256": "2651778b01a9f87d4eba3677c9dc4418d789b4ac978d84565e4dd8cc294251b1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    },
+    {
+      "id": "supplemental-acceptance-defects",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.101846+00:00",
+      "endedAt": "2026-10-17T06:20:15.166348+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-acceptance-defects.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-acceptance-defects.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "c1646c4b382b59f13e8cc42425ff73fbb32b0d9ca3a86b16ab4fa5e08a3b781c",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-acceptance-intake",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.224384+00:00",
+      "endedAt": "2026-10-17T06:20:15.288689+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-acceptance-intake.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-acceptance-intake.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "64299396603955ab28f088437050b658abf345cd2b34e11ddbf506999c9e496e",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-acceptance-plan",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.350084+00:00",
+      "endedAt": "2026-10-17T06:20:15.414467+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-acceptance-plan.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-acceptance-plan.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "c7dd79b135c933570723076b1ff1c4d56ee2e6bf8aeb66854c4d4e863ad033f8",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-acceptance-report",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.471215+00:00",
+      "endedAt": "2026-10-17T06:20:15.535532+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-acceptance-report.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-acceptance-report.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "745f20a43f748cd890daaa10741690ce577dc9bcada00cea6ed381e810b87d37",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-acceptance-rework-probe",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.592749+00:00",
+      "endedAt": "2026-10-17T06:20:15.657226+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-acceptance-rework-probe.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-acceptance-rework-probe.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "7768397fb688f13c161551f1dd7ed543ef6590ee0088008c0a26a631f8e12870",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-actions",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.713557+00:00",
+      "endedAt": "2026-10-17T06:20:15.778032+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-actions.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-actions.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "1c05719e051c90680227b7959a735c3f8baf49e2e7f7f101858029056b0a2fd6",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-boundary",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.834944+00:00",
+      "endedAt": "2026-10-17T06:20:15.899464+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-boundary.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-boundary.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9115839da0e7ca14ccea052d8cb2669d4c2dc5f7d3c753ddaef6494d35d5dfcc",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-bulk",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:15.956081+00:00",
+      "endedAt": "2026-10-17T06:20:16.020605+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-bulk.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-bulk.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "6897e762d8eca89bb596d633833c4955ebe90cf724bc13056b41f528e495c0ad",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-folders",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:16.078136+00:00",
+      "endedAt": "2026-10-17T06:20:16.142495+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-folders.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-folders.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "99448168c5679312eac847ea56cf4e3b923509ae0bda823c9d71cdda4b9ec832",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-polish",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:16.199017+00:00",
+      "endedAt": "2026-10-17T06:20:16.263465+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-polish.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-polish.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "dff5a04a887739c67877661a9341a35eeff4c39e1ab567d8ea59b6c964cbee08",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-reading",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:16.320772+00:00",
+      "endedAt": "2026-10-17T06:20:16.385221+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-reading.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-reading.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "8563f398f9f3def099bd7685c99b884ccfdcaa6200efd66037e9af23943d1d34",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-release",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:16.441879+00:00",
+      "endedAt": "2026-10-17T06:20:16.858025+00:00",
+      "durationSeconds": 0.416,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-release.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-release.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "0f6626eda00c8f97be65d5b6d9b80be8bee67e2b34ba435618404b016f8a0fbf",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-material-zip",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:16.915491+00:00",
+      "endedAt": "2026-10-17T06:20:16.979715+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-material-zip.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-material-zip.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "6d6540f9989cbdbb23a0b44c8d7f5ddc4fbbb9b5daab22e153e51ba88ba88197",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "TypeError: api.read is not a function\n    at /home/superopen/All-Projects/msf-full-test-r42-6294520c/doc/tests/material-zip.cjs:5:238\n    at Object.<anonymous> (/home/superopen/All-Projects/msf-full-test-r42-6294520c/doc/tests/material-zip.cjs:7:369)"
+      }
+    },
+    {
+      "id": "supplemental-preview-continuity",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:17.035836+00:00",
+      "endedAt": "2026-10-17T06:20:17.100291+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-preview-continuity.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-preview-continuity.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "18c7750e2dc14866b4d31484f36e1c8c1befc482b7fdf69b6492fc3644978764",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-prototype-history",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:17.157019+00:00",
+      "endedAt": "2026-10-17T06:20:17.221471+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-prototype-history.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-prototype-history.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "07dfdf5d79e82a11eb1ba076e6da771e620e8b7f88057065726d833d8466d1e3",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-user-journey",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:17.278083+00:00",
+      "endedAt": "2026-10-17T06:20:17.342614+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-user-journey.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-user-journey.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "3194f4aeaf5dd2a12e0963d5d9a8bc91e9ea20d7853a85e6a7d4f931df194b6a",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-resume-selftest",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:17.399004+00:00",
+      "endedAt": "2026-10-17T06:20:17.463457+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-resume-selftest.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-resume-selftest.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "0b68f9410b88f50d7950b0297041ae916795ee8ce38d3ec03906772f26b12c5c",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-acceptance-visual",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:17.520159+00:00",
+      "endedAt": "2026-10-17T06:20:17.584640+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-acceptance-visual.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-acceptance-visual.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "983c3056b410d300cda17531f6f5eebbff3cc099b9f29e4f82e3b903bf65d541",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "supplemental-capture-design-before",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:20:17.641068+00:00",
+      "endedAt": "2026-10-17T06:20:17.705512+00:00",
+      "durationSeconds": 0.064,
+      "exitCode": 1,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/supplemental-capture-design-before.stdout.log",
+      "stderr": "reports/r42-logs/supplemental-capture-design-before.stderr.log",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "45f12ac76bb5c07c22612efc9ab822695f8348d93d4e6d8cbe359bf2587f9914",
+      "testCounts": {
+        "total": null,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "notExecuted": null,
+        "blockedSuites": 1,
+        "reason": "Playwright missing before test registration"
+      }
+    },
+    {
+      "id": "final-verification",
+      "cwd": "/home/superopen/All-Projects/msf-full-test-r42-6294520c",
+      "startedAt": "2026-10-17T06:21:39.364906+00:00",
+      "endedAt": "2026-10-17T06:21:39.579630+00:00",
+      "durationSeconds": 0.215,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": "reports/r42-logs/final-verification.stdout.log",
+      "stderr": "reports/r42-logs/final-verification.stderr.log",
+      "stdoutSha256": "02e6054b143e7851056c8d2f543a1d44e136a7305aa5bdb5132e269150c0d344",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testCounts": {
+        "total": null,
+        "passed": null,
+        "failed": null,
+        "skipped": null,
+        "notExecuted": null,
+        "reason": "non-test command; assertion counts not applicable"
+      }
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "path": "artifacts/cc-full-test-r42/independent-report-review.json",
+      "sha256": "0fc88656781e36a16167dd6e9489108eebf166ebac27d70558925b8f9de67f07",
+      "bytes": 42038
+    },
+    {
+      "path": "artifacts/cc-full-test-r42/final-source-readback.json",
+      "sha256": "6f6a09727a12834de16be50bdb58690a9f7811977e6e9309f814e13bad1df5fd",
+      "bytes": 505
+    },
+    {
+      "path": "artifacts/cc-full-test-r42/final-resource-qualified-readback.json",
+      "sha256": "43cf38781d33df1a808899c2f99e62181c5974c4826c4769978b9624dd7caec8",
+      "bytes": 2888
+    },
+    {
+      "path": "artifacts/cc-full-test-r42/file-collection-1792218123704.json",
+      "sha256": "fe91294a6f8510cb6a794655ec70d24e96d9370f902c73bd84b70fb073424fa6",
+      "bytes": 148397
+    },
+    {
+      "path": "artifacts/cc-full-test-r42/file-collection-1792218159877.json",
+      "sha256": "aa127d27ba583a25ced6ccd8ef5b722ed9cf632ef520c8199d90fec713b53dda",
+      "bytes": 1346
+    }
+  ],
+  "scope": {
+    "oneOffTestOnly": true,
+    "tenMinuteFollowup": "PAUSED",
+    "businessSourceModified": false,
+    "productionDeploymentPerformed": false,
+    "oldAutonomyRestarted": false,
+    "independentProductAcceptancePerformed": false
+  }
+}

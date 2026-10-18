@@ -1,0 +1,580 @@
+{
+  "at": "2026-10-17T10:27:54.474Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decisionId": "042f3630-81b4-4764-83a8-16b73c998559",
+  "revision": 2,
+  "hash": "52a0d4b2759b229d6d4801a7ecac23f7922c3077b6fe011f96d0542c1d9de49c",
+  "priorRevisionsAndActionsPreserved": true,
+  "decision": {
+    "questionSummary": "怎样让原目标一次授权后的持续监管与本人纠错经验真正生效，并完成正式运行链和发布前验收？",
+    "context": {
+      "observedAt": "2026-10-17T10:26:07.666Z",
+      "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+      "sourceFingerprint": "097d46e62e8b707db4bd29c5afe2f312d4f21a75e8dad69515738de84d34e952",
+      "sourceVersion": "101 CC app91fdeb1/reporte5c5754，112仍R41",
+      "runId": null,
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "objectives": [
+        "R43-REGULATION-CONTROL",
+        "R43-ACCOUNTING-RECONCILE"
+      ],
+      "constraints": [
+        "同原task/session/累计账与未知史，Root只监管收集发布控制",
+        "一次2400秒/retry0/最多2子agent，10分钟checkpoint/32分钟join留8分钟收尾",
+        "先真实Task DTO/Runtime/claim/signed result/journal ACK两次后继；不能替换执行器冒验收",
+        "连续授权按版本policy与一次有界receipt，暂停/停止/目标修订在dispatch/claim再核，不每轮owner grant",
+        "经验真实条件/反例/停用替代/采用理由和版本化决定行动，原副作用与失败保留",
+        "最终同源双包通过后才考虑112/101受控更新，旧十分钟PAUSED不恢复"
+      ],
+      "situation": "R6完整types/build及11项限定机制通过，多个旧源码缺口已修；真实两次后继和恢复矩阵仍未验。固定独审定位正式unknown入站DTO、consumed reconcile与awaiting-cost路径，持续目标授权和经验操作/决定行动闭环也尚缺。原24分钟两轮仍将真实链拖至下一轮，因此按源分工延长本轮有限窗口，技术边界仍清晰。"
+    },
+    "options": [
+      {
+        "id": "integrated-bounded-40min",
+        "title": "原会话单次40分钟分源闭合并集成",
+        "advantages": [
+          "真实执行链优先，由两个子任务和主线程分别负责执行合同、经验操作、目标政策",
+          "同一最终源验证并形成匹配双包，减少多次恢复会话重复上下文"
+        ],
+        "disadvantages": [
+          "核心执行与业务监管接缝需明确协作，须提前join和checkpoint"
+        ],
+        "impact": "仅101既有隔离开发副本，最后由Root另行控制发布。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "runtime-first-small-slice",
+        "title": "先一轮只闭合正式运行链，再做操作闭环",
+        "advantages": [
+          "第一轮范围较小，便于先独立核对执行机制"
+        ],
+        "disadvantages": [
+          "已确认的持续授权、经验与决定操作依然不可用，交付至少再分两轮",
+          "多次恢复和整合增加上下文与重复构建"
+        ],
+        "impact": "112仍保R41，后继需另外集成和同源包。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "integrated-bounded-40min",
+    "decisionRationale": "原用户授权涵盖整块监管。持续目标/经验真实操作是既有目标缺口；已具固定源码、原日志、精确独审与复用环境，选择同原会话单次40分钟分源集成，首先证明真实链，保0重试、32分钟join和8分钟收尾。模型不得扩大授权，未知不补零，任何真实阻断如实保留，不以候选包代实际效果。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json",
+        "sha256": "f06ae1a3915d9b6cc46b9ee5c6a6c3c64d482542b055b27c7a0f1cbeea9153f5",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+        "sha256": "e8c806e6ea463b654eb8e8dbda38abe7efc52f8f939a609ef34bdb5c564b6790",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json",
+        "sha256": "38cf3595487ca800b0e9d66960f8b4dc90b53cfb871a8ac047c05fae34ef6b68",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/round6-awaiting-cost-adoption-source-supplement.json",
+        "sha256": "641ca04d695ebfe8a503a9b506ed5bae5e834082ceb7ffb05ad1cd2bfefe7008",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "R43-REGULATION-CONTROL",
+      "R43-ACCOUNTING-RECONCILE"
+    ],
+    "rollbackPlan": {
+      "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+      "triggers": [
+        "身份/会话/源码绑定变化",
+        "终态或原件不完整",
+        "权限配置发生未核变化"
+      ],
+      "impact": "影响101后继CC；不改112业务或旧账。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "修正式unknown合同和阶段对账，真实运行链两次后继/ACK/restart；补版本化原目标持续授权、经验实际操作与决定行动链，最终同源验证与匹配双端包。",
+        "at": "2026-10-17T10:26:07.666Z",
+        "state": "planned",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json",
+            "sha256": "f06ae1a3915d9b6cc46b9ee5c6a6c3c64d482542b055b27c7a0f1cbeea9153f5",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+            "sha256": "e8c806e6ea463b654eb8e8dbda38abe7efc52f8f939a609ef34bdb5c564b6790",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json",
+            "sha256": "38cf3595487ca800b0e9d66960f8b4dc90b53cfb871a8ac047c05fae34ef6b68",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-awaiting-cost-adoption-source-supplement.json",
+            "sha256": "641ca04d695ebfe8a503a9b506ed5bae5e834082ceb7ffb05ad1cd2bfefe7008",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "维护7 operation6661a48c从固定R6 HEAD e5c5754在同task/session启动，2400秒/0重试/native2.1.296 bypass已实际观察；原节点config和其余模板H、中央task12 blocked/config45保持。当前active/running无终态，112仍R41、十分钟PAUSED。",
+        "at": "2026-10-17T10:27:54.434Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round7-start-boundary-readback.json",
+            "sha256": "85e336156203b1590f411b5eb9b0fedbf8ca3d732449962e0f8e18e53d5b9b37",
+            "kind": "observation"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "042f3630-81b4-4764-83a8-16b73c998559",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 2,
+    "createdAt": "2026-10-17T10:26:08.569Z",
+    "updatedAt": "2026-10-17T10:27:54.453Z",
+    "changeOf": "505d462b-c76d-461b-9cd7-e5d6f95800bd",
+    "changeOfRevision": 3,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": null,
+      "status": "ambiguous",
+      "candidates": [
+        {
+          "id": "integrated-bounded-40min",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "runtime-first-small-slice",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        }
+      ],
+      "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "721aa702c07c4fcef3bf59ac33a273847e8c82dca8f31fac0854138c25170c33",
+    "revisionReason": "按已选方案原会话新维护已实际启动并核权限/原绑定，当前只是START范围。",
+    "hash": "52a0d4b2759b229d6d4801a7ecac23f7922c3077b6fe011f96d0542c1d9de49c",
+    "revisions": [
+      {
+        "questionSummary": "怎样让原目标一次授权后的持续监管与本人纠错经验真正生效，并完成正式运行链和发布前验收？",
+        "context": {
+          "observedAt": "2026-10-17T10:26:07.666Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "097d46e62e8b707db4bd29c5afe2f312d4f21a75e8dad69515738de84d34e952",
+          "sourceVersion": "101 CC app91fdeb1/reporte5c5754，112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "同原task/session/累计账与未知史，Root只监管收集发布控制",
+            "一次2400秒/retry0/最多2子agent，10分钟checkpoint/32分钟join留8分钟收尾",
+            "先真实Task DTO/Runtime/claim/signed result/journal ACK两次后继；不能替换执行器冒验收",
+            "连续授权按版本policy与一次有界receipt，暂停/停止/目标修订在dispatch/claim再核，不每轮owner grant",
+            "经验真实条件/反例/停用替代/采用理由和版本化决定行动，原副作用与失败保留",
+            "最终同源双包通过后才考虑112/101受控更新，旧十分钟PAUSED不恢复"
+          ],
+          "situation": "R6完整types/build及11项限定机制通过，多个旧源码缺口已修；真实两次后继和恢复矩阵仍未验。固定独审定位正式unknown入站DTO、consumed reconcile与awaiting-cost路径，持续目标授权和经验操作/决定行动闭环也尚缺。原24分钟两轮仍将真实链拖至下一轮，因此按源分工延长本轮有限窗口，技术边界仍清晰。"
+        },
+        "options": [
+          {
+            "id": "integrated-bounded-40min",
+            "title": "原会话单次40分钟分源闭合并集成",
+            "advantages": [
+              "真实执行链优先，由两个子任务和主线程分别负责执行合同、经验操作、目标政策",
+              "同一最终源验证并形成匹配双包，减少多次恢复会话重复上下文"
+            ],
+            "disadvantages": [
+              "核心执行与业务监管接缝需明确协作，须提前join和checkpoint"
+            ],
+            "impact": "仅101既有隔离开发副本，最后由Root另行控制发布。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "runtime-first-small-slice",
+            "title": "先一轮只闭合正式运行链，再做操作闭环",
+            "advantages": [
+              "第一轮范围较小，便于先独立核对执行机制"
+            ],
+            "disadvantages": [
+              "已确认的持续授权、经验与决定操作依然不可用，交付至少再分两轮",
+              "多次恢复和整合增加上下文与重复构建"
+            ],
+            "impact": "112仍保R41，后继需另外集成和同源包。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "integrated-bounded-40min",
+        "decisionRationale": "原用户授权涵盖整块监管。持续目标/经验真实操作是既有目标缺口；已具固定源码、原日志、精确独审与复用环境，选择同原会话单次40分钟分源集成，首先证明真实链，保0重试、32分钟join和8分钟收尾。模型不得扩大授权，未知不补零，任何真实阻断如实保留，不以候选包代实际效果。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json",
+            "sha256": "f06ae1a3915d9b6cc46b9ee5c6a6c3c64d482542b055b27c7a0f1cbeea9153f5",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+            "sha256": "e8c806e6ea463b654eb8e8dbda38abe7efc52f8f939a609ef34bdb5c564b6790",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json",
+            "sha256": "38cf3595487ca800b0e9d66960f8b4dc90b53cfb871a8ac047c05fae34ef6b68",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-awaiting-cost-adoption-source-supplement.json",
+            "sha256": "641ca04d695ebfe8a503a9b506ed5bae5e834082ceb7ffb05ad1cd2bfefe7008",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "修正式unknown合同和阶段对账，真实运行链两次后继/ACK/restart；补版本化原目标持续授权、经验实际操作与决定行动链，最终同源验证与匹配双端包。",
+            "at": "2026-10-17T10:26:07.666Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json",
+                "sha256": "f06ae1a3915d9b6cc46b9ee5c6a6c3c64d482542b055b27c7a0f1cbeea9153f5",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+                "sha256": "e8c806e6ea463b654eb8e8dbda38abe7efc52f8f939a609ef34bdb5c564b6790",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json",
+                "sha256": "38cf3595487ca800b0e9d66960f8b4dc90b53cfb871a8ac047c05fae34ef6b68",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round6-awaiting-cost-adoption-source-supplement.json",
+                "sha256": "641ca04d695ebfe8a503a9b506ed5bae5e834082ceb7ffb05ad1cd2bfefe7008",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "selected",
+        "origin": "ai",
+        "id": "042f3630-81b4-4764-83a8-16b73c998559",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-17T10:26:08.569Z",
+        "updatedAt": "2026-10-17T10:26:08.569Z",
+        "changeOf": "505d462b-c76d-461b-9cd7-e5d6f95800bd",
+        "changeOfRevision": 3,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": null,
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "id": "integrated-bounded-40min",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "runtime-first-small-slice",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "按R6冻结源码和原用户连续监管目标补齐可操作闭环；不重放旧机会或清历史。",
+        "hash": "721aa702c07c4fcef3bf59ac33a273847e8c82dca8f31fac0854138c25170c33"
+      },
+      {
+        "questionSummary": "怎样让原目标一次授权后的持续监管与本人纠错经验真正生效，并完成正式运行链和发布前验收？",
+        "context": {
+          "observedAt": "2026-10-17T10:26:07.666Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "097d46e62e8b707db4bd29c5afe2f312d4f21a75e8dad69515738de84d34e952",
+          "sourceVersion": "101 CC app91fdeb1/reporte5c5754，112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "同原task/session/累计账与未知史，Root只监管收集发布控制",
+            "一次2400秒/retry0/最多2子agent，10分钟checkpoint/32分钟join留8分钟收尾",
+            "先真实Task DTO/Runtime/claim/signed result/journal ACK两次后继；不能替换执行器冒验收",
+            "连续授权按版本policy与一次有界receipt，暂停/停止/目标修订在dispatch/claim再核，不每轮owner grant",
+            "经验真实条件/反例/停用替代/采用理由和版本化决定行动，原副作用与失败保留",
+            "最终同源双包通过后才考虑112/101受控更新，旧十分钟PAUSED不恢复"
+          ],
+          "situation": "R6完整types/build及11项限定机制通过，多个旧源码缺口已修；真实两次后继和恢复矩阵仍未验。固定独审定位正式unknown入站DTO、consumed reconcile与awaiting-cost路径，持续目标授权和经验操作/决定行动闭环也尚缺。原24分钟两轮仍将真实链拖至下一轮，因此按源分工延长本轮有限窗口，技术边界仍清晰。"
+        },
+        "options": [
+          {
+            "id": "integrated-bounded-40min",
+            "title": "原会话单次40分钟分源闭合并集成",
+            "advantages": [
+              "真实执行链优先，由两个子任务和主线程分别负责执行合同、经验操作、目标政策",
+              "同一最终源验证并形成匹配双包，减少多次恢复会话重复上下文"
+            ],
+            "disadvantages": [
+              "核心执行与业务监管接缝需明确协作，须提前join和checkpoint"
+            ],
+            "impact": "仅101既有隔离开发副本，最后由Root另行控制发布。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "runtime-first-small-slice",
+            "title": "先一轮只闭合正式运行链，再做操作闭环",
+            "advantages": [
+              "第一轮范围较小，便于先独立核对执行机制"
+            ],
+            "disadvantages": [
+              "已确认的持续授权、经验与决定操作依然不可用，交付至少再分两轮",
+              "多次恢复和整合增加上下文与重复构建"
+            ],
+            "impact": "112仍保R41，后继需另外集成和同源包。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "integrated-bounded-40min",
+        "decisionRationale": "原用户授权涵盖整块监管。持续目标/经验真实操作是既有目标缺口；已具固定源码、原日志、精确独审与复用环境，选择同原会话单次40分钟分源集成，首先证明真实链，保0重试、32分钟join和8分钟收尾。模型不得扩大授权，未知不补零，任何真实阻断如实保留，不以候选包代实际效果。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json",
+            "sha256": "f06ae1a3915d9b6cc46b9ee5c6a6c3c64d482542b055b27c7a0f1cbeea9153f5",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+            "sha256": "e8c806e6ea463b654eb8e8dbda38abe7efc52f8f939a609ef34bdb5c564b6790",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json",
+            "sha256": "38cf3595487ca800b0e9d66960f8b4dc90b53cfb871a8ac047c05fae34ef6b68",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/round6-awaiting-cost-adoption-source-supplement.json",
+            "sha256": "641ca04d695ebfe8a503a9b506ed5bae5e834082ceb7ffb05ad1cd2bfefe7008",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "修正式unknown合同和阶段对账，真实运行链两次后继/ACK/restart；补版本化原目标持续授权、经验实际操作与决定行动链，最终同源验证与匹配双端包。",
+            "at": "2026-10-17T10:26:07.666Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json",
+                "sha256": "f06ae1a3915d9b6cc46b9ee5c6a6c3c64d482542b055b27c7a0f1cbeea9153f5",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round6-protocol-grant-source-review.json",
+                "sha256": "e8c806e6ea463b654eb8e8dbda38abe7efc52f8f939a609ef34bdb5c564b6790",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round6-goal-learning-source-review.json",
+                "sha256": "38cf3595487ca800b0e9d66960f8b4dc90b53cfb871a8ac047c05fae34ef6b68",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/round6-awaiting-cost-adoption-source-supplement.json",
+                "sha256": "641ca04d695ebfe8a503a9b506ed5bae5e834082ceb7ffb05ad1cd2bfefe7008",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "维护7 operation6661a48c从固定R6 HEAD e5c5754在同task/session启动，2400秒/0重试/native2.1.296 bypass已实际观察；原节点config和其余模板H、中央task12 blocked/config45保持。当前active/running无终态，112仍R41、十分钟PAUSED。",
+            "at": "2026-10-17T10:27:54.434Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/maintenance-round7-start-boundary-readback.json",
+                "sha256": "85e336156203b1590f411b5eb9b0fedbf8ca3d732449962e0f8e18e53d5b9b37",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "042f3630-81b4-4764-83a8-16b73c998559",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 2,
+        "createdAt": "2026-10-17T10:26:08.569Z",
+        "updatedAt": "2026-10-17T10:27:54.453Z",
+        "changeOf": "505d462b-c76d-461b-9cd7-e5d6f95800bd",
+        "changeOfRevision": 3,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": null,
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "id": "integrated-bounded-40min",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "runtime-first-small-slice",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "同等可逆性与运行影响的方案尚无法区分，需补充依据。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "721aa702c07c4fcef3bf59ac33a273847e8c82dca8f31fac0854138c25170c33",
+        "revisionReason": "按已选方案原会话新维护已实际启动并核权限/原绑定，当前只是START范围。",
+        "hash": "52a0d4b2759b229d6d4801a7ecac23f7922c3077b6fe011f96d0542c1d9de49c"
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "overlayVersion": 2,
+  "kind": "jarvis-112-isolated-development-overlay",
+  "baselineBuild": "20261018-project-goals-r49",
+  "baselineSourceCommit": "36ab0accc6d16c302f668574a6558a69fa277914",
+  "baselineManifestSHA256": "cea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb",
+  "overlayDirectory": "[machine path omitted]",
+  "files": [
+    {
+      "path": "package.json",
+      "bytes": 1571,
+      "sha256": "b6cea8cf31981080e9c58f689c949ab0ae9e1800d2a6573a14351d01d7475b68",
+      "baseSHA256": "dbd77b73a389bc210be64dc7c360871398a919ae20f48f1b570aa9d916457fff",
+      "operation": "replace"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 643,
+      "sha256": "7f248a8cb9c82d95e54bd17b08544622cdc24fe9f78574bed6d61189762873a5",
+      "baseSHA256": "016f2c0b4be1f2308e9a67d9d198a663861f708d927f331b58a984655fb740cb",
+      "operation": "replace"
+    },
+    {
+      "path": "apps/web/vite.config.ts",
+      "bytes": 460,
+      "sha256": "9c574bf9eb4ab7a3d854310b7c1e60ee06ab4174debfb5e4972bf9450a723712",
+      "baseSHA256": "f7756155228baa58e92f66e60b232818fea38b6080f3cfcf8f79d35b6ef9ea11",
+      "operation": "replace"
+    },
+    {
+      "path": "scripts/dev-112.mjs",
+      "bytes": 6807,
+      "sha256": "b23b83428ad86b782bffd8603e210ce86d5d2b09274e95e0e2165a4e8c839b5d",
+      "baseSHA256": null,
+      "operation": "add"
+    }
+  ],
+  "summary": [
+    "package.json: dev and dev:112 both invoke node scripts/dev-112.mjs.",
+    "vite.config.ts: proxy target accepts JARVIS_DEV_API_TARGET, retaining previous 3140 fallback for existing entry points.",
+    ".gitignore: append .migration-original/, .migration-private/ and .migration-staging/. Existing .jarvis-dev ignore preserved.",
+    "dev-112.mjs: ordinary Linux passwd user only; fixed loopback API 43140 and Vite 45173; data uses real passwd home/.local/share/jarvis-dev-112.",
+    "Child environment is allowlisted; inherited model keys, JARVIS settings, TLS, NODE_OPTIONS and production queue paths are excluded.",
+    "--check reads directory safety and Linux TCP listener tables; prints only safe configuration and does not bind sockets, launch services or write databases.",
+    "Launch uses existing concurrently and workspace scripts in a newly owned process group; INT/TERM/HUP cleanup is restricted to that group.",
+    "V2 uses persistent signal handlers. First INT/TERM starts bounded graceful cleanup; HUP forwards TERM and preserves exit code 129. Repeated stop signals force KILL only for the same owned group without resetting the original deadline, then continue waiting for cleanup."
+  ],
+  "previousVersion": {
+    "directory": "[machine path omitted]",
+    "manifestSHA256": "99a979e55851230fc93e063db159ee9ab28935fcf03f0a547073c1493aa74e3f",
+    "launcherSHA256": "3d4806578fe2f937a138999ed3a1cbee4c455b38e36963f82045848ce5ce1fef",
+    "preservedUnmodified": true
+  },
+  "validation": {
+    "nodeSyntaxCheck": {
+      "command": "node --check scripts/dev-112.mjs",
+      "exitCode": 0
+    },
+    "linuxRuntimeCheck": "v2 single/double INT and HUP cleanup pending root agent on target copy",
+    "typecheckBuild": "v1 Linux npm ci/npm ls/typecheck/build/HTTP passed as reported by root; v2 changes only launcher signal lifecycle, API business source unchanged"
+  },
+  "scope": {
+    "localRootSourceModified": false,
+    "112Modified": false,
+    "gitInitialized": false,
+    "modelsInvoked": false,
+    "productionProtectionCodeChanged": false,
+    "productionServicesOperated": false,
+    "monetaryCapConfigured": false
+  },
+  "sourceReportSHA256": "02d3395313e90ea5e4b2868a76fa8135ecef1e9764684e32e574231447cd5fbf",
+  "publicCopyRedactions": {
+    "machineAbsolutePathsOmitted": 2,
+    "fields": [
+      ".overlayDirectory",
+      ".previousVersion.directory"
+    ]
+  }
+}

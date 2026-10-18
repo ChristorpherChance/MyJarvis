@@ -1,0 +1,111 @@
+{
+  "kind": "record311-formal-lineage-and-usage-public",
+  "asOf": "2026-10-18T04:23:58.074Z",
+  "runLineage": [
+    {
+      "runId": "e23ccda816328df0f9e2073faca9bcbdc5c2674c",
+      "project": "Jarvis",
+      "nativeExitCode": 0,
+      "signedOutcome": "failed",
+      "collector": "EVIDENCE_SIZE_INVALID",
+      "evidenceReceipts": 0,
+      "parentInput": 10127983,
+      "parentOutput": 24897,
+      "cacheReadIncludedInInput": 9920768,
+      "parentTotal": 10152880
+    },
+    {
+      "runId": "a2c2590cd4978abf0b422faff64e4af5d269d487",
+      "project": "Jarvis",
+      "signedOutcome": "success",
+      "compactOriginalBytes": 3207,
+      "compactOriginalSHA256": "19346f261cff54c77b7aa52514f1e114a1a01ed05ec24dd9a434eacbcfd04599",
+      "reportOnlyRecovery": true,
+      "codeTestsBuildRerunForRecovery": false,
+      "parentInput": 637560,
+      "parentOutput": 2069,
+      "cacheReadIncludedInInput": 626432,
+      "parentTotal": 639629
+    },
+    {
+      "runId": "0f8be37abb584e8caa7a3094ec4d8dd34e1a5bd2",
+      "project": "Jarvis",
+      "goalRevision": 2,
+      "signedOutcome": "success",
+      "compactOriginalBytes": 3193,
+      "compactOriginalSHA256": "7f329318a45c3e1ef0072c3a231523f3818a515d8a99062d8e0b432ac1b20c97",
+      "candidateSourceCommit": "6d8504fab6c727550ba409425c8ef0bffc68a738",
+      "parentInput": 5383476,
+      "parentOutput": 10341,
+      "cacheReadIncludedInInput": 5316992,
+      "parentTotal": 5393817
+    }
+  ],
+  "knownParentTotal": 16186326,
+  "cacheReadAlreadyIncluded": true,
+  "catalogEstimateUSD": 11.108672999999996,
+  "invoiceUSD": null,
+  "PiDistinctInvalidBindings": 4,
+  "PiUsage": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "PiCostUSD": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "PiRootCause": null,
+  "reliableModelDecision": false,
+  "internalUsageAndPrice": null,
+  "moneyCap": null,
+  "newGoal3": {
+    "runId": "7f85cd04d6bd0ffc3b20f67855fe8447504b7da0",
+    "statusAtCut": "running",
+    "resultReceived": false,
+    "usage": null,
+    "price": null,
+    "project": "Jarvis; independent release-tool implementation, not factory product repair"
+  },
+  "oldIntentsReplayed": false,
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-candidate-result-window.json",
+      "sha256": "ea10cb9346fc9742809bfe390a7c2f4a11c625d293d8b89a99b74b358f7d730e",
+      "bytes": 1612
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-compact-report-received.json",
+      "sha256": "73c22a68f7f03b80c37e3419772641cef39e7f4babbf5d74a36e55e95fd52f84",
+      "bytes": 1253
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-supervisor-first-report-judgment.json",
+      "sha256": "919a6ffda0051e5aa765cdbd475cb2bf82433158bfbf2d2bb23657051fcc8f8a",
+      "bytes": 5471
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-goal2-compact-report-public-receipt.json",
+      "sha256": "377a5e0512daacc9bf405f415beb4f00665a92c02769ff185c2528a6209f0e02",
+      "bytes": 3136
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-goal2-compact-report-local-range-review.json",
+      "sha256": "30f0f70c776913441b69186b92de57153961b93a3449ca8fe03611fdd387c5c5",
+      "bytes": 1444
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-jarvis-release-sidecar-goal3-52f68928-5e6a-435e-93d3-88ea775f9100-readback.json",
+      "bytes": 1557,
+      "sha256": "dd67e5e59ba0d53f6c09b7c00fc98f6255075493fd9496b45e3d6d645a89dcbf"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-formal-supervision-sidecar-goal3-first-claim.json",
+      "bytes": 4260,
+      "sha256": "8119ba794b16f5417cf3561bbd3e03ab7020d3fe520afc9c36f04373ff379fcc"
+    }
+  ]
+}

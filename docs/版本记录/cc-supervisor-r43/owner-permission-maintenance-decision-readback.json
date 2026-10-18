@@ -1,0 +1,341 @@
+{
+  "kind": "r43-owner-permission-and-maintenance-selection-readback",
+  "at": "2026-10-17T09:02:23.983Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decisionId": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+  "revision": 1,
+  "hash": "11c312a587cc65d34ebc2d0180511e833ed824c2727012d6beed45edd5202f08",
+  "decision": {
+    "questionSummary": "本人已授权101全部权限；旧任务累计技术阈值阻止续派，如何保原账继续完成R43？",
+    "context": {
+      "observedAt": "2026-10-17T09:02:23.310Z",
+      "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+      "sourceFingerprint": "f6c5d5abbe2b82bfc9216c6caae8e9eff32feee4a8e28e9349ea4ca074215a4f",
+      "sourceVersion": "R43第三轮partial，正式112仍R41",
+      "runId": null,
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "objectives": [
+        "R43-REGULATION-CONTROL",
+        "R43-ACCOUNTING-RECONCILE"
+      ],
+      "constraints": [
+        "用户授权101广泛执行权限；私密材料不公开",
+        "原task/run/token/unknown成本和全部失败保持",
+        "维护操作明确外部授权，不伪造中央run/lease/result",
+        "一次1100秒/retry0，最多2有限子任务",
+        "112部署仍由Root核源码、测试、包和恢复证据后控制"
+      ],
+      "situation": "原中央任务10960354 Token已超过10M技术阈值，普通续派尚未尝试；原生账号权限已配置但未实际init核。旧R43存在类型、协议、纠错、经验闭环缺口，不能先部署半成品来解锁自身。"
+    },
+    "options": [
+      {
+        "id": "bounded-owner-maintenance",
+        "title": "原任务会话一次本人授权维护CC续轮",
+        "advantages": [
+          "CC实际修复控制面和功能，保原源码上下文",
+          "维护独立id和原件账本，可核真实权限/用量"
+        ],
+        "disadvantages": [
+          "本次不是中央派发，须独立保留生命周期与外部用量回执",
+          "账户级权限比单模板更广，不能称OS隔离"
+        ],
+        "impact": "仅101原副本和CC用户设置；原blocked/result/技术阈值不重置，112仍R41。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "remain-blocked",
+        "title": "保持停止，等待另一已验控制面可合法续派",
+        "advantages": [
+          "不引入外部维护执行路径"
+        ],
+        "disadvantages": [
+          "需要CC实现的控制面持续未完成",
+          "用户要求完成目标无法继续推进"
+        ],
+        "impact": "原任务维持blocked且R43不部署。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "reversible",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "bounded-owner-maintenance",
+    "decisionRationale": "用户明确授权权限与完成开发，选择一次独立有界维护续轮，真实标注非中央派发并保原task/session/历史账目，优于清账、换task或发布未验代码。先核源码阻断和完整构建，再回到正常配对节点监管链。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+        "sha256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "R43-REGULATION-CONTROL",
+      "R43-ACCOUNTING-RECONCILE"
+    ],
+    "rollbackPlan": {
+      "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+      "triggers": [
+        "身份/会话/源码绑定变化",
+        "终态或原件不完整",
+        "权限配置发生未核变化"
+      ],
+      "impact": "影响101后继CC；不改112业务或旧账。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "本人授权后原生user defaultMode配置为bypassPermissions；私备份留101，其他键和中央配置45不变，尚待真实init核。",
+        "at": "2026-10-17T09:02:23.310Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+            "sha256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "准备单次维护CC，原session/task和d5源绑定；systemd整组1100秒/重试0，完整私流和外部用量另记。",
+        "at": "2026-10-17T09:02:23.310Z",
+        "state": "planned",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+            "sha256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b",
+            "kind": "observation"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 1,
+    "createdAt": "2026-10-17T09:02:23.950Z",
+    "updatedAt": "2026-10-17T09:02:23.950Z",
+    "changeOf": "3ff2b23d-7b35-4e89-856a-4ae117ef82f8",
+    "changeOfRevision": 4,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": "remain-blocked",
+      "status": "recommended",
+      "candidates": [
+        {
+          "id": "bounded-owner-maintenance",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "remain-blocked",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            0,
+            1
+          ]
+        }
+      ],
+      "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "revisionReason": "本人最新明确授权101全部权限及继续完成开发；旧停止与待许可判断按原cut保留，现选择外部有界维护续轮",
+    "hash": "11c312a587cc65d34ebc2d0180511e833ed824c2727012d6beed45edd5202f08",
+    "revisions": [
+      {
+        "questionSummary": "本人已授权101全部权限；旧任务累计技术阈值阻止续派，如何保原账继续完成R43？",
+        "context": {
+          "observedAt": "2026-10-17T09:02:23.310Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "f6c5d5abbe2b82bfc9216c6caae8e9eff32feee4a8e28e9349ea4ca074215a4f",
+          "sourceVersion": "R43第三轮partial，正式112仍R41",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "用户授权101广泛执行权限；私密材料不公开",
+            "原task/run/token/unknown成本和全部失败保持",
+            "维护操作明确外部授权，不伪造中央run/lease/result",
+            "一次1100秒/retry0，最多2有限子任务",
+            "112部署仍由Root核源码、测试、包和恢复证据后控制"
+          ],
+          "situation": "原中央任务10960354 Token已超过10M技术阈值，普通续派尚未尝试；原生账号权限已配置但未实际init核。旧R43存在类型、协议、纠错、经验闭环缺口，不能先部署半成品来解锁自身。"
+        },
+        "options": [
+          {
+            "id": "bounded-owner-maintenance",
+            "title": "原任务会话一次本人授权维护CC续轮",
+            "advantages": [
+              "CC实际修复控制面和功能，保原源码上下文",
+              "维护独立id和原件账本，可核真实权限/用量"
+            ],
+            "disadvantages": [
+              "本次不是中央派发，须独立保留生命周期与外部用量回执",
+              "账户级权限比单模板更广，不能称OS隔离"
+            ],
+            "impact": "仅101原副本和CC用户设置；原blocked/result/技术阈值不重置，112仍R41。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "remain-blocked",
+            "title": "保持停止，等待另一已验控制面可合法续派",
+            "advantages": [
+              "不引入外部维护执行路径"
+            ],
+            "disadvantages": [
+              "需要CC实现的控制面持续未完成",
+              "用户要求完成目标无法继续推进"
+            ],
+            "impact": "原任务维持blocked且R43不部署。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "reversible",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "bounded-owner-maintenance",
+        "decisionRationale": "用户明确授权权限与完成开发，选择一次独立有界维护续轮，真实标注非中央派发并保原task/session/历史账目，优于清账、换task或发布未验代码。先核源码阻断和完整构建，再回到正常配对节点监管链。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+            "sha256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "本人授权后原生user defaultMode配置为bypassPermissions；私备份留101，其他键和中央配置45不变，尚待真实init核。",
+            "at": "2026-10-17T09:02:23.310Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+                "sha256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "准备单次维护CC，原session/task和d5源绑定；systemd整组1100秒/重试0，完整私流和外部用量另记。",
+            "at": "2026-10-17T09:02:23.310Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+                "sha256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "5f55865d-f372-4c01-afbb-21d6212d57ac",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-17T09:02:23.950Z",
+        "updatedAt": "2026-10-17T09:02:23.950Z",
+        "changeOf": "3ff2b23d-7b35-4e89-856a-4ae117ef82f8",
+        "changeOfRevision": 4,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "remain-blocked",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "bounded-owner-maintenance",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "remain-blocked",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                0,
+                1
+              ]
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "本人最新明确授权101全部权限及继续完成开发；旧停止与待许可判断按原cut保留，现选择外部有界维护续轮",
+        "hash": "11c312a587cc65d34ebc2d0180511e833ed824c2727012d6beed45edd5202f08"
+      }
+    ]
+  },
+  "priorDecisionsPreserved": true,
+  "reference": "artifacts/cc-supervisor-r43/101-permission-and-maintenance-selection-safe-summary-r2.json",
+  "referenceSHA256": "ac6f3280fe7d1770ded9ed5811a75ddef8c873ddd0e500e38ff9c5ed4ab7266b"
+}

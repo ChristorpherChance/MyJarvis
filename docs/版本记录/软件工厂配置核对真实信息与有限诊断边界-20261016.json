@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-config-normalization-failure-safe-analysis-and-next-boundary",
+  "at": "2026-10-16T10:06:34.612675+00:00",
+  "userSummary": "本轮资源收尾及留存证据已核对通过。测试在框架配置核对时中断，错误报告没有保存具体差异；四个用例仍未完成。",
+  "actualScope": {
+    "attempt": "553bb40c754c687be8195cc4c027863c",
+    "currentObservationClosed": true,
+    "currentScopeSavedIndependentlyQualified": true,
+    "fullProtectionAtSavedEpochQualified": true,
+    "currentScopeIsNotFutureFresh": true,
+    "firstFailurePhase": "framework-context-validation",
+    "closedErrorCode": "R33_PG4_DRIVER_NORMALIZED_CONFIG_CHANGED",
+    "fixtureLaunchAttempted": false,
+    "startsAttempted": 0,
+    "candidateMayHaveExecuted": null,
+    "codeExecuted": null,
+    "actualPG4Qualified": false
+  },
+  "verifiedSourceFacts": {
+    "sourceByteRows": 13,
+    "hostImportsReturned": 12,
+    "sourceOnlyDeferred": 1,
+    "threeExpectedInputConfigSectionsExactlyEqual": true,
+    "guardAtomicConditions": 21,
+    "guardFieldGroups": 19,
+    "actualNormalizedContextSnapshotPresent": false,
+    "perConditionSnapshotPresent": false,
+    "specificConfigDifferenceKnown": false,
+    "rootCauseProven": false,
+    "retainedErrorMessageBytes": 40,
+    "retainedMessageSHA256": "218b8e2e082f8dce7fb4d7b6862759b208b1ec24873774b705ca93d3e1ed6772",
+    "stackAvailable": false,
+    "rawErrorOrConfigPublished": false
+  },
+  "currentSavedEvidence": {
+    "necessaryReferencesVerifiedByRoot": 72,
+    "originalMetadataIntegers": 1233,
+    "unsafeForJSIntegerValues": 274,
+    "middleScans": [
+      {
+        "listed": 255,
+        "read": 255,
+        "boundExit": 0,
+        "unknown": 0
+      },
+      {
+        "listed": 255,
+        "read": 255,
+        "boundExit": 0,
+        "unknown": 0
+      }
+    ],
+    "wholeCaptures": 44,
+    "rawTransportCaptures": 12,
+    "parsedCaptures": 32,
+    "afterProtectionSourceBoundExits": 4,
+    "originalKernelExitProved": false,
+    "sourceBoundNotIndependentKernelTrace": true
+  },
+  "nextCandidate": {
+    "scope": "仅LOCAL准备独立配置诊断：沿原21条件留存有限差异，保原guard和原失败；不调用ctx.start，不建立PG或执行SQL。",
+    "sameVersionBootstrapBodyInspected": false,
+    "fullEnvironmentAndNetworkEquivalenceProven": false,
+    "implementation": false,
+    "SOURCE": null,
+    "actualDATA": null,
+    "specificENTRY": null,
+    "actualDiagnostic": null,
+    "requiredBeforeExecution": [
+      "检查同版实际create/bootstrap及插件来源，明确无隐式fixture启动的证据和限界",
+      "明确原环境与无网络诊断差异，不能假称复现原ctx",
+      "新独立有限生命周期、保存首错及关闭次错、独立SOURCE/具体ENTRY后才允许实际一次诊断"
+    ]
+  },
+  "analysisSources": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-worker-context-normalized-config-guard-local-source-analysis-r2.json",
+      "sha256": "15797d438d5bdcb58bf8e9f7dcbf6e3a041fe4c030fbb5356322e4517062c56e",
+      "bytes": 14204
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-worker-context-normalized-config-actual-originals-local-analysis.json",
+      "sha256": "2eeac39160b555612a8eafd307c1200f49f9f6040761fc0466769ff5ec7dfff2",
+      "bytes": 10028
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-worker-context-config-only-diagnostic-local-feasibility.json",
+      "sha256": "1fd3d70c408a1d566ae213bc3935d049af181916308f81edb9f3980ec9dc08a0",
+      "bytes": 7827
+    }
+  ],
+  "analysisCorrectionsPreserved": "首稿把c811模板误称为最终输入，r2更正，旧稿保原；实际最终输入502a/252150只私存，三阶段配置相同不等于实际ctx相同。",
+  "closedOpportunities": [
+    "START",
+    "CHECK",
+    "terminal5",
+    "D-current"
+  ],
+  "replayAllowed": false,
+  "caseResults": {
+    "passed": 0,
+    "businessFailed": 0,
+    "incomplete": 4
+  },
+  "original74Verified": 0,
+  "customer12Delivered": false,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false,
+  "costs": {
+    "policy": "record-only-no-limit",
+    "knownAmount": null,
+    "internalTokensAndAmountsUnknownSeparately": true
+  }
+}

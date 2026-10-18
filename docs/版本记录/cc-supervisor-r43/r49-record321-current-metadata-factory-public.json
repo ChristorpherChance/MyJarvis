@@ -1,0 +1,344 @@
+{
+  "kind": "record321-current-metadata-factory-public-safe-projection",
+  "asOf": "2026-10-18T07:54:23.091Z",
+  "factoryResults": [
+    {
+      "runId": "66b0bf0f40c332e7158c4376163bb0297448fc92",
+      "status": "succeeded",
+      "outcome": "success",
+      "exitCode": 0,
+      "resultHash": "9a5b05689640e9a10427c28bba78599b6e8d2ab4d4e206e124336c07640e2c68",
+      "session": {
+        "revision": 30,
+        "goalRevision": 4,
+        "status": "blocked",
+        "blocker": "MODEL_CONTEXT_INCOMPLETE"
+      },
+      "actualTestRuns": 0,
+      "notRun": 2,
+      "usage": {
+        "inputTokens": 916946,
+        "outputTokens": 4255,
+        "cacheReadTokens": 905728,
+        "cacheWriteTokens": 0,
+        "totalTokens": 921201,
+        "provider": "claude-cli",
+        "model": "gpt-6.1-sol[1m]",
+        "usageComplete": true,
+        "costUSD": 0.6153290000000009,
+        "costKind": "catalog-estimate",
+        "knownCostUSD": 0.6153290000000009,
+        "costComplete": true
+      },
+      "sourceReceipt": {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal4-saved-terminal-reconciliation.json",
+        "bytes": 2803,
+        "sha256": "f5b6e7e81410c470682e51996bcb94d89a0453081bb749da0eaf0fada1e24e69"
+      },
+      "selectedCases": 2,
+      "codeEdits": 0,
+      "resourceMutations": 0,
+      "stoppedBeforeTestsReason": "Instruction retained a future Root-confirmation prerequisite although Root had already performed it; CC stopped before mutation. New explicit owner instruction must state confirmation and authorization already satisfied.",
+      "RootDirectivePrerequisiteWordingOmissionAccepted": true
+    },
+    {
+      "runId": "8aadeebd17a7085915b693e0872da20c215d6bb3",
+      "status": "succeeded",
+      "outcome": "success",
+      "exitCode": 0,
+      "resultHash": "ca74e119c7fe4b9547bc71bda66e9aaa597586991e4cd31acd4aded9b64a8d47",
+      "session": {
+        "revision": 35,
+        "goalRevision": 5,
+        "status": "blocked",
+        "blocker": "MODEL_CONTEXT_INCOMPLETE"
+      },
+      "actualTestRuns": 0,
+      "notRun": 2,
+      "usage": {
+        "inputTokens": 1282962,
+        "outputTokens": 5431,
+        "cacheReadTokens": 1269120,
+        "cacheWriteTokens": 0,
+        "totalTokens": 1288393,
+        "provider": "claude-cli",
+        "model": "gpt-6.1-sol[1m]",
+        "usageComplete": true,
+        "costUSD": 0.8395449999999993,
+        "costKind": "catalog-estimate",
+        "knownCostUSD": 0.8395449999999993,
+        "costComplete": true
+      },
+      "sourceReceipt": {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal5-saved-terminal-facts.json",
+        "bytes": 2182,
+        "sha256": "6cea25cc044b6493b212ef77f19ddb538ef22f85a60b49a6997154cfac12629c"
+      },
+      "selectedCases": 2,
+      "producerClaims": {
+        "PGStartupReached": true,
+        "initializationFailed": "psql default socket mismatches /round-socket",
+        "productionSourceAndOldIndexUnchanged": true,
+        "exactCreatedResourcesRemoved": true,
+        "claimIndependentlyVerifiedAgainstAllIndexedLogs": false
+      },
+      "allIndexedLogsIndependentlyCollected": false
+    },
+    {
+      "runId": "6b5f50be14e511a6f49a8c70ab0846299d812448",
+      "status": "succeeded",
+      "outcome": "success",
+      "exitCode": 0,
+      "resultHash": "d5543d129e0f2e546639eb590dd4a23397a415f439e91dfbc6a4b185edba7508",
+      "session": {
+        "revision": 40,
+        "goalRevision": 6,
+        "status": "blocked",
+        "blocker": "MODEL_CONTEXT_INCOMPLETE"
+      },
+      "actualTestRuns": 0,
+      "notRun": 2,
+      "usage": {
+        "inputTokens": 1074245,
+        "outputTokens": 3214,
+        "cacheReadTokens": 909568,
+        "cacheWriteTokens": 0,
+        "totalTokens": 1077459,
+        "provider": "claude-cli",
+        "model": "gpt-6.1-sol[1m]",
+        "usageComplete": true,
+        "costUSD": 1.3585190000000003,
+        "costKind": "catalog-estimate",
+        "knownCostUSD": 1.3585190000000003,
+        "costComplete": true
+      },
+      "sourceReceipt": {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal6-saved-terminal-facts.json",
+        "bytes": 2632,
+        "sha256": "b2eebba3e6e9364d3649662008589699cf095e0dabc181e058c6a553447a287a"
+      },
+      "selectedCases": 2,
+      "producerClaims": {
+        "PGHOSTParameterChangedAndCreateArgvVerified": true,
+        "PGInitializationStillUsesDefaultSocket": true,
+        "overrideMechanism": "unknown",
+        "productionSourceAndOldIndexUnchanged": true,
+        "exactCreatedResourcesRemoved": true,
+        "allIndexedOriginalLogsIndependentlyCollected": false
+      },
+      "allIndexedLogsIndependentlyCollected": false,
+      "nextSelected": {
+        "previousOption": "bounded PGHOST-only launcher correction based on preceding signed report",
+        "actualOutcome": "did not resolve initialization; no tests executed",
+        "selectedNext": "read actual image entrypoint contract before another environment mutation; do not blindly repeat parameters",
+        "reason": "counterexample shows the parameter alone is insufficient; the contract and override mechanism remain unknown",
+        "automaticReviewRepair": "new formal Jarvis goal8 dispatched; no R50 implementation or production qualification yet"
+      }
+    }
+  ],
+  "sameTwoCasesAcrossAttemptsNotSixIndependentTests": true,
+  "sourceModelGuard": "Saved source branch rejects whole input JSON UTF8 above30000; complete actual input byte count not separately inspected. Smaller facts did not resolve whole-input refusal; guard was not weakened.",
+  "transitionAtEarlierCut": {
+    "item25": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 25,
+      "hash": "d28b94cd66be60f5451229e7f181e0d12328e67ded79982dd7cff6bfd60eb311",
+      "status": "running",
+      "stepId": "C4",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "runId": "8aadeebd17a7085915b693e0872da20c215d6bb3"
+    },
+    "planB8": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 8,
+      "hash": "1403ff60e744f03414cb916429b287b84e1072334ff97a912a4ad2cc869cee97",
+      "previousHash": "3a91a27884da85739b9d5a3859055fc3623ba80bcf918949804d32695bcd5a6a",
+      "currentStepId": "C4",
+      "goalBasis": "plan",
+      "active": true
+    },
+    "sourceRefs": [
+      {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-current-item25-cb1a195e-15b8-4333-8fec-edd0d93ef5ca-readback.json",
+        "bytes": 1746,
+        "sha256": "0fea9e13cf6561ee9803ea2e2b41da1bb4a2b00ad070286758942abd62b75c43"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-current-planB8-211b3bae-7881-46ff-aae9-79a030a8708e-readback.json",
+        "bytes": 2383,
+        "sha256": "e756ccd9d3df7cb9d38abe1486095f9e8325cadb25b1113ef00ae6b2da5ab0fa"
+      }
+    ],
+    "goal5WasReallyRunningThen": true,
+    "notCurrentAfterTerminal": true
+  },
+  "current": {
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 26,
+      "hash": "0da0594a08c17219df8152150df83dc410753495ea48b14d6b125155c6718a24",
+      "status": "blocked",
+      "stepId": "C4",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "runId": "6b5f50be14e511a6f49a8c70ab0846299d812448"
+    },
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 9,
+      "hash": "c0340cccb6d774e26ec4979450e7b578ab599d50430123edcdb7e4d4deaa360f",
+      "currentStepId": "C4",
+      "goalBasis": "plan"
+    },
+    "supervisorRevision": 40,
+    "goalRevision": 6,
+    "currentResultSHA256": "d5543d129e0f2e546639eb590dd4a23397a415f439e91dfbc6a4b185edba7508",
+    "text": {
+      "summary": "现行12项工厂能力和5项监管已清楚展示。101已两次回报数据库隔离入口失败，两用例尚未运行；已停止盲试并安排查明连接约定。",
+      "blocker": "数据库初始化连接仍异常，两用例未跑；监管自动审阅输入超限也待修，未达到本组或完整工厂验收。",
+      "nextAction": "先核对镜像真实启动与连接约定，再据实安排入口修复；监管自动审阅返修已另交101，核验后继续判断和复验。",
+      "validationScope": "已核目标12+5及当前六/后续六阶段无刷新可见、R49r1上线与独立健康。goal5/6均0测试2未跑，资源清理目前仅签名回报及索引，未冒原日志全独验。"
+    },
+    "metadataReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-current-item26-planB9-b145b598-dd5a-4e96-a66d-bb8780971e6e-readback.json",
+      "bytes": 2048,
+      "sha256": "8d7c0044406519acee913420d5cc48af79ccaf363d07a1349f552d4c75578dc2"
+    },
+    "derivedPlanActive": false,
+    "derivedActiveIsNotPersistedVersionInvariant": true
+  },
+  "protection": {
+    "first29EvidenceRefsPreserved": true,
+    "previousRollingRetainedInNewAggregateAndHistory": true,
+    "goalsAllTwelveStepCriteriaAndBindingPrefixesPreserved": true,
+    "C3AcceptedReportBindingPreserved": true,
+    "otherFiveItemsConfigAutonomyAndGlobalControlPreserved": true,
+    "fullProductAccepted": false,
+    "independentAcceptance": false
+  },
+  "newJarvisRepair": {
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "taskId": "cd7d9551-dc32-4bda-ad0e-b7ad2b121c80",
+    "runId": "2079bb4f80f3c0a2e200858584d1c0e75dfc72b1",
+    "goalRevision": 8,
+    "statusAtCut": "running",
+    "resultReceived": false,
+    "candidateRelease": "20261018-project-goals-r50",
+    "implemented": false,
+    "packaged": false,
+    "deployed": false,
+    "dispatchReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r50-jarvis-formal-goal8-bef6f111-c392-43a0-8c38-8039633d946f-readback.json",
+      "bytes": 1833,
+      "sha256": "6ad8706bbcdec79f51d24abbd9e2b42f02601ad67b5e2adc031f02d0409f9225"
+    },
+    "claimReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r50-jarvis-goal8-observation-9ef19912-c58a-4a5a-97a2-95f9a6996903.json",
+      "bytes": 886,
+      "sha256": "71829273594c4e2ce4d13a05c291b9fa08bbd023f80e020b2d8c6d5491ff255b"
+    },
+    "notCrossBoundToFactoryTaskOrPlan": true
+  },
+  "claimsAndDispatches": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-infra-goal4-8f998f9c-9ce6-47c4-a1a7-76cd2ca9b98f-readback.json",
+      "bytes": 1589,
+      "sha256": "21d699d60eb315723eef1e752124aad7e7bf791644703cef9aaa3e82412e7442"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal4-claim-d9fc574e-e75c-4940-b302-35723866073f.json",
+      "bytes": 1207,
+      "sha256": "5e1446e9938fd6bdc9cda663a1028851176d21a3920d4341f47a45acdc59b325"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-infra-goal5-1f2a899a-7df7-4773-9c67-e70a278dfb25-readback.json",
+      "bytes": 1589,
+      "sha256": "e7dd665f3dcb2f6d6c4b0e8b1db47836514a828e83fd9eb28289a101fa636921"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal5-observation-91eb2661-82dd-4b0c-ac3b-bf134a10b529.json",
+      "bytes": 890,
+      "sha256": "4de838b72ed8f09dbef2ee82e96c161b979f02db5d23f21b02a3aa71c701cf85"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-infra-goal6-c183133c-f787-4ab6-bd3c-28b5aa6555bb-readback.json",
+      "bytes": 1590,
+      "sha256": "3e04b65469f26eda44cb09adcaad5b832030211d61bf37e94bc01f55219b8003"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal6-observation-2e3b72b3-0f3c-495c-951f-3c948b4d5ba6.json",
+      "bytes": 890,
+      "sha256": "967bc54c83438669e23a49b282fe2b148ff1cd6a59891d93cc6f6d1b1558804d"
+    }
+  ],
+  "localRefusals": {
+    "sourceRefs": [
+      {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-current-item25-71f7fd29-1f4c-43dc-a8e7-3ab0119fac05-failure.json",
+        "bytes": 367,
+        "sha256": "6adc9bee8cf5ae522b04934572f36036a06a637ae85487a43ca5b5d29e30a54e"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/r49-r1-current-item25-1a127d1a-6392-4cb2-893d-2728515387f9-failure.json",
+        "bytes": 367,
+        "sha256": "42f3f3d18ea056cfa0256f162f1e9a66fde309c6b65edcd5ff409c91a7cdfd89"
+      }
+    ],
+    "allAttemptedPOSTs": false,
+    "first": "Derived plan.active comparison rejected before POST; persistent projection later excluded it.",
+    "second": "Run had actually ended, no active Factory execution; not another projection failure.",
+    "collector": "Feedback was in result.summary JSON, not result.feedback; reconciliation used three saved originals without another request.",
+    "originalFailureBytesPreserved": true
+  },
+  "feeLedger": {
+    "knownParentTokens": 68722968,
+    "cacheReadIncludedInInput": true,
+    "catalogEstimateUSD": 45.246465,
+    "notInvoice": true,
+    "invoiceUSD": null,
+    "PiInternalTokens": null,
+    "PiInternalUSD": null,
+    "R50NewTokens": null,
+    "R50NewUSD": null,
+    "moneyCap": null,
+    "technicalWindowTokens": 10000000,
+    "technicalWindowIsHardPerCallCap": false,
+    "nativeCumulativeNotDoubleAdded": true,
+    "otherThreadTerminalAndMigrationCostsNotMixed": true
+  },
+  "timer": "PAUSED",
+  "node101": "R7/config46",
+  "currentBaseline": "12 factory capabilities +5 supervision requirements; six current and six later stages; old74 history only/current denominator not asserted",
+  "noWholeProductAcceptance": true,
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal4-saved-terminal-reconciliation.json",
+      "bytes": 2803,
+      "sha256": "f5b6e7e81410c470682e51996bcb94d89a0453081bb749da0eaf0fada1e24e69"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal5-saved-terminal-facts.json",
+      "bytes": 2182,
+      "sha256": "6cea25cc044b6493b212ef77f19ddb538ef22f85a60b49a6997154cfac12629c"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-factory-goal6-saved-terminal-facts.json",
+      "bytes": 2632,
+      "sha256": "b2eebba3e6e9364d3649662008589699cf095e0dabc181e058c6a553447a287a"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-current-item26-planB9-b145b598-dd5a-4e96-a66d-bb8780971e6e-readback.json",
+      "bytes": 2048,
+      "sha256": "8d7c0044406519acee913420d5cc48af79ccaf363d07a1349f552d4c75578dc2"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-jarvis-formal-goal8-bef6f111-c392-43a0-8c38-8039633d946f-readback.json",
+      "bytes": 1833,
+      "sha256": "6ad8706bbcdec79f51d24abbd9e2b42f02601ad67b5e2adc031f02d0409f9225"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-jarvis-goal8-observation-9ef19912-c58a-4a5a-97a2-95f9a6996903.json",
+      "bytes": 886,
+      "sha256": "71829273594c4e2ce4d13a05c291b9fa08bbd023f80e020b2d8c6d5491ff255b"
+    }
+  ]
+}

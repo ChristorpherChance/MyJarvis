@@ -1,0 +1,331 @@
+{
+  "kind": "r46-round16-ui-submit-and-brief-independent-source-review",
+  "sourceOnly": true,
+  "status": "specified-submit-source-defect-closed-no-new-confirmed-P1-in-reviewed-delta",
+  "exactScope": {
+    "baseExcluded": "c687ec6dc8c56f6c4d5dcc1b87c9337270cae4b2",
+    "appHead": "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8",
+    "reportHead": "fca3c21b2d75767723541027727587ae3e2c2f60",
+    "finalHead": "e8012e8629c496447c31be19d2025a003153d6d1",
+    "commits": [
+      "0ad26196218831a80291509c78659ac2eff35c12",
+      "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8",
+      "fca3c21b2d75767723541027727587ae3e2c2f60",
+      "e8012e8629c496447c31be19d2025a003153d6d1"
+    ],
+    "changedPaths": [
+      "apps/api/src/app.ts",
+      "apps/api/src/runtime/cluster-runtime.ts",
+      "apps/api/src/runtime/project-workbench-runtime.ts",
+      "apps/api/src/runtime/supervision-work-runtime.ts",
+      "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "reports/r46-round16-cost-ledger.json",
+      "reports/r46-round16-git.json",
+      "reports/r46-round16-implementation.json",
+      "reports/r46-round16-implementation.md",
+      "reports/r46-round16-logs/build.txt",
+      "reports/r46-round16-logs/compat-readback.json",
+      "reports/r46-round16-logs/node-package.txt",
+      "reports/r46-round16-logs/platform-package.txt",
+      "reports/r46-round16-logs/prior-assets.json",
+      "reports/r46-round16-logs/submit-after.txt",
+      "reports/r46-round16-logs/submit-before.txt",
+      "reports/r46-round16-logs/submit-final.txt",
+      "reports/r46-round16-logs/submit-ux-final.txt",
+      "reports/r46-round16-logs/submit-ux-verified.txt",
+      "reports/r46-round16-logs/typecheck.txt",
+      "reports/r46-round16-packages.json",
+      "scripts/test-r46-submit.mjs"
+    ],
+    "productionSourceChangedPaths": [
+      "apps/api/src/app.ts",
+      "apps/api/src/runtime/cluster-runtime.ts",
+      "apps/api/src/runtime/project-workbench-runtime.ts",
+      "apps/api/src/runtime/supervision-work-runtime.ts",
+      "apps/web/src/features/operations/ProjectWorkbenchPage.tsx"
+    ],
+    "appSourceUnchangedAfterAppHead": true,
+    "laterCutsReviewed": false
+  },
+  "confirmedP1": [],
+  "closedOriginalP1": {
+    "trigger": "Root observed enabled valid production composer button type=button; real click produced no form submission. Original failure and earlier review correction remain preserved.",
+    "fix": "Only the common composer primary Button now explicitly receives type=submit. The production global Button default remains type=button and spread props preserve the explicit submit type.",
+    "evidence": [
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 12806,
+        "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+        "line": 27
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 12806,
+        "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+        "line": 23
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/ui.tsx",
+        "bytes": 2792,
+        "sha256": "4751a07fc37ef2d6618ca9ef4f17174c5b89c00f539a9a98923fab9a635aa482",
+        "line": 2
+      }
+    ],
+    "sharedSourceBranches": [
+      "fresh kickoff",
+      "existing draft start",
+      "paused resume",
+      "waiting_user reply",
+      "pending original kickoff recovery"
+    ],
+    "boundary": "All five use the same repaired rendered Button/form path by static source. This is not a claim that each branch was clicked or dispatched in a browser."
+  },
+  "limitedUXSourceResults": [
+    {
+      "finding": "No-session wording explicitly distinguishes this supervision from retained project results and independent acceptance. Goal/criteria remain in on-demand detail.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 12806,
+        "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+        "line": 26
+      }
+    },
+    {
+      "finding": "Compact result/problem/next-step fields use the latest feedback event first, then saved supervision-work brief; supervisor.view orders events descending. No copied history is counted as current independent acceptance.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "bytes": 12806,
+          "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+          "line": 18
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/project-supervisor-runtime.ts",
+          "bytes": 48782,
+          "sha256": "d08f387a10356284fc5c9a0f4835377c721a5e34599ef6c1c69723ba17effc65",
+          "line": 65
+        }
+      ]
+    },
+    {
+      "finding": "Saved brief is an owner/project scoped SELECT against current work-item revisions, descending sequence, max100. It calls access checking but neither pump nor create/adopt/start. Summary public-content sanitization is reused. Workbench GET adds only this optional brief.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/supervision-work-runtime.ts",
+          "bytes": 23567,
+          "sha256": "6223a960781d48ae505c13da650816c7ebd6a7872b068b21114a034ec1cf092a",
+          "line": 72
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/runtime/project-workbench-runtime.ts",
+          "bytes": 10711,
+          "sha256": "6df59ca111caf82ec6d9a9f069ce7286cd9f3f5e47644473e6d944cb78de5e0c",
+          "line": 26
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/api/src/app.ts",
+          "bytes": 54529,
+          "sha256": "f6cbad578cf6f6d4ad74b659a0a8152f6d2a2c1d10b9553a65217fdb37e2a421",
+          "line": 207
+        }
+      ]
+    },
+    {
+      "finding": "blocked/review_required/stopped/achieved replace a dead start with state explanation and a non-submit button opening existing audit/reconcile/revise details. They do not resume or send text automatically.",
+      "source": {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 12806,
+        "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+        "line": 27
+      }
+    },
+    {
+      "finding": "Running text remains explicitly an unsent draft. Pause/stop/takeover use the original explicit command handler, and queued/claimed/result state distinctions remain visible.",
+      "sources": [
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "bytes": 12806,
+          "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+          "line": 24
+        },
+        {
+          "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+          "bytes": 12806,
+          "sha256": "6c74260b195a060373a388f3e29271e857a94941ec67d33c035c13fb943e4384",
+          "line": 28
+        }
+      ]
+    }
+  ],
+  "actualSavedVerification": {
+    "script": {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/scripts/test-r46-submit.mjs",
+      "bytes": 4266,
+      "sha256": "5909ed529b78992cba5c003a412d9586e6642b9e5f05417b3529361d40aac7c7",
+      "line": 2
+    },
+    "implementation": "esbuild bundles actual ProjectWorkbenchPage and real production shared Button. React useState/useEffect are replaced at a preloaded GET context boundary; effects do not fetch and handlers are never invoked. React-dom/server renders static HTML.",
+    "positiveCovered": [
+      "Fresh no-session composer real form has one enabled actual Button type=submit.",
+      "Navigation Button keeps its production non-submit default.",
+      "Preloaded saved result/problem/repair text appears in actual page HTML.",
+      "blocked/review_required/stopped/achieved render no submit button and expose the detail entry."
+    ],
+    "notCovered": [
+      "No DOM default click/formsubmit event, React handler execution, HTML required-field validation or HTTP POST observed.",
+      "Existing draft/resume/reply/pending action branches are source-reviewed, not interaction-regression-tested here.",
+      "No full real supplier-model to 101 CC supervisory loop or mobile interaction is established by SSR."
+    ],
+    "failurePreservation": [
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/submit-before.txt",
+        "bytes": 547,
+        "sha256": "762105fdaf972ecc452c18c3efb80a521c4b733910b8f891167cd477499bd8c7"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/submit-ux-final.txt",
+        "bytes": 5842,
+        "sha256": "1aaea264e0b6fc5dae7eb839e215dc7836206cdfa0f68e39a691e165a88e8e57"
+      }
+    ],
+    "failures": "submit-before is actual pre-fix button-type AssertionError. submit-ux-final is a real SyntaxError caused by the then test regular expression, not a passing UX run; its original bytes are preserved.",
+    "laterPassRecords": [
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/submit-after.txt",
+        "bytes": 283,
+        "sha256": "dbc791ec4ef3e01bd7d80a2027db503564e840628069897eaf6417047b15bea3"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/submit-final.txt",
+        "bytes": 283,
+        "sha256": "dbc791ec4ef3e01bd7d80a2027db503564e840628069897eaf6417047b15bea3"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/submit-ux-verified.txt",
+        "bytes": 283,
+        "sha256": "dbc791ec4ef3e01bd7d80a2027db503564e840628069897eaf6417047b15bea3"
+      }
+    ],
+    "passAccounting": "These three 283-byte status files are identical bytes from saved SSR runs, not three different suites. No merged test-count claim is made.",
+    "typeBuild": [
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/typecheck.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+      },
+      {
+        "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-logs/build.txt",
+        "bytes": 3400,
+        "sha256": "4e955631c6f3834ace5fe1ad1e2ca8c42083e5dd49ba104c68658ba47327b422"
+      }
+    ],
+    "typeBuildScope": "Saved full web/API type logs and complete frontend/API build logs show no error; the author reports exit0. The independent reviewer did not rerun them."
+  },
+  "accountingBoundary": {
+    "costLedger": {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/reports/r46-round16-cost-ledger.json",
+      "bytes": 347,
+      "sha256": "93f248036d8da71f1304489263ffdf0c9a775133ee2cf03144c5cd89f21f2033"
+    },
+    "conclusion": "Unknown final token/cost placeholders remain null with unknownIsZero=false; Root trusted native-final reconciliation is separate. Normal terminal metadata is preserved, not inferred from package or test logs."
+  },
+  "unchangedInheritedFiles": [
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/ui.tsx",
+      "bytes": 2792,
+      "sha256": "4751a07fc37ef2d6618ca9ef4f17174c5b89c00f539a9a98923fab9a635aa482",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/common.tsx",
+      "bytes": 14108,
+      "sha256": "875a96ff74b71621dbec07287e23bc002d89b5da581bdb176309485f7ca3e5eb",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/DemoApp.tsx",
+      "bytes": 34709,
+      "sha256": "2befcf78c392d7be82ab8596dea604cbf7dd288580401521c7bf3f239435cc04",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectSupervisorPanel.tsx",
+      "bytes": 26387,
+      "sha256": "d9ca2cbf6d38e1b8bccae83aee3fea629d899eae6a9689e672dabafd94f1711c",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/ProjectDataDetails.tsx",
+      "bytes": 5474,
+      "sha256": "e08c8505dd729c1caed9add35998e44f8872b95f597fdd187bd7e2ae971894b1",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/apps/web/src/features/operations/project-workbench.css",
+      "bytes": 1206,
+      "sha256": "bdcc78f09e6b9fd060bbf32337e9f505f694f086904cd1e7aee698116471fa58",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/scripts/capture-managed-release.py",
+      "bytes": 14393,
+      "sha256": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504",
+      "sameBytesAsExcludedBase": true
+    },
+    {
+      "path": ".jarvis-dev/cc-supervisor-r46-round16/scripts/build-development-node-package.mjs",
+      "bytes": 1374,
+      "sha256": "189b49a029bd7f410944398bda56e81c625dec509a48a358465fcc32918eae60",
+      "sameBytesAsExcludedBase": true
+    }
+  ],
+  "packageBoundary": "Package production/source/payload/legacy-asset closure and compatible five-file R7 node bundle require Root actual artifact verification. This source report does not substitute a package test, deploy 112/101, or require relabelling an identical R7 node bundle.",
+  "minimumRootLiveAcceptance": [
+    "On the original logged-in project page, retain real fields and use the visible repaired button. Observe one actual intended request and visible pending/queued/session response; do not substitute direct submit-handler calls.",
+    "Verify the saved-result/problem/next-step brief is understandable and the displayed queued/running/result states match current receipts.",
+    "Opening stopped/blocked detail or using navigation must make no unintended start/reply. Preserve any real failure rather than clearing or switching projects to hide it.",
+    "Continue the already authorized real goal through feedback, judgment and repair arrangement; source/SSR/package/health success alone does not complete that workflow."
+  ],
+  "references": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-collection-1792261720843.json",
+      "bytes": 6822,
+      "sha256": "d05ee0534fa60ea68e12a09f505c4aac06707ad13d0e09f02b0bbfef606641d6"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-terminal-metadata-1792261696129.json",
+      "bytes": 3664,
+      "sha256": "136da6e65780440e774dafb68638ee1b995beaaacac8acb84098b44a6c1c539d"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-specified-history-publication-preflight.json",
+      "bytes": 11855,
+      "sha256": "2004a9341c7f81854c50231d77f5d8cc404d93e4a08be650bd33dfde3a51d430"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-composer-submit-live-failure-independent-source-review.json",
+      "bytes": 7081,
+      "sha256": "a40789edf85c3af63cd1cfe34b5d6bd2b5b859eeda157db609ab16a551aecad5"
+    }
+  ],
+  "releaseConclusion": "No confirmed new P1 in this fixed narrow UI/brief delta. The specific source submit defect is repaired, with saved before-fail/after-pass SSR contract evidence. Root real click/workflow/browser acceptance remains required and is not claimed here.",
+  "operations": {
+    "applicationOrTestsExecuted": false,
+    "browserUsed": false,
+    "network": false,
+    "model": false,
+    "remote": false,
+    "sourceModified": false,
+    "GitReadOnly": true
+  },
+  "localReportWriterCorrection": "First local report writer stopped before output on Windows default GBK decoding of a UTF-8 synthetic test log. This distinct r2 reads it as UTF-8; the failed writer and all application/log bytes remain unchanged. No application/test command was run.",
+  "_record308PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-ui-submit-independent-source-review.json",
+      "sha256": "25f676745db66a30b58efbc3ed787db0ee328077b08240fe294cdd999c033f44",
+      "bytes": 16498
+    },
+    "rawPrivatePathAuthorityAndNativeSessionMetadataExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

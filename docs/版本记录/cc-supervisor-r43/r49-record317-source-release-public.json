@@ -1,0 +1,333 @@
+{
+  "kind": "record317-source-release-safe-projection",
+  "asOf": "2026-10-18T06:46:14.073Z",
+  "scope": "原公开报告的限定结果与指纹投影；私有配置、源码内容、原生会话和raw日志不公开。",
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-goal6-independent-application-delta-source-review.json",
+      "bytes": 12235,
+      "sha256": "f861427bff253b1a491e7a97c5bef94d152dbd908991e44d7b07e46050c966c0"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-goal6-independent-package-sidecar-binding-source-review.json",
+      "bytes": 9637,
+      "sha256": "327d0fff56bf07fc10cecf98d900a95251bf25eda6690cb0bf8529a2f865d483"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-received-platform-package-independent-verification.json",
+      "bytes": 12163,
+      "sha256": "2beb71281496916ffeeaa634a2b5d9b78b376b2da31746e5fc6baeff2669eef2"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-goal6-compact-report-public-receipt.json",
+      "bytes": 5494,
+      "sha256": "aae702e4e196e68b690ed7942c5c1293d9a986a927ae8f73dc29023fbd32f3cf"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r49/112-stage.json",
+      "bytes": 1562,
+      "sha256": "d2ebd8c9adfe14bf51fc762006fcf3bf634d0bbaa0178f9b941b7dd8517195bd"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r49/112-install.json",
+      "bytes": 1550,
+      "sha256": "ae09ec3daf2184135954eecd23c1d22920c9fd36fa31155003fc801f173c9d4e"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r49/112-inspect.json",
+      "bytes": 1589,
+      "sha256": "abd0b84e3ce04cedd2820e67a5f9eaa69a11770f3291562fcbe049aba7036af9"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-root-sidecar-activation-103e0e28-822d-45e0-9c3c-f3b272b0ee9c-outcome.json",
+      "bytes": 1532,
+      "sha256": "99d7745518286c2e32213674d9c566b72401892bfdd372b5cb9960eb7e443f96"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-newpurpose-independent-health-3be7bcbd-9614-48d8-94d6-a3b9612fc59e.json",
+      "bytes": 2058,
+      "sha256": "87938500c97fc3278978674faba94ded0d698120f0bf226fd9edb4caa382f2ef"
+    }
+  ],
+  "fixedSource": {
+    "base": "254d25a030537073a41dc5e5c0de6cc4825ad52b",
+    "APP": "36ab0accc6d16c302f668574a6558a69fa277914",
+    "finalOpsHEAD": "136ce577dbd860a73de9b4af163a4330a0c08db4",
+    "importedBundleBytes": 83394,
+    "importedBundleSHA256": "2643660694a7b1e3ff5068a492454c3fc4861e843e7f4ed8414061189b41dff4",
+    "commits": 2
+  },
+  "sourceConclusion": {
+    "determinateP0P1InReviewedApplicationDelta": [],
+    "limitedSourceScopeMayProceedToRootPackageAndDeploymentDecision": true,
+    "doesNotQualifyPackageOrActivation": true,
+    "actualNewPiOrBrowserAcceptance": false
+  },
+  "sourceNonblockingFindings": [
+    {
+      "id": "R49-REVIEW-PROMPT-EXPLICITNESS",
+      "priority": "P2",
+      "files": [
+        "apps/api/src/runtime/project-supervisor-contract.ts:2",
+        "apps/api/src/runtime/project-supervisor-model.ts:120"
+      ],
+      "fact": "R49只补经验段；review提示仍是覆盖每个当前criterion unchanged及精确引用，未进一步显式写唯一且全部met===true。parser保留未知criterion、met非true、重复三条件拒绝。",
+      "impact": "模型仍可能因格式或不满足验收而被拒；现有合法输出可满足全部门，因此不是逻辑必败，也不证明本次旧R48r2 REVIEW_CRITERION具体子因。",
+      "narrowFollowup": "后续有源修复时只把review必须逐字原criterion、唯一覆盖、全mettrue写清；有未达标时选continue/wait_user/stop，不放宽parser。"
+    },
+    {
+      "id": "R49-JUDGMENT-GOAL-LABEL",
+      "priority": "P2",
+      "files": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:24",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:38"
+      ],
+      "fact": "currentDecision从当前会话所有goal事件中取最近decision/review，未按当前goal/run筛选；显示时优先其reason而非session.summary。",
+      "scenario": "同一会话旧goal曾有成功review，修订新goal后当前blocked且尚无新decision，主管判断格可能继续显示旧成功理由，未注明上次goal。当前阻塞格仍显示新blocker。",
+      "narrowFollowup": "按当前goal/run选择判断，或明确标上次goal/判断；新blocked原因优先，历史事件保留。"
+    }
+  ],
+  "savedValidationScope": {
+    "adapter": "1/1受控test含15子型与合法例，fake Pi；不冒真实模型。",
+    "UI": "原SSR失败保；fake EventSource通过，后SSR单项通过；非DOM/effects/mobile现场。",
+    "build": "API保存types/build；Web首types/build失败保，后受影响build含tsc与208modules，未重跑。"
+  },
+  "package": {
+    "threeReceivedArtifactsExactToSignedFacts": true,
+    "runtimeBuildAndArchiveVersion": "20261018-project-goals-r49",
+    "platformZip": {
+      "bytes": 23473249,
+      "sha256": "3a4aaa83923a1cb6fd2b6735fa8a82caca68e8b7e219a8c523242f9369959091"
+    },
+    "externalManifest": {
+      "bytes": 447717,
+      "sha256": "cea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb"
+    },
+    "externalManifestEqualsInternal": true,
+    "uniqueSafeRegularZipInventory": true,
+    "payloadFilesRecomputed": 2260,
+    "trackedPackagedFilesAgainstExactAppGitBlobs": 1857,
+    "allApplicationSourceFilesExactSetAndGitBlob": 307,
+    "all12NonArtifactSignedOriginalsPhysicalAndAppropriateAppOrFinalGitBlobHsize": true,
+    "acceptedNodeFilesReverified": 5,
+    "nodeFiveSourceInputsUnchangedFromBase": true,
+    "newNodePackage": false,
+    "nodeInstallationOrConfigChanged": false
+  },
+  "compatibilityAssets": {
+    "priorR48r2Archive": {
+      "bytes": 23058465,
+      "sha256": "e0495dc61b879d89c1a09b388c57de01e7d7c54d7291f0f3c1d4cd84704dac40"
+    },
+    "priorR48r2Manifest": {
+      "bytes": 443982,
+      "sha256": "63c5463c8bb0e118faba9bd1a90cdec6e4be21b6b3cefacc57f4dd8ac0faa1bb"
+    },
+    "entirePriorR48r2AssetSetComparedByPathBytesAndNewManifestHash": 104,
+    "missingOrChangedPriorAssets": 0,
+    "priorR48": 104,
+    "priorR46r1": 98,
+    "priorR45": 92,
+    "priorR44": 67,
+    "priorR7": 54,
+    "originalR41Seven": 7
+  },
+  "sidecar": {
+    "oldSourceSHA256": "c6e3ccc01042ce61a88e198caf211446006f0600ea5eb91e7714f49b51a7b883",
+    "newSourceSHA256": "99418d6dd411f63afba520342c09c77e0055ce2a714d5ec046044c043a5c1321",
+    "bytes": 26413,
+    "fourPinForwardInverseExact": true,
+    "permissionsBudgetLockBackupRestoreReadinessAlgorithmBytesUnchanged": true,
+    "fourPinValues": {
+      "EXPECTED": "20261018-project-goals-r48-r2",
+      "RELEASE": "20261018-project-goals-r49",
+      "APP": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "ZIP_HASH": "3a4aaa83923a1cb6fd2b6735fa8a82caca68e8b7e219a8c523242f9369959091"
+    },
+    "originalManagedToolSHA256": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504",
+    "originalRecoveryToolSHA256": "1f74cb9fea17d5f3a964675fc2909e79bbf5d00b65a59146af9eb1e86d128179",
+    "oldFailedOperationsNotReusedOrRewritten": true
+  },
+  "phases": {
+    "stage": {
+      "phase": "stage",
+      "node": "112",
+      "release": "20261018-project-goals-r49",
+      "sourceCommit": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "appHead": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "finalHead": "136ce577dbd860a73de9b4af163a4330a0c08db4",
+      "archiveSHA256": "3a4aaa83923a1cb6fd2b6735fa8a82caca68e8b7e219a8c523242f9369959091",
+      "manifestSHA256": "cea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb",
+      "exitCode": 0,
+      "wallSeconds": 25.21584987640381,
+      "phaseVerified": true,
+      "requiresReconciliation": false,
+      "originalToolUnchanged": true,
+      "businessSwitchRequested": false,
+      "node101Changed": false
+    },
+    "install": {
+      "phase": "install",
+      "node": "112",
+      "release": "20261018-project-goals-r49",
+      "sourceCommit": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "appHead": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "finalHead": "136ce577dbd860a73de9b4af163a4330a0c08db4",
+      "archiveSHA256": "3a4aaa83923a1cb6fd2b6735fa8a82caca68e8b7e219a8c523242f9369959091",
+      "manifestSHA256": "cea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb",
+      "exitCode": 0,
+      "wallSeconds": 5.282179594039917,
+      "phaseVerified": true,
+      "requiresReconciliation": false,
+      "originalToolUnchanged": true,
+      "businessSwitchRequested": false,
+      "node101Changed": false
+    },
+    "inspect": {
+      "phase": "inspect",
+      "node": "112",
+      "release": "20261018-project-goals-r49",
+      "sourceCommit": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "appHead": "36ab0accc6d16c302f668574a6558a69fa277914",
+      "finalHead": "136ce577dbd860a73de9b4af163a4330a0c08db4",
+      "archiveSHA256": "3a4aaa83923a1cb6fd2b6735fa8a82caca68e8b7e219a8c523242f9369959091",
+      "manifestSHA256": "cea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb",
+      "exitCode": 0,
+      "wallSeconds": 0.831493616104126,
+      "phaseVerified": true,
+      "requiresReconciliation": false,
+      "originalToolUnchanged": true,
+      "businessSwitchRequested": false,
+      "node101Changed": false
+    }
+  },
+  "activation": {
+    "kind": "r49-root-sidecar-activation-outcome",
+    "operationId": "103e0e28-822d-45e0-9c3c-f3b272b0ee9c",
+    "qualified": true,
+    "producerQualified": true,
+    "configurationPermissionPreservationQualified": true,
+    "configurationPermissionExpected": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "priorFailedSidecarChanged": false,
+    "independentHealthQualified": false,
+    "factoryDispatchQualified": false,
+    "classification": "QUALIFIED",
+    "transportExitCode": 0,
+    "transportTimeout": false,
+    "transportChildEnded": true,
+    "elapsedSeconds": 309.2819999998901,
+    "sidecarSourceSHA256": "99418d6dd411f63afba520342c09c77e0055ce2a714d5ec046044c043a5c1321",
+    "inputSHA256": "9ab8b92fb9a0fee1dec62c654c70613f9d81478b4854e6ffb935aec84d0ad7c6",
+    "rawPrivateFingerprints": {
+      "ssh.stdout": {
+        "bytes": 19235,
+        "sha256": "8cd8485209abf6900785a7388aa249d965dea32b2a91c11da42f3db743fc5122"
+      },
+      "ssh.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "sidecarRawPrivateFingerprints": {
+      "stdout": {
+        "bytes": 13823,
+        "sha256": "d7c72558205345eae2c8cb70550ac026970a8d9eaf0e4bcdcbb0a9f916661e0a"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "reconciliationRequired": false,
+    "automaticRetry": false,
+    "oldFailedActivateChanged": false,
+    "stageInstallRepeated": false,
+    "wrapperServiceActions": 0,
+    "wrapperRollback": false
+  },
+  "finalPrivateFingerprint": {
+    "bytes": 13823,
+    "sha256": "d7c72558205345eae2c8cb70550ac026970a8d9eaf0e4bcdcbb0a9f916661e0a"
+  },
+  "fullSnapshotIsolatedRestore": {
+    "bytes": 4484061686,
+    "files": 64,
+    "directories": 59,
+    "sqliteDatabases": 10,
+    "snapshotPassed": true,
+    "restorePassed": true,
+    "sameManifest": "54680a53a3bc7026a388e2b18a7cee576ffc993f89255f96ed01464a6bd73b98",
+    "liveDataRestored": false,
+    "configurationPermissionTuple": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "rollback": "NOT_REQUIRED"
+  },
+  "independentHealth": {
+    "kind": "r49-newpurpose-independent-health",
+    "at": "2026-10-18T06:36:02Z",
+    "healthOperationId": "3be7bcbd-9614-48d8-94d6-a3b9612fc59e",
+    "activationOperationId": "103e0e28-822d-45e0-9c3c-f3b272b0ee9c",
+    "producerReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r49-root-sidecar-activation-103e0e28-822d-45e0-9c3c-f3b272b0ee9c-outcome.json",
+      "bytes": 1532,
+      "sha256": "99d7745518286c2e32213674d9c566b72401892bfdd372b5cb9960eb7e443f96"
+    },
+    "activationFinalFingerprint": {
+      "sha256": "d7c72558205345eae2c8cb70550ac026970a8d9eaf0e4bcdcbb0a9f916661e0a",
+      "bytes": 13823
+    },
+    "release": "20261018-project-goals-r49",
+    "sourceCommit": "36ab0accc6d16c302f668574a6558a69fa277914",
+    "exitCode": 0,
+    "timeout": false,
+    "childEnded": true,
+    "elapsedSeconds": 0.4529999999795109,
+    "independentHealthQualified": true,
+    "health": {
+      "node": "112",
+      "release": "20261018-project-goals-r49",
+      "role": "primary",
+      "currentRelease": "20261018-project-goals-r49",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261018-project-goals-r49",
+      "businessHealthy": true,
+      "healthBuild": "20261018-project-goals-r49",
+      "healthStatus": "ok"
+    },
+    "failureCode": null,
+    "rawPrivateFingerprints": {
+      "health.stdout": {
+        "bytes": 322,
+        "sha256": "491acd2220e390c3941b0375cf3128127fbc5e47967bb7105b64ace96197b729"
+      },
+      "health.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "producerQualifiedPreviously": true,
+    "producerConfigurationMetadataAccepted": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "producerPreviousConfigSHA256Accepted": "bd2847ea0ca710f497ff0087fa78410d96d38565a8261f8ccdc5ece87c4e5bc0",
+    "productAccepted": false,
+    "fullSupervisionFlowAccepted": false,
+    "oldHealthPhaseInvokedOrOverwritten": false,
+    "oldFailedActivationChanged": false,
+    "serviceRecoveryStageInstallOrActivateCalled": false,
+    "APIAuthenticationUsed": false,
+    "automaticRetry": false
+  },
+  "productAccepted": false,
+  "browserAccepted": false
+}

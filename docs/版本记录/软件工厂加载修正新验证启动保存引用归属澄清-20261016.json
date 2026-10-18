@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-worker-context-main607-meta-r2-start-saved-evidence-review-ref-attribution-addendum",
+  "at": "2026-10-16T09:25:03.930321+00:00",
+  "independentNonAuthorReview": true,
+  "priorReport": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-start-saved-evidence-independent-local-review-final.json",
+    "sha256": "5190859ba1483445ee455d1a925eccd3aa2c04c9dd21a2d0d08b56b9b17e911a",
+    "bytes": 26977
+  },
+  "priorReportAnd65PhysicalRefsUnchanged": true,
+  "correctionType": "delegated-review-ref-attribution-only",
+  "correction": "The delegated fresh subset 35 consisted of snapshot + proof + 22 capture records + 8 sourceMethod refs + selection/current-main witness/current-main audit. The prior report used the same count but its physicalRefs instead included three historical method/HUP qualification refs; those were actually fingerprint-checked by the main reviewer, not part of that delegated 35.",
+  "delegatedActualThreeRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main607-fixed-metadata-r2-protection-root-selection.json",
+      "sha256": "3aea1f54a1d76f4ee4e062ecd2275d6f4c0af80b46e617b19d1a2131ce1ed99a",
+      "bytes": 4471
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-actual-observation-1792135433924-c67d00cc-5b68-4610-b30f-0da03e9a87fd.json",
+      "sha256": "7f37d66d4200cd070fa1cecc530ec9131f38df7bc2900f73e20fa4a1edbf2ce9",
+      "bytes": 5994
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-independent-local-saved-review-final.json",
+      "sha256": "49c061c16029d3400abb09ce72114547e7a478d67eb2ce1a6c4fc88d4fbc483f",
+      "bytes": 13632
+    }
+  ],
+  "otherThreeActuallyFingerprintedByMainReviewer": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-single-entry-method-r3-independent-observation-1791896751796-edc3c6d2-369d-4953-b163-a214a72b9224.json",
+      "sha256": "3f37f556d1ec228804c999fd3af2e93beca7219a6f4d3f479a93353fd9990d7d",
+      "bytes": 17643
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-bounded-hup-method-actual-result-1791972621857-c8d855cd-46fb-47ad-97b8-35d01bd97a55.json",
+      "sha256": "85ec33d74bfa46d5ab729e88fb1e0abbed2e5ffcf05b775ae8a5bb7a7a1f5436",
+      "bytes": 2011
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r33-bounded-hup-method-saved-evidence-independent-local-review-1791973060024-d2530690-3c83-4ee5-8205-b5bb4daa7580.json",
+      "sha256": "5535e18972feba0fc92ae2e619b76118268bcc0c1b9c42a4542b60503acb3dff",
+      "bytes": 36775
+    }
+  ],
+  "actualThreeRootWorkInitialFinalRawMatched": true,
+  "priorRawCountsAndBindingsAndLimitedSTARTQualificationChanged": false,
+  "newQualificationClaimed": false,
+  "p1Finding": false,
+  "rootAndWorkSameBytes": true,
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-worker-context-main607-meta-r2-start-saved-evidence-independent-local-review-final.json",
+      "sha256": "5190859ba1483445ee455d1a925eccd3aa2c04c9dd21a2d0d08b56b9b17e911a",
+      "bytes": 26977
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main607-fixed-metadata-r2-protection-root-selection.json",
+      "sha256": "3aea1f54a1d76f4ee4e062ecd2275d6f4c0af80b46e617b19d1a2131ce1ed99a",
+      "bytes": 4471
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-actual-observation-1792135433924-c67d00cc-5b68-4610-b30f-0da03e9a87fd.json",
+      "sha256": "7f37d66d4200cd070fa1cecc530ec9131f38df7bc2900f73e20fa4a1edbf2ce9",
+      "bytes": 5994
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-main-after-qa-protection-failure-independent-local-saved-review-final.json",
+      "sha256": "49c061c16029d3400abb09ce72114547e7a478d67eb2ce1a6c4fc88d4fbc483f",
+      "bytes": 13632
+    }
+  ],
+  "physicalRefsCount": 4,
+  "qualificationBoundary": "Only attribution correction and local fingerprints for the actual three finite refs; no old source semantics, remote byte read, function, test, START, CHECK or product observation repeated. Prior public saved-null values and original plan93/519 cut remain unchanged.",
+  "currentResourceScopeClosedVerified": false,
+  "frameworkABIQualified": false,
+  "actualPG4Qualified": false,
+  "productAccepted": false,
+  "API": 0,
+  "remote": 0,
+  "models": 0,
+  "tests": 0
+}

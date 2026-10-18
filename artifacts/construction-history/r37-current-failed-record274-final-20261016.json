@@ -1,0 +1,52 @@
+{
+  "id": "JARVIS-20261016-FACTORY-CURRENT-FAILED-274",
+  "kind": "incident",
+  "project": "software-factory",
+  "occurredAt": "2026-10-16",
+  "title": "当前范围唯一读取被main四合取拒绝，选择新的有限目录诊断并主动同步阻塞",
+  "objective": "继续推进四用例前置核查，以真实现场结果和可展开证据监督，先定位保护差异再选择修复。",
+  "changes": [
+    "Root完成唯一纯DATA封存和具体ENTRY独审后执行新current-r2，实际失败关闭。",
+    "平台原repair事项更新到revision3 blocked/event9，6事项读回为1受阻3待推进2完成。",
+    "新增固定main-only四项两帧有限诊断选择，平台重要决定selected和计划82实际提交，旧PG29/Env23及验收标准保持。"
+  ],
+  "decisions": [
+    "不重放已失败关闭current-r2，不从空stdout认定某个主目录字段；先选择一个新目的的有限目录观察。",
+    "只读新当前主目录四值，不复读旧driver613/capture1316/454终态文件，不扩大到全proc/全P/SQL或候选执行，不自动采纳新基准。"
+  ],
+  "facts": [
+    "纯DATA唯一0.719秒exit0，529绑定引用；非作者具体ENTRY passed，Root533实体H/size核后才唯一调用。",
+    "Root session58530已终态exit1，Node17.922秒noTimeout；public b5b86d46faa8dc1f22e817ea90a5fe975f90af086f1ea9b0cbc149e040b21167/3794，所有inner/outer once和console closed。",
+    "前后各10capture，Root inventory-before各status1/stdout0/stderr182，R28_HOST_MAIN_CHANGED；实际四值未导出，具体合取未知，不认定metadata又漂移或R36导致。",
+    "中间rawCurrentTransport null，current observer未进入，actor/资源/完整保护均未闭合；没有新QA或供应商模型。",
+    "SAVED c11cd0e7核35 refs和20捕获绑定完整；wrapper首错与core secondary分别保留，不把保存完整冒当前保护通过。",
+    "计划82实际读回，决定de8754ee-9965-40a0-b1ff-24ff1f5101bc rev1 selected，原25任务/自治/global和五步标准/绑定保持，PG29/Env23不改，notes零写入零截断。"
+  ],
+  "verification": [
+    "实际参数和入口只认证准备资格；唯一现场结果failed完整保存，未重试。",
+    "独立SAVED审查及Root35实体核通过，2显式index新run/source/参数/activation绑定正确，rawtransport和parsedframes分开。",
+    "保存窗口profile367749/globalfalsefalse/28templates-otherf31e/只读全SQLqueue0符合；不补缺失的current/proc/资源观察。"
+  ],
+  "pending": [
+    "新有限目录诊断的来源、实际参数和具体ENTRY核对及实际观察仍分层推进；新选择本身不等诊断执行。",
+    "四用例0通过0业务失败4未完成；原74/客户12、devCI与安装使用升级恢复仍未交付。",
+    "本轮供应商新模型0，内部Codex Token/金额未知分列；费用只记录无上限。"
+  ],
+  "lessons": [
+    "通用四合取拒绝需要保存当前实测值才能定位；明确哪层被拒绝，不能把命名含transport的包装错误一概当网络问题。"
+  ],
+  "evidence": [
+    "docs/版本记录/软件工厂当前核查参数封存-20261016.json",
+    "docs/版本记录/软件工厂当前核查入口独审-20261016.json",
+    "docs/版本记录/软件工厂当前核查实际结果-20261016.json",
+    "docs/版本记录/软件工厂当前核查保存独审-20261016.json",
+    "docs/版本记录/软件工厂当前目录诊断选择-20261016.json",
+    "docs/版本记录/软件工厂当前核查失败与计划82-20261016.json"
+  ],
+  "state": {
+    "implementation": "partial",
+    "verification": "failed",
+    "deployment": "not-applicable",
+    "acceptance": "pending"
+  }
+}

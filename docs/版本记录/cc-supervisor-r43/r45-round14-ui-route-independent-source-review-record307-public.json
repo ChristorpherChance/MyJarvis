@@ -1,0 +1,137 @@
+{
+  "kind": "r45-round14-ui-route-independent-source-review",
+  "mode": "LOCAL frozen source and saved evidence only",
+  "cut": {
+    "base": "6ab3e09b325a8f0f1868c8aeacb76c22d7060320",
+    "app": "095b0e646a2889390a6751e2bedeb2bfecdee393",
+    "report": "bd28b7003db3f66660ab7fa16d4d3a8a71065b31",
+    "final": "8e646d8c2627294cf8e51ce216f55c286a2f31fc"
+  },
+  "result": {
+    "newConfirmedUIP1": [],
+    "R13UIP1Closed": 2,
+    "R13RouteP2Closed": 2,
+    "releaseApproval": false,
+    "reason": "The reviewed UI defects are closed at source level. B's separately reported duplicate-criteria kickoff preflight defect remains an API blocker; this UI conclusion does not override it or assert browser/mobile acceptance."
+  },
+  "closures": [
+    {
+      "prior": "R13-UI-NEW-PROJECT-SETUP-UNREACHABLE",
+      "state": "closed-in-source-with-targeted-component-and-API-evidence",
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:22",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:24",
+        "apps/web/src/features/operations/ProjectDataDetails.tsx:7",
+        "apps/web/src/features/operations/ProjectDataDetails.tsx:8",
+        "apps/web/src/demo/live-operation-commands.ts:73",
+        "apps/web/src/demo/live-operation-commands.ts:74"
+      ],
+      "evidence": "Missing choices now exposes a direct directory/project-data action opening the same entity copies section. The new small ProjectDataDetails has actual register/edit copy, project edit, environment, plan/archive and milestone controls, plus decision/autonomy/usage/experience detail components. recordSnapshot retains version/scope; the live adapter translates op.project/update copies into the original copies command and normalizes machine fields. It does not render the old whole project Dialog or two full panels on the first screen. The saved component script triggers the real registration button handler and form submit with explicit workspace and version4; createApp evidence separately starts with copies=[] and proves the registered copy creates a real context choice. These are complementary bounded tests, not one end-to-end browser proof."
+    },
+    {
+      "prior": "R13-UI-EXECUTION-STATE-FROM-SUPERVISOR",
+      "state": "closed-in-source-with-state-render-evidence",
+      "refs": [
+        "apps/api/src/runtime/project-workbench-runtime.ts:25",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:21"
+      ],
+      "evidence": "Context now validates task/run project, task, machine and workspace binding before returning actual runStatus/resultReceived; queued is displayed as waiting to be claimed, running as claimed execution and returned as awaiting/completed judgment. Existing project historical active/blocked tasks are summarized even without a supervisor. The primary display no longer equates session.running with an attached executor. Saved createApp output checks actual queued request/run and component SSR distinguishes queued/running/succeeded. No live101 claim or supplier-model acceptance is inferred."
+    },
+    {
+      "prior": "R13-UI-LIST-QUERY-ROUTE",
+      "state": "closed-in-source-with-resolver/root-contract-evidence",
+      "refs": [
+        "apps/web/src/project-route.ts:1",
+        "apps/web/src/DemoApp.tsx:29",
+        "apps/web/src/DemoApp.tsx:30",
+        "apps/web/src/DemoApp.tsx:32",
+        "apps/web/src/project-route.test.ts:2"
+      ],
+      "evidence": "projectRouteRoot strips query before first path segment. Shell render candidate, navigate validation and history grouping use it; projects?unresolvedTask and projects?intent no longer fail route recognition. Added assertions cover missing task and tasks/new root outcomes. Existing initial/hash/popstate/navigate continue to share resolveProjectRoute; browser history itself remains unobserved here."
+    },
+    {
+      "prior": "R13-UI-SAME-PROJECT-TASK-FOCUS",
+      "state": "closed-in-source-with-production-effect-evidence",
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:14",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:15",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:25"
+      ],
+      "evidence": "An effect keyed by params.toString opens task details on a new task/advanced-create intent and maps legacy tab to the same project data section. The task panel receives the actual task query, or tasks/new with projectId for advanced creation. The test directly executes the production params effect and observes open=true and copies-tab updates. It does not execute browser Back/Forward or prove all React lifecycle interactions."
+    }
+  ],
+  "additionalContractChecks": [
+    {
+      "refs": [
+        "apps/web/src/features/operations/ProjectDataDetails.tsx:11",
+        "apps/web/src/demo/live-operation-commands.ts:76"
+      ],
+      "result": "The environment form passes patch.environmentInfo, which the existing adapter expressly accepts and extracts. The nested form shape is not a confirmed contract bug."
+    },
+    {
+      "refs": [
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:17",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:22"
+      ],
+      "result": "A discovered pending kickoff is submitted using pending.input, with an explicit notice that edits do not replace the original binding. This UI plumbing is present; validity/recovery of that immutable input is an API question, including B's duplicate-criteria defect."
+    },
+    {
+      "refs": [
+        "apps/web/src/DemoApp.tsx:18",
+        "apps/web/src/DemoApp.tsx:43",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:24"
+      ],
+      "result": "One top-level project entity architecture remains; controls/details are on demand. This review does not propose returning to three complete pages."
+    }
+  ],
+  "savedEvidenceScope": {
+    "apiRoute": "reports/r45-round14-logs/final-api-route.tap records6/6 passed: initial preflight/copy/queued checks, three original-session-cut owner pause/stop/takeover cases, inherited real signed-child/ACK recovery case, and route contract. Exact source was read; tests were not rerun.",
+    "components": "scripts/test-r45-r14-components.mjs uses the production components and an esbuild React hook/environment shim. It renders state variants, directly calls the real copy button/form handlers with an act spy, and invokes the production params effect. The spy does not itself prove live adapter/HTTP persistence; those adapter and API source contracts were separately checked.",
+    "remainingAcceptance": "Actual logged-in browser navigation, form/dialog interaction, narrow viewport/physical phone, full status/history matrix and real112-to101 model workflow remain outside this source review. Missing execution of those checks is not separately classified as P1.",
+    "typesBuild": "Saved implementation logs report final typecheck/build/package success. This review did not rerun them or use them as browser/product acceptance."
+  },
+  "pins": [
+    {
+      "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "sha256": "f1a3e0028fc52c8c15223c693ccf23e72e2076521dfde6e0ba0a80fecacb9f8c"
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectDataDetails.tsx",
+      "sha256": "e08c8505dd729c1caed9add35998e44f8872b95f597fdd187bd7e2ae971894b1"
+    },
+    {
+      "path": "apps/web/src/project-route.ts",
+      "sha256": "550b7311ae0d17957b000538e098eaa00a17819dfd5cd3674d74ecde7ab9d819"
+    },
+    {
+      "path": "apps/web/src/DemoApp.tsx",
+      "sha256": "2befcf78c392d7be82ab8596dea604cbf7dd288580401521c7bf3f239435cc04"
+    },
+    {
+      "path": "scripts/test-r45-r14-components.mjs",
+      "sha256": "143b949076829d0199c3377b456e28fd3fa3017da3783dd89bade9d143acc22e"
+    },
+    {
+      "path": "reports/r45-round14-implementation.json",
+      "sha256": "e633ca40378a50c3af1722df683edd0919e12224cfa269db3bb6840687ae71f9"
+    }
+  ],
+  "execution": {
+    "applicationEdits": 0,
+    "tests": 0,
+    "builds": 0,
+    "browser": 0,
+    "remote": 0,
+    "network": 0
+  },
+  "handoff": "Keep these source closure and bounded positive results while fixing the remaining API preflight family in the original CC. R14 was not deployed; this report is not a rollout or full-product approval.",
+  "_record307PublicProjection": {
+    "sourceEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r45-round14-ui-route-independent-source-review.json",
+      "sha256": "08ef13aeac5e88887bc3369118500defb634ea97ca7cc57bdf89f74400e57caa",
+      "bytes": 7691
+    },
+    "privatePathsAuthoritySessionAndRawPayloadsExcluded": true,
+    "originalEvidenceUnchanged": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-storage-retention-platform-sync",
+  "complete": true,
+  "at": "2026-10-18T10:09:34.097Z",
+  "phase": "complete",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "evidenceRefs": [
+    {
+      "reference": "artifacts/migration-112/retention-policy-selection-public.json",
+      "sha256": "c1a4e84437a7420efc5b46996480a12704b80fd62f446fe429899b054c90990a",
+      "kind": "requirement"
+    },
+    {
+      "reference": "artifacts/migration-112/retention-plan-public.json",
+      "sha256": "8ab3ca5ff4fbcd813530020c976447c769ff0a6719390280b5dd23faa0553417",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/migration-112/retention-log-cleanup-public.json",
+      "sha256": "a419b556e74118dd54a311e345cfdc27bae2c32e1ffc1014f3c4a1420b10a68f",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/migration-112/retention-final-public.json",
+      "sha256": "075f02929e24bb6dced6f6acd6aba0c533fbceb78c4a7c8a8d440b5d24a3a351",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/migration-112/retention-followup-cleanup-public.json",
+      "sha256": "452138e5f3609bb725cf1fd32035bcd061db58a5f6fe96e68989a53f06850c3f",
+      "kind": "test-report"
+    }
+  ],
+  "environmentFieldsAppended": [
+    "environment"
+  ],
+  "notesPreservedExactly": true,
+  "runAndVerifyPreservedExactly": true,
+  "protectedFields": [
+    "goal",
+    "copies",
+    "milestones",
+    "status"
+  ],
+  "protectedFieldsPreservedExactly": true,
+  "verification": {
+    "at": "2026-10-18T10:09:33.626Z",
+    "projectRevision": 42,
+    "notesPreservedExactly": true,
+    "runAndVerifyPreservedExactly": true,
+    "protectedFieldsPreservedExactly": true,
+    "protectedFieldsSHA256": "bf1e55b6b84dde886cb89f7335dd18ae60f3c6c148859048e5400ad2be6f69f6",
+    "decision": {
+      "id": "16ca5700-433e-4fc7-8a74-a67aa6b3ccf8",
+      "revision": 2,
+      "status": "implemented",
+      "revisions": [
+        {
+          "revision": 1,
+          "status": "selected",
+          "hash": "97c8bd0c9adfe58b12775bd84b06c0564ae40a8383a3a39be5c37ba300844264"
+        },
+        {
+          "revision": 2,
+          "status": "implemented",
+          "hash": "4d63fb6b4c29d355a0a201bc2e2da3c6f200b7bdb28f8341506e6beccc7b608e"
+        }
+      ]
+    },
+    "experience": {
+      "id": "3d24fe50-1e5a-4a0e-876d-595a7ed04bb3",
+      "status": "inbox",
+      "verified": false
+    }
+  },
+  "commandIds": {
+    "environment": "7cb9bcdb-b9ee-541d-bb16-e0bb7f622304",
+    "selection": "016a1a7d-7062-5c91-abb5-6edb07812345",
+    "implementation": "de0613b1-cf5f-5c16-bdf8-6ec887809cc0",
+    "experience": "d27f1f6a-fe9e-5552-a4d0-8ecd7903348b"
+  },
+  "modelsInvoked": false,
+  "skillPublished": false,
+  "cleanupExecutedByThisScript": false,
+  "businessServicesOperated": false,
+  "independentProductAcceptance": false,
+  "errorCode": null
+}

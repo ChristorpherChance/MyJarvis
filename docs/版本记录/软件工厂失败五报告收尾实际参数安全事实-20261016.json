@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-context-sentinel-failed-five-current-r1-actual-DATA-safe-facts",
+  "at": "2026-10-16T13:09:01.256069+00:00",
+  "sourceReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-context-sentinel-failed-five-current-r1-independent-local-source-review-final.json",
+    "sha256": "b97d73da2b96cdac57adacbf7a13aa415952b955836a5fde1c63df91a02c62e5",
+    "bytes": 28768
+  },
+  "pureHelper": {
+    "path": ".jarvis-dev/maintenance/seal-r37-context-sentinel-failed-five-current-r1-data-local.py",
+    "sha256": "3ee92f7905e243984e75c6574d10ded2e11df85b4a277aa06a8c3d4f9c5ffe6d",
+    "bytes": 42614
+  },
+  "actualInput": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-actual-input.json",
+    "sha256": "c35243cc2aaeb344e1281f0e389cbaa51dbf8cd714a7acbdb9fbc18007b8a236",
+    "bytes": 3322
+  },
+  "actualDATASeal": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-c1feff1f0eb21d90187d3f8201c384ac-data-seal.json",
+    "sha256": "dcd6900004df81a7a344da3e8d0d73552630fefee7d24949a9bb77cdbc3944de",
+    "bytes": 204882
+  },
+  "actualContext": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-entry-context.json",
+    "sha256": "56f1ab3f221318e8e4dc527619328f68f9e6bcd81678484a390036a3a6d6266f",
+    "bytes": 2683
+  },
+  "actualSourceContract": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-c1feff1f0eb21d90187d3f8201c384ac-source-contract.json",
+    "sha256": "1f4d89c45af721d46bbc6e27a9277771e3287126a4c5039fef1e4461f0dbcaed",
+    "bytes": 199036
+  },
+  "actualParameters": {
+    "path": ".jarvis-dev/maintenance/r37-context-sentinel-failed-five-current-r1-c1feff1f0eb21d90187d3f8201c384ac-parameters.json",
+    "sha256": "e075ba47a6700d54d547ceb99f258fb8771f1a97b7135186d8a1cb6ddd9b554a",
+    "bytes": 390829
+  },
+  "sourceRefCount": 802,
+  "rootPhysicalRefsVerified": 806,
+  "actualContextReaderMatchesNewCF20Caller": true,
+  "originalC708OrderedPrefixPreserved": true,
+  "originalC672639600PrefixPreserved": true,
+  "originalA83PrefixPreserved": true,
+  "originalMAINReviewSeparateFromNewDReview": true,
+  "reportPolicy": {
+    "kind": "normal-five",
+    "retainedCount": 5,
+    "missingCount": 0
+  },
+  "pureHelperElapsedSeconds": 2.0717397,
+  "pureHelperExitCode": 0,
+  "localPreparationBoundary": "Original descriptive NULL reader remains historical572; actual helper explicitly filled cf20 and Root checked exact actual caller. Initial mirror stopped on Windows long-path handling; long-path continuation skipped same bytes, finished without source change or repeating helper.",
+  "specificENTRY": null,
+  "actualDExecuted": false,
+  "reportBodiesRead": false,
+  "currentResourceScopeClosedVerified": false,
+  "actualPG4Qualified": false,
+  "cases": {
+    "passed": 0,
+    "businessFailed": 0,
+    "uncompleted": 4
+  },
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "newSupplierModelCalls": 0,
+  "internalTokens": null,
+  "internalCost": null,
+  "productionRelease": false
+}

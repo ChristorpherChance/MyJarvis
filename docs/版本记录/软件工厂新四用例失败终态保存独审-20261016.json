@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-first-error-main607-check-saved-independent-local-audit",
+  "at": "2026-10-16T05:57:06.185Z",
+  "ready": true,
+  "staticPreparationReady": true,
+  "remainingP0P1": 0,
+  "findings": [],
+  "scope": "Finite LOCAL SAVED CHECK integrity only, with original wire/START-prefix/terminal metadata bindings. No five-file byte reader, driver raw-body review, current resource census, QA acceptance or repeated source semantics.",
+  "publicObservation": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-main-actual-check-observation-1792129973698-1e485bc8-cc94-4687-bb62-fedf2c844e4a.json",
+    "sha256": "429c6d2a2f3af8550f6bd6b28c25885edf4de3e7a04259260c484b44c2ac2d5e",
+    "bytes": 162566
+  },
+  "originalByteSeal": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-main607-actual-check-original-byte-local-seal.json",
+    "sha256": "9384585e81a880c2998311cfd292274496473e5da9eeb682c25eea98b3ee4c04",
+    "bytes": 1577
+  },
+  "parentJournalSnapshot": {
+    "path": ".jarvis-dev/maintenance/r37-qa-main607-actual-check-parent-journal-snapshot.json",
+    "sha256": "af60d75b706748c6f74d3a74c65e3fde061bb1b880cc3930b59afb8b94fbe699",
+    "bytes": 3883121
+  },
+  "originalTerminal": {
+    "path": ".jarvis-dev/maintenance/r37-qa-main607-original-check-parent-frame.json",
+    "sha256": "ee1afb49282dcadc03a3bad683d0a64c66baab04d39813686e8bd2f18533a22a",
+    "bytes": 21282
+  },
+  "verdict": {
+    "savedEvidenceIntegrityVerified": true,
+    "startSnapshotPrefixPreserved": true,
+    "oneActualCheckReceiptAndWireBound": true,
+    "sourceAndContractAndAttemptBindingsVerified": true,
+    "failedProducerTerminalObserved": true,
+    "checkReadTransportSucceeded": true,
+    "specificModuleCauseKnown": false,
+    "currentResourceScopeClosedVerified": false,
+    "actualPG4Qualified": false,
+    "normalQAQualified": false,
+    "currentBusinessQualified": false,
+    "productAccepted": false
+  },
+  "localPreinvokeRefusal": {
+    "ref": {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-check-local-truncated-hash-preinvoke-refusal.json",
+      "sha256": "5a2966e0d7286df63390ffbdf51f99a2698c4b8bf28255bf9bd83e6b3705d5e7",
+      "bytes": 1153
+    },
+    "cause": "51-character copied ENTRY hash rejected before Node invocation; existing ENTRY hash remains correct64.",
+    "nodeInvocationOccurred": false,
+    "remoteCheckOccurred": false,
+    "checkOpportunityConsumed": false,
+    "parentUnchangedAtRefusalReported": true,
+    "originalRawToolOutputSaved": false,
+    "sourceOrderConsistentWithPreNodeRefusal": true,
+    "reportIsSafeFactProjectionNotNewRawToolCapture": true,
+    "productFailure": false
+  },
+  "actualCheck": {
+    "transportExitCode": 0,
+    "producerStatus": "failed",
+    "elapsedSeconds": 7.484000000171363,
+    "entryInvocations": 1,
+    "actualCheckReceipts": 1,
+    "automaticRetry": false,
+    "attempt": "3164f5048c2562a9c29c915f73bfd124",
+    "startInvocationIDPreserved": "0fec4a6bc1a346818d6df93e1718df72",
+    "dispatched": true,
+    "startUncertain": false,
+    "unchangedParentFieldsExcept": [
+      "receipts",
+      "lastStatus"
+    ],
+    "errorCode": null,
+    "secondaryFailureCodes": [],
+    "firstFailure": {
+      "phase": "module-import",
+      "errorCode": "R33_PG4_DRIVER_STAGE_INCOMPLETE",
+      "exceptionClass": "Error",
+      "errno": null,
+      "nodeCode": null,
+      "origin": "source-bound-driver",
+      "driverInputBindingVerified": true,
+      "privateDriverFailureRetentionReported": true
+    },
+    "specificModuleCauseInferred": false
+  },
+  "timeBoundary": {
+    "earliestCheckGuardFromRoot": "2026-10-16T05:51:27.065643Z",
+    "savedPreinvokeRefusalAt": "2026-10-16T05:52:35.557594+00:00",
+    "checkReceiptAt": "2026-10-16T05:52:52.596Z",
+    "publicObservationAt": "2026-10-16T05:52:53.698057+00:00",
+    "allRecordedCheckSequenceTimesAfterGuard": true,
+    "refusalAfterGuardMilliseconds": 68492,
+    "receiptAfterGuardMilliseconds": 85531,
+    "remoteRequestStartTimestampSeparatelyCaptured": false,
+    "rootSerialOrderingUsedAsRecorded": true
+  },
+  "terminalMetadata": {
+    "ownerIdentityRecorded": true,
+    "stopIdentityRecorded": true,
+    "actorMetadataCanonicalHashes": {
+      "owner": "289704ac3740d3a94d545ecc6ac1be5aaa65943f002f1267318be08a155214a2",
+      "stopIdentity": "a61c88aae63455356e2910981a2ea50cc78e4930428a6c9e41fa8190d58c9760"
+    },
+    "actorCount": 2,
+    "actorRecordsAreNotCurrentKernelExitProof": true,
+    "unit": {
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "InvocationID": ""
+    },
+    "notFoundDefaultsDoNotRequalifyOriginalRuntimeProfile": true,
+    "originalRecordPinCount": 136,
+    "stateSHA256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+    "fiveFilePins": {
+      "state.json": {
+        "sha256": "248a315d8aceae46096a09a09f246a9dd6d3649a3a642e1eda1cc2dd90bad26d",
+        "bytes": 22603
+      },
+      "work/postgres.created.json": {
+        "sha256": "1fbf6aaf648a45d97374328a45d3622ba1639d232ce74a4c6de698c315cf690f",
+        "bytes": 313
+      },
+      "work/pg4-runner.created.json": {
+        "sha256": "5fc37387efd36032543806ea38071e929feed2e27e8a4444c26237d383b5e6e8",
+        "bytes": 315
+      },
+      "work/internal-network.created.json": {
+        "sha256": "5eda528b469e961ee9cf52606edef54502ec9b3e374c2f52929184ae577576ef",
+        "bytes": 321
+      },
+      "work/postgres-data.created.json": {
+        "sha256": "a37c6455d704c29ca90630364eae2dfcfc4c4baca7081b262214ce976fbcf516",
+        "bytes": 329
+      }
+    },
+    "fivePinsAgreeWithTerminalAndDataSeal": true,
+    "fiveOriginalFileBytesIndependentlyRead": false,
+    "driverRetainedMetadataPin": {
+      "sha256": "2e456ec49393dba213034969549f6ee7143db87788419ae917dcf81cea4ec27a",
+      "bytes": 2066
+    },
+    "driverRawBytesIndependentlyRead": false,
+    "otherFourRetainedReportPinsAbsentFromTerminalMap": true,
+    "actualMissingHistoryIndependentlyRead": false,
+    "reportOrCaseOrBusinessResultAcceptance": false,
+    "cleanupIndependentlyVerified": false
+  },
+  "sourceListBindings": {
+    "lists": {
+      "public": {
+        "count": 620,
+        "canonicalSHA256": "e60e1829de4978b4375add54018ab55df4e06186ec86e9269fff2f858ffa35fe"
+      },
+      "private": {
+        "count": 620,
+        "canonicalSHA256": "e60e1829de4978b4375add54018ab55df4e06186ec86e9269fff2f858ffa35fe"
+      },
+      "parentResult": {
+        "count": 610,
+        "canonicalSHA256": "f64dd317fbd6feeb224545cb95387567cb254068032311ec8f549034ed0ec7f2"
+      },
+      "parentSnapshot": {
+        "count": 610,
+        "canonicalSHA256": "f64dd317fbd6feeb224545cb95387567cb254068032311ec8f549034ed0ec7f2"
+      }
+    },
+    "parent610ListUnchanged": true,
+    "samePathPinsNonConflicting": true,
+    "source610SemanticOrPhysicalGraphReviewRepeated": false
+  },
+  "physicalRefsInitialAndFinalVerified": 18,
+  "physicalRefs": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-first-error-main607-main-actual-check-observation-1792129973698-1e485bc8-cc94-4687-bb62-fedf2c844e4a.json",
+      "sha256": "429c6d2a2f3af8550f6bd6b28c25885edf4de3e7a04259260c484b44c2ac2d5e",
+      "bytes": 162566
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-main607-actual-check-original-byte-local-seal.json",
+      "sha256": "9384585e81a880c2998311cfd292274496473e5da9eeb682c25eea98b3ee4c04",
+      "bytes": 1577
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r37-first-error-main607-entry-private-check-outcome-1792129973469-27c41c30-f197-41c0-ba5e-1ce3b0f38f48.json",
+      "sha256": "7aec52d7a982158724128e1b6d1455daf32b1c1c78086b439526b005ef7a7014",
+      "bytes": 289568
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-qa-main607-actual-check-parent-journal-snapshot.json",
+      "sha256": "af60d75b706748c6f74d3a74c65e3fde061bb1b880cc3930b59afb8b94fbe699",
+      "bytes": 3883121
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-qa-main607-original-check-parent-frame.json",
+      "sha256": "ee1afb49282dcadc03a3bad683d0a64c66baab04d39813686e8bd2f18533a22a",
+      "bytes": 21282
+    },
+    {
+      "path": ".jarvis-dev/maintenance/pg4-r33-parent-private-1792129972593-17c5a726-ba66-4607-bb46-d374e7b54629.json",
+      "sha256": "7ce09012803dc0ee185c4a29c8bbfab4b72e751c2ae61601f408206c893ab05d",
+      "bytes": 28697
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-check-operator-outcome.json",
+      "sha256": "8288c30904c059a70c7095145f4da5c1b79977cb3a8a1e9dbc685a8dd667d196",
+      "bytes": 178788
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-qa-main607-actual-start-parent-journal-snapshot-84c2dd99-8cae-4d33-8fe6-71ee17dae802.json",
+      "sha256": "eb20eeb15ea33cb4288a7ba93b735afaed4f637d2d33ba015db24a3b2c5121bb",
+      "bytes": 3882854
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-check-local-truncated-hash-preinvoke-refusal.json",
+      "sha256": "5a2966e0d7286df63390ffbdf51f99a2698c4b8bf28255bf9bd83e6b3705d5e7",
+      "bytes": 1153
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-first-error-main607-context.json",
+      "sha256": "a0cd401a159fa8c4d76a0c75fb2b1baadc15ac54c394b288d5a6787fc0c36220",
+      "bytes": 964
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-first-error-main607-specific-entry-independent-local-review-final.json",
+      "sha256": "b146d8eadad65fbf3b2988b6ad84ec08e9085915e9ce4ef1a9365e9fd1073dda",
+      "bytes": 159476
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-pg4-qa-first-error-main607-corrected-r2-once.mjs",
+      "sha256": "8bae2ed20157c31124266fa5cee5b3b1437a887ca44fe09ed8b1640eab165e99",
+      "bytes": 19187
+    },
+    {
+      "path": ".jarvis-dev/maintenance/run-r37-pg4-qa-first-error-main607-reviewed-main.py",
+      "sha256": "7e7480cd382dd0e8ae7965bf2e7fd2b90bf2dcf4b077f958005ea5df4eda58cb",
+      "bytes": 3770
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-qa-first-error-main607-complete-family-independent-local-source-review-final.json",
+      "sha256": "95807a7fcafbb43fcc508db8e3b0fe3bde5239c02f1f93f04e975f04076d17e1",
+      "bytes": 22603
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-terminal5-actual-data-seal.json",
+      "sha256": "8f2e9580cec4b38b09c00f24c00e40e971f473817d619c90c1242e9fca4aaba6",
+      "bytes": 2861
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-first-error-main607-entry-check-once.json",
+      "sha256": "16a4216868089da6cdec8582e3473d234d183fe5b548d1ce0b3f7bc8a609bebf",
+      "bytes": 274
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-first-error-main607-entry-check-outcome.json",
+      "sha256": "4d4db5aeba55a85391677f60244bfc3373ff8a5bc39f5bd70fccd710fda59946",
+      "bytes": 133864
+    },
+    {
+      "path": ".jarvis-dev/maintenance/factory-r37-pg4-qa-first-error-main607-once.json.check-once.json",
+      "sha256": "6706d994473a0e51671310332b18d6743e2f71c93c3616f88eb00efe22248a0a",
+      "bytes": 217
+    }
+  ],
+  "actualPG4Qualified": false,
+  "normalQAQualified": false,
+  "currentBusinessQualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "productAccepted": false,
+  "full74ObjectivesAccepted": false,
+  "limitations": [
+    "Transport exit0 means the CHECK read succeeded; the observed producer state is failed.",
+    "Only module-import/R33_PG4_DRIVER_STAGE_INCOMPLETE is known. The raw retained driver body and its exact module cause are not reviewed here.",
+    "The five terminal pins and driver2066-byte pin are metadata only in this audit; original bytes and four missing-report history await their authorized readers.",
+    "Owner/stop identity records and unit-not-found are not an independent current process/FD/socket/resource/label/ACK closure census.",
+    "The local truncated-hash refusal has safe facts and source-order corroboration, but no separately saved raw tool-output file; it is preserved rather than presented as a remote CHECK failure.",
+    "No source/start/check/old once, model, API or remote operation was performed by this reviewer."
+  ],
+  "reviewerActions": {
+    "remoteCalls": 0,
+    "apiCalls": 0,
+    "subjectImportsOrFunctions": 0,
+    "testsRun": 0,
+    "modelCalls": 0,
+    "exportsRun": 0,
+    "starts": 0,
+    "checks": 0,
+    "terminal5SourceOrEntryReviewRepeated": false,
+    "originalEvidenceModified": false
+  },
+  "fees": {
+    "policy": "record-only-no-cap",
+    "supplierModelCalls": 0,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

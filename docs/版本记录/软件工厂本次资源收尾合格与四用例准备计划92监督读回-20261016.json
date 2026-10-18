@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-16T08:19:18.745Z",
+  "fixedMetadataVersionDecision": {
+    "id": "db8b2ca6-1b13-47df-8848-772a486eea72",
+    "revision": 2,
+    "status": "implemented",
+    "hash": "02de20fc916242b49d125973d21aa0a29fd7765e1d2ed508ff1489c0b1cbc697",
+    "independentAcceptance": false
+  },
+  "driverDecision": {
+    "id": "5d37103d-eee0-4805-92fe-81513a53e209",
+    "revision": 3,
+    "status": "implemented",
+    "hash": "9797425ea448270719e4e1bbed5c55bcf071e9b8aa2637269f9fdecb179b997e",
+    "independentAcceptance": false
+  },
+  "driverNewActionState": "planned",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 92,
+    "hash": "62a6ac251437ea2b0118d15123188b6b342a4f57a37cb0ff00e0c6cb0202da97",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "按最窄新目的集成已审driver与固定属性保护，保原回调、SQL和首错留存；新SOURCE、实际参数、独立入口及新鲜保护均合格后，只启动一次新的四用例验证。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 10,
+    "hash": "dcde8181745e04a5e34e2fbfdec784b52ff07c5e0540ef0776d771ce441e5b44",
+    "summary": "完整保护和本次资源收尾已核对通过。现在集成测试框架加载修正，准备重新验证四个关键用例；用例尚未计为通过。",
+    "nextAction": "按最窄新目的集成已审driver与固定属性保护，保原回调、SQL和首错留存；新SOURCE、实际参数、独立入口及新鲜保护均合格后，只启动一次新的四用例验证。",
+    "blocker": "修正后的QA家族与具体入口尚未完成，新四用例尚未启动；本次保护与资源合格不代未来新鲜保护。",
+    "validationScope": "仅2026-10-16T08:00Z左右这次保存epoch的完整保护与3164当前资源范围。中段2×255全读；after-native首267=265读取+2绑定退出，未知0，不能写全读或原owner kernel退出。137行metadata保原整数，274超JS安全域、parsed行有舍入，资格据原wire canonicalH。候选may原null/ABI false/四用例0通过0业务失败4未完成/原74不变，未来START仍需新鲜保护。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 23,
+  "matchingPersistedNotifications": 1,
+  "oldAutonomyTasksAndGlobalUnchanged": true,
+  "allOriginalFiveStepCriteriaTaskRunAndTitlesGoalsPreserved": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "currentActualSHA256": "3c5e561ac86c66ef300ce162d69344bafcd996fb8615c27e6181b3de59d2ad57",
+  "currentSavedReviewSHA256": "d3f2938c0a4789f25e6ebf6fcc56ef1e2bca41030e557a9a42bb8e2befcc1207",
+  "fullProtectionIndependentlyQualified": true,
+  "currentResourceScopeClosedIndependentlyQualified": true,
+  "scopeIsOnlyThisSavedEpoch": true,
+  "futureFreshProtectionRequired": true,
+  "sourceFamilyIntegrated": false,
+  "newQAActuallyExecuted": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0
+}

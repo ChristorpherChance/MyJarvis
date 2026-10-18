@@ -1,0 +1,82 @@
+{
+  "intentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:9:0:8278fcb5a9258957994f510ff07690159d1f7f4d:597800c94fbd91287d026476a010454a1f0bac07d5abf75382c53bcec17a20d2",
+  "sourceRunId": "8278fcb5a9258957994f510ff07690159d1f7f4d",
+  "sourceResultHash": "597800c94fbd91287d026476a010454a1f0bac07d5abf75382c53bcec17a20d2",
+  "state": "started",
+  "binding": "77f5e2ba12d8f41fe6c967e62067446fc6db7f75982f4b08592dd3e6478c66de",
+  "observations": [
+    {
+      "sequence": 58,
+      "status": "input-blocked",
+      "reason": null,
+      "inputDiagnostic": {
+        "components": {
+          "goal": {
+            "UTF8bytes": 340,
+            "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+            "count": 1
+          },
+          "criteria": {
+            "UTF8bytes": 765,
+            "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+            "count": 3
+          },
+          "corrections": {
+            "UTF8bytes": 1360,
+            "sha256": "cf8792052272c3d30d2536540fa9946674186bbcfcc422b8705682b2071aaa49",
+            "count": 1
+          },
+          "originals": {
+            "UTF8bytes": 57431,
+            "sha256": "8097ea7a98c1198486745427dd409c30d255c10d1449bcdfc03b9e521200b3a4",
+            "count": 25
+          },
+          "selected": {
+            "UTF8bytes": 2,
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "count": 0
+          },
+          "exclusions": {
+            "UTF8bytes": 8283,
+            "sha256": "5ec2b5bfa69622cd1d48f03d065934b10ba2b3568d8c6b332ea36823eb1e56d9",
+            "count": 49
+          },
+          "other": {
+            "UTF8bytes": 11304,
+            "sha256": "491b5cce3539cc3e59640bf2954824bdf5ed71ec6af4468103b97957dd090c0f",
+            "count": 1
+          },
+          "total": {
+            "UTF8bytes": 79581,
+            "sha256": "4b44baf8493d70beb8b7c17bca93df57e7a806d85344f45d162628f4ced72cb1",
+            "count": 1
+          }
+        },
+        "prompt": {
+          "UTF8bytes": 81717,
+          "sha256": "754028bc6b0000dfc56dec717cd6d719db7f001510176bdcabf306511bbfeed1",
+          "count": 1
+        },
+        "limitUTF8bytes": 65536,
+        "binding": {
+          "goalRevision": 9,
+          "sourceRunSHA256": "564ef2277d91cc1d3d1da95f6333f4b99714c204480cf94cb4b853d757d19eb0",
+          "resultHash": "597800c94fbd91287d026476a010454a1f0bac07d5abf75382c53bcec17a20d2"
+        },
+        "frozenSHA256": "77f5e2ba12d8f41fe6c967e62067446fc6db7f75982f4b08592dd3e6478c66de"
+      }
+    },
+    {
+      "sequence": 59,
+      "status": "failed",
+      "reason": "MODEL_CONTEXT_INCOMPLETE",
+      "inputDiagnostic": null
+    }
+  ],
+  "rawInputOrProviderResponseReturned": false,
+  "databaseMode": "ro/query_only",
+  "modelInvokedOrRetried": false,
+  "kind": "r51-r1-new-goal9-input-diagnostic",
+  "operationId": "63b8f76e-4cd3-4631-9ec5-a6dd7ea75777",
+  "at": "2026-10-18T09:33:57.662Z"
+}

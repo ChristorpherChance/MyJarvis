@@ -1,0 +1,665 @@
+{
+  "at": "2026-10-17T13:40:35.889Z",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decisionId": "3b504ecc-3a0c-4297-9f99-1f62ef8bdc25",
+  "revision": 2,
+  "hash": "4f3f67adfa49a940cd35997773d60a897f3821d8e7b0ae564830cfee6f1732f2",
+  "priorActionsPreserved": true,
+  "originalApplySuccess": false,
+  "decision": {
+    "questionSummary": "怎样让101现有CC任务接上新监管流程，同时保留配对身份、原会话及全部历史？",
+    "context": {
+      "observedAt": "2026-10-17T12:27:08.883Z",
+      "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+      "sourceFingerprint": "d0c49b085e82255bf39738d19d5d0ac120a741232722601b2e641dbe1e002bcc",
+      "sourceVersion": "当前112R41/config45；固定R8合同静核，R9仍在开发",
+      "runId": null,
+      "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+      "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+      "objectives": [
+        "R43-REGULATION-CONTROL",
+        "R43-ACCOUNTING-RECONCILE"
+      ],
+      "constraints": [
+        "先通过最终源码审和双端代码升级，再另立新鲜空闲配置切换",
+        "同原executorId/agent/task/session，完整旧config45私存与安全H保留",
+        "仅当前目标模板用途/单轮/重试/validator改变，所有其它模板/probes/wol/R22/global/旧run与账保持",
+        "先核新中央配置，再原节点空闲同步/同身份重启，adopt另作实际模型执行",
+        "费用只记录无美元上限，未知不填0，旧自治与十分钟PAUSED保持"
+      ],
+      "situation": "实际读取msf-101-claude尚purpose=null/maxRounds10/recovery3/repairValidationtrue/有validator，R43要求专用single-round record-only模板。起初考虑另加模板，但固定产品合同没有task-agent更新或保身份追加capability入口，且原source.executor_id必须匹配。保持原ID可复用既有配对能力和原任务来源，现有配置CAS支持目标专用化；旧配置全文归档，不冒当前目标完全不变。"
+    },
+    "options": [
+      {
+        "id": "specialize-same-executor-id",
+        "title": "保全旧版本后将现有执行器ID专用化",
+        "advantages": [
+          "无需改旧任务、配对身份或运行来源，沿现有CAS接口完成",
+          "原配置完整归档，其余模板及原执行证据保持"
+        ],
+        "disadvantages": [
+          "该目标的未来用途会改变；须单独空闲同步和同身份重启"
+        ],
+        "impact": "仅在R43双端代码合格后改变一条目标模板；当前不实施。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "new-id-and-product-handoff",
+        "title": "新增执行器ID并开发任务及配对迁移",
+        "advantages": [
+          "可同时保留一条旧用途的活动模板"
+        ],
+        "disadvantages": [
+          "当前合同不支持task-agent迁移和保身份追加能力，原source绑定也不匹配",
+          "需额外产品接口与验证才能实现，增加此次交付范围"
+        ],
+        "impact": "引入新的迁移能力及身份/来源接缝。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "missing",
+        "missingEvidence": [
+          "缺支持的同task executor handoff合同",
+          "缺同agent追加capability合同",
+          "原source executorId不等于新ID"
+        ],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "operationalImpact": 2
+      }
+    ],
+    "chosenId": "specialize-same-executor-id",
+    "decisionRationale": "根据真实配置和固定源码合同，采用同ID专用化比新增迁移接口更小。保旧配置字节与版本证据、原CC会话/账/旧验证结果；只有新请求不再自动执行旧validator。最终源码、双端代码和新鲜空闲仍是执行前提，当前不改变config45或启动模型。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-supervisor-r43/release-supervisor-template-readiness.json",
+        "sha256": "01f18f2978b85abc8e72e67837bf5aa09a3df933aef0448eb5bb68134a2fc682",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-template-transition-final-plan.json",
+        "sha256": "b59b5b51ebf9247f7610158ba09b3bacda531612e12cbe050d376cdafdc71bb8",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "R43-REGULATION-CONTROL",
+      "R43-ACCOUNTING-RECONCILE"
+    ],
+    "rollbackPlan": {
+      "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+      "triggers": [
+        "身份/会话/源码绑定变化",
+        "终态或原件不完整",
+        "权限配置发生未核变化"
+      ],
+      "impact": "影响101后继CC；不改112业务或旧账。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "最终R43代码通过并双端升级后，另用新鲜空闲证据/CAS将原ID目标转为project-supervisor单轮record-only，保其它配置与历史；同步节点原配置并同身份重启。",
+        "at": "2026-10-17T12:27:08.883Z",
+        "state": "planned",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-supervisor-template-readiness.json",
+            "sha256": "01f18f2978b85abc8e72e67837bf5aa09a3df933aef0448eb5bb68134a2fc682",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-template-transition-final-plan.json",
+            "sha256": "b59b5b51ebf9247f7610158ba09b3bacda531612e12cbe050d376cdafdc71bb8",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "已先私存完整旧配置，在13项空闲守门与源/任务/历史固定指纹下完成中央配置45→46和101单目标模板安装；用途project-supervisor、单轮、record-only、1200秒、无fallback/自动recovery/repairValidation/validator。原executor/agent/task/nativeSession/身份、其它模板/probes/wol/global/R22及历史保持。",
+        "at": "2026-10-17T13:40:34.463Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+            "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+            "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+            "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+            "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "原apply在restart确认失败并保持失败CLOSED；Root辅助核验错误地把紧凑JSON安装字节作为正常启动格式化保存后的哈希，且包装器未保留原restart false对象。后续只读核验必须按冻结源码的纯模板规范化+JSON.stringify2派生预期完整字节并核全部当前守门；没有重启、CAS重放或修改旧失败回执。",
+        "at": "2026-10-17T13:40:34.463Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+            "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+            "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+            "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+            "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+            "kind": "observation"
+          }
+        ]
+      },
+      {
+        "summary": "当前资格来自新增只读实际回执；原maintenance状态仍restart-intent、原applySuccess=false历史不改。配置到位和节点在线不等于真实监管/model/CC/browser端到端验收，原74和客户12未签、十分钟跟进继续暂停。",
+        "at": "2026-10-17T13:40:34.463Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+            "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+            "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+            "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+            "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+            "kind": "observation"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "3b504ecc-3a0c-4297-9f99-1f62ef8bdc25",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 2,
+    "createdAt": "2026-10-17T12:27:09.500Z",
+    "updatedAt": "2026-10-17T13:40:35.783Z",
+    "changeOf": null,
+    "changeOfRevision": null,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": "specialize-same-executor-id",
+      "status": "recommended",
+      "candidates": [
+        {
+          "id": "specialize-same-executor-id",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "new-id-and-product-handoff",
+          "eligible": false,
+          "reasons": [
+            "ENVIRONMENT_EVIDENCE_MISSING"
+          ],
+          "rank": null
+        }
+      ],
+      "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "5421ecbc00f600a64cf9eeef4b1f82a39f69e618afd8411f7c39954937bc087d",
+    "revisionReason": "同ID监管模板已实际写入，保留失败编排与原错误缺失边界；用独立只读资格记录当前运行状态，不重放原切换。",
+    "hash": "4f3f67adfa49a940cd35997773d60a897f3821d8e7b0ae564830cfee6f1732f2",
+    "revisions": [
+      {
+        "questionSummary": "怎样让101现有CC任务接上新监管流程，同时保留配对身份、原会话及全部历史？",
+        "context": {
+          "observedAt": "2026-10-17T12:27:08.883Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "d0c49b085e82255bf39738d19d5d0ac120a741232722601b2e641dbe1e002bcc",
+          "sourceVersion": "当前112R41/config45；固定R8合同静核，R9仍在开发",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "先通过最终源码审和双端代码升级，再另立新鲜空闲配置切换",
+            "同原executorId/agent/task/session，完整旧config45私存与安全H保留",
+            "仅当前目标模板用途/单轮/重试/validator改变，所有其它模板/probes/wol/R22/global/旧run与账保持",
+            "先核新中央配置，再原节点空闲同步/同身份重启，adopt另作实际模型执行",
+            "费用只记录无美元上限，未知不填0，旧自治与十分钟PAUSED保持"
+          ],
+          "situation": "实际读取msf-101-claude尚purpose=null/maxRounds10/recovery3/repairValidationtrue/有validator，R43要求专用single-round record-only模板。起初考虑另加模板，但固定产品合同没有task-agent更新或保身份追加capability入口，且原source.executor_id必须匹配。保持原ID可复用既有配对能力和原任务来源，现有配置CAS支持目标专用化；旧配置全文归档，不冒当前目标完全不变。"
+        },
+        "options": [
+          {
+            "id": "specialize-same-executor-id",
+            "title": "保全旧版本后将现有执行器ID专用化",
+            "advantages": [
+              "无需改旧任务、配对身份或运行来源，沿现有CAS接口完成",
+              "原配置完整归档，其余模板及原执行证据保持"
+            ],
+            "disadvantages": [
+              "该目标的未来用途会改变；须单独空闲同步和同身份重启"
+            ],
+            "impact": "仅在R43双端代码合格后改变一条目标模板；当前不实施。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "new-id-and-product-handoff",
+            "title": "新增执行器ID并开发任务及配对迁移",
+            "advantages": [
+              "可同时保留一条旧用途的活动模板"
+            ],
+            "disadvantages": [
+              "当前合同不支持task-agent迁移和保身份追加能力，原source绑定也不匹配",
+              "需额外产品接口与验证才能实现，增加此次交付范围"
+            ],
+            "impact": "引入新的迁移能力及身份/来源接缝。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "missing",
+            "missingEvidence": [
+              "缺支持的同task executor handoff合同",
+              "缺同agent追加capability合同",
+              "原source executorId不等于新ID"
+            ],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 2
+          }
+        ],
+        "chosenId": "specialize-same-executor-id",
+        "decisionRationale": "根据真实配置和固定源码合同，采用同ID专用化比新增迁移接口更小。保旧配置字节与版本证据、原CC会话/账/旧验证结果；只有新请求不再自动执行旧validator。最终源码、双端代码和新鲜空闲仍是执行前提，当前不改变config45或启动模型。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-supervisor-template-readiness.json",
+            "sha256": "01f18f2978b85abc8e72e67837bf5aa09a3df933aef0448eb5bb68134a2fc682",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-template-transition-final-plan.json",
+            "sha256": "b59b5b51ebf9247f7610158ba09b3bacda531612e12cbe050d376cdafdc71bb8",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "最终R43代码通过并双端升级后，另用新鲜空闲证据/CAS将原ID目标转为project-supervisor单轮record-only，保其它配置与历史；同步节点原配置并同身份重启。",
+            "at": "2026-10-17T12:27:08.883Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-supervisor-template-readiness.json",
+                "sha256": "01f18f2978b85abc8e72e67837bf5aa09a3df933aef0448eb5bb68134a2fc682",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-template-transition-final-plan.json",
+                "sha256": "b59b5b51ebf9247f7610158ba09b3bacda531612e12cbe050d376cdafdc71bb8",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "selected",
+        "origin": "ai",
+        "id": "3b504ecc-3a0c-4297-9f99-1f62ef8bdc25",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-17T12:27:09.500Z",
+        "updatedAt": "2026-10-17T12:27:09.500Z",
+        "changeOf": null,
+        "changeOfRevision": null,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "specialize-same-executor-id",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "specialize-same-executor-id",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "new-id-and-product-handoff",
+              "eligible": false,
+              "reasons": [
+                "ENVIRONMENT_EVIDENCE_MISSING"
+              ],
+              "rank": null
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "记录当时的问题与选择",
+        "hash": "5421ecbc00f600a64cf9eeef4b1f82a39f69e618afd8411f7c39954937bc087d"
+      },
+      {
+        "questionSummary": "怎样让101现有CC任务接上新监管流程，同时保留配对身份、原会话及全部历史？",
+        "context": {
+          "observedAt": "2026-10-17T12:27:08.883Z",
+          "goalSpecHash": "574c7343c1c37349b3364012c059ea80a72c83e11675150a3ec91a44de33d024",
+          "sourceFingerprint": "d0c49b085e82255bf39738d19d5d0ac120a741232722601b2e641dbe1e002bcc",
+          "sourceVersion": "当前112R41/config45；固定R8合同静核，R9仍在开发",
+          "runId": null,
+          "taskId": "ac662885-fbf9-40d3-8f90-1a0933364fa1",
+          "machineId": "b737bb02-1ad7-48e8-8c8a-00fdfb44ef73",
+          "objectives": [
+            "R43-REGULATION-CONTROL",
+            "R43-ACCOUNTING-RECONCILE"
+          ],
+          "constraints": [
+            "先通过最终源码审和双端代码升级，再另立新鲜空闲配置切换",
+            "同原executorId/agent/task/session，完整旧config45私存与安全H保留",
+            "仅当前目标模板用途/单轮/重试/validator改变，所有其它模板/probes/wol/R22/global/旧run与账保持",
+            "先核新中央配置，再原节点空闲同步/同身份重启，adopt另作实际模型执行",
+            "费用只记录无美元上限，未知不填0，旧自治与十分钟PAUSED保持"
+          ],
+          "situation": "实际读取msf-101-claude尚purpose=null/maxRounds10/recovery3/repairValidationtrue/有validator，R43要求专用single-round record-only模板。起初考虑另加模板，但固定产品合同没有task-agent更新或保身份追加capability入口，且原source.executor_id必须匹配。保持原ID可复用既有配对能力和原任务来源，现有配置CAS支持目标专用化；旧配置全文归档，不冒当前目标完全不变。"
+        },
+        "options": [
+          {
+            "id": "specialize-same-executor-id",
+            "title": "保全旧版本后将现有执行器ID专用化",
+            "advantages": [
+              "无需改旧任务、配对身份或运行来源，沿现有CAS接口完成",
+              "原配置完整归档，其余模板及原执行证据保持"
+            ],
+            "disadvantages": [
+              "该目标的未来用途会改变；须单独空闲同步和同身份重启"
+            ],
+            "impact": "仅在R43双端代码合格后改变一条目标模板；当前不实施。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 1
+          },
+          {
+            "id": "new-id-and-product-handoff",
+            "title": "新增执行器ID并开发任务及配对迁移",
+            "advantages": [
+              "可同时保留一条旧用途的活动模板"
+            ],
+            "disadvantages": [
+              "当前合同不支持task-agent迁移和保身份追加能力，原source绑定也不匹配",
+              "需额外产品接口与验证才能实现，增加此次交付范围"
+            ],
+            "impact": "引入新的迁移能力及身份/来源接缝。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "missing",
+            "missingEvidence": [
+              "缺支持的同task executor handoff合同",
+              "缺同agent追加capability合同",
+              "原source executorId不等于新ID"
+            ],
+            "reversibility": "bounded",
+            "coveredObjectives": [
+              "R43-REGULATION-CONTROL",
+              "R43-ACCOUNTING-RECONCILE"
+            ],
+            "operationalImpact": 2
+          }
+        ],
+        "chosenId": "specialize-same-executor-id",
+        "decisionRationale": "根据真实配置和固定源码合同，采用同ID专用化比新增迁移接口更小。保旧配置字节与版本证据、原CC会话/账/旧验证结果；只有新请求不再自动执行旧validator。最终源码、双端代码和新鲜空闲仍是执行前提，当前不改变config45或启动模型。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/cc-supervisor-r43/release-supervisor-template-readiness.json",
+            "sha256": "01f18f2978b85abc8e72e67837bf5aa09a3df933aef0448eb5bb68134a2fc682",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-template-transition-final-plan.json",
+            "sha256": "b59b5b51ebf9247f7610158ba09b3bacda531612e12cbe050d376cdafdc71bb8",
+            "kind": "observation"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [
+          "R43-REGULATION-CONTROL",
+          "R43-ACCOUNTING-RECONCILE"
+        ],
+        "rollbackPlan": {
+          "plan": "停止后继派发并保原件；权限若需回退只在无运行、当前settings指纹匹配时恢复该字段/原文件，后继已变则字段CAS。未执行回退。",
+          "triggers": [
+            "身份/会话/源码绑定变化",
+            "终态或原件不完整",
+            "权限配置发生未核变化"
+          ],
+          "impact": "影响101后继CC；不改112业务或旧账。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "最终R43代码通过并双端升级后，另用新鲜空闲证据/CAS将原ID目标转为project-supervisor单轮record-only，保其它配置与历史；同步节点原配置并同身份重启。",
+            "at": "2026-10-17T12:27:08.883Z",
+            "state": "planned",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-supervisor-template-readiness.json",
+                "sha256": "01f18f2978b85abc8e72e67837bf5aa09a3df933aef0448eb5bb68134a2fc682",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-template-transition-final-plan.json",
+                "sha256": "b59b5b51ebf9247f7610158ba09b3bacda531612e12cbe050d376cdafdc71bb8",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "已先私存完整旧配置，在13项空闲守门与源/任务/历史固定指纹下完成中央配置45→46和101单目标模板安装；用途project-supervisor、单轮、record-only、1200秒、无fallback/自动recovery/repairValidation/validator。原executor/agent/task/nativeSession/身份、其它模板/probes/wol/global/R22及历史保持。",
+            "at": "2026-10-17T13:40:34.463Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+                "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+                "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+                "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+                "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "原apply在restart确认失败并保持失败CLOSED；Root辅助核验错误地把紧凑JSON安装字节作为正常启动格式化保存后的哈希，且包装器未保留原restart false对象。后续只读核验必须按冻结源码的纯模板规范化+JSON.stringify2派生预期完整字节并核全部当前守门；没有重启、CAS重放或修改旧失败回执。",
+            "at": "2026-10-17T13:40:34.463Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+                "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+                "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+                "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+                "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+                "kind": "observation"
+              }
+            ]
+          },
+          {
+            "summary": "当前资格来自新增只读实际回执；原maintenance状态仍restart-intent、原applySuccess=false历史不改。配置到位和节点在线不等于真实监管/model/CC/browser端到端验收，原74和客户12未签、十分钟跟进继续暂停。",
+            "at": "2026-10-17T13:40:34.463Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-current-runtime-qualification.json",
+                "sha256": "f9bc1a9f0943c1ab57158773ec8865d10654074211f0e69da0465a11c6499146",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-apply-r2.json",
+                "sha256": "f85dad986283099b7c7f5ae0937d82f08eaca07420e24e342fbaadb826ffd0a2",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/release-r7/template-readonly-reconciliation.json",
+                "sha256": "ddf625e8f267c1487e6088c6977e6b20918c14ad58c7845d6cac0abcdd3c049f",
+                "kind": "observation"
+              },
+              {
+                "reference": "artifacts/cc-supervisor-r43/r43-same-id-supervisor-transition-r2-failure-source-analysis.json",
+                "sha256": "34460ae40993f3687acb2212246fb1a4b6d0848c42d04a0ea28eb8f59438a9af",
+                "kind": "observation"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "3b504ecc-3a0c-4297-9f99-1f62ef8bdc25",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 2,
+        "createdAt": "2026-10-17T12:27:09.500Z",
+        "updatedAt": "2026-10-17T13:40:35.783Z",
+        "changeOf": null,
+        "changeOfRevision": null,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "specialize-same-executor-id",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "specialize-same-executor-id",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "new-id-and-product-handoff",
+              "eligible": false,
+              "reasons": [
+                "ENVIRONMENT_EVIDENCE_MISSING"
+              ],
+              "rank": null
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "5421ecbc00f600a64cf9eeef4b1f82a39f69e618afd8411f7c39954937bc087d",
+        "revisionReason": "同ID监管模板已实际写入，保留失败编排与原错误缺失边界；用独立只读资格记录当前运行状态，不重放原切换。",
+        "hash": "4f3f67adfa49a940cd35997773d60a897f3821d8e7b0ae564830cfee6f1732f2"
+      }
+    ]
+  }
+}

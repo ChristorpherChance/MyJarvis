@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-context-sentinel-minimal-repair-root-selection",
+  "at": "2026-10-16T11:15:53.353973+00:00",
+  "userGoal": "Obtain actual four-case results and preserve real failures while keeping all original 74 acceptance criteria.",
+  "evidence": {
+    "independentAnalysis": {
+      "path": "artifacts/software-factory/goals-r29/r37-normalized-api-context-reporter-guard-independent-local-analysis.json",
+      "sha256": "9ad5432deeb863e0687a30634586259f254471ed34719456d1bac4b02d1db92c",
+      "bytes": 15664
+    },
+    "actualCheck": {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-main-actual-check-observation-1792148605232-a84d0905-07f6-4168-ba84-db3ed5324e74.json",
+      "sha256": "b816e3682492c516b5c22598036c80e19e4ca97dda8a1fe6ab3ad15bfcfb0f73",
+      "bytes": 3041
+    }
+  },
+  "alternatives": [
+    {
+      "name": "minimal-local-sentinel-repair-and-closed-guard-facts",
+      "selected": true,
+      "benefit": "Correct the proven same-version false/undefined mismatch without another diagnostic run; preserve which context/reporter predicate actually rejects in existing private error output.",
+      "cost": "A separate successor driver source, one necessary targeted pure group and independent source review are required."
+    },
+    {
+      "name": "additional-onsite-context-only-diagnostic-before-any-repair",
+      "selected": false,
+      "benefit": "Could observe actual context predicate values in a separately qualified future diagnostic.",
+      "cost": "Adds new onsite preparation and a remote operation despite an already proven sufficient source incompatibility."
+    }
+  ],
+  "implementationScope": {
+    "newDriverPath": "scripts/factory-pg4-qa-startup-driver-r37-context-sentinel.mjs",
+    "oldDriverSHA256": "0fd0414f84fd7c34135c01b61b9c0e0c6756de616d38ffdc88c3e5f52dc8bb05",
+    "fix": "Use the pinned resolved undefined sentinel for disabled file loading and also require empty configFileDependencies; retain explicitly disabled inline input and the other eight context/reporter conditions.",
+    "diagnostics": "Preserve first rejected context/reporter condition using only fixed literal condition names and boolean or not-evaluated values in the existing private driver failure report; preserve short circuit and primary error order. Do not store context objects, internal tokens, values, paths, Env or error bodies in public output.",
+    "kept": "API guard and other normalized-config predicates, plugins, 13 modules and 12-host+1-deferred contract, original callbacks/hooks/SQL/fixture, freshness, limits, failure/close/private retention and public protocols remain unchanged.",
+    "validation": "One new targeted pure group only; no framework, fixture, candidate, old groups, remote calls or model runs.",
+    "newQAAllowedNow": false
+  },
+  "actualContextRecovered": false,
+  "actualHistoricalShortCircuitProven": false,
+  "selected": true,
+  "implemented": false,
+  "independentlySourceQualified": false,
+  "newEntryOrQAExecuted": false,
+  "currentDQualificationPending": true,
+  "original74AcceptanceChanged": false,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false,
+  "rollbackCondition": "Reject successor source or entry if exact inverse, retained gates, closed diagnostics or targeted validation fails; preserve all originals and do not dispatch."
+}

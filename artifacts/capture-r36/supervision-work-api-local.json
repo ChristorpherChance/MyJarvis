@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "kind": "factory-supervision-r36-api-local-protocol",
+  "scope": "new synthetic local API/runtime/SSE cases only",
+  "sourceHashes": {
+    "apps/api/src/runtime/supervision-work-runtime.ts": "37d5c3df8d5d1298238cd2bfcf457947c5419c23efdaeb67dc41888854ff7a03",
+    "apps/api/src/runtime/supervision-work-routes.ts": "0090ab1811a53082e567d2c7baeecc3ac2e612b2448965c77c02a685563e0355",
+    "apps/api/src/runtime/notifications.ts": "8c3a1d33d61df371e856d8fcfce1cefca27d00a31a394554a26c6c37885f3f46",
+    "apps/api/src/v1/repository.ts": "42df86773d63ca3e70ae9141ed1ef1cd08707f70614493df4adda08dc4fdc4dd",
+    "apps/api/test/supervision-work.test.ts": "e094309a6dbf0fb0241169fca7c83db88720ba9e7c8ba1d5ef755c5b4b746a79"
+  },
+  "cuts": [
+    {
+      "id": "attempt-1",
+      "groups": 5,
+      "passed": 2,
+      "failed": 3,
+      "result": "failed",
+      "failures": [
+        {
+          "group": "append-only history/no-op",
+          "cause": "Actual source defect: strict body.parse(before) rejected item metadata during revision."
+        },
+        {
+          "group": "owner/current-principal",
+          "cause": "Fixture assertion expected ownership error but the synthetic foreign principal was rejected earlier as expired."
+        },
+        {
+          "group": "real HTTP/SSE",
+          "cause": "Same strict no-op parse defect stopped the work revision."
+        }
+      ],
+      "passedGroups": [
+        "committed execution and rollback/owner notices",
+        "notification outbox restart and cursor recovery"
+      ]
+    },
+    {
+      "id": "attempt-2-failed-only",
+      "groups": 3,
+      "passed": 3,
+      "failed": 0,
+      "result": "passed",
+      "changes": [
+        "No-op equality strips metadata only for stored snapshot comparison; incoming schemas remain strict.",
+        "Foreign-owner fixture now uses actual foreign-owned project with valid admin.",
+        "Stale member-cookie presence gate applies to both work and notification routes."
+      ],
+      "passedGroups": [
+        "append-only history/CAS/idempotency/no-op/completed brief",
+        "owner/current-principal/public refs/bindings",
+        "real HTTP/member-cookie/SSE metadata/replay/session revocation"
+      ]
+    },
+    {
+      "id": "attempt-3-owner-stream-only",
+      "groups": 1,
+      "passed": 1,
+      "failed": 0,
+      "result": "passed",
+      "passedGroups": [
+        "one owner stream across two projects, owner cursor, member/invalid cursor rejection, metadata only"
+      ]
+    }
+  ],
+  "uniqueGroupsWithPassingCut": 6,
+  "singleAllGroupsPassingRunClaimed": false,
+  "checks": {
+    "apiTypecheck": {
+      "command": "npm run typecheck --workspace @jarvis/api",
+      "finalExitCode": 0,
+      "earlierRootTSPageErrorPreserved": true
+    },
+    "diffWhitespace": {
+      "exitCode": 0,
+      "crAtEolRecognized": true
+    }
+  },
+  "facts": {
+    "durableWorkRevisions": true,
+    "durableEventsAndOutbox": true,
+    "commitDrivenSSE": true,
+    "newBusinessPollingTimerAdded": false,
+    "sseHeartbeatSeconds": 15,
+    "ownerOnly": true,
+    "notificationRecoveryUsesExistingScan": true,
+    "independentAcceptanceAutomaticallyChanged": false,
+    "evidenceFileContentsReadOrHashVerifiedByThisAPI": false
+  },
+  "notPerformed": [
+    "remote access",
+    "production changes",
+    "model calls",
+    "old matrix rerun",
+    "build",
+    "commit",
+    "independent product acceptance"
+  ],
+  "modelRequests": 0,
+  "costUSD": 0,
+  "costBasis": "No model or paid-provider calls in this local synthetic protocol scope."
+}

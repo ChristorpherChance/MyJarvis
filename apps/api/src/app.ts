@@ -49,6 +49,8 @@ import {SoftwareFactoryRuntime,registerSoftwareFactoryRoutes,createSoftwareFacto
 import {ProjectAutonomyRuntime} from './runtime/project-autonomy-runtime.js';
 import {ProjectSupervisionPlanRuntime} from './runtime/project-supervision-plan-runtime.js';
 import {registerProjectSupervisionPlanRoutes} from './runtime/project-supervision-plan-routes.js';
+import {SupervisionWorkRuntime} from './runtime/supervision-work-runtime.js';
+import {registerSupervisionWorkRoutes} from './runtime/supervision-work-routes.js';
 import {registerProjectAutonomyRoutes} from './runtime/project-autonomy-routes.js';
 import {ProjectDecisionRuntime} from './runtime/project-decision-runtime.js';
 import {registerProjectDecisionRoutes} from './runtime/project-decision-routes.js';
@@ -192,6 +194,8 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
     try{let current=job;while(['queued','running'].includes(current.status)){input.signal.throwIfAborted();await new Promise(resolve=>setTimeout(resolve,100));current=voice.job(job.id,p);}input.signal.throwIfAborted();if(current.status!=='complete')throw new RuntimeAccessError(String(current.result.code??'TTS_FAILED'),String(current.result.message??'播报合成未完成'),502);return {jobId:job.id,audioUrl:String(current.result.audioUrl),mime:String(current.result.mime),seconds:Number(current.result.seconds),turn:current.turn};}finally{input.signal.removeEventListener('abort',stop);if(input.signal.aborted)try{voice.cancel(job.id,p);}catch{/* Revoked identities cannot fetch or replay the job. */}}
   }});
   startupCleanup.push(()=>notifications?.close());
+  const supervisionWork=new SupervisionWorkRuntime(v1,execution,{directory:join(options.dataDir,'project-supervision-work'),identity,notifications,plans:supervisionPlans});
+  startupCleanup.push(()=>supervisionWork.close());
   const learningSummary:DomainHandler={domain:'learning',commands:['companion-summary'],execute:(_command,p,ctx)=>{const record=ctx.create('learning',{kind:'practice',profile:'me',memberProfileId:p.profileId,type:'language',title:p.title,minutes:Math.floor(p.activeSeconds/60),activeSeconds:p.activeSeconds,rounds:p.rounds,answers:p.rounds.map((r:any)=>r.answer),corrections:p.rounds.filter((r:any)=>r.correction).map((r:any)=>r.correction),score:null,source:'pi-text-companion',assessmentStatus:'text-feedback',lessonId:p.id,time:ctx.now,status:'recorded',createdAt:ctx.now,updatedAt:ctx.now});ctx.emit('learning',record.id,'practice-recorded',{source:'pi-text-companion',rounds:p.rounds.length});return record;}};
   companion=new CompanionRuntime(identity,pi,notifications,{onLearning:(p,s)=>v1!.execute(learningSummary,'companion-summary',{commandId:'companion_'+s.id,expectedVersion:0,scope:'private',payload:{id:s.id,profileId:p.profileId,title:s.title,rounds:s.rounds,activeSeconds:s.activeSeconds}},p.actorId,()=>undefined).data.id});
   startupCleanup.push(()=>companion?.close());
@@ -398,15 +402,16 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   registerProjectAutonomyRoutes(app,autonomy,identity,join(workspaceRoot,'docs','软件工厂无人值守交付总纲.html'));
   registerProjectDecisionRoutes(app,projectDecisions,identity);
   registerProjectSupervisionPlanRoutes(app,supervisionPlans,identity);
+  registerSupervisionWorkRoutes(app,supervisionWork,identity);
   registerRemoteOperations(app,remoteOps);remoteOps.start();
-  knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();cluster.start();applications.start();
+  knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');
   if(existsSync(webDir)){
     await app.register(staticFiles,{root:webDir,prefix:'/'});
   }
   app.setNotFoundHandler((req,reply)=> req.url.startsWith('/api/v1/') ? reply.code(404).send({requestId:randomUUID(),code:'VALIDATION',message:'接口不存在'}) : req.url.startsWith('/api/') ? reply.code(404).send({error:{code:'NOT_FOUND',message:'接口不存在'}}) : existsSync(webDir)?reply.sendFile('index.html'):reply.code(404).send({error:{code:'NOT_FOUND',message:'页面不存在'}}));
   // Stop SDK streams before Fastify waits for existing SSE connections to close.
-  app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
+  app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();supervisionWork.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
   app.addHook('onClose',async()=>{supervisionPlans.close();projectDecisions.close();web?.close();identity.close();billing.close();governance.close();store.close();});
   return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy};
   }catch(error){

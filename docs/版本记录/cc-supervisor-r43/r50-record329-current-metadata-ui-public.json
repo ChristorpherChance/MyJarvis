@@ -1,0 +1,155 @@
+{
+  "kind": "record329-r50-current-metadata-ui-public-safe-projection",
+  "asOf": "2026-10-18T08:28:23.540Z",
+  "current": {
+    "metadataReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r50-current-item28-planB11-42f07451-e964-4e41-8377-591503afcf74-readback.json",
+      "bytes": 2281,
+      "sha256": "5620933a355c064c93477d51c13aa8b7c8e90cda75f0e9d57fa250c36f279ef1"
+    },
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 28,
+      "hash": "d9ebac76ac2faae085efae1a4272d66713b9e10e0d693a0d148aecb5b24ea303",
+      "status": "blocked",
+      "stepId": "C5",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "runId": "d2c14227054efd4f2020a0818a30000d61e9edd8"
+    },
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 11,
+      "hash": "47b2c3b70c0c55fd1bdee10d74e3d39314f7beb492689123caf434680b44d9d8",
+      "currentStepId": "C5",
+      "goalBasis": "plan"
+    },
+    "text": {
+      "summary": "真实监管已完成“指令→101修复→两用例通过回报→贾维斯要求补原件→自动续发→收回原件”。现回归原件已保存，审阅容量不足待修，完整工厂未验收。",
+      "blocker": "补齐13份原件后完整审阅输入44830字节，超过现30000字节门；当前停在待判断。两用例保存原报告2通过0失败0跳过不等于完整交付。",
+      "nextAction": "调整有界完整证据审阅容量并核验，再以新绑定审阅已保存原件；保旧意图和失败，不为补证重跑测试。通过后推进其余真实测试及交付目标。",
+      "validationScope": "源与同源包、112发布及独立健康、真实自动continue与续发、两用例保存原报告和13原件H、实际输入组件已核；没有重跑测试或独立现场DB，完整产品未签。"
+    },
+    "supervisorRevision": 48,
+    "FactoryActiveRun": false
+  },
+  "earlierRunningMetadata": {
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/r50-current-item27-planB10-69fbfecc-6b1a-4474-b817-0ae8e863d7ac-readback.json",
+      "bytes": 1975,
+      "sha256": "2c08ef4c7c473b4096f0bde2a94a476500a6d7c173af03c150141912c32a7c54"
+    },
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 27,
+      "hash": "6ffbea86b9726a85dba92d8e7c1397fd5a1d95077fd55058e8428758ab6a4fde",
+      "status": "running",
+      "stepId": "C4",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "runId": "4ba52302d42e7980f8e77b16d83f78f01f8007c7"
+    },
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 10,
+      "hash": "f033d30bb3adb2eaa02af6c4c1991716edb75a25abc11f597ed880373af73e27",
+      "currentStepId": "C4",
+      "goalBasis": "plan"
+    },
+    "onlyTheirSavedCut": true
+  },
+  "protection": {
+    "first29EvidenceRefsPreserved": true,
+    "previousRollingRetainedInNewAggregateAndHistory": true,
+    "goalsAllTwelveStepCriteriaAndBindingPrefixesPreserved": true,
+    "C3AcceptedReportBindingPreserved": true,
+    "otherFiveItemsConfigAutonomyAndGlobalControlPreserved": true,
+    "automaticFollowupNotOwnerStart": true,
+    "fullProductAccepted": false,
+    "independentAcceptance": false
+  },
+  "UI": {
+    "kind": "r50-actual-supervision-loop-UI-observation",
+    "release": "20261018-project-goals-r50",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "goalBaseline": "unchanged1691characters/12factory+5supervision; previous finite expanded DOM preserved",
+    "visibleSequence": [
+      "formal instruction claimed on101",
+      "CC two-test pass report",
+      "model says originals insufficient",
+      "automatic followup instruction",
+      "CC originals-only reply",
+      "input capacity blocked"
+    ],
+    "pageAfterDeploymentReloadRequestedOnce": true,
+    "reloadCallTimedOut": true,
+    "reboundTabInitiallyLoadingThenLoaded": true,
+    "actualStreamConnectedAfterReload": true,
+    "laterBlockedStateVisibleWithoutAnotherReload": true,
+    "exclusiveSSEVersus15secFallbackProved": false,
+    "simplifiedSixCardsVisible": true,
+    "detailsInitiallyCollapsed": true,
+    "knownPresentationGap": "MODEL_CONTEXT_INCOMPLETE is still raw English code in two firstscreen cards",
+    "notFullMobileOrProductAcceptance": true,
+    "evidence": [
+      {
+        "path": "artifacts/cc-supervisor-r43/screenshots/r50-actual-supervision-loop.png",
+        "bytes": 89134,
+        "sha256": "925578a076c94111b8c4b150a20e3f39beffefefed9b58faba51a283a1dddcce"
+      }
+    ],
+    "productAccepted": false
+  },
+  "newScheme": {
+    "status": "selected and formally dispatched only",
+    "candidateRelease": "20261018-project-goals-r51",
+    "JarvisGoalRevision": 9,
+    "dispatchReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r51-jarvis-formal-goal9-f1ed529c-c59e-41d3-9b7e-558b4a0ce90d-readback.json",
+      "bytes": 1830,
+      "sha256": "dcd9fe2ad8e361c11735546476639b65719068c929000df9e45c9a9886d4da9b"
+    },
+    "newRun": {
+      "id": "335b19d2c945652c39c015cc624374856342f05b",
+      "status": "queued",
+      "maxRounds": 1,
+      "remainingTokens": 10000000,
+      "policyWindowId": "23d8d2ad860f88536f370f9e9473a0a9e34fbd8dd48ea6c99cc68aec5c527803"
+    },
+    "implemented": false,
+    "packaged": false,
+    "deployed": false,
+    "wholePromptUTF8LimitBytes": 65536,
+    "includesContractSeparatorsAndJSON": true,
+    "existingProviderContextTokenDeclaration": 32768,
+    "existingOutputTokenDeclaration": 4096,
+    "byteAndTokenUnitsAreDistinct": true,
+    "tokenCountUnknownNotZero": true,
+    "providerAcceptanceAt64KiBVerified": false,
+    "allNecessaryOriginalsAndCriteriaPreservedRequired": true,
+    "strictResponseExperienceCitationSourceStaleAuthorizationGatesRetainedRequired": true
+  },
+  "goalBaseline": "project47 canonical1691 characters;12factory+5supervision;12stages criteria/binding prefixes all kept;old74 historical only",
+  "timer": "PAUSED",
+  "node101": "R7/config46",
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-current-item27-planB10-69fbfecc-6b1a-4474-b817-0ae8e863d7ac-readback.json",
+      "bytes": 1975,
+      "sha256": "2c08ef4c7c473b4096f0bde2a94a476500a6d7c173af03c150141912c32a7c54"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-current-item28-planB11-42f07451-e964-4e41-8377-591503afcf74-readback.json",
+      "bytes": 2281,
+      "sha256": "5620933a355c064c93477d51c13aa8b7c8e90cda75f0e9d57fa250c36f279ef1"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-actual-supervision-loop-ui-observation.json",
+      "bytes": 1259,
+      "sha256": "45350cb63b993b37ecdaf9ddfc8b2432218d57383becd04d8a6b86015916e7b1"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r51-jarvis-formal-goal9-f1ed529c-c59e-41d3-9b7e-558b4a0ce90d-readback.json",
+      "bytes": 1830,
+      "sha256": "dcd9fe2ad8e361c11735546476639b65719068c929000df9e45c9a9886d4da9b"
+    }
+  ]
+}

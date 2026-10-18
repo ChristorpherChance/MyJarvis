@@ -1,0 +1,282 @@
+{
+  "kind": "record329-r50-judgment-factory-public-safe-projection",
+  "asOf": "2026-10-18T08:28:23.540Z",
+  "goalRevision": 7,
+  "firstRunId": "4ba52302d42e7980f8e77b16d83f78f01f8007c7",
+  "firstResultSHA256": "ddca89ab99e0ec2acb5c0a706bbed91bc79b53d0bf7b8a3a9d10195b6460e447",
+  "firstFeedbackEvidence": [
+    {
+      "path": "artifacts/goal7-policy-facts.json",
+      "bytes": 1465,
+      "sha256": "c415a8752c07b05177898178fbf4386043c2e3df3395eccc3b975872d1e02aa6"
+    }
+  ],
+  "realPiDecision": {
+    "sequence": 125,
+    "eventId": "61a6f2b2-e504-44aa-9616-8a8f5ebc4153",
+    "action": "continue",
+    "criteriaCount": 3,
+    "criteriaMet": 0,
+    "reasonFingerprint": {
+      "bytes": 473,
+      "sha256": "0751cc7c568f4b7e045bc2d1f1953fa4525281e6f2fd5e7f33f5ca03a6451258"
+    },
+    "eventHash": "d7c6cad4b5b26bef3f37ab5e309e5ae4bf44c57e8fe61a945425a948bdfc112f",
+    "eventHashVerified": true
+  },
+  "automaticFollowup": {
+    "runId": "d2c14227054efd4f2020a0818a30000d61e9edd8",
+    "sourceRunId": "4ba52302d42e7980f8e77b16d83f78f01f8007c7",
+    "newSignedResultSHA256": "77c64824cc4e1b72af9e25dcfeb9125e4ec80dae321a929d2eb101f643b953f5",
+    "notOwnerStart": true,
+    "oldIntentReplayed": false
+  },
+  "savedIndependentAudit": {
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/r50-goal7-automatic-followup-saved-evidence-independent-review.json",
+      "bytes": 12367,
+      "sha256": "b3c85e46d7cedf7b5b7161e1ff50049f7eccfcedff3538425b84f703655f2b58"
+    },
+    "followupOriginals": 13,
+    "savedTests": {
+      "vitest": {
+        "path": "artifacts/goal7-policy/vitest.json",
+        "bytes": 1302,
+        "sha256": "43c58242a551d542b9bfd5135d212f0c9aec3011c0be29cff2f10d200c7755a5"
+      },
+      "success": true,
+      "total": 2,
+      "pass": 2,
+      "fail": 0,
+      "pending": 0,
+      "todo": 0,
+      "assertions": [
+        {
+          "title": "未配置确认点默认人工（REQ-711）",
+          "status": "passed"
+        },
+        {
+          "title": "配置后按配置求值；listGates 覆盖全部 7 点",
+          "status": "passed"
+        }
+      ],
+      "savedTestCommandCount": 1,
+      "cwd": "apps/server",
+      "exit": 0,
+      "recoverySavedCountsMatch": true,
+      "postgres16VersionAppearsInBeforeBytes": true,
+      "cleanupCommandEvidence": {
+        "removeExit": 0,
+        "inspectExit": 1,
+        "exactIdConsistent": true
+      },
+      "cleanupRecoveryClaim": {
+        "removed": true,
+        "absenceVerified": true,
+        "socketRemoved": true
+      },
+      "resultJsonOnlyIndexed": {
+        "path": "artifacts/goal7-policy/result.json",
+        "bytes": 1009,
+        "sha256": "0dc99523b956357c9e68e0dbad10b2f33cc61aefc4b55a80b2df0ba442e484f4"
+      },
+      "resultJsonOriginalCollectedInThese13": false,
+      "testRerunByReviewer": false,
+      "independentCurrentEnvironmentOrResourcesInspected": false
+    },
+    "resultBindings": [
+      {
+        "runId": "4ba52302d42e7980f8e77b16d83f78f01f8007c7",
+        "status": "succeeded",
+        "source": "signed-agent",
+        "outcome": "success",
+        "exitCode": 0,
+        "resultSHA256": "ddca89ab99e0ec2acb5c0a706bbed91bc79b53d0bf7b8a3a9d10195b6460e447",
+        "hashExact": true
+      },
+      {
+        "runId": "d2c14227054efd4f2020a0818a30000d61e9edd8",
+        "status": "succeeded",
+        "source": "signed-agent",
+        "outcome": "success",
+        "exitCode": 0,
+        "resultSHA256": "77c64824cc4e1b72af9e25dcfeb9125e4ec80dae321a929d2eb101f643b953f5",
+        "hashExact": true
+      }
+    ],
+    "cryptographicSignatureReverifiedByReviewer": false,
+    "independentLiveDBOrCurrentResourceInspection": false,
+    "allThreeCriteriaMet": false,
+    "wholeProductAccepted": false
+  },
+  "currentFactory": {
+    "revision": 48,
+    "goalRevision": 7,
+    "status": "blocked",
+    "enabled": false,
+    "currentRunId": "d2c14227054efd4f2020a0818a30000d61e9edd8",
+    "resultSHA256": "77c64824cc4e1b72af9e25dcfeb9125e4ec80dae321a929d2eb101f643b953f5",
+    "blocker": "MODEL_CONTEXT_INCOMPLETE",
+    "policyGeneration": 13
+  },
+  "inputDiagnostics": {
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/r50-factory-goal7-model-pair-safe-observation-ab07c425-1c3a-4cc5-bc2d-d9f4f00df7cc-readback.json",
+      "bytes": 13069,
+      "sha256": "ab0f19fca9e69d7116577c3940661ee3bf6ce3da747a483f854d1c81a32d9bfc"
+    },
+    "intents": [
+      {
+        "state": "complete",
+        "binding": "90294fc1614cbc3db00c8b73639dbc5e0ea1dabc4862433b58ca28331fdb62ef",
+        "inputBinding": {
+          "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+          "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+          "goalRevision": 7,
+          "runId": "4ba52302d42e7980f8e77b16d83f78f01f8007c7",
+          "resultHash": "ddca89ab99e0ec2acb5c0a706bbed91bc79b53d0bf7b8a3a9d10195b6460e447",
+          "outcome": "success"
+        },
+        "criteriaCount": 3,
+        "expectedExperienceCount": 0,
+        "persistedDecision": {
+          "action": "continue",
+          "criteriaCount": 3,
+          "metCount": 0,
+          "providerTerminalNotInferredFromIntentState": true
+        },
+        "observations": [
+          {
+            "sequence": 36,
+            "status": "input-projected",
+            "reason": null,
+            "totalUTF8bytes": 11317,
+            "componentsUTF8bytes": {
+              "goal": 340,
+              "criteria": 765,
+              "corrections": 2,
+              "originals": 1715,
+              "selected": 2,
+              "exclusions": 6588,
+              "other": 1809,
+              "total": 11317
+            },
+            "projectionBindingMatchesExpected": true,
+            "failureBindingMatchesExpected": false,
+            "diagnostic": {
+              "reasonEnum": null,
+              "schemaPath": null,
+              "UTF8bytes": null,
+              "terminal": null
+            }
+          }
+        ]
+      },
+      {
+        "state": "started",
+        "binding": "051f0366ac59b2a397f990c7b0ef289f6f5a3f72de3505167f5600c336ba0a42",
+        "inputBinding": {
+          "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+          "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+          "goalRevision": 7,
+          "runId": "d2c14227054efd4f2020a0818a30000d61e9edd8",
+          "resultHash": "77c64824cc4e1b72af9e25dcfeb9125e4ec80dae321a929d2eb101f643b953f5",
+          "outcome": "success"
+        },
+        "criteriaCount": 3,
+        "expectedExperienceCount": 0,
+        "persistedDecision": {
+          "action": null,
+          "criteriaCount": null,
+          "metCount": 0,
+          "providerTerminalNotInferredFromIntentState": true
+        },
+        "observations": [
+          {
+            "sequence": 39,
+            "status": "input-blocked",
+            "reason": null,
+            "totalUTF8bytes": 44830,
+            "componentsUTF8bytes": {
+              "goal": 340,
+              "criteria": 765,
+              "corrections": 2,
+              "originals": 29579,
+              "selected": 2,
+              "exclusions": 6753,
+              "other": 7293,
+              "total": 44830
+            },
+            "projectionBindingMatchesExpected": true,
+            "failureBindingMatchesExpected": false,
+            "diagnostic": {
+              "reasonEnum": null,
+              "schemaPath": null,
+              "UTF8bytes": null,
+              "terminal": null
+            }
+          }
+        ]
+      }
+    ],
+    "firstProjectedInputBytes": 11317,
+    "followupProjectedInputBytes": 44830,
+    "currentLimitBytes": 30000,
+    "lateFailureBeforeProviderCall": true,
+    "providerErrorClaimed": false,
+    "componentByteCountsNotGuaranteedAdditiveJSONPartitions": true,
+    "rawInputOrResponseReturned": false,
+    "credentialsOrProviderConfigRead": false,
+    "modelInvokedOrOldIntentRetriedByObserver": false,
+    "missingFieldsRemainNull": true
+  },
+  "failureDistinctions": {
+    "dispatchPreflight": {
+      "path": "artifacts/cc-supervisor-r43/r50-goal7-local-preflight-path-refusal.json",
+      "bytes": 514,
+      "sha256": "b02b3af456ec0f73cd07fba41ac36a440d7f1773601ae530da73c1d2014e1b18"
+    },
+    "absoluteVersusRelativeReferenceRejectedBeforeIntentOrAPI": true,
+    "correctedDataOnlyWithNewOperation": true,
+    "modelObserverSourceHASHFirstCLIWrongBeforeIntentSSH": true,
+    "sameUnchangedSourceThenExactExpectedHashRanOnce": true
+  },
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-factory-goal7-entrypoint-cebf2887-267d-4f5a-b29b-9a13835776f8-readback.json",
+      "bytes": 1592,
+      "sha256": "2aa2de4173c053f65cf44a5137f012a0fabfe4688c2e3ccc07b228227fe824e8"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-automatic-followup-6766c914-2a3f-4c10-95e7-44a84c7ad44d.json",
+      "bytes": 5442,
+      "sha256": "b80f150eba6dcb07c5f8798182605dd1e9ad345ab9d37fff7b79ca1a42d5413f"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-goal7-automatic-followup-saved-evidence-independent-review.json",
+      "bytes": 12367,
+      "sha256": "b3c85e46d7cedf7b5b7161e1ff50049f7eccfcedff3538425b84f703655f2b58"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r50-factory-goal7-model-pair-safe-observation-ab07c425-1c3a-4cc5-bc2d-d9f4f00df7cc-readback.json",
+      "bytes": 13069,
+      "sha256": "ab0f19fca9e69d7116577c3940661ee3bf6ce3da747a483f854d1c81a32d9bfc"
+    }
+  ],
+  "feeLedger": {
+    "knownParentTokens": 78990076,
+    "cacheReadIncludedInInput": true,
+    "catalogEstimateUSD": 50.984673,
+    "notInvoice": true,
+    "invoiceUSD": null,
+    "PiInternalTokens": null,
+    "PiInternalUSD": null,
+    "newR51Tokens": null,
+    "newR51USD": null,
+    "nativeCumulativeNotAddedAgain": true,
+    "moneyCap": null,
+    "technicalWindowTokens": 10000000,
+    "technicalWindowIsHardPerCallCap": false,
+    "otherTerminalAndMigrationCostsNotMixed": true
+  }
+}

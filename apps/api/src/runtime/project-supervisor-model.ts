@@ -134,15 +134,15 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
   return async (input: any): Promise<any> => {
     const health = pi.health('project-supervisor');
     if (!health.configured) throw error(NOT_CONFIGURED);
-    input=boundedSupervisorModelInput(input).input;
-    if (utf8Bytes(JSON.stringify(input)) > 30_000) throw error('MODEL_CONTEXT_INCOMPLETE');
+    const projected=boundedSupervisorModelInput(input);
+    input=projected.input;
     const usageReferences:{usageId:string;runId:string;model:string|null}[]=[];
     const runInput: PiRunInput = {
       conversationId: `supervisor-${randomUUID()}`,
       actorId: input?.binding?.ownerId ?? 'server-admin',
       member: { name: 'project-supervisor', preferences: '' },
       sessionPath: null,
-      text: `${PROJECT_SUPERVISOR_CONTRACT}\n\nUntrusted supervisor input JSON:\n${JSON.stringify(input)}`,
+      text: projected.text,
       onEvent: (event,data) => {
         // Pi's existing measured usage event is the only model/run attribution source.
         if(event!=='usage'||data?.actorId!==runInput.actorId||data?.conversationId!==runInput.conversationId||data?.projectId!==input?.binding?.projectId||data?.taskId!==input?.binding?.taskId||data?.source!==`supervisor:${input?.binding?.goalRevision}:${input?.binding?.runId}`)return;

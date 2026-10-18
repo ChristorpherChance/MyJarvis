@@ -1,0 +1,11 @@
+# R51 完整Prompt 64KiB候选 · 未部署
+
+起点HEAD745936fe9083ddf1e27622466afcb09e8bce71ef/APP5e171acbf924e678e0bce52788fec7d45ea0d963核同。Root反馈R50已上线健康，仅作主管事实；本轮不访问112或Factory工作区、不重goal8/run2079/RH7f6及旧intent/Pi/费用。Factory first4ba 11317B与后继d2 44830B前置拒绝是主管诊断，非provider错误；本轮不冒读取原输入。
+
+唯一共享SUPERVISOR_PROMPT_MAX_UTF8_BYTES=64*1024，runtime和adapter都以原contract＋固定分隔文本＋完整JSON.stringify(projected input)同一text计量/发送。WeakMap只接受本函数构造且当前input H未变的已准备对象，避免二次投影产生新hash/口径；改输入则重新完整构建。诊断补完整prompt bytes/H及limit，不回传原文。必需原件/criteria/corrections/selected、冻结审计/source/resultH与排除元数据保留；超65536明确MODEL_CONTEXT_INCOMPLETE且0调用，响应16KB及strict六键、review/experience/citation/abortpartial等门不变。
+
+Pi现有源码catalog声明contextWindow32768/maxTokens4096，ephemeral输出上限4096保持，未读取凭据/配置或探测provider。字节不换算Token、不保证provider接受；本轮精确Token预测unknown，无新tokenizer，也不据缺预测永久拒合法44KB。实际partial或非complete仍拒绝。首屏仅MCI映射为“报告资料超过本轮审阅容量，待调整”，原码/诊断保详情，blocked不变。
+
+一组生产接线受控fixture通过：31K和44830B JSON/13原件形状、多字节转义完整prompt恰65536、超限0调用、原件逐byte保持、partial拒绝及中文映射。均为构造数据，不是Factory两case重跑或实际Pi接受证据。API/Web types和build各一次通过。
+
+R51同源平台ZIP/manifest/sha与封包后四literal派生ops分列，保R50全部120 assets及更早闭包。b320原sidecar仅EXPECTED/RELEASE/APP/ZIP_HASH改变，原预算/lock/readiness/ownership/完整snapshot+restore/rollback门不改，R7/config46保持。Root后继独审发布、新绑定实际判断与整体验收另验；费用只记无金额cap，历史unknown及十分钟PAUSED保持。

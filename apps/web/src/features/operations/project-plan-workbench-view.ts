@@ -1,3 +1,4 @@
+export function workbenchBlockerSummary(value:unknown){return typeof value==='string'&&value.includes('MODEL_CONTEXT_INCOMPLETE')?'报告资料超过本轮审阅容量，待调整':value;}
 export interface WorkbenchPlanStep {id:string;title:string;goal?:string;criteria?:string[];state?:string;nextAction?:string|null}
 export interface WorkbenchPlan {projectId:string;title:string;goal:string;currentStepId:string|null;nextAction:string|null;steps:WorkbenchPlanStep[];latestResult?:{summary?:string|null}|null}
 export function planWorkbenchView(plan:WorkbenchPlan|null){

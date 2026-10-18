@@ -1,0 +1,118 @@
+import {createHash,randomUUID} from 'node:crypto';
+import {constants,openSync,closeSync,fstatSync,lstatSync,readFileSync,writeFileSync,fchmodSync,fsyncSync,renameSync,unlinkSync,existsSync} from 'node:fs';
+import {join,resolve,parse} from 'node:path';
+import {z} from 'zod';
+import type {FastifyInstance} from 'fastify';
+import {IdentityRuntime,RuntimeAccessError,type RuntimePrincipal} from './identity.js';
+import type {V1Repository} from '../v1/repository.js';
+import {redactExecutionLog} from './execution-runtime.js';
+
+const label=z.string().min(1).max(300),slug=z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_.-]{0,99}$/),hash=z.string().regex(/^[a-f0-9]{64}$/);
+const clean=(value:string)=>redactExecutionLog(value).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'').slice(0,2000);
+const publicText=(max=300)=>z.string().max(max).transform(clean);
+const count=z.number().finite().min(0).max(Number.MAX_SAFE_INTEGER),percent=z.number().finite().min(0).max(100);
+const provider=z.object({id:slug,name:publicText(),model:publicText().nullable(),credentialConfigured:z.boolean(),current:z.boolean().optional()}).strict();
+export const aiDevelopmentProfileSchema=z.object({id:slug,revision:z.number().int().positive(),name:publicText(),tools:z.array(z.object({name:slug,version:publicText(100)}).strict()).max(20),providers:z.array(provider).max(32),statuslineVersion:publicText(100)}).strict();
+export const aiDevelopmentPolicySchema=z.object({version:z.literal(1),profiles:z.array(aiDevelopmentProfileSchema).max(30),nodes:z.array(z.object({machineId:label,nodeId:slug,address:z.string().min(1).max(253),targetUser:z.string().regex(/^[a-z_][a-z0-9_-]{0,31}$/).refine(v=>v!=='root'),profileIds:z.array(slug).min(1).max(30)}).strict()).max(100)}).strict();
+export type AiDevelopmentProfile=z.infer<typeof aiDevelopmentProfileSchema>;
+export type AiDevelopmentPolicy=z.infer<typeof aiDevelopmentPolicySchema>;
+export const aiDevelopmentInventorySchema=z.object({
+ schemaVersion:z.literal(1),
+ tools:z.array(z.object({name:slug,version:publicText(100).nullable(),installed:z.boolean(),path:publicText(2000).nullable().optional(),matchesPinned:z.boolean().optional(),authStatus:z.enum(['configured','missing','unknown']).optional()}).strip()).max(20).default([]),
+ providers:z.array(provider.strip()).max(32).default([]),
+ statusline:z.object({version:publicText(100).nullable().optional(),installed:z.boolean().optional(),enabled:z.boolean().optional(),configured:z.boolean().default(false),commandSHA256:hash.nullable().optional(),scope:z.literal('global-and-provider').optional(),resources:z.boolean().optional()}).strip().optional(),
+ resources:z.object({cpuPercent:percent.nullable().optional(),memoryPercent:percent.nullable().optional(),memoryTotalGB:count.nullable().optional(),memoryUsedGB:count.nullable().optional(),diskFreeGB:count.nullable().optional(),diskPercent:percent.nullable().optional(),ramUsedBytes:count.nullable().optional(),ramTotalBytes:count.nullable().optional(),diskFreeBytes:count.nullable().optional(),diskTotalBytes:count.nullable().optional(),load1m:count.nullable().optional()}).strip().nullable().optional(),
+ terminalTelemetry:z.object({schemaVersion:z.literal(1),observedAt:z.string().datetime({offset:true}),sessionId:z.string().regex(/^[A-Za-z0-9_-]{1,128}$/).nullable(),model:publicText().nullable(),provider:publicText().nullable(),contextTokens:count.nullable(),contextWindow:count.nullable(),currentInputTokens:count.nullable(),currentOutputTokens:count.nullable(),cacheReadTokens:count.nullable(),cacheCreationTokens:count.nullable(),sessionCostUSD:count.nullable(),billingStatus:z.enum(['estimated','unknown']),rateLimitFiveHourPercent:percent.nullable(),rateLimitSevenDayPercent:percent.nullable()}).strip().nullable().optional(),
+}).strip();
+export type AiDevelopmentInventory=z.infer<typeof aiDevelopmentInventorySchema>;
+export const aiDevelopmentAction=z.enum(['probe','configure','telemetry']);
+const commandSchema=z.object({commandId:z.string().uuid(),machineId:label,action:aiDevelopmentAction,profileId:slug,expectedMachineVersion:z.number().int().positive(),expectedProfileRevision:z.number().int().positive()}).strict();
+export const aiDevelopmentReceiptSchema=z.object({schemaVersion:z.literal(1),id:z.string().uuid(),machineId:label,profileId:slug,profileRevision:z.number().int().positive(),profileHash:hash,bindingHash:hash,status:z.enum(['queued','running','succeeded','failed','unknown']),at:z.string().datetime({offset:true}),inventory:aiDevelopmentInventorySchema.optional(),summary:publicText(2000).default('')}).strip();
+export type AiDevelopmentReceipt=z.infer<typeof aiDevelopmentReceiptSchema>;
+export const aiDevelopmentObservationSchema=z.object({schemaVersion:z.literal(1),machineId:z.string().uuid(),nodeId:slug,address:z.string().min(1).max(253),targetUser:z.string().regex(/^[a-z_][a-z0-9_-]{0,31}$/),profileId:slug,profileRevision:z.number().int().positive(),profileHash:hash,policyHash:hash,at:z.string().datetime({offset:true}),inventory:aiDevelopmentInventorySchema,source:z.literal('fixed-ssh-ai-development-telemetry')}).strip();
+export type AiDevelopmentObservation=z.infer<typeof aiDevelopmentObservationSchema>;
+/** Matches Python json.dumps(sort_keys=True, ensure_ascii=False, separators=(',',':')). */
+export function canonicalAiDevelopment(value:unknown):string {const encode=(v:any):string=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(x=>encode(x??null)).join(',')+']':'{'+Object.keys(v).filter(k=>v[k]!==undefined).sort().map(k=>JSON.stringify(k)+':'+encode(v[k])).join(',')+'}';return encode(value);}
+export const aiDevelopmentHash=(value:unknown)=>createHash('sha256').update(canonicalAiDevelopment(value)).digest('hex');
+type Command=z.infer<typeof commandSchema>;
+export type AiDevelopmentRequest={schemaVersion:1;id:string;commandId:string;machineId:string;machineRevision:number;nodeId:string;address:string;targetUser:string;action:Command['action'];profileId:string;profileRevision:number;profileHash:string;policyHash:string;bindingHash:string;createdAt:string;expiresAt:string;actorId:string;authorizationHash:string;profile:AiDevelopmentProfile};
+type Job=AiDevelopmentRequest&{status:'blocked'|'queued'|'running'|'succeeded'|'failed'|'unknown';revision:number;reason:string|null;result:AiDevelopmentReceipt|null};
+const terminal=(job:Job)=>['succeeded','failed'].includes(job.status);
+function fail(ok:unknown,code:string,message:string,status=409):asserts ok {if(!ok)throw new RuntimeAccessError(code,message,status);}
+function noLinks(path:string){const absolute=resolve(path),root=parse(absolute).root;let current=root;for(const part of absolute.slice(root.length).split(/[\\/]/)){if(!part)continue;current=join(current,part);fail(!lstatSync(current).isSymbolicLink(),'AI_DEVELOPMENT_STORAGE_UNSAFE','AI环境存储路径不可使用链接',503);}}
+function regularJson(path:string,max=512*1024):unknown {noLinks(path);const stat=lstatSync(path);fail(stat.isFile()&&stat.nlink===1&&stat.size<=max,'AI_DEVELOPMENT_STORAGE_UNSAFE','AI环境文件类型无效',503);const fd=openSync(path,constants.O_RDONLY|(constants.O_NOFOLLOW??0));try{const a=fstatSync(fd),raw=readFileSync(fd),b=fstatSync(fd);fail(a.dev===stat.dev&&a.ino===stat.ino&&a.size===b.size&&a.mtimeMs===b.mtimeMs&&a.ctimeMs===b.ctimeMs&&raw.length===a.size,'AI_DEVELOPMENT_STORAGE_CHANGED','AI环境文件正在变化',503);return JSON.parse(raw.toString('utf8'));}finally{closeSync(fd);}}
+
+/** Public policy and safe observations only. Secrets belong to the independent worker. */
+export class AiDevelopmentRuntime {
+ readonly queue:string;readonly configPath:string;private clock:()=>number;
+ constructor(readonly identity:IdentityRuntime,readonly repository:V1Repository,dir:string,readonly stopped:()=>boolean,options:{queue?:string;configPath?:string;now?:()=>number}={}){
+  this.queue=options.queue??process.env.JARVIS_AI_DEVELOPMENT_QUEUE??join(dir,'ai-development-queue');this.configPath=options.configPath??process.env.JARVIS_AI_DEVELOPMENT_CONFIG??join(dir,'ai-development-policy.json');this.clock=options.now??Date.now;
+  // The root installer creates the cross-user queue with its actual owner/group layout.
+  identity.db.exec(`CREATE TABLE IF NOT EXISTS runtime_ai_development_jobs(id TEXT PRIMARY KEY,actor_id TEXT NOT NULL,authorization_hash TEXT NOT NULL,command_id TEXT NOT NULL,request_hash TEXT NOT NULL,status TEXT NOT NULL,revision INTEGER NOT NULL,json TEXT NOT NULL,UNIQUE(actor_id,command_id));`);
+ }
+ private admin(p:RuntimePrincipal){fail(p.administrator&&p.profileId==='me'&&!!p.authorizationHash&&this.identity.isPrincipalCurrent(p),'AI_DEVELOPMENT_ADMIN_REQUIRED','仅当前已认证管理员可管理AI开发环境',403);}
+ private policy(){try{const policy=aiDevelopmentPolicySchema.parse(regularJson(this.configPath));fail(new Set(policy.profiles.map(p=>p.id)).size===policy.profiles.length&&new Set(policy.nodes.map(n=>n.machineId)).size===policy.nodes.length,'AI_DEVELOPMENT_POLICY_INVALID','AI环境策略存在重复对象',503);for(const n of policy.nodes)fail(n.profileIds.every(id=>policy.profiles.some(p=>p.id===id)),'AI_DEVELOPMENT_POLICY_INVALID','AI环境策略未绑定已知模板',503);return policy;}catch(error){if(error instanceof RuntimeAccessError)throw error;throw new RuntimeAccessError('AI_DEVELOPMENT_NOT_CONFIGURED','AI环境公开策略尚未配置或格式无效',503);}}
+ private storageReady(){try{for(const part of ['', 'requests','results']){const path=join(this.queue,part);noLinks(path);if(!lstatSync(path).isDirectory())return false;}return true;}catch{return false;}}
+ private worker(){try{const value=regularJson(join(this.queue,'results','_status.json')) as any;const at=typeof value?.at==='string'?Date.parse(value.at):NaN,age=this.clock()-at;return {online:value?.online!==false&&Number.isFinite(age)&&age>=-5000&&age<=30000,at:Number.isFinite(at)?new Date(at).toISOString():null};}catch{return {online:false,at:null};}}
+ private machine(p:RuntimePrincipal,id:string){const machine=this.repository.read('machines',id,p.actorId);fail(machine&&machine.ownerId===p.actorId,'AI_DEVELOPMENT_MACHINE_NOT_FOUND','设备不存在或不属于当前管理者',404);return machine;}
+ private managed(machine:any){fail(!machine.readOnly&&!machine.readonly&&!machine.company&&machine.scope!=='company','AI_DEVELOPMENT_READ_ONLY','公司或只读设备不能配置AI环境',403);}
+ private bind(p:RuntimePrincipal,c:Command){const machine=this.machine(p,c.machineId);this.managed(machine);const policy=this.policy(),node=policy.nodes.find(n=>n.machineId===machine.id),profile=policy.profiles.find(v=>v.id===c.profileId);fail(node&&profile&&node.profileIds.includes(profile.id),'AI_DEVELOPMENT_NOT_CONFIGURED','该机器尚未授权此AI环境模板',503);fail(machine.address===node.address,'AI_DEVELOPMENT_TARGET_CHANGED','机器地址与固定策略不一致');fail(machine.revision===c.expectedMachineVersion&&profile.revision===c.expectedProfileRevision,'AI_DEVELOPMENT_VERSION_CHANGED','机器或AI模板已改变，请刷新');const binding={machineId:machine.id,machineRevision:machine.revision,address:node.address,nodeId:node.nodeId,targetUser:node.targetUser,action:c.action,profileId:profile.id,profileRevision:profile.revision,profileHash:aiDevelopmentHash(profile),policyHash:aiDevelopmentHash(policy)};return {machine,profile,...binding,bindingHash:aiDevelopmentHash(binding)};}
+ capabilities(p:RuntimePrincipal){this.admin(p);let policy:AiDevelopmentPolicy|undefined,reason:string|null=null;try{policy=this.policy();if(!policy.nodes.length||!policy.profiles.length)reason='AI_DEVELOPMENT_NOT_CONFIGURED';}catch{reason='AI_DEVELOPMENT_NOT_CONFIGURED';}const worker=this.worker(),storageReady=this.storageReady();if(!reason&&!storageReady)reason='AI_DEVELOPMENT_QUEUE_UNAVAILABLE';if(!reason&&!worker.online)reason='AI_DEVELOPMENT_WORKER_OFFLINE';if(!reason&&this.stopped())reason='AI_DEVELOPMENT_PAUSED';return {configured:!!policy?.nodes.length,controllerOnline:worker.online,controllerObservedAt:worker.at,storageReady,blocked:!!reason,reason,profiles:policy?.profiles??[],nodes:policy?.nodes.filter(n=>{try{return !!this.machine(p,n.machineId);}catch{return false;}})??[],actions:aiDevelopmentAction.options,observationMaxAgeSeconds:120,costPolicy:'record-only',credentialsAccepted:false};}
+ profiles(p:RuntimePrincipal){return this.capabilities(p).profiles;}
+ private save(job:Job){this.identity.db.prepare('UPDATE runtime_ai_development_jobs SET status=?,revision=?,json=? WHERE id=? AND actor_id=?').run(job.status,job.revision,JSON.stringify(job),job.id,job.actorId);}
+ private publicJob(job:Job){const {authorizationHash:_,actorId:__,profile:___,...out}=job;return {...out,status:job.reason==='AI_DEVELOPMENT_WORKER_OFFLINE'?'blocked' as const:job.status,observationStale:!job.result||this.clock()-Date.parse(job.result.at)>120000};}
+ private publish(job:Job){
+  fail(this.storageReady(),'AI_DEVELOPMENT_QUEUE_UNAVAILABLE','AI环境队列不可用',503);const {status:_,revision:__,reason:___,result:____,...request}=job,target=join(this.queue,'requests',job.id+'.json');
+  if(existsSync(target)){fail(aiDevelopmentHash(regularJson(target))===aiDevelopmentHash(request),'AI_DEVELOPMENT_QUEUE_CONFLICT','队列目标已改变',503);return;}
+  const temporary=target+'.'+randomUUID()+'.tmp';
+  try{const fd=openSync(temporary,constants.O_WRONLY|constants.O_CREAT|constants.O_EXCL|(constants.O_NOFOLLOW??0),0o600);try{writeFileSync(fd,canonicalAiDevelopment(request));fchmodSync(fd,0o640);fsyncSync(fd);}finally{closeSync(fd);}renameSync(temporary,target);}finally{try{unlinkSync(temporary);}catch{}}
+ }
+ create(p:RuntimePrincipal,input:unknown){this.admin(p);const c=commandSchema.parse(input),requestHash=aiDevelopmentHash(c),existing=this.identity.db.prepare('SELECT * FROM runtime_ai_development_jobs WHERE actor_id=? AND command_id=?').get(p.actorId,c.commandId);if(existing){fail(existing.request_hash===requestHash,'AI_DEVELOPMENT_COMMAND_CONFLICT','同一提交编号不能改变目标');return this.read(p,String(existing.id));}const bound=this.bind(p,c),caps=this.capabilities(p),blocked=caps.reason??(['offline','sleeping'].includes(String(bound.machine.status))?'AI_DEVELOPMENT_MACHINE_OFFLINE':null),createdAt=new Date(this.clock()).toISOString();const {machine:_,...binding}=bound;const job:Job={schemaVersion:1,id:randomUUID(),commandId:c.commandId,...binding,createdAt,expiresAt:new Date(this.clock()+15*60000).toISOString(),actorId:p.actorId,authorizationHash:p.authorizationHash!,status:blocked?'blocked':'queued',revision:1,reason:blocked,result:null};this.identity.db.prepare('INSERT INTO runtime_ai_development_jobs VALUES(?,?,?,?,?,?,?,?)').run(job.id,p.actorId,p.authorizationHash!,c.commandId,requestHash,job.status,job.revision,JSON.stringify(job));if(!blocked)try{this.publish(job);}catch{job.status='blocked';job.reason='AI_DEVELOPMENT_QUEUE_UNAVAILABLE';job.revision++;this.save(job);}this.identity.store.audit('ai-development.'+c.action,job.id);return this.publicJob(job);}
+ private reconcile(p:RuntimePrincipal,job:Job){
+  if(job.status==='blocked'||terminal(job))return job;let bound;
+  try{bound=this.bind(p,{commandId:job.commandId,machineId:job.machineId,action:job.action,profileId:job.profileId,expectedMachineVersion:job.machineRevision,expectedProfileRevision:job.profileRevision});}
+  catch{job.status='unknown';job.reason='AI_DEVELOPMENT_TARGET_CHANGED';this.save(job);return job;}
+  if(bound.bindingHash!==job.bindingHash||job.authorizationHash!==p.authorizationHash){job.status='unknown';job.reason='AI_DEVELOPMENT_AUTHORIZATION_CHANGED';this.save(job);return job;}
+  let receipt:AiDevelopmentReceipt|undefined;
+  try{const result=aiDevelopmentReceiptSchema.safeParse(regularJson(join(this.queue,'results',job.id+'.json')));if(result.success)receipt=result.data;}catch{/* Partial, unsafe or unavailable results never become success. */}
+  if(receipt&&receipt.id===job.id&&receipt.machineId===job.machineId&&receipt.profileId===job.profileId&&receipt.profileRevision===job.profileRevision&&receipt.profileHash===job.profileHash&&receipt.bindingHash===job.bindingHash){
+   const at=Date.parse(receipt.at);
+   if(at>=Date.parse(job.createdAt)&&at<=Date.parse(job.expiresAt)&&at<=this.clock()+5000&&!(receipt.status==='succeeded'&&!receipt.inventory)){
+    if(aiDevelopmentHash(job.result)!==aiDevelopmentHash(receipt)||job.status!==receipt.status||job.reason!==null){job.result=receipt;job.status=receipt.status;job.reason=null;job.revision++;this.save(job);}return job;
+   }
+  }
+  if(this.clock()>Date.parse(job.expiresAt)){if(job.reason!=='AI_DEVELOPMENT_EXPIRED'){job.status='unknown';job.reason='AI_DEVELOPMENT_EXPIRED';job.revision++;this.save(job);}}
+  else if(!this.storageReady()||!this.worker().online){if(job.reason!=='AI_DEVELOPMENT_WORKER_OFFLINE'){job.reason='AI_DEVELOPMENT_WORKER_OFFLINE';job.revision++;this.save(job);}}
+  else if(job.reason==='AI_DEVELOPMENT_WORKER_OFFLINE'){job.reason=null;job.revision++;this.save(job);}
+  return job;
+ }
+ read(p:RuntimePrincipal,id:string){this.admin(p);fail(z.string().uuid().safeParse(id).success,'AI_DEVELOPMENT_JOB_NOT_FOUND','AI环境任务不存在',404);const row=this.identity.db.prepare('SELECT json FROM runtime_ai_development_jobs WHERE id=? AND actor_id=?').get(id,p.actorId);fail(row,'AI_DEVELOPMENT_JOB_NOT_FOUND','AI环境任务不存在',404);return this.publicJob(this.reconcile(p,JSON.parse(String(row.json))));}
+ jobs(p:RuntimePrincipal,machineId?:string){this.admin(p);if(machineId)this.machine(p,machineId);return this.identity.db.prepare('SELECT id FROM runtime_ai_development_jobs WHERE actor_id=? ORDER BY rowid DESC LIMIT 100').all(p.actorId).map(r=>this.read(p,String(r.id))).filter(j=>!machineId||j.machineId===machineId);}
+ private periodic(machine:any):AiDevelopmentObservation|null {
+  if(!z.string().uuid().safeParse(machine.id).success||machine.readOnly||machine.readonly||machine.company||machine.scope==='company')return null;
+  try{
+   const observation=aiDevelopmentObservationSchema.parse(regularJson(join(this.queue,'results','observations',machine.id+'.json'))),policy=this.policy(),node=policy.nodes.find(n=>n.machineId===machine.id),profile=policy.profiles.find(v=>v.id===observation.profileId);
+   if(!node||!profile||observation.machineId!==machine.id||machine.address!==node.address||observation.nodeId!==node.nodeId||observation.address!==node.address||observation.targetUser!==node.targetUser||!node.profileIds.includes(profile.id)||observation.profileRevision!==profile.revision||observation.profileHash!==aiDevelopmentHash(profile)||observation.policyHash!==aiDevelopmentHash(policy)||Date.parse(observation.at)>this.clock()+5000)return null;
+   return observation;
+  }catch{return null;}
+ }
+ details(p:RuntimePrincipal,id:string){
+  this.admin(p);const machine=this.machine(p,id),jobs=this.jobs(p,id),caps=this.capabilities(p),node=caps.nodes.find(n=>n.machineId===id),latest=jobs.find(j=>j.status==='succeeded'&&j.result?.inventory);let current=false;
+  if(latest)try{current=this.bind(p,{commandId:latest.commandId,machineId:id,action:latest.action,profileId:latest.profileId,expectedMachineVersion:latest.machineRevision,expectedProfileRevision:latest.profileRevision}).bindingHash===latest.bindingHash;}catch{}
+  const jobObservation=current&&latest?.result?{at:latest.result.at,source:'fixed-ai-development-worker',inventory:latest.result.inventory}:null,periodic=this.periodic(machine);
+  const observation=periodic&&(!jobObservation||Date.parse(periodic.at)>Date.parse(jobObservation.at))?{at:periodic.at,source:periodic.source,inventory:periodic.inventory}:jobObservation;
+  const stale=!observation||this.clock()-Date.parse(observation.at)>120000,telemetry=machine.telemetry??{};
+  const machineResources=Object.fromEntries(['cpuPercent','memoryPercent','memoryTotalGB','memoryUsedGB','diskFreeGB','diskPercent'].filter(k=>typeof telemetry[k]==='number'&&Number.isFinite(telemetry[k])&&telemetry[k]>=0&&telemetry[k]<=Number.MAX_SAFE_INTEGER&&(!k.endsWith('Percent')||telemetry[k]<=100)).map(k=>[k,telemetry[k]]));
+  // A periodic receipt timestamps transport, not a new statusline resource sample.
+  const useMachineResources=Object.keys(machineResources).length>0,resources=useMachineResources?machineResources:observation?.inventory?.resources??{};
+  const sampleAt=useMachineResources?machine.lastSeen:observation?.inventory?.terminalTelemetry?.observedAt,resourceTime=typeof sampleAt==='string'?Date.parse(sampleAt):NaN;
+  const resourcesObservedAt=Number.isFinite(resourceTime)&&resourceTime<=this.clock()+5000?new Date(resourceTime).toISOString():null,resourcesStale=!resourcesObservedAt||this.clock()-resourceTime>120000;
+  const readOnly=!!machine.readOnly||!!machine.readonly||!!machine.company||machine.scope==='company',offline=['offline','sleeping'].includes(String(machine.status));
+  const reason=caps.reason??(readOnly?'AI_DEVELOPMENT_READ_ONLY':!node?'AI_DEVELOPMENT_NOT_CONFIGURED':offline?'AI_DEVELOPMENT_MACHINE_OFFLINE':null);
+  return {machineId:id,machineRevision:machine.revision,name:clean(String(machine.name)),address:clean(String(machine.address)),readOnly,status:machine.status,node:node??null,profiles:caps.profiles.filter(v=>node?.profileIds.includes(v.id)),blocked:!!reason,reason,observation:observation?{...observation,stale}:null,resources,resourcesObservedAt,resourcesStale,jobs,usage:{url:'/api/runtime/governance/usage?machineId='+encodeURIComponent(id),summaryUrl:'/api/runtime/governance/usage/summary?machineId='+encodeURIComponent(id),terminalSessionBilling:'unknown',note:'终端上下文及当前响应Token不是累计账单；仅完整可去重原生逐响应回执进入已有用量账本。'}};
+ }
+}
+export type AiDevelopmentJob=ReturnType<AiDevelopmentRuntime['read']>;
+export type AiDevelopmentCapabilities=ReturnType<AiDevelopmentRuntime['capabilities']>;
+export type AiDevelopmentMachineDetails=ReturnType<AiDevelopmentRuntime['details']>;
+export function registerAiDevelopment(app:FastifyInstance,runtime:AiDevelopmentRuntime){const base='/api/runtime/ai-development',principal=(req:any)=>runtime.identity.principal(req);app.get(base+'/capabilities',async req=>runtime.capabilities(principal(req)));app.get(base+'/profiles',async req=>({profiles:runtime.profiles(principal(req))}));app.get<{Params:{id:string}}>(base+'/machines/:id',async req=>runtime.details(principal(req),req.params.id));app.get(base+'/jobs',async req=>{const q=z.object({machineId:label.optional()}).strict().parse(req.query);return {jobs:runtime.jobs(principal(req),q.machineId)};});app.get<{Params:{id:string}}>(base+'/jobs/:id',async req=>runtime.read(principal(req),req.params.id));app.post(base+'/jobs',async req=>runtime.create(principal(req),req.body));}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "profileId": "linux-ai-dev-v1",
+  "profileRevision": 1,
+  "platform": "linux-x86_64",
+  "credentialTransport": "stdin-private-provisioning-only",
+  "costPolicy": "record-only-no-amount-cap",
+  "downloadAttempts": 2,
+  "installationDeadlineSeconds": 900,
+  "packages": {
+    "claude": {
+      "version": "2.1.292",
+      "url": "https://downloads.claude.ai/claude-code-releases/2.1.292/linux-x64/claude",
+      "fallbackUrl": "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.292/linux-x64/claude",
+      "sha256": "a967e7b1d8b4e47ee421d5433027880347952b0c0857abf880e2c942a4ec93b3",
+      "bytes": 251456696,
+      "format": "binary"
+    },
+    "cc-switch": {
+      "version": "5.11.2",
+      "url": "https://github.com/SaladDay/cc-switch-cli/releases/download/v5.11.2/cc-switch-cli-linux-x64-musl.tar.gz",
+      "sha256": "bb0255e37894c47f0bea721605c2f02ac7a69d699011bb1636db751e175d2baa",
+      "bytes": 8920703,
+      "binarySha256": "6f2bb6394482bc03b46182cfa138131dd628d3e3ae6d5dc9c2c8770f43b25cdf",
+      "format": "tar.gz"
+    },
+    "node": {
+      "version": "24.15.0",
+      "url": "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.xz",
+      "sha256": "472655581fb851559730c48763e0c9d3bc25975c59d518003fc0849d3e4ba0f6",
+      "maximumBytes": 100000000,
+      "format": "tar.xz"
+    }
+  }
+}

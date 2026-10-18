@@ -1,0 +1,545 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-ai-operations-readonly-environment-audit",
+  "complete": true,
+  "at": "2026-10-18T14:06:49.060Z",
+  "machine": {
+    "schemaVersion": 1,
+    "kind": "jarvis-112-ai-operations-readonly-environment-audit",
+    "startedAt": "2026-10-18T14:06:48.148666+00:00",
+    "user": "superopen",
+    "home": "/home/superopen",
+    "readOnly": true,
+    "modelCalls": 0,
+    "serviceOperations": 0,
+    "transcriptsRead": false,
+    "businessDataQueries": 0,
+    "remoteWrites": false,
+    "tools": {
+      "claude": {
+        "found": true,
+        "path": "/home/superopen/.local/bin/claude",
+        "resolvedPath": "/home/superopen/.local/share/claude/versions/2.1.292",
+        "version": "2.1.292",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "cc-switch": {
+        "found": true,
+        "path": "/home/superopen/.local/bin/cc-switch",
+        "resolvedPath": "/home/superopen/.local/bin/cc-switch",
+        "version": "5.11.2",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "ccswitch": {
+        "found": true,
+        "path": "/home/superopen/.local/bin/ccswitch",
+        "resolvedPath": "/home/superopen/.local/bin/cc-switch",
+        "version": "5.11.2",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "node": {
+        "found": true,
+        "path": "/home/superopen/.local/bin/node",
+        "resolvedPath": "/home/superopen/opt/node-v24.15.0-linux-x64/bin/node",
+        "version": "24.15.0",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "npm": {
+        "found": true,
+        "path": "/home/superopen/.local/bin/npm",
+        "resolvedPath": "/home/superopen/opt/node-v24.15.0-linux-x64/lib/node_modules/npm/bin/npm-cli.js",
+        "version": "11.12.1",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "npx": {
+        "found": true,
+        "path": "/home/superopen/.local/bin/npx",
+        "resolvedPath": "/home/superopen/opt/node-v24.15.0-linux-x64/lib/node_modules/npm/bin/npx-cli.js",
+        "version": "11.12.1",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "git": {
+        "found": true,
+        "path": "/usr/bin/git",
+        "resolvedPath": "/usr/bin/git",
+        "version": "2.53.0",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "python3": {
+        "found": true,
+        "path": "/usr/bin/python3",
+        "resolvedPath": "/usr/bin/python3.14",
+        "version": "3.14.4",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "tmux": {
+        "found": true,
+        "path": "/usr/bin/tmux",
+        "resolvedPath": "/usr/bin/tmux",
+        "version": "3.6",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "rg": {
+        "found": true,
+        "path": "/usr/bin/rg",
+        "resolvedPath": "/usr/bin/rg",
+        "version": "15.1.0",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "jq": {
+        "found": true,
+        "path": "/usr/bin/jq",
+        "resolvedPath": "/usr/bin/jq",
+        "version": "1.8.1",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "pidstat": {
+        "found": true,
+        "path": "/usr/bin/pidstat",
+        "resolvedPath": "/usr/bin/pidstat",
+        "version": "12.7.7",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      },
+      "iostat": {
+        "found": true,
+        "path": "/usr/bin/iostat",
+        "resolvedPath": "/usr/bin/iostat",
+        "version": "12.7.7",
+        "versionExitCode": 0,
+        "versionOnlyCommand": true,
+        "rawOutputExcluded": true
+      }
+    },
+    "otherCLIEntries": {
+      "codex": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "pi": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "gemini": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "opencode": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "aider": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "kimi": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "kimi-cli": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "k3": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "K3": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "kilocode": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "kilocode-cli": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "pnpm": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "bun": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "deno": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "ccstatusline": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      },
+      "claude-statusline": {
+        "found": false,
+        "path": null,
+        "resolvedPath": null
+      }
+    },
+    "unknownCLIsExecuted": false,
+    "globalNpmPackageMetadata": [],
+    "claudeSettings": {
+      "path": "/home/superopen/.claude/settings.json",
+      "file": {
+        "exists": true,
+        "type": "regular-file",
+        "ownerUid": 1000,
+        "mode": "0o600",
+        "bytes": 811
+      },
+      "environmentValuesExcluded": true,
+      "transcriptsRead": false,
+      "fileSHA256": "dbfb8d8f1d2590ece0ae9d28cb0a88decadf4c4a2ace893b4c2735d9fd210c8b",
+      "envPresent": true,
+      "envFieldCount": 12,
+      "statusLine": {
+        "present": false,
+        "valueType": "NoneType",
+        "rawCommandExcluded": true
+      },
+      "otherSettingsContentExcluded": true
+    },
+    "ccSwitch": {
+      "databasePath": "/home/superopen/.cc-switch/cc-switch.db",
+      "providers": [
+        {
+          "name": "Claude Official",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "OpenAI Official",
+          "appType": "codex",
+          "current": false
+        },
+        {
+          "name": "Google Official",
+          "appType": "gemini",
+          "current": false
+        },
+        {
+          "name": "default",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "AIGoCode",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "Kimi For Coding",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "Xiaomi MiMo",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "Xiaomi MiMo plan",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "My Claude",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "DeepSeek",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "AIGoCode copy",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "Kimi For Coding-699",
+          "appType": "claude",
+          "current": false
+        },
+        {
+          "name": "JP-CCR (Codex订阅)",
+          "appType": "claude",
+          "current": true
+        }
+      ],
+      "settingsAndCredentialsExcluded": true,
+      "noProviderCLIInvoked": true,
+      "databaseFile": {
+        "exists": true,
+        "type": "regular-file",
+        "ownerUid": 1000,
+        "mode": "0o600",
+        "bytes": 237568
+      },
+      "nonemptyWALPresent": false,
+      "readStatus": "read-only-immutable",
+      "providerCount": 13
+    },
+    "developmentProject": {
+      "path": "/home/superopen/All-Projects/MyJevis",
+      "root": {
+        "exists": true,
+        "type": "directory",
+        "ownerUid": 1000,
+        "mode": "0o700",
+        "bytes": 4096
+      },
+      "sourceTreeRehashed": false,
+      "gitEntry": {
+        "exists": false
+      },
+      "originalMigrationBucketPresent": true,
+      "nodeModulesPresent": true,
+      "package.json": {
+        "sha256": "b6cea8cf31981080e9c58f689c949ab0ae9e1800d2a6573a14351d01d7475b68",
+        "name": "jarvis-platform",
+        "version": "0.1.0",
+        "scriptFingerprints": {
+          "dev": "aeef6dfccece57bddf7412ec6159c8a109e7a26388062bb1731b58f672697bc7",
+          "dev:112": "aeef6dfccece57bddf7412ec6159c8a109e7a26388062bb1731b58f672697bc7",
+          "build": "b3f68f450ad766336b3e4e833fdcf266f2d782235406902d202859fd57d748f7",
+          "typecheck": "3b22be1d074ea65ecdd9af02f5e16517d170c751120c041b83db4845abcfa532"
+        },
+        "devUses112Helper": true
+      },
+      "release-manifest.json": {
+        "sha256": "c14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15",
+        "runtimeBuild": "20261018-project-goals-r49-r1",
+        "sourceCommit": "03a1c8be794102b908479c4f9890d6bcc714c3f7"
+      },
+      "devHelperPresent": true,
+      "AGENTS.mdPresent": true,
+      "CLAUDE.mdPresent": true
+    },
+    "productionCurrentRealpath": "/opt/jarvis/releases/20261018-supervision-closed-loop-r53",
+    "productionSource": {
+      "path": "/opt/jarvis/current",
+      "root": {
+        "exists": true,
+        "type": "symlink",
+        "ownerUid": 0,
+        "mode": "0o777",
+        "bytes": 57
+      },
+      "sourceTreeRehashed": false,
+      "gitEntry": {
+        "exists": false
+      },
+      "originalMigrationBucketPresent": false,
+      "nodeModulesPresent": true,
+      "package.json": {
+        "sha256": "dbd77b73a389bc210be64dc7c360871398a919ae20f48f1b570aa9d916457fff",
+        "name": "jarvis-platform",
+        "version": "0.1.0",
+        "scriptFingerprints": {
+          "dev": "ad4f896461708a6acaeff440551907f4ba330238582808327868912c95ab3ca8",
+          "build": "b3f68f450ad766336b3e4e833fdcf266f2d782235406902d202859fd57d748f7",
+          "typecheck": "3b22be1d074ea65ecdd9af02f5e16517d170c751120c041b83db4845abcfa532"
+        },
+        "devUses112Helper": false
+      },
+      "release-manifest.json": {
+        "sha256": "b49031b52527d547ccc3ea15ad3757d5a485f0ffbd589d2c4b2cb082989c12b5",
+        "runtimeBuild": "20261018-supervision-closed-loop-r53",
+        "sourceCommit": "f46749926b0ec6bf12fa060a0267518c8400527d"
+      },
+      "devHelperPresent": false,
+      "AGENTS.mdPresent": false,
+      "CLAUDE.mdPresent": false
+    },
+    "productionServices": {
+      "jarvis-platform.service": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "363638",
+        "Result": "success",
+        "ExecMainStatus": "0",
+        "pidStartTicks": 86314741,
+        "commandBasename": "MainThread",
+        "executableBasename": "node"
+      },
+      "jarvis-observer.service": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "363648",
+        "Result": "success",
+        "ExecMainStatus": "0",
+        "pidStartTicks": 86314746,
+        "commandBasename": "MainThread",
+        "executableBasename": "node"
+      },
+      "jarvis-voice.service": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "2900037",
+        "Result": "success",
+        "ExecMainStatus": "0",
+        "pidStartTicks": 18040493,
+        "commandBasename": "python",
+        "executableBasename": "python3.12"
+      },
+      "systemd-journald.service": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "406",
+        "Result": "success",
+        "ExecMainStatus": "0",
+        "pidStartTicks": 302,
+        "commandBasename": "systemd-journal",
+        "executableBasename": "systemd-journald"
+      }
+    },
+    "resources": {
+      "logicalCPUs": 8,
+      "availableCPUAffinityCount": 8,
+      "loadAverage": [
+        0.958984375,
+        0.7802734375,
+        0.74951171875
+      ],
+      "memory": {
+        "MemTotalBytes": 49310707712,
+        "MemAvailableBytes": 47149944832,
+        "SwapTotalBytes": 8589930496,
+        "SwapFreeBytes": 5821353984
+      },
+      "rootFilesystem": {
+        "availableBytes": 166995197952,
+        "freeBytesIncludingReserved": 178958348288,
+        "totalBytes": 234039422976
+      },
+      "kernelRelease": "7.0.0-38-generic",
+      "architecture": "x86_64",
+      "pressureCountersAvailable": {
+        "cpu": true,
+        "memory": true,
+        "io": true
+      },
+      "ownProcIOReadable": true,
+      "sysstatPackageVersion": "12.7.7-0ubuntu2",
+      "sysstatCommands": {
+        "pidstat": {
+          "found": true,
+          "path": "/usr/bin/pidstat",
+          "resolvedPath": "/usr/bin/pidstat"
+        },
+        "iostat": {
+          "found": true,
+          "path": "/usr/bin/iostat",
+          "resolvedPath": "/usr/bin/iostat"
+        },
+        "mpstat": {
+          "found": true,
+          "path": "/usr/bin/mpstat",
+          "resolvedPath": "/usr/bin/mpstat"
+        },
+        "sar": {
+          "found": true,
+          "path": "/usr/bin/sar",
+          "resolvedPath": "/usr/bin/sar.sysstat"
+        },
+        "sadf": {
+          "found": true,
+          "path": "/usr/bin/sadf",
+          "resolvedPath": "/usr/bin/sadf"
+        }
+      },
+      "sysstatServices": {
+        "sysstat.service": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "exited",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainStatus": "0"
+        },
+        "sysstat-collect.timer": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "waiting",
+          "Result": "success"
+        },
+        "sysstat-summary.timer": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "waiting",
+          "Result": "success"
+        }
+      },
+      "sysstatHistoryDirectoryPresent": true,
+      "sysstatHistoryDataFileCount": 9
+    },
+    "finishedAt": "2026-10-18T14:06:48.385147+00:00",
+    "complete": true
+  },
+  "publicHealth": {
+    "complete": true,
+    "httpStatus": 200,
+    "status": "ok",
+    "build": "20261018-supervision-closed-loop-r53",
+    "role": "primary"
+  },
+  "sourceHelperSHA256": "016c604722e6f67db267b56e09c66762de179bdf2fb7d49f01f03ad5af4c256f",
+  "limits": [
+    "CLI version checks only; no inference, login, provider switching or model command.",
+    "Other named AI CLIs are presence-only to avoid invoking an unidentified wrapper.",
+    "StatusLine structure and command fingerprint only; no environment values, complete configuration or transcripts exported.",
+    "CC Switch provider names/current flags only from immutable SQLite with no pending WAL; no provider settings or credentials read.",
+    "Git metadata only when a .git entry exists; no remote URLs, credentials, index update, build or project tree hash.",
+    "System resources are a point-in-time observation; no sysstat collector or service was started."
+  ],
+  "remoteWrites": false,
+  "serviceOperations": 0,
+  "modelCalls": 0,
+  "businessDataQueries": 0
+}

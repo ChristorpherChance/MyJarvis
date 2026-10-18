@@ -1,0 +1,103 @@
+[
+  {
+    "project": "jarvis",
+    "occurredAt": "2026-10-18T15:07:21.100Z",
+    "objective": "112终端可直接用K3等AI开发，原生对话底部显示用量与资源，并通过贾维斯运维复用固定环境模板。",
+    "id": "JARVIS-20261018-AI-DEVELOPMENT-OPS-R55-RELEASE",
+    "kind": "release",
+    "title": "112正式发布R55：AI开发环境运维，保留R54工作台",
+    "changes": [
+      "真实Linux构建和审阅候选a16a1eb9以20261018-ai-development-ops-r55发布，包含R54 bc4f工作台；原部署工具、发布锁、固定目标与配置CAS沿用受审流程。",
+      "发布前完整数据快照与隔离恢复通过后切换112并验证HTTPS健康；未把恢复副本写回实时数据。",
+      "正式运维和机器详情加入AI开发环境入口，独立执行器保持运行；语音及旧运维控制器保持原PID。"
+    ],
+    "decisions": [
+      "对并发正式R54先真实合并，再按固定前置CAS发布；不修改expectedCurrent来发布缺少R54的旧候选。",
+      "完整快照、隔离恢复、服务健康与现场API分别确认；页面静态资源核对不代替视觉验收。"
+    ],
+    "facts": [
+      "源码a16a1eb9e0109bc31fefcb9325f74379529bd5cd；包4927a9d264a8bb58023d4d2f55df77f065b32a2444175e8c4d44c5d106414d32；配置owner0/group973/mode0640保持。",
+      "完整快照与恢复均64文件、59目录、4614965750字节，10个SQLite库完整性ok，清单5435fce45b9a3d2a3ed196f17a67dd28ba1e50968da7c2126f51367868279eda一致。",
+      "112正式/primary，101平台冷备与独立工厂未变；旧开发原件和并行R54副本保留。费用只记录，不设消费上限。"
+    ],
+    "verification": [
+      "原stage/install/权限检查/inspect、最终配置读回绑定、受锁激活的qualified生产者回执全部通过，transportExitCode0，未重试、未回退。",
+      "另用可信CA的HTTPS读取health200/statusok/buildR55/primary；平台626441、observer626443均active，语音2900037、AI执行器574159、旧控制器2051保持active。",
+      "正式HTTP入口资源及OperationsPage延迟加载包均逐字SHA匹配审阅候选。"
+    ],
+    "pending": [
+      "桌面/手机浏览器导航多次超时，视觉验收未完成；未签用户人工验收或第二台机器配置验收。"
+    ],
+    "lessons": [
+      "发布候选必须包含当前正式源码祖先，仅比较版本字符串不足以防止并发功能降级。"
+    ],
+    "evidence": [
+      "artifacts/ai-development-ops/release-binding-public.json",
+      "artifacts/ai-development-ops/release-install-public.json",
+      "artifacts/ai-development-ops/release-inspect-public.json",
+      "artifacts/ai-development-ops/release-activation-outcome-public.json",
+      "artifacts/ai-development-ops/release-recovery-proof-public.json",
+      "artifacts/ai-development-ops/live-api-validation-public.json",
+      "artifacts/ai-development-ops/lazy-feature-assets-public.json"
+    ],
+    "state": {
+      "implementation": "complete",
+      "verification": "passed",
+      "deployment": "live",
+      "acceptance": "pending"
+    }
+  },
+  {
+    "project": "jarvis",
+    "occurredAt": "2026-10-18T15:07:21.100Z",
+    "objective": "112终端可直接用K3等AI开发，原生对话底部显示用量与资源，并通过贾维斯运维复用固定环境模板。",
+    "id": "JARVIS-20261018-AI-DEVELOPMENT-OPS-LIVE-CHAIN-VALIDATION",
+    "kind": "validation",
+    "title": "平台一键配置、幂等回执、周期观察与项目关联资料现场核验",
+    "changes": [
+      "实际从正式API派发configure任务a4edc115-da34-4cb5-8be7-43eb4520890b，112固定SSH和普通用户执行返回succeeded；同commandId重复提交返回同一任务。",
+      "每分钟真实周期观察已在平台读回fresh，任务仍1条；资源新鲜度按真实采样时间，终端Token不写作累计账单。",
+      "建设项目备注容量已满，首轮同步无业务写即拒绝；改用项目关联决定和经验，整个项目及修订42保持，不截断历史。"
+    ],
+    "decisions": [
+      "复用原稳定命令编号和受版本保护接口，只追加selected→implemented决定与inbox经验；不为腾备注空间删除或改写旧资料。",
+      "源码、Linux定点验证、真实发布、API链路、终端显示及视觉/人工验收各保原范围。"
+    ],
+    "facts": [
+      "11通道盘点、K3存在、JP-CCR默认及状态栏均现场核实；K3仅一次实际测试，输入2359/输出35，CLI估0.01267美元，供应商实账未知。",
+      "决定5147bf99-fe15-4bd4-9825-4fb593dc691a为implemented修订2，selected历史修订1保持、independentAcceptance=false；经验197e9b68-78c0-4666-9246-4897eabed934为inbox/verified=false，未发布Skill。",
+      "平台同步本身新增模型/测试/服务操作/部署均0；原项目环境备注未追加、修订未变化，不冒称备注已更新。"
+    ],
+    "verification": [
+      "可信TLS健康200；未认证访问新环境接口401；当前管理员经机器归属、模板修订和固定目标约束创建任务，跨UID请求和结果文件真实可读。",
+      "实际配置成功与同命令幂等返回通过；后续只读周期来源fixed-ssh-ai-development-telemetry于14:58:13Z读回，jobCount1、资源fresh，未重复配置。",
+      "项目原环境四字段、完整notes、其他项目字段、revision与updatedAt全部核同保持；新增决定两版与经验候选逐项回读一致。",
+      "指南及建设档案按真实结果更新，同源HTML已生成；历史失败与更正继续留存。"
+    ],
+    "pending": [
+      "本轮只实际验证112；未来可信Linux x86_64机器需绑定模板后使用一键配置，未声明任意裸机自动纳管。",
+      "桌面/手机视觉检查受浏览器连接/导航超时影响未完成；用户实际日常使用体验尚未确认。"
+    ],
+    "lessons": [
+      "资料字段达到容量上限时，用项目关联记录保存新证据并保旧文，不能为补日志截断历史。",
+      "周期回读旧状态不等于新采样；无实际额度或账单时必须保持未知。"
+    ],
+    "evidence": [
+      "artifacts/ai-development-ops/live-api-validation-public.json",
+      "artifacts/ai-development-ops/periodic-and-static-https-public.json",
+      "artifacts/ai-development-ops/platform-sync-public.json",
+      "artifacts/ai-development-ops/native-terminal-observation-public.json",
+      "artifacts/ai-development-ops/k3-smoke-public.json",
+      "docs/112-AI开发环境与一键配置.md",
+      "docs/112-AI开发环境与一键配置.html",
+      "docs/贾维斯建设档案.md",
+      "docs/贾维斯建设档案.html"
+    ],
+    "state": {
+      "implementation": "complete",
+      "verification": "passed",
+      "deployment": "live",
+      "acceptance": "pending"
+    }
+  }
+]

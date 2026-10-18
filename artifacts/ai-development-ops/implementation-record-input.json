@@ -1,0 +1,102 @@
+[
+  {
+    "project": "jarvis",
+    "occurredAt": "2026-10-18T14:53:05.007Z",
+    "objective": "112可直接使用K3等模型开发，Claude对话下方显示原生用量和资源，贾维斯运维提供可信节点的可复用一键环境配置。",
+    "id": "JARVIS-20261018-AI-DEVELOPMENT-OPS-IMPLEMENTATION",
+    "kind": "change",
+    "title": "实现AI开发环境模板、原生状态栏与固定运维执行链",
+    "changes": [
+      "独立Git提交a16a1eb9包含固定Linux x86_64模板、普通用户安装/私密合并、claude-k3隔离启动、被动原生状态栏、加密凭据库、独立执行器、版本保护API及运维/机器详情页面。",
+      "R54 bc4f源码已真实合并，原工作台307个未改应用文件在候选包逐字保持；112新真实Git副本已快进到本轮候选，旧迁移原件与R54工作副本保留。",
+      "新执行器已实际安装启动，112普通用户配置已执行两次并确认第二次无改动；11通道保留、当前JP-CCR默认及原权限/参数保持，配置回退备份1份且最多保留2份。"
+    ],
+    "decisions": [
+      "保留全局默认通道，K3通过独立入口启动；仅追加同源Linux状态栏，不迁移Windows钩子或权限豁免。",
+      "使用固定目标/用户/模板/双指纹与15分钟有效期，凭据仅经私密stdin，后台失联不重放配置；新机器须先完成可信节点和模板绑定。",
+      "资源按实际采样来源二选一，不用轮询回执刷新旧终端资源时间；缺失真实额度保持未知。"
+    ],
+    "facts": [
+      "中央执行器、普通用户配置与平台业务发布分别验收；新执行器启动时平台/observer/voice PID保持。",
+      "本记录时R55已经完成stage/install/权限/inspect，正式激活正在原发布锁内进行；不预填上线成功。",
+      "费用只记录不设消费上限；本轮实际K3调用仅1次，其他供应商通道仅配置盘点，未逐个实际调用。"
+    ],
+    "verification": [
+      "安装前后源码SHA与固定配置元数据核同；Linux3类基础设施测试全部通过。",
+      "配置保留摘要前中后三次一致，第二次changed=false，K3启动dry-run通过。",
+      "源码与完整包分别独立审阅通过，ZIP/manifest全成员核对及R54保留校验通过。"
+    ],
+    "pending": [
+      "正式激活终态与上线独立健康检查、API配置任务到节点回执验收、页面视觉验收、第二台机器实际复制验证。"
+    ],
+    "lessons": [
+      "服务UMask=0077需在已打开FD显式设置共享文件模式；模板工具盘点需区分无固定版本与版本不符。"
+    ],
+    "evidence": [
+      "artifacts/ai-development-ops/source-review-public.json",
+      "artifacts/ai-development-ops/package-review-public.json",
+      "artifacts/ai-development-ops/infrastructure-install-public.json",
+      "artifacts/ai-development-ops/infrastructure-worker-start-public.json",
+      "artifacts/ai-development-ops/native-configuration-public.json",
+      "artifacts/ai-development-ops/git-candidate-transfer-public.json",
+      "artifacts/ai-development-ops/release-inspect-public.json"
+    ],
+    "state": {
+      "implementation": "complete",
+      "verification": "partial",
+      "deployment": "staged",
+      "acceptance": "pending"
+    }
+  },
+  {
+    "project": "jarvis",
+    "occurredAt": "2026-10-18T14:53:05.007Z",
+    "objective": "112可直接使用K3等模型开发，Claude对话下方显示原生用量和资源，贾维斯运维提供可信节点的可复用一键环境配置。",
+    "id": "JARVIS-20261018-AI-DEVELOPMENT-OPS-TARGETED-VALIDATION",
+    "kind": "validation",
+    "title": "Linux定点验证、K3最小调用和真实SSH终端状态栏通过",
+    "changes": [
+      "保留首轮权限、资源新鲜度及终端信任提示失败，再以窄修和现场证据更正。"
+    ],
+    "decisions": [
+      "不因记录或终端显示验证追加模型调用；只有一次最小K3固定文本调用。",
+      "浏览器桥连接失败后保留视觉验收未完成，不用源码审阅冒充真实页面验收。"
+    ],
+    "facts": [
+      "K3最小实际调用模型k3[1m]，输入2359、输出35、缓存0，CLI估算0.01267美元；供应商实际账单未知，不能作为已核账金额。",
+      "真实SSH PTY已在新Git开发目录显示模型/通道、上下文/最近响应、CLI估算、CPU/RAM/磁盘、缓存和原生额度；未提交对话prompt，新增模型调用0。首次CPU及缺失额度为未知。",
+      "前三次Python PTY停于信任提示；R2的projectTrustAccepted标志仅代表输入尝试，不能视为实际接受。后续交互式SSH逐步观察选择后真实显示并退出0，原报告保留。"
+    ],
+    "verification": [
+      "112 Linux provision9、node11、controller5全部通过，含真实POSIX umask和符号链接测试；API受影响测试、API/web类型检查及真实Linux构建/打包通过。",
+      "实际Claude安装旧目录0775被严格工具安全检查拒绝，首轮configure120秒超时且未配置状态栏；核对251456696字节二进制官方固定SHA后仅将2个普通用户目录收紧至0755，再执行配置通过并验证幂等。",
+      "候选2231个载荷、1906个Git源码对象、118份API map与5个离线入口闭包核验通过。",
+      "真实交互式终端观察、原生结构化私密摘要0600与安全显示片段核同，默认通道保持。"
+    ],
+    "pending": [
+      "平台发布与API现场链路终态另记；浏览器视觉验收未完成，第二台机器未实际配置，未作用户人工签收。"
+    ],
+    "lessons": [
+      "终端自动化应在实际观察到选中项后分步提交；不能把发送按键的布尔标志当作界面已接受。",
+      "工具安全检查拒绝现有安装时先读真实路径/权限与版本，避免把安全拒绝误当未安装而重复下载。"
+    ],
+    "evidence": [
+      "artifacts/ai-development-ops/linux-infrastructure-validation-public.json",
+      "artifacts/ai-development-ops/linux-validation-public.json",
+      "artifacts/ai-development-ops/linux-build-package-public.json",
+      "artifacts/ai-development-ops/k3-smoke-public.json",
+      "artifacts/ai-development-ops/claude-install-permissions-public.json",
+      "artifacts/ai-development-ops/native-terminal-observation-public.json",
+      "artifacts/ai-development-ops/native-terminal-observed-display.txt",
+      "artifacts/ai-development-ops/native-terminal-render-public.json",
+      "artifacts/ai-development-ops/native-terminal-render-r2-public.json",
+      "artifacts/ai-development-ops/native-terminal-render-r3-public.json"
+    ],
+    "state": {
+      "implementation": "complete",
+      "verification": "passed",
+      "deployment": "staged",
+      "acceptance": "pending"
+    }
+  }
+]

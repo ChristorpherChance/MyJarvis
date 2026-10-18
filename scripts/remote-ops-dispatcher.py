@@ -110,6 +110,17 @@ def diagnostics(config, units):
 def dispatch(config, request):
     if request.get('machineId')!=config['machineId'] or socket.gethostname()!=config['hostname']:raise RuntimeError('NODE_IDENTITY_DIFFERS')
     mode=request.get('mode')
+    if mode=='ai-development':
+        # This fixed delegation adds no shell, path, service or argv capability.
+        fixed=Path('/opt/jarvis-ai-development/node-dispatcher.py')
+        for parent in [fixed.parent,fixed]:
+            st=parent.lstat()
+            if parent.is_symlink() or st.st_uid!=0 or st.st_mode&0o022:raise RuntimeError('UNSAFE_AI_DEVELOPMENT_WRAPPER')
+        st=fixed.lstat()
+        if not fixed.is_file() or st.st_nlink!=1:raise RuntimeError('UNSAFE_AI_DEVELOPMENT_WRAPPER')
+        child=subprocess.run(['/usr/bin/python3','-I',str(fixed)],input=json.dumps(request,ensure_ascii=False),text=True,capture_output=True,timeout=15,env={'PATH':'/usr/sbin:/usr/bin:/sbin:/bin','LANG':'C.UTF-8'})
+        if child.returncode or len(child.stdout)>524288:raise RuntimeError('AI_DEVELOPMENT_WRAPPER_FAILED')
+        return json.loads(child.stdout)
     if mode=='probe':return {'machineId':config['machineId'],'hostname':socket.gethostname(),'bootId':boot_id(),'at':datetime.now(timezone.utc).isoformat()}
     id=request.get('id','')
     if not UUID.fullmatch(id):raise RuntimeError('INVALID_JOB_ID')

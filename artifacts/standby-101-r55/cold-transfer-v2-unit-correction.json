@@ -1,0 +1,27 @@
+{
+  "kind": "r55-cold-transfer-v2-unit-literal-correction",
+  "prior": {
+    "path": ".jarvis-dev/maintenance/cold-r55-transfer.py",
+    "bytes": 28062,
+    "sha256": "36fbaee43aacc911cbb7e0e43c4bc8ccbe05b5edf4daea8049ab5fee39f53fa5"
+  },
+  "source": {
+    "path": ".jarvis-dev/maintenance/cold-r55-transfer-v2.py",
+    "bytes": 28069,
+    "sha256": "2c3115fc76c4aaf5e48ad9bf68ff9023132a44db8e43f3c8cf3000b3ff6a137c"
+  },
+  "onlyChange": "COMMON cold() 'frpc.service' -> 'jarvis-frpc.service' exactly once",
+  "wholeByteInverseExact": true,
+  "allServiceLiterals": [
+    "jarvis-frpc.service",
+    "jarvis-observer.service",
+    "jarvis-platform.service",
+    "jarvis-voice.service"
+  ],
+  "allOtherCodeAndInputSchemaUnchanged": true,
+  "oldSourceRetained": true,
+  "phaseExecuted": false,
+  "inputActualSealed": false,
+  "acknowledgement": "Author used a nonexistent alias; this would refuse before cold-data installation. It is corrected before any phase execution, not a production failure.",
+  "CLI": "python .jarvis-dev/maintenance/cold-r55-transfer-v2.py <export|download|import|install> --input-sha256 <actual operation-input H> --self-sha256 2c3115fc76c4aaf5e48ad9bf68ff9023132a44db8e43f3c8cf3000b3ff6a137c"
+}

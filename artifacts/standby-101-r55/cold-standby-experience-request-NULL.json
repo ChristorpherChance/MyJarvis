@@ -1,0 +1,34 @@
+{
+  "kind": "standby-r55-experience-candidate-NULL",
+  "optionalSeparateWrite": true,
+  "method": "POST",
+  "path": "/api/v1/experiences/commands/capture",
+  "body": {
+    "commandId": null,
+    "scope": "personal",
+    "expectedVersion": 0,
+    "payload": {
+      "kind": "lesson",
+      "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+      "title": "冷备程序、恢复材料与接管验收分别核验",
+      "summary": "程序更新不等于数据恢复或接管；短停快照失败后也要核主平台恢复。",
+      "conditions": "更新冷备程序且主平台仍为正式入口；已有固定源码/包和隔离业务边界。",
+      "content": "先核隔离载荷、旧资源和必要依赖，保留旧code/config并使冷业务保持禁用。短停维护先持发布锁再核当前版本和源，失败时保首错，启动后仍须核真实健康。私有数据传输、全库恢复和接管演练各留真实证据；程序版本或现存依赖通过不能替代这些结果。当前只形成经验候选，尚无独立接管与跨机器复用验收。",
+      "source": "artifacts/standby-101-r55/program-v2-apply.json；artifacts/standby-101-r55/prepare-independent-review.json",
+      "tags": [
+        "冷备",
+        "恢复证据",
+        "失败恢复"
+      ]
+    }
+  },
+  "requiredReadback": {
+    "status": "inbox",
+    "verified": false
+  },
+  "forbiddenCommands": [
+    "verify",
+    "skill-publish"
+  ],
+  "executed": false
+}

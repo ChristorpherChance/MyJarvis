@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="112 正式运行；101 保持冷备。完整批次、新鲜度、语音与人工接管分别核对，不提供自动切换。">
-  <meta name="jarvis-source-sha256" content="6466c6d46f10ffbce8008e0f201e08fd41e41bfe127664b6098985bbbf520d9b">
-  <title>贾维斯 · Linux主备部署与验收（R35）</title>
+  <meta name="description" content="程序和时点恢复核验通过，900秒新鲜度不放宽；不是持续同步或自动接替。">
+  <meta name="jarvis-source-sha256" content="5a6dfd81f65a999a9f4ab3996e292efbf8cfae15dfef35b2e3b866da68d0a9e7">
+  <title>贾维斯 · Linux主备部署与验收（R55实际补充）</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
     :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
@@ -30,7 +30,7 @@
 <body>
   <a class="skip" href="#main-content">跳至正文</a>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R35</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R55冷备时点同步</span></div>
     <div class="tools">
       <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
       <a class="tool source-tool" href="Linux%E4%B8%BB%E5%A4%87%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E6%94%B6.md">Markdown 源文档</a>
@@ -42,36 +42,47 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 11 章 · Ctrl / ⌘ + K 查找</div>
-    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">R35 当前已核对的范围</a>
-<a class="toc-link level-2" href="#section-2" data-parent="2">人工接管与回切顺序</a>
-<a class="toc-link level-2" href="#section-3" data-parent="3">历史正文：2026-10-07 首轮迁移与当时验收</a>
-<a class="toc-link level-2" href="#section-4" data-parent="4">后续版本更新</a>
-<a class="toc-link level-2" href="#section-5" data-parent="5">1. 现在怎么访问</a>
-<a class="toc-link level-2" href="#section-6" data-parent="6">2. 机器与服务分工</a>
-<a class="toc-link level-2" href="#section-7" data-parent="7">3. 本轮新增后台</a>
-<a class="toc-link level-2" href="#section-8" data-parent="8">4. 数据迁移与恢复点</a>
-<a class="toc-link level-2" href="#section-9" data-parent="9">5. 语音和知识处理的实际状态</a>
-<a class="toc-link level-2" href="#section-10" data-parent="10">6. 验收记录</a>
-<a class="toc-link level-2" href="#section-11" data-parent="11">7. 下一批工作</a></nav>
-    <div class="sidebar-foot">更新于 2026-10-16<br>需求与设计稿 · 可离线浏览</div>
+    <div class="search-status" id="search-status" aria-live="polite">共 12 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">R55实际补充：完整批次已装入，当前仍不可接替</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">R35 当前已核对的范围</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">人工接管与回切顺序</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">历史正文：2026-10-07 首轮迁移与当时验收</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">后续版本更新</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">1. 现在怎么访问</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">2. 机器与服务分工</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">3. 本轮新增后台</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">4. 数据迁移与恢复点</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">5. 语音和知识处理的实际状态</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">6. 验收记录</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">7. 下一批工作</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-19<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
   <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
   <main class="layout" id="main-content" aria-labelledby="document-title">
     <div class="document">
       <header class="hero">
-        <p class="eyebrow">主备部署 / 人工接管 / 阶段事实</p>
-        <h1 id="document-title">贾维斯 · Linux主备部署与验收（R35）</h1>
-        <p class="subtitle">112 正式运行；101 保持冷备。完整批次、新鲜度、语音与人工接管分别核对，不提供自动切换。</p>
-        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-16</span><span>与 Markdown 同源生成</span></div>
-        <div class="stats"><div class="stat"><strong>R35</strong><span>112 已发布，结束时健康核对通过</span></div><div class="stat"><strong>900 秒</strong><span>原恢复材料新鲜度阈值保持</span></div><div class="stat"><strong>人工</strong><span>先隔离旧主，再确认唯一主</span></div></div>
+        <p class="eyebrow">112正式 / 101冷备 / 原件保留</p>
+        <h1 id="document-title">贾维斯 · Linux主备部署与验收（R55实际补充）</h1>
+        <p class="subtitle">程序和时点恢复核验通过，900秒新鲜度不放宽；不是持续同步或自动接替。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-19</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>R55</strong><span>112主平台 / 101冷备</span></div><div class="stat"><strong>1282秒</strong><span>最终快照年龄，已过900秒</span></div><div class="stat"><strong>冷备</strong><span>三业务单元禁用、未接管</span></div></div>
       </header>
       <article class="article">
-        <div class="intro"><p>本文件记录R35的实际部署与人工恢复边界。下方原 2026-10-07 正文保留为历史证据，其中的恢复批次、依赖、180 文件及旧语音状态不是 R35 当前状态。</p>
+        <div class="intro"><h2 id="section-1" tabindex="-1">R55实际补充：完整批次已装入，当前仍不可接替</h2>
+<p>本节为2026-10-19后继事实；下方R35全文原字节保留，其中“当前”及resident load仅指其历史时点，不是本轮R55结论。</p>
+<p>112保持R55/primary并健康。101隔离程序安装和临时运行检查通过，基础载荷2231项保持，另补129件R54/R36兼容资产；实际只更新release配置和程序并重启observer。101的jarvis-platform、jarvis-frpc、jarvis-voice仍disabled/inactive，独立软件工厂未触碰。</p>
+<p>恢复点是 <strong>2026-10-18 16:10:54.080506 UTC（北京时间10月19日00:10:54）</strong>：64文件、59目录、4,633,958,902字节、10个SQLite。112经既有授权短停保存快照，至恢复健康约129.122秒；随后私有导出、传输、101隔离恢复及冷备安装全树核同，旧101数据和标记保留，未覆盖112实时数据。</p>
+<p>最终16:32:17.820 UTC回读距快照 <strong>1282秒</strong>，原阈值 <strong>900秒</strong> 保持，所以recoveryMaterialsReady=false，材料原因仅SNAPSHOT_TOO_OLD_OR_FUTURE，canTakeover=false。验证时间更新不改变原snapshotAt；传输完整也不能让过期批次保持fresh。112后续数据没有连续复制，没有自动failover或真实接管。</p>
+<p>现存语音文件、包版本和pip一致性已核；当前没有新R55 resident load、推理或音质验收，R35历史装载结论保持其原范围。接管前仍需满足新鲜度的新批次，实际停止并隔离旧主，再按唯一主/角色/业务启动流程核验。本轮没有启用101冷业务。</p>
+<p>本次材料继续保留，未清理：112的 /var/lib/jarvis-control/standby-r55-sync-20261019-112/ 保存源data-snapshot和本批归档；101的 /var/lib/jarvis-control/cold-r55-81e81d3b-28bc-4441-94fb-65830b13f0a9/ 保存导入归档、snapshot及prior-101-data旧数据。已安装的101冷备数据在 /var/lib/jarvis/data，三业务单元仍禁用。这里只公开受控资料位置和指纹回执，不公开原始数据或密钥；未自动清理、持续复制或接替。后续112开发目录与Git仅同步本轮文档，不重复发布程序。</p>
+<p><a href="../artifacts/standby-101-r55/final-live-verification.json">最终双机核对</a> · <a href="../artifacts/standby-101-r55/final-saved-independent-review.json">保存范围独审</a> · <a href="../artifacts/standby-101-r55/cold-standby-final-safe-summary.json">本轮事实摘要</a>。</p>
+<hr>
+<h1>贾维斯 · Linux主备部署与验收（R35）</h1>
+<!-- jarvis-doc-meta {"version":"R35","date":"2026-10-16","eyebrow":"主备部署 / 人工接管 / 阶段事实","subtitle":"112 正式运行；101 保持冷备。完整批次、新鲜度、语音与人工接管分别核对，不提供自动切换。","stats":[{"value":"R35","label":"112 已发布，结束时健康核对通过"},{"value":"900 秒","label":"原恢复材料新鲜度阈值保持"},{"value":"人工","label":"先隔离旧主，再确认唯一主"}]} --><p>本文件记录R35的实际部署与人工恢复边界。下方原 2026-10-07 正文保留为历史证据，其中的恢复批次、依赖、180 文件及旧语音状态不是 R35 当前状态。</p>
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
-        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">R35 当前已核对的范围</h2>
+        <section class="doc-section" data-section="1"><h2 id="section-2" tabindex="-1">R35 当前已核对的范围</h2>
 <p>2026-10-16，112 已从 <code>20261012-supervision-r28-2</code> 切换到 <code>20261016-capture-complete-r35</code>。本轮激活结束时，平台及 observer 均 active，业务健康和运行版本核对通过。整个激活步骤耗时约 230 秒，包含快照及隔离恢复；不能据此推算连续健康观察时长。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -108,7 +119,7 @@
 <p>本批次快照时点为 <strong>2026-10-16 00:51:03.423620 UTC（北京时间 08:51:03）</strong>，清单 SHA-256 为 <code>5015c126eacf382f366457a71dcc7884050251a76490ccd741587a87d1173ca9</code>。本轮最终核对时已经超过原 <strong>900 秒</strong> 新鲜度期限，应据实视为 stale。批次完整性通过只说明这个时点的副本完整，不表示现在的恢复材料仍然 fresh。</p>
 <p>新鲜度阈值、快照时间与观测时间保持原意；不能通过改时间、放宽 900 秒或只刷新观测来维持“就绪”。112 后续新增的数据没有持续自动复制到 101。接管前须生成并传送合适的新恢复点，再按真实时间、版本、依赖、完整清单和数据库状态重新核对。</p>
 </section>
-<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">人工接管与回切顺序</h2>
+<section class="doc-section" data-section="2"><h2 id="section-3" tabindex="-1">人工接管与回切顺序</h2>
 <ol>
 <li>先确认故障范围及旧主状态，并实际隔离旧主。网络失联本身不能证明旧主已停用；不能在旧主仍可能服务时启动另一主节点。</li>
 <li>核对待用副本的完整清单、SQLite、语音与凭据配套、发布版本及原 900 秒新鲜度。stale 或信息不明时保留阻断原因，不以完整传输记录替代当前就绪证据。</li>
@@ -118,17 +129,17 @@
 </ol>
 <p>本轮没有新增自动故障接管、自动回切或持续数据复制。只读 readiness、observer 健康、源码审查、依赖安装或一次隔离恢复都不授予自动切换能力。软件工厂十分钟自动跟进继续保持暂停，101 上的软件工厂开发节点与平台冷备分别管理。</p>
 </section>
-<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">历史正文：2026-10-07 首轮迁移与当时验收</h2>
+<section class="doc-section" data-section="3"><h2 id="section-4" tabindex="-1">历史正文：2026-10-07 首轮迁移与当时验收</h2>
 <p>以下原文保留原字节，供核对首轮迁移。其版本、恢复点、服务状态与验收数字均按历史日期理解；R35 当前事实以上方及最终公开报告为准。</p>
 <hr>
 <h1>贾维斯 · Linux主备部署与验收</h1>
 <p>更新：2026-10-07。正式版本：20261007-linux-cluster。</p>
 <p><strong>112已成为正式中心，101已部署同版本并恢复同批数据，业务保持停止。联想的旧生产服务已停止，开发使用独立数据目录。101目前是经过核验的冷备，持续同步和受控接管尚未完成。</strong></p>
 </section>
-<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">后续版本更新</h2>
+<section class="doc-section" data-section="4"><h2 id="section-5" tabindex="-1">后续版本更新</h2>
 <p>2026-10-07已切换到20261007-cloud-monitoring。112继续运行，101仍保持冷备；增加广州、日本两台云节点的签名监测。本文原恢复批次和验收数字保留为首轮迁移证据，不代表新增数据已复制到101。最新接入与验收见<a href="%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A5%E5%85%A5%E4%B8%8E%E9%AA%8C%E6%94%B6.md">云服务器接入与验收</a>。</p>
 </section>
-<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">1. 现在怎么访问</h2>
+<section class="doc-section" data-section="5"><h2 id="section-6" tabindex="-1">1. 现在怎么访问</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -156,7 +167,7 @@
 <p>使用原管理员密码登录。地址属于家庭局域网。当前联想用户已安装家庭HTTPS证书，实际浏览器检查通过，没有绕过证书校验。其他终端需要先信任<a href="../artifacts/linux-deployment/jarvis-lan-ca.crt">家庭公开CA证书</a>，再允许麦克风；每台机器的浏览器权限分别设置。证书私钥不提供给房间终端。</p>
 <p>原127.0.0.1:3140生产入口已经停止。开发运行npm run dev时使用.jarvis-dev，API3140、前端5173；开发库与112家庭数据独立。默认生产旧目录.jarvis已设启动保护，旧Windows登录启动任务已禁用并保留任务导出，原库保留作迁移前恢复材料。</p>
 </section>
-<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">2. 机器与服务分工</h2>
+<section class="doc-section" data-section="6"><h2 id="section-7" tabindex="-1">2. 机器与服务分工</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -194,7 +205,7 @@
 <p>业务使用jarvis系统账号运行，管理账号superopen负责安装和维护。发布文件、角色配置和恢复记录由root保护；业务账号可以读配置和写自己的数据，不能修改主备角色或发布代码。</p>
 <p>采用原生HTTPS3140。独立的HTTPS3141只读观测服务需要节点专用凭据，备用观测不打开业务库、不调度任务。没有开放远程任意命令接口。</p>
 </section>
-<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">3. 本轮新增后台</h2>
+<section class="doc-section" data-section="7"><h2 id="section-8" tabindex="-1">3. 本轮新增后台</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -226,19 +237,19 @@
 <p>以上接口仅管理者本人可访问。检查请求不接受临时URL，不修改角色，也不启动备用业务。后台每15秒检查已登记节点，机器中心同步刷新；过期或失效观测显示未知。Pi增加原生只读工具jarvis_platform_nodes，身份撤销后旧工具不能继续查询。</p>
 <p>角色配置为standby时，实际启动入口在打开业务库前拒绝启动。主节点运行中角色、代次、版本或授权目录变化时停止业务。旧生产目录的启动保护避免联想再次使用原家庭数据启动第二个中心。</p>
 </section>
-<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">4. 数据迁移与恢复点</h2>
+<section class="doc-section" data-section="8"><h2 id="section-9" tabindex="-1">4. 数据迁移与恢复点</h2>
 <p>迁移先暂停原业务，生成完整一致备份，再恢复到两台服务器。逐文件SHA256、业务库和执行库完整性均核验通过，原语音密钥保留。迁移中暴露的Windows语音路径、服务账号目录权限和启动入口问题已修复并增加实际进程及恢复测试；不完整尝试均保留，未覆盖原库。</p>
 <p>最终恢复批次：migration-20261007043835235；恢复点为2026-10-07 12:38:38（北京时间）。两台核验相同完整清单的11个文件，包括业务库、执行库、Pi及运行资料和语音模型。11表示此时实际文件数，不表示业务功能数。</p>
 <p>Windows本地语音程序转换为Linux程序。系统内部拥有的文件路径按数据根转换；开发项目和外部知识目录的Windows路径不假装在Linux存在，后续需要在对应执行节点配置。</p>
 <p>两台前后端发布文件共180个，逐文件哈希一致。备份留在联想和两个节点的受保护目录；升级前另有112完整快照。角色、证书和观测凭据与业务库分开管理。</p>
 <p><strong>目前没有持续复制器。</strong> 101的数据不会自动跟随112变化。恢复点超过15分钟或版本、依赖核验失败时，管理页面会明确取消“恢复材料就绪”。这不影响112正常运行，也不能用修改阈值代替实际同步。</p>
 </section>
-<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">5. 语音和知识处理的实际状态</h2>
+<section class="doc-section" data-section="9"><h2 id="section-10" tabindex="-1">5. 语音和知识处理的实际状态</h2>
 <p>两台使用固定Node24.15.0、独立Python3.12.15和已记录的依赖版本。Ubuntu自带Python3.14保留，OCR运行在独立环境中。</p>
 <p>实际服务账号已执行本地语音合成、Whisper CPU识别及中英扫描OCR；原模型随完整备份迁移，运行时不下载。当前TTS是espeak-ng基础离线声音，自然度有限。Piper程序与适配器已准备，但自然语音模型下载未成功，尚未切换；也可配置真实HTTP语音引擎。</p>
 <p>语音识别和合成可运行，不等于真实麦克风、房间回声和免触碰唤醒已验收。专业中文唤醒与声纹仍待接入。Pi真实对话仍需配置实际模型账户或本地模型地址；语音会话、身份、预算和工具链继续使用已有Pi SDK。</p>
 </section>
-<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">6. 验收记录</h2>
+<section class="doc-section" data-section="10"><h2 id="section-11" tabindex="-1">6. 验收记录</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -296,7 +307,7 @@
 <li><a href="../artifacts/v1-api-qa/contract.json">接口核对</a></li>
 </ul>
 </section>
-<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">7. 下一批工作</h2>
+<section class="doc-section" data-section="11"><h2 id="section-12" tabindex="-1">7. 下一批工作</h2>
 <ol>
 <li>一致的持续恢复批次：业务库、执行库、Pi会话及文件协调，失败保留上一份成功数据，并显示真实滞后。</li>
 <li>受控接管与回切：旧主隔离证明、唯一主角色、任务与外部调用对账、角色代次和审计；先在隔离环境演练。</li>

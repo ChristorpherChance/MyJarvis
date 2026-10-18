@@ -1,0 +1,39 @@
+{
+  "kind": "r55-cold-transfer-independent-local-source-review",
+  "reviewedAt": "2026-10-18T16:07:41.275997+00:00",
+  "source": {
+    "path": ".jarvis-dev/maintenance/cold-r55-transfer.py",
+    "bytes": 28062,
+    "sha256": "36fbaee43aacc911cbb7e0e43c4bc8ccbe05b5edf4daea8049ab5fee39f53fa5"
+  },
+  "scope": "Static export/download/import/install and input/phase flow; no helper execution, remote access, application tests, or source modification.",
+  "accepted": false,
+  "P0": 0,
+  "P1": 1,
+  "findings": [
+    {
+      "priority": "P1",
+      "path": ".jarvis-dev/maintenance/cold-r55-transfer.py",
+      "line": 158,
+      "code": "WRONG_FRPC_UNIT",
+      "fact": "cold() checks frpc.service; saved current101 units use jarvis-frpc.service. Import/install can conservatively reject before any data replacement.",
+      "minimalCorrection": "Distinct source correcting only this unit literal; preserve original source and report.",
+      "evidencePath": "artifacts/standby-101-r55/preflight-101.json"
+    }
+  ],
+  "finiteChecks": [
+    "Input/self hashes and NULL refusal precede phase intents/remote.",
+    "Fixed primary snapshot sourceRoot/release/createdAt/manifest/counts/SQLite binding; no new snapshot in export.",
+    "Private exact archive hash/size; path/type/link/duplicate checks, exclusive extraction, whole verification and isolated restore.",
+    "101 config hash/ownership and standby role/current release remain fixed; cold business services required.",
+    "Original101data retained by rename; full installed content/voice-key hash checks; original marker bytes+ownership retained for rollback.",
+    "Observer-only service operations; current voice byte/package evidence and historical R35 resident-load scope distinguished.",
+    "Actual snapshot createdAt preserved, no freshness relabel, no automatic takeover or retries."
+  ],
+  "syntaxOnly": "Outer and each COMMON+phase AST parsed without importing/executing helper.",
+  "knownBoundaries": [
+    "Final 900-second material readiness must be checked from actual createdAt by the existing readiness API; installation alone is not takeover qualification.",
+    "No claim of new R55 voice resident load or physical voice acceptance.",
+    "No live factory data, config, agent or session actions."
+  ]
+}

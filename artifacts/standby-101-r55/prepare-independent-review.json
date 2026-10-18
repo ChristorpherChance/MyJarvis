@@ -1,0 +1,65 @@
+{
+  "kind": "standby-r55-prepare-independent-source-review",
+  "atUTC": "2026-10-18T16:06:57.474348Z",
+  "accepted": true,
+  "source": {
+    "path": ".jarvis-dev/maintenance/standby-r55-prepare.py",
+    "bytes": 16775,
+    "sha256": "8836a4fefb34e43aecd0e14e930fb2aa9feb60937a67e2fec6885fa6bbb796cb"
+  },
+  "originalSource": {
+    "path": "artifacts/standby-101-r55/prepare-source-before-snapshot-review.py",
+    "bytes": 11998,
+    "sha256": "9d6fa930e0db2f033dd3a0037c3eef93723cbeb9bbc4ed90f612478edada5141"
+  },
+  "reviewerAuthoredSnapshotCorrectionAtRootDirection": true,
+  "independenceLimit": "Original helper reviewed independently; snapshot-only correction was then authored by this reviewer at Root direction and statically checked, not independently executed or tested. Root retains execution ownership.",
+  "originalP1Findings": [
+    {
+      "id": "P1-LOCK-BINDING",
+      "finding": "Configuration/current/source were captured before acquiring the shared publication lock. Another publication could finish between capture and lock acquisition.",
+      "resolution": "Acquire and verify the lock first, read config/current/recovery under it, and recheck exact original config/current/recovery again immediately before stop."
+    },
+    {
+      "id": "P1-FAILURE-RESTORATION",
+      "finding": "Snapshot error triggered finally-start but then propagated before recovery-health verification or a durable safe failure receipt. A failed start could also replace the original snapshot error.",
+      "resolution": "Preserve firstError separately from recoveryError; start exactly once after any possibly effective stop; always run bounded health/config/current checks after that attempt and write safe outcome even without a snapshot. Snapshot failure remains nonzero even if service restoration passes."
+    }
+  ],
+  "remainingDeterminateP1Findings": [],
+  "mechanicalBoundary": {
+    "onlySnapshotBranchChanged": true,
+    "fetchStageInstallSmokeOverlayVoiceAndCommonReceiptBytesUnchanged": true,
+    "localAndEmbeddedRemoteASTParsed": true,
+    "embeddedRemoteExecuted": false,
+    "testsRun": false
+  },
+  "snapshotFailureEvidence": {
+    "remotePrivateChildRawLogs": "WX0600 phase stdout/stderr and snapshot-receipt.json within this exact new control directory",
+    "localFailedOutcome": "artifacts/standby-101-r55/snapshot-failure.json, exclusive create, safe typed errors/hash/size only",
+    "firstErrorPreserved": true,
+    "healthPassedDoesNotTurnFailedSnapshotGreen": true,
+    "outerSSHTimeoutSeconds": 650,
+    "transportTimeoutMeaning": "Uncertain restoration, nonzero; does not retry or claim success. Hard kill/power loss remains outside Python finally guarantees."
+  },
+  "overlayBoundary": [
+    "R54 ZIP is fixed to f9eb4c09c06e6a1c2dc09889cdfd10b6ba062907ea7660c2ad4f4f0111eb0b97; only JS/CSS assets are selected.",
+    "Local R55+R54 union must cover the saved preflight-101 webAssets (R36 baseline) exactly by path/size/hash; mismatched existing R55 path refuses.",
+    "Remote target is isolated R55 release: manifest H pinned, all 119 destinations prechecked absent, exclusive nofollow writes, old 101 assets and all base manifest bytes rechecked. This is asset preservation, not startup/browser validation; saved preflight is not a fresh inventory of later additions."
+  ],
+  "voiceBoundary": [
+    "Checks current installed-manifest binding, regular file/type/size and content H except the service-token secret (type/size only), package versions/pip consistency, and voice unit inactive.",
+    "No new resident model load, inference or audio-quality validation; resident-load statement stays explicitly historical R35. Parent-directory ownership and hardlink identity are not comprehensively certified by this phase."
+  ],
+  "notPerformed": [
+    "No helper phase execution, SSH/API/daemon/model/app/test/build/Git network or production action by reviewer.",
+    "Snapshot has not been claimed executed or passed by this review."
+  ],
+  "cost": {
+    "supplierModelCallsByReviewer": 0,
+    "internalTokens": null,
+    "internalAmount": null,
+    "invoiceAmount": null,
+    "currencyCap": null
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "requestId": "a20a21b9-4b0e-4994-89f8-ea6cf5dd8555",
+  "version": 1,
+  "data": {
+    "title": "冷备更新按程序、服务数据的实际所有者与旧资源核验",
+    "content": "先核隔离载荷、旧资源和必要依赖，保留旧code/config并使冷业务保持禁用。短停维护先持发布锁再核当前版本和源，失败时保首错，启动后仍须核真实健康。私有数据传输、全库恢复和接管演练各留真实证据；程序版本或现存依赖通过不能替代这些结果。当前只形成经验候选，尚无独立接管与跨机器复用验收。 本次实际先在远端变更前拒绝缺十件旧资源的候选，并补入经指纹固定的R36原件；首次程序预检因合法997:973/0700服务目录误拒，独立v2仅按固定实际身份核验，不修改权限或泛放程序Root守卫。数据恢复慢于新鲜度期限时保留原snapshotAt，不用verifiedAt冒充新恢复点。",
+    "kind": "lesson",
+    "source": "artifacts/standby-101-r55/overlay-first-local-refusal.json；artifacts/standby-101-r55/program-owner-metadata-cause.json；artifacts/standby-101-r55/final-live-verification.json",
+    "conditions": "更新冷备程序且主平台仍为正式入口；已有固定源码/包和隔离业务边界。",
+    "evidence": "",
+    "version": "draft-1",
+    "verified": false,
+    "status": "inbox",
+    "history": [],
+    "references": [],
+    "mergedSources": [],
+    "createdAt": "2026-10-18T16:32:47.336Z",
+    "updatedAt": "2026-10-18T16:32:47.336Z",
+    "summary": "R36有十个资源未进入后继包，合法服务数据目录也会被错误的root-only守卫拒绝；先按真实类型和角色核验，再更新冷备。",
+    "tags": [
+      "冷备",
+      "恢复证据",
+      "失败恢复"
+    ],
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "id": "3be202fb-4290-4755-be8f-bb3a3e2edb82",
+    "revision": 1,
+    "scope": "personal",
+    "ownerId": "server-admin"
+  },
+  "events": [
+    {
+      "id": "414e68e7-e498-48a1-9b8e-e3c25c780c9c",
+      "sequence": 1327282,
+      "at": "2026-10-18T16:32:47.336Z",
+      "actorId": "server-admin",
+      "domain": "experiences",
+      "objectId": "3be202fb-4290-4755-be8f-bb3a3e2edb82",
+      "type": "captured",
+      "payload": {
+        "kind": "lesson"
+      }
+    }
+  ]
+}

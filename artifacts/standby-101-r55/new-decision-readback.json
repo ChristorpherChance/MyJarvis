@@ -1,0 +1,318 @@
+{
+  "data": {
+    "questionSummary": "101冷备如何更新R55并保留旧资产、语音材料和独立软件工厂，避免把程序就绪冒作接管验收？",
+    "context": {
+      "observedAt": "2026-10-18T16:32:45.598Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a",
+      "sourceVersion": "20261018-ai-development-ops-r55",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [],
+      "constraints": [
+        "112是正式主平台；101保持冷备，独立软件工厂不受影响。",
+        "费用只记账、未知分列，不设金额上限；十分钟自动监督仍暂停。",
+        "不覆盖满额项目notes，不改工厂目标、计划、监督项或原决策。"
+      ],
+      "situation": "已完成101隔离载荷安装、临时运行检查、129件兼容资产与现存语音材料核验。program-v2实际切换R55且仅observer重启，三冷业务单元仍disabled/inactive。112已完成64文件、59目录、4633958902字节与10个SQLite一致快照并恢复R55健康；私有传输、101全树恢复及接管不由本条推定。 后继实际已完成私有包校核、101隔离恢复与全树换入，10库通过，原101数据保留。112正式健康、101R55冷停与跨节点TLS观察已读回；快照仅为原时点，900秒阈值和非持续同步保持。"
+    },
+    "options": [
+      {
+        "id": "cold-code-and-private-recovery-separate",
+        "title": "更新冷备程序并核验私有恢复副本，保留原数据和接管隔离门",
+        "advantages": [
+          "保留旧资产与历史恢复路径。",
+          "不启101冷业务，不影响独立软件工厂。"
+        ],
+        "disadvantages": [
+          "程序对齐不能替代私有数据恢复和接管验证。"
+        ],
+        "impact": "101程序与冷备数据已更新；112仍唯一正式主，三冷服务disabled/inactive；不启动或操作独立软件工厂。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "cold-code-and-private-recovery-separate",
+    "decisionRationale": "按已发生程序准备与后续恢复分层登记，保持冷备和工厂隔离；本次状态implemented只证明证据所列动作发生，不代表独立接管验收。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/standby-101-r55/program-v2-apply.json",
+        "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/standby-101-r55/overlay-r2.json",
+        "sha256": "23dd86cf980b2e2b4d50bc5e7ce06bdd89f8be27a72438c09d0b5c6acd335761",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/standby-101-r55/smoke.json",
+        "sha256": "f4d4a7bfb5965ea41461d53a8561fe7068edd23011ae719259d91d28636b7a7c",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/standby-101-r55/voice.json",
+        "sha256": "12ab75877f44eca8176beb49eaceec2e9b180fd12c7595903b282eb53a883dc3",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/standby-101-r55/snapshot.json",
+        "sha256": "26c83e5e7aa69f82b8499f928704c6ff007c330a37b2a518532607e8eb4227fa",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/standby-101-r55/final-live-verification.json",
+        "sha256": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a",
+        "kind": "test-report"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [],
+    "rollbackPlan": {
+      "plan": "如新程序或配置不符，保持三冷业务单元禁用，依据私存旧code/config形成独立受控回退步骤；数据恢复与接管另行核对，不由记录接口自动执行。",
+      "triggers": [
+        "程序/配置与已验指纹不符",
+        "冷业务意外启动或工厂受到影响"
+      ],
+      "impact": "可能恢复旧冷备程序及配置；不得覆盖101工厂、原私有资料或112实时业务数据。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "101 R55程序/release切换已成功，只重启observer；三冷业务单元disabled/inactive、业务数据及工厂未改。",
+        "at": "2026-10-18T16:08:45.731Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/standby-101-r55/program-v2-apply.json",
+            "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181",
+            "kind": "test-report"
+          }
+        ]
+      },
+      {
+        "summary": "按既有授权短停112平台完成一致快照，随后启动并核R55健康；未恢复或覆盖实时数据。",
+        "at": "2026-10-18T16:11:05.715Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/standby-101-r55/snapshot.json",
+            "sha256": "26c83e5e7aa69f82b8499f928704c6ff007c330a37b2a518532607e8eb4227fa",
+            "kind": "test-report"
+          }
+        ]
+      },
+      {
+        "summary": "私有传输、隔离恢复和101全树换入已完成，10个SQLite通过；原数据与旧控制材料保留。跨节点TLS确认R55冷备和真实快照时点，未执行接管。",
+        "at": "2026-10-18T16:32:17.820Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/standby-101-r55/final-live-verification.json",
+            "sha256": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a",
+            "kind": "test-report"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "1f17db8e-97c4-4446-bc79-0a0106960b68",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 1,
+    "createdAt": "2026-10-18T16:32:47.120Z",
+    "updatedAt": "2026-10-18T16:32:47.120Z",
+    "changeOf": null,
+    "changeOfRevision": null,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": "cold-code-and-private-recovery-separate",
+      "status": "recommended",
+      "candidates": [
+        {
+          "id": "cold-code-and-private-recovery-separate",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        }
+      ],
+      "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "revisionReason": "记录当时的问题与选择",
+    "hash": "910f883515460b9d7d8c1663f9e157bce1e21a65ce1304f07b6e8a8c7998ee26",
+    "revisions": [
+      {
+        "questionSummary": "101冷备如何更新R55并保留旧资产、语音材料和独立软件工厂，避免把程序就绪冒作接管验收？",
+        "context": {
+          "observedAt": "2026-10-18T16:32:45.598Z",
+          "goalSpecHash": null,
+          "sourceFingerprint": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a",
+          "sourceVersion": "20261018-ai-development-ops-r55",
+          "runId": null,
+          "taskId": null,
+          "machineId": null,
+          "objectives": [],
+          "constraints": [
+            "112是正式主平台；101保持冷备，独立软件工厂不受影响。",
+            "费用只记账、未知分列，不设金额上限；十分钟自动监督仍暂停。",
+            "不覆盖满额项目notes，不改工厂目标、计划、监督项或原决策。"
+          ],
+          "situation": "已完成101隔离载荷安装、临时运行检查、129件兼容资产与现存语音材料核验。program-v2实际切换R55且仅observer重启，三冷业务单元仍disabled/inactive。112已完成64文件、59目录、4633958902字节与10个SQLite一致快照并恢复R55健康；私有传输、101全树恢复及接管不由本条推定。 后继实际已完成私有包校核、101隔离恢复与全树换入，10库通过，原101数据保留。112正式健康、101R55冷停与跨节点TLS观察已读回；快照仅为原时点，900秒阈值和非持续同步保持。"
+        },
+        "options": [
+          {
+            "id": "cold-code-and-private-recovery-separate",
+            "title": "更新冷备程序并核验私有恢复副本，保留原数据和接管隔离门",
+            "advantages": [
+              "保留旧资产与历史恢复路径。",
+              "不启101冷业务，不影响独立软件工厂。"
+            ],
+            "disadvantages": [
+              "程序对齐不能替代私有数据恢复和接管验证。"
+            ],
+            "impact": "101程序与冷备数据已更新；112仍唯一正式主，三冷服务disabled/inactive；不启动或操作独立软件工厂。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "cold-code-and-private-recovery-separate",
+        "decisionRationale": "按已发生程序准备与后续恢复分层登记，保持冷备和工厂隔离；本次状态implemented只证明证据所列动作发生，不代表独立接管验收。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/standby-101-r55/program-v2-apply.json",
+            "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181",
+            "kind": "test-report"
+          },
+          {
+            "reference": "artifacts/standby-101-r55/overlay-r2.json",
+            "sha256": "23dd86cf980b2e2b4d50bc5e7ce06bdd89f8be27a72438c09d0b5c6acd335761",
+            "kind": "test-report"
+          },
+          {
+            "reference": "artifacts/standby-101-r55/smoke.json",
+            "sha256": "f4d4a7bfb5965ea41461d53a8561fe7068edd23011ae719259d91d28636b7a7c",
+            "kind": "test-report"
+          },
+          {
+            "reference": "artifacts/standby-101-r55/voice.json",
+            "sha256": "12ab75877f44eca8176beb49eaceec2e9b180fd12c7595903b282eb53a883dc3",
+            "kind": "test-report"
+          },
+          {
+            "reference": "artifacts/standby-101-r55/snapshot.json",
+            "sha256": "26c83e5e7aa69f82b8499f928704c6ff007c330a37b2a518532607e8eb4227fa",
+            "kind": "test-report"
+          },
+          {
+            "reference": "artifacts/standby-101-r55/final-live-verification.json",
+            "sha256": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a",
+            "kind": "test-report"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [],
+        "rollbackPlan": {
+          "plan": "如新程序或配置不符，保持三冷业务单元禁用，依据私存旧code/config形成独立受控回退步骤；数据恢复与接管另行核对，不由记录接口自动执行。",
+          "triggers": [
+            "程序/配置与已验指纹不符",
+            "冷业务意外启动或工厂受到影响"
+          ],
+          "impact": "可能恢复旧冷备程序及配置；不得覆盖101工厂、原私有资料或112实时业务数据。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "101 R55程序/release切换已成功，只重启observer；三冷业务单元disabled/inactive、业务数据及工厂未改。",
+            "at": "2026-10-18T16:08:45.731Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/standby-101-r55/program-v2-apply.json",
+                "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181",
+                "kind": "test-report"
+              }
+            ]
+          },
+          {
+            "summary": "按既有授权短停112平台完成一致快照，随后启动并核R55健康；未恢复或覆盖实时数据。",
+            "at": "2026-10-18T16:11:05.715Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/standby-101-r55/snapshot.json",
+                "sha256": "26c83e5e7aa69f82b8499f928704c6ff007c330a37b2a518532607e8eb4227fa",
+                "kind": "test-report"
+              }
+            ]
+          },
+          {
+            "summary": "私有传输、隔离恢复和101全树换入已完成，10个SQLite通过；原数据与旧控制材料保留。跨节点TLS确认R55冷备和真实快照时点，未执行接管。",
+            "at": "2026-10-18T16:32:17.820Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/standby-101-r55/final-live-verification.json",
+                "sha256": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a",
+                "kind": "test-report"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "1f17db8e-97c4-4446-bc79-0a0106960b68",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-18T16:32:47.120Z",
+        "updatedAt": "2026-10-18T16:32:47.120Z",
+        "changeOf": null,
+        "changeOfRevision": null,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "cold-code-and-private-recovery-separate",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "cold-code-and-private-recovery-separate",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "记录当时的问题与选择",
+        "hash": "910f883515460b9d7d8c1663f9e157bce1e21a65ce1304f07b6e8a8c7998ee26"
+      }
+    ]
+  }
+}

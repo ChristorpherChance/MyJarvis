@@ -1,0 +1,262 @@
+{
+  "kind": "r55-cold-standby-final-saved-independent-review",
+  "reviewedAt": "2026-10-18T16:33:34.556290+00:00",
+  "operationId": "81e81d3b-28bc-4441-94fb-65830b13f0a9",
+  "release": "20261018-ai-development-ops-r55",
+  "acceptedForSavedProgramAndPointInTimeRecoverySync": true,
+  "P0": 0,
+  "P1MismatchFindings": [],
+  "scope": "LOCAL audit of Root-saved public receipts, exact input/reference hashes and already-reviewed operation source. No new remote read, private archive/raw access, application execution, model, or test. This is not takeover or all-factory acceptance.",
+  "authorshipLimit": "Reviewer authored program-switch-v2; this final report audits Root actual saved outcomes and cross-bindings, not independent approval of its own source. Cold-transfer source was reviewed independently.",
+  "program": {
+    "from": "20261016-factory-supervision-r36",
+    "to": "20261018-ai-development-ops-r55",
+    "sourceCommit": "a16a1eb9e0109bc31fefcb9325f74379529bd5cd",
+    "baseManifestFiles": 2231,
+    "baseManifestSHA256": "46c8412dcf8f5e255e8feba84f720e64e8278f6ef027221fea17636a0b8a23c8",
+    "oldR36AssetsSubsetVerified": 27,
+    "primaryR55AssetsMatchedByFinalReadback": 146,
+    "overlayAdded": 129,
+    "overlayR54Assets": 119,
+    "overlayAdditionalR36Assets": 10,
+    "overlayAddedBytes": 17155919,
+    "originalManifestUnchanged": true,
+    "configurationChangedKeys": [
+      "release"
+    ],
+    "configurationMetadata": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "standbyConfigSHA256": "b491c634a668d395b0f36b2028b4d2c98ff378b759d9f34234c3f88385df2fc2",
+    "coldServices": [
+      "jarvis-platform.service",
+      "jarvis-frpc.service",
+      "jarvis-voice.service"
+    ],
+    "coldServicesInactiveDisabled": true,
+    "observerOnlyRestarted": true,
+    "observerBuild": "20261018-ai-development-ops-r55",
+    "observerAuthenticatedTLSReadbackMatched": true
+  },
+  "recovery": {
+    "snapshotAt": "2026-10-18T16:10:54.080506+00:00",
+    "manifestSHA256": "6f732b6e0bd4f3c977419757180989f8b4807e7c1b38e39eac8548e8abb3d61d",
+    "files": 64,
+    "directories": 59,
+    "bytes": 4633958902,
+    "sqliteDatabasesChecked": 10,
+    "sqliteIntegrity": "ok",
+    "fullTreeVerified": true,
+    "isolatedRestorePassed": true,
+    "installedTreeMatched": true,
+    "voiceKeyPreserved": true,
+    "old101DataAndMarkersRetained": true,
+    "archiveBytes": 986492932,
+    "archiveSHA256": "f46f72152f982e4fef000f072d924939a8e3d33dddd97244d7a3ee6e621e7bf4",
+    "phasesExit0": [
+      "export",
+      "download",
+      "import",
+      "install"
+    ],
+    "importSeconds": 859.094000000041,
+    "installSeconds": 101.61000000010245,
+    "primaryStoppedThroughHealthSeconds": 129.12188833893742,
+    "primaryHealthRestored": true,
+    "primaryLiveDataRestoredOrOverwritten": false
+  },
+  "freshnessAndTakeover": {
+    "limitSeconds": 900,
+    "snapshotLagAtInstallSeconds": 1269,
+    "snapshotLagAtIndependentPeerReadbackSeconds": 1282,
+    "snapshotTimeNotRefreshed": true,
+    "verifiedAtIsSeparate": true,
+    "recoveryMaterialsReady": false,
+    "readinessReasons": [
+      "SNAPSHOT_TOO_OLD_OR_FUTURE"
+    ],
+    "automaticFailover": false,
+    "continuousReplication": false,
+    "takeoverPerformed": false,
+    "canTakeover": false,
+    "requiredBeforeTakeover": "Fresh verified recovery materials and explicit old-primary stop/fencing; this operation neither promoted101 nor activated its business/FRP/voice."
+  },
+  "dependencies": {
+    "runtimeSmoke": {
+      "build": "20261018-ai-development-ops-r55",
+      "status": "passed",
+      "temporaryAppOnly": true,
+      "modelCalls": 0,
+      "businessDataRead": false,
+      "browserOrProductionAcceptance": false
+    },
+    "voice": {
+      "currentInstalledFilesChecked": 1878,
+      "currentInstalledBytesChecked": 1379567775,
+      "pythonVersion": "3.12.15",
+      "currentPackagesAndPipChecked": true,
+      "historicalResidentLoadRelease": "20261016-capture-complete-r35",
+      "historicalResidentLoadVerified": true,
+      "currentR55ResidentLoadPerformed": false,
+      "inferenceCalls": 0,
+      "physicalMicrophoneOrAudioQualityAccepted": false
+    }
+  },
+  "primary": {
+    "node": "112",
+    "role": "primary",
+    "build": "20261018-ai-development-ops-r55",
+    "health": "ok",
+    "configurationSHA256Preserved": "1149ea11ed4e7c7ffeb16af46aeb54f98e0833a775b27be33e9c7b44f4024059",
+    "observerDependenciesReady": false,
+    "observerDependenciesNote": "Primary observer still reports its historical dependency marker as not ready; business health is separately R55/ok. No claim that both observer dependency markers passed."
+  },
+  "independentFactory": {
+    "actionsByTheseControls": 0,
+    "untouchedEvidence": "Operation source and actual controls are confined to platform release/config/control/platform-data and observer, with saved factoryActions=0.",
+    "independentlyInspected": false,
+    "allFactoryRuntimeCertified": false
+  },
+  "retainedFailures": {
+    "wrongServiceDirectoryRootOwnerAssumption": "Original program preflight conservatively rejected ST55_TYPE_OWNER_MODE before service/data/code mutation; v2 exact service UID/GID/mode correction and original evidence retained.",
+    "overlayMissingR36Assets": "First local overlay refusal retained; r2 explicitly adds R36 ten missing assets.",
+    "wrongFrpcUnitLiteral": "Original cold source P1 found statically before execution; distinct v2 fixes only the unit name.",
+    "completeImportV3": "Not used; original v2 import completed successfully, no retry or re-upload."
+  },
+  "cost": {
+    "supplierModelCallsByThisMaintenance": 0,
+    "internalTokens": null,
+    "internalAmount": null,
+    "amountCapIntroduced": false,
+    "unknownNotZero": true
+  },
+  "limitations": [
+    "No role promotion, primary fencing, domain/FRP takeover, standby business startup, new R55 voice inference or factory product test.",
+    "Point-in-time data installation passed, but the exact original 900-second freshness requirement did not.",
+    "R55 runtime artifact/source identity is a16a1e; this report does not assert that all newest main tooling or an independent development directory was deployed as that immutable package."
+  ],
+  "physicalReferences": [
+    {
+      "path": "artifacts/standby-101-r55/operation-input.json",
+      "bytes": 8622,
+      "sha256": "e6a315abca567501fc8037921571559e4c6ee2314be31b068649c8f5f881f771"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-v2-apply.json",
+      "bytes": 1770,
+      "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-input-v2.json",
+      "bytes": 5723,
+      "sha256": "b1de7a525ffad749c9cbcb497c8329d8237c8270f964ba8f8253a29e1729999b"
+    },
+    {
+      "path": "artifacts/standby-101-r55/snapshot.json",
+      "bytes": 2658,
+      "sha256": "26c83e5e7aa69f82b8499f928704c6ff007c330a37b2a518532607e8eb4227fa"
+    },
+    {
+      "path": "artifacts/standby-101-r55/snapshot-metadata.json",
+      "bytes": 252,
+      "sha256": "9ee3836eed4af0a190187af91ea96ab0174b289cf440fcb405d2e4210a8de6f7"
+    },
+    {
+      "path": "artifacts/standby-101-r55/runtime-smoke.json",
+      "bytes": 5613,
+      "sha256": "07f5fb62160001c7dbee33bb904671084aaf5ed414829b99d7f290de584a8cde"
+    },
+    {
+      "path": "artifacts/standby-101-r55/voice.json",
+      "bytes": 1058,
+      "sha256": "12ab75877f44eca8176beb49eaceec2e9b180fd12c7595903b282eb53a883dc3"
+    },
+    {
+      "path": "artifacts/standby-101-r55/overlay-r2.json",
+      "bytes": 360,
+      "sha256": "23dd86cf980b2e2b4d50bc5e7ce06bdd89f8be27a72438c09d0b5c6acd335761"
+    },
+    {
+      "path": "artifacts/standby-101-r55/stage.json",
+      "bytes": 425,
+      "sha256": "1b1796fa6726eff88c5bf3ecaf404460c804ff9759249db0cc15dff94166c31d"
+    },
+    {
+      "path": "artifacts/standby-101-r55/install.json",
+      "bytes": 413,
+      "sha256": "1e3016c3810529882053c93dc18cb32b81995e5ee9d0e219710fd189db3dcf39"
+    },
+    {
+      "path": "artifacts/standby-101-r55/final-live-verification.json",
+      "bytes": 7022,
+      "sha256": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/standby-r55-program-switch-v2.py",
+      "bytes": 20953,
+      "sha256": "0b38c41b01a47f7f1f742a6417749c46ed8da6a9ec4ebba1814dd4181bfdd960"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/cold-r55-transfer-v2.py",
+      "bytes": 28069,
+      "sha256": "2c3115fc76c4aaf5e48ad9bf68ff9023132a44db8e43f3c8cf3000b3ff6a137c"
+    },
+    {
+      "path": "artifacts/standby-101-r55/81e81d3b-28bc-4441-94fb-65830b13f0a9-export.json",
+      "bytes": 972,
+      "sha256": "d356e531a5d8cc5cab2053c8deca653837555f9b567afb0e2bad5632e2964df9"
+    },
+    {
+      "path": "artifacts/standby-101-r55/81e81d3b-28bc-4441-94fb-65830b13f0a9-download.json",
+      "bytes": 662,
+      "sha256": "317c710667da1cad015c9d25e9659e1ed9b40a0180f262950935a8dbff400a1c"
+    },
+    {
+      "path": "artifacts/standby-101-r55/81e81d3b-28bc-4441-94fb-65830b13f0a9-import.json",
+      "bytes": 1395,
+      "sha256": "75f7c2145d2570fc9ed8c62fb5dc7c27abf84d18feeea1ddcae27f4c49c87006"
+    },
+    {
+      "path": "artifacts/standby-101-r55/81e81d3b-28bc-4441-94fb-65830b13f0a9-install.json",
+      "bytes": 1439,
+      "sha256": "2c87dc2dcaedc5f1ccfcbbd5b15770381f6646385ffff175a138aeea07ad00b3"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-preflight.json",
+      "bytes": 674,
+      "sha256": "bccf34f59b418b692abd55b479a615b844bb867864cb5ff12f7889d14f1e8a65"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-owner-metadata-cause.json",
+      "bytes": 416,
+      "sha256": "5a9ffbfa888a47198fbbf468debf687610479a753c2284208ede5eb3e0c86374"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-v2-owner-correction.json",
+      "bytes": 1024,
+      "sha256": "c9ba46f8038374497079f0ae880a68f65be2bcde54cb2dff1bb431db7d157687"
+    },
+    {
+      "path": "artifacts/standby-101-r55/overlay-first-local-refusal.json",
+      "bytes": 203,
+      "sha256": "d84c2af9136c33316dcb40b8a65b0ec2036e5e42740aeb4565f6ae29a99d19ef"
+    },
+    {
+      "path": "artifacts/standby-101-r55/cold-transfer-independent-source-review.json",
+      "bytes": 2276,
+      "sha256": "dda07d8fa668175f6f975e88e41eb51d5549b5d9f9d35d35f009ca79a868a092"
+    },
+    {
+      "path": "artifacts/standby-101-r55/cold-transfer-v2-independent-source-review.json",
+      "bytes": 2385,
+      "sha256": "da4e34684ca942b044a7e0a7042dcfb4d639bf3eed414d8baf824e131776973c"
+    },
+    {
+      "path": "artifacts/standby-101-r55/prepare-independent-review.json",
+      "bytes": 4198,
+      "sha256": "233d79af00c7473101bce3c0db6bb55aa5ef719be69e1c9252528b95366e9b81"
+    }
+  ]
+}

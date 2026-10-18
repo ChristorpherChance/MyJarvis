@@ -1,0 +1,100 @@
+{
+  "kind": "r55-cold-standby-final-record351-safe-summary",
+  "cutAt": "2026-10-18T16:32:17.820Z",
+  "release": "20261018-ai-development-ops-r55",
+  "programAndPointInTimeDataInstalled": true,
+  "snapshot": {
+    "path": "/var/lib/jarvis-control/standby-r55-sync-20261019-112/data-snapshot",
+    "manifestSHA256": "6f732b6e0bd4f3c977419757180989f8b4807e7c1b38e39eac8548e8abb3d61d",
+    "createdAt": "2026-10-18T16:10:54.080506+00:00",
+    "files": 64,
+    "directories": 59,
+    "bytes": 4633958902,
+    "sqliteDatabases": 10
+  },
+  "primaryStopThroughHealthSeconds": 129.12188833893742,
+  "primaryHealthy": true,
+  "standbyColdBusinessUnitsInactiveDisabled": true,
+  "old101DataRetained": true,
+  "overlayAssets": {
+    "added": 129,
+    "R54": 119,
+    "R36Additional": 10,
+    "old101Subset": 27
+  },
+  "freshness": {
+    "limitSeconds": 900,
+    "lagAtCutSeconds": 1282,
+    "recoveryMaterialsReady": false,
+    "reason": "SNAPSHOT_TOO_OLD_OR_FUTURE"
+  },
+  "continuousReplication": false,
+  "automaticFailover": false,
+  "canTakeover": false,
+  "factoryActions": 0,
+  "voiceScope": "Current bytes/dependencies only; historical resident load remains R35. No R55 inference/audio-quality acceptance.",
+  "decision": {
+    "id": "1f17db8e-97c4-4446-bc79-0a0106960b68",
+    "revision": 1,
+    "status": "implemented",
+    "hash": "910f883515460b9d7d8c1663f9e157bce1e21a65ce1304f07b6e8a8c7998ee26",
+    "independentAcceptance": false
+  },
+  "experience": {
+    "id": "3be202fb-4290-4755-be8f-bb3a3e2edb82",
+    "revision": 1,
+    "status": "inbox",
+    "verified": false
+  },
+  "supplierModelCalls": 0,
+  "internalTokens": null,
+  "internalAmount": null,
+  "invoiceAmount": null,
+  "actualSavedReports": [
+    {
+      "path": "artifacts/standby-101-r55/final-live-verification.json",
+      "bytes": 7022,
+      "sha256": "81f10ed981d22895a6747704e6e946929c5654c8db6c5950a9c2fccb9bbad42a"
+    },
+    {
+      "path": "artifacts/standby-101-r55/final-saved-independent-review.json",
+      "bytes": 10765,
+      "sha256": "d8854286445ec92e53a4d6d4f7b9b56ef9c681c2304d367e37c337ee0dad0e99"
+    },
+    {
+      "path": "artifacts/standby-101-r55/platform-metadata-receipt.json",
+      "bytes": 18224,
+      "sha256": "74b974d1823dea7a9db70d964746c8c3a26eda8a095a699aa9a2d9c492081db1"
+    },
+    {
+      "path": "artifacts/standby-101-r55/snapshot.json",
+      "bytes": 2658,
+      "sha256": "26c83e5e7aa69f82b8499f928704c6ff007c330a37b2a518532607e8eb4227fa"
+    },
+    {
+      "path": "artifacts/standby-101-r55/program-v2-apply.json",
+      "bytes": 1770,
+      "sha256": "b2d76d9fa630fea7ff4e1beb616944888573964467ea492e89443f08e74fd181"
+    },
+    {
+      "path": "artifacts/standby-101-r55/overlay-r2.json",
+      "bytes": 360,
+      "sha256": "23dd86cf980b2e2b4d50bc5e7ce06bdd89f8be27a72438c09d0b5c6acd335761"
+    },
+    {
+      "path": "artifacts/standby-101-r55/voice.json",
+      "bytes": 1058,
+      "sha256": "12ab75877f44eca8176beb49eaceec2e9b180fd12c7595903b282eb53a883dc3"
+    },
+    {
+      "path": "artifacts/standby-101-r55/81e81d3b-28bc-4441-94fb-65830b13f0a9-import.json",
+      "bytes": 1395,
+      "sha256": "75f7c2145d2570fc9ed8c62fb5dc7c27abf84d18feeea1ddcae27f4c49c87006"
+    },
+    {
+      "path": "artifacts/standby-101-r55/81e81d3b-28bc-4441-94fb-65830b13f0a9-install.json",
+      "bytes": 1439,
+      "sha256": "2c87dc2dcaedc5f1ccfcbbd5b15770381f6646385ffff175a138aeea07ad00b3"
+    }
+  ]
+}

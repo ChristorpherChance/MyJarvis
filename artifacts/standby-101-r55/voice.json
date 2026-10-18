@@ -1,0 +1,30 @@
+{
+  "at": 1792339583.1861732,
+  "phase": "voice",
+  "wallSeconds": 6.734999999869615,
+  "result": {
+    "status": "passed",
+    "node": "101",
+    "checkedForRelease": "20261018-ai-development-ops-r55",
+    "installedManifestSha256": "08448cbe4c63bbedd021980ef9521e9ea9666327639c74db918541d2c7ea8358",
+    "actualFilesChecked": 1878,
+    "actualBytesChecked": 1379567775,
+    "pythonVersion": "3.12.15",
+    "packages": {
+      "sherpa-onnx": "1.13.8",
+      "numpy": "2.2.6",
+      "av": "19.0.0",
+      "pypinyin": "0.55.0",
+      "sentencepiece": "0.2.1",
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.6.0"
+    },
+    "pipCheckPassed": true,
+    "currentLoadPerformed": false,
+    "historicalLoadRelease": "20261016-capture-complete-r35",
+    "historicalResidentLoadVerified": true,
+    "inferenceCalls": 0,
+    "residentInactive": true,
+    "scope": "Current installed bytes, Python package versions and pip consistency; historical resident load remains R35 evidence, no new R55 load or audio-quality test"
+  }
+}

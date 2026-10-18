@@ -1,0 +1,19 @@
+{
+  "kind": "standby-r55-program-service-directory-owner-correction",
+  "previous": {
+    "path": ".jarvis-dev/maintenance/standby-r55-program-switch.py",
+    "bytes": 20590,
+    "sha256": "bdef71e10d6005eac9295f4ad70000cc7b9123965b8f146f162a7ee9d9f492ec"
+  },
+  "candidate": {
+    "path": ".jarvis-dev/maintenance/standby-r55-program-switch-v2.py",
+    "bytes": 20953,
+    "sha256": "0b38c41b01a47f7f1f742a6417749c46ed8da6a9ec4ebba1814dd4181bfdd960"
+  },
+  "literalChanges": 1,
+  "wholeByteInverseExact": true,
+  "outerAndRemoteASTParsed": true,
+  "remoteOrHelperExecuted": false,
+  "scope": "Only data_stamp accepts the two observed service-owned directories as exact UID997/GID973/mode0700. All other parent paths retain original root-only checks. Both directory stamps are compared before/after. No chmod/chown or data contents access.",
+  "originalFailure": "ST55_TYPE_OWNER_MODE before observer stop/current switch/control creation; root-only assumption was incorrect. Original source and actual refusal preserved."
+}

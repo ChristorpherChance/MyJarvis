@@ -1,0 +1,74 @@
+{
+  "at": 1792339865.715828,
+  "phase": "snapshot",
+  "wallSeconds": 129.5470000000205,
+  "result": {
+    "status": "passed",
+    "release": "20261018-ai-development-ops-r55",
+    "snapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261018-ai-development-ops-r55",
+      "scope": "primary",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4633958902,
+      "manifestSha256": "6f732b6e0bd4f3c977419757180989f8b4807e7c1b38e39eac8548e8abb3d61d",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "control": "/var/lib/jarvis-control/standby-r55-sync-20261019-112",
+    "stopRequestedAt": "2026-10-18T16:08:56.428913+00:00",
+    "startReturnedAt": "2026-10-18T16:11:03.531494+00:00",
+    "stopThroughHealthSeconds": 129.12188833893742,
+    "primaryHealth": {
+      "status": "ok",
+      "build": "20261018-ai-development-ops-r55",
+      "nodeId": "112",
+      "role": "primary"
+    },
+    "primaryRestored": true,
+    "firstError": null,
+    "recoveryError": null,
+    "evidenceWriteFailed": false,
+    "childResults": [
+      {
+        "phase": "platform-stop",
+        "returnCode": 0,
+        "timedOut": false,
+        "stdoutBytes": 0,
+        "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 0,
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "phase": "snapshot",
+        "returnCode": 0,
+        "timedOut": false,
+        "stdoutBytes": 379,
+        "stdoutSHA256": "865afac630327a0c50fd3ba43310387871ecfdfcdf606cb4c25e4f0f4959eb49",
+        "stderrBytes": 0,
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "phase": "platform-start",
+        "returnCode": 0,
+        "timedOut": false,
+        "stdoutBytes": 0,
+        "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 0,
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "sourceBinding": {
+      "configSHA256": "1149ea11ed4e7c7ffeb16af46aeb54f98e0833a775b27be33e9c7b44f4024059",
+      "releaseDirectory": "20261018-ai-development-ops-r55",
+      "recoverySHA256": "1f74cb9fea17d5f3a964675fc2909e79bbf5d00b65a59146af9eb1e86d128179"
+    },
+    "observerVoiceFrpcChangedByThisControl": false,
+    "factoryTouched": false
+  }
+}

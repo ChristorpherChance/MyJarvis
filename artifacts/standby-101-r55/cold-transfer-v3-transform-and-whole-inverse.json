@@ -1,0 +1,49 @@
+{
+  "prior": {
+    "path": ".jarvis-dev/maintenance/cold-r55-transfer-v2.py",
+    "bytes": 28069,
+    "sha256": "2c3115fc76c4aaf5e48ad9bf68ff9023132a44db8e43f3c8cf3000b3ff6a137c"
+  },
+  "source": {
+    "path": ".jarvis-dev/maintenance/cold-r55-transfer-v3.py",
+    "bytes": 35272,
+    "sha256": "58528d5125ce2251af3d70c4285e8f69b393c85148527295242dbd04038eaa04"
+  },
+  "rules": [
+    {
+      "from": "\n\ndef main():",
+      "to": "\n# This phase is available only after a pinned, nonzero, remotely terminal v2\n# import.  It reuses the received archive and never uploads or deletes data.\nPROGRAMS[\"complete-import\"] = r'''\nimport tarfile\nneed(p['oldImportTerminal']['qualified'] is True and p['oldImportTerminal']['operationId']==p['operationId'],'OLD_IMPORT_NOT_TERMINAL')\nheld_lock=lock();node('101');cold();folder=Path(p['destination']);private(folder);archive=folder/'primary-snapshot.tar.gz'\narchive_stat=archive.lstat();need(stat.S_ISREG(archive_stat.st_mode) and archive_stat.st_uid==0 and archive_stat.st_nlink==1 and stat.S_IMODE(archive_stat.st_mode)==0o600 and archive_stat.st_size==p['archiveBytes'],'EXISTING_ARCHIVE_BOUNDARY')\nneed(digest(archive)==p['archiveSHA256'] and signature(archive.lstat())==signature(archive_stat),'EXISTING_ARCHIVE_CHANGED')\nmodule=recovery()\n# Full admission precedes either partial-directory rename. Keep archive order:\n# gzip backwards seeks caused by the v2 depth sort are deliberately removed.\nwith tarfile.open(archive,'r:gz') as tar:\n members=tar.getmembers();seen=set();admitted_dirs={'.'};need(len(members)<=1000001,'ARCHIVE_COUNT')\n for item in members:\n  path=PurePosixPath(item.name);need(not path.is_absolute() and path.parts and path.parts[0]=='snapshot' and '..' not in path.parts and '\\\\' not in item.name and item.name not in seen and (item.isfile() or item.isdir()) and not item.linkname,'ARCHIVE_PATH');seen.add(item.name)\n  need(str(path.parent) in admitted_dirs,'ARCHIVE_PARENT_ORDER')\n  if item.isdir():admitted_dirs.add(str(path))\n need(members and members[0].name=='snapshot' and members[0].isdir(),'ARCHIVE_ROOT')\n need(signature(archive.lstat())==signature(archive_stat),'ARCHIVE_CHANGED_AFTER_ADMISSION')\n partials=[]\n for name in ['snapshot','restored-data']:\n  old=folder/name;failed=folder/('failed-v2-'+name);need(not os.path.lexists(failed),'PRESERVED_PARTIAL_ALREADY_EXISTS')\n  if os.path.lexists(old):\n   private(old);s=old.lstat();partials.append((old,failed,s.st_dev,s.st_ino))\n node('101');cold()\n for old,failed,device,inode in partials:\n  s=old.lstat();need((s.st_dev,s.st_ino)==(device,inode) and not os.path.lexists(failed),'PARTIAL_CHANGED_BEFORE_PRESERVE');os.rename(old,failed);fsyncdir(folder);need((failed.lstat().st_dev,failed.lstat().st_ino)==(device,inode),'PRESERVED_PARTIAL_IDENTITY')\n for item in members:\n  target=folder/item.name;need(target.resolve().is_relative_to(folder),'EXTRACT_ESCAPE');private(target.parent)\n  if item.isdir():target.mkdir(mode=0o700,exist_ok=False)\n  else:\n   fd=os.open(target,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)\n   with tar.extractfile(item) as source,os.fdopen(fd,'wb') as stream:\n    copied=0\n    for b in iter(lambda:source.read(1048576),b''):stream.write(b);copied+=len(b);need(copied<=item.size,'EXTRACT_BOUND')\n    need(copied==item.size,'EXTRACT_SIZE');stream.flush();os.fsync(stream.fileno())\nneed(signature(archive.lstat())==signature(archive_stat) and digest(archive)==p['archiveSHA256'],'ARCHIVE_CHANGED_AFTER_EXTRACTION')\nvalue,checked=verified(module,folder/'snapshot');restored=module.restore(folder/'snapshot',folder/'restored-data',p['snapshot']['manifestSHA256'],p['release']);node('101');cold()\nreceipt={'imported':True,'verified':True,'phase':'complete-import','operationId':p['operationId'],'archiveSHA256':p['archiveSHA256'],'archiveBytes':p['archiveBytes'],'manifestSHA256':p['snapshot']['manifestSHA256'],'snapshotAt':value['createdAt'],'sqliteDatabasesChecked':checked,'isolatedRestore':restored,'oldImportTerminal':p['oldImportTerminal'],'preservedPartialDirectories':[failed.name for old,failed,device,inode in partials],'uploadRepeated':False,'deletions':0,'liveDataChanged':False,'privateDataPrinted':False}\nwx(folder/'complete-import-receipt.json',encoded(receipt));print(json.dumps(receipt))\n'''\n\n\ndef main():"
+    },
+    {
+      "from": "parser.add_argument(\"phase\", choices=[\"export\", \"download\", \"import\", \"install\"])",
+      "to": "parser.add_argument(\"phase\", choices=[\"complete-import\", \"install\"])"
+    },
+    {
+      "from": "    parser.add_argument(\"--self-sha256\", required=True)",
+      "to": "    parser.add_argument(\"--self-sha256\", required=True)\n    parser.add_argument(\"--completion-sha256\", required=True)"
+    },
+    {
+      "from": "    if args.phase != \"export\":",
+      "to": "\n    # A local timeout or exitCode=1 alone is not remote terminal evidence.\n    need(HASH.fullmatch(args.completion_sha256), \"COMPLETION_INPUT_PIN\")\n    completion_raw = (PUBLIC / \"complete-import-input.json\").read_bytes()\n    need(hashlib.sha256(completion_raw).hexdigest() == args.completion_sha256, \"COMPLETION_INPUT_CHANGED\")\n    completion = json.loads(completion_raw)\n    need(set(completion) == {\"schema\", \"operationId\", \"oldImportReceiptSHA256\", \"rootTerminalObservation\"}\n         and completion[\"schema\"] == 1 and completion[\"operationId\"] == op\n         and HASH.fullmatch(completion.get(\"oldImportReceiptSHA256\") or \"\"), \"COMPLETION_BINDING\")\n    old_import_raw = (PUBLIC / (op + \"-import.json\")).read_bytes()\n    need(hashlib.sha256(old_import_raw).hexdigest() == completion[\"oldImportReceiptSHA256\"], \"OLD_IMPORT_RECEIPT_CHANGED\")\n    old_import = json.loads(old_import_raw)\n    need(old_import.get(\"phase\") == \"import\" and old_import.get(\"operationId\") == op\n         and old_import.get(\"inputSHA256\") == args.input_sha256\n         and old_import.get(\"selfSHA256\") == \"2c3115fc76c4aaf5e48ad9bf68ff9023132a44db8e43f3c8cf3000b3ff6a137c\"\n         and type(old_import.get(\"exitCode\")) is int and old_import[\"exitCode\"] != 0, \"OLD_IMPORT_NOT_FAILED\")\n    transport_exit = (old_import.get(\"transport\") or {}).get(\"exitCode\")\n    explicit_terminal = type(transport_exit) is int and transport_exit in (1, 142)\n    terminal_observation_hash = None\n    if not explicit_terminal:\n        proof = completion.get(\"rootTerminalObservation\")\n        need(isinstance(proof, dict) and set(proof) == {\"path\", \"sha256\"}\n             and proof[\"path\"] == \"artifacts/standby-101-r55/\" + op + \"-import-terminal.json\"\n             and HASH.fullmatch(proof.get(\"sha256\") or \"\"), \"REMOTE_TERMINAL_PROOF_REQUIRED\")\n        proof_raw = (ROOT / proof[\"path\"]).read_bytes()\n        need(hashlib.sha256(proof_raw).hexdigest() == proof[\"sha256\"], \"REMOTE_TERMINAL_PROOF_CHANGED\")\n        observed = json.loads(proof_raw)\n        need(observed.get(\"kind\") == \"r55-cold-import-terminal-observation\" and observed.get(\"phase\") == \"import\"\n             and observed.get(\"operationId\") == op and observed.get(\"inputSHA256\") == args.input_sha256\n             and observed.get(\"sourceSHA256\") == old_import[\"selfSHA256\"]\n             and observed.get(\"remoteTerminal\") is True and observed.get(\"noActiveImportProcess\") is True,\n             \"REMOTE_TERMINAL_PROOF_BINDING\")\n        terminal_observation_hash = proof[\"sha256\"]\n    p[\"oldImportTerminal\"] = {\"qualified\": True, \"operationId\": op,\n                              \"oldImportReceiptSHA256\": completion[\"oldImportReceiptSHA256\"],\n                              \"method\": \"explicit-ssh-child-exit\" if explicit_terminal else \"root-pinned-terminal-observation\",\n                              \"sshChildExitCode\": transport_exit, \"rootObservationSHA256\": terminal_observation_hash}\n\n    if args.phase != \"export\":"
+    },
+    {
+      "from": "    if args.phase in [\"import\", \"install\"]:",
+      "to": "    if args.phase in [\"complete-import\", \"install\"]:"
+    },
+    {
+      "from": "        imported = prior(\"import\")",
+      "to": "        completed = json.loads((PUBLIC / (op + \"-complete-import.json\")).read_bytes())\n        need(completed.get(\"selfSHA256\") == args.self_sha256 and completed.get(\"completionInputSHA256\") == args.completion_sha256, \"COMPLETED_IMPORT_SOURCE\")\n        imported = prior(\"complete-import\")"
+    },
+    {
+      "from": "                          \"selfSHA256\": args.self_sha256, \"at\": datetime.datetime.now(datetime.timezone.utc).isoformat(), \"automaticRetry\": False}))",
+      "to": "                          \"selfSHA256\": args.self_sha256, \"completionInputSHA256\": args.completion_sha256, \"at\": datetime.datetime.now(datetime.timezone.utc).isoformat(), \"automaticRetry\": False}))"
+    },
+    {
+      "from": "                 \"inputSHA256\": args.input_sha256, \"selfSHA256\": args.self_sha256,",
+      "to": "                 \"inputSHA256\": args.input_sha256, \"selfSHA256\": args.self_sha256, \"completionInputSHA256\": args.completion_sha256,",
+      "count": 2
+    }
+  ],
+  "wholeByteInverseExact": true,
+  "notExecuted": true
+}

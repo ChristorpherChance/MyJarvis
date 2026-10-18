@@ -102,3 +102,19 @@ test('AI development periodic observation: exact machine/profile/policy bindings
   f.setClock(f.clock()+121000);await f.online();detail=await f.call('GET','/machines/'+f.machine.id);assert.equal(detail.observation.stale,true);assert.equal(detail.observation.inventory.terminalTelemetry.contextTokens,101);assert.equal(detail.jobs.length,1);assert.equal(f.rt.governance.usageSummary({}).totals.records,0);
  }finally{await f.close();}
 });
+
+test('AI development resource provenance: fresh periodic transport cannot refresh old terminal samples or mix them with machine telemetry',async()=>{
+ const f=await fixture();try{
+  const job=await f.call('POST','/jobs',f.request()),result=await f.result(job);await f.call('GET','/jobs/'+job.id);
+  const sampledAt=new Date(f.clock()-300000).toISOString(),folder=join(f.queue,'results','observations');await mkdir(folder);
+  const path=join(folder,f.machine.id+'.json'),observation={schemaVersion:1,machineId:f.machine.id,nodeId:'112',address:f.machine.address,targetUser:'superopen',profileId:'linux-ai-dev-v1',profileRevision:1,profileHash:aiDevelopmentHash(f.policy.profiles[0]),policyHash:aiDevelopmentHash(f.policy),at:new Date(f.clock()+1000).toISOString(),inventory:structuredClone(result.inventory),source:'fixed-ssh-ai-development-telemetry'};
+  observation.inventory.terminalTelemetry.observedAt=sampledAt;await writeFile(path,JSON.stringify(observation));
+  let detail=await f.call('GET','/machines/'+f.machine.id);assert.equal(detail.observation.stale,false);assert.equal(detail.resources.ramUsedBytes,4096);assert.equal(detail.resourcesObservedAt,sampledAt);assert.equal(detail.resourcesStale,true);
+  // Signed-machine fixture enters the same durable repository read by the API.
+  const machine={...f.machine,lastSeen:new Date(f.clock()).toISOString(),telemetry:{source:'signed-agent',observedAt:new Date(f.clock()).toISOString(),cpuPercent:35,memoryUsedGB:4,memoryTotalGB:16,diskFreeGB:50}};
+  const setMachine=()=>f.rt.identity.db.prepare("UPDATE v1_documents SET json=? WHERE domain='machines' AND id=?").run(JSON.stringify(machine),f.machine.id);setMachine();
+  detail=await f.call('GET','/machines/'+f.machine.id);assert.deepEqual(detail.resources,{cpuPercent:35,memoryTotalGB:16,memoryUsedGB:4,diskFreeGB:50});assert.equal(detail.resources.ramUsedBytes,undefined);assert.equal(detail.resourcesObservedAt,machine.lastSeen);assert.equal(detail.resourcesStale,false);
+  machine.telemetry={} as any;setMachine();observation.at=new Date(f.clock()+2000).toISOString();observation.inventory.terminalTelemetry=null as any;await writeFile(path,JSON.stringify(observation));
+  detail=await f.call('GET','/machines/'+f.machine.id);assert.equal(detail.observation.stale,false);assert.equal(detail.resources.ramUsedBytes,4096);assert.equal(detail.resourcesObservedAt,null);assert.equal(detail.resourcesStale,true);
+ }finally{await f.close();}
+});

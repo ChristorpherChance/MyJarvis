@@ -53,7 +53,7 @@ test('production workbench SSR shows automatic report/current technical block, w
   await build({entryPoints:['apps/web/src/features/operations/ProjectWorkbenchPage.tsx'],outfile:out,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',loader:{'.css':'empty'},plugins:[{name:'isolated-read-hooks',setup(b:any){b.onResolve({filter:/^react$/},()=>({path:shim}));}}],logLevel:'silent'});
   const Page=(await import(pathToFileURL(out).href)).EntityWorkbench;(globalThis as any).__r53States=[f.context(),null,'2026-10-18T00:00:00Z','live'];
   const html=renderToStaticMarkup(React.createElement(Page,{projectId:'project',projectName:'Synthetic project',params:new URLSearchParams(),data:{projects:[{id:'project',name:'Synthetic project'}],machines:[],tasks:[]},navigate:()=>{throw Error('SSR cannot navigate');}}));
-  const first=html.slice(0,html.indexOf('workbench-plan-details'));assert.ok(first.includes('自动本轮回报'));assert.ok(first.includes('报告资料超过本轮审阅容量'));assert.ok(!first.includes('等待本人'));assert.ok(!first.includes('历史旧阻塞'));assert.ok(html.includes('历史登记事项'));assert.ok(first.includes('不代表任务完成'));f.unchanged();
+  const first=html.slice(0,html.indexOf('workbench-plan-details'));assert.ok(first.includes('最近执行回报'));assert.ok(first.includes('报告资料超过本轮审阅容量'));assert.ok(!first.includes('等待本人'));assert.ok(!first.includes('历史旧阻塞'));assert.ok(html.includes('历史登记事项'));assert.ok(first.includes('独立验收另列'));assert.ok(first.includes('最近互动'));assert.ok(first.includes('项目任务清单'));assert.ok(!first.includes('class="workbench-loop"'));f.unchanged();
  }finally{delete(globalThis as any).__r53States;rmSync(dir,{recursive:true,force:true});f.close();}
 });
 

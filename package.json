@@ -10,7 +10,7 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "dev": "concurrently -k -n API,WEB \"npm run dev -w @jarvis/api\" \"npm run dev -w @jarvis/web\"",
+    "dev": "node scripts/dev-112.mjs",
     "build": "npm run build -w @jarvis/web && npm run build -w @jarvis/api",
     "build:stage": "npm run build:stage -w @jarvis/web && npm run build -w @jarvis/api -- --outDir .dist-next",
     "typecheck": "npm run typecheck --workspaces --if-present",
@@ -27,7 +27,8 @@
     "test:service": "node --test scripts/test-platform-service.mjs scripts/test-upgrade-local-platform.mjs",
     "server:onboard": "node scripts/onboard-managed-servers.mjs",
     "server:verify": "node scripts/verify-managed-servers.mjs",
-    "test:server-monitoring": "node --test scripts/test-managed-server-plan.mjs scripts/test-cloud-node-relay.mjs"
+    "test:server-monitoring": "node --test scripts/test-managed-server-plan.mjs scripts/test-cloud-node-relay.mjs",
+    "dev:112": "node scripts/dev-112.mjs"
   },
   "devDependencies": {
     "concurrently": "9.2.4",

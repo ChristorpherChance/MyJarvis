@@ -1,3 +1,4 @@
+import {workbenchDetailRoute} from './project-plan-workbench-view';
 import type { ComponentType } from 'react';
 import { useDemo } from '../../demo/context';
 import { ResearchPage, InboxPage } from './research';
@@ -23,6 +24,7 @@ export function OperationsPage({ route, navigate, target }: {
     const capability = real?.capabilities.domains.find(d => d.domain === domains[route]);
     const trueDomain = mode === 'live' && !!domains[route];
     const liveStrip=trueDomain && <div className="op-live-strip"><div><span className="op-live-dot"/>真实记录 <small>{capability?.description || '身份、范围与修订历史由服务保存'}</small></div><div className="op-actions"><Button kind="ghost" onClick={() => void refresh().catch(() => {})}>刷新记录</Button><Button kind="ghost" onClick={() => discussWithPi(`请只读查看我的${({inbox:'收件',research:'研究',projects:'项目',tasks:'任务',knowledge:'经验'} as Record<string,string>)[route]}，说明现状与下一步建议；任何修改先给我确认。`)}>与 Pi 讨论</Button></div></div>;
+    const projectDetail=workbenchDetailRoute(route,target);
     const projectReport=trueDomain&&route==='tasks'&&target?.split('/')[1]==='project';
-    return <div className="op-page">{!projectReport&&liveStrip}{View ? <View key={route} {...props}/> : <Empty title="页面不存在"/>}{projectReport&&<details className="project-autonomy-history"><summary>平台运行与操作</summary>{liveStrip}</details>}</div>;
+    return <div className="op-page">{!projectReport&&!projectDetail&&liveStrip}{View ? <View key={route} {...props}/> : <Empty title="页面不存在"/>}{projectReport&&<details className="project-autonomy-history"><summary>平台运行与操作</summary>{liveStrip}</details>}</div>;
 }

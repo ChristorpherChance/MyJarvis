@@ -32,3 +32,58 @@ export function workbenchLoopView(context:any,planView:ReturnType<typeof planWor
   ownerActionRequired:loop?.ownerActionRequired??s?.status==='waiting_user',
   judgmentLabel:loop?.judgment&&!loop.judgment.currentResult?'最近主管判断（上一回包）':'最近主管判断'};
 }
+
+export type WorkbenchTaskGroup='active'|'planned'|'attention'|'ended';
+export type WorkbenchInteraction={id:string;role:'jarvis'|'executor'|'owner';status:string;at:string|null;summary:string;detail?:string;sourceRef?:Record<string,unknown>};
+/** Activity is optional on older servers. A heartbeat is never task completion. */
+export function workbenchActivity(context:any){
+ const session=context?.supervisor?.session,activity=context?.currentActivity;
+ return activity?.bindingVerified===true&&activity.runId===session?.runId&&activity.taskId===session?.taskId?activity:null;
+}
+export function workbenchInteractions(context:any):WorkbenchInteraction[]{
+ const activity=workbenchActivity(context);
+ if(activity&&Array.isArray(activity.items))return activity.items.filter((item:any)=>item&&typeof item.id==='string'&&['jarvis','executor','owner'].includes(item.role)&&typeof item.summary==='string'&&item.summary.trim()).slice(-12);
+ const session=context?.supervisor?.session,loop=context?.currentLoopBrief;
+ if(!session||loop?.bindingVerified!==true)return [];
+ const events=(context.supervisor.events??[]).filter((e:any)=>e.goalRevision===session.goalRevision&&e.taskId===session.taskId).sort((a:any,b:any)=>(a.sequence??0)-(b.sequence??0));
+ const items:WorkbenchInteraction[]=[];
+ for(const e of events){
+  const current=e.runId===session.runId;
+  if(e.kind==='instruction'&&e.dispatchedRunId===session.runId&&typeof e.directive==='string')items.push({id:e.eventId,role:'jarvis',status:'requested',at:e.at??e.createdAt??null,summary:e.directive,sourceRef:{kind:'supervisor-event',eventId:e.eventId,runId:e.dispatchedRunId}});
+  else if(e.kind==='feedback'&&current&&typeof loop.feedbackSummary==='string')items.push({id:e.eventId,role:'executor',status:'reported',at:e.at??e.createdAt??null,summary:loop.feedbackSummary,sourceRef:{kind:'supervisor-event',eventId:e.eventId,runId:e.runId,resultHash:e.resultHash}});
+  else if(loop.judgment?.eventId===e.eventId)items.push({id:e.eventId,role:'jarvis',status:'judged',at:e.at??e.createdAt??null,summary:loop.judgment.reason,detail:loop.judgment.currentResult?'本次回包的判断':'上次回包的判断，供当前后继参考',sourceRef:{kind:'supervisor-event',eventId:e.eventId,runId:e.runId,resultHash:e.resultHash}});
+ }
+ return items.slice(-12);
+}
+export function workbenchTasks(context:any){
+ const groups:Record<WorkbenchTaskGroup,any[]>={active:[],planned:[],attention:[],ended:[]};
+ for(const task of context?.tasks??[]){
+  const actual=task.bindingVerified!==false&&!!task.runId&&['running','queued'].includes(task.runStatus);
+  const group:WorkbenchTaskGroup=actual?(task.runStatus==='running'?'active':'planned'):task.activityState==='attention'||['blocked','failed','paused','waitingUser','approval','waitingResource','waitingQuota'].includes(task.status)?'attention':task.activityState==='ended'||['completed','cancelled'].includes(task.status)?'ended':'planned';
+  const label=actual?(task.runStatus==='running'?'正在执行':'已提交，等待领取'):group==='planned'?'待安排':group==='ended'?'已结束记录':task.activityLabel||'需要处理';
+  groups[group].push({...task,activityLabel:label});
+ }
+ return groups;
+}
+export function workbenchPrimaryAction(context:any){
+ const session=context?.supervisor?.session;
+ if(context?.pending?.length)return {kind:'compose',label:'继续核对原请求'};
+ if(!session)return {kind:'compose',label:'安排目标并开始'};
+ if(['running','judging','dispatching','review_pending'].includes(session.status))return {kind:'pause',label:'暂停推进'};
+ if(session.status==='draft')return {kind:'compose',label:'开始这个目标'};
+ if(session.status==='paused')return {kind:'compose',label:'补充指令并继续'};
+ if(session.status==='waiting_user'&&context?.currentLoopBrief?.ownerActionRequired===true)return {kind:'compose',label:'回答本轮问题'};
+ if(['achieved','stopped','human_control'].includes(session.status))return {kind:'revise',label:'安排下一目标'};
+ return {kind:'review',label:'处理当前阻塞'};
+}
+export function workbenchReadFreshness(readAt:string|null,now:number){
+ const stamp=readAt?Date.parse(readAt):NaN;
+ return {known:Number.isFinite(stamp),stale:Number.isFinite(stamp)&&now-stamp>45000};
+}
+/** Saving a revised goal never adds start/authorizeContinuous. */
+export function workbenchRevisionBody(session:any,goal:string,criteria:string[],commandId:string){
+ if(!session||!goal.trim()||!criteria.length||criteria.some(value=>!value.trim())||new Set(criteria).size!==criteria.length)throw Error('请填写目标和不重复的验收标准');
+ return {commandId,expectedVersion:session.revision,action:'revise',goal:goal.trim(),criteria};
+}
+
+export function workbenchDetailRoute(route:string,target?:string){const parts=(target??'').split('?')[0].split('/');return route==='projects'&&parts[0]==='projects'&&parts.length===2&&!!parts[1]&&parts[1]!=='new';}

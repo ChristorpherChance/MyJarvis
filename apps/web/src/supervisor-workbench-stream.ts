@@ -11,3 +11,17 @@ export function subscribeWorkbenchSupervisor(projectId:string,onChange:()=>void,
  source.addEventListener('session-expired',()=>{if(closed)return;set('closed');closed=true;source.close();onExpired();});
  return()=>{if(closed)return;closed=true;source.close();};
 }
+
+/** The authenticated run stream only invalidates the read model; raw log text stays out of the UI. */
+export function subscribeWorkbenchExecution(runId:string,after:number,onChange:()=>void,onState:(state:SupervisorConnection)=>void,onExpired:()=>void){
+ let cursor=Number.isSafeInteger(after)&&after>=0?after:0,closed=false,state:SupervisorConnection='connecting',lastStatus:string|null=null;
+ const source=new EventSource(`/api/v1/execution/runs/${encodeURIComponent(runId)}/events?after=${cursor}`,{withCredentials:true});
+ const set=(next:SupervisorConnection)=>{if(!closed&&state!==next){state=next;onState(next);}};
+ onState(state);
+ source.addEventListener('open',()=>set('live'));
+ source.addEventListener('log',message=>{if(closed)return;try{const row=JSON.parse((message as MessageEvent).data);if(!Number.isSafeInteger(row.id)||row.id<=cursor)return;cursor=row.id;set('live');onChange();}catch{/* The authoritative GET remains available. */}});
+ source.addEventListener('status',message=>{if(closed)return;try{const row=JSON.parse((message as MessageEvent).data);if(row.id!==runId||typeof row.status!=='string'||row.status===lastStatus)return;lastStatus=row.status;set('live');onChange();}catch{/* No status is inferred from malformed metadata. */}});
+ source.onerror=()=>set(source.readyState===2?'closed':'reconnecting');
+ source.addEventListener('session-expired',()=>{if(closed)return;set('closed');closed=true;source.close();onExpired();});
+ return()=>{if(closed)return;closed=true;source.close();};
+}

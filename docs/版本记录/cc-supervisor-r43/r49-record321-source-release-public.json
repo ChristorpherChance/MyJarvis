@@ -1,0 +1,251 @@
+{
+  "kind": "record321-source-release-public-safe-projection",
+  "asOf": "2026-10-18T07:54:23.091Z",
+  "release": "20261018-project-goals-r49-r1",
+  "priorRelease": "20261018-project-goals-r49",
+  "source": {
+    "APP": "03a1c8be794102b908479c4f9890d6bcc714c3f7",
+    "finalOpsHEAD": "59091c2346ab2eea31691a00df1d2a96d03184da",
+    "base": "136ce577dbd860a73de9b4af163a4330a0c08db4",
+    "auditP0": 0,
+    "auditP1": 0,
+    "auditP2": 2,
+    "sourceAndSavedEvidenceOnly": true,
+    "savedSSRPass": 1,
+    "savedAdapterTestPass": 1,
+    "adapterControlledInvocations": 4,
+    "noLivePiOrBrowserInThoseTests": true,
+    "savedTypesBuildScope": "Source audit preserved command headers/no-error and Web build footer; not independent rerun or all header-only exit-code proof."
+  },
+  "package": {
+    "archive": {
+      "bytes": 23763448,
+      "sha256": "3228ba66ed5c94e080987fce6dbf706396677e1af0f9089553e602d2b2c5a451"
+    },
+    "manifest": {
+      "bytes": 449890,
+      "sha256": "c14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15"
+    },
+    "payloadFiles": 2271,
+    "trackedGitBlobs": 1861,
+    "appSourceFiles": 307,
+    "compatibleNodeFiles": 5,
+    "nodeReinstalled": false,
+    "artifactAuditPassed": true,
+    "compilerReproductionClaimed": false
+  },
+  "phaseReceipts": [
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r49-r1/112-stage.json",
+      "bytes": 1568,
+      "sha256": "1f735ea55578dd4893d6e720557507dd5b2206d902be27035f568958a8310e9b",
+      "phase": "stage",
+      "exitCode": 0,
+      "phaseVerified": true
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r49-r1/112-install.json",
+      "bytes": 1555,
+      "sha256": "3dab13513391aece0e33f70148ba05388b5d8d9e6f1b7c8cbd1b8754d68b63dc",
+      "phase": "install",
+      "exitCode": 0,
+      "phaseVerified": true
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r49-r1/112-inspect.json",
+      "bytes": 1596,
+      "sha256": "74941a353569b7f474ec6f34c502ec5c54dcc13752e053c7a7a58405fb706682",
+      "phase": "inspect",
+      "exitCode": 0,
+      "phaseVerified": true
+    }
+  ],
+  "failureKept": {
+    "activation": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-root-sidecar-activation-71469265-abd9-44c1-a7aa-e1e8da173147-outcome.json",
+      "bytes": 1539,
+      "sha256": "2ca17ce8d075c685730ab35640a8e027f5c9e2445dc3acaf1369fc475095c787"
+    },
+    "qualified": false,
+    "phase": "space",
+    "beforeStopRejected": true,
+    "rollback": "NOT_STOPPED",
+    "priorHealth": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-post-space-failure-prior-health-root-observation.json",
+      "bytes": 871,
+      "sha256": "c3e34c50fe13949a6c0d315917a003226c2e67dfaa7b15f2bbb40625b7ad3ad3"
+    },
+    "priorHealthOriginalStdoutSaved": false,
+    "priorHealthOriginalStdoutSHA256": null
+  },
+  "spaceMaintenance": {
+    "firstAttempt": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-disposable-restores-cleanup-31728a5f-88c4-443e-8e9a-84cb4282c616.json",
+      "bytes": 924,
+      "sha256": "d4f9ec0f19eb4ac32fd58e854ce5b14d3e2d80801c35d4898dc252dae1cb8976"
+    },
+    "firstDeletedFiles": 0,
+    "firstError": "PIN_CHANGED",
+    "correction": "Remote deterministic serialization was derived from frozen source rather than treating sorted stdout bytes as identical. Original failure retained.",
+    "successfulAttempt": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-disposable-restores-cleanup-7c3c2a7e-740d-49e1-bd83-247e122923ae.json",
+      "bytes": 1357,
+      "sha256": "b7bd953fa4f5ac721271c65c25d80d0c229c2694fbb9bdcf5327a7eb87c37f65"
+    },
+    "deletedDisposableFiles": 128,
+    "logicalBytes": 8953721836,
+    "actualFreeIncrease": 8954191872,
+    "allOriginalSnapshotsAndManifestHashesRetained": true,
+    "liveDataOrServicesTouched": false,
+    "sqliteRechecked": false,
+    "earlierExternalSpaceDeltaUnattributed": 24050954240,
+    "notAllPriorSpaceIncreaseAttributedToThisCleanup": true
+  },
+  "successfulActivation": {
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-root-sidecar-activation-92e47840-13f4-469e-a7b4-18c6a5728f1a-outcome.json",
+      "bytes": 1536,
+      "sha256": "9225e9bbc07d057a7e311401f29181672d0178aa5f987bdea3156ba388914d46"
+    },
+    "operationId": "92e47840-13f4-469e-a7b4-18c6a5728f1a",
+    "elapsedSeconds": 320.01499999989755,
+    "producerQualified": true,
+    "sourceSHA256": "17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd",
+    "inputSHA256": "2e956fe86fc20eef5b4e3110185ae3ea2a4e8a40f9975ab1129b163a9841eb16",
+    "finalFingerprint": {
+      "bytes": 17401,
+      "sha256": "84d6ce49f58785baf6c17c55c52523ae47ad082d98fb8c8a1aa9871fb1836714"
+    },
+    "snapshot": {
+      "status": "passed",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4495227382,
+      "manifestSha256": "4a5b942fcab0ba6abfba9452727d5b239d086ceada1eea9b3d15415cb8434c8a",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false
+    },
+    "isolatedRestore": {
+      "status": "passed",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4495227382,
+      "manifestSha256": "4a5b942fcab0ba6abfba9452727d5b239d086ceada1eea9b3d15415cb8434c8a",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false
+    },
+    "configMetadata": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "configPreviousSHA256": "66491bad4f23ad007c6b7d8d3f806f06b013ba52143a4a29204790fa12a69708",
+    "configWrittenSHA256": "dd3f10aad84bd2507bdeae174164eb1a5477fca6bc929dfda8e4359d8a16daf4",
+    "firstError": null,
+    "rollback": "NOT_REQUIRED",
+    "liveDataRestored": false
+  },
+  "independentHealth": {
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-newpurpose-independent-health-d2486ad5-9b1f-4346-95af-f5dd0577cef7.json",
+      "bytes": 2065,
+      "sha256": "a67cd8d71ea2cc71bc35d843f26e1872e368891d08414f13220f36a06b31185a"
+    },
+    "qualified": true,
+    "typedHealth": {
+      "node": "112",
+      "release": "20261018-project-goals-r49-r1",
+      "role": "primary",
+      "currentRelease": "20261018-project-goals-r49-r1",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261018-project-goals-r49-r1",
+      "businessHealthy": true,
+      "healthBuild": "20261018-project-goals-r49-r1",
+      "healthStatus": "ok"
+    },
+    "oldFailedActivateAndOldHealthPhaseUnchanged": true
+  },
+  "sourceGit": {
+    "kind": "r49-r1-source-pr7-publication-receipt",
+    "at": "2026-10-18T07:38:30.438Z",
+    "repository": "ChristorpherChance/MyJarvis",
+    "pullRequest": "https://github.com/ChristorpherChance/MyJarvis/pull/7",
+    "branch": "feat/unified-projects-r45",
+    "previousHead": "254d25a030537073a41dc5e5c0de6cc4825ad52b",
+    "head": "59091c2346ab2eea31691a00df1d2a96d03184da",
+    "application": "03a1c8be794102b908479c4f9890d6bcc714c3f7",
+    "fastForward": true,
+    "pushExitCode": 0,
+    "prEditExitCode": 0,
+    "state": "OPEN",
+    "isDraft": true,
+    "merged": false,
+    "publicationIsNotNewDeployment": true,
+    "canonicalConstructionHistoryOnIndependentDocsBranch": true
+  },
+  "sourceGitReceipt": {
+    "path": "artifacts/cc-supervisor-r43/r49-r1-source-pr7-publication-receipt.json",
+    "bytes": 657,
+    "sha256": "87aea00c7d926f38b1edc8a7f30e778ecb7dd4953b7b76b28d1cfc8b8ef41e78"
+  },
+  "productAccepted": false,
+  "wholeSupervisionFlowAccepted": false,
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-goal7-compact-report-public-receipt.json",
+      "bytes": 8961,
+      "sha256": "a8f258894cc5cc67bb1a6d84a8b2f3800a947f4a28e9acd5e178b0355524d69f"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-goal7-independent-application-delta-source-review.json",
+      "bytes": 19522,
+      "sha256": "0fce377540fff1937a6b650d366a158e58a2a0b607e18b1f14f375390eb26c60"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-received-platform-package-independent-verification.json",
+      "bytes": 12532,
+      "sha256": "6d33ba523f0c1665f39f942ac1ff5240d97649e78095e2351d9679f3a57e0bd8"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-root-sidecar-activation-71469265-abd9-44c1-a7aa-e1e8da173147-outcome.json",
+      "bytes": 1539,
+      "sha256": "2ca17ce8d075c685730ab35640a8e027f5c9e2445dc3acaf1369fc475095c787"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-post-space-failure-prior-health-root-observation.json",
+      "bytes": 871,
+      "sha256": "c3e34c50fe13949a6c0d315917a003226c2e67dfaa7b15f2bbb40625b7ad3ad3"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-disposable-restores-cleanup-31728a5f-88c4-443e-8e9a-84cb4282c616.json",
+      "bytes": 924,
+      "sha256": "d4f9ec0f19eb4ac32fd58e854ce5b14d3e2d80801c35d4898dc252dae1cb8976"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-disposable-restores-cleanup-7c3c2a7e-740d-49e1-bd83-247e122923ae.json",
+      "bytes": 1357,
+      "sha256": "b7bd953fa4f5ac721271c65c25d80d0c229c2694fbb9bdcf5327a7eb87c37f65"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-root-sidecar-activation-92e47840-13f4-469e-a7b4-18c6a5728f1a-outcome.json",
+      "bytes": 1536,
+      "sha256": "9225e9bbc07d057a7e311401f29181672d0178aa5f987bdea3156ba388914d46"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-newpurpose-independent-health-d2486ad5-9b1f-4346-95af-f5dd0577cef7.json",
+      "bytes": 2065,
+      "sha256": "a67cd8d71ea2cc71bc35d843f26e1872e368891d08414f13220f36a06b31185a"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r49-r1-source-pr7-publication-receipt.json",
+      "bytes": 657,
+      "sha256": "87aea00c7d926f38b1edc8a7f30e778ecb7dd4953b7b76b28d1cfc8b8ef41e78"
+    }
+  ],
+  "privacy": "Only safe selected facts and saved fingerprints; no private configuration, raw dialogue, native stream or private path copied."
+}

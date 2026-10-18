@@ -17,6 +17,7 @@ import { emptyRoutingDocument, gatewayDefinitionSchema, modelScenarios, presetGa
 import {resolveReplyLanguage} from './runtime/conversation-language.js';
 import {NativeUsageCollector} from './runtime/pi-usage.js';
 import {PROJECT_SUPERVISOR_CONTRACT} from './runtime/project-supervisor-contract.js';
+import {SUPERVISOR_PROMPT_MAX_UTF8_BYTES} from './runtime/supervisor-model-input.js';
 import { randomUUID } from 'node:crypto';
 import {PublicAnswerFilter,publicAnswer} from './public-answer.js';
 import {permitsDirectVoiceReply} from './runtime/family-speech.js';
@@ -410,7 +411,7 @@ export class PiService {
     if (input.purpose === 'project-supervisor' && (!input.boundedJob || !ephemeral || input.sessionPath !== null || input.scenario !== 'project-supervisor')) failure('PI_INPUT_INVALID');
     if (input.purpose !== undefined && input.purpose !== 'project-supervisor') failure('PI_INPUT_INVALID');
     if (this.configuring || this.runs.has(conversation)) failure('PI_BUSY');
-    if (!input.text.trim() || input.text.length > 32000) failure('PI_INPUT_INVALID');
+    if (!input.text.trim() || (input.purpose === 'project-supervisor' ? Buffer.byteLength(input.text, 'utf8') > SUPERVISOR_PROMPT_MAX_UTF8_BYTES : input.text.length > 32000)) failure('PI_INPUT_INVALID');
     const responseLanguage=resolveReplyLanguage(input.member.preferences,input.responseLanguage,input.text);
     let finish!: () => void;
     const run: ActiveRun = { actorId: actor, cancelled: false, finished: new Promise(resolve => { finish = resolve; }), finish: () => finish() };

@@ -1,0 +1,44 @@
+{
+  "id": "JARVIS-20261018-AI-DEVELOPMENT-OPS-SELECTION",
+  "kind": "decision",
+  "project": "jarvis",
+  "occurredAt": "2026-10-18T14:30:34.350Z",
+  "title": "112模型与终端状态接入运维：选择固定Linux开发环境模板",
+  "objective": "将112上的K3等模型、Claude对话底部用量与资源状态纳入贾维斯运维，并支持后续可信新机器一键配置。",
+  "changes": [
+    "在独立真实Git工作副本实现固定模板、原生状态栏、运维API、执行器与页面；当前尚未安装上线。",
+    "112新建独立真实Git开发副本，保留旧开发目录、原迁移快照与并行R54工作副本。"
+  ],
+  "decisions": [
+    "选择固定Linux x86_64模板、凭据独立加密保管、普通账号执行；相较仅手工改112，可重复核验并留节点回执。",
+    "保留现有默认通道与权限设置，仅补状态栏；未选择直接复制Windows配置，因为含Windows路径与本机钩子。",
+    "K3已在112的Kimi For Coding-699通道正确存在，增加隔离启动入口；模型配置存在与实际调用分开验收。"
+  ],
+  "facts": [
+    "当前正式基线R53；并行R54发布前须重新核对，禁止覆盖其他工作。",
+    "费用只记录无消费上限；最多一次K3最小调用，Token与CLI估计费用、未知供应商账单分列。",
+    "只采集Claude原生结构化状态，不读取原始会话文本；缺失额度保持未知。"
+  ],
+  "verification": [
+    "已完成112、本机模型元数据与现有运维执行链的只读盘点。",
+    "首轮审阅发现私有umask导致跨UID队列不可读，正在窄修并安排Linux实际权限测试；尚未宣称真实节点配置通过。"
+  ],
+  "pending": [
+    "Linux实际测试、固定执行器安装、112配置与模型调用验证、原生状态栏现场显示、运维页面上线及接口/页面验收。"
+  ],
+  "lessons": [
+    "终端环境模板需区分普通用户配置和服务间队列权限；Windows模拟通过不能代替Linux跨UID现场验证。"
+  ],
+  "evidence": [
+    "artifacts/ai-development-ops/selection-public.json",
+    "artifacts/ai-development-ops/ops-runtime-readonly-public.json",
+    "artifacts/ai-development-ops/k3-and-git-readonly-public.json",
+    "artifacts/ai-development-ops/remote-worktree-created-public.json"
+  ],
+  "state": {
+    "implementation": "partial",
+    "verification": "partial",
+    "deployment": "not-deployed",
+    "acceptance": "pending"
+  }
+}

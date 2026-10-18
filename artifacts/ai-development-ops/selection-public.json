@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-ai-development-operations-scope-and-selection",
+  "at": "2026-10-18T14:21:25.162Z",
+  "status": "selected-implementation-in-progress",
+  "userGoal": "Configure available models including local Kimi K3 on 112; show native Claude usage/status and machine resources below conversations; manage reusable one-click machine AI-development provisioning in Jarvis operations.",
+  "observations": {
+    "productionBuild": "20261018-supervision-closed-loop-r53",
+    "productionSourceCommit": "f46749926b0ec6bf12fa060a0267518c8400527d",
+    "verifiedGitBase": "95af1062ee61db6323162f2271f8092ba178a71b",
+    "k3AlreadyPresentOn112": true,
+    "statuslineMissing": true,
+    "concurrentR54WorktreeProtected": true
+  },
+  "implementation": {
+    "source": "D:/AI/workspaces/MyJevis/.jarvis-dev/ai-development-ops-20261018",
+    "branch": "feat/ai-development-ops",
+    "remoteWorktree": "/home/superopen/All-Projects/MyJevis-ai-development-ops",
+    "localRootApplicationSourceModified": false
+  },
+  "alternatives": [
+    {
+      "id": "single-machine-manual",
+      "benefit": "Fast local statusline repair",
+      "limitation": "Does not provide reusable machine onboarding or operations history"
+    },
+    {
+      "id": "copy-windows-settings",
+      "benefit": "Reuses the existing saved K3 profile and script",
+      "limitation": "Carries Windows paths and unrelated hooks/security settings; local five-hour estimate is not provider quota"
+    },
+    {
+      "id": "fixed-operations-profile",
+      "benefit": "Keeps existing machine identities, fixed SSH execution, native statusline data and durable version-bound receipts",
+      "limitation": "Requires authenticated trusted-node enrollment and a Linux profile/worker installation first"
+    }
+  ],
+  "selected": "fixed-operations-profile",
+  "scope": {
+    "profile": "linux-ai-dev-v1",
+    "actions": [
+      "probe",
+      "configure",
+      "telemetry"
+    ],
+    "installOnlyOrdinaryUser": true,
+    "providerSecrets": "independent encrypted worker vault; SSH stdin only",
+    "modelConfigurationIndependentOfJarvisPiCredentials": true,
+    "periodicTelemetrySeconds": 60,
+    "nativeUsageSemantics": "Context/last-response token observations and client cost estimates; unknown provider limits or invoice amounts remain unknown, never inferred from local five-hour logs.",
+    "noRawConversationInOperations": true
+  },
+  "technicalBoundaries": {
+    "jobDeadlineSeconds": 900,
+    "downloadAttempts": 2,
+    "sourceAndPackageHashesRequired": true,
+    "modelSmokeTestsPlanned": {
+      "model": "k3[1M]",
+      "maximumCalls": 1,
+      "purpose": "Explicit fixed-sentinel model usability verification; no project task dispatch"
+    },
+    "repairRoundsPerScope": 2
+  },
+  "costPolicy": {
+    "amountCap": null,
+    "recordTokensAndEstimatesSeparately": true,
+    "providerBillUSD": null,
+    "codexAndSubagentSessionCharges": "unknown"
+  },
+  "validationPlan": [
+    "Meaningful API authorization, target/version binding, idempotency, receipt isolation and stale observation tests",
+    "Installer and dispatcher fixture safety checks; no secret values in public responses or argv",
+    "Native 112 user configuration and common/provider statusline persistence checks",
+    "One bounded K3 call and PTY statusline render verification",
+    "Build and isolated integration before a release preserving concurrent work; current-source and publication-lock gates"
+  ],
+  "releasePerformed": false,
+  "userAcceptancePerformed": false,
+  "evidence": [
+    {
+      "path": "artifacts/ai-development-ops/environment-readonly-public.json",
+      "sha256": "32f030b3da645fd53cc42bd0e585cad1d1d1eb98790d60475312f705a7adc221"
+    },
+    {
+      "path": "artifacts/ai-development-ops/k3-and-git-readonly-public.json",
+      "sha256": "bf37a35e232b52fba7b504d8b5f5e369193a8ff102d7ab90f9a13c2f75dcadee"
+    },
+    {
+      "path": "artifacts/ai-development-ops/git-lineage-readonly-public.json",
+      "sha256": "f74316f29e1d99af67bd9cf298951a86a6c38146c537dda397b27666561eb347"
+    },
+    {
+      "path": "artifacts/ai-development-ops/local-k3-statusline-audit-public.json",
+      "sha256": "cea8b459154dea306d523cb59a611e3ae8401799e425ee2e9ab0622cd3730e1e"
+    },
+    {
+      "path": "artifacts/ai-development-ops/cli-contract-readonly-public.json",
+      "sha256": "a06973310cdef90d05dce199ed144eeb598520d6ff8f9c246d6a50b9cb9aea94"
+    },
+    {
+      "path": "artifacts/ai-development-ops/ops-runtime-readonly-public.json",
+      "sha256": "a98dc6f0dd1c51aa89fbb972a1f8b6dcdf4a68ce2082129a04ddfe1fbd36a1eb"
+    },
+    {
+      "path": "artifacts/ai-development-ops/remote-worktree-created-public.json",
+      "sha256": "b9fe17e9d22e739c4c9a8366daf1959ac436cb2b48a414a23ba7534a9beb1d1d"
+    }
+  ]
+}

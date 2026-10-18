@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "kind": "ai-development-platform-metadata-sync",
+  "complete": true,
+  "at": "2026-10-18T15:06:04.628Z",
+  "phase": "complete",
+  "release": "20261018-ai-development-ops-r55",
+  "sourceCommit": "a16a1eb9e0109bc31fefcb9325f74379529bd5cd",
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "evidenceRefs": [
+    {
+      "reference": "artifacts/ai-development-ops/selection-public.json",
+      "sha256": "7c205897a2ce46c86b863726c6f3e1983ed7175a2ea5999adefafcf3f2210fc8",
+      "kind": "requirement"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/environment-readonly-public.json",
+      "sha256": "32f030b3da645fd53cc42bd0e585cad1d1d1eb98790d60475312f705a7adc221",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/local-k3-statusline-audit-public.json",
+      "sha256": "cea8b459154dea306d523cb59a611e3ae8401799e425ee2e9ab0622cd3730e1e",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/source-review-public.json",
+      "sha256": "57d7ed274582ce7a0888adfdacc45fc3f759fdd695d3894b803f7801883952db",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/package-review-public.json",
+      "sha256": "d6d9a1da59e15523826317d05d584956930f72ebbc79132aaef3f65d03bdb7f4",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/linux-validation-public.json",
+      "sha256": "df0eb807420279cb30ac9bf68afc0317ea517fc0ad98f9fa6e7270d7856bd8fe",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/linux-build-package-public.json",
+      "sha256": "b66867b92ec1350e15755d80a0ae59256a33916bf89d058786a715a2b7991ab9",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/native-configuration-public.json",
+      "sha256": "95108f584e3c4697bb7d689c6506cf893d0e36c4aa08dcc6af64db3f31bd6c98",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/native-terminal-observation-public.json",
+      "sha256": "ac5c207b3d9ab7b6d754bd7b6ea3686a9ccaa502a10ae450a95c65eb9130463f",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/k3-smoke-public.json",
+      "sha256": "bbd1202f0a60720c30568c87dbad9c3eb21363a9f76fe2056ff22cc7551180d2",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/release-activation-outcome-public.json",
+      "sha256": "8b154b205cb04d7e0528230ed4a284460b7e184531bd5a8b5d35630490a11070",
+      "kind": "test-report"
+    },
+    {
+      "reference": "artifacts/ai-development-ops/live-api-validation-public.json",
+      "sha256": "623cabd826539f1bdeff2e98e9ccc6fcb2bd4ae943a9747792252b689edb0fc6",
+      "kind": "test-report"
+    }
+  ],
+  "verification": {
+    "at": "2026-10-18T15:06:01.977Z",
+    "projectRevision": 42,
+    "projectRevisionBefore": 42,
+    "projectRevisionPreserved": true,
+    "oldNotesPrefixPreservedExactly": true,
+    "notesAppendMode": "no-room-preserved-project-linked-records",
+    "environmentNotesAppended": false,
+    "wholeOldProjectPreservedExactly": true,
+    "otherEnvironmentFieldsPreservedExactly": true,
+    "wholeProtectedProjectPreservedExactly": true,
+    "protectedProjectSHA256": "c379291f45acf258a83f8b108c254c51545320c8b3155cef70b6fecb048912d6",
+    "decision": {
+      "id": "5147bf99-fe15-4bd4-9825-4fb593dc691a",
+      "revision": 2,
+      "status": "implemented",
+      "revisions": [
+        {
+          "revision": 1,
+          "status": "selected",
+          "hash": "b102f24da93569ace6a7c3df6506f5c81bc9785c5f3721d8e813bb5b34f5181e"
+        },
+        {
+          "revision": 2,
+          "status": "implemented",
+          "hash": "ae532b05a9f5c9eacbce8db9f643ba139de05d7539cb54f9f6c038b1209397a2"
+        }
+      ],
+      "independentAcceptance": false
+    },
+    "experience": {
+      "id": "197e9b68-78c0-4666-9246-4897eabed934",
+      "status": "inbox",
+      "verified": false,
+      "kind": "lesson"
+    }
+  },
+  "commandIds": {
+    "environment": "b9a465a6-ab7c-54bf-98ca-6167bf0d84ae",
+    "selection": "99a10918-55b1-5cc4-86a8-6181591b8c57",
+    "implementation": "9fa6db6e-6fd4-5554-b15e-02f2dd62d944",
+    "experience": "912e4b51-fb65-5659-aeff-f53c2d42a5c5"
+  },
+  "notesAppendMode": "no-room-preserved-project-linked-records",
+  "environmentNotesAppended": false,
+  "projectFieldsAppended": [],
+  "wholeOldProjectPreservationExcludesOnly": [],
+  "projectRevisionBefore": 42,
+  "projectRevisionAfter": 42,
+  "historicalModelUsage": {
+    "calls": 1,
+    "inputTokens": 2359,
+    "outputTokens": 35,
+    "cliEstimatedCostUSD": 0.01267,
+    "supplierInvoiceUSD": null,
+    "supplierInvoiceStatus": "unknown",
+    "spendingCap": null
+  },
+  "thisSync": {
+    "modelCalls": 0,
+    "testsRun": 0,
+    "serviceOperations": 0,
+    "deployments": 0,
+    "skillPublications": 0,
+    "independentHumanAcceptance": false
+  },
+  "errorCode": null
+}

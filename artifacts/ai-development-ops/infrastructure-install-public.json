@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-ai-development-infrastructure-install",
+  "complete": true,
+  "at": "2026-10-18T14:35:03.047322+00:00",
+  "executed": true,
+  "node": {
+    "schemaVersion": 1,
+    "validated": true,
+    "installed": true,
+    "machineId": "fd4b32f6-2fc7-409e-a8d3-3774035181e6",
+    "targetUser": "superopen",
+    "profilePins": [
+      {
+        "id": "linux-ai-dev-v1",
+        "revision": 1,
+        "publicHash": "a88b175243a33dad46a9da312b85e4220142931f66a21b59c2ba43f388ece693",
+        "manifestSHA256": "e348b29c672120ed8b190665753ce345d04a5762c6fad06648c7f581f7cbbcee"
+      }
+    ],
+    "servicesStarted": false,
+    "modelCalls": 0,
+    "backup": "/var/lib/jarvis-ai-development-node/before-install-20261018T143502-5d992a85-98f6-48c1-8540-e8ec116df9d4"
+  },
+  "controller": {
+    "schemaVersion": 1,
+    "validated": true,
+    "installed": true,
+    "service": "jarvis-ai-development-controller.service",
+    "controllerUser": "jarvis-control",
+    "queue": "/var/lib/jarvis-ai-development-queue",
+    "policy": "/etc/jarvis-ai-development-policy.json",
+    "policyHash": "7810ef0abece2a2f498291e6f026173ac3ce0418ea5b72f092d8e028493ccae1",
+    "profiles": [
+      {
+        "id": "linux-ai-dev-v1",
+        "revision": 1,
+        "profileHash": "a88b175243a33dad46a9da312b85e4220142931f66a21b59c2ba43f388ece693",
+        "providerCount": 11
+      }
+    ],
+    "vaultAlgorithm": "AES-256-GCM",
+    "credentialsReturned": false,
+    "servicesStarted": false,
+    "modelCalls": 0,
+    "backup": "/var/lib/jarvis-ai-development-install/before-20261018T143502-bf921fc4-2faf-45cc-b3d2-857216f580bf"
+  },
+  "sourceSHA256": {
+    "controller.mjs": "55e3d0f5fccd3510b4d56ad516b39e7937f35034e9888fd3ce71f19228e42978",
+    "node-dispatcher.py": "c95b62ca2af615c03d38d304698e83ec3fd5381466895aee26d0a45b12eb419b",
+    "install-node.py": "bd37f610868619d8bf51925b7af480d06012c3835fcc59250215e4361a91331e",
+    "install-controller.py": "1fc0376c159c21240081c6e842e5a00068ba289f57529fe64501fd4e7b2e5bd5",
+    "provision.py": "859c9e0893e82dadf318577c9271fab72c75a988f8912deb3fab4b8f800c30de",
+    "terminal-statusline.py": "150f6d0a22c165fea15a05f1b9f383efa3b3017b9abd89159d0f98631ee42b1e",
+    "profile-manifest.json": "e348b29c672120ed8b190665753ce345d04a5762c6fad06648c7f581f7cbbcee",
+    "remote-ops-dispatcher.py": "f177e46c3d0a8dea1ea811f891c5ed32c5f637889fff4832d82de73c12cbcdba"
+  },
+  "credentialsReturned": false,
+  "businessServiceOperations": 0,
+  "modelCalls": 0,
+  "servicesStarted": false
+}

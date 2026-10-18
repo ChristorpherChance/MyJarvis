@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-local-k3-and-statusline-readonly-audit",
+  "complete": true,
+  "observedAt": "2026-10-18T14:08:14.731079+00:00",
+  "machine": "local-Windows",
+  "scope": "Claude/CC Switch configuration metadata and status-line script static structure only",
+  "sources": [
+    "C:/Users/Admin/.claude/settings.json",
+    "C:/Users/Admin/.claude/config.json",
+    "C:/Users/Admin/.cc-switch/settings.json",
+    "C:/Users/Admin/.cc-switch/cc-switch.db",
+    "C:/Users/Admin/.claude/statusline.py"
+  ],
+  "k3": {
+    "id": "37da09d7-6a09-4598-9765-eefde5766aa4",
+    "app": "claude",
+    "name": "Kimi For Coding-699",
+    "isCurrent": false,
+    "providerType": null,
+    "publicConfig": {
+      "keys": [
+        "attribution",
+        "autoUpdatesChannel",
+        "effortLevel",
+        "enabledPlugins",
+        "env",
+        "extraKnownMarketplaces",
+        "hooks",
+        "includeCoAuthoredBy",
+        "model",
+        "skipDangerousModePermissionPrompt",
+        "statusLine",
+        "theme",
+        "verbose"
+      ],
+      "envKeys": [
+        "ANTHROPIC_AUTH_TOKEN",
+        "ANTHROPIC_BASE_URL",
+        "ANTHROPIC_DEFAULT_FABLE_MODEL",
+        "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME",
+        "ANTHROPIC_MODEL",
+        "CLAUDE_CODE_AUTO_COMPACT_WINDOW",
+        "CLAUDE_CODE_MAX_CONTEXT_TOKENS",
+        "CLAUDE_CODE_SUBAGENT_MODEL"
+      ],
+      "models": {
+        "ANTHROPIC_DEFAULT_FABLE_MODEL": "k3[1M]",
+        "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "k3",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-for-coding-highspeed",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "kimi-for-coding-highspeed",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "k3[1M]",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "k3",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "k3[1M]",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "k3",
+        "ANTHROPIC_MODEL": "k3[1M]",
+        "CLAUDE_CODE_SUBAGENT_MODEL": "k3[1M]"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com"
+      },
+      "model": "kimi-k3"
+    },
+    "supplierConfigured": "Kimi",
+    "baseURLWithoutCredentialsOrQuery": "https://api.kimi.com/coding/",
+    "protocolConfigured": "Anthropic-compatible Claude API configuration",
+    "protocolConclusionBasis": "ANTHROPIC_BASE_URL/AUTH_TOKEN/MODEL fields in a Claude provider; no network or model call",
+    "modelSetting": "kimi-k3",
+    "credentialFieldPresent": true,
+    "credentialValuesOutputOrPersisted": false,
+    "contextMarkerMeaning": "[1M] is the saved client configuration; server acceptance and actual context window were not tested"
+  },
+  "currentClaudeProvider": {
+    "id": "a3f7ced5-5255-4afd-bc34-63833721463d",
+    "name": "JP-CCR (Codex订阅)",
+    "k3Selected": false
+  },
+  "claudeProviderInventory": [
+    {
+      "name": "AIGoCode",
+      "id": "e164dddd-3b08-4fb6-8bd1-d57438bc94b3",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_MODEL": "claude-opus-4-6"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.aigocode.com"
+      }
+    },
+    {
+      "name": "AIGoCode copy",
+      "id": "91507e2c-cdef-491f-8157-8450e26f2372",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "gpt-5.5",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "gpt-5.5",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gpt-5.5",
+        "ANTHROPIC_MODEL": "gpt-5.5"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.aigocode.com"
+      }
+    },
+    {
+      "name": "DeepSeek",
+      "id": "c6cf6f4a-e22e-41aa-9488-b7ad36dd0bdb",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-pro",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro",
+        "ANTHROPIC_MODEL": "deepseek-v4-pro"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.deepseek.com"
+      }
+    },
+    {
+      "name": "JP-CCR (Codex订阅)",
+      "id": "a3f7ced5-5255-4afd-bc34-63833721463d",
+      "isCurrent": true,
+      "models": {
+        "ANTHROPIC_DEFAULT_FABLE_MODEL": "gpt-6.1-sol[1M]",
+        "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "gpt-6.1-sol",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gpt-6-luna",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "gpt-6-luna",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "gpt-6.1-sol[1M]",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "gpt-6.1-sol",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "gpt-6-luna[1M]",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "gpt-6-luna",
+        "ANTHROPIC_MODEL": "gpt-6.1-sol[1M]",
+        "CLAUDE_CODE_SUBAGENT_MODEL": "gpt-6-luna[1M]"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://gw.superopen.top"
+      }
+    },
+    {
+      "name": "Kimi For Coding",
+      "id": "f9ddb3f2-173c-419a-adff-0bde5c0f03b3",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "K2.6[1m]",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "K2.61m]",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "K2.6[1m]",
+        "ANTHROPIC_REASONING_MODEL": "K2.6-code-preview[1m]",
+        "ANTHROPIC_MODEL": "K2.6[1m]"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com"
+      }
+    },
+    {
+      "name": "Kimi For Coding-699",
+      "id": "37da09d7-6a09-4598-9765-eefde5766aa4",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_DEFAULT_FABLE_MODEL": "k3[1M]",
+        "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "k3",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-for-coding-highspeed",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "kimi-for-coding-highspeed",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "k3[1M]",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "k3",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "k3[1M]",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "k3",
+        "ANTHROPIC_MODEL": "k3[1M]",
+        "CLAUDE_CODE_SUBAGENT_MODEL": "k3[1M]"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com"
+      }
+    },
+    {
+      "name": "My Claude",
+      "id": "myclaude-1777632155470",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.foxnio.com"
+      }
+    },
+    {
+      "name": "Xiaomi MiMo",
+      "id": "22e894a0-eab8-49e5-82ba-e63a0ca806ba",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_MODEL": "mimo-v2.5",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "mimo-v2.5",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "mimo-v2.5",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "mimo-v2.5"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://api.xiaomimimo.com"
+      }
+    },
+    {
+      "name": "Xiaomi MiMo plan",
+      "id": "dfd354d4-e26e-48bd-86e9-61cd1ac48120",
+      "isCurrent": false,
+      "models": {
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "mimo-v2.5-pro",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "mimo-v2.5-pro",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "mimo-v2.5-pro",
+        "ANTHROPIC_MODEL": "mimo-v2.5-pro"
+      },
+      "apiOrigins": {
+        "ANTHROPIC_BASE_URL": "https://token-plan-cn.xiaomimimo.com"
+      }
+    },
+    {
+      "name": "Claude Official",
+      "id": "claude-official",
+      "isCurrent": false,
+      "models": {},
+      "apiOrigins": {}
+    }
+  ],
+  "entryPoints": {
+    "claudeResolvedPath": "C:/Users/Admin/.local/bin/claude.exe",
+    "nodeResolvedPath": "C:/Program Files/nodejs/node.exe",
+    "ccswitchOrK3CLIResolvedInNoProfilePATHCheck": false,
+    "notResolvedCommandNames": [
+      "ccswitch",
+      "cc-switch",
+      "k3",
+      "kimi"
+    ],
+    "modelLaunch": "Select the saved Kimi For Coding-699 provider, then launch claude; runtime acceptance was not tested",
+    "windowsExecutablesPortableToLinux": false
+  },
+  "statusLine": {
+    "configuredInK3Provider": true,
+    "fields": [
+      "command",
+      "refreshInterval",
+      "type"
+    ],
+    "type": "command",
+    "scriptPaths": [
+      "C:/Users/Admin/.claude/statusline.py"
+    ],
+    "padding": null,
+    "refreshInterval": 10,
+    "globalSettingsStatusLinePresent": false,
+    "legacyConfigStatusLinePresent": false,
+    "script": {
+      "path": "C:\\Users\\Admin\\.claude\\statusline.py",
+      "language": "Python",
+      "bytes": 6069,
+      "imports": [
+        "datetime",
+        "glob",
+        "json",
+        "os",
+        "subprocess",
+        "sys",
+        "time"
+      ],
+      "functions": [
+        "_parse_ts",
+        "fmt_tokens",
+        "get_5h_usage",
+        "get_context_tokens",
+        "get_git_branch",
+        "main"
+      ],
+      "referencedMetadataKeys": [
+        "CLAUDE_CODE_MAX_CONTEXT_TOKENS",
+        "CLAUDE_PROJECTS_DIR",
+        "KIMI_5H_REQUEST_CAP",
+        "KIMI_5H_TOKEN_CAP",
+        "cache_creation_input_tokens",
+        "cache_read_input_tokens",
+        "computed_at",
+        "current_dir",
+        "display_name",
+        "input_tokens",
+        "message",
+        "model",
+        "output_tokens",
+        "requests",
+        "timestamp",
+        "tokens",
+        "transcript_path",
+        "usage",
+        "workspace"
+      ],
+      "referencesTranscriptPath": true,
+      "containsModelOrNetworkInvocationIndicators": {
+        "requests.": false,
+        "urllib": false,
+        "subprocess": true,
+        "os.popen": false,
+        "curl": false,
+        "claude ": false
+      }
+    },
+    "cachePathObservedOnly": "C:/Users/Admin/.claude/.statusline_5h_cache.json",
+    "cacheContentsRead": false,
+    "staticInterpretation": "Saved Python status line derives local 5-hour request/token estimates from transcript usage metadata, plus model/context/workspace/git information",
+    "providerBillingOrQuotaVerified": false,
+    "cpuRamDiskResourceFieldsIdentified": false
+  },
+  "nonModelProviderStructure": {
+    "topLevelKeys": [
+      "attribution",
+      "autoUpdatesChannel",
+      "effortLevel",
+      "enabledPlugins",
+      "env",
+      "extraKnownMarketplaces",
+      "hooks",
+      "includeCoAuthoredBy",
+      "model",
+      "skipDangerousModePermissionPrompt",
+      "statusLine",
+      "theme",
+      "verbose"
+    ],
+    "nonSecretOptions": {
+      "model": "kimi-k3",
+      "effortLevel": "high",
+      "verbose": true,
+      "theme": "dark",
+      "skipDangerousModePermissionPrompt": true
+    },
+    "hookEventNamesOnly": [
+      "Stop"
+    ]
+  },
+  "migrationApproach": [
+    "Read only this provider by exact id from the private local CC Switch database; keep credential values in memory and transfer only through the existing secure SSH channel when the parent performs migration.",
+    "Import the selected model/API environment and model alias into the target CLI provider; preserve existing target defaults until an intentional channel selection.",
+    "Keep token values out of public audit/bootstrap files; obtain them from private provisioning or an existing private source for each target account.",
+    "Replace the Windows Python command/path with a Linux Python3 status-line path; a Windows executable or absolute script path cannot be copied as a working Linux entry point.",
+    "Preserve target global status line and permissions/hooks instead of copying the entire saved K3 profile, which includes a Stop hook and a skip-dangerous-mode-prompt option.",
+    "Expose model/context/session usage from status-line input and machine resources from local OS metadata; label local 5-hour estimates and unavailable provider quota/cost explicitly."
+  ],
+  "risksAndUnverified": [
+    "Saved top-level model kimi-k3 and environment model k3[1M] coexist; actual CLI precedence/provider acceptance was not tested.",
+    "The older separate Kimi For Coding profile uses K2.6 aliases and a likely malformed Haiku value K2.61m]; it is not the identified K3 profile.",
+    "The existing statusline.py statically references transcript_path/CLAUDE_PROJECTS_DIR/glob; this audit did not execute it or read any transcript.",
+    "Current JP-CCR active settings lack statusLine; the script being present does not establish that its UI is currently active.",
+    "No remote target comparison, live model call, provider balance lookup, billing price inspection, or terminal UI validation was performed."
+  ],
+  "privateValuesOutput": false,
+  "privateValuesPersisted": false,
+  "transcriptBodiesRead": false,
+  "chatHistoryRead": false,
+  "billingOrUsageTableRowsRead": false,
+  "statuslineCacheRead": false,
+  "databaseReadOnly": true,
+  "sourceConfigurationModified": false,
+  "remoteAccessed": false,
+  "modelCalls": 0,
+  "serviceOperations": 0,
+  "auditHelperSHA256": "57675ab49c6cc02dd2759d82e5e28afa7aff9532efc2a1904ce65f0c85dea1bd"
+}

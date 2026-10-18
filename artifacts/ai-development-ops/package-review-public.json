@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "kind": "ai-development-received-package-independent-local-review",
+  "at": "2026-10-18T14:45:46.979779+00:00",
+  "qualified": true,
+  "sourceCommit": "a16a1eb9e0109bc31fefcb9325f74379529bd5cd",
+  "runtimeBuild": "20261018-ai-development-ops-r55",
+  "priorRelease": "20261018-simple-workbench-r54",
+  "r54SourceCommit": "bc4fcd21e3cec9a3cfec92f492ee85304b90ff16",
+  "r54IsAncestor": true,
+  "archive": {
+    "name": "20261018-ai-development-ops-r55.zip",
+    "bytes": 20642575,
+    "sha256": "4927a9d264a8bb58023d4d2f55df77f065b32a2444175e8c4d44c5d106414d32"
+  },
+  "manifest": {
+    "name": "release-manifest.json",
+    "bytes": 441899,
+    "sha256": "46c8412dcf8f5e255e8feba84f720e64e8278f6ef027221fea17636a0b8a23c8"
+  },
+  "payload": {
+    "files": 2231,
+    "membersIncludingManifest": 2232,
+    "logicalBytes": 49588549,
+    "allMembersSHA256SizeModeAndCRCVerified": true,
+    "noDuplicateCaseCollisionOrLinks": true,
+    "embeddedManifestExactExternal": true
+  },
+  "source": {
+    "packagedTrackedGitBlobsExact": 1906,
+    "requiredAppAndScriptFiles": 1530,
+    "allAppAndScriptsPresent": true,
+    "changedApplicationAndScriptPaths": [
+      "apps/api/src/app.ts",
+      "apps/api/src/runtime/ai-development.ts",
+      "apps/api/src/runtime/cluster-runtime.ts",
+      "apps/api/test/ai-development.test.ts",
+      "apps/web/src/features/operations/ActualInfrastructurePages.tsx",
+      "apps/web/src/features/operations/ActualOperationsControl.tsx",
+      "apps/web/src/features/operations/AiDevelopmentPanel.tsx",
+      "apps/web/src/features/operations/ai-development.css",
+      "scripts/ai-development/controller.mjs",
+      "scripts/ai-development/install-controller.py",
+      "scripts/ai-development/install-node.py",
+      "scripts/ai-development/node-dispatcher.py",
+      "scripts/ai-development/profile-manifest.json",
+      "scripts/ai-development/provision.py",
+      "scripts/ai-development/terminal-statusline.py",
+      "scripts/ai-development/test-controller.mjs",
+      "scripts/ai-development/test-provision.py",
+      "scripts/ai-development/test_node_dispatcher.py",
+      "scripts/remote-ops-dispatcher.py"
+    ],
+    "allDeltaWithinReviewedScope": true,
+    "sourceReviewFingerprintsBound": 14
+  },
+  "compiled": {
+    "files": 324,
+    "apiSourceMapsChecked": 118,
+    "allMapSourcesResolveToExactPackagedSources": true,
+    "sourceAndCompiledBuildMatch": true,
+    "webSourceMapsAvailable": false,
+    "reproducibleBuildClaimed": false
+  },
+  "offline": {
+    "manifestVersion": "045622fe02fe5bf8b1a0354d0c2146d03cc842df94653d9c9c7eb9c812f2b3ad",
+    "precacheEntries": 5,
+    "dependencyEdgesChecked": 6,
+    "workerAndManifestSameEntries": true,
+    "staticLiteralImportAndCSSDependencyClosureVerified": true,
+    "onlineHTMLAssetsPresent": true
+  },
+  "r54Preservation": {
+    "unchangedApplicationSourceFilesByteExact": 307,
+    "r54CriticalSourceFilesUnchanged": [
+      "apps/api/src/runtime/execution-runtime.ts",
+      "apps/api/src/runtime/project-workbench-activity.ts",
+      "apps/api/src/runtime/project-workbench-runtime.ts",
+      "apps/web/src/features/operations/OperationsPage.tsx",
+      "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "apps/web/src/features/operations/project-plan-workbench-view.ts",
+      "apps/web/src/features/operations/project-workbench.css",
+      "apps/web/src/supervisor-workbench-stream.ts"
+    ],
+    "reviewedOverlapsOnly": [
+      "apps/api/src/runtime/cluster-runtime.ts"
+    ],
+    "noR54ChangesRemoved": true
+  },
+  "privacyAdmission": {
+    "privateRuntimeDirectoriesAdmitted": false,
+    "privateConfigOrEnvironmentFilesAdmitted": false,
+    "databasesOrDependenciesAdmitted": false,
+    "basis": "Complete ZIP path/type inventory, exact tracked source blobs, fixed build scopes and bound public source review.",
+    "limitation": "Source-code fixtures and schema names may mention credentials. This is a provenance/path admission review; it is not a general private-content detection guarantee."
+  },
+  "evidence": {
+    "linuxBuildPackage": {
+      "path": "artifacts/ai-development-ops/linux-build-package-public.json",
+      "bytes": 1196,
+      "sha256": "b66867b92ec1350e15755d80a0ae59256a33916bf89d058786a715a2b7991ab9"
+    },
+    "sourceReview": {
+      "path": "artifacts/ai-development-ops/source-review-public.json",
+      "bytes": 7260,
+      "sha256": "57d7ed274582ce7a0888adfdacc45fc3f759fdd695d3894b803f7801883952db"
+    },
+    "linuxValidation": {
+      "path": "artifacts/ai-development-ops/linux-validation-public.json",
+      "bytes": 1299,
+      "sha256": "df0eb807420279cb30ac9bf68afc0317ea517fc0ad98f9fa6e7270d7856bd8fe"
+    }
+  },
+  "reviewScope": "Independent local package byte/provenance audit; backend implementation author, not an independent semantic reviewer of own backend code. Existing Linux build/test receipts were inspected, not re-executed.",
+  "actions": {
+    "SSHDownloadPublicFiles": 2,
+    "localTestsOrBuildsExecuted": 0,
+    "sourceFilesModified": 0,
+    "remoteWrites": 0,
+    "installationPerformed": false,
+    "deploymentPerformed": false,
+    "serviceOperations": 0,
+    "modelCalls": 0
+  },
+  "acceptance": {
+    "productionHealthyVerified": false,
+    "browserOrManualTerminalAccepted": false,
+    "productAccepted": false
+  }
+}

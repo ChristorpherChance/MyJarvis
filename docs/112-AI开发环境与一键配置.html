@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="普通账号使用 Claude、K3 与 CC Switch，以及通过贾维斯复用可信开发环境模板。">
+  <meta name="jarvis-source-sha256" content="b2e46e456182aaa47abf9726ddd98aad85e30c1b81007f8ff7043f419421cccb">
+  <title>112 AI 开发环境与一键配置</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">AI开发环境 1.0 · R55已上线</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="112-AI%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%B8%80%E9%94%AE%E9%85%8D%E7%BD%AE.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 8 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">连接后直接开始</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">当前固定工具与模型通道</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">对话底部状态栏怎么读</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">在贾维斯管理开发环境</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">新机器复用模板的前置条件</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">配置备份、回退与原件保护</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">已完成的验证与待完成事项</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">公开证据索引</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">112 / 终端AI / 开发环境运维</p>
+        <h1 id="document-title">112 AI 开发环境与一键配置</h1>
+        <p class="subtitle">普通账号使用 Claude、K3 与 CC Switch，以及通过贾维斯复用可信开发环境模板。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>3 个</strong><span>固定版本的核心工具</span></div><div class="stat"><strong>11 个</strong><span>已配置通道元数据</span></div><div class="stat"><strong>1 次</strong><span>K3真实调用已核验</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>112 的普通账号 <code>superopen</code> 已完成本轮终端配置，重复执行没有再次改动配置，既有默认通道与受保护设置保持。K3 已完成一次真实调用；其余通道的配置存在不代表都已实际调用。本文根据 2026-10-18 的公开回执编写。</p>
+<p><strong>本轮 R55 已在 112 正式上线，HTTPS 健康检查返回 200、R55、primary，真实配置任务成功。</strong> 桌面与手机视觉验收仍未完成，不能用 API 成功代替视觉验收。原生交互 SSH 终端已实际观察到四行状态栏，未输入 prompt、未新增模型调用；前三次 Python PTY 停在目录信任提示的失败边界继续保留。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">连接后直接开始</h2>
+<p>在已配置好 <code>112</code> SSH 别名的终端执行：</p>
+<pre><code class="language-sh">ssh 112
+cd /home/superopen/All-Projects/MyJevis-ai-development-ops
+claude
+</code></pre>
+<p>这是本轮已就绪、有真实 Git 基线的独立源码工作副本，对应正式源码 <code>a16a1eb9e0109bc31fefcb9325f74379529bd5cd</code>。其中 <code>node_modules</code> 复用 <code>/home/superopen/All-Projects/MyJevis-r53-closed-loop/node_modules</code>，已核对相同 package lock；依赖并非全部物理独立复制。日常修改先阅读该目录的 <code>AGENTS.md</code>；正式部署目录与原件快照各有用途，不在原件树中启动旧项目。此前完整迁移目录和文件来源见<a href="112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">112 开发迁移使用说明</a>。</p>
+<p><code>claude</code> 使用现有全局默认通道。本次配置保留的默认为 <strong>JP-CCR (Codex订阅)</strong>，模型元数据为 <code>gpt-6.1-sol[1M]</code>；没有把默认切成 K3。</p>
+<p>只在当前启动中使用 K3：</p>
+<pre><code class="language-sh">claude-k3
+</code></pre>
+<p>该入口调用 <code>cc-switch start claude &lt;K3选择器&gt;</code>，不切换全局默认。等价的显式入口为：</p>
+<pre><code class="language-sh">cc-switch start claude &#39;Kimi For Coding-699&#39;
+</code></pre>
+<p>列出通道、查看帮助或打开 CC Switch：</p>
+<pre><code class="language-sh">ccswitch provider list --app claude
+ccswitch --help
+ccswitch
+</code></pre>
+<p><code>ccswitch</code> 是 <code>cc-switch</code> 的别名。CC Switch 内主动切换默认通道会改变后续普通 <code>claude</code> 的选择；临时使用另一通道时可采用 <code>start claude</code>。首次进入项目如遇 Claude 原生目录信任提示，应依据自己是否信任该项目作正常选择；本轮保留既有权限和安全设置。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">当前固定工具与模型通道</h2>
+<p>模板 <code>linux-ai-dev-v1</code>、修订 1 固定以下核心版本：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>固定版本</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Claude Code</td>
+<td>2.1.292</td>
+<td>终端开发与原生状态栏</td>
+</tr>
+<tr>
+<td>CC Switch CLI</td>
+<td>5.11.2</td>
+<td>管理和隔离启动模型通道</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>24.15.0</td>
+<td>前后端开发工具链</td>
+</tr>
+</tbody></table></div>
+<p>已有正确版本直接复用。需要安装时，从清单中的固定官方版本 URL 下载并核对 SHA-256 与大小界限，最多两次下载尝试；不会自动下载 latest。其他已盘点的 Git、Python、npm、tmux、rg、jq 和 sysstat 等按现场情况显示，模板未指定版本的工具不表示需要降级或升级。</p>
+<p>本轮公开配置回执中共有 11 个 Claude 通道：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>通道名称</th>
+<th>模型元数据</th>
+<th>凭据字段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Xiaomi MiMo</td>
+<td><code>mimo-v2.5</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>Kimi For Coding-699</td>
+<td><code>k3[1M]</code></td>
+<td>已配置；本轮真实调用通过</td>
+</tr>
+<tr>
+<td>AIGoCode copy</td>
+<td><code>gpt-5.5</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>JP-CCR (Codex订阅)</td>
+<td><code>gpt-6.1-sol[1M]</code></td>
+<td>已配置；本轮保留的默认</td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td><code>deepseek-v4-pro</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>Claude Official</td>
+<td>未提供</td>
+<td>未配置</td>
+</tr>
+<tr>
+<td>default</td>
+<td><code>gpt-6.1-sol[1M]</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>Xiaomi MiMo plan</td>
+<td><code>mimo-v2.5-pro</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>AIGoCode</td>
+<td><code>claude-opus-4-6</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>Kimi For Coding</td>
+<td><code>K2.6[1m]</code></td>
+<td>已配置</td>
+</tr>
+<tr>
+<td>My Claude</td>
+<td><code>claude-opus-4-6</code></td>
+<td>已配置</td>
+</tr>
+</tbody></table></div>
+<p>“凭据已配置”只说明私密配置中有认证字段，不证明凭据仍有效、套餐有余量或模型服务可达。模型 ID 与名称按当时配置留证，实际可用性以各通道独立调用结果为准。K3 对接 Kimi Coding 的兼容接口，端点为 <code>https://api.kimi.com/coding/</code>；认证值不出现在本文或公开报告。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">对话底部状态栏怎么读</h2>
+<p>状态栏从 Claude 官方 stdin 会话元数据读取数字，不读取 transcript 正文，也不查询模型或供应商余额。脚本及设置已安装到全局配置、CC Switch common 片段和各 Claude provider 的覆盖设置，使切换通道及 <code>start claude</code> 隔离启动沿用同一状态栏。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>显示项</th>
+<th>含义与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型、通道</td>
+<td>原生模型名称与当前通道标签；隔离 K3 启动使用其独立标签</td>
+</tr>
+<tr>
+<td><code>ctx</code></td>
+<td>当前请求的输入及两类缓存量 / 上下文窗口；字段不完整时保持未知</td>
+</tr>
+<tr>
+<td><code>last in/out</code></td>
+<td>最近响应的输入、输出 Token，不是累计用量</td>
+</tr>
+<tr>
+<td><code>cache r/c</code></td>
+<td>原生缓存读取、缓存创建 Token</td>
+</tr>
+<tr>
+<td><code>CLI-est</code></td>
+<td>CLI 提供的本会话美元估算；缺失显示 <code>?</code>，不等同供应商账单</td>
+</tr>
+<tr>
+<td><code>native quota 5h/7d</code></td>
+<td>只展示原生提供的额度使用百分比；未提供即 <code>?</code>，不以本地五小时 Token 伪造套餐额度</td>
+</tr>
+<tr>
+<td>CPU、RAM、磁盘可用</td>
+<td>本机 <code>/proc</code>、文件系统数字采样；资源缓存最长约 15 秒，CPU 首次缺少差分时可为未知</td>
+</tr>
+</tbody></table></div>
+<p>脚本按可取得的终端宽度选择布局。<strong>真实原生交互 SSH 终端已观察通过</strong>：通过 <code>tty=true</code> 与 <code>ssh -tt</code>，逐步确认原生信任提示中的 Yes 后再按 Enter，实际下方显示：</p>
+<pre><code class="language-text">k3[1m] | Kimi For Coding-699
+ctx ?/1.0M | last in/out ?/? | CLI-est $0.0000
+CPU ? | RAM 2.1G/45.9G | disk free 146.2G
+cache r/c ?/? | native quota 5h/7d ?/?
+</code></pre>
+<p>该观察没有输入 prompt、没有新增模型调用；CPU 为首个差分采样未知，Token/额度未提供保持 <code>?</code>。本次空会话显示的零 CLI 估算不改写下文那次真实 K3 调用的估算。随后两次 Ctrl+C 正常退出，exit 0。见<a href="../artifacts/ai-development-ops/native-terminal-observation-public.json">原生终端观察回执</a>与<a href="../artifacts/ai-development-ops/native-terminal-observed-display.txt">安全可见片段</a>。这是本次实际终端布局的验收，不代表所有终端宽度或第二台机器已验收。</p>
+<p>此前三次 Python PTY 尝试均停在项目目录信任提示，没有提交 prompt，不作为状态栏显示通过的证据。R2 的 <code>projectTrustAccepted</code> 标志曾仅表示发送了选择输入，没有证实原生提示已接受，现已按这个真实边界更正；成功依据是上面的后续实际交互观察，旧尝试回执继续保留。</p>
+<p>私密摘要位于：</p>
+<pre><code class="language-text">~/.local/state/jarvis-ai-development/session-summary.json
+</code></pre>
+<p>摘要仅含允许的会话标签、时间、Token、估算和资源数字，不保存 prompt、transcript 路径或正文。贾维斯展示时区分节点回执时间与真实资源采样时间；旧终端摘要不会因为重新读取就变成新的 CPU/RAM 采样。没有原生逐响应、可去重的账单证据时，不把这些摘要写成累计模型账单。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">在贾维斯管理开发环境</h2>
+<p>R55 已上线，在“运维费用 → AI 开发环境”选择目标机器，或打开机器详情的“AI开发环境”页签。该入口面向已认证管理员，只操作绑定到本人可管理设备的可信节点；公司或只读设备不能配置。真实接口流程已通过，桌面与手机界面的视觉验收仍待完成。</p>
+<ol>
+<li>选择已绑定的机器和环境模板，查看核心工具固定版本、当前观察时间及已有通道。</li>
+<li>“检查环境”读取工具和配置情况；缺项、未知版本及尚未配置会如实展示。</li>
+<li>“一键配置开发环境”安装或补齐固定工具，导入尚不存在的通道，并合并状态栏。现有同 ID 或同名通道的模型、认证、安全设置和默认选择保留。</li>
+<li>“刷新终端状态”读取最近的安全摘要。独立控制器约每 60 秒观察一次已绑定节点；该周期观察不调用模型，也不新建用户配置任务。</li>
+<li>在环境运维记录查看排队、运行和回执。节点离线、模板版本或机器目标变化、超时等会显示阻断或待核实，不把等待当作成功。</li>
+</ol>
+<p>控制器约每 10 秒写心跳，心跳有效窗口为约 30 秒；界面能力轮询约 10 秒、机器详情轮询约 5 秒，节点终端观察约每 60 秒一次，观察新鲜度窗口约 120 秒。资源卡另按采样来源和对应时间判断新鲜度。终端没有产生摘要时，“尚未收到状态栏采样”是正常的未知状态；不要为补一条记录而重复模型调用。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">新机器复用模板的前置条件</h2>
+<p>一键配置处理的是<strong>已建立可信绑定的开发节点</strong>。仅有模板或一条普通 SSH 连接，不会让任意裸机自动进入管理范围。本轮实际验证目标只有 112，尚未完成第二台机器的端到端验收。</p>
+<p>新目标需要兼容固定 <code>linux-x64</code> 构建的 Linux x86_64 环境、系统 Python 3，以及 passwd 中存在的普通开发账号（UID 至少 1000、真实且归该账号所有的 home）。管理员还需完成以下机器接入工作：</p>
+<ol>
+<li>在贾维斯登记机器，核实实际 machine ID、hostname、node ID、地址与普通目标账号。</li>
+<li>建立既有受限 SSH 运维通道及固定 dispatcher；通过真实机器身份与地址核对后，安装固定 AI 开发节点 wrapper。</li>
+<li>将公开环境模板与该机器绑定，同时安装并固定 root 所有的模块、清单 SHA、公开 profile hash 和策略 hash。清单原文字节 SHA 与公开模板的规范化 hash 分别核对。</li>
+<li>给独立控制器准备该模板的私密认证来源，确认队列、控制器心跳和机器观察正常，然后使用贾维斯配置入口。</li>
+</ol>
+<p>中央控制器以 <code>jarvis-control</code> 普通系统账号运行，通过固定命令把配置 stdin 交给目标 wrapper；wrapper 再以目标普通用户运行 provision。API 不接收模型密钥，也没有任意 shell、路径或 argv 入口。目标安装工具不需要用户在日常 <code>claude</code> 前加 <code>sudo</code>。</p>
+<p>私密模型配置保存在控制器的 AES-256-GCM vault 中，vault 与密钥文件受限，公开策略只含名称、模型 ID、是否有认证字段和固定绑定。传递采用私密 stdin，不把认证值放入命令行、URL、网页或日志。可移植字段只包含允许的模型和认证 env/model；不把 Windows 的 hooks、跳过权限设置、旧状态栏命令或私人会话带到新机器。</p>
+<p>已有不符合固定版本的同名用户工具路径发生冲突时，安装器会安全拒绝覆盖并报告问题；应先核实该机器的原工具来源，再在已有授权范围内处理冲突。不要以删除用户目录或关闭安全门来冒充一键配置通过。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">配置备份、回退与原件保护</h2>
+<p>配置过程有普通用户幂等锁，只在真正改变配置时产生同源私密备份，最多保留最近两次：</p>
+<pre><code class="language-text">~/.local/state/jarvis-ai-development/backups/backup-&lt;标识&gt;/
+</code></pre>
+<p>备份包含修改前的 CC Switch SQLite 快照、相关原文件与 manifest。manifest 记录本机账号/home 绑定、相对路径和改动前后 SHA；配置事务失败时会回滚 SQLite，并在仍与自身写入身份匹配的前提下恢复已改文件。重复成功配置不会不断新增备份。</p>
+<p>如需人工回退，应在没有并发配置任务时，依据同一机器的 manifest 与前后指纹恢复原配置，并做只读核对。当前固定 JSON 协议仅有 probe/configure/telemetry，未提供任意路径恢复命令；私密备份不能直接覆盖到另一机器，也不进入公开文档或 Git。</p>
+<p>这两份是<strong>AI 终端配置备份</strong>，与贾维斯发布前完整恢复点的“保留最近两份”是不同对象。旧完整迁移原件仍在 <code>/home/superopen/All-Projects/MyJevis/.migration-original/local</code>，与上面的新 Git 工作副本分别保留。本轮终端配置不清理原迁移全文件快照、迁移桶或旧历史证据，也不运行原件中的 Windows <code>node_modules</code>、虚拟环境或旧生产入口。完整原件的保护边界继续按<a href="112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">迁移说明</a>执行。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">已完成的验证与待完成事项</h2>
+<p>截至本指南编写时，公开回执已经确认：</p>
+<ul>
+<li>112 原生配置成功；重复配置 <code>changed=false</code>，受保护配置和默认通道保留，K3 隔离启动 dry-run 成功。</li>
+<li>Linux 基础设施 25 项测试通过（provision 9、node dispatcher 11、controller 5）；Linux API 检查、API/Web 类型检查、构建与打包成功。</li>
+<li>K3 仅一次真实调用成功，输入 2,359 Token、输出 35 Token，缓存创建/读取为 0；CLI 估算 <strong>USD 0.01267</strong>，供应商账单为未知。调用后默认通道保持，没有公开原始输出或保存会话正文。</li>
+<li>原生交互 SSH 终端已实际显示模型、通道、上下文/Token/CLI 估算、CPU/RAM/磁盘及未知额度四行状态栏；此项观察未新增模型调用，正常退出。</li>
+<li>最终候选源码集成审阅无阻断，精确提交为 <code>a16a1eb9e0109bc31fefcb9325f74379529bd5cd</code>。</li>
+<li>R55 正式激活回执 <code>qualified=true</code>；随后可信 HTTPS 健康检查为 200/R55/primary，未认证接口返回 401。真实配置任务 <code>a4edc115-da34-4cb5-8be7-43eb4520890b</code> 为 <code>succeeded</code>，同一 command ID 重复提交返回同一任务，11 个通道、K3 配置和 JP 默认保持，资源采样新鲜；该接口验收没有调用模型。</li>
+<li>14:58:13Z 的实际观察来源为 <code>fixed-ssh-ai-development-telemetry</code>，观察与资源均新鲜，任务数仍为 1，没有新增配置任务、模型调用或服务操作。该周期事实单独留证，不将静态资源读取当作浏览器视觉验收。</li>
+</ul>
+<p>仍待完成：桌面与手机的视觉验收，当前浏览器连接/导航多次超时，未取得视觉通过证据。其余模型通道实际调用、新裸机下载安装、第二台可信机器的完整配置与验收均未由本轮结果证明。</p>
+<p>费用策略始终是<strong>只记账，不设消费金额上限</strong>。已知 Token、CLI 估算与未知供应商费用分开记录；没有价格或账单证据时不写零费用，不为完善文档重跑模型。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">公开证据索引</h2>
+<ul>
+<li><a href="../artifacts/ai-development-ops/infrastructure-plan-public.json">固定模板、通道与节点计划</a></li>
+<li><a href="../artifacts/ai-development-ops/infrastructure-install-public.json">独立基础设施安装</a>、<a href="../artifacts/ai-development-ops/infrastructure-worker-start-public.json">独立控制器启动</a></li>
+<li><a href="../artifacts/ai-development-ops/native-configuration-public.json">原生配置与重复幂等</a></li>
+<li><a href="../artifacts/ai-development-ops/k3-smoke-public.json">K3 一次真实调用</a></li>
+<li><a href="../artifacts/ai-development-ops/linux-infrastructure-validation-public.json">Linux 基础设施测试</a>、<a href="../artifacts/ai-development-ops/linux-validation-public.json">API 与类型检查</a>、<a href="../artifacts/ai-development-ops/linux-build-package-public.json">Linux 构建与打包</a></li>
+<li><a href="../artifacts/ai-development-ops/source-review-public.json">最终源码集成审阅</a></li>
+<li><a href="../artifacts/ai-development-ops/release-activation-outcome-public.json">R55 正式激活</a>、<a href="../artifacts/ai-development-ops/live-api-validation-public.json">上线后真实 API 验收</a></li>
+<li><a href="../artifacts/ai-development-ops/periodic-and-static-https-public.json">周期观察与静态 HTTPS 公开回执</a>：本文引用其周期观察事实，视觉验收状态仍未完成</li>
+<li><a href="../artifacts/ai-development-ops/native-terminal-observation-public.json">原生交互 SSH 终端观察通过</a>、<a href="../artifacts/ai-development-ops/native-terminal-observed-display.txt">安全可见片段</a></li>
+<li><a href="../artifacts/ai-development-ops/native-terminal-render-public.json">Python PTY 第一次尝试</a>、<a href="../artifacts/ai-development-ops/native-terminal-render-r2-public.json">第二次尝试与信任标志边界</a>、<a href="../artifacts/ai-development-ops/native-terminal-render-r3-public.json">第三次尝试</a>：停在信任提示的历史保留</li>
+</ul>
+<p>证据是对应时点的事实；后续发布、通道切换、工具更新和机器状态变化，应以新的实际回执追加说明，不改写本轮历史。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="112-AI%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%B8%80%E9%94%AE%E9%85%8D%E7%BD%AE.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

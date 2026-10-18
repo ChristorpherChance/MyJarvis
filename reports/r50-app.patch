@@ -1,0 +1,1108 @@
+diff --git a/apps/api/src/runtime/cluster-runtime.ts b/apps/api/src/runtime/cluster-runtime.ts
+index 36d1060..540cbf8 100644
+--- a/apps/api/src/runtime/cluster-runtime.ts
++++ b/apps/api/src/runtime/cluster-runtime.ts
+@@ -7,7 +7,7 @@ import { defineTool, type ToolDefinition } from '@earendil-works/pi-coding-agent
+ import { Type } from 'typebox';
+ import { IdentityRuntime, RuntimeAccessError, type RuntimePrincipal } from './identity.js';
+ 
+-export const PLATFORM_BUILD = '20261018-project-goals-r49-r1';
++export const PLATFORM_BUILD = '20261018-project-goals-r50';
+ const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/);
+ const absolutePath = z.string().min(1).max(1000).refine(value => resolve(value) === value, 'Absolute path required');
+ const baseUrl = z.string().url().refine(value => { const u = new URL(value); return u.protocol === 'https:' && !u.username && !u.password && !u.search && !u.hash && u.pathname === '/'; });
+diff --git a/apps/api/src/runtime/project-supervisor-model.ts b/apps/api/src/runtime/project-supervisor-model.ts
+index 601e59a..cf535da 100644
+--- a/apps/api/src/runtime/project-supervisor-model.ts
++++ b/apps/api/src/runtime/project-supervisor-model.ts
+@@ -1,6 +1,7 @@
+ import { createHash, randomUUID } from 'node:crypto';
+ import type { PiRunInput, PiService } from '../pi.js';
+ import {assertPublicSupervisorContent} from './public-privacy-guard.js';
++import {boundedSupervisorModelInput} from './supervisor-model-input.js';
+ import {PROJECT_SUPERVISOR_CONTRACT} from './project-supervisor-contract.js';
+ 
+ const MAX_RESPONSE_BYTES = 16_000;
+@@ -133,6 +134,7 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
+   return async (input: any): Promise<any> => {
+     const health = pi.health('project-supervisor');
+     if (!health.configured) throw error(NOT_CONFIGURED);
++    input=boundedSupervisorModelInput(input).input;
+     if (utf8Bytes(JSON.stringify(input)) > 30_000) throw error('MODEL_CONTEXT_INCOMPLETE');
+     const usageReferences:{usageId:string;runId:string;model:string|null}[]=[];
+     const runInput: PiRunInput = {
+diff --git a/apps/api/src/runtime/project-supervisor-runtime.ts b/apps/api/src/runtime/project-supervisor-runtime.ts
+index 9be812e..5bdeae8 100644
+--- a/apps/api/src/runtime/project-supervisor-runtime.ts
++++ b/apps/api/src/runtime/project-supervisor-runtime.ts
+@@ -6,6 +6,7 @@ import {z} from 'zod';
+ import {BusinessError} from '../v1/types.js';
+ import type {V1Repository} from '../v1/repository.js';
+ import type {RuntimePrincipal,IdentityRuntime} from './identity.js';
++import {boundedSupervisorModelInput,supervisorModelProjection} from './supervisor-model-input.js';
+ import {SupervisorIntents} from './supervisor-intents.js';
+ import {modelFailureObservation,publicModelRejection} from './project-supervisor-model.js';
+ import {pumpSupervisorProjections} from './supervisor-projection-runtime.js';
+@@ -83,10 +84,10 @@ export class ProjectSupervisorRuntime {
+  if(s.status==='dispatching'){if(s.decisionId?.startsWith('model:')){const prior=this.intents.get(s.decisionId);if(!prior||((prior.input as any).experienceSnapshotHash&&!this.experienceSnapshotCurrent(s,(prior.input as any).experienceSnapshotHash,true))||!experiencesCurrent((prior.input as any).experienceReferences??[],id=>this.repository.read('experiences',id,s.ownerId))||(prior.input as any).decisionContextRevision!==(s.decisionContextRevision??0))fail('派发前经验选择、排除、上限或更正上下文已变化，旧决定不再授权','DECISION_CONTEXT_CHANGED');}if(!this.options.modelReady())fail('主管模型未配置或认证不可用，尚未派发CC','MODEL_NOT_CONFIGURED');if(s.rounds>=20&&!s.continuationGrantId&&!this.policyCurrent(s))fail('达到主管20轮技术边界，请核对证据并明确调整授权','STALLED');if(typeof this.execution.supervisorDispatch!=='function')fail('执行器尚未安装受控主管续轮入口','EXECUTOR_NOT_READY');const intentId=s.dispatchIntentId??`dispatch:${s.id}:${s.goalRevision}:${s.revision}`,intent=this.intents.get(intentId)??this.intents.prepare(intentId,'dispatch',{sessionId:s.id,goalRevision:s.goalRevision,supervisorRevision:s.revision,taskId:s.taskId,consumedRunId:s.adoptionBinding?.sourceRunId??s.consumedRunId,resultHash:s.adoptionBinding?.sourceResultHash??s.resultHash,...(s.adoptionBinding?{adoptionBinding:s.adoptionBinding}:{}),expectedTaskRevision:s.adoptionBinding?.expectedTaskRevision??task.revision,directive:s.directive,goal:s.goal,criteria:s.criteria.join('\n'),machineId:s.machineId,executorId:task.agent,workspace:s.workspace,ownerId:s.ownerId,resumeStopped:s.resumeStopped===true,...(s.newSession?{newSession:true,handoffSummary:s.handoffSummary}:{}),...(s.continuationGrantId?{grantId:s.continuationGrantId}:{})});if(!s.dispatchIntentId){s.dispatchIntentId=intentId;this.save(s,'dispatch-intent',{intentId});}const receipt=intent.state==='complete'?intent.result:intent.state==='uncertain'?(()=>{throw new Error('DISPATCH_RESULT_UNCERTAIN');})():await this.execution.supervisorDispatch(intent.input);this.intents.complete(intentId,receipt);if(!this.current(s)){this.execution.cancelRun(receipt.runId,'派发提交期间主管授权已变化');return;}s.runId=receipt.runId;if(s.pendingNativeHandoff&&!s.pendingNativeHandoff.runId)s.pendingNativeHandoff.runId=receipt.runId;if(s.adoptionBinding){const adopted=s.adoptionBinding;delete s.adoptionBinding;this.save(s,'adoption-handoff-consumed',{sourceRunId:adopted.sourceRunId,sourceResultHash:adopted.sourceResultHash,nextRunId:receipt.runId});}delete s.dispatchIntentId;delete s.continuationGrantId;s.resumeStopped=false;delete s.newSession;delete s.handoffSummary;s.status='running';s.rounds++;s.revision++;this.save(s,'instruction',{directive:s.directive,sourceDecisionId:s.decisionId??null,dispatchedRunId:receipt.runId});return;}
+  if(s.status==='judging'){await this.finishJudgment(s);return;}if(s.adoptionBinding&&s.status==='running'&&s.runId===s.adoptionBinding.sourceRunId&&s.consumedRunId!==s.runId){const source=this.execution.getRun(s.runId);if(!source?.result)return;if(source.result.source!=='signed-agent'||source.result.lateEvidenceOnly||!['success','failed','round-limit','timeout','budget-exhausted','awaiting-cost','blocked'].includes(source.result.outcome)||hash(source.result)!==s.adoptionBinding.sourceResultHash)fail('收养来源终态或指纹已变化，不继续判断','ADOPTION_SOURCE_INVALID');s.consumedRunId=s.runId;s.resultHash=s.adoptionBinding.sourceResultHash;delete s.decisionId;const verifiedBinding=s.adoptionBinding;s.status='running';s.summary='已确认收养的签名终态；准备执行常规证据与模型判断';s.revision++;this.save(s,'adopt-source-verified',{sourceRunId:s.runId,sourceResultHash:s.resultHash,sourceTaskRevision:verifiedBinding.expectedTaskRevision});return;}if(s.status!=='running'||!s.runId)return;const run=this.execution.getRun(s.runId);if(!run?.result)return;const result=run.result;if(result.source!=='signed-agent'||result.lateEvidenceOnly||run.stopRequested||!['success','failed','round-limit','timeout','budget-exhausted','awaiting-cost','blocked'].includes(result.outcome))fail('未收到当前授权正常签名执行结果；不从退出码或任务状态推测完成','TERMINAL_NOT_NORMAL');if(run.projectId!==s.projectId||run.workspace!==s.workspace||run.machineId!==s.machineId)fail('回包绑定不符','BINDING_INVALID');const resultHash=hash(result);if(this.db.prepare('SELECT run_id FROM supervisor_consumed WHERE run_id=?').get(s.runId))return;
+  if(typeof result.summary!=='string'||Buffer.byteLength(result.summary)>16000)fail('反馈超长或缺失','PROTOCOL_ERROR');let feedback:z.infer<typeof supervisorFeedbackSchema>,normalization:{kind:string;sourceSummarySHA256:string}|undefined;try{const source=JSON.parse(result.summary);const derive=source&&typeof source==='object'&&!Array.isArray(source)&&['progress','blocked','ready_for_review'].includes(source.state)&&source.question===null;if(derive)normalization={kind:'non-question-null-to-empty',sourceSummarySHA256:createHash('sha256').update(result.summary,'utf8').digest('hex')};feedback=supervisorFeedbackSchema.parse(derive?{...source,question:''}:source);}catch{if(result.outcome==='success')fail('成功反馈不是受控严格JSON','PROTOCOL_ERROR');feedback=failureFeedback(result);}
+- const executionMetadata=result.executionMetadata&&typeof result.executionMetadata==='object'?{nativeCliVersion:result.executionMetadata.nativeCliVersion??null,agentBuild:result.executionMetadata.agentBuild??null,programSha256:result.executionMetadata.programSha256??null,invocationId:result.executionMetadata.invocationId??null}:null;const experienceSourceEventId=this.db.prepare("SELECT json FROM supervisor_events WHERE session_id=? AND kind='outcome' ORDER BY sequence DESC LIMIT 1").all(s.id).map(r=>JSON.parse(String(r.json))).find((event:any)=>event.runId===s.runId)?.eventId??null;const originals=this.execution.supervisorEvidence?.(s.runId,feedback.evidence)??{items:[],missing:feedback.evidence.map(e=>({path:e.path,reason:'原件通道未就绪'}))};const verified=originals.items.filter((e:any)=>e.verified===true).map((e:any)=>({...e,content:Buffer.isBuffer(e.content)?e.content.toString('utf8'):e.content}));const contextRevision=s.decisionContextRevision??0,experienceContext=selectSupervisorExperienceContext(this.repository.list('experiences',s.ownerId),{ownerId:s.ownerId,projectId:s.projectId,machineId:s.machineId,executor:s.executor,version:executionMetadata?.nativeCliVersion??null}),experienceReferences=experienceContext.selected,experienceSnapshotHash=hash(experienceContext);const modelInput={experienceSnapshotHash,experienceSourceEventId,experienceExclusions:experienceContext.excluded.slice(0,100),experienceExclusionCount:experienceContext.excluded.length,goal:s.goal,criteria:s.criteria,decisionContextRevision:contextRevision,corrections:s.correctionContext??[],executionMetadata,experienceReferences,evidenceTable:{declared:feedback.evidence,verified:verified.map((e:any)=>({path:e.path,sha256:e.sha256})),missing:originals.missing,complete:evidenceComplete(feedback.evidence,verified,originals.missing)},feedback:{...feedback,evidence:verified.map((e:any)=>({path:e.path,sha256:e.sha256}))},originals:verified,binding:{ownerId:s.ownerId,projectId:s.projectId,taskId:s.taskId,goalRevision:s.goalRevision,runId:s.runId,resultHash,outcome:result.outcome}};const intentId=`model:${s.id}:${s.goalRevision}:${contextRevision}:${s.runId}:${resultHash}`;this.intents.prepare(intentId,'model',modelInput);
++ const executionMetadata=result.executionMetadata&&typeof result.executionMetadata==='object'?{nativeCliVersion:result.executionMetadata.nativeCliVersion??null,agentBuild:result.executionMetadata.agentBuild??null,programSha256:result.executionMetadata.programSha256??null,invocationId:result.executionMetadata.invocationId??null}:null;const experienceSourceEventId=this.db.prepare("SELECT json FROM supervisor_events WHERE session_id=? AND kind='outcome' ORDER BY sequence DESC LIMIT 1").all(s.id).map(r=>JSON.parse(String(r.json))).find((event:any)=>event.runId===s.runId)?.eventId??null;const originals=this.execution.supervisorEvidence?.(s.runId,feedback.evidence)??{items:[],missing:feedback.evidence.map(e=>({path:e.path,reason:'原件通道未就绪'}))};const verified=originals.items.filter((e:any)=>e.verified===true).map((e:any)=>({...e,content:Buffer.isBuffer(e.content)?e.content.toString('utf8'):e.content}));const contextRevision=s.decisionContextRevision??0,experienceContext=selectSupervisorExperienceContext(this.repository.list('experiences',s.ownerId),{ownerId:s.ownerId,projectId:s.projectId,machineId:s.machineId,executor:s.executor,version:executionMetadata?.nativeCliVersion??null}),experienceReferences=experienceContext.selected,experienceSnapshotHash=hash(experienceContext);const modelInput={experienceAudit:experienceContext,experienceSnapshotHash,experienceSourceEventId,experienceExclusions:experienceContext.excluded,experienceExclusionCount:experienceContext.excluded.length,goal:s.goal,criteria:s.criteria,decisionContextRevision:contextRevision,corrections:s.correctionContext??[],executionMetadata,experienceReferences,evidenceTable:{declared:feedback.evidence,verified:verified.map((e:any)=>({path:e.path,sha256:e.sha256})),missing:originals.missing,complete:evidenceComplete(feedback.evidence,verified,originals.missing)},feedback:{...feedback,evidence:verified.map((e:any)=>({path:e.path,sha256:e.sha256}))},originals:verified,binding:{ownerId:s.ownerId,projectId:s.projectId,taskId:s.taskId,goalRevision:s.goalRevision,runId:s.runId,resultHash,outcome:result.outcome}};const intentId=`model:${s.id}:${s.goalRevision}:${contextRevision}:${s.runId}:${resultHash}`;this.intents.prepare(intentId,'model',modelInput);
+  this.tx(()=>{this.db.prepare('INSERT INTO supervisor_consumed VALUES(?,?,?)').run(s.runId!,resultHash,s.id);s.consumedRunId=s.runId;s.resultHash=resultHash;s.modelIntentId=intentId;s.status='judging';const sourceDecisionId=s.decisionId??null;delete s.decisionId;s.revision++;s.summary=feedback.summary;this.save(s,'outcome',{decisionId:sourceDecisionId,actualOutcome:result.outcome,exitCode:result.exitCode,usage:result.usage??null,resultHash,executionMetadata,unresolved:originals.missing,independentAcceptance:false});this.save(s,'feedback',{feedback,resultHash,...(normalization?{normalization}:{}),missingEvidence:originals.missing});});await this.finishJudgment(s);
+  }
+- private async finishJudgment(s:SupervisorSession){if(!s.modelIntentId)fail('判断意图缺失','RECONCILIATION_REQUIRED');let intent=this.intents.get(s.modelIntentId!);if(!intent)fail('判断意图不存在','RECONCILIATION_REQUIRED');let decision:any;if(intent.state==='complete')decision=intent.result;else{if(intent.state==='started'||intent.state==='uncertain'){this.intents.interrupted(intent.id);if(intent.state==='uncertain'&&intent.kind==='model'&&['continue','wait_user','review','stop'].includes(intent.result?.action)){decision=intent.result;}else if(intent.state==='uncertain'&&intent.kind==='model'&&intent.result?.action==='review_required'){fail('模型判断结果不完整；请本人通过新目标/决定入口明确下一步','MODEL_RESULT_UNCERTAIN');}else fail('模型调用中断且提供方不支持幂等恢复；保留用量，需对账而非重复调用','MODEL_RESULT_UNCERTAIN');}else{this.intents.started(intent.id);try{decision=await this.options.model(intent.input);this.publicInput(decision);this.intents.complete(intent.id,decision);}catch(e){const diagnostic=modelFailureObservation(e);this.intents.observe(intent.id,{status:'failed',reason:diagnostic?((e as any)?.code==='MODEL_RUN_FAILED'?'MODEL_RUN_FAILED':'MODEL_REVIEW_INVALID'):e instanceof Error?redactExecutionLog(e.message).slice(0,500):'MODEL_FAILED',...(diagnostic?{diagnostic,binding:{intentId:intent.id,inputSHA256:intent.binding,goalRevision:s.goalRevision,sourceRunId:(intent.input as any).binding?.runId??null,sourceResultHash:(intent.input as any).binding?.resultHash??null}}:{})});throw e;}}}if(!this.current(s))return;this.binding(s);this.publicInput(decision);if(!['continue','wait_user','review','stop'].includes(decision.action))fail('主管决定格式无效','PROTOCOL_ERROR');if(decision.action==='continue'&&(!decision.directive||decision.directive===s.directive))fail('没有实质新指令，停止重复派发','STALLED');if(((intent.input as any).experienceSnapshotHash&&!this.experienceSnapshotCurrent(s,(intent.input as any).experienceSnapshotHash,true))||!experiencesCurrent((intent.input as any).experienceReferences??[],id=>this.repository.read('experiences',id,s.ownerId)))fail('经验选择、排除、上限或本人纠错已变化，旧判断不可派发','EXPERIENCE_CHANGED');const originals=(intent.input as any).originals??[];if(decision.action==='review'&&(!originals.length||!(intent.input as any).evidenceTable?.complete||(intent.input as any).binding.outcome!=='success'))fail('实际失败或缺少已核原件，不能宣告达标','EVIDENCE_INSUFFICIENT');const priorOutcomes=this.db.prepare('SELECT json FROM supervisor_events WHERE session_id=? AND kind=\'outcome\' ORDER BY sequence DESC LIMIT 3').all(s.id).map(r=>JSON.parse(String(r.json)));if(decision.action==='continue'&&priorOutcomes.length===3&&priorOutcomes.every(e=>e.actualOutcome!=='success'))fail('连续三轮非成功结果，需明确调整方案或本人复核，不无限自动重试','STALLED');s.revision++;s.decisionId=intent.id;s.directive=decision.directive||s.directive;s.summary=decision.reason;s.nextAction=decision.directive||'';s.status=decision.action==='continue'?'dispatching':decision.action==='wait_user'?'waiting_user':decision.action==='review'?'achieved':'stopped';s.enabled=decision.action==='continue';this.save(s,decision.action==='review'?'review':'decision',{decision,feedback:(intent.input as any).feedback,resultHash:s.resultHash,experienceReferences:(intent.input as any).experienceReferences??[],experienceExclusions:(intent.input as any).experienceExclusions??[],independentAcceptance:false});}
++ private async finishJudgment(s:SupervisorSession){if(!s.modelIntentId)fail('判断意图缺失','RECONCILIATION_REQUIRED');let intent=this.intents.get(s.modelIntentId!);if(!intent)fail('判断意图不存在','RECONCILIATION_REQUIRED');let decision:any;if(intent.state==='complete')decision=intent.result;else{if(intent.state==='started'||intent.state==='uncertain'){this.intents.interrupted(intent.id);if(intent.state==='uncertain'&&intent.kind==='model'&&['continue','wait_user','review','stop'].includes(intent.result?.action)){decision=intent.result;}else if(intent.state==='uncertain'&&intent.kind==='model'&&intent.result?.action==='review_required'){fail('模型判断结果不完整；请本人通过新目标/决定入口明确下一步','MODEL_RESULT_UNCERTAIN');}else fail('模型调用中断且提供方不支持幂等恢复；保留用量，需对账而非重复调用','MODEL_RESULT_UNCERTAIN');}else{this.intents.started(intent.id);try{const projected=boundedSupervisorModelInput(intent.input);this.intents.observe(intent.id,{status:'input-projected',intentId:intent.id,inputSHA256:intent.binding,diagnostic:projected.diagnostic});decision=await this.options.model(projected.input);this.publicInput(decision);this.intents.complete(intent.id,decision);}catch(e){const diagnostic=modelFailureObservation(e);if((e as any)?.code==='MODEL_CONTEXT_INCOMPLETE'){const projected=supervisorModelProjection(intent.input).diagnostic;this.intents.observe(intent.id,{status:'input-blocked',intentId:intent.id,inputSHA256:intent.binding,diagnostic:projected});}this.intents.observe(intent.id,{status:'failed',reason:diagnostic?((e as any)?.code==='MODEL_RUN_FAILED'?'MODEL_RUN_FAILED':'MODEL_REVIEW_INVALID'):e instanceof Error?redactExecutionLog(e.message).slice(0,500):'MODEL_FAILED',...(diagnostic?{diagnostic,binding:{intentId:intent.id,inputSHA256:intent.binding,goalRevision:s.goalRevision,sourceRunId:(intent.input as any).binding?.runId??null,sourceResultHash:(intent.input as any).binding?.resultHash??null}}:{})});throw e;}}}if(!this.current(s))return;this.binding(s);this.publicInput(decision);if(!['continue','wait_user','review','stop'].includes(decision.action))fail('主管决定格式无效','PROTOCOL_ERROR');if(decision.action==='continue'&&(!decision.directive||decision.directive===s.directive))fail('没有实质新指令，停止重复派发','STALLED');if(((intent.input as any).experienceSnapshotHash&&!this.experienceSnapshotCurrent(s,(intent.input as any).experienceSnapshotHash,true))||!experiencesCurrent((intent.input as any).experienceReferences??[],id=>this.repository.read('experiences',id,s.ownerId)))fail('经验选择、排除、上限或本人纠错已变化，旧判断不可派发','EXPERIENCE_CHANGED');const originals=(intent.input as any).originals??[];if(decision.action==='review'&&(!originals.length||!(intent.input as any).evidenceTable?.complete||(intent.input as any).binding.outcome!=='success'))fail('实际失败或缺少已核原件，不能宣告达标','EVIDENCE_INSUFFICIENT');const priorOutcomes=this.db.prepare('SELECT json FROM supervisor_events WHERE session_id=? AND kind=\'outcome\' ORDER BY sequence DESC LIMIT 3').all(s.id).map(r=>JSON.parse(String(r.json)));if(decision.action==='continue'&&priorOutcomes.length===3&&priorOutcomes.every(e=>e.actualOutcome!=='success'))fail('连续三轮非成功结果，需明确调整方案或本人复核，不无限自动重试','STALLED');s.revision++;s.decisionId=intent.id;s.directive=decision.directive||s.directive;s.summary=decision.reason;s.nextAction=decision.directive||'';s.status=decision.action==='continue'?'dispatching':decision.action==='wait_user'?'waiting_user':decision.action==='review'?'achieved':'stopped';s.enabled=decision.action==='continue';this.save(s,decision.action==='review'?'review':'decision',{decision,feedback:(intent.input as any).feedback,resultHash:s.resultHash,experienceReferences:(intent.input as any).experienceReferences??[],experienceExclusions:supervisorModelProjection(intent.input).input.experienceExclusions,independentAcceptance:false});}
+  private projectEvents(){pumpSupervisorProjections(this.db,this.repository,this.options.decisions);}
+  private flushNotices(){if(this.closed||!this.options.notifications)return;for(const row of this.db.prepare('SELECT event_id,json FROM supervisor_notice_outbox WHERE done=0 ORDER BY rowid LIMIT 50').all())try{this.options.notifications.publishSupervision(JSON.parse(String(row.json)));this.db.prepare('UPDATE supervisor_notice_outbox SET done=1 WHERE event_id=?').run(String(row.event_id));}catch{/* Same immutable notice retries on recovery scan/restart. */}}
+  close(){if(this.closed)return;this.offNotices?.();this.closed=true;if(this.timer)clearInterval(this.timer);if(!this.active.size){this.intents.close();this.policies.close();this.db.close();}}
+diff --git a/apps/api/src/runtime/supervisor-model-input.ts b/apps/api/src/runtime/supervisor-model-input.ts
+new file mode 100644
+index 0000000..4cb81a9
+--- /dev/null
++++ b/apps/api/src/runtime/supervisor-model-input.ts
+@@ -0,0 +1,15 @@
++import {createHash} from 'node:crypto';
++const hash=(bytes:string)=>createHash('sha256').update(bytes,'utf8').digest('hex');
++const reasons=new Set(['skill-not-supervisor-lesson','unmatched','archived','deprecated','superseded','counterexample-recorded','unknown-condition','project-mismatch','condition-mismatch','unverified','selected-cap-exceeded']);
++const metric=(value:unknown)=>{const raw=JSON.stringify(value??null);return {UTF8bytes:Buffer.byteLength(raw),sha256:hash(raw),count:Array.isArray(value)?value.length:value==null?0:1};};
++/** Frozen input is retained in intents. Only excluded, non-authoritative bodies are omitted. */
++export function supervisorModelProjection(frozen:any){
++ const exclusions=Array.isArray(frozen.experienceExclusions)?frozen.experienceExclusions:[];
++ const metadata=exclusions.map((ref:any)=>({experienceId:ref.experienceId,revision:ref.revision,hash:ref.hash??hash(JSON.stringify(ref)),reason:reasons.has(ref.reason)?ref.reason:'unknown-condition'}));
++ const {experienceAudit,...required}=frozen;
++ const input={...required,experienceExclusions:metadata,experienceExclusionCount:frozen.experienceExclusionCount??exclusions.length};
++ const components={goal:metric(input.goal),criteria:metric(input.criteria),corrections:metric(input.corrections),originals:metric(input.originals),selected:metric(input.experienceReferences),exclusions:metric(metadata),other:metric(Object.fromEntries(Object.entries(input).filter(([k])=>!['goal','criteria','corrections','originals','experienceReferences','experienceExclusions'].includes(k)))),total:metric(input)};
++ const diagnostic={components,binding:frozen.binding?{goalRevision:Number.isSafeInteger(frozen.binding.goalRevision)?frozen.binding.goalRevision:null,sourceRunSHA256:typeof frozen.binding.runId==='string'?hash(frozen.binding.runId):null,resultHash:/^[a-f0-9]{64}$/.test(frozen.binding.resultHash)?frozen.binding.resultHash:null}:null,frozenSHA256:hash(JSON.stringify(frozen))};
++ return {input,diagnostic,complete:components.total.UTF8bytes<=30000};
++}
++export function boundedSupervisorModelInput(frozen:any){const projected=supervisorModelProjection(frozen);if(!projected.complete)throw Object.assign(new Error('MODEL_CONTEXT_INCOMPLETE'),{code:'MODEL_CONTEXT_INCOMPLETE',contextDiagnostic:projected.diagnostic});return projected;}
+diff --git a/apps/api/src/runtime/supervisor-review.ts b/apps/api/src/runtime/supervisor-review.ts
+index 2923bac..44f4d0e 100644
+--- a/apps/api/src/runtime/supervisor-review.ts
++++ b/apps/api/src/runtime/supervisor-review.ts
+@@ -23,8 +23,8 @@ export function selectSupervisorExperienceContext(records:any[],binding:any){
+   else if(m.projectId!==binding.projectId)reason='project-mismatch';
+   else if(m.unknownConditions?.length||!['machineId','executor','version'].every(k=>conditions[k]&&binding[k]&&conditions[k]===binding[k]))reason=m.unknownConditions?.length?'unknown-condition':'condition-mismatch';
+   else if(r.verified!==true||r.verifiedContent!==r.content||r.verifiedConditions!==r.conditions||!r.evidence?.trim())reason='unverified';
+-  if(reason){excluded.push({experienceId:r.id,revision:r.revision,reason,status:r.status,verified:r.verified===true,conditions,content:String(r.content??'').slice(0,2000)});continue;}
+-  selected.push({experienceId:r.id,revision:r.revision,hash:supervisorHash(r),status:r.status,verified:true,conditions,content:String(r.content??'').slice(0,2000),use:'qualified-reference'});
++  if(reason){excluded.push({experienceId:r.id,revision:r.revision,reason,hash:supervisorHash(r),status:r.status,verified:r.verified===true,conditions,sourceConditions:r.conditions,authorization:m,content:String(r.content??'')});continue;}
++  selected.push({experienceId:r.id,revision:r.revision,hash:supervisorHash(r),status:r.status,verified:true,conditions,content:String(r.content??''),sourceConditions:r.conditions,verifiedConditions:r.verifiedConditions,evidence:r.evidence,authorization:m,use:'qualified-reference'});
+  }
+  selected.sort((a,b)=>String(a.experienceId).localeCompare(String(b.experienceId)));
+  excluded.sort((a,b)=>String(a.experienceId).localeCompare(String(b.experienceId)));
+diff --git a/apps/api/test/supervisor-input-budget-r50.test.ts b/apps/api/test/supervisor-input-budget-r50.test.ts
+new file mode 100644
+index 0000000..4143e7b
+--- /dev/null
++++ b/apps/api/test/supervisor-input-budget-r50.test.ts
+@@ -0,0 +1,5 @@
++import test from 'node:test';import assert from 'node:assert/strict';import {supervisorModelProjection,boundedSupervisorModelInput} from '../src/runtime/supervisor-model-input.js';import {selectSupervisorExperienceContext,experiencesCurrent,supervisorHash} from '../src/runtime/supervisor-review.js';import {createProjectSupervisorModel} from '../src/runtime/project-supervisor-model.js';
++test('R50 production projection/adapter budgets UTF8, preserves essentials and rejects stale/counterexamples',async()=>{const binding={ownerId:'owner',projectId:'p',machineId:'m',executor:'cc',version:'v'},record={id:'selected',ownerId:'owner',revision:1,status:'active',verified:true,content:'完整已验证条件正文'.repeat(250),conditions:'原条件',verifiedContent:'完整已验证条件正文'.repeat(250),verifiedConditions:'原条件',evidence:'evidence ref',supervisorLearning:{projectId:'p',conditions:{machineId:'m',executor:'cc',version:'v'},counterexamples:[]}},excluded=Array.from({length:100},(_,i)=>({...record,id:'excluded-'+i,verified:false,content:'多字节排除私正文'.repeat(2000)})),ctx=selectSupervisorExperienceContext([record,...excluded],binding);assert.equal(ctx.selected.length,1);assert.equal(ctx.selected[0].content,record.content);assert.equal(ctx.excluded.length,100);assert.equal(ctx.excluded[0].content,excluded[0].content);
++const base={goal:'原目标',criteria:['原标准'],corrections:[{reason:'原纠错'}],originals:[{verified:true,path:'artifacts/facts.json',sha256:'a'.repeat(64),content:'原件正文'}],feedback:{evidence:[]},binding:{goalRevision:8,runId:'fixture-run',resultHash:'b'.repeat(64)},experienceAudit:ctx,experienceReferences:ctx.selected,experienceExclusions:ctx.excluded,experienceExclusionCount:100,experienceSnapshotHash:supervisorHash(ctx)};const before=JSON.stringify(base),projection=boundedSupervisorModelInput(base);assert.ok(projection.diagnostic.components.total.UTF8bytes<=30000);assert.equal(JSON.stringify(base),before);assert.ok(!JSON.stringify(projection.input).includes('多字节排除私正文'));assert.deepEqual(projection.input.originals,base.originals);assert.deepEqual(projection.input.experienceReferences,base.experienceReferences);assert.deepEqual(projection.input.corrections,base.corrections);assert.equal(projection.input.experienceSnapshotHash,base.experienceSnapshotHash);assert.ok(!('experienceAudit' in projection.input));assert.equal(projection.input.experienceExclusions.length,100);
++let calls=0;const output={action:'stop',directive:'',reason:'受控fixture',selectedOption:null,criteria:[],experienceReferences:[{experienceId:'selected',disposition:'not_adopted',reason:'fixture'}]},pi:any={health:()=>({configured:true}),run:async(i:any)=>{calls++;const sent=JSON.parse(i.text.split('Untrusted supervisor input JSON:\n')[1]);assert.deepEqual(sent,projection.input);return {text:JSON.stringify(output),status:'complete'};}};assert.deepEqual(await createProjectSupervisorModel(pi)(base),output);assert.equal(calls,1);const huge={...base,goal:'必需目标'.repeat(12000)};assert.throws(()=>boundedSupervisorModelInput(huge),/MODEL_CONTEXT_INCOMPLETE/);await assert.rejects(createProjectSupervisorModel(pi)(huge),/MODEL_CONTEXT_INCOMPLETE/);assert.equal(calls,1);const small={...base,experienceReferences:[],experienceExclusions:[],experienceAudit:{selected:[],excluded:[]}};assert.equal(supervisorModelProjection(small).complete,true);
++const counter={...record,supervisorLearning:{...record.supervisorLearning,counterexamples:['反例']}};assert.equal(selectSupervisorExperienceContext([counter],binding).selected.length,0);assert.equal(experiencesCurrent(ctx.selected,()=>counter),false);assert.equal(experiencesCurrent(ctx.selected,()=>({...record,revision:2})),false);assert.equal(selectSupervisorExperienceContext([record],{...binding,version:'stale'}).selected.length,0);console.log(JSON.stringify({scope:'real production projection and adapter with fake Pi; no provider',components:projection.diagnostic.components,longExclusions:100,requiredOverLimitBlocked:true,selectedFullContent:true,counterexampleAndStaleRejected:true}));});
+diff --git "a/docs/R50\347\233\221\347\256\241\350\276\223\345\205\245\345\255\227\350\212\202\351\242\204\347\256\227.md" "b/docs/R50\347\233\221\347\256\241\350\276\223\345\205\245\345\255\227\350\212\202\351\242\204\347\256\227.md"
+new file mode 100644
+index 0000000..aaf5bd0
+--- /dev/null
++++ "b/docs/R50\347\233\221\347\256\241\350\276\223\345\205\245\345\255\227\350\212\202\351\242\204\347\256\227.md"
+@@ -0,0 +1,17 @@
++# R50 监管输入UTF8预算候选 · 未部署
++
++起点59091c2346ab2eea31691a00df1d2a96d03184da，原APP03a1c8be794102b908479c4f9890d6bcc714c3f7。仅Jarvis独立副本本轮文件；不读取或修改Factory其它工作区，不以其静止为条件。不重goal7/run87ed/RHc82f旧intent/模型或业务CC，旧MODEL_CONTEXT_INCOMPLETE、费用及未知保留。实际旧输入各组件bytes未知，本轮不倒填已证根因。
++
++## 生产接线
++
++新增supervisor-model-input统一投影：runtime在私有intent内冻结完整experienceAudit、全部排除与snapshotHash，原记录继续在原repository保留；Pi只接收去掉experienceAudit的必需输入、排除最小ID/revision/hash/固定reason与数量。排除不是候选，不带正文/条件大包，数量不等于采纳权。Adapter同一投影并保整个JSON.stringify UTF8 30000字节终门，必需字段自身超限明确MODEL_CONTEXT_INCOMPLETE，0模型调用，不截goal/criteria/corrections/originals或selected，不扩大上限。
++
++原selected此前slice2000会把截断正文标verified；本轮保存完整selected content、来源条件/verifiedConditions/evidence/授权条件与反例状态，不把截断引用冒已验证。完整context含所有排除内容冻结在私有intent，所有版本/hash/源run/result绑定不变；旧intent和旧snapshot不重写。经验筛选、counterexample/unknown/stale/superseded拒绝及后继CAS仍用完整snapshot与原引用H检查。
++
++固定组件goal/criteria/corrections/originals/selected/exclusions/other/total只记UTF8bytes、SHA256、count；私有观察绑定intent/inputH与goal/sourceRunH/resultH，不记raw输入/排除正文/provider返回/聊天/env。成功和阻塞均有组件诊断，公开决定排除仅同一最小元数据；不改变六键、review逐字唯一全met、citation/证据/abortpartial门。
++
++## 实际验证边界
++
++一组真实生产投影+adapter受控fake Pi：正常、100条超长多字节排除、必需超限0调用、selected完整正文、counterexample/stale拒绝通过。组件bytes/H是本组合成fixture实测，不代表旧goal7实际输入量。API types及API/Web真实build各一次通过，未重旧组/实际Pi/Factory测试。R50平台包与后四pin ops来源分列，原工具/预算/ownership/readiness/备份隔离恢复/rollback门保持，不执行部署/服务/恢复/真实DB/nodeR7或配置。
++
++费用只记无金额cap，10M技术窗与retry0不改，十分钟PAUSED。Root后续独审发布与新绑定真实判断、产品独验另列。
+diff --git "a/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl" "b/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl"
+index 92c41f9..1180a2e 100644
+--- "a/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl"
++++ "b/docs/\345\273\272\350\256\276\350\256\260\345\275\225/events.jsonl"
+@@ -302,3 +302,4 @@
+ {"id":"JARVIS-20261018-R49-PACKAGE-OPS-SEAL","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"R49真实候选包与四pin派生ops封存，原失败保留","objective":"分列APP源码来源、真实构建包与后ops来源，不部署，不冒实际Pi或浏览器独验。","changes":["APP提交36ab0accc6d16c302f668574a6558a69fa277914固定；原packager生成R49 ZIP、manifest及sha，runtime/archive一致，2260载荷作者逐件H核同，104旧assets闭包保持。","封包后新增capture-activate-r49-sidecar.py，仅由冻结c6e3原源四pin派生：R49/priorR48r2/真实APP/实际ZIP，预算/ownership/readiness/锁/备份隔离恢复门不变，原源不改。"],"decisions":["不改packager时间关联门或伪造mtime；额外受影响build如实保留，不冒一次types/build/包即成功。"],"facts":["ZIP H3a4aaa83923a1cb6fd2b6735fa8a82caca68e8b7e219a8c523242f9369959091，manifest Hcea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb。","派生ops H99418d6dd411f63afba520342c09c77e0055ce2a714d5ec046044c043a5c1321；APP包不包含该封包后源码，后ops提交不冒包内来源。"],"verification":["adapter1/1、SSE1/1、失败首屏修后1/1分cut通过；API types/build一次通过。","Web首轮SSR与types/build因lastInstruction未定义、plan可能null失败，保原；冻结并行写者修后SSR与Web build通过，不称一次全过。","第一次打包在写包前因web entry早于最终source mtime拒绝；只重受影响Web association build并重继承assets后原packager成功，原拒绝日志保留。","四pin派生AST通过；104旧assets及所有新载荷作者逐H核同；原c6e3源/旧R48r2包、R7node及历史报告指纹保持。"],"pending":["Root独审、新operation部署112、新绑定真实Pi判断与浏览器验收仍planned；没有服务/recovery/真实DB/业务模型/probe。","Factory20旧拒绝子型未知，不重intent/消费/费用，不撤或恢复dormant policy，十分钟PAUSED。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"scripts/capture-activate-r49-sidecar.py","sha256":"99418d6dd411f63afba520342c09c77e0055ce2a714d5ec046044c043a5c1321","bytes":26413},{"path":"artifacts/r49/platform/release-manifest.json","sha256":"cea1299e835430046e6a2c0b1bc9c817f599728e034614b892f1324aad1ebceb","bytes":447717},{"path":"docs/R49主管经验与首屏候选.md","sha256":"8c3513339cfb6d35a61350ec8b69ae7311f1bef2fefddb94f2e9ffd0c442b5f7","bytes":3255}],"formatVersion":1,"recordedAt":"2026-10-18T06:16:03.024Z","previousHash":"85fa8fd29b8a3304b117ecc19c650b90854dd0c81009da7806aa565a66727ce5","hash":"be81d46bf9c5a4fa85dfb52892d123bcc05bac4686bf0795f8bd31dce202276d"}
+ {"id":"JARVIS-20261018-R49R1-COMPACT-REVIEW","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"R49r1折叠首屏与当前goal判断窄修，真实浏览器另验","objective":"有限修默认首屏、跨goal判断与review提示合同，不重旧业务/模型或操作112。","changes":["工作台默认六格短摘要；goal/12阶段criteria/本轮长安排与绑定收详情，实际F/S及C/N编号展开分组，未知原文fallback。","仅项目详情父banner按需，紧凑标题/导航行与移动CSS；当前判断绑定goal/run，旧判断标历史，新阻塞优先，项目下一步按plan。","shared prompt明确review原criterion逐字、唯一完整覆盖且全met:true；未满足不得review，parser及全部证据/授权门保持。"],"decisions":[],"facts":["起点136ce577、APP36ab0ac核同；原99418 sidecar冻结，先APP包后四pinops派生。","Root截图合同精确path/H及planB6实际目标原文未在本副本取得；不声称读过截图，不索取传播私人画面。","Root现R49健康/Factory goal3有限achieved为主管事实，不冒本轮CC现场或完整工厂验收；旧账/目标/政策及十分钟PAUSED保持。"],"verification":["新增生产组件SSR折叠树与跨goal/run反例、真实Button submit组通过；合成1691字符目标/12stage，非实际planB6原件。","生产adapter合法review及未met/重复/改写拒绝通过；API/Web types及真实build各一次通过，无旧组/模型probe。"],"pending":["Root独审、1280×720与移动真实浏览器/DOM/overflow验收、发布及后继判断均未做。","包/ops指纹另保候选事实索引，APP来源与后ops来源分列，旧失败具体子因未知不倒填。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"scripts/test-r49-r1-compact.mjs","sha256":"7f4ff50b890b258b4b4162ac46a33a5aad1b0837be13e3db8320d5d4cd98f484","bytes":4588},{"path":"apps/api/test/supervisor-review-contract-r49-r1.test.ts","sha256":"0abbbf98bc9b77f07844e3524480bf1cd441c592bdd972f993dd3a6742ce0b9f","bytes":1564},{"path":"docs/R49r1简洁首屏与判断边界.md","sha256":"fb733b9b55db2506c1272bad9d5ee58e661f65e2c48020525127df0f7a6d0881","bytes":2692}],"formatVersion":1,"recordedAt":"2026-10-18T06:48:57.412Z","previousHash":"be81d46bf9c5a4fa85dfb52892d123bcc05bac4686bf0795f8bd31dce202276d","hash":"9e29177af3f6caf96194fd09c3edb5f58342d18da7521fb8fe09f672fe645ec9"}
+ {"id":"JARVIS-20261018-R49R1-PACKAGE-SEAL","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"R49r1精确APP包与四literal后ops封存，未部署","objective":"保留同源构建原件与资源闭包，分列APP/包/后ops，不冒浏览器或真实Pi验收。","changes":["APP03a1c8be794102b908479c4f9890d6bcc714c3f7，原packager一次成功生成20261018-project-goals-r49-r1 ZIP/manifest/sha，runtime与archive一致。","2271载荷作者逐件大小/H核同，113件R49 assets与旧104闭包保持；从99418原sidecar只四literal派生新ops，原源和工具不改。"],"decisions":[],"facts":[],"verification":["ZIP H3228ba66ed5c94e080987fce6dbf706396677e1af0f9089553e602d2b2c5a451；manifest Hc14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15。","派生ops H17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd，四literal差异及AST核验通过，不运行sidecar。"],"pending":["Root截图合同及planB6原文未在本副本取得，合成SSR不替代真实1691字原件或1280×720/移动布局验收。","Root独审发布与浏览器、后继Pi判断另验，未部署/服务/恢复/真实DB或业务模型操作，旧费用未知保持。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"artifacts/r49-r1/platform/release-manifest.json","sha256":"c14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15","bytes":449890},{"path":"scripts/capture-activate-r49-r1-sidecar.py","sha256":"17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd","bytes":26413}],"formatVersion":1,"recordedAt":"2026-10-18T06:50:07.881Z","previousHash":"9e29177af3f6caf96194fd09c3edb5f58342d18da7521fb8fe09f672fe645ec9","hash":"d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab"}
++{"id":"JARVIS-20261018-R50-MODEL-INPUT-BUDGET","kind":"validation","project":"jarvis","retrospective":false,"occurredAt":"2026-10-18","title":"监管Pi输入最小排除投影与UTF8整体预算候选，未部署","objective":"保完整私有审计及必需语义，避免排除正文无差别进入Pi，不重旧intent/模型或跨Factory工作区。","changes":["runtime私有intent冻结完整experienceAudit/全部排除与snapshotHash，Pi只最小ID/版本/H/固定原因/数量；排除非候选。","selected改保完整正文/条件/证据与授权，不再截断成verified；必需goal/criteria/corrections/originals/selected不静默损失，30K终门仍严格。","生产构建及adapter同一投影；固定组件bytes/H/count与intent/inputH/goal/sourceRunH/resultH诊断，必需超限明确block，不存raw/provider/chat/env。"],"decisions":[],"facts":["起点59091c2与APP03a1c8b核同；冻结17116 sidecar原H保持，APP包后四pin派生另列。","旧goal7/run87ed/RHc82f和MODEL_CONTEXT_INCOMPLETE/费用/未知不重放不修改；旧各组件实际bytes未知，不倒填根因。"],"verification":["唯一生产投影/adapter组受控通过：正常、100长多字节排除、必需超限0调用、完整selected、反例及stale拒绝；不是实际Pi或旧goal7组件bytes证明。","受影响API types及API/Web真实build各一次通过；R49r1所有载荷和120旧assets原H校验继承，未重旧组或业务测试。"],"pending":["Root独审发布、新绑定真实Pi判断、完整产品验收未做；不碰112服务/recovery/真实DB/nodeR7/配置。","Factory其它工作区及goal6不读取变更，技术窗口/retry0与十分钟PAUSED保持。"],"lessons":[],"state":{"implementation":"complete","verification":"partial","deployment":"not-deployed","acceptance":"pending"},"evidence":[{"path":"apps/api/src/runtime/supervisor-model-input.ts","sha256":"b93cc21e8cedc499c8ebb88ee034aac010e281e0673f6a46dfa6292e6c768f19","bytes":2314},{"path":"apps/api/test/supervisor-input-budget-r50.test.ts","sha256":"92f40c89fbb31ba133b4b555417c6696318e02592060a1aa1084026f00d32909","bytes":4129},{"path":"docs/R50监管输入字节预算.md","sha256":"b8df6e718bd93a1cc020e755c421d3ae8afb0fdce1bd0ed9baadb04cb821b410","bytes":2542}],"formatVersion":1,"recordedAt":"2026-10-18T07:57:32.839Z","previousHash":"d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab","hash":"4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d"}
+diff --git "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html" "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html"
+index 580d1fc..9690b10 100644
+--- "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html"
++++ "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.html"
+@@ -4,7 +4,7 @@
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。">
+-  <meta name="jarvis-source-sha256" content="93509f6fa255fa19eaf6918b38e18273297e266cc4e767202a4e7b121bb711bf">
++  <meta name="jarvis-source-sha256" content="f343215469abd009b73c262d4928dc0809902e9ce52b48419dffb1ea78dfaf07">
+   <title>贾维斯建设日志</title>
+   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+   <style>
+@@ -42,7 +42,7 @@
+     <p class="sidebar-label">目录与查找</p>
+     <label class="search-label" for="search">按关键词筛选章节</label>
+     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+-    <div class="search-status" id="search-status" aria-live="polite">共 304 章 · Ctrl / ⌘ + K 查找</div>
++    <div class="search-status" id="search-status" aria-live="polite">共 305 章 · Ctrl / ⌘ + K 查找</div>
+     <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</a>
+ <a class="toc-link level-3" href="#section-1-1" data-parent="1">本次改变</a>
+ <a class="toc-link level-3" href="#section-1-2" data-parent="1">决策与原因</a>
+@@ -2427,7 +2427,13 @@
+ <a class="toc-link level-3" href="#section-304-1" data-parent="304">本次改变</a>
+ <a class="toc-link level-3" href="#section-304-2" data-parent="304">验证结果</a>
+ <a class="toc-link level-3" href="#section-304-3" data-parent="304">待办与未确认事项</a>
+-<a class="toc-link level-3" href="#section-304-4" data-parent="304">证据与当时指纹</a></nav>
++<a class="toc-link level-3" href="#section-304-4" data-parent="304">证据与当时指纹</a>
++<a class="toc-link level-2" href="#section-305" data-parent="305">JARVIS-20261018-R50-MODEL-INPUT-BUDGET · 监管Pi输入最小排除投影与UTF8整体预算候选，未部署</a>
++<a class="toc-link level-3" href="#section-305-1" data-parent="305">本次改变</a>
++<a class="toc-link level-3" href="#section-305-2" data-parent="305">事实与边界</a>
++<a class="toc-link level-3" href="#section-305-3" data-parent="305">验证结果</a>
++<a class="toc-link level-3" href="#section-305-4" data-parent="305">待办与未确认事项</a>
++<a class="toc-link level-3" href="#section-305-5" data-parent="305">证据与当时指纹</a></nav>
+     <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+   </aside>
+   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+@@ -2439,11 +2445,11 @@
+         <h1 id="document-title">贾维斯建设日志</h1>
+         <p class="subtitle">保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。</p>
+         <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+-        <div class="stats"><div class="stat"><strong>304 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
++        <div class="stats"><div class="stat"><strong>305 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
+       </header>
+       <article class="article">
+         <div class="intro"><p>本页由 <a href="%E5%BB%BA%E8%AE%BE%E8%AE%B0%E5%BD%95/events.jsonl">建设记录原始账本</a> 生成。详细维护方式见 <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">建设档案</a>。历史回顾以现有文档为依据，不补写缺失的决定动机或现场验收。日期时间为 ISO 格式，Z 表示 UTC；中国时间加八小时。证据指纹记录当时文件内容，后续文件可能另有更新。</p>
+-<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab。</p>
++<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d。</p>
+ </div>
+         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+         <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</h2>
+@@ -17293,6 +17299,39 @@
+ <li><a href="../scripts/capture-activate-r49-r1-sidecar.py">scripts/capture-activate-r49-r1-sidecar.py</a> · SHA-256：17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd</li>
+ </ul>
+ <p>记录指纹：d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab；前一条：9e29177af3f6caf96194fd09c3edb5f58342d18da7521fb8fe09f672fe645ec9。</p>
++</section>
++<section class="doc-section" data-section="305"><h2 id="section-305" tabindex="-1">JARVIS-20261018-R50-MODEL-INPUT-BUDGET · 监管Pi输入最小排除投影与UTF8整体预算候选，未部署</h2>
++<p>发生时间：2026-10-18；记录时间：2026-10-18T07:57:32.839Z；项目：贾维斯；类型：validation。</p>
++<p>目标：保完整私有审计及必需语义，避免排除正文无差别进入Pi，不重旧intent/模型或跨Factory工作区。</p>
++<p>状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收</p>
++<h3 id="section-305-1" tabindex="-1">本次改变</h3>
++<ul>
++<li>runtime私有intent冻结完整experienceAudit/全部排除与snapshotHash，Pi只最小ID/版本/H/固定原因/数量；排除非候选。</li>
++<li>selected改保完整正文/条件/证据与授权，不再截断成verified；必需goal/criteria/corrections/originals/selected不静默损失，30K终门仍严格。</li>
++<li>生产构建及adapter同一投影；固定组件bytes/H/count与intent/inputH/goal/sourceRunH/resultH诊断，必需超限明确block，不存raw/provider/chat/env。</li>
++</ul>
++<h3 id="section-305-2" tabindex="-1">事实与边界</h3>
++<ul>
++<li>起点59091c2与APP03a1c8b核同；冻结17116 sidecar原H保持，APP包后四pin派生另列。</li>
++<li>旧goal7/run87ed/RHc82f和MODEL_CONTEXT_INCOMPLETE/费用/未知不重放不修改；旧各组件实际bytes未知，不倒填根因。</li>
++</ul>
++<h3 id="section-305-3" tabindex="-1">验证结果</h3>
++<ul>
++<li>唯一生产投影/adapter组受控通过：正常、100长多字节排除、必需超限0调用、完整selected、反例及stale拒绝；不是实际Pi或旧goal7组件bytes证明。</li>
++<li>受影响API types及API/Web真实build各一次通过；R49r1所有载荷和120旧assets原H校验继承，未重旧组或业务测试。</li>
++</ul>
++<h3 id="section-305-4" tabindex="-1">待办与未确认事项</h3>
++<ul>
++<li>Root独审发布、新绑定真实Pi判断、完整产品验收未做；不碰112服务/recovery/真实DB/nodeR7/配置。</li>
++<li>Factory其它工作区及goal6不读取变更，技术窗口/retry0与十分钟PAUSED保持。</li>
++</ul>
++<h3 id="section-305-5" tabindex="-1">证据与当时指纹</h3>
++<ul>
++<li><a href="../apps/api/src/runtime/supervisor-model-input.ts">apps/api/src/runtime/supervisor-model-input.ts</a> · SHA-256：b93cc21e8cedc499c8ebb88ee034aac010e281e0673f6a46dfa6292e6c768f19</li>
++<li><a href="../apps/api/test/supervisor-input-budget-r50.test.ts">apps/api/test/supervisor-input-budget-r50.test.ts</a> · SHA-256：92f40c89fbb31ba133b4b555417c6696318e02592060a1aa1084026f00d32909</li>
++<li><a href="../docs/R50%E7%9B%91%E7%AE%A1%E8%BE%93%E5%85%A5%E5%AD%97%E8%8A%82%E9%A2%84%E7%AE%97.md">docs/R50监管输入字节预算.md</a> · SHA-256：b8df6e718bd93a1cc020e755c421d3ae8afb0fdce1bd0ed9baadb04cb821b410</li>
++</ul>
++<p>记录指纹：4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d；前一条：d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab。</p>
+ </section>
+       </article>
+       <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.md">打开源文档</a></footer>
+diff --git "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md" "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md"
+index 486ec37..a14da96 100644
+--- "a/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md"
++++ "b/docs/\350\264\276\347\273\264\346\226\257\345\273\272\350\256\276\346\227\245\345\277\227.md"
+@@ -1,10 +1,10 @@
+ # 贾维斯建设日志
+ 
+-<!-- jarvis-doc-meta {"version":"建设记录 1.0","date":"2026-10-18","eyebrow":"建设过程 / 验证证据 / 经验沉淀","subtitle":"保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。","stats":[{"value":"304 条","label":"已归档记录"},{"value":"追加保存","label":"旧记录保留原文"},{"value":"事实分层","label":"实现 · 验证 · 上线 · 验收"}]} -->
++<!-- jarvis-doc-meta {"version":"建设记录 1.0","date":"2026-10-18","eyebrow":"建设过程 / 验证证据 / 经验沉淀","subtitle":"保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。","stats":[{"value":"305 条","label":"已归档记录"},{"value":"追加保存","label":"旧记录保留原文"},{"value":"事实分层","label":"实现 · 验证 · 上线 · 验收"}]} -->
+ 
+ 本页由 [建设记录原始账本](建设记录/events.jsonl) 生成。详细维护方式见 [建设档案](贾维斯建设档案.md)。历史回顾以现有文档为依据，不补写缺失的决定动机或现场验收。日期时间为 ISO 格式，Z 表示 UTC；中国时间加八小时。证据指纹记录当时文件内容，后续文件可能另有更新。
+ 
+-历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab。
++历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d。
+ 
+ ## JARVIS\-RETRO\-20261002\-01 · V4：家庭管家与设备规划基线
+ 
+@@ -16053,3 +16053,40 @@
+ - [scripts/capture\-activate\-r49\-r1\-sidecar\.py](../scripts/capture-activate-r49-r1-sidecar.py) · SHA-256：17116bafdda9cc6f054d5676cc4a26018f240acac9c9228f4c56202161e907dd
+ 
+ 记录指纹：d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab；前一条：9e29177af3f6caf96194fd09c3edb5f58342d18da7521fb8fe09f672fe645ec9。
++
++## JARVIS\-20261018\-R50\-MODEL\-INPUT\-BUDGET · 监管Pi输入最小排除投影与UTF8整体预算候选，未部署
++
++发生时间：2026-10-18；记录时间：2026-10-18T07:57:32.839Z；项目：贾维斯；类型：validation。
++
++目标：保完整私有审计及必需语义，避免排除正文无差别进入Pi，不重旧intent/模型或跨Factory工作区。
++
++状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收
++
++### 本次改变
++
++- runtime私有intent冻结完整experienceAudit/全部排除与snapshotHash，Pi只最小ID/版本/H/固定原因/数量；排除非候选。
++- selected改保完整正文/条件/证据与授权，不再截断成verified；必需goal/criteria/corrections/originals/selected不静默损失，30K终门仍严格。
++- 生产构建及adapter同一投影；固定组件bytes/H/count与intent/inputH/goal/sourceRunH/resultH诊断，必需超限明确block，不存raw/provider/chat/env。
++
++### 事实与边界
++
++- 起点59091c2与APP03a1c8b核同；冻结17116 sidecar原H保持，APP包后四pin派生另列。
++- 旧goal7/run87ed/RHc82f和MODEL\_CONTEXT\_INCOMPLETE/费用/未知不重放不修改；旧各组件实际bytes未知，不倒填根因。
++
++### 验证结果
++
++- 唯一生产投影/adapter组受控通过：正常、100长多字节排除、必需超限0调用、完整selected、反例及stale拒绝；不是实际Pi或旧goal7组件bytes证明。
++- 受影响API types及API/Web真实build各一次通过；R49r1所有载荷和120旧assets原H校验继承，未重旧组或业务测试。
++
++### 待办与未确认事项
++
++- Root独审发布、新绑定真实Pi判断、完整产品验收未做；不碰112服务/recovery/真实DB/nodeR7/配置。
++- Factory其它工作区及goal6不读取变更，技术窗口/retry0与十分钟PAUSED保持。
++
++### 证据与当时指纹
++
++- [apps/api/src/runtime/supervisor\-model\-input\.ts](../apps/api/src/runtime/supervisor-model-input.ts) · SHA-256：b93cc21e8cedc499c8ebb88ee034aac010e281e0673f6a46dfa6292e6c768f19
++- [apps/api/test/supervisor\-input\-budget\-r50\.test\.ts](../apps/api/test/supervisor-input-budget-r50.test.ts) · SHA-256：92f40c89fbb31ba133b4b555417c6696318e02592060a1aa1084026f00d32909
++- [docs/R50监管输入字节预算\.md](../docs/R50%E7%9B%91%E7%AE%A1%E8%BE%93%E5%85%A5%E5%AD%97%E8%8A%82%E9%A2%84%E7%AE%97.md) · SHA-256：b8df6e718bd93a1cc020e755c421d3ae8afb0fdce1bd0ed9baadb04cb821b410
++
++记录指纹：4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d；前一条：d58828fe7ed67503cd6367cad3d1dfc5faafff5aa72acd421b2caa66402f36ab。
+diff --git a/reports/r50-logs/api-build.txt b/reports/r50-logs/api-build.txt
+new file mode 100644
+index 0000000..d488286
+--- /dev/null
++++ b/reports/r50-logs/api-build.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/api@0.1.0 build
++> tsc -p tsconfig.json --outDir .dist-next
++
+diff --git a/reports/r50-logs/api-types.txt b/reports/r50-logs/api-types.txt
+new file mode 100644
+index 0000000..665ddaf
+--- /dev/null
++++ b/reports/r50-logs/api-types.txt
+@@ -0,0 +1,4 @@
++
++> @jarvis/api@0.1.0 typecheck
++> tsc --noEmit -p tsconfig.json
++
+diff --git a/reports/r50-logs/assets.json b/reports/r50-logs/assets.json
+new file mode 100644
+index 0000000..77fbfe8
+--- /dev/null
++++ b/reports/r50-logs/assets.json
+@@ -0,0 +1,726 @@
++{
++  "oldPayloadsVerified": 2271,
++  "assets": [
++    {
++      "path": "apps/web/dist/assets/api-Chk_xhf3.js",
++      "size": 1786,
++      "sha256": "cf309c095eb52e286c9d2d42b4bd77c44eea8ad9675d1892c9314623f92caa3e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/ApiWorkbench-BU9U4-wP.css",
++      "size": 24191,
++      "sha256": "c2a32540a003bc2efbdb3d98df0656648d4a46c4e72f9c5e14260f07bf5e81c9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/ApiWorkbench-Dmp8PqAz.js",
++      "size": 50856,
++      "sha256": "0ca4d25496e44e5b4d465868bd9dd1d030c7cb6fc3b07574409ba6de3226e549",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/App-Bw5WWsEu.js",
++      "size": 42768,
++      "sha256": "c11aaa1ba905a437e0900d2e790f72fad68f2f4a3685d0a4a07854382e110443",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/client-OI5hagxP.js",
++      "size": 222585,
++      "sha256": "34aec097c7b218d47aca0265f613f0a4668038896b9683205db60c9886358fe6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BGspGo2n.js",
++      "size": 186426,
++      "sha256": "8f28fbdd3429d375b0b77acf70d9c09ef091dd2a7338f9dcf0bdff5e1fedd7f4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BjNIZnjT.js",
++      "size": 185044,
++      "sha256": "3c0e936dc454387fb8ecc118b7ca21291bfd822a9b539419f496ab4188e92d14",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Bkbv5Ons.js",
++      "size": 186058,
++      "sha256": "0f070546ae77fefa831fd06be336c83f5d1bd78ccc3b523b561ac620870a756d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-BqArLHFo.js",
++      "size": 185044,
++      "sha256": "6edee98e1b3607643a8f5f5ec4d225d49f9765876dfceac0522cc5d7e9616a25",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-C2xJPBSV.js",
++      "size": 186046,
++      "sha256": "1999f260fd3dfb306cb32b7bab9959cf85a0cdb01313a5808ea108100e588107",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-C8pWeWn4.js",
++      "size": 185044,
++      "sha256": "f6e46f702b1a6e9da220b83b181752025ec95e9505972f3555b87d30831edee9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CEqDwIn0.js",
++      "size": 185755,
++      "sha256": "3d999e39ce9a245521b204d5fc358fc1cfed717066c257e52d38d7c4b26856fe",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CtFYN7Wp.js",
++      "size": 186058,
++      "sha256": "1fa2aa685de146d93fb4f9346a113f6634eebdb8db231345437b19a58094d344",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CxDa9fQX.js",
++      "size": 185044,
++      "sha256": "4bbfce0108c3bfddb6609cca1e33b44335ec3a24641ad9e5465d3d545068617a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CYjB9jpI.js",
++      "size": 185044,
++      "sha256": "ff5f69a775e4b941ea5b31c1d174cdd3c038ef8c2b3eb5330e122057b5c3e79e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-CySQ6cmX.js",
++      "size": 186058,
++      "sha256": "1c72c2e64489581878a8a668674b6de762c2052b5a5b626a0f5a2684c977df40",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-Dc9Q7TVE.js",
++      "size": 186058,
++      "sha256": "617803e0f6e036d7ea10c0a679f45467bede7e78721ef53d6d99e6f500b1b454",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-DFO5vBD_.js",
++      "size": 185044,
++      "sha256": "fe2b2774efe77733d7983212a890bead3cc6e36f965948f900733f021a27e7fd",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-L1CrooRu.css",
++      "size": 87280,
++      "sha256": "3a0f4bf7b75a979321331804ceeaae100ab4e08b10b7fa8f7e7c11ba6ec6613c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-SyS9LJyM.js",
++      "size": 186058,
++      "sha256": "abf9fec25f039162d63ab7c941abac8c7745a8f3430fb0c5da9318b7d03a1c6b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/DemoApp-ZXK0_h2J.js",
++      "size": 185044,
++      "sha256": "8c7ee87d787685542d9259c7d17bbd10d25debd596bb790e83c12323cf51594f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-B9NToAGp.js",
++      "size": 8815,
++      "sha256": "e69003cad109d9e27198dd08b029d12c26bd0bf97d073cd449b76b7221e27740",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-BWfAf0S7.js",
++      "size": 8815,
++      "sha256": "157468b57f858ece5c109429acd1d21980776336e46f4dd1416908f40812a1c3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-DuoOicCv.css",
++      "size": 1671,
++      "sha256": "ce29fab4b0c33a8ddb1b9f296a20e9a57b486265d013d634285341fb845e492c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/EvidenceAssistantPanel-Gxi7GIkS.js",
++      "size": 8815,
++      "sha256": "95e3eb5dfd29e0014d948f1fbcbc3fcdd60af6505a193dc9cc5724bd8c6a359d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-7k36TmbJ.js",
++      "size": 132639,
++      "sha256": "cc78a95e738e46c89aeeb74803a7b516f8228985d649e859b12dab127dcbf20f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-B3HKuLzG.js",
++      "size": 2700,
++      "sha256": "c3163f3e9def0fe0371c80381b91c7b4aaa43e6919732d089ea83df235d8bc68",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BC9IJeJP.js",
++      "size": 2700,
++      "sha256": "4a1306154eca0bb91077ed6f81eba8ebea79aefc6f16ffea01042a9a3fad0a4f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bd-erOE4.js",
++      "size": 2700,
++      "sha256": "2a00575c327c8145b818d5cc82e7be8e422e92f1d8b5b1ffaea49cf08387768a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bh9bR11H.js",
++      "size": 132639,
++      "sha256": "18d0a77117dc2a7079cdb7b9778102aa3b4eef5ce96944d7a2dcd709b71fa891",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BMxX7Uy-.js",
++      "size": 132639,
++      "sha256": "de57abdbb2dc0d4271d621992e303d4d2cd3dda9ba1b9e8c1e69423c4d8c560a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bn0_XvS3.css",
++      "size": 35140,
++      "sha256": "f9d14b722b93870f3ed73250ac9cb00443914f1ad8144c1937873328c242ab62",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BOK2KYgE.js",
++      "size": 132639,
++      "sha256": "bbbb12556a5a0dcbc19f7fe117095133e3b08b79d9d23a018818192351e064a5",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BPqbihwj.js",
++      "size": 2700,
++      "sha256": "a1b50c3117a1b3d33387289e45771fbcbe86036aa31a39d07618cb28578bbc6f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Bt3Uhcrq.js",
++      "size": 132639,
++      "sha256": "2160c3d11bffabfd139b28c6a33bd5e98e71bf1185e668e6e12638bb8dc422b7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Btf2sgPH.js",
++      "size": 132639,
++      "sha256": "87ecba8e25e5cb2eaf446bc6d218ef9622cb0516d90fafd7317773c0429d3d6e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BUR4f3cz.js",
++      "size": 2700,
++      "sha256": "07c378acf1d63a823105e10386fceb84dc04186eb82f2d2427022e123cba7fa7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BWW6DgEo.js",
++      "size": 2700,
++      "sha256": "0afc7f5b3e195ee3b0a1c09addd88d1f2e0d1809972dc45a93004b3d1637b64f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-BY6ONzcm.js",
++      "size": 132639,
++      "sha256": "d04df7ec73b5df5a1014fce88da11ad5459e7fda59e91386e4ea54d3dffaa002",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-C4A9K3Js.css",
++      "size": 40695,
++      "sha256": "ca42460074cc8d01a856c3298d43a59d2917f2e041bccbd89f5e251202308036",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CfFWULd2.js",
++      "size": 132639,
++      "sha256": "c77c1b21768fa3c4fe81f604af0ddb691af8ee8296d0edbdec6f966341e0a157",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CM4cqeLV.js",
++      "size": 132639,
++      "sha256": "a6da79934113e0da456a214763ad7ce154760189292d26e9a335d4f6b8ae1911",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Cna248pL.js",
++      "size": 2700,
++      "sha256": "e84fbfe8145d3c30e676fa05b1b684b1e93b77630ef5abaf6679ccd84788c21b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CP2KzcLD.js",
++      "size": 132639,
++      "sha256": "dff121d289b65751e66dd6ad2326b6162acd018dec6a63143065233e0efb664e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-CvsSKgv3.js",
++      "size": 132639,
++      "sha256": "362d868daf02d1b54e3ec9fb1e1cf3360702365f7f7c1330c10379a6d48bd003",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Cyo_cLt3.js",
++      "size": 132639,
++      "sha256": "3cbb39961b61531b158ab9bf4e9344b3746cde292310247652321ea1a0cd8c13",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DAdKF6t6.js",
++      "size": 2700,
++      "sha256": "e42cd01faa768cb2af385197b2bb80e3c27a952686e50c2087536139e704b9d6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DaRI1A8S.js",
++      "size": 2700,
++      "sha256": "c77fa4e9e5c541377eb99fbc4300a3e8a3edc4f5fe47cd5a9d90a69b15eb5d34",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-Ddh4n_em.js",
++      "size": 2700,
++      "sha256": "14d712ade0dab462314fe1292dff0dade260a4495c4d10bbeb85f1b62d7287d3",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DgeLu-8j.js",
++      "size": 2700,
++      "sha256": "46af2097133f28ea859d3ce6b7d4e3d8d83a4f4f85eac3b7e47aa88a3f375196",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-DirT-lzL.js",
++      "size": 2700,
++      "sha256": "339b84adb78d74377947e0970dba59811816782963c2c0c01d522b066494d339",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-dN1MUL4D.js",
++      "size": 2700,
++      "sha256": "1aff914c125eb1d23201417bdfa8a95dad25d7887fa4d308eb94d57d1d123fe6",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-GrlWu2q3.js",
++      "size": 2700,
++      "sha256": "0766628ffa91be29992d789916169638cc8e3cd1192f3afbd7c85fe0642c96a7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-It7MDlfH.js",
++      "size": 132639,
++      "sha256": "3b40e4141a66dfb81bd8802c54ee35f09cba49a4bea3af9c9e7521e6b8a7f2aa",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-L1mh8oeb.js",
++      "size": 132639,
++      "sha256": "147f70e10d9bb8826eea2073382293eace23ddbbf3356b15af03c459a9170e20",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-PS6BmzZD.js",
++      "size": 132639,
++      "sha256": "fdbd288ef3f262002182a56242c01188bc6c1a9019c4178a7a947be2b84c824d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/index-qDG0eH8A.js",
++      "size": 2700,
++      "sha256": "a0994f3fabde1d8f2cc5847f52b95999a696c69efffc9294c203a33f6aa16048",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-B9NdCIHy.js",
++      "size": 105346,
++      "sha256": "ab28547dd07dbb61fae77377f299e5360a189c9c1d3634a9ac8486998bab3a62",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bahhxq9H.js",
++      "size": 105346,
++      "sha256": "5983e4c6e895a5f965d338a37e9dd69e502665ff5fe39f653822b9df0a435bf7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bd9cyBWd.js",
++      "size": 105346,
++      "sha256": "d24a10af81b1f2d6a1112e98b37f686e3b549582a7095e5acddff82b9763084e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bf6wBYBw.js",
++      "size": 105346,
++      "sha256": "da95a3e00cb4d097126922b0c36bedd0843c95293c19a59144c803f91523e206",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-BOdeK6FX.js",
++      "size": 105346,
++      "sha256": "f537d99f80fb14809c35884cd14705f4e72676832badf7ac1ab6006030d4ff39",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Bpq8f1ds.js",
++      "size": 105346,
++      "sha256": "c690b5d713ee02443be6a17ec7d0b3d90fd4e5467295f3802031dd5c54ba3b84",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-C72O-0zk.js",
++      "size": 105346,
++      "sha256": "7c8bb9b7cfaa789003984b16f22927077ae840e51070a7d1d39e7d0761a38e9e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CcUY24pM.js",
++      "size": 105346,
++      "sha256": "6112a4afe3d8318c1199d1a840c66b24b2a73a47ebcbd6aed64ed38c97e6da6b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CkTZVpVT.js",
++      "size": 105346,
++      "sha256": "7782cf9f6113b44c1c0774658b60546ed6a7f1743d6709aaaf2358210f2529d8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CoG1rh-n.js",
++      "size": 105346,
++      "sha256": "acc9ba5cfb73447c021edd3d03de2782dc953a55fb6c270f9f9b9178d4a1f5d2",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-CrrNMALd.js",
++      "size": 105346,
++      "sha256": "43d79b445740904d21e0792ccc82982bb6573446062d6f12ce7e9af6b7306c82",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-D5w3tZSc.js",
++      "size": 105346,
++      "sha256": "0181e8b649a9589f0293a9d78966d8842667fbf896af63e90a55b64a3c5cf020",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-DO5gJB2N.css",
++      "size": 38457,
++      "sha256": "77db6669262c00f07767cbea1fd83ce587a2cd942c3c9523462a7b272510483a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-Dy0AfEMD.js",
++      "size": 105346,
++      "sha256": "536254533a94ae4f1383799565eadc3f9770f1698904cca31e87077259fed1b4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-DzxKXEBt.js",
++      "size": 105346,
++      "sha256": "24546506629cd71529332a10ff8e50c8ab922c651160c801de49e585959e7473",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/KnowledgePage-jjOkZEhU.js",
++      "size": 105346,
++      "sha256": "e2fcb2fe2bcea5cf5460e0110141ed1c31ef01257eceb12617c9edf1aea161a1",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-B-adSYOj.css",
++      "size": 2834,
++      "sha256": "eb58679b215d72a22d2ebe0cd94e0041c16baaf99fc693f085293dc1a479aaf7",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-BSE7EDoo.js",
++      "size": 25939,
++      "sha256": "7e20ce1468c07ef98e74b371bfefa690d03152ca0e61e0314f3191cd25f0035a",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-BSJ0JW-p.js",
++      "size": 25939,
++      "sha256": "fabfe45557faa8f9b66009dcf49c8c281d87a37b51471ea808c121d69a6db54c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-C2jU-A-7.js",
++      "size": 25939,
++      "sha256": "8ed277706d6e43dd62a49f462a27b0854d16aaae2623795fc869e71ee1971df4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-CDIXPyOs.js",
++      "size": 25939,
++      "sha256": "6510ac0b01ce5556b04972eaa15a116689a092e73063fd73bbea2563139528e0",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D_p8XfbM.js",
++      "size": 25939,
++      "sha256": "adedcb05720125ded83352b4cbb818ab7686c236dd3e8f8ad3e2c6b30ac84947",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D-9IUbUb.js",
++      "size": 25939,
++      "sha256": "e32214bb0323bd33b6eb1ac1da96bfd2c678a6b63a1f7092bf26800a844c7e56",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-D8NtBV_6.js",
++      "size": 25939,
++      "sha256": "38ed8affb8c7f29b91c710c553fe0472cd5884d625c43f0fd69b0a44faf59b03",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-Dck92uDK.js",
++      "size": 25939,
++      "sha256": "6f02cd3b58c4e333dec54a8eb2c44ca13f1c88e200a2e823d7322f24bd502065",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DMhr_St1.js",
++      "size": 25939,
++      "sha256": "4c99267f5d6e2ba4c4545f26e56cdfb628aac34466b6a843c4c96e402df8266b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DoJ982dN.js",
++      "size": 25939,
++      "sha256": "4ba788a05c866ec89b913173e92bf711b0be1d99303204e8de3cbbf455ba1004",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DU5_jGCS.js",
++      "size": 25939,
++      "sha256": "b80bea2295103e519e08ab003e7cde6337f7cc07aec7dfd68acf4d5379d7c819",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-DYLehZft.js",
++      "size": 25939,
++      "sha256": "a019a3edb475a501e042d477b25b24f23f32222a0fdbce639ae293ff0b778e5f",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-egK1debn.js",
++      "size": 25939,
++      "sha256": "98736d8e37849b9e95b47d93f3315b3f5a83a7df047daefd775d06994c26d039",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-so6Lr4DI.js",
++      "size": 25939,
++      "sha256": "8a071c07708692166eadf5919f9236bb9889c782128819fb3e42859fd6c42f02",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/MaterialManager-wuVXStul.js",
++      "size": 25939,
++      "sha256": "293480fb899074fed21e77a4408571ff046ec1dc4523ed5555f7c776c683ca14",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-BT4-La1g.js",
++      "size": 232114,
++      "sha256": "b8583cc9ce5e9eaf2fe857879854274a3822f2aaffed830314167003c44f8500",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-C9BkAmZa.js",
++      "size": 233143,
++      "sha256": "b04358703e63d1b4cb9c529a5e89896199a8fb6782f0090dc5a0d4ab1137720b",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-CMPr2Z5F.css",
++      "size": 2997,
++      "sha256": "2e673872eaffd25f2dc6a53a898335a4f98e86e2e94dbddf6749be4c5c07eb69",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/NotificationPreferencesPanel-LzUl84_X.js",
++      "size": 233415,
++      "sha256": "0ec578b7bf2301d7d8e88d7696690a8d0a9ccefc9423df8dca60a862ab2d5ab5",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offline-vault-g54LtOEF.js",
++      "size": 10707,
++      "sha256": "4331dc743b9e304c41112789d75641c85e90bafc5cac4c3d839dc48f0e5dfe94",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offlineCapture-CTF5MCW4.css",
++      "size": 4717,
++      "sha256": "81ca3809012e895c9c7ecbf96fa695ca1e0485e917be83737e3d0ef9fbe655a8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/offlineCapture-Dp37MnGd.js",
++      "size": 26587,
++      "sha256": "2bfcb7312f12ca39396c4cbda155db3c7785b51f6b5c52076da4cfbca02f8851",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-1WgeqKb3.js",
++      "size": 368891,
++      "sha256": "3f0552a20c0bfe23b7e1aa7e6bbb160636108ae2f51c251ae406f27dd003bf9c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-9zmXoABQ.js",
++      "size": 391313,
++      "sha256": "5e7a4e3b8afd7e923c6adc514651e41bfcaa44918b87dc6e1306deb7ff52de4e",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BnMPRN5w.js",
++      "size": 383927,
++      "sha256": "06a6cdc492d41e17a59092c6e30056d0e1aff9a84da84f01d86efdf815479ccc",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BrEOh5vG.css",
++      "size": 52837,
++      "sha256": "a3e916c69fd6cb6af73f513b68bbfb0467a62631f251cb65ea37b431c1a13801",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BSSnywsR.js",
++      "size": 400137,
++      "sha256": "7453c368848897fd4fdf0ada276e76615b987781501a8ab329e3b16ac1770ffe",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-BVMKKxYv.js",
++      "size": 396677,
++      "sha256": "fa6ec9999d8241fe5fe2bed69338799b64d4adfd5efb58573fd7ea8183c135d4",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-C4HGN7pt.js",
++      "size": 371928,
++      "sha256": "4be291bc28157d739dfe5739f48b7262a5bf22c304f10c6acca5bd4ffc4eb72c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CpaZZ68b.css",
++      "size": 54005,
++      "sha256": "39a394144ed99d0be56d52917d5fb78d54a0c5fc75a0aa96846c18036c4fec06",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CRKBQHI1.css",
++      "size": 51632,
++      "sha256": "2adc489d6dd6f45daf620794c2db4dafa8a394e1a0a63d150c44ad6bba54541c",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CrpXyVjM.js",
++      "size": 377067,
++      "sha256": "bf0675cb1360df857c0853f8f6b0c946a3e27cb023de4beed1d5224f1aadb256",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-CRRRJkKB.js",
++      "size": 370510,
++      "sha256": "8ffa64a416981d768b2b64c035cac7ae7d57a1f22856dd5ddac22c27d02c27c9",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-D62v5whk.js",
++      "size": 390569,
++      "sha256": "dc953d5763c98904ab3266d8a4ecca5d0fe9cba40711f08e55788ef48fd8ad33",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-D87eoche.js",
++      "size": 383927,
++      "sha256": "014b25c346170df5d7ca93b38ad4d0aae3ac200febc97069df35d60a63682955",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DqwvsULR.css",
++      "size": 46777,
++      "sha256": "2fa190448c3e488547d5d1529bd620f8a2bf6933a74bfcfb27564bf092d05611",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-DXGqDr63.js",
++      "size": 377755,
++      "sha256": "2b768cb0cf07c58144657d3ab12c852c7fdfcfb867043ba0e19e4fdd42e92783",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-IkdwqqX8.js",
++      "size": 402078,
++      "sha256": "c05899bd82cc27053edb12c316dbad5d5b08996b3322a0855acd6f20cc71fda8",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-q5MPL812.js",
++      "size": 390387,
++      "sha256": "ea850d77aa4fd3d136ee3127bfb45c9a5bcd9ff81b902f2c52b175156c7845a1",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-s2jqT4-3.js",
++      "size": 377742,
++      "sha256": "ec7ac650a8f7db2a243f0bdf4d204420d57dc97d13706fab848ccf2540926498",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/OperationsPage-S8tWeD7W.js",
++      "size": 353240,
++      "sha256": "c9ef162315e680f844f9b5cf83bb4975e4214d7f54fa7d285118897a2c16163d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-BAGOxt2c.js",
++      "size": 85733,
++      "sha256": "8378efb880686b116dded6adfd5f5dcda53eb5dec1104dada8cdf7f58ce9475d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-Boq6QLI7.css",
++      "size": 15592,
++      "sha256": "790e387b0261d59bd808204d997df1c579af65ff636259f8509d7672c94bee12",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-CO_NVOaj.js",
++      "size": 85733,
++      "sha256": "f6555f6dd86c7263fd8a929b20b27ce62ac46a36bc09ad59cd06680ea50c3dfd",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/RoomVoice-DgLk029p.js",
++      "size": 85733,
++      "sha256": "dd94a50e0bd124ea07f72ab4d4fec9c293b4ea18660328a8c6d148129906352d",
++      "mode": 420
++    },
++    {
++      "path": "apps/web/dist/assets/v1-client-CX0ITgRR.js",
++      "size": 2273,
++      "sha256": "5e92175b68bba52ee01d2446431e921fbb4730f68e64f5e4c5251a91e53f4d32",
++      "mode": 420
++    }
++  ],
++  "allPriorClosurePreserved": true
++}
+diff --git a/reports/r50-logs/construction.txt b/reports/r50-logs/construction.txt
+new file mode 100644
+index 0000000..73ef769
+--- /dev/null
++++ b/reports/r50-logs/construction.txt
+@@ -0,0 +1 @@
++{"executed":true,"added":["JARVIS-20261018-R50-MODEL-INPUT-BUDGET"],"reused":[],"records":305,"headHash":"4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d","path":"docs/建设记录/events.jsonl","render":{"markdown":"docs/贾维斯建设日志.md","records":305,"headHash":"4b9891309cbbb80048f5aba2fc6bd8c360fcc7487955de9031c0bf11eecd6e1d","html":"docs/贾维斯建设日志.html"}}
+diff --git a/reports/r50-logs/input-budget.tap b/reports/r50-logs/input-budget.tap
+new file mode 100644
+index 0000000..e826547
+--- /dev/null
++++ b/reports/r50-logs/input-budget.tap
+@@ -0,0 +1,10 @@
++{"scope":"real production projection and adapter with fake Pi; no provider","components":{"goal":{"UTF8bytes":11,"sha256":"b8af8016b359e71eed4d205ab5874ebd513aeedf3eb922e2b8768dd4c601450c","count":1},"criteria":{"UTF8bytes":13,"sha256":"dcc8e301d6a5aaacabaa516f14763d4a76440bf8613f862ac1e93c53b966e668","count":1},"corrections":{"UTF8bytes":24,"sha256":"4434328b65be955af2601ff6258c4aae1363a6a449ab169c6197f92f587ff3d4","count":1},"originals":{"UTF8bytes":150,"sha256":"2d9c0d14d16f21d82efc5da7abc9e1fb003c71a10d24f1035e3787d553b3b0bb","count":1},"selected":{"UTF8bytes":7208,"sha256":"a3dc46f950dbe643ffbb0da3d8547270924960e2c7d04ce279c7bfbe0d0156e9","count":1},"exclusions":{"UTF8bytes":13991,"sha256":"9563ea7ed4427583bf9f869daf08bca00344b90e1dcf8707fc7aa017e0f291cb","count":100},"other":{"UTF8bytes":282,"sha256":"11c6022e75fbd2aa7ba372fd03654ebe6a00b753e0307784c3438f6769a1128c","count":1},"total":{"UTF8bytes":21775,"sha256":"d08d7d31e9b3d14a5bcd188a8290da0bb0678e631a215adc7208b367102c642a","count":1}},"longExclusions":100,"requiredOverLimitBlocked":true,"selectedFullContent":true,"counterexampleAndStaleRejected":true}
++✔ R50 production projection/adapter budgets UTF8, preserves essentials and rejects stale/counterexamples (394.087991ms)
++ℹ tests 1
++ℹ suites 0
++ℹ pass 1
++ℹ fail 0
++ℹ cancelled 0
++ℹ skipped 0
++ℹ todo 0
++ℹ duration_ms 833.663424
+diff --git a/reports/r50-logs/web-build.txt b/reports/r50-logs/web-build.txt
+new file mode 100644
+index 0000000..a538418
+--- /dev/null
++++ b/reports/r50-logs/web-build.txt
+@@ -0,0 +1,41 @@
++
++> @jarvis/web@0.1.0 build:stage
++> tsc --noEmit && vite build --outDir .dist-next
++
++vite v7.3.6 building client environment for production...
++transforming...
++✓ 208 modules transformed.
++rendering chunks...
++computing gzip size...
++.dist-next/index.html                                          0.52 kB │ gzip:   0.37 kB
++.dist-next/offline-capture.html                                0.66 kB │ gzip:   0.40 kB
++.dist-next/offline-capture-shell-manifest.json                 1.14 kB │ gzip:   0.51 kB
++.dist-next/offline-capture-sw.js                               4.15 kB
++.dist-next/assets/EvidenceAssistantPanel-DuoOicCv.css          1.67 kB │ gzip:   0.66 kB
++.dist-next/assets/MaterialManager-B-adSYOj.css                 2.83 kB │ gzip:   0.85 kB
++.dist-next/assets/NotificationPreferencesPanel-CMPr2Z5F.css    3.00 kB │ gzip:   1.04 kB
++.dist-next/assets/offlineCapture-CTF5MCW4.css                  4.72 kB │ gzip:   1.58 kB
++.dist-next/assets/RoomVoice-Boq6QLI7.css                      15.59 kB │ gzip:   3.79 kB
++.dist-next/assets/ApiWorkbench-BU9U4-wP.css                   24.19 kB │ gzip:   5.90 kB
++.dist-next/assets/index-Bn0_XvS3.css                          35.14 kB │ gzip:   6.58 kB
++.dist-next/assets/KnowledgePage-DO5gJB2N.css                  38.46 kB │ gzip:   6.91 kB
++.dist-next/assets/index-C4A9K3Js.css                          40.70 kB │ gzip:   8.49 kB
++.dist-next/assets/OperationsPage-CpaZZ68b.css                 54.01 kB │ gzip:   9.18 kB
++.dist-next/assets/DemoApp-L1CrooRu.css                        87.28 kB │ gzip:  15.90 kB
++.dist-next/assets/api-Chk_xhf3.js                              1.79 kB │ gzip:   0.99 kB
++.dist-next/assets/v1-client-CX0ITgRR.js                        2.27 kB │ gzip:   1.27 kB
++.dist-next/assets/index-qDG0eH8A.js                            2.70 kB │ gzip:   1.37 kB
++.dist-next/assets/EvidenceAssistantPanel-B9NToAGp.js           8.82 kB │ gzip:   3.72 kB
++.dist-next/assets/offline-vault-g54LtOEF.js                   10.71 kB │ gzip:   4.36 kB
++.dist-next/assets/MaterialManager-Dck92uDK.js                 25.94 kB │ gzip:   9.20 kB
++.dist-next/assets/offlineCapture-Dp37MnGd.js                  26.59 kB │ gzip:   9.59 kB
++.dist-next/assets/App-Bw5WWsEu.js                             42.77 kB │ gzip:  13.79 kB
++.dist-next/assets/ApiWorkbench-Dmp8PqAz.js                    50.86 kB │ gzip:  16.83 kB
++.dist-next/assets/RoomVoice-CO_NVOaj.js                       85.73 kB │ gzip:  29.68 kB
++.dist-next/assets/KnowledgePage-DzxKXEBt.js                  105.35 kB │ gzip:  32.84 kB
++.dist-next/assets/index-CP2KzcLD.js                          132.64 kB │ gzip:  43.44 kB
++.dist-next/assets/DemoApp-BGspGo2n.js                        186.43 kB │ gzip:  58.68 kB
++.dist-next/assets/client-OI5hagxP.js                         222.59 kB │ gzip:  69.34 kB
++.dist-next/assets/NotificationPreferencesPanel-LzUl84_X.js   233.42 kB │ gzip:  79.85 kB
++.dist-next/assets/OperationsPage-BSSnywsR.js                 400.14 kB │ gzip: 118.82 kB
++✓ built in 6.07s

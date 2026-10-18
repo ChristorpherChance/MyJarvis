@@ -9,3 +9,15 @@ export function planWorkbenchView(plan:WorkbenchPlan|null){
 }
 /** Group by the structure saved in the plan; identifiers and counts are never inferred. */
 export function numberedPlanGroups(plan:WorkbenchPlan){return plan.steps.map((step,index)=>({number:index+1,step,criteria:step.criteria??[]}));}
+export function currentGoalEvents(events:any[],session:any){
+ const ordered=[...events].sort((a,b)=>(b.sequence??0)-(a.sequence??0));
+ const bound=(event:any)=>!!session&&event.goalRevision===session.goalRevision&&!!event.runId&&[session.runId,session.consumedRunId].filter(Boolean).includes(event.runId);
+ return {decision:ordered.find(e=>bound(e)&&(e.kind==='decision'||e.kind==='review')),previousDecision:ordered.find(e=>!bound(e)&&(e.kind==='decision'||e.kind==='review')),instruction:ordered.find(e=>e.goalRevision===session?.goalRevision&&e.kind==='instruction'),feedback:ordered.find(e=>bound(e)&&e.feedback)?.feedback};
+}
+/** Parse only explicit numbered source lines; unknown text is retained, never invented. */
+export function planGoalGroups(goal:string){
+ const groups:{title:string;lines:string[]}[]=[{title:'软件工厂能力',lines:[]},{title:'监管要求',lines:[]},{title:'其他目标原文',lines:[]}];
+ for(const line of goal.split(/\r?\n/).filter(x=>x.trim())){const code=line.trim().replace(/^[-*]\s*/, '');groups[/^F\d{2}\b/.test(code)?0:/^S\d{2}\b/.test(code)?1:2].lines.push(line);}
+ return groups.filter(g=>g.lines.length);
+}
+export function planStageGroups(plan:WorkbenchPlan){return [{title:'当前阶段',steps:plan.steps.filter(s=>/^C[1-6]$/.test(s.id))},{title:'后续阶段',steps:plan.steps.filter(s=>/^N[1-6]$/.test(s.id))},{title:'其他阶段原文',steps:plan.steps.filter(s=>!/^([CN])[1-6]$/.test(s.id))}].filter(g=>g.steps.length);}

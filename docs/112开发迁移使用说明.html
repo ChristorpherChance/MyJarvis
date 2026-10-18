@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="贾维斯在112的日常开发入口、完整原件、验证证据与后续边界。">
-  <meta name="jarvis-source-sha256" content="b392d269e2aaea75635ed2185c1d3f56e2d027c211b82f99a5401d46eab8588f">
+  <meta name="jarvis-source-sha256" content="d6ed78dc8fe0fc4801747e4b2fb1c3a05a9f6c3410c37d0c653c1f2eef928cc9">
   <title>112 贾维斯平台开发使用说明</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -30,7 +30,7 @@
 <body>
   <a class="skip" href="#main-content">跳至正文</a>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">112开发迁移 1.0</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">112开发源码 2.0 · R55统一</span></div>
     <div class="tools">
       <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
       <a class="tool source-tool" href="112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">Markdown 源文档</a>
@@ -42,16 +42,17 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 8 章 · Ctrl / ⌘ + K 查找</div>
-    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">迁移状态</a>
-<a class="toc-link level-2" href="#section-2" data-parent="2">112 存储保留与日志（2026-10-18）</a>
-<a class="toc-link level-3" href="#section-2-1" data-parent="2">独立发布后的保留维护收尾（18:05–18:09）</a>
-<a class="toc-link level-2" href="#section-3" data-parent="3">文件来源与开发基线</a>
-<a class="toc-link level-2" href="#section-4" data-parent="4">连接并使用 AI 开发</a>
-<a class="toc-link level-2" href="#section-5" data-parent="5">启动开发页面</a>
-<a class="toc-link level-2" href="#section-6" data-parent="6">开发数据与保留文件</a>
-<a class="toc-link level-2" href="#section-7" data-parent="7">Git 与项目规则</a>
-<a class="toc-link level-2" href="#section-8" data-parent="8">回执与后续事项</a></nav>
+    <div class="search-status" id="search-status" aria-live="polite">共 9 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">当前统一开发基线（2026-10-18）</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">迁移状态</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">112 存储保留与日志（2026-10-18）</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">独立发布后的保留维护收尾（18:05–18:09）</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">文件来源与开发基线</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">连接并使用 AI 开发</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">启动开发页面</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">开发数据与保留文件</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">Git 与项目规则</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">回执与后续事项</a></nav>
     <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
@@ -63,7 +64,7 @@
         <h1 id="document-title">112 贾维斯平台开发使用说明</h1>
         <p class="subtitle">贾维斯在112的日常开发入口、完整原件、验证证据与后续边界。</p>
         <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
-        <div class="stats"><div class="stat"><strong>188,045</strong><span>原件文件逐项SHA核验</span></div><div class="stat"><strong>R49-r1</strong><span>活动开发源码基线</span></div><div class="stat"><strong>独立数据</strong><span>普通用户与开发端口</span></div></div>
+        <div class="stats"><div class="stat"><strong>188,045</strong><span>原件文件逐项SHA核验</span></div><div class="stat"><strong>R55统一</strong><span>活动开发源码基线</span></div><div class="stat"><strong>独立数据</strong><span>普通用户与开发端口</span></div></div>
       </header>
       <article class="article">
         <div class="intro"><p>以后使用 112 的普通账号 <code>superopen</code> 开发贾维斯，最终项目目录为：</p>
@@ -71,7 +72,12 @@
 </code></pre>
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
-        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">迁移状态</h2>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">当前统一开发基线（2026-10-18）</h2>
+<p>R55应用功能与最新main资源保留修复已在独立副本合并，18项定向测试、类型检查、构建和开发入口check通过。后续日常开发固定使用上面的 <code>~/All-Projects/MyJevis</code>，从其main建立任务副本；旧 <code>MyJevis-ai-development-ops</code> 目录保留历史，不再当另一处长期常规入口。GitHub合并和该目录最终快进以本轮后继同步回执与 <code>git rev-parse HEAD</code> 为准。</p>
+<p>开发仍使用 <code>npm run dev</code> 或 <code>npm run dev:112</code>，端口43140/45173、独立开发数据和白名单环境保持。没有为源码统一重启正式平台或覆盖实时数据。下方R49/R54迁移说明保留当时事实。</p>
+<p><a href="../artifacts/code-unification-r55/linux-integration-validation.json">Linux整合验证</a> · <a href="../artifacts/ai-development-ops/r55-complete-integration-independent-source-review.json">源码独审</a>。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">迁移状态</h2>
 <p><strong>迁移与开发环境核验已完成。</strong> 188,045 个文件、15,501 个目录、1,999 个内部链接，逻辑文件共 14,535,197,309 字节；文件内容 SHA-256 全部相同，4,443 个硬链关系也已核对。目标端原始树及移动后的保留目录分别逐项核验，最终整树 rename 后身份不变。见<a href="../artifacts/migration-112/final-migration-public.json">完整迁移回执</a>、<a href="../artifacts/migration-112/snapshot-target-verification-public.json">目标端全量核验</a>和<a href="../artifacts/migration-112/mapping-public.json">路径映射核验</a>。</p>
 <p>迁入前先清理已与完整快照核同的旧隔离恢复副本及 apt 缓存，合计约 28.02 GB。临时传输压缩包均在验包解开后删除；迁入完成时观察剩余约 13.99 GB。当时正式平台为 R49-r1、健康正常，该次迁移未重启或发布生产服务。后续存储维护与当前正式版本见下方说明。</p>
 <p>13.99 GB 是原件迁入完成时的观察值；随后机器上其他任务写入期间，普通账号可用空间曾在约 2.01–4.69 GB 间波动。日常开发以 <code>df -h /</code> 的 Avail 为准，最新管理资料同步回执使用 <code>statvfs.f_bavail</code> 记录当时余量；上述迁入与同步阶段没有修改文件系统保留块或删除完整快照，随后另按用户授权实施最近两份恢复点的保留策略。</p>
@@ -79,7 +85,7 @@
 <p>早先的 R49 准备副本已完成 Linux 依赖安装、类型检查和构建；开发 API、前端及前端代理健康接口均返回 200。已核实 API 使用独立开发数据和隔离子环境；入口收到 SIGINT（终端 Ctrl+C 对应信号）后退出，两个开发端口均释放。</p>
 <p>随后对齐的 R49-r1 准备副本已实际通过类型检查、构建，以及新加入的受控 API 合约和合成组件 SSR 两项限定测试。最终目录也已实际通过 Claude/CC Switch 版本检查、默认命令映射、开发入口配置检查、API/网页/代理 200、fresh 账号状态、子环境与数据目录检查；SIGINT 退出 130，端口释放、自有活进程归零，生产双服务 PID 未变。最终运行直接启动与 npm 默认命令相同的 helper，未单独测试 npm 父进程信号转发；组件 SSR 也不代表浏览器现场验收。见<a href="../artifacts/migration-112/r49-r1-development-verification-public.json">构建与限定测试</a>和<a href="../artifacts/migration-112/development-final-public.json">最终目录运行回执</a>。开发服务在核验后已停止，按下方命令自行启动。</p>
 </section>
-<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">112 存储保留与日志（2026-10-18）</h2>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">112 存储保留与日志（2026-10-18）</h2>
 <p><strong>本轮清理末尾正式平台为 R51-r1，两份完整发布前恢复点关联 R51-r1 与 R50。</strong> 后续独立发布可能新增恢复点，小时策略会按完整状态与 <code>createdAt</code> 重新选择，具体版本以实时状态为准。活动开发目录仍沿用下节记录的 R49-r1 源码基线；生产更新不会自动覆盖开发源码。</p>
 <p>本轮主清理及后续残留清理均已完成，目标分配量分别为 151,821,131,776 字节与 5,923,528,704 字节，合计 157,744,660,480 字节；日志清理另完成 6,232,645,632 字节。上述按已删除目标分配量、旧日志实际块及 journal 降幅核算，累计 163,977,306,112 字节，约 164 GB（十进制）。完整项目原件、源本机目录、封存包和迁移桶均未改动。</p>
 <p>清理末次观测可用 167,967,576,064 字节，约 168 GB（2026-10-18 17:58，北京时间，<code>statvfs.f_bavail</code>）。这是会随其他任务写入变化的时点值，日常仍以 <code>df -h /</code> 的 Avail 和现场回执为准；分配量累计与最终可用空间分别留证。</p>
@@ -87,18 +93,18 @@
 <p>系统 journal 已设置容量上限 256 MiB、最长保留时间 7 天。容量先达到上限时可以更早回收，因此不保证留满 7 天；当前活日志保留，清理未读取业务日志正文。</p>
 <p>本轮清理末尾为支撑恢复链保留 R51-r1、R50、R49-r1 三个必要程序版本；后续独立发布可以新增程序版本。这是本轮的明确版本选择，未来每小时 timer 不自动清理 release 或 pre-* 备份，也不自动扩大删除范围。</p>
 <p>见<a href="../artifacts/migration-112/retention-backup-cleanup-public.json">主清理回执</a>、<a href="../artifacts/migration-112/retention-log-cleanup-public.json">日志清理回执</a>和<a href="../artifacts/migration-112/retention-maintenance-policy-public.json">原生保留策略安装回执</a>。本轮维护未修改或重启贾维斯业务服务。</p>
-<h3 id="section-2-1" tabindex="-1">独立发布后的保留维护收尾（18:05–18:09）</h3>
+<h3 id="section-3-1" tabindex="-1">独立发布后的保留维护收尾（18:05–18:09）</h3>
 <p>2026-10-18 10:05:48Z（北京时间 18:05:48），另一任务的独立 R52 发布已完成，current 为 R52、health 返回 200，平台/observer PID 为 4109137/4109144。PID 变化来自该独立发布；前述清理阶段 PID 保持的回执只证明其当时范围，本节不变更另一任务的研发、发布或用户验收结论。见<a href="../artifacts/migration-112/retention-publication-completed-public.json">独立发布完成回执</a>。</p>
 <p>新增完整恢复点后，现场曾有 3 份 snapshot payload 和 1 份 restore。既有原生保留 service 实际于 10:06:02.673Z 启动、10:07:40.696Z 完成，R52 与 R51-r1 两个恢复点的完整内容、清单及 SQLite 验证通过；两项目录全部删除，目标分配量 9,049,739,264 字节（逻辑文件量 9,049,494,508 字节），零 held，保留 payload 元数据未改。见<a href="../artifacts/migration-112/retention-followup-plan-public.json">后续保留计划</a>、<a href="../artifacts/migration-112/retention-followup-start-public.json">服务启动</a>和<a href="../artifacts/migration-112/retention-followup-cleanup-public.json">后续清理完成回执</a>，后者 SHA-256 为 <code>452138e5f3609bb725cf1fd32035bcd061db58a5f6fe96e68989a53f06850c3f</code>。每小时策略范围保持不变，不自动删除 release 或 pre-*。</p>
 <p><strong>10:09Z（北京时间 18:09）最终现场：</strong> snapshot payload 共 2 份，关联 R52 与 R51-r1，restore 为 0；四个程序目录包含独立发布新增的 R52。R52 为 primary、health ok，平台/observer 为 active，PID 4109137/4109144；语音 PID 2900037，journald PID 406。可用空间 167,996,870,656 字节，约 168 GB；<code>/var/log</code> 为 464,392,192 字节，约 0.46 GB。包含后续维护后，累计目标分配量及日志核算为 173,027,045,376 字节，约 173 GB（十进制），与最终可用空间分别留证，时点值仍会随并发写入变化。见<a href="../artifacts/migration-112/retention-final-public.json">最终回执</a>，SHA-256 为 <code>075f02929e24bb6dced6f6acd6aba0c533fbceb78c4a7c8a8d440b5d24a3a351</code>。</p>
 <p>建设项目环境资料已追加至修订 42，旧 notes、运行和验证命令、目标、副本、里程碑及状态逐项保持。决定 <code>16ca5700-433e-4fc7-8a74-a67aa6b3ccf8</code> 保留选定→实施两版；经验 <code>3d24fe50-1e5a-4a0e-876d-595a7ed04bb3</code> 仍为 inbox、<code>verified=false</code>，未发布 Skill。见<a href="../artifacts/migration-112/retention-platform-sync-public.json">平台资料同步回执</a>。这些是存储维护与资料留证结果，另一任务的研发和用户验收结论保持其原范围。</p>
 </section>
-<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">文件来源与开发基线</h2>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">文件来源与开发基线</h2>
 <p>本机原始整个项目树的保留位置为 <code>.migration-original/local</code>，其中原始源码、依赖、历史工作副本、资料和运行数据按原件保留，完整性以最终清单核验为准。</p>
 <p>Linux 活动开发目录采用已核验的生产源码基线，并叠加 112 开发入口。迁移准备期间生产从 R49 更新到 R49-r1，因此目标基线随之对齐；R49 原包、核验报告和原测试证据继续保留。R49-r1 导出时的生产指向为 <code>/opt/jarvis/releases/20261018-project-goals-r49-r1</code>，源码提交为 <code>03a1c8be794102b908479c4f9890d6bcc714c3f7</code>，清单 SHA-256 为 <code>c14367d54b54e5d1c7e8f643260bae8849d7dc6a3686bdc3d7fd124cef30ab15</code>。这些值证明导出来源，不代表工作目录拥有该提交的 Git 历史。</p>
 <p>活动 <code>docs</code> 以本机原件为底，保留基线中独有的公开文档；生成建设日志由建设记录工具更新。<code>RELEASE-README.md</code> 采用 R49-r1 版本。活动 <code>artifacts</code> 是真实目录，存放本次公开迁移报告；完整历史证据、配置、原型和 serverinfo 均在 <code>.migration-original/local</code> 中查阅，本次没有把它们链接到活动入口。旧文档历史证据链接缺少对应文件时，回到原件的 <code>docs</code> 打开同名文档，原相对目录结构完整保留；新建设证据复制为活动目录中的真实文件后再留证。来源清单记录上游发布载荷，活动目录另有文档与开发补丁，不能仅凭清单认定整个目录逐文件等同生产发布包。</p>
 </section>
-<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">连接并使用 AI 开发</h2>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">连接并使用 AI 开发</h2>
 <p>在当前电脑的 PowerShell 或 Windows Terminal 中：</p>
 <pre><code class="language-powershell">ssh 112
 </code></pre>
@@ -108,7 +114,7 @@ claude
 </code></pre>
 <p>Claude Code 会读取项目中的 <code>CLAUDE.md</code>，并按其要求遵循 <code>AGENTS.md</code> 和建设记录约定。<code>ccswitch</code> 可切换已配置的 Claude 通道。开发使用普通账号，不使用 <code>sudo claude</code> 或 <code>sudo npm</code>。</p>
 </section>
-<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">启动开发页面</h2>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">启动开发页面</h2>
 <p>在本机终端建立 SSH 转发并登录：</p>
 <pre><code class="language-powershell">ssh -L 45173:127.0.0.1:45173 112
 </code></pre>
@@ -127,7 +133,7 @@ npm run dev
 npm run build
 </code></pre>
 </section>
-<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">开发数据与保留文件</h2>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">开发数据与保留文件</h2>
 <p>开发数据固定使用 passwd 账号真实主目录下的独立目录：</p>
 <pre><code class="language-text">~/.local/share/jarvis-dev-112
 </code></pre>
@@ -138,13 +144,13 @@ npm run build
 <p>历史维护脚本、SSH 配置可能仍含 Windows 路径，不能据此认定在 112 自动可用；本轮不迁移项目目录之外的 SSH 私钥。需要运行某项维护操作时，先核对其目标机器、路径、权限和用途。</p>
 <p>语音、OCR、ASR 及相应 Linux Python 环境尚未专项验收，不能从前端和 API 健康通过推断这些功能已经可用。完整产品功能、生产发布和人工验收仍分别确认。</p>
 </section>
-<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">Git 与项目规则</h2>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">Git 与项目规则</h2>
 <p>普通 <code>npm run dev</code>、类型检查和构建不要求项目具有 <code>.git</code>。初次迁移来自发布包，当时的目录没有 Git 历史，迁移本身也不代表已经初始化 Git 或提交。其后，2026-10-18 14:26:12.906068Z（北京时间22:26:12.906068）R54同步已在上述常规目录导入真实Git对象与index，main为 <code>f8ac8a5648c16e4164dff6ced2d30f96024299b6</code>，3158个跟踪文件逐项核同且跟踪工作树干净；这不是仅执行 <code>git init</code>。773项更新、26件旧版本私备份，原337条账本完整前缀保留；原件、私有运行路径、依赖和未知未跟踪文件未删除。开发入口仅完成安全配置和43140/45173端口检查，未启动开发服务或操作正式服务。见<a href="../artifacts/workbench-r54/daily-development-sync.json">实际同步回执</a>。本段是新的Git与源码状态切面，上文R49-r1导出说明仍保留初次迁移出处；后续实际任务须重新核对当前HEAD和dirty。</p>
 <p>对仍无Git的历史发布包副本，不能把目录中的来源提交号当作已有对象；如需建立基线，应先确认原件、私密目录和运行数据已被忽略，只显式选择已核对的公开源码与所需文档，检查暂存区后再提交，不要直接 <code>git add .</code>。新的本地首次提交具有自己的提交号，不能冒认为上游提交。当前常规目录已有真实历史，不应为“补历史”重新造首次提交或用reset/clean/checkout覆盖活动文件。远端仓库、推送和外部凭据按后续明确授权处理。</p>
 <p>部分工厂验收脚本要求被验项目存在真实 <code>.git</code>；<code>scripts/package-capture-release.mjs</code> 还会读取选定提交和 Git 对象并核对跟踪文件。仅初始化一个空仓库不会补齐这些前置条件。运行该类维护或发布脚本前，先核对它的目标项目、提交对象、输入范围与权限。</p>
 <p>活动目录根部需同时保留 <code>CLAUDE.md</code> 和 <code>AGENTS.md</code>，并确保 <code>AGENTS.md</code> 引用的当前建设档案、建设日志可读。原件树里的同名历史文件用于留存，后续开发按活动根部的现行规则执行。</p>
 </section>
-<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">回执与后续事项</h2>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">回执与后续事项</h2>
 <ul>
 <li><a href="../artifacts/migration-112/final-migration-public.json">完整迁移结果</a>：文件数量、指纹、空间、源码出处与边界。</li>
 <li><a href="../artifacts/migration-112/snapshot-target-verification-public.json">全量目标核验</a>、<a href="../artifacts/migration-112/mapping-public.json">移动后路径映射</a>、<a href="../artifacts/migration-112/workspace-publish-public.json">最终目录交付</a>。</li>

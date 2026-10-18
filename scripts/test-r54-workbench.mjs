@@ -1,16 +1,16 @@
 import test,{before,after} from 'node:test';
 import assert from 'node:assert/strict';
 import {build} from 'esbuild';
-import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
-import {tmpdir} from 'node:os';
 import {pathToFileURL} from 'node:url';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 
 let dir,view,Page,stream;
 before(async()=>{
- dir=await mkdtemp(join(tmpdir(),'jarvis-r54-ui-'));
+ await mkdir(resolve('.r54-tools'),{recursive:true});
+ dir=await mkdtemp(resolve('.r54-tools/jarvis-r54-ui-'));
  const react=resolve('node_modules/react/index.js'),shim=join(dir,'hooks.mjs'),client=join(dir,'client.mjs');
  await writeFile(shim,`export * from ${JSON.stringify(react)};import R from ${JSON.stringify(react)};export default R;export const useState=v=>{const i=globalThis.__r54Cursor++;if(!(i in globalThis.__r54States))globalThis.__r54States[i]=typeof v==='function'?v():v;return [globalThis.__r54States[i],v=>{globalThis.__r54States[i]=typeof v==='function'?v(globalThis.__r54States[i]):v;}];};export const useRef=v=>({current:v});export const useEffect=()=>{};`);
  await writeFile(client,'export const v1Request=(...args)=>globalThis.__r54Request(...args);');

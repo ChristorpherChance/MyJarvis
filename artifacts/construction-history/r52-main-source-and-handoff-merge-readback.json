@@ -1,0 +1,123 @@
+{
+  "kind": "r52-source-and-platform-handoff-main-merge-readback",
+  "observedAt": "2026-10-18T12:31:50.857992+00:00",
+  "repository": "ChristorpherChance/MyJarvis",
+  "baseBefore": "13992d57447b5eb19fa8f7475f924e09a9571cda",
+  "baseAfterSourceMerge": "a6216bf688e11871f14e035e4705e31626029eaa",
+  "actualMergeOrder": [
+    2,
+    7
+  ],
+  "method": "GitHub normal merge commits with exact expected head matching; no force or squash",
+  "pullRequests": [
+    {
+      "baseRefName": "main",
+      "headRefName": "feat/unified-projects-r45",
+      "headRefOid": "3c382868fe9a13d6fefe412679b90c3b7c696a5a",
+      "isDraft": false,
+      "mergeCommit": {
+        "oid": "a6216bf688e11871f14e035e4705e31626029eaa"
+      },
+      "mergedAt": "2026-10-18T12:30:50Z",
+      "number": 7,
+      "state": "MERGED",
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/7"
+    },
+    {
+      "baseRefName": "feat/project-oversight-console",
+      "headRefName": "feat/cc-supervisor-r43",
+      "headRefOid": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+      "isDraft": true,
+      "mergeCommit": null,
+      "mergedAt": null,
+      "number": 6,
+      "state": "CLOSED",
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/6"
+    },
+    {
+      "baseRefName": "fix/action-effectiveness-audit",
+      "headRefName": "feat/project-oversight-console",
+      "headRefOid": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+      "isDraft": true,
+      "mergeCommit": null,
+      "mergedAt": null,
+      "number": 5,
+      "state": "CLOSED",
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/5"
+    },
+    {
+      "baseRefName": "fix/personal-settings-save",
+      "headRefName": "fix/action-effectiveness-audit",
+      "headRefOid": "d9d06c5c6a67b02906653d60f92997f5a1f05fd0",
+      "isDraft": true,
+      "mergeCommit": null,
+      "mergedAt": null,
+      "number": 4,
+      "state": "CLOSED",
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/4"
+    },
+    {
+      "baseRefName": "feat/factory-supervision-events",
+      "headRefName": "fix/personal-settings-save",
+      "headRefOid": "f13fa9211180b94b3515767a0f4dae5cddb9e96c",
+      "isDraft": true,
+      "mergeCommit": null,
+      "mergedAt": null,
+      "number": 3,
+      "state": "CLOSED",
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/3"
+    },
+    {
+      "baseRefName": "main",
+      "headRefName": "feat/factory-supervision-events",
+      "headRefOid": "75afd8c26e50871d9a9dc21a7a7c23c497942734",
+      "isDraft": false,
+      "mergeCommit": {
+        "oid": "882776d58ed22e7615f0adc920f232301cd0dd32"
+      },
+      "mergedAt": "2026-10-18T12:29:52Z",
+      "number": 2,
+      "state": "MERGED",
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/2"
+    }
+  ],
+  "allSixOriginalHeadsAreMainAncestors": true,
+  "stackedPRs3To6": "Their full commits are in main via PR7. GitHub retained OPEN state; retarget3 refused because no new commits. Root closed 3-6 as superseded, not separately merged.",
+  "integrationCommit": "3c382868fe9a13d6fefe412679b90c3b7c696a5a",
+  "integrationParents": [
+    "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+    "75afd8c26e50871d9a9dc21a7a7c23c497942734"
+  ],
+  "conflictResolution": "Eleven historical documentation/rules conflicts selected exact canonical 338 blobs; no ledger rows or generated log manually combined.",
+  "canonicalFilesExactAtMerge": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "docs/建设记录/events.jsonl",
+    "docs/贾维斯建设档案.md",
+    "docs/贾维斯建设档案.html",
+    "docs/贾维斯建设日志.md",
+    "docs/贾维斯建设日志.html",
+    "docs/软件工厂监督推进检查点.md",
+    "docs/软件工厂目标驱动验收与推进计划.md",
+    "docs/软件工厂目标驱动验收与推进计划.html",
+    "docs/软件工厂首项目交付计划.md",
+    "docs/软件工厂首项目交付计划.html",
+    "docs/贾维斯平台开发接手指南.md",
+    "docs/贾维斯平台开发接手指南.html"
+  ],
+  "applicationScriptsAndPackagesEqualDeployedR52Source": true,
+  "localIndependentReview": {
+    "sourceInputsUnchanged": 1752,
+    "canonicalChangesChecked": 294,
+    "sourceBlockingFindings": 0,
+    "newTestsOrBuildsPerformed": false
+  },
+  "githubChecks": "No status checks configured/reported on either PR; no submitted reviews or review threads. Prior saved R52 source/build/offline-driver and production health evidence retained; not claimed as new CI.",
+  "diffCheck": "Application and script diff check passed with cr-at-eol; initial unconfigured whole-doc check flagged historical CRLF as whitespace. Historical bytes were preserved.",
+  "productionRedeployed": false,
+  "formalRelease": "20261018-project-goals-r52",
+  "factoryAcceptance": "C5 blocked, C6 and whole 12+5/customer delivery unaccepted",
+  "tenMinuteFollowup": "PAUSED",
+  "remainingOpenPRsAtReadback": [],
+  "boundary": "This is the source-merge cut. A later documentation-only construction record may advance main without changing application source."
+}

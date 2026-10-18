@@ -1,0 +1,46 @@
+{
+  "id": "JARVIS-20261018-VERIFIED-PR-MERGES-AND-PLATFORM-HANDOFF-FOLLOWUP",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-18T12:35:11.637464Z",
+  "title": "R52源码和整平台接手文档已合入main，保留规范建设历史",
+  "objective": "按用户授权合并已经处理并核验的源码及文档分支，保留原作者、已有验收边界与建设历史；合并、正式上线和接手交付分开记。",
+  "changes": [
+    "用户明确授权处理好后合并。PR2于12:29:52Z普通merge到main（882776d58ed22e7615f0adc920f232301cd0dd32），PR7于12:30:50Z普通merge到main（a6216bf688e11871f14e035e4705e31626029eaa）。",
+    "独立工作副本从已核验R52 e0a919dd整合规范文档75afd8c，产生双亲提交3c382868；11份文档冲突选择原规范338完整blob，未手改事件账本或生成日志。",
+    "PR3至6完整原提交均为main祖先；GitHub没有自动标为合并，改基PR3因无新提交被拒，故关闭四份已被PR7包含的旧PR。四件为superseded CLOSED，不冒各自MERGED。",
+    "建设338之后，整平台R3接手快照已真实交付112，104文件9922649B逐项核对；原开发目录源码、生产数据与服务未被这次文档交付覆盖。"
+  ],
+  "decisions": [
+    "保留普通merge及完整作者提交，合并PR7到main时一次包含设置、操作生效、监管台与主管闭环的既有依赖，避免重复制造发布包或重跑现场。",
+    "规范338为建设历史主线，旧CC分支文档仍可从Git原提交回溯；两条独立账本不拼尾、不改旧hash。本次只统一源码来源，不冒完整工厂目标验收。"
+  ],
+  "facts": [
+    "建设338固定cut与全部旧历史原样保留；330—337存储维护、迁移与AI环境块不可覆盖。",
+    "最新既有事实：R3接手快照在338后已真实交到112，104文件／9922649B，guide H3d601…与338账本head绑定；只读快照交付不代表活动源码更新或服务发布。",
+    "平台当前仍R52、Factory item33／B16C5blocked；C6、完整12+5工厂、客户12和正常全自动未签。十分钟跟进保持PAUSED。"
+  ],
+  "verification": [
+    "Root实读GitHub PR2/7为MERGED及实际merge commit；PR3至6实读CLOSED，所有六份原head均为main祖先，主分支树与已独审整合树完全相同。",
+    "非作者LOCAL核对1752项应用、脚本和包输入与已上线R52 e0a919dd完全一致，294项规范变更与75afd8c完全一致，22份保护文件精确；新确定P0/P1为0。",
+    "GitHub未配置或报告PR检查，无已提交review或review thread。使用既有R52限定测试、构建、源码独审和独立上线健康证据；本轮未重跑测试、构建、模型或部署。",
+    "初次全量diff whitespace检查把历史CRLF识别为尾空白；保历史字节，改为cr-at-eol下检查源码/脚本通过，不据此重写旧公开证据。"
+  ],
+  "pending": [
+    "跨轮原件可信合并、dirty/index与二进制无损运输、f9原生产run绑定仍待在112独立源码副本完善。",
+    "“等待本人”主标题与既有授权下技术继续的语义仍需修复。"
+  ],
+  "lessons": [],
+  "evidence": [
+    "artifacts/construction-history/r52-main-source-and-handoff-merge-readback.json",
+    "artifacts/construction-history/r52-main-merge-independent-local-review.json",
+    "artifacts/handoff/20261018-r52/112-delivery-receipt.json"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "not-applicable",
+    "acceptance": "pending"
+  }
+}

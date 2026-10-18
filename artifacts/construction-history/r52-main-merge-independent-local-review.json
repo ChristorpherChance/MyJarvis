@@ -1,0 +1,305 @@
+{
+  "kind": "r52-main-merge-independent-local-review",
+  "reviewType": "Non-author LOCAL Git object and saved public readback review; no Git network/API/tests/build/models/deployment.",
+  "findings": {
+    "P0": 0,
+    "P1": 0,
+    "sourceMergeBlockingFindings": 0,
+    "result": "passed within this exact source-merge cut"
+  },
+  "rootMergeReadback": {
+    "path": "artifacts/construction-history/r52-main-source-and-handoff-merge-readback.json",
+    "bytes": 5050,
+    "sha256": "a20b9cb5639ef16a8f6e3b8ac3833735659ef78d27e5cbe95b1c83a43b87c4c0"
+  },
+  "mainCut": {
+    "cachedOriginMainObserved": "a6216bf688e11871f14e035e4705e31626029eaa",
+    "reviewedSourceMerge": "a6216bf688e11871f14e035e4705e31626029eaa",
+    "tree": "50987ff641ce049783da26373a13f28e8ca67700",
+    "integrationCommit": "3c382868fe9a13d6fefe412679b90c3b7c696a5a",
+    "integrationTree": "50987ff641ce049783da26373a13f28e8ca67700",
+    "exactTreeEqual": true,
+    "normalMergeParents": [
+      "882776d58ed22e7615f0adc920f232301cd0dd32",
+      "3c382868fe9a13d6fefe412679b90c3b7c696a5a"
+    ],
+    "integrationParents": [
+      "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+      "75afd8c26e50871d9a9dc21a7a7c23c497942734"
+    ],
+    "PR2MergeCommit": "882776d58ed22e7615f0adc920f232301cd0dd32"
+  },
+  "originalHeadAncestry": [
+    {
+      "originalPR": 2,
+      "head": "75afd8c26e50871d9a9dc21a7a7c23c497942734",
+      "ancestorOfMergedMain": true
+    },
+    {
+      "originalPR": 3,
+      "head": "f13fa9211180b94b3515767a0f4dae5cddb9e96c",
+      "ancestorOfMergedMain": true
+    },
+    {
+      "originalPR": 4,
+      "head": "d9d06c5c6a67b02906653d60f92997f5a1f05fd0",
+      "ancestorOfMergedMain": true
+    },
+    {
+      "originalPR": 5,
+      "head": "5eb623b7b5fdb0db9e99f8e0bb33cc0a85162b86",
+      "ancestorOfMergedMain": true
+    },
+    {
+      "originalPR": 6,
+      "head": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+      "ancestorOfMergedMain": true
+    },
+    {
+      "originalPR": 7,
+      "head": "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+      "ancestorOfMergedMain": true
+    }
+  ],
+  "pullRequestStateBoundary": {
+    "source": "Root saved actual GitHub readback, not a new independent API request.",
+    "PR2": "MERGED",
+    "PR7": "MERGED",
+    "PR3to6": "CLOSED as superseded; all original commits are ancestors of main, but these four PRs are not represented as separately MERGED.",
+    "noClaimOfGitHubAutomaticMergeClosure": true
+  },
+  "sourceIntegrity": {
+    "referenceSource": "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+    "referenceAPP": "0ae044826235fd7f7908db786dc2b186fdebf984",
+    "appsPackagesScriptsAndRootPackageInputs": 1752,
+    "mismatches": 0,
+    "allOtherCandidatePathsOutsideCanonicalDeltaSame": true,
+    "newTechnicalDocsPreserved": [
+      {
+        "path": "docs/R48激活Sidecar交付边界.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/R49r1简洁首屏与判断边界.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/R49主管经验与首屏候选.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/R50监管输入字节预算.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/R51r1真实Pi入口容量修复.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/R51完整Prompt容量候选.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/R52主管完整载荷方案与交付.md",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/现行项目目标与监管要求-R48.html",
+        "sameAsSource": true
+      },
+      {
+        "path": "docs/现行项目目标与监管要求-R48.md",
+        "sameAsSource": true
+      }
+    ],
+    "newBuildOrTestsRequiredOrPerformedForThisDocumentMerge": false
+  },
+  "canonicalIntegrity": {
+    "reference": "75afd8c26e50871d9a9dc21a7a7c23c497942734",
+    "canonicalDeltaPaths": 294,
+    "mismatches": 0,
+    "indexConflictResolutionScope": "Exact final Git blobs independently checked; no ledger rows or generated text combined by this review.",
+    "protectedFiles": [
+      {
+        "path": "AGENTS.md",
+        "canonicalBlob": "52d6d6334f8b23c9f0eaf23535194d6b7fd9c0fd",
+        "mainBlob": "52d6d6334f8b23c9f0eaf23535194d6b7fd9c0fd",
+        "equal": true
+      },
+      {
+        "path": "CLAUDE.md",
+        "canonicalBlob": "074d9d81c6b0e2fcf833e560cf9e69f776fb3d90",
+        "mainBlob": "074d9d81c6b0e2fcf833e560cf9e69f776fb3d90",
+        "equal": true
+      },
+      {
+        "path": "docs/建设记录/events.jsonl",
+        "canonicalBlob": "92d02f0e1531fc8f7052e4d4e4282992d6b15f95",
+        "mainBlob": "92d02f0e1531fc8f7052e4d4e4282992d6b15f95",
+        "equal": true
+      },
+      {
+        "path": "docs/贾维斯建设档案.md",
+        "canonicalBlob": "d629f2bddd794f704d1e108432dc448c419b937b",
+        "mainBlob": "d629f2bddd794f704d1e108432dc448c419b937b",
+        "equal": true
+      },
+      {
+        "path": "docs/贾维斯建设档案.html",
+        "canonicalBlob": "8536ce8a2e1b6712d74f44cf6deab77ed7c2e26e",
+        "mainBlob": "8536ce8a2e1b6712d74f44cf6deab77ed7c2e26e",
+        "equal": true
+      },
+      {
+        "path": "docs/贾维斯建设日志.md",
+        "canonicalBlob": "2f100ce913835bf402c078788f080066037787ba",
+        "mainBlob": "2f100ce913835bf402c078788f080066037787ba",
+        "equal": true
+      },
+      {
+        "path": "docs/贾维斯建设日志.html",
+        "canonicalBlob": "b738fbea30aad39d682c466e0ed96b1cbfa51d7c",
+        "mainBlob": "b738fbea30aad39d682c466e0ed96b1cbfa51d7c",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂监督推进检查点.md",
+        "canonicalBlob": "79f10ea45e992490b4db94d0de6cc26152559445",
+        "mainBlob": "79f10ea45e992490b4db94d0de6cc26152559445",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂目标驱动验收与推进计划.md",
+        "canonicalBlob": "ed251d0ab06986b027c770fb132cafb64b784f41",
+        "mainBlob": "ed251d0ab06986b027c770fb132cafb64b784f41",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂目标驱动验收与推进计划.html",
+        "canonicalBlob": "5a95ebc8510fd45204d9a0bdeeac20e331ccd60e",
+        "mainBlob": "5a95ebc8510fd45204d9a0bdeeac20e331ccd60e",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂首项目交付计划.md",
+        "canonicalBlob": "072b9a3c6c0c1431b7f814d49c12d8cd7d686333",
+        "mainBlob": "072b9a3c6c0c1431b7f814d49c12d8cd7d686333",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂首项目交付计划.html",
+        "canonicalBlob": "d1eedf06ba8e312e2210bdd7675a20422ae8ec58",
+        "mainBlob": "d1eedf06ba8e312e2210bdd7675a20422ae8ec58",
+        "equal": true
+      },
+      {
+        "path": "docs/贾维斯平台开发接手指南.md",
+        "canonicalBlob": "5a7ab8b6dd037f19585f54314f44ae2f44566302",
+        "mainBlob": "5a7ab8b6dd037f19585f54314f44ae2f44566302",
+        "equal": true
+      },
+      {
+        "path": "docs/贾维斯平台开发接手指南.html",
+        "canonicalBlob": "5663dec27ef80398a607abc873952713ee346be8",
+        "mainBlob": "5663dec27ef80398a607abc873952713ee346be8",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂无人值守交付总纲.md",
+        "canonicalBlob": "685f23a3afa82be6f99d780043a6d4f71f1a8669",
+        "mainBlob": "685f23a3afa82be6f99d780043a6d4f71f1a8669",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂无人值守交付总纲.html",
+        "canonicalBlob": "109537f092a956450ca4b033c1a11654ca6d1d9c",
+        "mainBlob": "109537f092a956450ca4b033c1a11654ca6d1d9c",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂端到端目标与验收标准.md",
+        "canonicalBlob": "2183c0b06c70489f807191fb4696f7f534633866",
+        "mainBlob": "2183c0b06c70489f807191fb4696f7f534633866",
+        "equal": true
+      },
+      {
+        "path": "docs/软件工厂端到端目标与验收标准.html",
+        "canonicalBlob": "e126933c401ed2fda8dcf6b62b93081026b4e052",
+        "mainBlob": "e126933c401ed2fda8dcf6b62b93081026b4e052",
+        "equal": true
+      },
+      {
+        "path": "docs/112开发迁移使用说明.md",
+        "canonicalBlob": "af42dc782d1ce79f54f59e7807d19bc1eb894ff8",
+        "mainBlob": "af42dc782d1ce79f54f59e7807d19bc1eb894ff8",
+        "equal": true
+      },
+      {
+        "path": "docs/112开发迁移使用说明.html",
+        "canonicalBlob": "b7f6cee0832408c5de4f80f7dc96fd3ccbcc26ab",
+        "mainBlob": "b7f6cee0832408c5de4f80f7dc96fd3ccbcc26ab",
+        "equal": true
+      },
+      {
+        "path": "docs/112终端AI开发环境.md",
+        "canonicalBlob": "cbcff566643083505d921bb99ae057fa1a2a4cd4",
+        "mainBlob": "cbcff566643083505d921bb99ae057fa1a2a4cd4",
+        "equal": true
+      },
+      {
+        "path": "docs/112终端AI开发环境.html",
+        "canonicalBlob": "fb2c88afe461cf457726041c96d8c583ffab7b40",
+        "mainBlob": "fb2c88afe461cf457726041c96d8c583ffab7b40",
+        "equal": true
+      }
+    ],
+    "ledger": {
+      "count": 338,
+      "head": "f0d37edc091119ca5f503ed51496b39979315401f0fedd2bada91dcca88bc915",
+      "lastId": "JARVIS-20261018-R51R1-R52-REAL-SUPERVISION-AND-PLATFORM-HANDOFF",
+      "bytes": 1724669,
+      "sha256": "048ea4c930678d14d2bd4849384e9b95dad96712465ed63cfd9cf2356a8b3fdd"
+    },
+    "candidate308DidNotReplaceCanonical338": true,
+    "originalAuthorshipAndBothCommitHistoriesReachable": true
+  },
+  "savedAcceptanceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-goal11-independent-application-delta-source-review.json",
+      "bytes": 16295,
+      "sha256": "7558e6edc33aa5d409312a8603c35a6922852d677014750d8a1f18705694496a"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-received-platform-package-independent-verification.json",
+      "bytes": 15694,
+      "sha256": "f10b070781a57f84c612016e1d5d997f53d77eb02ea6bb4d6b849b712f24875b"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-newpurpose-independent-health-2e6c1aef-bdd6-44f2-8458-84245d13944a.json",
+      "bytes": 2059,
+      "sha256": "006295aab7d29ed23fe616e0877c2193bf1c8f000ff86d9305aad46937b621d3"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-factory-goal10-saved-originals-and-two-decisions-limited-review.json",
+      "bytes": 15719,
+      "sha256": "9e7b069bada5c8ad904b4d011ea3d0bb68da70e7ce96d7344efcb9e05762d6c4"
+    }
+  ],
+  "practicalBoundary": [
+    "This confirms main preserves the already reviewed/deployed R52 application and canonical338 documents; no new production release occurred.",
+    "Factory C5, C6, whole12+5/customer delivery, automatic brief truth-source synchronization and cross-round lossless originals remain unaccepted; these do not establish a source merge conflict.",
+    "Later documentation-only construction339 is outside this fixed merge cut and is not re-audited or claimed complete here.",
+    "Historical CRLF bytes are preserved through exact blobs; no line-ending normalization performed."
+  ],
+  "actions": {
+    "GitReadsOnly": true,
+    "network": 0,
+    "API": 0,
+    "models": 0,
+    "testsOrBuilds": 0,
+    "sourceOrDocsEdits": 0,
+    "GitCommitsOrPushes": 0,
+    "publicReportWritten": true,
+    "sameBytesMirroredToRequestedIntegrationPath": true
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "kind": "record311-release-and-failed-candidate-public",
+  "asOf": "2026-10-18T04:23:58.074Z",
+  "baseR48": {
+    "build": "20261018-project-goals-r48",
+    "fivePhasesExit0": true,
+    "fullSnapshot": {
+      "bytes": 4439714294,
+      "files": 64,
+      "directories": 59,
+      "sqliteDatabases": 10,
+      "isolatedRestorePassed": true,
+      "productionDataRestored": false
+    },
+    "limitedBrowser": "12+5 and current/future stages visible; historical74 no longer current denominator. Owner-question button absent/not exercised; no fullflow acceptance."
+  },
+  "r48r2": {
+    "stage": {
+      "exitCode": 0,
+      "wallSeconds": 44.4113974571228
+    },
+    "install": {
+      "exitCode": 0,
+      "wallSeconds": 5.6435651779174805
+    },
+    "inspect": {
+      "exitCode": 0,
+      "wallSeconds": 1.5390024185180664
+    },
+    "activate": {
+      "exitCode": 1,
+      "wallSeconds": 323.28958773612976,
+      "phaseVerified": false,
+      "requiresReconciliation": true,
+      "code": "ACTIVATION_FAILED_CODE_CONFIG_ROLLED_BACK_DATA_PRESERVED",
+      "CLOSED": true
+    },
+    "candidateHealthInvoked": false,
+    "candidateSuccessfullyLive": false,
+    "originalFailureCause": null,
+    "failedSnapshotDeclared": {
+      "bytes": 4449810934,
+      "files": 64,
+      "directories": 59,
+      "sqliteDatabases": 10,
+      "snapshotReferencePresent": true,
+      "isolatedRestoreCompletionIndependentlyVerified": false
+    }
+  },
+  "lastVerifiedOldR48Health": {
+    "at": "2026-10-18T04:08:03.535868+00:00",
+    "readOnly": true,
+    "platformService": "active",
+    "observerService": "active",
+    "healthStatus": "ok",
+    "release": "20261018-project-goals-r48",
+    "dataRestored": false
+  },
+  "sameQualifiedAPPAndArchivePreserved": true,
+  "oldFailedActivateOnceReused": false,
+  "rollbackDoesNotTurnOriginalFailureGreen": true,
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48/112-stage.json",
+      "sha256": "60b69e1e83f3f69b3e92cfe5754462ca005c5b5d634e7d189df846db74bda8b5",
+      "bytes": 1566
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48/112-install.json",
+      "sha256": "9925dfacd174ad5b2e2d48d9b8c80689e16600cef1fc21e51b4cb09eccbee585",
+      "bytes": 1552
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48/112-inspect.json",
+      "sha256": "e39e8905cc29554e220cfd284ee4dd7ae502d0d7b467f720055a6e327086285d",
+      "bytes": 1593
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48/112-activate.json",
+      "sha256": "9189cd10464e030e5060b0e2ed0052d9ff80fdeff1fb8283ab302a63f2787166",
+      "bytes": 2931
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48/112-health.json",
+      "sha256": "692389d6be7ea1b1ce99a571b196cefbc3d6fd1c68e3870d8d72914f9ea6ec7a",
+      "bytes": 1626
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-live-browser-limited-readback.json",
+      "sha256": "800600fa3ce3dbaf3302a51bc888de6334bde72223d0b5896c523102d77eca85",
+      "bytes": 769
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48-r2/112-stage.json",
+      "sha256": "f4735fdf0211b8eb8510b2908185c28323a85f386027b4fe9aca88689923d91b",
+      "bytes": 1567
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48-r2/112-install.json",
+      "sha256": "70c9c3b7ab3f9d2e3131d518491243c078a64af507a67318de0ba921310d811c",
+      "bytes": 1557
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48-r2/112-inspect.json",
+      "sha256": "5a5059abe06db1521c4b7752b08e56fb4090a9a13d3cfe75b67ba6ec755aeec1",
+      "bytes": 1596
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r48-r2/112-activate.json",
+      "bytes": 1400,
+      "sha256": "9feac6a2f2f7c777398f85186bb0802a4b3a9172447d77e499e0277f5810e74f"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-rollback-health-readonly.json",
+      "bytes": 931,
+      "sha256": "a884d7af6f1994b3b31699822a4511fa6317c9fbd315ab050cee48b5e4f3b75e"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-112-activation-incident-be41929e-e83c-498d-862d-08c38097ab4b-readback.json",
+      "bytes": 8908,
+      "sha256": "3f3c8e7a60b2214291d2d8391365b12ad9dbaeb9b2962e6aaf95504d704156b6"
+    }
+  ]
+}

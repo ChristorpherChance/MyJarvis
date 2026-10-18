@@ -1,0 +1,71 @@
+{
+  "kind": "record311-r2-three-audits-public",
+  "asOf": "2026-10-18T04:23:58.074Z",
+  "sourceCommit": "6d8504fab6c727550ba409425c8ef0bffc68a738",
+  "runtimeBuild": "20261018-project-goals-r48-r2",
+  "sourceAudit": {
+    "P0": 0,
+    "P1": 0,
+    "diagnosticsOnly": true,
+    "strictSixKeysExperienceReviewTerminalGatesRetained": true,
+    "rawFinalThoughtProviderErrorNotSaved": true,
+    "providerRootCauseProved": false
+  },
+  "privacyWrapperAudit": {
+    "oneNewCommitFiles": 14,
+    "noNewConfirmedPrivacyOrWrapperP1InReviewedScope": true,
+    "wrapperLiteralWholeInverse": true,
+    "originalManagedToolUnchanged": true
+  },
+  "artifactAudit": {
+    "platformPayload": 2241,
+    "trackedGitBlobs": 1847,
+    "allAppSrc": 306,
+    "existingAcceptedNodeFiles": 5,
+    "nodeFiveSourceInputsSameAsBase": true,
+    "oldAssetsPreserved": [
+      104,
+      98,
+      92,
+      67,
+      54,
+      7
+    ],
+    "allTwelveSignedIndexedOriginalsPhysicallyChecked": true,
+    "extraPatchAndPackagerLog": "Received private originals by signed path/Hsize; not claimed Git tracked."
+  },
+  "savedValidation": {
+    "targetedFixtures": "2/2",
+    "runtimeFinalDelta": "1/1; overlaps one runtime case from targeted pair, not a third independent test",
+    "typesBuildLogs": "Exact saved APItypes/APIbuild/Webbuild outputs read and Hsize verified; no independent shell exit receipt or Root rerun claimed",
+    "testScope": "Stub Pi/fixture executor and local Store/SQLite runtime; no real provider, signed-agent HTTP/TCP or browser acceptance"
+  },
+  "sourceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-model-diagnostics-independent-source-review.json",
+      "sha256": "a1638a9f55f7cada0e0500ef3a1a3ea2abfe5e276150acb0fc45e958fdc5240b",
+      "bytes": 12062
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-one-commit-privacy-and-wrapper-independent-review.json",
+      "sha256": "927842ea5038d8b334869b2f3e1026809acc1a6766016aa565aa9366682ca243",
+      "bytes": 10577
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-received-platform-package-independent-verification.json",
+      "sha256": "6c7b7d9759d2da67bc1d3ded628ce67f23b111278294b8c008706c45c66301e2",
+      "bytes": 10048
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-extra-originals-received.json",
+      "sha256": "199a87161dc982679909282b9bd9455276efef2151df0c80bb0db971e66f156b",
+      "bytes": 792
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-r2-three-package-transfer.json",
+      "sha256": "287648762ec229d29821e157c777d68169f2024641ef06d30a804c6cfd6abb89",
+      "bytes": 1377
+    }
+  ],
+  "compiledReproductionOrFullProductAcceptance": false
+}

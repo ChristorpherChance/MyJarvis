@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="由贾维斯监督101软件工厂，真实完成全部阶段、Agent迭代及原始需求到文档和软件实际使用的自动交付。">
-  <meta name="jarvis-source-sha256" content="f1c6d07b984b67b5c9d936380a84eeab53352c6789e13b9f270c2968ae6740ed">
+  <meta name="description" content="按用户确认新基线核实成果，先走通112文字监管101CC，再逐项完成工厂能力与正常流程全自动。">
+  <meta name="jarvis-source-sha256" content="997a9adda9b2c492cacfefaecd146da4b78a79dbb6d2df7ca9fa4235f4fb9f35">
   <title>软件工厂无人值守交付总纲</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -30,7 +30,7 @@
 <body>
   <a class="skip" href="#main-content">跳至正文</a>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">执行总纲 R22.1 · 费用只记录</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">执行总纲 R48.1 · 12项能力与5项监管</span></div>
     <div class="tools">
       <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
       <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E4%BA%A4%E4%BB%98%E6%80%BB%E7%BA%B2.md">Markdown 源文档</a>
@@ -42,53 +42,145 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 14 章 · Ctrl / ⌘ + K 查找</div>
-    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1. 完成的含义及授权边界</a>
-<a class="toc-link level-2" href="#section-2" data-parent="2">2. 已有基础、差距及身份边界</a>
-<a class="toc-link level-2" href="#section-3" data-parent="3">3. 费用全记录与技术运行边界</a>
-<a class="toc-link level-2" href="#section-4" data-parent="4">4. 编号化必需目标与验收</a>
-<a class="toc-link level-3" href="#section-4-1" data-parent="4">FA-01 · 最新工厂打包部署基线</a>
-<a class="toc-link level-3" href="#section-4-2" data-parent="4">FA-02 · 完整输入需求设计与上下文</a>
-<a class="toc-link level-3" href="#section-4-3" data-parent="4">FA-03 · Pi与能力版本真实生效</a>
-<a class="toc-link level-3" href="#section-4-4" data-parent="4">FA-04 · 真实父子任务归账与恢复</a>
-<a class="toc-link level-3" href="#section-4-5" data-parent="4">FA-05 · 真实生产独立验收与修复</a>
-<a class="toc-link level-3" href="#section-4-6" data-parent="4">FA-06 · Agent独立优化与版本提升</a>
-<a class="toc-link level-3" href="#section-4-7" data-parent="4">FA-07 · 贾维斯持久自动监督工作流</a>
-<a class="toc-link level-3" href="#section-4-8" data-parent="4">FA-08 · 完整成套交付与实际使用</a>
-<a class="toc-link level-3" href="#section-4-9" data-parent="4">FA-09 · 完整全自动及稳定复用证明</a>
-<a class="toc-link level-2" href="#section-5" data-parent="5">5. FA-01—09 的依赖与推进</a>
-<a class="toc-link level-2" href="#section-6" data-parent="6">6. 自动质量门及阶段产出</a>
-<a class="toc-link level-2" href="#section-7" data-parent="7">7. 连续监督的正常循环与例外</a>
-<a class="toc-link level-2" href="#section-8" data-parent="8">8. 完整交付包及客户实际使用</a>
-<a class="toc-link level-2" href="#section-9" data-parent="9">9. 真实性、从零验证与完成率</a>
-<a class="toc-link level-2" href="#section-10" data-parent="10">10. Agent 持续改进与技能复用</a>
-<a class="toc-link level-2" href="#section-11" data-parent="11">11. 全过程记录与可复核证据</a>
-<a class="toc-link level-3" href="#section-11-1" data-parent="11">11.1 自主择优与决策台账</a>
-<a class="toc-link level-2" href="#section-12" data-parent="12">12. 后续项目复用模板</a>
-<a class="toc-link level-2" href="#section-13" data-parent="13">13. 目标集、旧需求覆盖及版本规则</a>
-<a class="toc-link level-2" href="#section-14" data-parent="14">14. 本轮实施与监督状态</a>
-<a class="toc-link level-3" href="#section-14-1" data-parent="14">14.1 首任务中止、对账与恢复边界</a>
-<a class="toc-link level-3" href="#section-14-2" data-parent="14">14.2 尚待完成的真实验证与能力</a></nav>
-    <div class="sidebar-foot">更新于 2026-10-11<br>需求与设计稿 · 可离线浏览</div>
+    <div class="search-status" id="search-status" aria-live="polite">共 18 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">当前：12＋5现行目标已保存，112正式文字监管101CC已运行（建设310，2026-10-18）</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">现行工厂能力与监管验收</a>
+<a class="toc-link level-3" href="#section-2-1" data-parent="2">F01 · 工厂自身完整真实可用</a>
+<a class="toc-link level-3" href="#section-2-2" data-parent="2">F02 · 客户原始资料开始</a>
+<a class="toc-link level-3" href="#section-2-3" data-parent="2">F03 · 资料真正整理加工</a>
+<a class="toc-link level-3" href="#section-2-4" data-parent="2">F04 · 完整专业CRD PRD RTM HLD七LLD</a>
+<a class="toc-link level-3" href="#section-2-5" data-parent="2">F05 · 专业可复用模板</a>
+<a class="toc-link level-3" href="#section-2-6" data-parent="2">F06 · 完整高保真与实际软件设计一致</a>
+<a class="toc-link level-3" href="#section-2-7" data-parent="2">F07 · 真开发与自测/CI/审评合并</a>
+<a class="toc-link level-3" href="#section-2-8" data-parent="2">F08 · 独立测试缺陷修复闭环</a>
+<a class="toc-link level-3" href="#section-2-9" data-parent="2">F09 · 完整文档软件交付并目标实际使用</a>
+<a class="toc-link level-3" href="#section-2-10" data-parent="2">F10 · 升级恢复后续变更</a>
+<a class="toc-link level-3" href="#section-2-11" data-parent="2">F11 · Pi/AI/Agent子Agent真实能力</a>
+<a class="toc-link level-3" href="#section-2-12" data-parent="2">F12 · Agent持续改进且正常流程最终全自动</a>
+<a class="toc-link level-3" href="#section-2-13" data-parent="2">S01 · 112贾维斯文字监管101CC</a>
+<a class="toc-link level-3" href="#section-2-14" data-parent="2">S02 · 看回应决策继续/调整直到达标</a>
+<a class="toc-link level-3" href="#section-2-15" data-parent="2">S03 · 统一简明入口/brief/详情/主动变化推送</a>
+<a class="toc-link level-3" href="#section-2-16" data-parent="2">S04 · 异常决策纠错经验</a>
+<a class="toc-link level-3" href="#section-2-17" data-parent="2">S05 · 后续项目复用/权限自主+有效暂停</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">当前与后续阶段</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">当前优先</a>
+<a class="toc-link level-3" href="#section-3-2" data-parent="3">后续依赖</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">以下为R22.1及后续旧总纲历史全文</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">1. 完成的含义及授权边界</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">2. 已有基础、差距及身份边界</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">3. 费用全记录与技术运行边界</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">4. 编号化必需目标与验收</a>
+<a class="toc-link level-3" href="#section-8-1" data-parent="8">FA-01 · 最新工厂打包部署基线</a>
+<a class="toc-link level-3" href="#section-8-2" data-parent="8">FA-02 · 完整输入需求设计与上下文</a>
+<a class="toc-link level-3" href="#section-8-3" data-parent="8">FA-03 · Pi与能力版本真实生效</a>
+<a class="toc-link level-3" href="#section-8-4" data-parent="8">FA-04 · 真实父子任务归账与恢复</a>
+<a class="toc-link level-3" href="#section-8-5" data-parent="8">FA-05 · 真实生产独立验收与修复</a>
+<a class="toc-link level-3" href="#section-8-6" data-parent="8">FA-06 · Agent独立优化与版本提升</a>
+<a class="toc-link level-3" href="#section-8-7" data-parent="8">FA-07 · 贾维斯持久自动监督工作流</a>
+<a class="toc-link level-3" href="#section-8-8" data-parent="8">FA-08 · 完整成套交付与实际使用</a>
+<a class="toc-link level-3" href="#section-8-9" data-parent="8">FA-09 · 完整全自动及稳定复用证明</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">5. FA-01—09 的依赖与推进</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">6. 自动质量门及阶段产出</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">7. 连续监督的正常循环与例外</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">8. 完整交付包及客户实际使用</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">9. 真实性、从零验证与完成率</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">10. Agent 持续改进与技能复用</a>
+<a class="toc-link level-2" href="#section-15" data-parent="15">11. 全过程记录与可复核证据</a>
+<a class="toc-link level-3" href="#section-15-1" data-parent="15">11.1 自主择优与决策台账</a>
+<a class="toc-link level-2" href="#section-16" data-parent="16">12. 后续项目复用模板</a>
+<a class="toc-link level-2" href="#section-17" data-parent="17">13. 目标集、旧需求覆盖及版本规则</a>
+<a class="toc-link level-2" href="#section-18" data-parent="18">14. 本轮实施与监督状态</a>
+<a class="toc-link level-3" href="#section-18-1" data-parent="18">14.1 首任务中止、对账与恢复边界</a>
+<a class="toc-link level-3" href="#section-18-2" data-parent="18">14.2 尚待完成的真实验证与能力</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
   <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
   <main class="layout" id="main-content" aria-labelledby="document-title">
     <div class="document">
       <header class="hero">
-        <p class="eyebrow">唯一执行依据 / 项目级监督 / 全过程复用</p>
+        <p class="eyebrow">现行目标 / 真实交付 / 可见监管</p>
         <h1 id="document-title">软件工厂无人值守交付总纲</h1>
-        <p class="subtitle">由贾维斯监督101软件工厂，真实完成全部阶段、Agent迭代及原始需求到文档和软件实际使用的自动交付。</p>
-        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-11</span><span>与 Markdown 同源生成</span></div>
-        <div class="stats"><div class="stat"><strong>74项目标</strong><span>稳定编号 · 真实证据</span></div><div class="stat"><strong>9个工作包</strong><span>依赖推进 · 独立验收</span></div><div class="stat"><strong>3类归账</strong><span>工厂 · 产品 · 能力</span></div></div>
+        <p class="subtitle">按用户确认新基线核实成果，先走通112文字监管101CC，再逐项完成工厂能力与正常流程全自动。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>12项能力</strong><span>工厂现行目标</span></div><div class="stat"><strong>5项要求</strong><span>监管现行目标</span></div><div class="stat"><strong>按阶段核验</strong><span>不以技术子项数推算进度</span></div></div>
       </header>
       <article class="article">
-        <div class="intro"><p><strong>最终目标：让贾维斯持续监督 101 上的软件工厂完善自身，并由软件工厂从客户原始需求开始，自动形成完整合格的产品文档、各页高保真原型、真实代码及软件，经过独立测试、问题修复、发布和目标环境实际使用；各阶段 Agent 与子 Agent 持续评估改进。</strong></p>
-<p>本轮用户已经授权：整合全部目标，改造贾维斯，启动项目级无人值守监督并持续推进到完成，全过程记录，形成可复用的方法。本文件是本轮统一执行及验收依据，机器目标集为 <a href="../artifacts/software-factory/autonomy-r22/objectives.json">objectives.json</a>。旧文档作为设计出处和历史证据保留；有旧“永远人工”“本期仅预留发布”的表述时，以本纲新增的自动质量策略和实际交付使用目标为准，原有真实性、权限、事务和质量要求继续有效。</p>
-<p><strong>当前状态：目标实施中；第14节最新已记录观察为监督阻塞、0/74独立验收。</strong> 专项监督曾启动，首任务因技术中止而结束；心跳保护、受限新任务恢复及决策改选修复已完成本地验证，R22-7发布与实际恢复尚未执行。本版截至发布前，不预填后续发布、恢复启动或产品通过；其后以实时平台、新运行回执及建设记录为准。历史全局监督关闭不是本轮新授权的限制；专项监督不得同时复活旧任务或启动无关项目。</p>
+        <div class="intro"><!-- record310-current-block-begin -->
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
-        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1. 完成的含义及授权边界</h2>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">当前：12＋5现行目标已保存，112正式文字监管101CC已运行（建设310，2026-10-18）</h2>
+<p><strong>现在做什么：</strong> 核实已有成果，修好报告兼容与简洁界面，再消费已有报告、作出主管判断、交101修复并回收回归。工厂及监管完整能力尚未全体验收。</p>
+<p><strong>真实进展：</strong> 12项工厂能力＋5项监管要求已写入软件工厂项目47，新计划1替代旧计划108；现有监督项15running。112建设项目正式派发已由101接收，截至02:48:41Z同一session/task/run仍running、尚无结果，不是维护调用，也不是完成证明。</p>
+<p><strong>尚未做到：</strong> R19构建及包核已过，但全文链接P1独审未过，因此未部署。原页面已见新12＋5项目目标，旧主说明、监督goal和74当前显示仍待代码修复；新包上线、主管消费既有报告、产品修复与复验均未在本cut完成。112仍R46r1。</p>
+<p><strong>现行目标：</strong> 旧74退出现行目标与完成分母，只保历史、原标准和原证据；不会清零已有成果或自动转为新目标通过。<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/cc-supervisor-r43/r48-current-baseline-record310.txt">确认基线与验收结果</a> · <a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/cc-supervisor-r43/r48-goal-transition-record310-final-safe-summary.json">实际保存及正式派发范围</a>。</p>
+<p>当前六步：核实成果和目标 → 修兼容及简洁界面 → 处理既有报告和主管判断 → 101实际修复 → 收回回归及反馈 → 验证本人可见文字闭环。后续六阶段：原始资料及专业模板 → 文档设计及高保真一致性 → 真开发和独立测试 → 交付使用及升级恢复 → Agent真实能力与持续优化 → 成熟正常流程全自动及后续复用。后续均待逐项核验。</p>
+<p>语义版本追溯、多语言品牌终端和工程质量贯穿；实现、验证、上线、现场验收分别记录。费用只留账、不设金额消费cap，当前run量费未知不填0；十分钟跟进仍PAUSED。原三CAS发布器尾验因精确活跃run日志时间前进失败，独立只读对账确认写入，原失败保留且未重放。</p>
+<!-- record310-current-block-end --></section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">现行工厂能力与监管验收</h2>
+<h3 id="section-2-1" tabindex="-1">F01 · 工厂自身完整真实可用</h3>
+<p>安装部署后的工厂各适用功能与操作真实生效，状态、数据和执行结果可核对；页面能看、服务健康或局部通过不能替代完整可用。</p>
+<h3 id="section-2-2" tabindex="-1">F02 · 客户原始资料开始</h3>
+<p>客户可直接提供原始资料；原件、目录和来源保留，长文、表格、图片、附件及扫描疑点有完整处理或明确缺项，重要歧义得到澄清，不要求先提供专业设计。</p>
+<h3 id="section-2-3" tabindex="-1">F03 · 资料真正整理加工</h3>
+<p>资料的解析、整理、编辑、翻译、脱敏和批量处理按适用范围真实执行，原件与处理稿对应，失败、重试、定稿及下游引用可核验。</p>
+<h3 id="section-2-4" tabindex="-1">F04 · 完整专业CRD PRD RTM HLD七LLD</h3>
+<p>形成内容完整、专业且相互一致的CRD、PRD、RTM、HLD及七册LLD；可编辑、确认、保存版本，空标题或只挂链接不算完成。</p>
+<h3 id="section-2-5" tabindex="-1">F05 · 专业可复用模板</h3>
+<p>具备专业默认模板及项目模板整套保存与复用、同类模板选择和换源；用户模板优先，支持新增类别并经人工修改确认。</p>
+<h3 id="section-2-6" tabindex="-1">F06 · 完整高保真与实际软件设计一致</h3>
+<p>所有适用页面、子页、角色、状态和终端有独立高保真及完整交互；实际软件逐项与批准需求和设计对照，关键流程、数据与权限行为真实一致。</p>
+<h3 id="section-2-7" tabindex="-1">F07 · 真开发与自测/CI/审评合并</h3>
+<p>真实代码与仓库提交承接设计；开发自测、前后端联调、真实CI、独立审评及合并各有对应产物和结果，模拟结果与合成提交不算完成。</p>
+<h3 id="section-2-8" tabindex="-1">F08 · 独立测试缺陷修复闭环</h3>
+<p>独立测试覆盖适用正常、边界和异常；问题形成真实修复安排、代码修复、新构建和回归结果。跳过、未运行、环境缺项和失败分开，不能只看断言通过数。</p>
+<h3 id="section-2-9" tabindex="-1">F09 · 完整文档软件交付并目标实际使用</h3>
+<p>交付同版完整文档、源码及可运行软件包和说明，真实下载和完整性可核对；在已约定且获授权的目标环境安装，由目标角色完成真实业务使用。</p>
+<h3 id="section-2-10" tabindex="-1">F10 · 升级恢复后续变更</h3>
+<p>验证安装升级、数据及配置恢复、回退、故障处理和后续需求变更；影响到的文档、设计、软件和验收同步更新，保留旧版本和原失败。</p>
+<h3 id="section-2-11" tabindex="-1">F11 · Pi/AI/Agent子Agent真实能力</h3>
+<p>Pi/AI路由及各阶段Agent、子Agent真正执行职责，实际加载对应提示词、模板、工具和技能；委派、返回、取消、恢复、身份和用量可核对，登记名称不算能力。</p>
+<h3 id="section-2-12" tabindex="-1">F12 · Agent持续改进且正常流程最终全自动</h3>
+<p>能力改进与全自动分别验收：真实问题形成改进候选，经独立对照评价、观察和必要回退；成熟后在完整输入和有效授权下，从原始资料到文档、软件交付使用的正常流程无需逐关人工点击。</p>
+<h3 id="section-2-13" tabindex="-1">S01 · 112贾维斯文字监管101CC</h3>
+<p>本人在112贾维斯输入目标或文字指令，101CC真实接收执行并返回与同一项目、任务、产物相符的回应；全过程在统一入口可见。</p>
+<h3 id="section-2-14" tabindex="-1">S02 · 看回应决策继续/调整直到达标</h3>
+<p>贾维斯消费真实报告，区分结果、问题和未知，说明继续或调整的决定并安排101执行；收回修复及复验，达到目标才判完成，真实阻塞需明确说明。</p>
+<h3 id="section-2-15" tabindex="-1">S03 · 统一简明入口/brief/详情/主动变化推送</h3>
+<p>同一项目入口简明展示当前目标、实际状态、阻塞和下一步；完成有简报，按需展开证据与历史。有实质变化主动推送，无变化安静，不以轮询次数和Token推算进度。</p>
+<h3 id="section-2-16" tabindex="-1">S04 · 异常决策纠错经验</h3>
+<p>异常、真实选项、判断依据、处理和结果可复查；本人可更正事实或目标偏好，记录影响和后续处理。经验可核验、补条件/反例、停用/替代，并能说明后续采用或不采用原因。</p>
+<h3 id="section-2-17" tabindex="-1">S05 · 后续项目复用/权限自主+有效暂停</h3>
+<p>监管和经验可用于后续项目；在目标及现有权限内自主继续有界执行，无需每轮人工授权。暂停、停止、接管和目标修订真实生效，未知权限或真实阻塞明确处理，不绕历史或清账继续。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">当前与后续阶段</h2>
+<h3 id="section-3-1" tabindex="-1">当前优先</h3>
+<ul>
+<li>核实已有成果并更新现行目标：新基线、当前状态和证据范围一致可见；未验证项明确待验。 当前：12＋5目标和新计划已实际保存；旧74界面仍待代码修复，阶段未完成</li>
+<li>完成监管兼容和简洁界面上线：当前版本能处理真实无提问报告；首屏清楚展示结果、阻塞和下一步，操作真实生效。 当前：R19构建/包核已过，但链接P1独审拒部署；正式平台窄修任务已claim，结果未回收</li>
+<li>消费既有测试报告并作出主管判断：同一报告已被明确接纳或拒绝，判断有依据，问题、未验和修复安排可见。 当前：待执行；既有报告尚未完成主管消费与新判断</li>
+<li>交101实施实际产品修复：101收到并执行明确修复任务，返回对应源码、验证和产物；仅planned不算已修复。 当前：待安排并执行；未冒新产品修复已发生</li>
+<li>回收回归并反馈结果：原问题得到回归结论，未解决事项和下一步明确，完成简报可展开证据。 当前：待实际修复后回收回归</li>
+<li>走通本人可见的文字监管闭环：本人能简洁看到同一任务链、真实回应和实际处理；只签本次范围，不冒全部工厂能力已验收。 当前：正式文字派发及101claim已观察；回应、判断、修复、复验和现场全闭环待核验</li>
+</ul>
+<h3 id="section-3-2" tabindex="-1">后续依赖</h3>
+<ul>
+<li>原始资料、整理与专业模板：原件完整、加工与确认可追溯，模板套件可实际选择和复用。 当前：后续逐项核验和补齐，未宣告完成</li>
+<li>完整文档、设计及高保真一致性：完整专业文档和所有适用原型可用；设计和实现的差异有处理结论。 当前：后续逐项核验和补齐，未宣告完成</li>
+<li>真实开发质量与独立测试：代码和构建真实，适用质量门通过，独立回归与遗留事项可核对。 当前：后续逐项核验和补齐，未宣告完成</li>
+<li>完整交付、目标使用与生命周期：目标角色真实使用，升级恢复和后续变更有验证，交付对象和版本一致。 当前：后续逐项核验和补齐，未宣告完成</li>
+<li>真实Agent能力及持续优化：实际Agent/子Agent职责及版本有证据，改进有对照结果、观察和回退条件。 当前：后续逐项核验和补齐，未宣告完成</li>
+<li>成熟正常流程全自动及后续复用：完整输入及有效授权下，从客户原始资料到目标交付使用自动走通；例外可见、可接管，后续项目能复用。 当前：后续逐项核验和补齐，未宣告完成</li>
+</ul>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">以下为R22.1及后续旧总纲历史全文</h2>
+<p>下方旧74编号、工作包和“唯一执行依据”等现在时均为当时版本原文，已经本次12＋5基线取代；保留其出处、证据与失败，不作为当前目标或当前完成分母。历史全文不改写。</p>
+<h1>软件工厂无人值守交付总纲</h1>
+<!-- jarvis-doc-meta {"version":"执行总纲 R22.1 · 费用只记录","date":"2026-10-11","eyebrow":"唯一执行依据 / 项目级监督 / 全过程复用","subtitle":"由贾维斯监督101软件工厂，真实完成全部阶段、Agent迭代及原始需求到文档和软件实际使用的自动交付。","stats":[{"value":"74项目标","label":"稳定编号 · 真实证据"},{"value":"9个工作包","label":"依赖推进 · 独立验收"},{"value":"3类归账","label":"工厂 · 产品 · 能力"}]} --><p><strong>最终目标：让贾维斯持续监督 101 上的软件工厂完善自身，并由软件工厂从客户原始需求开始，自动形成完整合格的产品文档、各页高保真原型、真实代码及软件，经过独立测试、问题修复、发布和目标环境实际使用；各阶段 Agent 与子 Agent 持续评估改进。</strong></p>
+<p>本轮用户已经授权：整合全部目标，改造贾维斯，启动项目级无人值守监督并持续推进到完成，全过程记录，形成可复用的方法。本文件是本轮统一执行及验收依据，机器目标集为 <a href="../artifacts/software-factory/autonomy-r22/objectives.json">objectives.json</a>。旧文档作为设计出处和历史证据保留；有旧“永远人工”“本期仅预留发布”的表述时，以本纲新增的自动质量策略和实际交付使用目标为准，原有真实性、权限、事务和质量要求继续有效。</p>
+<p><strong>当前状态：目标实施中；第14节最新已记录观察为监督阻塞、0/74独立验收。</strong> 专项监督曾启动，首任务因技术中止而结束；心跳保护、受限新任务恢复及决策改选修复已完成本地验证，R22-7发布与实际恢复尚未执行。本版截至发布前，不预填后续发布、恢复启动或产品通过；其后以实时平台、新运行回执及建设记录为准。历史全局监督关闭不是本轮新授权的限制；专项监督不得同时复活旧任务或启动无关项目。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">1. 完成的含义及授权边界</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -117,7 +209,7 @@
 <p>授权涵盖本项目的必要开发、隔离测试、问题修复和按既有策略部署运行监管。依然要落实明确副本、实际执行器、完整费用/Token归账及技术单次Token/上下文/轮次/重试/时限边界。管理者主动暂停或取消必须生效。未知客户凭据、无关服务器操作、多租户 SaaS、完整 OIDC/LDAP/RBAC 及原生 App 不因本纲自动扩入；当前最简鉴权、项目隔离和沙箱安全等必需部分不能因此推迟。</p>
 <p>目标总完成只有一种判据：全部本期必需条款有当前有效、真实、合格、独立的证据，无阻断缺陷，并已在约定目标环境实际使用。任务结束、模型声明、报告定稿、可下载 ZIP 和健康检查均不是这一结论。</p>
 </section>
-<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2. 已有基础、差距及身份边界</h2>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">2. 已有基础、差距及身份边界</h2>
 <p>正式贾维斯在 112；101 为贾维斯冷备，同时运行独立软件工厂开发节点。联想使用独立开发目录。软件工厂源码项目与其内部生产的客户项目分别验收、归账。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -150,7 +242,7 @@
 <p>R21 审阅绑定的是当时 <code>main / 266104923b7f49b259dc8a7b827d599c5220ad16</code>；仅所审公开文件首尾哈希稳定，没有证明运行进程加载同版。R20 <code>e375…</code> 的部署快照、R19 模型和旧 <code>4bf…/fecbf…</code> 测试都保留历史范围。实施前重新核对最新内容与实际环境，不能把旧测试署为当前通过，历史 NO-GO 不自动改绿。</p>
 <p>本纲承接全部 <strong>17 项 Agent、10 项自动流程、12 项交付完整性发现</strong>；编号对应关系保存在目标集。三份远端报告范围重叠，不相加为全仓阅读/验收数量。当前模拟路径、资料截断/OCR、占位原型、提示词只记版本、七关外人工和逻辑备份等差距均在下面编号目标中有出口。</p>
 </section>
-<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3. 费用全记录与技术运行边界</h2>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">3. 费用全记录与技术运行边界</h2>
 <p>用户本轮已明确：<strong>费用只记录，不设金额限额，也不设项目累计Token消费额度</strong>。原累计10/30USD、每任务1USD等建议已被此决定替换，不能继续作为阻止正常开发的条件。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -180,9 +272,9 @@
 <p>未知价格或金额只标为未知，<strong>不单独阻止正常开发、评审、返工或推进</strong>；价格补全后按实际证据对账。三类用途分别统计并保留来源，归账不是金额审批或消费封顶。</p>
 <p>技术运行保护继续生效：单次模型输出/上下文限制、并发和写入范围、任务时限、轮次/重试、无进展识别、暂停/取消及晚到零写。provider自身额度、限流、不可用及必要权限/环境缺失依实际原因恢复或安全阻塞；不得把技术限制误写成总费用/累计Token消费上限。</p>
 </section>
-<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4. 编号化必需目标与验收</h2>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">4. 编号化必需目标与验收</h2>
 <p>以下 74 项均为必需目标。每项实现任务至少附：目标版本、依赖、输入/候选身份、执行副本、实际工具、三类费用归账、停止条件与独立验证方式。编号稳定；范围调整追加新版本和采用理由，不重用编号，不删失败来提高比例。表内所有验收均是所需真实结果，<strong>尚未取得证据的项目保持未验证</strong>。</p>
-<h3 id="section-4-1" tabindex="-1">FA-01 · 最新工厂打包部署基线</h3>
+<h3 id="section-8-1" tabindex="-1">FA-01 · 最新工厂打包部署基线</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -241,7 +333,7 @@
 <td>工厂/监管</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-2" tabindex="-1">FA-02 · 完整输入需求设计与上下文</h3>
+<h3 id="section-8-2" tabindex="-1">FA-02 · 完整输入需求设计与上下文</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -318,7 +410,7 @@
 <td>工厂/监管</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-3" tabindex="-1">FA-03 · Pi与能力版本真实生效</h3>
+<h3 id="section-8-3" tabindex="-1">FA-03 · Pi与能力版本真实生效</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -371,7 +463,7 @@
 <td>工厂/监管</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-4" tabindex="-1">FA-04 · 真实父子任务归账与恢复</h3>
+<h3 id="section-8-4" tabindex="-1">FA-04 · 真实父子任务归账与恢复</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -424,7 +516,7 @@
 <td>工厂/监管</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-5" tabindex="-1">FA-05 · 真实生产独立验收与修复</h3>
+<h3 id="section-8-5" tabindex="-1">FA-05 · 真实生产独立验收与修复</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -513,7 +605,7 @@
 <td>工厂/监管</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-6" tabindex="-1">FA-06 · Agent独立优化与版本提升</h3>
+<h3 id="section-8-6" tabindex="-1">FA-06 · Agent独立优化与版本提升</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -560,7 +652,7 @@
 <td>能力改进</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-7" tabindex="-1">FA-07 · 贾维斯持久自动监督工作流</h3>
+<h3 id="section-8-7" tabindex="-1">FA-07 · 贾维斯持久自动监督工作流</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -625,7 +717,7 @@
 <td>工厂/监管</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-8" tabindex="-1">FA-08 · 完整成套交付与实际使用</h3>
+<h3 id="section-8-8" tabindex="-1">FA-08 · 完整成套交付与实际使用</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -678,7 +770,7 @@
 <td>客户产品</td>
 </tr>
 </tbody></table></div>
-<h3 id="section-4-9" tabindex="-1">FA-09 · 完整全自动及稳定复用证明</h3>
+<h3 id="section-8-9" tabindex="-1">FA-09 · 完整全自动及稳定复用证明</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -726,7 +818,7 @@
 </tr>
 </tbody></table></div>
 </section>
-<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5. FA-01—09 的依赖与推进</h2>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">5. FA-01—09 的依赖与推进</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -805,7 +897,7 @@
 <p>贾维斯专项监督在自身运行契约、执行器与边界就绪后即可启动，管理全部未完成目标；不必等 FA-07 所有产品能力完成才启动监督。起初可驱动有限真实源码任务和独立验收，逐步接通工厂内完整流程。<strong>监督已启动和客户产品已全自动交付分别记录。</strong></p>
 <p>第一批执行优先：固定当前候选与独立完整包/运行基线；建立完整条款分母；修真实性门禁，再补真实生产。Agent 定义/路由与父子执行可按就绪合同同步实施，后续汇入 FA-05。不在保护现有数据之前贸然启动原 Compose 固定端口。</p>
 </section>
-<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6. 自动质量门及阶段产出</h2>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">6. 自动质量门及阶段产出</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -845,7 +937,7 @@
 <p>规则、责任、策略版本、引用证据和每次通过/拒绝决定可查询。独立 AI 可辅助语义评阅；文件字节、代码构建、运行及数据行为必须由真实工具取得。七关以外的资料/设计册定稿、补丁、计划建议、缺陷关单、版本交接及 AT-MANUAL 也要改造成真实可自动动作；不能冒用人、直接写库通过或仅切换 mode。</p>
 <p>非 UI 条款由相应后台/数据/运维设计与测试承接，不能强行配空页面。未跑/跳过/未知/N/A与通过分开；N/A须具体理由，必需未执行不能从分母删除。P0/P1、虚假证据和必需能力未实现/未验不得豁免。非阻断中低遗留有逐项影响、采用决定及后续版本，不靠降级来绕标准。</p>
 </section>
-<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7. 连续监督的正常循环与例外</h2>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">7. 连续监督的正常循环与例外</h2>
 <p>每轮按<strong>读取实际目标/候选 → 找就绪工作 → 派有界真实任务 → 收签名/真实产物及用量 → 独立核验 → 更新条款证据 → 有问题有限修复复验 → 自动安排下一步</strong>运行。任务成功退出先进入待验；项目只有全部出口合格才完成。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -893,7 +985,7 @@
 </tbody></table></div>
 <p>项目级专项监督只派本工作流绑定的新任务；不复活历史已取消任务，不把全局开关关闭解释成不能专项执行，也不误开无关项目。阶段正常过关不再逐项问人；范围、权限和技术运行边界变化依据已有授权及有效配置处理。故障注入和试验在独立环境，不能为补证据破坏业务环境。</p>
 </section>
-<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8. 完整交付包及客户实际使用</h2>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">8. 完整交付包及客户实际使用</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -934,18 +1026,18 @@
 <p>各约定 md/html/docx/pdf 格式核对文本、表格、图示、链接、字体、语言及分页；存在导出接口不等于这些已经通过。客户包、报告/决定引用 JSON、证据包、逻辑备份与可恢复备份分别管理。恢复需一致快照及实际对象/全部适用关系和依赖，只有对象键不能证明离线恢复。</p>
 <p>没有客户目标时可先完成可复现包及独立安装，但最终实际使用目标仍未通过，不能永远以此替代。客户商业签收如有约定保留真实表达；机器技术验收不假称客户签字，亦不额外强制所有项目等待商业签字。</p>
 </section>
-<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9. 真实性、从零验证与完成率</h2>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">9. 真实性、从零验证与完成率</h2>
 <p>测试同时包括：软件工厂最新完整候选从清洁环境安装；客户新资料从起点经历所有阶段直到实际使用。旧服务冒烟或测试目录全跑完不替代全部当前条款验收。需求/设计/原型允许明确模拟演示数据；真实后端、模型、开发、测试和交付不许由模拟结果签收。</p>
 <p>必须验证真实正例和拒收反例，包括错项目/错版本、模拟标记丢失、零用例/必测未跑、伪 CI、陈旧/重复/晚到回执、审计失败、取消复活及重复副作用。检查持久业务状态/决定，不只 HTTP 错误。至少代表性多页面项目应经历一次实际失败、实质修复、新构建/批次和独立复验。</p>
 <p>条款分母来自当前完整冻结范围。本期必需条款 100%有承接与真实合格结果；历史RTM/UI比例和证据按原版本保留。关键项100%、单页一般项≥95%、严重偏差0不能掩盖必需页面或业务缺失。活动量、Token和执行器自报不是完成率。</p>
 <p>先取得单阶段真实正反证据，再验证能力候选/回滚、代表性贯通、正常无逐关点击、异常/变更及多输入/环境的24/72小时稳定观察。次数、性能/费用/时间阈值按基线和配置实测，不预填绿色，不无必要反复重跑收费模型。</p>
 </section>
-<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10. Agent 持续改进与技能复用</h2>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">10. Agent 持续改进与技能复用</h2>
 <p>项目总控、阶段负责人及按需专业子 Agent 各有不可变定义；运行实例绑定实际输入/版本/模型、工具、父子任务、输出及用量。子 Agent 数量取决于专业/并发/独立复核收益，不无限递归。</p>
 <p>改进闭环为：真实错误/低效 → 分类归因 → 有假设的隔离候选 → 独立版本评估集与未见集 → 同条件稳定版对照及跨阶段回归 → 匹配范围观察 → 达阈值自动提升 → 退化回滚 → 经验证经验技能。项目修好与能力优化各有结果，修改提示词不证明总体更好。</p>
 <p>定义版本要真的注入执行器并在回执中核对正文/技能/路由/模板哈希；只存注册 ID 不合格。在途固定，提升/回滚影响后续任务。产出方不能自行降质量门、删失败、改答案或扩权限。质量与真实优先，保持同等质量后再比较速度/费用；小样本只声明本范围。</p>
 </section>
-<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">11. 全过程记录与可复核证据</h2>
+<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">11. 全过程记录与可复核证据</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>
@@ -980,7 +1072,7 @@
 </tbody></table></div>
 <p>建设记录使用 <code>scripts/construction-records.mjs</code> 追加并生成同源 MD/HTML；不手改事件账本或生成日志。项目资料通过已有版本保护接口同步，保留旧证据。私有原始执行日志与公开建设元数据分开，凭据、Cookie、私密环境、聊天原文和录音不进入公开记录。</p>
 <p>记录状态区分实施、验证、上线、产品/现场验收；通信接管通过、目标台账或模型输出不证明产品完成。无进展轮询不重复补日志；没有新改动不为日志重跑模型、测试或部署。</p>
-<h3 id="section-11-1" tabindex="-1">11.1 自主择优与决策台账</h3>
+<h3 id="section-15-1" tabindex="-1">11.1 自主择优与决策台账</h3>
 <p>用户新增规则：AI遇到实际问题或可选方案时，在已授权项目范围内自主选择当前最合适的方案，并保存当时情境和回退依据。普通实现选项不再停下来等待人工选择。优先满足硬需求、真实质量证据、权限与安全边界，再比较可逆影响、兼容性、长期维护及实际速度/费用；费用只记录，不作为消费限额。</p>
 <p>每个有意义的决定形成独立、可引用的记录，至少包含：</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
@@ -1031,7 +1123,7 @@
 <p>源码工作任务将公开、脱敏的决定追加到工作副本 <code>docs/jarvis-decisions.md</code>；平台决策台账与建设记录分别承接真实记录及其版本。普通实现选择自动处理；业务需求真正冲突、缺少无法推导的客户输入、越出授权或存在未解决副作用时，记录具体例外和恢复条件，不能靠自选方案取消验收要求。私密资料、凭据和完整思考过程不进入文档或公开台账。</p>
 <p>此规则适用于后续项目的监督复用，是本轮新增运行规范；74个已冻结目标及其验收条款保持不变。运行规则的实现、上线及验证在第14节单独记录。</p>
 </section>
-<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">12. 后续项目复用模板</h2>
+<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">12. 后续项目复用模板</h2>
 <p>复用的是目标/契约/调度/工具/已验证技能，不是旧项目的客户资料、凭据、账单或通过状态。新项目自动建立以下配置，重要业务歧义才具体澄清：</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
@@ -1079,7 +1171,7 @@
 </tbody></table></div>
 <p>同一项目目标变更追加新版本并计算影响；无依赖部分可保留验证，有影响部分重新验收。复制项目先做就绪检查及代表性真实验收，不复制完成率/绿色结果。不可沿用其他客户私料来证明新项目达标。</p>
 </section>
-<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">13. 目标集、旧需求覆盖及版本规则</h2>
+<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">13. 目标集、旧需求覆盖及版本规则</h2>
 <p><a href="../artifacts/software-factory/autonomy-r22/objectives.json">机器目标集</a> 提供 <code>schemaVersion:1</code>、<code>projectKey</code>、<code>version</code>、<code>workPackages[]</code>、<code>objectives[]</code>。每目标含稳定 <code>id/title/acceptance[]/dependsOn[]/workPackage/scope</code>；scope 与三类归账同名。目标集只表示义务及依赖，<strong>没有模拟通过或预填产品状态</strong>。</p>
 <p>目标/政策改变产生新版本及内容指纹，已有任务继续引用其冻结版；新增目标不复用旧编号。已发布的目标集是平台任务拆分及验收的结构化输入，最终意思以本纲正文和该版目标内容共同确定；JSON或文档单独改动须同源更新，不悄悄削减验收。</p>
 <p>下面逐项保留 R21 当时公开 PRD 的全部103个REQ及15个BR索引；每项完整规则及当前详细设计子条款仍须执行前核对，映射不是产品已实现证明。旧人工永久出口按本纲成熟自动策略替换；REQ-208 空分母/95%旧口径不作为本期“无遗漏”完成依据；REQ-712实际交付适配纳入新增目标；REQ-707/803的当前最简安全必需，完整OIDC/RBAC等扩展没有自动扩大。</p>
@@ -1721,7 +1813,7 @@
 </tbody></table></div>
 <p>原PRD来源：101 <code>doc/product-design/PRD.md</code>，SHA <code>d27cf88cc769e2fecbd7417a7d5ab62379aeb0406342b0392317fafabd6b2dc7</code>；公开只读捕获保存在 <a href="../artifacts/software-factory/goals-r21/delivery-source-readout.json">delivery-source-readout.json</a>。旧材料不因本纲整合而覆盖，后续最新源代码及运行状态由真实记录更新。</p>
 </section>
-<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">14. 本轮实施与监督状态</h2>
+<section class="doc-section" data-section="18"><h2 id="section-18" tabindex="-1">14. 本轮实施与监督状态</h2>
 <p>以下是2026年10月11日本轮证据读回时的状态。实施、部署、监督启动、阶段通过和客户使用分别记录；本节更新不改变已冻结的74个目标和验收条款。</p>
 <p>下表保留明确观察时点：正式平台已于北京时间13:54:48激活R22-6，总纲引用于13:56:30只读核对；项目13:53:25读回为阻塞。R22-7修复的末次API重编记录于14:13:47，本版尚未记录其发布或真实恢复。13:43及13:46“任务运行中”和13:50的R22-5决策台账读回是历史快照，不能推断当前任务仍在运行。后续状态、恢复任务、用量和验收以实时平台及建设记录为准。</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
@@ -1811,13 +1903,13 @@
 <p>首次派发观察时间为2026年10月11日13:43:28（北京时间）。任务ID为 <code>30d37bfa-6bf5-4ca7-8167-89a5df5be091</code>，运行ID为 <code>111ade66794ad6a5dc7de7318aceb4838449934b</code>；当时2条运行日志、74个目标独立验收通过数为0，FA02—09仍待依赖。任务运行、产生修改、固定验证、独立评阅和工作包通过将分别追加实际证据，不能以本次启动直接签收目标。</p>
 <p>13:46:30后续观察仍为FA-01第1次开发运行中，已取得200条日志元数据且强模型进程仍在，独立验收通过数仍为0/74、用量仍待任务终结回执；日志条数不能推算完成率。<a href="../artifacts/software-factory/autonomy-r22/observation-work-progress-a.json">运行观察</a>。首启动已写入建设记录 <code>R22-PROJECT-AUTONOMY-FIRST-LAUNCH-20261011</code>，保留原任务、费用未知与未验收范围。<a href="../artifacts/software-factory/autonomy-r22/construction-first-launch.json">记录输入</a></p>
 <p>13:50:52的3条真实决定分别记录配置格式对账、准确工作副本根目录授权、用户费用只记录策略；两条实施选择来源为AI，费用策略来源为用户。此次台账写入/读回没有发起服务器操作或模型调用，也没有接受任何产品目标。源码资料、台账implemented状态和独立产品验收之间仍保留证据边界，不能把保存决定解释为全自动决策执行已完成。</p>
-<h3 id="section-14-1" tabindex="-1">14.1 首任务中止、对账与恢复边界</h3>
+<h3 id="section-18-1" tabindex="-1">14.1 首任务中止、对账与恢复边界</h3>
 <p>中止发生于13:50:46，签名结果于13:50:51到达中央；实际停止代码为 <code>HEARTBEAT_FAILED</code>，没有中央stop请求。与发布时点重叠不单独证明因果。13:55诊断读回确认101日志及结果已确认，待对账运行、未确认回执和待送日志均为0；项目仍因执行中止保持阻塞，不能把通信已对账当成产品完成或任务已恢复。</p>
 <p>诊断中，101节点检查点的 <code>sessionIdPresent=true</code>，中央终结结果的 <code>sessionIdPresent=false</code>。这表示节点曾保存会话标识而中央结果没有回传该标识，不能推断没有原生会话；也没有证据证明该会话可安全恢复。当前拟用新任务及新尝试继续已有目标，不使用 <code>--resume</code>，不声称已完成原生会话续跑。</p>
 <p>心跳修复的边界是：仅在中央已授予且仍有效的租约内，对明确的短暂连接故障最多6次退避；以真实到期时间和本地单调时钟控制剩余权限。失败的请求不能延长租约，不能因重试继续持有已失效权限。明确的授权拒绝、暂停、取消、租约到期或重试耗尽须停止。心跳/租约的范围内本地测试已通过；修复发布和现场恢复尚待各自证据，不能用模拟租约或本地受控进程代替生产结果。</p>
 <p>原任务、日志指纹、工作副本产物及不完整用量继续保存；恢复不能删除失败或把旧任务费用归零。本轮新任务恢复仅适用于worker因已核实 <code>HEARTBEAT_FAILED</code> 中止、且项目为执行对账阻塞：须匹配可信签名终结回执及root维护的短期对账凭据，确认旧进程已结束、无活动写者及未送结果，再核对当前目标、独立工作副本、执行模板和版本。恢复决定及新尝试引用旧任务、旧运行和对账证据，保留重试上限；未知副作用先对账。用户主动暂停/取消、授权拒绝或撤销、目标/权限改变，以及不能解释的中止不得借该接口自动复活。其他停止原因、独立评审及固定验证的恢复未由本轮接口自动支持。恢复专项在本机通过，生产root文件所有权检查尚未现场执行；实际恢复结果另存任务/运行证据，接口通过不代表已调用，也不代表CLI原生session已经续做。</p>
 <p>平台资料同步已记录当时blocked及0/74目标验收，经验只作为候选、未发布Skill；未改变项目目标/代码仓库副本或全局监督。<a href="../artifacts/software-factory/autonomy-r22/construction-platform-sync-r22.json">同步记录</a></p>
-<h3 id="section-14-2" tabindex="-1">14.2 尚待完成的真实验证与能力</h3>
+<h3 id="section-18-2" tabindex="-1">14.2 尚待完成的真实验证与能力</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
 <thead>
 <tr>

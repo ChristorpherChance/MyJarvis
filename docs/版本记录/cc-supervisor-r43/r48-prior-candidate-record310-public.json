@@ -1,0 +1,41 @@
+{
+  "kind": "r48-prior-R19-candidate-record310-public-summary",
+  "originalTerminal": {
+    "path": "artifacts/cc-supervisor-r43/r46-round19-terminal-native-observation.json",
+    "sha256": "6112e797e48ac48d1e658f28b2eb29febc2923d15764f3d40d48be8cd028a64b",
+    "bytes": 3495
+  },
+  "originalPackageVerification": {
+    "path": "artifacts/cc-supervisor-r43/r46-round19-received-dual-package-verification.json",
+    "sha256": "1a2ba8f27872001b6881f6e31d0ebdfc2d36c3c41c596edc30179a660ab60b5b",
+    "bytes": 6612
+  },
+  "originalSourceReview": {
+    "path": "artifacts/cc-supervisor-r43/r46-round19-narrow-source-independent-review.json",
+    "sha256": "820027df0c8912ab109f289070b2092a90e0adfb035e695d062057e4edc78581",
+    "bytes": 14538
+  },
+  "nativeTerminalSuccessful": true,
+  "reportsCollected": 19,
+  "packageVerificationPassed": true,
+  "sourceReviewDeploymentReadiness": {
+    "sourceReleaseBlockers": 1,
+    "recommendation": "Fix the new local question-link hash-routing regression before activating this candidate. Package/infrastructure checks and later browser/business acceptance remain separate.",
+    "productAcceptance": false
+  },
+  "definiteP1": "全文链接裸fragment会跳离项目工作台；因此该候选未部署。",
+  "productionDeployed": false,
+  "noClaimOfFullFactoryAcceptance": true,
+  "packageFacts": {
+    "sourceCommit": "e2442ad4ef514342956594db7bbb05b12d1c0d8b",
+    "reportCommit": "7a7961156caa95b8930a82dbca7bf2c6d800c2da",
+    "runtimeBuild": "20261018-unified-projects-r46-r2",
+    "archiveVersion": "20261018-unified-projects-r46-r2",
+    "platformPayloadFilesVerified": 2235,
+    "packagedTrackedSourceFilesComparedToExactGitBlob": 1841,
+    "nodePayloadFilesVerified": 0,
+    "allPackagedAppSourceFilesVerifiedAgainstExactGitBlob": 306,
+    "platformClusterRuntimeBuildMarkerVerified": true
+  },
+  "projection": "保原件指纹及限定结论，不复制工作副本路径或原始会话。"
+}

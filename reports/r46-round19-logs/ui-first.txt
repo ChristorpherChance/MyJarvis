@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /<button type="submit" disabled="">/. Input:
+
+'<form class="project-workbench-composer"><label>给项目AI的文字指令<textarea placeholder="当前轮正在执行；文字保留草稿，尚未发送"></textarea></label><label><input type="checkbox"/>确认只在本目标/副本授权内持续推进，可随时暂停；历史未知用量仍保留未知，不清账</label><button type="submit" class="button d-btn primary " disabled="">正在派发</button><p>当前轮不支持即时stdin注入。此输入仅保留草稿，未送达CC。</p></form>'
+
+    at file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/scripts/test-r46-round19.mjs:2:2634
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '<form class="project-workbench-composer"><label>给项目AI的文字指令<textarea placeholder="当前轮正在执行；文字保留草稿，尚未发送"></textarea></label><label><input type="checkbox"/>确认只在本目标/副本授权内持续推进，可随时暂停；历史未知用量仍保留未知，不清账</label><button type="submit" class="button d-btn primary " disabled="">正在派发</button><p>当前轮不支持即时stdin注入。此输入仅保留草稿，未送达CC。</p></form>',
+  expected: /<button type="submit" disabled="">/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "kind": "ai-development-source-integration-review",
+  "at": "2026-10-18T14:42:30.953982+00:00",
+  "complete": true,
+  "qualified": true,
+  "qualificationScope": "read-only source integration review; no blocking finding in the reviewed contracts",
+  "sourceCommit": "a16a1eb9e0109bc31fefcb9325f74379529bd5cd",
+  "worktreeCleanAtReview": true,
+  "reviewerRole": "dev-portability implementation owner, reviewing UI/API/worker integration; not an independent reviewer of own provision/statusline implementation",
+  "method": "Local read-only source inspection and source fingerprint comparison; no new tests executed in this review",
+  "blockingFindings": [],
+  "checked": [
+    {
+      "area": "resource freshness and source provenance",
+      "result": "API selects machine telemetry or terminal resource samples without mixing, preserves the matching sample timestamp, and exposes resourcesStale; UI reads snapshot.resources and resourcesStale."
+    },
+    {
+      "area": "template tool labels",
+      "result": "UI only interprets matchesPinned for profile-listed tools, maps ccswitch alias to cc-switch, and shows other tools as template-unspecified."
+    },
+    {
+      "area": "statusline capability versus activation",
+      "result": "UI requires configured and resources before reporting resource display enabled."
+    },
+    {
+      "area": "poll ordering and machine switching",
+      "result": "Per-machine component key, unmount/auth abort epoch, and per-machine response serial prevent late data from repopulating another machine or regressing successful snapshot responses."
+    },
+    {
+      "area": "API and worker inventory contract",
+      "result": "Worker adds schemaVersion and projects sessionSummary to terminalTelemetry with compatible numeric/null fields; API parses the fixed receipt tuple and strips unknown fields."
+    },
+    {
+      "area": "request identity and fixed templates",
+      "result": "CAS machine/profile versions, node/address/user, canonical policy/profile/binding hashes and expiry are checked. Manifest byte SHA remains distinct from canonical public-profile SHA."
+    },
+    {
+      "area": "ordinary user and provider preservation",
+      "result": "Node drops privilege through fixed runuser invocation; provision derives home from passwd, accepts no caller paths/commands/current selection, and preserves existing provider settings/active/default and Claude safety/hooks/unknown keys while replacing statusLine."
+    },
+    {
+      "area": "same-source statusline and tool pins",
+      "result": "Root-installed module hashes bind provision/statusline/manifest; provision installs a byte-identical private user statusline and uses fixed version/URL/SHA downloads with bounded attempts and verified reuse."
+    },
+    {
+      "area": "privacy and usage semantics",
+      "result": "Credentials use private stdin/vault/config only; public inventory projects metadata and credentialConfigured. Statusline reads native metadata only, no transcript body/network/model call, keeps missing quota unknown and labels CLI cost as estimate; no local five-hour fabricated balance or cumulative token claim."
+    }
+  ],
+  "sourceFingerprints": [
+    {
+      "path": "apps/web/src/features/operations/AiDevelopmentPanel.tsx",
+      "bytes": 13761,
+      "sha256": "ffb8d65d1edce00c3b18e404a251327b6016d82b99c9756de46d9820aae02c50"
+    },
+    {
+      "path": "apps/web/src/features/operations/usePrivateRuntime.ts",
+      "bytes": 1558,
+      "sha256": "19494fb6d2148b458e5a9957b34888dad7097723d57e76296651a1e985fb441d"
+    },
+    {
+      "path": "apps/web/src/features/operations/ActualInfrastructurePages.tsx",
+      "bytes": 33716,
+      "sha256": "18b3e5af415e134f25da3f9ad0ce276e4c79a16af4c03daee2b3b8eca4de0194"
+    },
+    {
+      "path": "apps/web/src/features/operations/ActualOperationsControl.tsx",
+      "bytes": 15795,
+      "sha256": "197f57bd66aa64f89af6104c4fca2ba26da42615f4a417abc28eb0a0cb9a32dc"
+    },
+    {
+      "path": "apps/api/src/runtime/ai-development.ts",
+      "bytes": 22806,
+      "sha256": "10e8d8eef9f93d881cc38b3bfd9b7e46a61e7b18973c2319171e649355be2b49"
+    },
+    {
+      "path": "apps/api/test/ai-development.test.ts",
+      "bytes": 17392,
+      "sha256": "296e4a880c71e81511e4c19011e5472f6c302d7e3aad6e5c29fff8a7668d003d"
+    },
+    {
+      "path": "scripts/ai-development/controller.mjs",
+      "bytes": 18022,
+      "sha256": "55e3d0f5fccd3510b4d56ad516b39e7937f35034e9888fd3ce71f19228e42978"
+    },
+    {
+      "path": "scripts/ai-development/node-dispatcher.py",
+      "bytes": 16875,
+      "sha256": "c95b62ca2af615c03d38d304698e83ec3fd5381466895aee26d0a45b12eb419b"
+    },
+    {
+      "path": "scripts/ai-development/install-node.py",
+      "bytes": 8031,
+      "sha256": "bd37f610868619d8bf51925b7af480d06012c3835fcc59250215e4361a91331e"
+    },
+    {
+      "path": "scripts/ai-development/install-controller.py",
+      "bytes": 15129,
+      "sha256": "1fc0376c159c21240081c6e842e5a00068ba289f57529fe64501fd4e7b2e5bd5"
+    },
+    {
+      "path": "scripts/ai-development/provision.py",
+      "bytes": 34503,
+      "sha256": "859c9e0893e82dadf318577c9271fab72c75a988f8912deb3fab4b8f800c30de"
+    },
+    {
+      "path": "scripts/ai-development/terminal-statusline.py",
+      "bytes": 12364,
+      "sha256": "150f6d0a22c165fea15a05f1b9f383efa3b3017b9abd89159d0f98631ee42b1e"
+    },
+    {
+      "path": "scripts/ai-development/profile-manifest.json",
+      "bytes": 1399,
+      "sha256": "e348b29c672120ed8b190665753ce345d04a5762c6fad06648c7f581f7cbbcee"
+    },
+    {
+      "path": "scripts/remote-ops-dispatcher.py",
+      "bytes": 13727,
+      "sha256": "f177e46c3d0a8dea1ea811f891c5ed32c5f637889fff4832d82de73c12cbcdba"
+    }
+  ],
+  "existingLinuxEvidence": {
+    "reference": "artifacts/ai-development-ops/linux-infrastructure-validation-public.json",
+    "sha256": "64ec84ce3510195f0b0458e690404a9c3e2315382e975473b3de91988f44290b",
+    "at": "2026-10-18T14:34:32.193405+00:00",
+    "complete": true,
+    "infrastructureTestsPassed": 25,
+    "counts": {
+      "provision": 9,
+      "nodeDispatcher": 11,
+      "controller": 5
+    },
+    "basis": "Existing root-produced Linux validation receipt inspected; controller count also matches the five declared controller test cases. These Linux commands were not run by this reviewer.",
+    "receiptContainsExactSourceCommit": false,
+    "currentCommitIndependentlyExecutedByReviewer": false
+  },
+  "notPerformedThisReview": [
+    "SSH or remote writes",
+    "Linux command execution or test rerun",
+    "browser/manual terminal rendering acceptance",
+    "new-machine download/install acceptance",
+    "model/provider health or quota calls",
+    "production service operations or release deployment",
+    "billing or cumulative usage verification"
+  ],
+  "reviewActions": {
+    "sourceFilesModified": 0,
+    "testsExecuted": 0,
+    "sshConnections": 0,
+    "remoteWrites": 0,
+    "modelCalls": 0,
+    "serviceOperations": 0
+  },
+  "notes": [
+    "Qualification applies to the listed source contracts; operational deployment and live acceptance require their separate receipts.",
+    "Correct existing tools are reused; conflicting existing user-bin paths fail closed instead of overwriting user tools."
+  ]
+}

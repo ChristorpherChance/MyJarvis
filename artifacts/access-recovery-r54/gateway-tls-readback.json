@@ -1,0 +1,66 @@
+{
+  "kind": "public-gateway-tls-and-loopback-observation",
+  "at": "2026-10-18T15:14:38.848Z",
+  "gateway": {
+    "units": [
+      {
+        "unit": "nginx.service",
+        "status": {
+          "MainPID": "863337",
+          "NRestarts": "0",
+          "ActiveState": "active",
+          "SubState": "running"
+        }
+      },
+      {
+        "unit": "frps.service",
+        "status": {
+          "MainPID": "161084",
+          "NRestarts": "0",
+          "ActiveState": "active",
+          "SubState": "running"
+        }
+      }
+    ],
+    "nginxConfigValid": true,
+    "siteSHA256": "156006940d59b5357dbed39af59b94cd2b69416dae5f517b8bc62d2d33b46dab",
+    "certificate": [
+      "notBefore=Oct 12 08:46:21 2026 GMT",
+      "notAfter=Jan 10 08:46:20 2027 GMT",
+      "issuer=C = US, O = Let's Encrypt, CN = YE1",
+      "subject=CN = ikvein.com",
+      "X509v3 Subject Alternative Name: ",
+      "    DNS:*.ikvein.com, DNS:ikvein.com"
+    ],
+    "loopbackHTTPS": {
+      "exitCode": 0,
+      "summary": "200|0|0.063454",
+      "stderrBytes": 0
+    },
+    "last64KiBMatchingDomainErrorCategories": {
+      "upstream_timed_out": 1,
+      "connection_refused": 0,
+      "SSL_handshake_failed": 0,
+      "no_live_upstreams": 0
+    },
+    "logScope": "Only bounded aggregate of matching domain errors; no raw addresses, requests, or configuration exported",
+    "actions": 0
+  },
+  "clientTLS": [
+    {
+      "version": "TLSv1.2",
+      "status": 200,
+      "bytes": 117,
+      "authorized": null,
+      "tls": null
+    },
+    {
+      "version": "TLSv1.3",
+      "status": 200,
+      "bytes": 117,
+      "authorized": null,
+      "tls": null
+    }
+  ],
+  "productionChanges": 0
+}

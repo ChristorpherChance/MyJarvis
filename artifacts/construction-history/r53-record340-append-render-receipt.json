@@ -1,0 +1,31 @@
+{
+  "kind": "r53-record340-original-tool-single-append-render-receipt",
+  "command": "node scripts/construction-records.mjs --input artifacts/construction-history/r53-record340-input-FINAL.json --execute --render",
+  "input": {
+    "path": "artifacts/construction-history/r53-record340-input-FINAL.json",
+    "bytes": 11846,
+    "sha256": "4dc6b6f71b3c94b3f5b17f033479619e9a86754783802b24412a2d7b1a80e48c"
+  },
+  "uniqueExecuteInvocation": true,
+  "exitCode": 0,
+  "stdout": "{\"executed\":true,\"added\":[\"JARVIS-20261018-R53-SUPERVISION-CONTINUITY-AND-VISIBLE-LOOP\"],\"reused\":[],\"records\":340,\"headHash\":\"ce1f3a3575d81d2523697e797914aa99673e74d8ab396020919cfba6b703f2d7\",\"path\":\"docs/建设记录/events.jsonl\",\"render\":{\"markdown\":\"docs/贾维斯建设日志.md\",\"records\":340,\"headHash\":\"ce1f3a3575d81d2523697e797914aa99673e74d8ab396020919cfba6b703f2d7\",\"html\":\"docs/贾维斯建设日志.html\"}}\n",
+  "result": {
+    "executed": true,
+    "added": [
+      "JARVIS-20261018-R53-SUPERVISION-CONTINUITY-AND-VISIBLE-LOOP"
+    ],
+    "reused": [],
+    "records": 340,
+    "headHash": "ce1f3a3575d81d2523697e797914aa99673e74d8ab396020919cfba6b703f2d7",
+    "path": "docs/建设记录/events.jsonl",
+    "render": {
+      "markdown": "docs/贾维斯建设日志.md",
+      "records": 340,
+      "headHash": "ce1f3a3575d81d2523697e797914aa99673e74d8ab396020919cfba6b703f2d7",
+      "html": "docs/贾维斯建设日志.html"
+    }
+  },
+  "constructionToolChanged": false,
+  "testsReexecuted": false,
+  "APIOrRemoteUsed": false
+}

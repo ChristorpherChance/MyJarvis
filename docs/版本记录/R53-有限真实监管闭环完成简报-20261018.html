@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="完成一条真实测试、问题反馈、修复安排与回收判断流程；完整工厂和产品验收另列。">
+  <meta name="jarvis-source-sha256" content="18595be0dd678081c03dae1ba50e0221fa5f6de314487c4def4e3fb17467fb9c">
+  <title>本轮监管完成简报 · R53</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R53 · 本轮有限监管闭环完成</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="R53-%E6%9C%89%E9%99%90%E7%9C%9F%E5%AE%9E%E7%9B%91%E7%AE%A1%E9%97%AD%E7%8E%AF%E5%AE%8C%E6%88%90%E7%AE%80%E6%8A%A5-20261018.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 0 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">真实监管 / 原件与判断 / 有限验收</p>
+        <h1 id="document-title">本轮监管完成简报 · R53</h1>
+        <p class="subtitle">完成一条真实测试、问题反馈、修复安排与回收判断流程；完整工厂和产品验收另列。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>3／3</strong><span>原标准由真实判断满足</span></div><div class="stat"><strong>32件</strong><span>完整原件，3个来源</span></div><div class="stat"><strong>C6</strong><span>仅本次监管流程收尾</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p><strong>本轮已走到真实达标判断：贾维斯安排修复一条数据库测试路径，收到实际测试及清理原件，再回收补证；最新判断确认原三条标准全部满足。</strong> 范围是 PolicyService 的 PostgreSQL 集成路径，保存结果为 <strong>2 通过、0 失败、0 跳过、0 未运行</strong>。最新一轮仅只读核对和回传原件，没有重跑这两项测试或再次操作数据库资源。</p>
+<p>112 已上线 R53，独立健康检查通过。工作台已能按当前指令、CC 回应、主管判断和下一步自动生成本轮回报；技术阻塞与真正需要本人回答的问题分别显示。本轮自动回报明确保留“独立验收另列”。</p>
+<p><strong>本轮已收尾：</strong> 非作者核对原件、来源与全部引用通过，真实页面已看到达标并展开原三条标准。主事项第35版标为完成，计划第17版进入 C6，仅表示这次文字监管流程完成，独立产品验收仍另列。下一步按既有目标继续其余环境、覆盖率、素材读取和完整浏览器问题。</p>
+<details>
+<summary>查看本轮过程、证据范围与费用</summary><p>本轮保留了完整的“测试结果 → 问题反馈 → 修复安排 → 回收原件 → 再判断”过程：</p>
+<ol>
+<li>从旧报告的真实基础设施跳过项中选出 PolicyService 数据库路径，定位隔离启动入口问题，完成最窄修复。</li>
+<li>该组实际使用 PostgreSQL 16.15，保存命令、退出结果、两项断言及精确容器清理回执；没有降低 lines 90／branches 80 标准。</li>
+<li>主管曾要求补来源、完整启动脚本与保护已有工作区的证据。跨轮证据连续性和界面回报随后修复，并在 112 独立开发副本完成验证、构建与发布。</li>
+<li>R53 初次回复因旧判断的经验／更正上下文变化被正确拒绝；该失败和旧判断均保留。通过明确的当前后继更正与重新绑定授权后，只产生一次新的只读回收运行。</li>
+<li>最新冻结审阅纳入同目标的 <strong>3 个运行来源、32 件原件、71,683 字节内容</strong>。新判断对原三条标准全部给出满足，主管状态为本轮达标，自动继续已关闭。</li>
+</ol>
+<p>本轮 R53 实现共验证 <strong>13 个唯一针对场景</strong>：界面／读模型 5 个、原件连续性 6 个、无损投影 2 个；后续重跑的受影响用例不重复计数。API、Web 类型与构建检查及后续 API 增量检查均留有成功记录。此前真实上下文 140,433 字节超限、首轮打包父目录缺失失败仍保留；无损去重复后的候选测量为 119,065 字节，123,466 字节是离线预留测量。最终真实判断含4条更正、32件原件，完整输入实测125,663字节，小于131,072字节硬门；该测量不证明供应商最大上下文容量。</p>
+<p>最新 CC 运行计 <strong>642,862 Token</strong>，其中输入 640,602、输出 2,260；输入已包含 633,088 cache-read Token，缓存不再相加。目录估算 <strong>USD 0.410614</strong>，实际账单、Pi 判断及内部编排费用未知；不写成零，也不叠加原生会话累计计数。费用只记录，不设置金额上限；10M 是技术窗口。</p>
+<p>当前简明程度：真实页面已直接给出最近指令、CC回应、主管判断、下一步和阻塞；完成简报可展开原三条标准与32件来源。截图只覆盖页面中部视口，不冒全页或移动端验收。最初一次重载超时留存，后续DOM和展开／收起实际通过；没有单独证明SSE是唯一刷新来源。</p>
+<p>自然停止已核：13:20至13:26的三次保存观测保持同一达标终态，自动继续关闭、无排队／运行中的Factory任务、无新指令。该结论仅表示主管停止继续派发，不冒操作系统停止确认；十分钟跟进仍暂停。</p>
+</details><details>
+<summary>查看仍未完成的产品事项</summary><ul>
+<li>旧全局覆盖率 <strong>28.2%</strong> 的失败保留；lines <strong>90</strong>／branches <strong>80</strong> 门不降。本组没有重新测量全局覆盖率。</li>
+<li>其他基础设施与隔离环境路径、素材 ZIP 读取检查及完整浏览器验证仍按原问题继续；本轮没有重跑全套测试。</li>
+<li>现行 <strong>12 项能力＋5 项监管要求</strong>、客户 12 项需求、完整交付与 24—72 小时持续自治尚未独立验收。</li>
+<li>历史文件生产者身份未知的部分继续注明；当前可信回传和指纹校验不被冒称为历史生产者签名。</li>
+<li>全域旧待办通知未在本补丁重构，仅当前项目首屏与本轮回报修复。</li>
+<li>本轮主管达标不改写任务为 completed，不替代人工或独立产品验收。十分钟自动跟进保持暂停。</li>
+</ul>
+</details><p>证据入口：<a href="../../artifacts/cc-supervisor-r43/r53-newpurpose-independent-health-a42bef4a-f1b7-4800-84f3-e8b1f91960f2.json">部署与健康</a> · <a href="../../artifacts/closed-loop-r53/current-followup-rebind-readback.json">当前后继更正与重新绑定</a> · <a href="../../artifacts/closed-loop-r53/live-b7557c41-c010-4893-9f36-7e8e024fed1a.json">真实达标判断与本轮回报</a> · <a href="../../artifacts/closed-loop-r53/final-frozen-capture-readback.json">最终冻结原件链</a>。</p>
+<p>完成依据：<a href="../../artifacts/closed-loop-r53/independent-loop-saved-evidence-review.json">非作者原件与引用复核</a> · <a href="../../artifacts/closed-loop-r53/browser-visible-loop-readback.json">真实页面核对</a> · <a href="../../artifacts/closed-loop-r53/automatic-stop-readback.json">停止继续派发观测</a> · <a href="../../artifacts/closed-loop-r53/closed-loop-final-evidence.json">本轮完成与范围</a> · <a href="../../artifacts/closed-loop-r53/completed-item-and-plan-readback.json">事项35／计划17收尾</a>。</p>
+<p>本文记录截至2026年10月18日21:28（北京时间）的本轮结果。平台事项已按有限范围完成，完整工厂、客户交付与长期自治独验继续保留。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="R53-%E6%9C%89%E9%99%90%E7%9C%9F%E5%AE%9E%E7%9B%91%E7%AE%A1%E9%97%AD%E7%8E%AF%E5%AE%8C%E6%88%90%E7%AE%80%E6%8A%A5-20261018.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

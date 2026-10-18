@@ -1,0 +1,41 @@
+{
+  "id": "JARVIS-20261018-R53-RECORD340-PREPARATION-SCOPE-CLARIFICATION",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-18T13:35:27.581424Z",
+  "title": "更正340准备阶段措辞：记录工具已经真实执行，旧条原文保持",
+  "objective": "澄清建设340验证第四项的准备时点措辞，避免把最终追加与草稿准备混为一谈。",
+  "changes": [
+    "建设340 verification[3]中的“本草稿与记录编排……未调用construction-records”只适用于封草稿前的准备cut；最终实际已经通过原工具唯一append/render，added1/reused0，记录340头ce1f3a…703f2d7。该句不用于否定真实最终执行。",
+    "340原记录、原输入与旧日志事实不覆盖；本条追加更正。R53上线、真实G10 review207与停止状态不因此新增测试、模型、执行器、平台写入或部署。"
+  ],
+  "decisions": [
+    "追加明确更正并引用原追加回执，保留旧340全文；文档归档不是再次产品验收。"
+  ],
+  "facts": [
+    "340最终文档核验已经明确草稿时点语义，原工具执行以append-render receipt和新ledger头为准。",
+    "这次仅修正文档说明；本次限定闭环完成、完整工厂和客户产品独立验收仍未签。"
+  ],
+  "verification": [
+    "读原340 input、实际append/render回执及最终核验报告，三份指纹保存。",
+    "原construction-records工具追加本更正并生成同源日志，不修改原events行，不重复工具测试或业务验证。"
+  ],
+  "pending": [
+    "原340列出的全局coverage、其他基础设施、完整交付及独立产品验收保持原待办。"
+  ],
+  "lessons": [
+    "最终记录中保留准备阶段说明时应显式标注该cut，实际工具执行与准备件分别陈述。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "not-applicable",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/construction-history/r53-record340-input-FINAL.json",
+    "artifacts/construction-history/r53-record340-append-render-receipt.json",
+    "artifacts/construction-history/r53-record340-final-document-verification.json"
+  ]
+}

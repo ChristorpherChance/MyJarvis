@@ -1,0 +1,59 @@
+{
+  "kind": "r53-newpurpose-independent-health",
+  "at": "2026-10-18T13:16:08Z",
+  "healthOperationId": "a42bef4a-f1b7-4800-84f3-e8b1f91960f2",
+  "activationOperationId": "5d77de4b-c7e7-489d-aa75-378e46e6b3ab",
+  "producerReceipt": {
+    "path": "artifacts/cc-supervisor-r43/r53-root-sidecar-activation-5d77de4b-c7e7-489d-aa75-378e46e6b3ab-outcome.json",
+    "bytes": 1533,
+    "sha256": "1df3aaca73b6c23cf87548347f9d27d46b376df441ca61fe045b393ac90b1400"
+  },
+  "activationFinalFingerprint": {
+    "sha256": "3b62173768dea84082e8a14623bf778cb311114727879ff8180d91224adecedf",
+    "bytes": 12959
+  },
+  "release": "20261018-supervision-closed-loop-r53",
+  "sourceCommit": "f46749926b0ec6bf12fa060a0267518c8400527d",
+  "exitCode": 0,
+  "timeout": false,
+  "childEnded": true,
+  "elapsedSeconds": 0.5469999997876585,
+  "independentHealthQualified": true,
+  "health": {
+    "node": "112",
+    "release": "20261018-supervision-closed-loop-r53",
+    "role": "primary",
+    "currentRelease": "20261018-supervision-closed-loop-r53",
+    "platformService": "active",
+    "observerService": "active",
+    "observerBuild": "20261018-supervision-closed-loop-r53",
+    "businessHealthy": true,
+    "healthBuild": "20261018-supervision-closed-loop-r53",
+    "healthStatus": "ok"
+  },
+  "failureCode": null,
+  "rawPrivateFingerprints": {
+    "health.stdout": {
+      "bytes": 362,
+      "sha256": "b2fdf3963c8a788b48541deee393ab7310256ef607c142583ea88d7674b8939c"
+    },
+    "health.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "producerQualifiedPreviously": true,
+  "producerConfigurationMetadataAccepted": {
+    "uid": 0,
+    "gid": 973,
+    "mode": 416
+  },
+  "producerPreviousConfigSHA256Accepted": "82637f09d7ea57e2d24200affebaf24e0d5df1b71061ba7908a04e13406da3a5",
+  "productAccepted": false,
+  "fullSupervisionFlowAccepted": false,
+  "oldHealthPhaseInvokedOrOverwritten": false,
+  "oldFailedActivationChanged": false,
+  "serviceRecoveryStageInstallOrActivateCalled": false,
+  "APIAuthenticationUsed": false,
+  "automaticRetry": false
+}

@@ -1,0 +1,116 @@
+{
+  "kind": "r53-lossless-evidence-projection-non-author-source-review",
+  "at": "2026-10-18T13:04:51.656Z",
+  "reviewer": "/root/r43_permission_config_review",
+  "scope": "Only new projector and two-case test source, plus saved capacity arithmetic. No repeat audit of prior8 production files, no app/test/module execution or network.",
+  "result": "passed-limited-source-review",
+  "blockingFindings": [],
+  "P0": 0,
+  "P1": 0,
+  "baseCommit": "ab804c805f05f77c615574235ab527e9309dd29e",
+  "candidateManifest": {
+    "path": ".jarvis-dev/r53-patch-projection/manifest.json",
+    "bytes": 3893,
+    "sha256": "ab731ffebb51a2e2fb14047296457ed2be4017226d88035380d206feaad868b8"
+  },
+  "files": [
+    {
+      "path": ".jarvis-dev/r53-patch-projection/apps/api/src/runtime/supervisor-model-input.ts",
+      "bytes": 6500,
+      "sha256": "4cc01f3088f506af0c0577ff8e8d5a926d69e015e69c6b27c85e1e76d8ad7bd3",
+      "beforeSHA256": "07aa482313e198f0f5361053df7346d81b88160a4994af884d41cbaa1e84b974"
+    },
+    {
+      "path": ".jarvis-dev/r53-patch-projection/apps/api/test/supervisor-evidence-projection-r53.test.ts",
+      "bytes": 6347,
+      "sha256": "ebbf6a9c3c2bf7c7dda1a79e77b8dcb1a2cb1df7f8dd8fdb7ce99b4a6a6f8f95",
+      "beforeSHA256": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "Exactly reconstructible provenance",
+      "source": "supervisor-model-input.ts:25-36",
+      "result": "Every original retains exact content/path/sha256/size/verified and the complete ordered sourceBindings array. All five removable top-level values must exist on the first frozen-history projection and match sourceBindings[0] with strict equality. Partial presence/mismatched source metadata rejects. Reconstruction guarantees the five typed values, not the old serialized object property order; the original frozen intent bytes remain separately unchanged."
+    },
+    {
+      "name": "Private audit and raw-byte verification",
+      "source": "supervisor-model-input.ts:14-24,38-40",
+      "result": "Full frozen evidenceHistory is not mutated. Before removal its own SHA256, version/items, source table equality and each original UTF8 content size/SHA256 are checked. Model retains evidenceAuditHash plus all sourceBindings; current history/helper/runtime revalidation is unchanged."
+    },
+    {
+      "name": "Repeat projection/JSON roundtrip",
+      "source": "supervisor-model-input.ts:14-40,47-55",
+      "result": "First projection removes duplicate private history body and adds one audit hash. An already projected input may omit all five top-level duplicates only when its sourceBindings resolve exactly against unchanged evidenceTable.sources. Reapplying preserves JSON input/text order and exclusions metadata; cached and uncached adapter paths retain the same contract+text."
+    },
+    {
+      "name": "Malformed shape rejection",
+      "result": "Missing/invalid audit hash, malformed history, mismatched history hash/table/items, missing binding tuples, partial provenance, changed raw content/size/H and conflicting duplicate values reject with fixed SUPERVISOR_EVIDENCE_PROJECTION_INVALID. It does not silently fill malformed mappings or invent provenance."
+    },
+    {
+      "name": "No semantic/authority/citation truncation",
+      "result": "Goal, criteria, corrections, selected references, feedback, evidenceTable and the entire strict citation whitelist are retained. Only excluded non-authoritative bodies retain prior projection behavior. No runtime/collector/evidence helper/policy/contract changes are made by these two files. Existing frozen history checks remain before model/apply/dispatch."
+    },
+    {
+      "name": "Unchanged full prompt limit",
+      "source": "supervisor-model-input.ts:3,50-55",
+      "result": "131072 UTF8 bytes still measures complete contract+separator+serialized input and blocks larger mandatory content. No provider token cap, response strictness or partial-result rule is changed."
+    }
+  ],
+  "calibration": {
+    "source": {
+      "path": "artifacts/closed-loop-r53/saved-real-union-prompt-budget-compacted.json",
+      "bytes": 20306,
+      "sha256": "c165ecf3dfd2902b7f3243d6f42eb45e64e0b5e47ae0f997ca0ebeada4877beb"
+    },
+    "sourceType": "Author saved-byte calibration; not a model/provider result. This review independently reconciles its measured delta arithmetically, without executing the candidate.",
+    "current": {
+      "originals": 31,
+      "decodedOriginalBytes": 67702,
+      "exclusions": 56,
+      "selected": 0,
+      "actualCorrections": 3,
+      "uncompactedPromptBytes": 140433,
+      "compactedPromptBytes": 119065,
+      "remainingBytes": 12007
+    },
+    "independentDelta": {
+      "removeHistoryBody": 14585,
+      "removeHistoryKeyAndComma": 19,
+      "originalsSerializedBytesBefore": 92441,
+      "originalsSerializedBytesAfter": 85590,
+      "addAuditHashKeyValueAndComma": 87,
+      "recomputedPromptBytes": 119065
+    },
+    "futureReserve": {
+      "additionalFactsBytes": 4096,
+      "additionalSourceRun": 1,
+      "compactedPromptBytes": 123466,
+      "remainingBytes": 7606,
+      "actualSignedOrDispatchedReport": false
+    },
+    "preliminaryNumbers": "118978/123379 excluded the87-byte evidenceAuditHash field and are preliminary estimates, not final implementation measurements.",
+    "limits": "Actual frozen task revision is explicitly inferred in author calibration; future context can grow. These numbers do not guarantee arbitrary131072-byte provider acceptance or a future signed report."
+  },
+  "testSource": {
+    "newTests": 2,
+    "coverage": [
+      "31 originals and complete sources reconstruct to original values; frozen input unchanged; repeated/JSON projection text identical; malformed mapping negatives",
+      "Complete originals/corrections/56 exclusion shape fits; mandatory oversized input still rejects at131072"
+    ],
+    "executedByThisReviewer": false,
+    "Root112Validation": "Reported running new2+affected6 and incremental API types/build; no terminal assertion made by this source report."
+  },
+  "previousSourceReportPreserved": {
+    "path": "artifacts/closed-loop-r53/evidence-independent-source-review.json",
+    "bytes": 11889,
+    "sha256": "8bf481af562885bb12ff7a44b6bec7bd5b3df0d8d6aef598e49f360ea102c492"
+  },
+  "notPerformed": [
+    "Tests or build rerun",
+    "Source changes",
+    "Network/API/model/provider calls",
+    "New deployment or browser acceptance"
+  ],
+  "qualification": "Candidate source is acceptable within this lossless serialization scope. Final APP/Git binding and actual112 validation remain separate, and full product/independent acceptance stays false."
+}

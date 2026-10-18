@@ -1,0 +1,211 @@
+{
+  "kind": "record316-formal-factory-material-zip-saved-results",
+  "record": 316,
+  "asOf": "2026-10-18T06:03:30.575Z",
+  "signedResult": {
+    "kind": "r48-factory-zip-goal2-compact-report-received",
+    "at": "2026-10-18T05:51:34.491Z",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "supervisorSessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+    "goalRevision": 2,
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "runId": "82612a1e749b03bdd539ff9e60c39f70bae47b2f",
+    "source": "signed-agent",
+    "outcome": "success",
+    "nativeExitCode": 0,
+    "sourceResultSHA256": "59a229bf2f0c2b1cb38f49ed5fbc5439a51f3431d7c940a0e0fcfb736c47d517",
+    "evidence": {
+      "path": "artifacts/r47-zip-facts.json",
+      "sha256": "2fb4e60bdf8f6f93f0403eef4e2a05c0f552131963fe507b98acc816bbb39f81",
+      "bytes": 3844
+    },
+    "feedbackExactSevenKeys": true,
+    "questionIsEmptyString": true,
+    "feedbackState": "ready_for_review",
+    "reportRawUTF8CanonicalBase64HsizeChecked": true,
+    "authorClaimsIndependentlyVerified": false,
+    "usage": {
+      "inputTokens": 1949095,
+      "outputTokens": 7225,
+      "cacheReadTokens": 1844480,
+      "cacheWriteTokens": 0,
+      "totalTokens": 1956320,
+      "provider": "claude-cli",
+      "model": "gpt-6.1-sol[1m]",
+      "usageComplete": true,
+      "costUSD": 1.6259400000000004,
+      "costKind": "catalog-estimate",
+      "knownCostUSD": 1.6259400000000004,
+      "costComplete": true,
+      "invoiceUSD": null,
+      "internalPiUsagePrice": null
+    },
+    "nativeSessionCumulativeObservation": {
+      "costUSD": 4.934239000000002,
+      "costScope": "session-cumulative",
+      "notAdditionalRunCost": true,
+      "notUsedAsPiCost": true
+    },
+    "supervisorAutomaticReview": "MODEL_REVIEW_INVALID · EXPERIENCE_SCHEMA",
+    "modelResponseDetailsKnown": false,
+    "productionDeployed": false,
+    "productAccepted": false,
+    "oldResultsOrIntentsReplayed": false
+  },
+  "savedOriginalsAudit": {
+    "receipt": {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-zip2-saved-originals-independent-artifact-inspection.json",
+      "bytes": 8539,
+      "sha256": "3b6ab76d3242749482562da48ba481173dfcbde96cb518be1894020e8c26128f"
+    },
+    "originalCount": 12,
+    "twoValidZipSamples": true,
+    "memberUTF8Bytes": 9,
+    "payloadHashAndCRCVerified": true,
+    "loaderScope": "test tool only; not proof of complete factory application delivery",
+    "negativeCases": "CC saved evidence audited; Root did not rerun tests"
+  },
+  "publicSyntheticSamples": {
+    "kind": "r48-factory-material-zip-public-synthetic-samples",
+    "sourceRunId": "82612a1e749b03bdd539ff9e60c39f70bae47b2f",
+    "samples": [
+      {
+        "path": "artifacts/cc-supervisor-r43/samples/sample-store.zip",
+        "bytes": 139,
+        "sha256": "8a7967f6551844f592f9e43541d70edc0b29fb2bf83e74028ed5b45360ae1122"
+      },
+      {
+        "path": "artifacts/cc-supervisor-r43/samples/sample-deflate.zip",
+        "bytes": 141,
+        "sha256": "f3e6af7247814f4712bd5c6bed2c4e04f503edab82f56e3aaf76ee9a3bb984e8"
+      }
+    ],
+    "member": "资料/说明.md",
+    "memberUTF8Bytes": 9,
+    "memberSHA256": "8c80ef8e2ad113b669061172aee60ee4b4d8f0adb5898ca70d797f400cb36b06",
+    "sourceContentsSynthetic": true,
+    "noPrivateDataObserved": true,
+    "independentSavedArtifactInspection": {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-zip2-saved-originals-independent-artifact-inspection.json",
+      "bytes": 8539,
+      "sha256": "3b6ab76d3242749482562da48ba481173dfcbde96cb518be1894020e8c26128f"
+    },
+    "softwareReleasePackage": false,
+    "deployed": false,
+    "productAccepted": false
+  },
+  "exactModelObservation": {
+    "kind": "r48-factory-zip2-exact-model-intent-safe-projection",
+    "intent": {
+      "id": "model:b98926a6-c143-4e69-be44-ee767858c8fc:2:0:82612a1e749b03bdd539ff9e60c39f70bae47b2f:59a229bf2f0c2b1cb38f49ed5fbc5439a51f3431d7c940a0e0fcfb736c47d517",
+      "state": "started",
+      "binding": "5bd277d47416949f9f9834630e802052b6e85273abbb285608666d7f53567152"
+    },
+    "inputBinding": {
+      "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+      "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+      "goalRevision": 2,
+      "runId": "82612a1e749b03bdd539ff9e60c39f70bae47b2f",
+      "resultHash": "59a229bf2f0c2b1cb38f49ed5fbc5439a51f3431d7c940a0e0fcfb736c47d517",
+      "outcome": "success"
+    },
+    "criteriaCount": 3,
+    "expectedExperienceType": "array",
+    "expectedExperienceCount": 0,
+    "uniqueExperienceIdCount": 0,
+    "experienceSnapshotSHA256": "5f9df180909fb9a30a0b1b4724bf6036035258fe084186af0221eb9770a02b90",
+    "expectedReferences": [],
+    "observations": [
+      {
+        "sequence": 20,
+        "at": "2026-10-18T05:49:24.432Z",
+        "status": "failed",
+        "reason": "MODEL_REVIEW_INVALID",
+        "binding": {
+          "intentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:2:0:82612a1e749b03bdd539ff9e60c39f70bae47b2f:59a229bf2f0c2b1cb38f49ed5fbc5439a51f3431d7c940a0e0fcfb736c47d517",
+          "inputSHA256": "5bd277d47416949f9f9834630e802052b6e85273abbb285608666d7f53567152",
+          "goalRevision": 2,
+          "sourceRunId": "82612a1e749b03bdd539ff9e60c39f70bae47b2f",
+          "sourceResultHash": "59a229bf2f0c2b1cb38f49ed5fbc5439a51f3431d7c940a0e0fcfb736c47d517"
+        },
+        "bindingMatchesExpected": true,
+        "diagnostic": {
+          "reasonEnum": "EXPERIENCE_SCHEMA",
+          "schemaPath": "$.experienceReferences",
+          "responseSHA256": "5e21ceee0ab3fc5cbb7828142723046e191b82e98f9f471dfc4a10efcc302fee",
+          "UTF8bytes": 6239,
+          "terminal": "complete",
+          "usageReferences": []
+        }
+      }
+    ],
+    "inputOrResponseRawReturned": false,
+    "providerConfigOrEnvironmentRead": false,
+    "onlyOneExactIntentQueried": true,
+    "modelInvokedOrIntentRetried": false,
+    "databaseMode": "ro/query_only/read-transaction",
+    "at": "2026-10-18T05:54:30.914Z",
+    "operationId": "3aa0bdc0-418a-4682-bd0e-4cc5567f5413",
+    "sourceSHA256": "aa1b5b030d14c54781e58d434a9a50f1b9cf19d686a07033064c536a3cbd640c",
+    "automaticRetry": false
+  },
+  "reviewBoundary": "Signed success0 and sample audit do not mean whole product acceptance. Factory session20 remains blocked/disabled, with no reliable automatic decision. expectedarray0/refs[] is known; missing/null/nonempty output subtype remains unknown. The complete6239B model terminal was not disclosed or replayed.",
+  "metadataPrewriteRefusals": [
+    {
+      "kind": "old-policy-null-schema guard",
+      "effect": "reviseAttemptedfalse/startAttemptedfalse; old null native policy was legal, distinct frozen19-field guard corrected before fresh dispatch",
+      "ref": {
+        "path": "artifacts/cc-supervisor-r43/r48-factory-zip-goal2-67d91015-54bf-426c-b782-96b441ee046e-failure.json",
+        "bytes": 411,
+        "sha256": "c3b89957489022feeb8bc0a60095fdbfaa3a5bc64670f21fd538b31707a0e7e2"
+      }
+    },
+    {
+      "kind": "live state already terminal",
+      "effect": "planAttemptedfalse; active-run gate correctly refused after genuine new result arrived, not a product defect",
+      "ref": {
+        "path": "artifacts/cc-supervisor-r43/r48-current-planB5-282fba9f-d275-4c13-90ce-9736766e7686-failure.json",
+        "bytes": 384,
+        "sha256": "3c96a2835351c9174b5f3f8bd935209f7bcc305617cc8731658b5de6cfa08eab"
+      }
+    },
+    {
+      "kind": "omitted optional decision field",
+      "effect": "planAttemptedfalse; controller assumed null but real decisionId was absent; Root distinctr3 accepts only actual field absence, original failed intent kept",
+      "ref": {
+        "path": "artifacts/cc-supervisor-r43/r48-current-planB5-21b36218-bac8-4eb6-9925-599a5ed274a2-failure.json",
+        "bytes": 384,
+        "sha256": "f089b2a282f1053922d98ac1013a406ad92326e2b9e0a076050f8bdfd19e3253"
+      }
+    }
+  ],
+  "refs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-zip2-82612-compact-report-public-receipt.json",
+      "bytes": 2207,
+      "sha256": "a63d0386c8f481c374c9f9ff3a152e3b89df739227b4fe106ab2015ca771dbfa"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-zip2-82612-result-observation.json",
+      "bytes": 1277,
+      "sha256": "42d2eb100d84cc1f792ea1bd348ac2031e8bb6535ce89b74764340f2faf452fb"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-zip2-saved-originals-independent-artifact-inspection.json",
+      "bytes": 8539,
+      "sha256": "3b6ab76d3242749482562da48ba481173dfcbde96cb518be1894020e8c26128f"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-material-zip-public-samples.json",
+      "bytes": 1074,
+      "sha256": "c16241e3cd5a28b64b7a50fe22c4d000f2bd695f14d61f2ccfe3c1e0ae93134b"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r48-factory-zip2-model-safe-observation-3aa0bdc0-418a-4682-bd0e-4cc5567f5413-readback.json",
+      "bytes": 2344,
+      "sha256": "d92367315daf323c227bc7c16f928f60bdb2df9a21b19361366fd0831a0fd38e"
+    }
+  ],
+  "softwareReleasePackage": false,
+  "wholeFactoryAccepted": false
+}

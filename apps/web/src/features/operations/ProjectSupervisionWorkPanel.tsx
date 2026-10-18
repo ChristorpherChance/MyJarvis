@@ -54,10 +54,11 @@ export default function ProjectSupervisionWorkPanel({projectId,navigate,consoleM
    fields:[{key:'title',label:'监督事项',required:true},{key:'status',label:'事项状态',type:'select',options:[['planned','待推进'],['running','推进中'],['blocked','需要处理'],['completed','本项已完成']]},
     {key:'summary',label:'简明进展',type:'textarea',required:true},{key:'nextAction',label:'下一步',type:'textarea'},{key:'blocker',label:'当前阻塞',type:'textarea'},
     {key:'completionSummary',label:'完成简报',type:'textarea'},{key:'validationScope',label:'验证范围与边界',type:'textarea'},
+    {key:'taskId',label:'绑定现有任务ID',hint:'仅填本项目已有任务；留空表示未绑定，不会创建或派发。'},{key:'runId',label:'绑定现有运行ID',hint:'仅填真实已存在且属于此项目/任务的run；无运行保持空。'},
     {key:'evidenceText',label:'公开证据引用',type:'textarea',hint:'每行：docs/或artifacts/公开路径 | 64位小写SHA-256。引用登记不等于原件已验证。'}],
    initial:item?{...item,evidenceText:item.evidenceRefs.map(ref=>ref.path+' | '+ref.sha256).join('\n')}:{status:'planned'},
    submit:async values=>{
-    const body:SupervisionWorkBody={title:String(values.title).trim(),status:values.status,summary:String(values.summary).trim(),nextAction:String(values.nextAction??'').trim(),blocker:String(values.blocker??'').trim(),stepId:item?.stepId??null,taskId:item?.taskId??null,runId:item?.runId??null,completionSummary:String(values.completionSummary??'').trim(),validationScope:String(values.validationScope??'').trim(),evidenceRefs:parseEvidence(values.evidenceText)};
+    const body:SupervisionWorkBody={title:String(values.title).trim(),status:values.status,summary:String(values.summary).trim(),nextAction:String(values.nextAction??'').trim(),blocker:String(values.blocker??'').trim(),stepId:item?.stepId??null,taskId:String(values.taskId??'').trim()||null,runId:String(values.runId??'').trim()||null,completionSummary:String(values.completionSummary??'').trim(),validationScope:String(values.validationScope??'').trim(),evidenceRefs:parseEvidence(values.evidenceText)};
     if(body.status==='blocked'&&!body.blocker)throw Error('需要处理的事项须填写当前阻塞。');if(body.status==='completed'&&!validCompletion(body))throw Error('完成事项须填写完成简报、验证范围及至少一条完整公开证据引用。');
     attempted=prepareSupervisionSubmission(attempted,JSON.stringify(body),()=>crypto.randomUUID());
     const own=flight.current,session=materialSessionGeneration();try{

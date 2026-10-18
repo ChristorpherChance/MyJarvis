@@ -1,0 +1,242 @@
+{
+  "kind": "r53-evidence-continuity-non-author-final-source-review",
+  "at": "2026-10-18T12:58:12.414Z",
+  "reviewer": "/root/r43_permission_config_review",
+  "result": "passed-limited-source-review",
+  "blockingFindings": [],
+  "P0": 0,
+  "P1": 0,
+  "scope": "Non-author review of A evidence runtime/helper/test plus finite Root contract/label changes. All10 final files are byte-reconciled. UI authored by this reviewer is not independently accepted here; the separate non-author UI report is cited.",
+  "actualApp": {
+    "path": ".jarvis-dev/closed-loop-r53-final",
+    "commit": "ab804c805f05f77c615574235ab527e9309dd29e",
+    "changedPaths": 10,
+    "productionFiles": 8,
+    "testFiles": 2,
+    "allFinalGitBlobsMatchPreparedOrAppliedBytes": true,
+    "files": [
+      {
+        "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+        "bytes": 52945,
+        "sha256": "9bc57ee75dcb34bd48efc8d8c8c1653d61fa4fb960536d62f51832d64ac634f8",
+        "scope": "non-author evidence review",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/api/src/runtime/supervisor-evidence-history.ts",
+        "bytes": 10423,
+        "sha256": "2e9d1178e6360529f257925e5d5ffbdc38294bd22c371a1e8f7bbbcc38caa2b3",
+        "scope": "non-author evidence review",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/api/test/supervisor-evidence-history-r53.test.ts",
+        "bytes": 14023,
+        "sha256": "3296df80352b18cc6b3ce0d6dd298ef7e02b097269b5e7a429663b0f75d88a06",
+        "scope": "non-author evidence review",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+        "bytes": 18682,
+        "sha256": "70fee815813948c3ad20dd0371f3d4fe602ec8296077839383871f24a89c754c",
+        "scope": "byte reconciliation only; UI author here, separate non-author UI report cited",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 21140,
+        "sha256": "2ccc380640a9ebdb2e8dd789a10f4e4a0c0ce5c90622135f33f3485eef67596c",
+        "scope": "byte reconciliation only; UI author here, separate non-author UI report cited",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/web/src/features/operations/project-plan-workbench-view.ts",
+        "bytes": 4110,
+        "sha256": "36b140febf2665c6f967657d70224cc476b1ce8bf0f38c066b0620cffb2b486b",
+        "scope": "byte reconciliation only; UI author here, separate non-author UI report cited",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/web/src/supervisor-workbench-stream.ts",
+        "bytes": 1317,
+        "sha256": "9ad4506d24b348ee86febd9711b0ca13d57202df1c2d1d194655378a53efd007",
+        "scope": "byte reconciliation only; UI author here, separate non-author UI report cited",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/api/test/project-workbench-loop-r53.test.ts",
+        "bytes": 10462,
+        "sha256": "87eb1f58dcfc9c3a8d00967a36f6914abfebf417e754ae334537e147ef27c893",
+        "scope": "byte reconciliation only; UI author here, separate non-author UI report cited",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-contract.ts",
+        "beforeSHA256": "09f2b47cdc25abf1260e06876f55e62130e900affac672527a6b426d9b3ccf08",
+        "sha256": "8fb36793fa48604e24d3343567b4d88d81c90c7995a3c889cac27c224a9ce268",
+        "bytes": 2838,
+        "scope": "Root contract/label finite read",
+        "gitBlobAndPhysicalExact": true
+      },
+      {
+        "path": "apps/api/src/runtime/cluster-runtime.ts",
+        "beforeSHA256": "08f8ad28c559161f169c1d0834baf4802d9ff7473fb1aa8995149c34c2ef83ec",
+        "sha256": "9af903dd94fa7b9fb7ca5c1f2be7fd925d3a50f8ce307dc7da5f39b75b6c8dc3",
+        "bytes": 11778,
+        "scope": "Root contract/label finite read",
+        "gitBlobAndPhysicalExact": true
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "Actual getRun ownership shape",
+      "source": "execution-runtime.ts:141,151; project-supervisor-runtime.ts:82-90; supervisor-evidence-history.ts:26-43",
+      "result": "getRun strips template/leaseToken and omits owner_id. Payload preserves scope/objectId/taskId/executor/workspace/native. Missing ownerId is rechecked by the existing owner-filtered runsForTask index; optional ownerId mismatch still rejects. Saved real Factory receipts were also locally inspected for this exact shape."
+    },
+    {
+      "name": "Identity/revision/goal/native boundary",
+      "source": "supervisor-evidence-history.ts:26-83",
+      "result": "Requires same owner task/project/scope/machine/executor/workspace and supervisor identity; positive expected task revision may not exceed the frozen current task revision. Traverses only consumedRunId with exact predecessor resultHash. Changed goal is a verified exclusion boundary; old-goal originals are not imported. New-native handoff requires the existing bound signed stop identity/proof and excludes the predecessor native rather than mixing its originals."
+    },
+    {
+      "name": "Missing current originals cannot be filled by history",
+      "source": "supervisor-evidence-history.ts:88-124",
+      "result": "Each declared source reference is resolved by the unchanged receipt verifier. Same path/differentH rejects; same path/H deduplicates bytes while retaining each source binding. A missing current receipt remains missing/current=true and complete=false even when predecessor bytes match."
+    },
+    {
+      "name": "Frozen input and authorization",
+      "source": "project-supervisor-runtime.ts:88,92,96,99,102; supervisor-evidence-history.ts:132-140",
+      "result": "Fresh binding/history SHA and exact originals/table/citation whitelist are rechecked before model, before applying judgment and before successor dispatch. Pause/revision/context/policy/task/receipt changes fail closed. This does not create new authorization requirements or change existing owner authorization."
+    },
+    {
+      "name": "Single consumption and retry boundary",
+      "source": "project-supervisor-runtime.ts:97-102; unchanged supervisor-intents.ts",
+      "result": "Original consumed-run guard/table insertion and deterministic model intent remain. Already consumed/uncertain models are not automatically invoked again. New history is frozen only into newly prepared inputs; old intents/signed feedback are not rewritten."
+    },
+    {
+      "name": "Complete prompt limit",
+      "source": "unchanged supervisor-model-input.ts:3,14-21",
+      "result": "131072 UTF8 bytes still applies to the entire contract+separator+serialized projected input including continuity metadata and every retained original. Helper additionally has explicit20run/120unique/256KiB decoded bounds; it rejects instead of truncating. Strict model adapter, partial rejection and per-run receipt/private-content gates are unchanged."
+    },
+    {
+      "name": "Root contract distinction",
+      "source": "r53-prepare-central-source.mjs; final project-supervisor-contract.ts",
+      "result": "Explicitly evaluates only supplied criteria and existing bound authorization. Trusted server transport identifies the run carrying historical bytes; it does not fabricate historical producer aliases/signatures. A document author being unable to sign does not negate the agent transport binding. No criteria or acceptance standard is weakened."
+    }
+  ],
+  "guardFilesUnchanged": [
+    {
+      "path": "apps/api/src/runtime/supervisor-model-input.ts",
+      "bytes": 2985,
+      "sha256": "07aa482313e198f0f5361053df7346d81b88160a4994af884d41cbaa1e84b974",
+      "finalExact": true
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-model.ts",
+      "bytes": 12524,
+      "sha256": "9d612d2ebbf98f04af29f126cb3854257e04ddea0020f10b3164391ef35a515d",
+      "finalExact": true
+    },
+    {
+      "path": "apps/api/src/runtime/supervisor-evidence.ts",
+      "bytes": 4476,
+      "sha256": "e61475eb266a3170a817b17919cc002006a663c63c108bdfc9087c1fdfd5bb9e",
+      "finalExact": true
+    },
+    {
+      "path": "apps/api/src/runtime/supervisor-intents.ts",
+      "bytes": 2819,
+      "sha256": "26865ed66027076d72c8f61f7c516a807248f7cad3513fb454975f982ab737fe",
+      "finalExact": true
+    },
+    {
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 131800,
+      "sha256": "d8c36cb859060e271c84946b5427c627658491923f6092c916ed21f0ab4eb3e4",
+      "finalExact": true
+    }
+  ],
+  "validation": {
+    "source": "Root actual112 saved stdout/stderr; read locally, never rerun here",
+    "files": [
+      {
+        "path": "artifacts/closed-loop-r53/validation/targeted.stdout.txt",
+        "bytes": 1416,
+        "sha256": "a93e808b8c3a027fb1c2a267c1125b2dc11d668717bf22f4ce00c697593bc459"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/targeted.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/typecheck.stdout.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/typecheck.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/build.stdout.txt",
+        "bytes": 3400,
+        "sha256": "82831bc7cea4f27dd8e7a7dfc9fe7f0cb3dc74cb440ac25494fd04fd7c22568a"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/build.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "tests": 11,
+    "pass": 11,
+    "fail": 0,
+    "skipped": 0,
+    "independentSourceOfExitCodes": "Root reports targeted/types/build all exit0. Raw saved stdout/stderr alone do not encode the process exit code.",
+    "typecheckStdoutContainsApiAndWebTsc": true,
+    "buildStdoutContainsViteAndApiTsc": true,
+    "newTestsOrBuildExecutedHere": false,
+    "providerTest": false
+  },
+  "related": {
+    "evidenceManifest": {
+      "path": ".jarvis-dev/r53-patch-evidence/manifest.json",
+      "bytes": 4765,
+      "sha256": "fd362ce9c1fd414e75015b126e2dda9b65176ac366810739c40277fdeaf99b6b"
+    },
+    "uiManifest": {
+      "path": ".jarvis-dev/r53-patch-ui/filelist-manifest.json",
+      "bytes": 3764,
+      "sha256": "2be1ce0f211bfb9a9a1526e65c44248cff594c23c43f28fb7da711efd785daba"
+    },
+    "RootPreparation": {
+      "path": "artifacts/closed-loop-r53/central-source-preparation.json",
+      "bytes": 591,
+      "sha256": "5670b0268b74470c66e508ad1afee44d0407e6cdb25421dc757428b9c7225084"
+    },
+    "nonAuthorUiReview": {
+      "path": "artifacts/closed-loop-r53/ui-independent-source-review-final.json",
+      "bytes": 11108,
+      "sha256": "7fd1a5fe8c7ddc79b98a1cce0e1c12ce45ecd5e9aacac78158e036f74582e97f"
+    }
+  },
+  "limits": [
+    "This is source/immutable file and saved controlled validation qualification, not deployed release, fresh provider judgment, browser acceptance or whole-product delivery.",
+    "Existing legacy global notification actionability is outside this evidence patch; current project readmodel/UI qualification is supplied separately.",
+    "Historical producer identity remains unknown where its actual original binding is unavailable. Verified transport/source hashes do not invent it."
+  ],
+  "localOperations": {
+    "sourceChanges": false,
+    "tests": false,
+    "typecheck": false,
+    "build": false,
+    "API": false,
+    "remote": false,
+    "model": false,
+    "reportOnly": true
+  }
+}

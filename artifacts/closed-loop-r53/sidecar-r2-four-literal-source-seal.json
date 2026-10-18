@@ -1,0 +1,48 @@
+{
+  "kind": "r53-r2-sidecar-four-literal-actual-source-seal",
+  "parent": {
+    "path": ".jarvis-dev/r52-merge-integration/scripts/capture-activate-r52-sidecar.py",
+    "bytes": 26413,
+    "sha256": "736e5c25043e4355a24be50ff2194a07291a8a6b719fdd20733b8eaaa3d3b309"
+  },
+  "actualSource": {
+    "path": ".jarvis-dev/maintenance/r53-activate-sidecar-r2-ACTUAL.py",
+    "bytes": 26420,
+    "sha256": "db24902605c0609961877d45805aefe81ff0a0de0934810c9ba0c6309867d78c"
+  },
+  "literalChanges": [
+    {
+      "from": "EXPECTED = '20261018-project-goals-r51-r1'",
+      "to": "EXPECTED = '20261018-project-goals-r52'"
+    },
+    {
+      "from": "RELEASE = '20261018-project-goals-r52'",
+      "to": "RELEASE = '20261018-supervision-closed-loop-r53'"
+    },
+    {
+      "from": "APP = '0ae044826235fd7f7908db786dc2b186fdebf984'",
+      "to": "APP = 'f46749926b0ec6bf12fa060a0267518c8400527d'"
+    },
+    {
+      "from": "ZIP_HASH = '18b66d384c64d4b8e2a0a02aae4e2f8353504db6b0680367acb961d8a362586b'",
+      "to": "ZIP_HASH = '93369604af8c03502c629bf8dfd904542454f32854a629fcd3d14aac891bf4a7'"
+    }
+  ],
+  "onlyFourLiteralDifferences": true,
+  "wholeByteInverseToR52Exact": true,
+  "syntaxParsedWithoutExecution": true,
+  "priorR53APPabAndPackageAndSidecarPreserved": true,
+  "currentConfigEvidence": {
+    "path": "artifacts/closed-loop-r53/current-release-pins.json",
+    "bytes": 390,
+    "sha256": "57b1f74014002ec38977304cf0ec73c26ef8a78b0bca64df2edf03d5303eb5fd"
+  },
+  "currentConfigSHA256": "82637f09d7ea57e2d24200affebaf24e0d5df1b71061ba7908a04e13406da3a5",
+  "currentConfigMetadata": {
+    "uid": 0,
+    "gid": 973,
+    "mode": 416
+  },
+  "runtimeOrRemoteExecution": false,
+  "publicationOrActivationPerformed": false
+}

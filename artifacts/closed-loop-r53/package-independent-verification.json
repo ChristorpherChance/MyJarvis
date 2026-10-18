@@ -1,0 +1,191 @@
+{
+  "kind": "r53-received-platform-package-independent-local-verification",
+  "at": "2026-10-18T12:59:20.777675+00:00",
+  "scope": "Non-author LOCAL archive/manifest/Git original blob, source-map relationship and saved-log audit. No application or tests/builds/models/API/network execution.",
+  "qualified": true,
+  "sourceCommit": "ab804c805f05f77c615574235ab527e9309dd29e",
+  "rootObservedFinalHead": "ab804c805f05f77c615574235ab527e9309dd29e",
+  "parentCommit": "cd9545ac525cc7d5da7494ffbaf63904ebdaa02c",
+  "runtimeBuild": "20261018-supervision-closed-loop-r53",
+  "artifacts": [
+    {
+      "path": ".jarvis-dev/releases/r53/platform/20261018-supervision-closed-loop-r53.zip",
+      "bytes": 24813173,
+      "sha256": "5d4d90eb2c81056367152a4fc3dde44e16a26f4e021c6efc4a678d48c51c40c2"
+    },
+    {
+      "path": ".jarvis-dev/releases/r53/platform/release-manifest.json",
+      "bytes": 457793,
+      "sha256": "166e40569473fca1891b9d58370efff99c5c8cb487d769bf30f99e089d14c567"
+    },
+    {
+      "path": ".jarvis-dev/releases/r53/platform/20261018-supervision-closed-loop-r53.zip.sha256",
+      "bytes": 107,
+      "sha256": "c3cc0389450330455a712c1c52372200c442cfbdf050c7b792982de538f54275"
+    }
+  ],
+  "payload": {
+    "files": 2311,
+    "allPayloadSHA256SizeAndModesVerified": true,
+    "zipCRCReadChecked": true,
+    "noDuplicateCaseCollisionOrLinks": true,
+    "embeddedManifestExactExternal": true
+  },
+  "source": {
+    "packagedTrackedGitBlobsExact": 1885,
+    "allAppSourceFiles": 310,
+    "noUntrackedOrMissingAppSource": true,
+    "allPackagedScriptsAndPackageSourcesTrackedExact": true,
+    "changedFiles": [
+      "apps/api/src/runtime/cluster-runtime.ts",
+      "apps/api/src/runtime/project-supervisor-contract.ts",
+      "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "apps/api/src/runtime/project-workbench-runtime.ts",
+      "apps/api/src/runtime/supervisor-evidence-history.ts",
+      "apps/api/test/project-workbench-loop-r53.test.ts",
+      "apps/api/test/supervisor-evidence-history-r53.test.ts",
+      "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "apps/web/src/features/operations/project-plan-workbench-view.ts",
+      "apps/web/src/supervisor-workbench-stream.ts"
+    ]
+  },
+  "compiled": {
+    "sourceMapsChecked": 116,
+    "allTargetsResolveToPackagedExactGitSources": true,
+    "affectedMaps": [
+      {
+        "map": "apps/api/dist/runtime/project-supervisor-runtime.js.map",
+        "compiled": "apps/api/dist/runtime/project-supervisor-runtime.js",
+        "sources": [
+          "apps/api/src/runtime/project-supervisor-runtime.ts"
+        ],
+        "embeddedSourceContent": false
+      },
+      {
+        "map": "apps/api/dist/runtime/supervisor-evidence-history.js.map",
+        "compiled": "apps/api/dist/runtime/supervisor-evidence-history.js",
+        "sources": [
+          "apps/api/src/runtime/supervisor-evidence-history.ts"
+        ],
+        "embeddedSourceContent": false
+      },
+      {
+        "map": "apps/api/dist/runtime/project-workbench-runtime.js.map",
+        "compiled": "apps/api/dist/runtime/project-workbench-runtime.js",
+        "sources": [
+          "apps/api/src/runtime/project-workbench-runtime.ts"
+        ],
+        "embeddedSourceContent": false
+      },
+      {
+        "map": "apps/api/dist/runtime/project-supervisor-contract.js.map",
+        "compiled": "apps/api/dist/runtime/project-supervisor-contract.js",
+        "sources": [
+          "apps/api/src/runtime/project-supervisor-contract.ts"
+        ],
+        "embeddedSourceContent": false
+      },
+      {
+        "map": "apps/api/dist/runtime/cluster-runtime.js.map",
+        "compiled": "apps/api/dist/runtime/cluster-runtime.js",
+        "sources": [
+          "apps/api/src/runtime/cluster-runtime.ts"
+        ],
+        "embeddedSourceContent": false
+      }
+    ],
+    "newCompiledSymbolsAndRuntimeBuildPresent": true,
+    "webSourceMapsAvailable": false,
+    "compiledReproducibilityClaimed": false,
+    "limitation": "TypeScript maps without sourcesContent establish source paths, not a fresh recompilation proof. Preserved compiler/build logs and source review are separate evidence."
+  },
+  "compatibility": {
+    "priorRelease": "20261018-project-goals-r52",
+    "priorArchive": {
+      "path": ".jarvis-dev/releases/r52/platform/20261018-project-goals-r52.zip",
+      "bytes": 24085993,
+      "sha256": "18b66d384c64d4b8e2a0a02aae4e2f8353504db6b0680367acb961d8a362586b"
+    },
+    "all126PriorAssetsByteExact": true,
+    "seedIndex": {
+      "path": "artifacts/closed-loop-r53/r52-public-assets-seed.json",
+      "bytes": 23729,
+      "sha256": "321dd18ca7a026bae2edc2b131944109bfe1e9aad339e8415ef7e81ea6190cf6"
+    },
+    "preservationProducerReport": {
+      "path": "artifacts/closed-loop-r53/asset-preservation.json",
+      "bytes": 101,
+      "sha256": "0c3cf8b9b69dda3f3c1fd96f06f1f530f4444d328a94d74cf0213af7470e81ca"
+    },
+    "producerAdded105AndSame21": "Saved producer report; no independent pre-seed filesystem snapshot was collected. Final all126 exact bytes independently checked.",
+    "nodeFiveSourceInputsUnchangedFromR52": [
+      "scripts/build-development-node-package.mjs",
+      "apps/agent/src/index.ts",
+      "apps/api/src/runtime/agent-supervisor.ts",
+      "scripts/prepare-development-node.mjs",
+      "docs/开发监督与双机接入.md"
+    ],
+    "node101ReinstallPerformed": false
+  },
+  "savedValidation": {
+    "originalLogFingerprints": [
+      {
+        "path": "artifacts/closed-loop-r53/validation/targeted.stdout.txt",
+        "bytes": 1416,
+        "sha256": "a93e808b8c3a027fb1c2a267c1125b2dc11d668717bf22f4ce00c697593bc459"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/targeted.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/typecheck.stdout.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/typecheck.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/build.stdout.txt",
+        "bytes": 3400,
+        "sha256": "82831bc7cea4f27dd8e7a7dfc9fe7f0cb3dc74cb440ac25494fd04fd7c22568a"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/build.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/package.stdout.txt",
+        "bytes": 765,
+        "sha256": "322be181c523f93e935dbc103ac3add0159813ebf27cc95be716f0da46cd5b17"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/package.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "targeted": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0
+    },
+    "typecheckAPIAndWebSaved": true,
+    "completeBuildSaved": true,
+    "packageLogExactSourceAndArchive": true,
+    "processExitCodes": "Root reported all original validation processes exit0; these eight saved stdout/stderr originals do not separately encode an OS exit receipt. No re-execution or stronger exit-provenance claim.",
+    "logReadNotTestExecution": true
+  },
+  "boundary": {
+    "productionDeployedByThisAudit": false,
+    "browserAcceptancePerformed": false,
+    "wholeFactoryAccepted": false,
+    "newModelsCalled": false
+  }
+}

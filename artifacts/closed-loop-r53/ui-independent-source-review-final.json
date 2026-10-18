@@ -1,0 +1,230 @@
+{
+  "kind": "r53-ui-independent-source-review",
+  "at": "2026-10-18T12:56:26.272601+00:00",
+  "reviewer": "non-author UI/source reviewer; evidence-history authoring is a separate scope",
+  "scope": "Five UI/readmodel/test patch files plus Root central contract/build-label preparation source. No remote execution or claim of deployed state.",
+  "baselineCommit": "cd9545ac525cc7d5da7494ffbaf63904ebdaa02c",
+  "result": "passed-limited-source-review",
+  "blockingFindings": [],
+  "counts": {
+    "P0": 0,
+    "P1": 0
+  },
+  "sourceRefs": [
+    {
+      "path": ".jarvis-dev/r53-patch-ui/apps/api/src/runtime/project-workbench-runtime.ts",
+      "bytes": 18682,
+      "sha256": "70fee815813948c3ad20dd0371f3d4fe602ec8296077839383871f24a89c754c"
+    },
+    {
+      "path": ".jarvis-dev/r53-patch-ui/apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "bytes": 21140,
+      "sha256": "2ccc380640a9ebdb2e8dd789a10f4e4a0c0ce5c90622135f33f3485eef67596c"
+    },
+    {
+      "path": ".jarvis-dev/r53-patch-ui/apps/web/src/features/operations/project-plan-workbench-view.ts",
+      "bytes": 4110,
+      "sha256": "36b140febf2665c6f967657d70224cc476b1ce8bf0f38c066b0620cffb2b486b"
+    },
+    {
+      "path": ".jarvis-dev/r53-patch-ui/apps/web/src/supervisor-workbench-stream.ts",
+      "bytes": 1317,
+      "sha256": "9ad4506d24b348ee86febd9711b0ca13d57202df1c2d1d194655378a53efd007"
+    },
+    {
+      "path": ".jarvis-dev/r53-patch-ui/apps/api/test/project-workbench-loop-r53.test.ts",
+      "bytes": 10462,
+      "sha256": "87eb1f58dcfc9c3a8d00967a36f6914abfebf417e754ae334537e147ef27c893"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r53-prepare-central-source.mjs",
+      "bytes": 2469,
+      "sha256": "6a5b283a7f0b98eb1f46759e8592ef258f4efd242bc5266d17c6c5e9aef7ea17"
+    },
+    {
+      "path": ".jarvis-dev/r53-patch-ui/filelist-manifest.json",
+      "bytes": 3764,
+      "sha256": "2be1ce0f211bfb9a9a1526e65c44248cff594c23c43f28fb7da711efd785daba"
+    },
+    {
+      "path": ".jarvis-dev/r52-merge-integration/apps/api/src/runtime/project-supervisor-routes.ts",
+      "bytes": 3106,
+      "sha256": "2e4884008e39f41053e3d04e0a030fa183c2efe474535c9ffc3649c210085586"
+    },
+    {
+      "path": ".jarvis-dev/r52-merge-integration/apps/api/src/runtime/project-supervisor-contract.ts",
+      "bytes": 2227,
+      "sha256": "09f2b47cdc25abf1260e06876f55e62130e900affac672527a6b426d9b3ccf08"
+    },
+    {
+      "path": ".jarvis-dev/r52-merge-integration/apps/web/src/supervision-work-client.ts",
+      "bytes": 6933,
+      "sha256": "3d558ba3c9a762673c37864527a86e9cf81fc4b4a7deeaf24b0718d71f4a1bc7"
+    }
+  ],
+  "checks": [
+    {
+      "area": "Current persisted state and source binding",
+      "refs": [
+        "apps/api/src/runtime/project-workbench-runtime.ts:18-44"
+      ],
+      "result": "Current task owner/project/scope/machine/workspace and supervisor session/goal bind the readmodel; signed-agent nonlate normal terminal plus exact JSON result hash qualify judgment/feedback. Current run additionally matches task executionRequest. Latest feedback outranks an earlier judgment for roundBrief; prior judgment is explicitly labelled previous result."
+    },
+    {
+      "area": "Truthful completion and independent acceptance",
+      "refs": [
+        "apps/api/src/runtime/project-workbench-runtime.ts:35-43",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:35-37"
+      ],
+      "result": "Achieved title needs persisted current review, source success and exact consumed/result/decision binding. Automatic per-round brief explicitly does not mean task/project completion or independent acceptance; independentAcceptance is false. No completion, acceptance or model/dispatch mutation was added to context GET."
+    },
+    {
+      "area": "Historical manual item cannot hide new technical state",
+      "refs": [
+        "apps/web/src/features/operations/project-plan-workbench-view.ts:27-34",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:20-24,35-38"
+      ],
+      "result": "currentLoopBrief blocker/action/nextAction take precedence. Manual unresolved item remains available under historical details; plan/current stage is still displayed and full standards remain expandable."
+    },
+    {
+      "area": "SSE and auth side effects",
+      "refs": [
+        "apps/web/src/supervisor-workbench-stream.ts:1-13",
+        "apps/web/src/features/operations/ProjectWorkbenchPage.tsx:15-16",
+        "base apps/api/src/runtime/project-supervisor-routes.ts:19"
+      ],
+      "result": "Endpoint and supervisor.changed projectId/revision schema match actual existing route. Only monotonic current-project metadata triggers load GET; no commands are sent from SSE. EventSource closes on unmount/auth expiry, late callbacks ignored, polling fallback retained. Duplicate owner and supervisor streams cause bounded coalesced GETs, not execution."
+    },
+    {
+      "area": "Original user authorization versus producer provenance",
+      "refs": [
+        ".jarvis-dev/maintenance/r53-prepare-central-source.mjs:3-10",
+        "base apps/api/src/runtime/project-supervisor-contract.ts:1-2"
+      ],
+      "result": "Added contract text says evaluate supplied criteria, do not demand renewed permission already within goal, and distinguish trusted byte transport from historical authorship. It explicitly forbids invented aliases/signatures and permits history only with server-bound source run/result hash. Existing strict six-key/citations/review-all-met, missing/conflict/unknown/version/counterexample rejection and independent acceptance language remain unchanged."
+    },
+    {
+      "area": "Prepared controlled tests",
+      "refs": [
+        "apps/api/test/project-workbench-loop-r53.test.ts:1-64"
+      ],
+      "result": "Five saved cases cover current-vs-stale precedence/read-only context, technical block versus bound wait_user, automatic limited review/stale source rejection, production-page SSR, and SSE revision/auth lifecycle. Source read only here; Root reports all five plus six continuity tests passed on112, not independently rerun by this reviewer."
+    }
+  ],
+  "nonBlockingObservations": [
+    {
+      "priority": "P2",
+      "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+      "lines": [
+        31,
+        38
+      ],
+      "finding": "A persisted waiting_user plus bound wait_user action is labelled owner action even when the model reason asks for technical evidence already authorized. This patch has no typed distinction for that class; it fixes actual blocked/review_required mislabelling.",
+      "minimumFollowup": "If observed live, add an explicit reason/required-action classification rather than inferring from free text or weakening authorization; keep actual model action/history visible.",
+      "releaseBlocker": false
+    }
+  ],
+  "verification": {
+    "sourceRead": true,
+    "localTestsRun": false,
+    "buildRun": false,
+    "providerRun": false,
+    "network": false,
+    "sourceEdited": false,
+    "savedReportOnly": true
+  },
+  "limits": [
+    "No browser/layout/mobile verification was performed by this reviewer.",
+    "Root current11-test pass is reported evidence; no raw test logs were re-executed or reclassified here.",
+    "No claim of full product acceptance, authentic provider completion, deployment success or whole supervision closure.",
+    "Root preparation helper was read, not executed; its remote/source-update receipt and actual installed bytes require Root execution evidence.",
+    "Review does not certify notification unread history or old manually maintained completion counters."
+  ],
+  "actualAppBinding": {
+    "commit": "ab804c805f05f77c615574235ab527e9309dd29e",
+    "directory": ".jarvis-dev/closed-loop-r53-final",
+    "matches": [
+      {
+        "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+        "bytes": 18682,
+        "sha256": "70fee815813948c3ad20dd0371f3d4fe602ec8296077839383871f24a89c754c",
+        "physicalEqualsAppGitBlob": true,
+        "equalsReviewedPatch": true
+      },
+      {
+        "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+        "bytes": 21140,
+        "sha256": "2ccc380640a9ebdb2e8dd789a10f4e4a0c0ce5c90622135f33f3485eef67596c",
+        "physicalEqualsAppGitBlob": true,
+        "equalsReviewedPatch": true
+      },
+      {
+        "path": "apps/web/src/features/operations/project-plan-workbench-view.ts",
+        "bytes": 4110,
+        "sha256": "36b140febf2665c6f967657d70224cc476b1ce8bf0f38c066b0620cffb2b486b",
+        "physicalEqualsAppGitBlob": true,
+        "equalsReviewedPatch": true
+      },
+      {
+        "path": "apps/web/src/supervisor-workbench-stream.ts",
+        "bytes": 1317,
+        "sha256": "9ad4506d24b348ee86febd9711b0ca13d57202df1c2d1d194655378a53efd007",
+        "physicalEqualsAppGitBlob": true,
+        "equalsReviewedPatch": true
+      },
+      {
+        "path": "apps/api/test/project-workbench-loop-r53.test.ts",
+        "bytes": 10462,
+        "sha256": "87eb1f58dcfc9c3a8d00967a36f6914abfebf417e754ae334537e147ef27c893",
+        "physicalEqualsAppGitBlob": true,
+        "equalsReviewedPatch": true
+      },
+      {
+        "path": "apps/api/src/runtime/project-supervisor-contract.ts",
+        "bytes": 2838,
+        "sha256": "8fb36793fa48604e24d3343567b4d88d81c90c7995a3c889cac27c224a9ce268",
+        "physicalEqualsAppGitBlob": true,
+        "equalsReviewedLiteralTransform": true
+      }
+    ],
+    "result": "all five reviewed files and exact reviewed contract transform equal actual APP Git blobs",
+    "typecheckBuild": "Parent reports actual112 passed; saved validation logs fingerprinted only, not rerun",
+    "validationLogs": [
+      {
+        "path": "artifacts/closed-loop-r53/validation/build.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/build.stdout.txt",
+        "bytes": 3400,
+        "sha256": "82831bc7cea4f27dd8e7a7dfc9fe7f0cb3dc74cb440ac25494fd04fd7c22568a"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/targeted.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/targeted.stdout.txt",
+        "bytes": 1416,
+        "sha256": "a93e808b8c3a027fb1c2a267c1125b2dc11d668717bf22f4ce00c697593bc459"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/typecheck.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/closed-loop-r53/validation/typecheck.stdout.txt",
+        "bytes": 193,
+        "sha256": "7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac"
+      }
+    ]
+  },
+  "priorSourceReview": {
+    "path": "artifacts/closed-loop-r53/ui-independent-source-review.json",
+    "bytes": 7633,
+    "sha256": "f916d2576f23b0e9560705155d20de6b2a28570796b714cf079f30841de94633"
+  }
+}

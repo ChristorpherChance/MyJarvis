@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="说明R53源码、运行边界、跨轮原件与无损提示词投影，以及下一位贾维斯平台开发者如何继续维护。">
+  <meta name="jarvis-source-sha256" content="4e70662006081a14e7360571e81763417fa879ffa7823a78217764d0d162ed6c">
+  <title>R53 监管闭环维护与接手补充</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R53 · 有限真实监管闭环已验证</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="R53%E7%9B%91%E7%AE%A1%E9%97%AD%E7%8E%AF%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%8E%A5%E6%89%8B%E8%A1%A5%E5%85%85-20261018.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 6 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1 接手先核对源码、目录与运行归属</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2 R53实际改了哪些模块和接口</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3 跨轮原件连续性与容量边界</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">3.1 来源链的信任边界</a>
+<a class="toc-link level-3" href="#section-3-2" data-parent="3">3.2 无损模型投影</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4 纠错、显式接续与自然停派</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5 已验证范围、没有验证的部分与费用</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6 下一位开发者的最小工作顺序</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">112开发 / 原件连续性 / 维护接手</p>
+        <h1 id="document-title">R53 监管闭环维护与接手补充</h1>
+        <p class="subtitle">说明R53源码、运行边界、跨轮原件与无损提示词投影，以及下一位贾维斯平台开发者如何继续维护。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>32件</strong><span>三个来源运行的完整原件</span></div><div class="stat"><strong>125663B</strong><span>本次实际完整提示词</span></div><div class="stat"><strong>分列验收</strong><span>本轮达标与整体验收</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>本补充面向<strong>贾维斯平台本身</strong>的开发者，配合<a href="../%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E6%8E%A5%E6%89%8B%E6%8C%87%E5%8D%97.md">平台开发接手指南</a>、<a href="../112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">112开发迁移使用说明</a>及仓库根规则阅读。软件工厂是平台监管的外部项目；101是执行节点和平台冷备，不是第二个正式监管中心。</p>
+<p>本页状态截止已保存的最后资料更新：<strong>2026-10-18 13:28:59.194 UTC，即北京时间21:28:59.194</strong>。时间取自<a href="../../artifacts/closed-loop-r53/completed-item-and-plan-readback.json">事项与计划读回</a>，不是文档生成时间。旧接手指南的R52状态属于原固定切面；本补充说明此后的R53变化，不改写旧记录。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1 接手先核对源码、目录与运行归属</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>本次已核事实</th>
+<th>维护边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正式平台</td>
+<td>112运行<code>20261018-supervision-closed-loop-r53</code>；独立健康回执为R53、primary、平台与observer均active、业务健康</td>
+<td>正式release与运行数据不作为开发目录，不通过改数据库把状态改成完成</td>
+</tr>
+<tr>
+<td>112独立源码副本</td>
+<td><code>/home/superopen/All-Projects/MyJevis-r53-closed-loop</code>；实际应用提交<code>f46749926b0ec6bf12fa060a0267518c8400527d</code></td>
+<td>保留真实Git历史、首次失败与后续修复，不用构建输出代替源码提交</td>
+</tr>
+<tr>
+<td>发布控制源码</td>
+<td>后续ops提交<code>5377b761591a54ac976176dc3a30db050110b146</code></td>
+<td>与APP分列；发布器、完整备份、隔离恢复、权限保全和独立健康各自留证</td>
+</tr>
+<tr>
+<td>原日常开发目录</td>
+<td><code>/home/superopen/All-Projects/MyJevis</code></td>
+<td>本轮没有用R53覆盖该目录、Linux开发适配、开发数据或迁移原件；不能假定它已升级到R53</td>
+</tr>
+<tr>
+<td>本机核验副本</td>
+<td><code>.jarvis-dev/closed-loop-r53-r2-final</code></td>
+<td>保存本次源码与文档同路径副本；本机历史维护脚本不因此自动具备112执行条件</td>
+</tr>
+</tbody></table></div>
+<p>先读当前目录的<code>AGENTS.md</code>、<code>CLAUDE.md</code>与最新建设记录，再核Git提交、dirty、执行中的任务和原生会话。<strong>同一需求不要在112、101两个副本并行修改后相互覆盖。</strong> 101工厂工作区继续由正式平台绑定的任务控制；不要另启旧维护operation或重放旧模型intent。</p>
+<p>R53源码副本存在真实Git对象，不代表它已具备原日常开发目录的四项Linux适配。保存源码中的旧<code>npm run dev</code>入口与Vite默认配置仍可能指向旧端口或正式API；不要直接启动后声称隔离已成立。继续开发时按112迁移说明逐项核对开发启动器、包脚本、前端代理和规则适配，使用<strong>43140/45173与账号home下独立开发数据</strong>，先做开发配置检查。不要继承正式模型配置、认证材料、队列或家庭数据库，也不要用生产release覆盖开发树。</p>
+<p>本节依据：<a href="../../artifacts/closed-loop-r53/root-actual-source-qualification.json">源码与验证资格</a>、<a href="../../artifacts/cc-supervisor-r43/r53-root-sidecar-activation-5d77de4b-c7e7-489d-aa75-378e46e6b3ab-outcome.json">实际发布</a>、<a href="../../artifacts/cc-supervisor-r43/r53-newpurpose-independent-health-a42bef4a-f1b7-4800-84f3-e8b1f91960f2.json">独立健康</a>。凭据只通过现有受保护的账号配置获取，不在本文、Git或报告中复制。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2 R53实际改了哪些模块和接口</h2>
+<p>源码路径均相对于上述R53源码副本。R53扩展了既有工作台返回和模型输入，没有新增可绕过授权的派发端点。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>源码</th>
+<th>接手时应理解的职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>apps/api/src/runtime/supervisor-evidence-history.ts</code></td>
+<td>沿受控运行的<code>consumedRunId/resultHash</code>构建同目标原件连续链；保每件来源与完整字节，冲突或陈旧绑定拒绝</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/project-supervisor-runtime.ts</code></td>
+<td>将统一原件并集、证据表和引用白名单冻结到新model intent；模型前、决定应用前及后继派发前重新核对，不改旧回包或重调旧intent</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/supervisor-model-input.ts</code></td>
+<td>在模型序列化时去除可严格重建的重复审计字段；完整冻结输入仍保存，完整prompt仍受131072 UTF-8字节门约束</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/project-supervisor-contract.ts</code></td>
+<td>保严格六键、逐字标准、全met与引用门；澄清transport不等于历史作者身份，不追加无关标准或重复授权要求</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/project-workbench-runtime.ts</code></td>
+<td>只读生成<code>currentLoopBrief</code>，优先展示当前绑定回包、主管判断和下一步；自动形成有限本轮回报，不写任务完成或独立验收</td>
+</tr>
+<tr>
+<td><code>apps/web/src/features/operations/ProjectWorkbenchPage.tsx</code>及<code>project-plan-workbench-view.ts</code></td>
+<td>当前状态、回应、判断、下一步与阻塞优先；旧事项放历史详情，完整目标与标准按需展开</td>
+</tr>
+<tr>
+<td><code>apps/web/src/supervisor-workbench-stream.ts</code></td>
+<td>订阅既有主管SSE元数据并触发只读刷新；不发送执行命令，登出或鉴权失效后关闭</td>
+</tr>
+</tbody></table></div>
+<p>主要入口如下，路径中的<code>:id</code>始终是实际项目ID，管理者本人身份与版本保护继续生效：</p>
+<ul>
+<li><code>GET /api/v1/projects/:id/workbench</code>：返回既有context及新增<code>currentLoopBrief</code>，只读。</li>
+<li><code>GET /api/v1/projects/:id/supervisor</code>与<code>/event-history</code>、<code>/events/:eventId</code>：核主管会话、历史和准确事件；不要用事项摘要代替这些来源。</li>
+<li><code>GET /api/v1/projects/:id/supervisor/events</code>：既有SSE，<code>supervisor.changed</code>只含项目/修订元数据；页面收到变化后重新GET，不能凭事件推断执行成功。</li>
+<li><code>POST /api/v1/projects/:id/supervisor/corrections</code>：按目标事件/H与CAS追加纠错；旧事实保留。</li>
+<li><code>POST /api/v1/projects/:id/supervisor/commands</code>：明确的reply/start/pause/stop等动作。普通只读刷新不走此入口；原子kickoff和已有adopt/reconcile语义保持原保护。</li>
+</ul>
+<p>管理界面自动回报中的<code>independentAcceptance</code>始终为false。若手工事项与新回包不同，先核当前run/结果H/目标修订和主管事件，不把旧摘要当当前事实，也不要直接重写数据库消除差异。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3 跨轮原件连续性与容量边界</h2>
+<h3 id="section-3-1" tabindex="-1">3.1 来源链的信任边界</h3>
+<p>新判断从当前运行出发，只沿请求中已记录的前驱<code>consumedRunId/resultHash</code>追溯。每一源运行重核已接受的正常<code>signed-agent</code>终态、结果H、任务/项目/owner/scope/机器/执行器/工作区/原生会话和主管目标修订；既有原件验证器再次核完整receipt。公开<code>getRun</code>不返回owner_id时，使用执行运行时已有的owner过滤任务索引，不把字段缺省当外来owner，也不跳过owner核对。</p>
+<p>旧目标或可信停止后的显式新原生会话是<strong>排除边界</strong>：验证边界来源后停止继承，不自动混入旧目标、旧native或无签名别名。<code>sourceRunId/sourceResultHash/sourceGoalRevision</code>等说明<strong>哪个受控运行运输了这些字节</strong>，不自动证明历史文档由该运行生成。旧f9用于定位报告和skip，不追加“f9必须是报告生成者”的新验收条件；不存在的旧<code>binding.json</code>或历史作者签名仍记unknown，不伪造。</p>
+<p>同路径同H去重并保留全部<code>sourceBindings</code>；同路径异H明确冲突，不能静默覆盖。当前回包声明的原件缺失，即使历史运行有同路径同H，也仍标当前缺件，不能借旧件伪称本次完整。新增facts使用全新唯一路径，避免用相同路径更新内容造成合法但不可静默处理的冲突。</p>
+<p>冻结审计有界：最多20源运行、120个唯一原件、262144解码字节；每次实际回包仍保原30件、单件32768B等采集门。无论哪一层超限，都明确阻断，不能截取原件后沿用原H。大dirty原文和二进制index本次保留与只读核查；没有声称已把全部原件无损运到模型，更没有把这一未实现传输能力新增为本组标准。</p>
+<h3 id="section-3-2" tabindex="-1">3.2 无损模型投影</h3>
+<p>完整<code>evidenceHistory</code>保存在私有冻结intent，模型侧只携其核验后的<code>evidenceAuditHash</code>。每件原件的完整<code>content/path/sha256/size/verified</code>和全部<code>sourceBindings</code>仍发送；仅省去与首个binding逐字段完全相同的五个顶层来源字段。来源表、manifest hash、原件内容H/size和映射不一致即拒绝，不能“尽量匹配”。投影再次执行或JSON往返后保持相同完整prompt，旧输入无此审计结构时保原行为。</p>
+<p>完整正文、原标准、纠错、已选经验、来源关系和引用白名单均未截断；完整冻结输入仍用于执行前的陈旧/撤权检查。这个改动减少重复序列化，不提高采集上限或131072B完整prompt门，也不保证所有provider/token配置都能接受任意上限输入。</p>
+<p>实际最后判断使用32件完整原件、71683解码字节、3个来源运行、4条纠错、60个经验排除metadata；完整contract加JSON为<strong>125663B</strong>，余5409B。此前实测新并集的未压缩输入140433B超限，修复后先做实际保存输入的离线计量，再进行真实判断，未用模型反复撞门。见<a href="../../artifacts/closed-loop-r53/evidence-projection-independent-source-review.json">投影独审</a>、<a href="../../artifacts/closed-loop-r53/saved-real-union-prompt-budget-compacted.json">真实保存输入计量</a>及<a href="../../artifacts/closed-loop-r53/final-actual-prompt-measurement.json">最后实际prompt计量</a>。</p>
+<p>执行指令内历史“JSON.stringify全部输入30000字节”说明是陈旧文本，不代表当前门又降为30000；本次没有额外源码修正它。维护者以当前共享常量、runtime/adapter/PiService实际调用链和绑定诊断为准。清理该说明应作为后续小变更留证，不因本文便追改旧运行文本。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4 纠错、显式接续与自然停派</h2>
+<p>本次保留原G10及三条标准，先用<code>future_reference</code>追加授权/标准解释，未执行新任务。随后需要使旧技术判断失效时，使用<code>current_followup</code>：它会增加纠错上下文修订、撤销旧后继授权并暂停；不是把旧判断改绿。操作者再通过明确reply/rebind，重核绑定终态和当前版本后派发合法新运行。不要直接改session、decision或consumed表，也不要把旧CLOSED intent重新调用一遍。</p>
+<p>本次<a href="../../artifacts/closed-loop-r53/current-followup-rebind-readback.json">纠错与显式rebind回执</a>记录两次业务POST、原历史保留、无自动重试。新运行<code>42c4f4761defa4de21ed4e2b8baaffb1573c0e34</code>只读核对已保存资料，交回一份新小facts；旧Policy/PG两测试未重新执行。原31件与新facts由平台统一核为32件，模型按原三标准给出真实review，事件序号207。</p>
+<p>达标后session修订79、goal10、<code>achieved/enabled=false</code>；多次保存观察跨390.553秒保持同一终态，工厂queued/running为0、没有新指令或请求。这里证明<strong>自然停止派发</strong>，并未声称向一个仍运行的OS子树发stop并取得ACK。周期跟进仍为PAUSED，不能为保持“监督在工作”擅自恢复轮询或再派任务。见<a href="../../artifacts/closed-loop-r53/automatic-stop-readback.json">自然停派读回</a>。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5 已验证范围、没有验证的部分与费用</h2>
+<p>本轮有限结论为：真实文字指令→101 CC回报→签名采集→主管判断→本人事实纠错与显式后继→主管按原标准达标→自动生成本轮回报→自然停派，已在112页面可见。事项35已completed，计划B17当前C6，但<code>independentAcceptance=false</code>，不是整个平台或软件工厂12＋5全部功能验收。</p>
+<p>保存证据分层如下：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>已发生的验证</th>
+<th>限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>源码</td>
+<td>独立审查连续性、UI和投影；最终APP与交付包源码逐字节核对</td>
+<td>不以作者自述代替非作者核验</td>
+</tr>
+<tr>
+<td>受控测试</td>
+<td>13个唯一新增定向case；首批11通过，投影变更后8通过，其中6为受影响组必要重跑</td>
+<td>不能相加说19个独立case，不是全仓库或真实provider全容量验收</td>
+</tr>
+<tr>
+<td>类型/构建</td>
+<td>API/Web类型与构建通过；投影修改后必要API检查通过</td>
+<td>保初次打包输出父目录缺失失败及distinct修复日志，未洗掉失败</td>
+</tr>
+<tr>
+<td>发布/健康</td>
+<td>112受控发布与独立R53健康通过，旧assets闭包保留</td>
+<td>101节点程序未因本平台包自动升级；健康不等于业务完整验收</td>
+</tr>
+<tr>
+<td>真实判断/页面</td>
+<td>新run签名成功；32件原件引用、原三标准全满足；真实页面回报详情可展开收起</td>
+<td>页面观察未隔离SSE与其他刷新，未新增手机或全工厂浏览器组</td>
+</tr>
+<tr>
+<td>结果与停止</td>
+<td>独立有限原件/引用审查通过，多观测确认自然停派</td>
+<td>不代表完整dirty/index传输、历史作者身份或全产品独验</td>
+</tr>
+</tbody></table></div>
+<p>全局28.2%覆盖率失败仍保留，lines90/branches80门未降低；其他基础设施路径、环境、browser/ZIP完整验证、客户12项和12＋5能力交付仍按原项目计划推进。需要的新验证应明确范围和产物，不能包装成“补日志”后重跑旧测试。</p>
+<p>最终这个中央父运行的已知用量为<strong>642862 Token</strong>（input640602、output2260，cache-read633088已包含在input），目录价估算USD0.410614，非账单；不能重复加cache或CLI原生会话累计数。Pi判断费用、内部编排、本文整理与其他未归集费用仍unknown/null，不写零，也不设金额上限。它不是本轮所有参与过程的完整费用总计。见<a href="../../artifacts/closed-loop-r53/closed-loop-final-evidence.json">最终有限闭环证据</a>。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6 下一位开发者的最小工作顺序</h2>
+<ol>
+<li>先核本文APP、当前prod版本、真实Git及是否有后来任务；本页不是日后继续复用的实时授权快照。保原日常开发目录，在112独立副本按规则开发，不并发改101同一需求。</li>
+<li>修原件问题时先检查完整intent、当前源run/resultH、同目标连续链和缺件表。新报告使用唯一path，只提供新增必要原件；不要重复全部历史来挤满prompt。摘要不能冒完整原件，来源transport不能冒历史作者身份。</li>
+<li>改动上述模块时优先执行对应定向文件：<code>apps/api/test/supervisor-evidence-history-r53.test.ts</code>、<code>project-workbench-loop-r53.test.ts</code>、<code>supervisor-evidence-projection-r53.test.ts</code>。按受影响范围选组，类型/构建按实际修改执行；不为文档、日志或已保存通过结果重跑模型与测试。</li>
+<li>新增上下文或原件后，先对保存字节计算完整prompt，包括contract、JSON转义、metadata和纠错；131072门不动。若必需语义仍放不下，明确阻塞并安排独立方案，不删除原文、来源或纠错求通过。</li>
+<li>交付应分列源码/包指纹、必要验证、部署/独立健康、真实用户流程、费用和未完项；按仓库工具追加建设记录。新发布使用新的operation与受控备份/恢复资格，不重放本轮一次性控制器。没有做的验收明确写未做。</li>
+</ol>
+<p>关键安全报告入口：<a href="../../artifacts/closed-loop-r53/closed-loop-final-evidence.json">最终闭环</a>、<a href="../../artifacts/closed-loop-r53/independent-loop-saved-evidence-review.json">独立保存原件审查</a>、<a href="../../artifacts/closed-loop-r53/browser-visible-loop-readback.json">页面观察</a>、<a href="../../artifacts/closed-loop-r53/completed-item-and-plan-readback.json">事项35/计划B17</a>、<a href="../../artifacts/closed-loop-r53/package-r2-independent-verification.json">包核验</a>。原始私有intent、完整回包与认证材料不复制到本文或公开仓库；公开报告中的指纹用于定位当时证据，不代替获取权限。</p>
+<p>本页Markdown为源，同目录HTML由<code>node scripts/build-design-html.mjs &lt;本Markdown路径&gt;</code>生成。复制接手资料时保持<code>docs/版本记录</code>与<code>artifacts/closed-loop-r53</code>等相对结构；不要只复制HTML后声称证据已交付。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="R53%E7%9B%91%E7%AE%A1%E9%97%AD%E7%8E%AF%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%8E%A5%E6%89%8B%E8%A1%A5%E5%85%85-20261018.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

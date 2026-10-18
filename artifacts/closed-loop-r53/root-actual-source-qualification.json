@@ -1,0 +1,54 @@
+{
+  "kind": "r53-root-source-and-validation-qualification",
+  "sourceCommit": "f46749926b0ec6bf12fa060a0267518c8400527d",
+  "opsCommit": "5377b761591a54ac976176dc3a30db050110b146",
+  "qualifiedForLimitedProductionDeployment": true,
+  "scope": "Cross-round immutable evidence continuity, current round UI/readmodel, strict lossless prompt projection; original criteria unchanged.",
+  "independentReviews": [
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\closed-loop-r53\\ui-independent-source-review-final.json",
+      "bytes": 11108,
+      "sha256": "7fd1a5fe8c7ddc79b98a1cce0e1c12ce45ecd5e9aacac78158e036f74582e97f"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\closed-loop-r53\\evidence-independent-source-review.json",
+      "bytes": 11889,
+      "sha256": "8bf481af562885bb12ff7a44b6bec7bd5b3df0d8d6aef598e49f360ea102c492"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\closed-loop-r53\\evidence-projection-independent-source-review.json",
+      "bytes": 6629,
+      "sha256": "f1e39744351cd472ae388f93191d95bb284ca299952e4af8026873184c1e72c3"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\closed-loop-r53\\package-r2-independent-verification.json",
+      "bytes": 8573,
+      "sha256": "6e190b660505b1384d74e5963a8cb16429c364ea9eb0d2efb827bc736e1ff6c8"
+    },
+    {
+      "path": "D:\\AI\\workspaces\\MyJevis\\artifacts\\closed-loop-r53\\saved-real-union-prompt-budget-compacted.json",
+      "bytes": 20306,
+      "sha256": "c165ecf3dfd2902b7f3243d6f42eb45e64e0b5e47ae0f997ca0ebeada4877beb"
+    }
+  ],
+  "uniqueTargetedCases": 13,
+  "firstTargeted": {
+    "pass": 11,
+    "fail": 0,
+    "skip": 0
+  },
+  "projectionAffected": {
+    "pass": 8,
+    "fail": 0,
+    "skip": 0,
+    "sixPreviouslyPassedReexecutedBecauseAffected": true
+  },
+  "apiWebTypecheckAndBuildExitCode": 0,
+  "afterProjectionAPITypecheckAndBuildExitCode": 0,
+  "actualPromptBytes": 119065,
+  "futureControlledReserveBytes": 123466,
+  "promptMaximumBytes": 131072,
+  "browserAcceptance": false,
+  "actualFactoryLoopAccepted": false,
+  "newModelsInvokedAtCut": false
+}

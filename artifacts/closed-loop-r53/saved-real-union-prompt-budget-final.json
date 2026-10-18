@@ -1,0 +1,560 @@
+{
+  "kind": "r53-real-saved-evidence-prompt-budget-measurement-final",
+  "appCommit": "ab804c805f05f77c615574235ab527e9309dd29e",
+  "sourceFiles": [
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-dc37bd23-3aa1-46da-b54d-6dd84f6a6f3d/run.json",
+      "bytes": 89215,
+      "sha256": "71014d45b40a6467b829a96784852b2d2adf0c349bb39e4b3806b0577c1aa3c8"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-03329d8b-20b3-472e-a7f8-507506413d69/run.json",
+      "bytes": 42326,
+      "sha256": "1b95c02f40b4967cbbea0ef9e4747bbd8ffbcefaa8c80cfdf144be125efcc98b"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal9-observation-a8240aed-6ce6-466f-901a-7be20ba14657/run.json",
+      "bytes": 85644,
+      "sha256": "8f35b36f0901c8abd1ebf003c379f0e9168b2e6be012b1038b1f7316cd10adb9"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-03329d8b-20b3-472e-a7f8-507506413d69/workbench.json",
+      "bytes": 428849,
+      "sha256": "49cc7cf3369233545bfa2505d04206e80325a7ad4f34062b3aec925f244948ae"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r53-frozen-capacity-11e70675-a3be-4a94-b9e2-373aab893e01/frozen.json",
+      "bytes": 214167,
+      "sha256": "7f2bad0fdb7a48555e05ca06d340f4a0624ba85409e50a66d5d72e56e7b4bb50"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r53-authority-981c34b2-2f24-421a-84c6-d1d246e38730/request.json",
+      "bytes": 1709,
+      "sha256": "f49068397e23f0de5b46771ef4f4acd2ed28e0c8b5dba0e061c3db9caa739a54"
+    }
+  ],
+  "actualFrozen": {
+    "intentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:10:0:667f4896820efb461c79185c662933a10f3ad180:97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+    "intentBinding": "4b4337a2c46eeff6b027d7d8b30d4625f7af30310f012faf6e63ff33e938adf9",
+    "rawSHA256": "e7f99aa59d023c38b1f1fb6c42db3f976abcda244be60fb22d57871097c53182",
+    "state": "complete",
+    "exclusions": 56,
+    "selected": 0,
+    "realCorrections": 3
+  },
+  "union": {
+    "sourceRunIds": [
+      "667f4896820efb461c79185c662933a10f3ad180",
+      "9531d5b862d3538ac3ae7449b9555d134c9c3df0"
+    ],
+    "sourceResultHashes": [
+      "97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+      "def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003"
+    ],
+    "boundary": {
+      "runId": "8278fcb5a9258957994f510ff07690159d1f7f4d",
+      "resultHash": "597800c94fbd91287d026476a010454a1f0bac07d5abf75382c53bcec17a20d2",
+      "outcome": "success",
+      "nativeSessionId": "d482f9f6-f0a5-48fc-a603-20ccb5a919f4",
+      "goalRevision": 9,
+      "reason": "different-goal"
+    },
+    "uniqueOriginals": 31,
+    "missing": 0,
+    "complete": true,
+    "originalsUTF8bytes": 92441,
+    "tableUTF8bytes": 9296,
+    "historyUTF8bytes": 14585,
+    "referenceWhitelistUTF8bytes": 4058,
+    "unionDecodedBytes": 67702
+  },
+  "measurements": [
+    {
+      "name": "actualFrozen56Exclusions_actualThirdCorrection_actual31union",
+      "complete": false,
+      "promptUTF8bytes": 140433,
+      "promptSHA256": "c0de509ebcb8d7e3e3e0a541ef774c3dbf8bf2008b6e7e092ae6870e9585a928",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": -9361,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 4716,
+          "sha256": "a25533742927f023e7e42161fda1a504f02f329bea18632f1454a09c88e57cc5",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 92441,
+          "sha256": "aea57584c300dcb3b88ad4e3ee8c3c3fe6c01459a51f760a9f518ce001a7fafa",
+          "count": 31
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 9469,
+          "sha256": "59f99261add746d5be5d5ec53b6d6bbe6fbe1b59ea246d126f8d5c1c51f008d8",
+          "count": 56
+        },
+        "other": {
+          "UTF8bytes": 29857,
+          "sha256": "085bf75ab50b02ea342f7de5c3a6c16ea3608be5b1668fe7a8e84b7706b9d035",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 137686,
+          "sha256": "15ee9907aef51c47711eef6fded78c5c7e090842e8aca12d899aa29813d0a202",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 56
+    },
+    {
+      "name": "conservativeFutureOneRun_4KiBUniqueFacts_realFrozen56_actual3Corrections",
+      "complete": false,
+      "promptUTF8bytes": 145913,
+      "promptSHA256": "8ff892e231aa5703874d9e3fd29d8bf88c782701055dcfd474d5f4971ef5ac07",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": -14841,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 4716,
+          "sha256": "a25533742927f023e7e42161fda1a504f02f329bea18632f1454a09c88e57cc5",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 97207,
+          "sha256": "4692c2b6e01b7c61c60fc21cd2abbbce43c7ecc2eca649d034b1bd259049e287",
+          "count": 32
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 9469,
+          "sha256": "59f99261add746d5be5d5ec53b6d6bbe6fbe1b59ea246d126f8d5c1c51f008d8",
+          "count": 56
+        },
+        "other": {
+          "UTF8bytes": 30571,
+          "sha256": "7413c3d21a1b3d1a66c89efddf934c887f7ad82fa1371c541a54e4da2e2699ac",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 143166,
+          "sha256": "b4ec12be3bc186f8bf45eeacfd1d5c5bc99fa241304d71f2da2b1924fae1b8df",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 56
+    },
+    {
+      "name": "actual_proposalKeepFullFrozenAudit_modelOmitOnlyDuplicateHistoryAndTopProvenance",
+      "complete": true,
+      "promptUTF8bytes": 118978,
+      "promptSHA256": "4f378a282258899634ea1247d29c1225c7c8b1125b5b39ca754f1ae82424976e",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": 12094,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 4716,
+          "sha256": "a25533742927f023e7e42161fda1a504f02f329bea18632f1454a09c88e57cc5",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 85590,
+          "sha256": "3ccf3690f62955a0fd8ad28d982d21d2a60bd1740ec06d922a985d50b0d36136",
+          "count": 31
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 9469,
+          "sha256": "59f99261add746d5be5d5ec53b6d6bbe6fbe1b59ea246d126f8d5c1c51f008d8",
+          "count": 56
+        },
+        "other": {
+          "UTF8bytes": 15253,
+          "sha256": "e349617f6e58bd203dbdc822b5a7eeb910b6b2a46cea4153aae2998a5f98d8fd",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 116231,
+          "sha256": "2d8c5bdfa757c33bb357a31ca0598478ad76fd1bdc5a89ad66df1ad0a180b6a3",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 56
+    },
+    {
+      "name": "actual_proposalPlusTableCounters_SourceBindingsAndCitationWhitelistRemainExact",
+      "complete": true,
+      "promptUTF8bytes": 110876,
+      "promptSHA256": "5f63426cc560e966e0fd0bff43e9e6e9f345bb142ffa75e5623dd9a7071cbbfa",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": 20196,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 4716,
+          "sha256": "a25533742927f023e7e42161fda1a504f02f329bea18632f1454a09c88e57cc5",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 85590,
+          "sha256": "3ccf3690f62955a0fd8ad28d982d21d2a60bd1740ec06d922a985d50b0d36136",
+          "count": 31
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 9469,
+          "sha256": "59f99261add746d5be5d5ec53b6d6bbe6fbe1b59ea246d126f8d5c1c51f008d8",
+          "count": 56
+        },
+        "other": {
+          "UTF8bytes": 7151,
+          "sha256": "af0278bff027fd67cd543bdd52882b13a2b6728aa527d050fb665e8992788429",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 108129,
+          "sha256": "32dc2b3d0754a1d3bc48064dec982b95c152978db44e70522e32fbf284475f80",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 56
+    },
+    {
+      "name": "future4KiB_proposalKeepFullFrozenAudit_modelOmitOnlyDuplicateHistoryAndTopProvenance",
+      "complete": true,
+      "promptUTF8bytes": 123379,
+      "promptSHA256": "26d3ad8038a443884af47eedf1cf0ed9467bf9495b8a1e2deb9aa9ed60f054d5",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": 7693,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 4716,
+          "sha256": "a25533742927f023e7e42161fda1a504f02f329bea18632f1454a09c88e57cc5",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 90123,
+          "sha256": "e8fdad2f5286f7fca3f9c72e16da37990ca887388a20ffef9c0617736e5c97c7",
+          "count": 32
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 9469,
+          "sha256": "59f99261add746d5be5d5ec53b6d6bbe6fbe1b59ea246d126f8d5c1c51f008d8",
+          "count": 56
+        },
+        "other": {
+          "UTF8bytes": 15121,
+          "sha256": "423df6003e3584896f2097cd36827167cd002125885c90d4580618cf04d0c7b0",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 120632,
+          "sha256": "beb7a33aee5ba742b4f578841a8df66d53bf24e05b2fa62223330933c8e678c9",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 56
+    },
+    {
+      "name": "future4KiB_proposalPlusTableCounters_SourceBindingsAndCitationWhitelistRemainExact",
+      "complete": true,
+      "promptUTF8bytes": 115009,
+      "promptSHA256": "f7c91114194f8319895ff6c07289e702e54a003e871f6b9ee84961994ff1a97b",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": 16063,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 4716,
+          "sha256": "a25533742927f023e7e42161fda1a504f02f329bea18632f1454a09c88e57cc5",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 90123,
+          "sha256": "e8fdad2f5286f7fca3f9c72e16da37990ca887388a20ffef9c0617736e5c97c7",
+          "count": 32
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 9469,
+          "sha256": "59f99261add746d5be5d5ec53b6d6bbe6fbe1b59ea246d126f8d5c1c51f008d8",
+          "count": 56
+        },
+        "other": {
+          "UTF8bytes": 6751,
+          "sha256": "9699a08e0b312020debd7e2b8e73423408b41bbf311fdda81c2501919f51c901",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 112262,
+          "sha256": "ae460555104942e1631f20a6de0a4daa06936dd9eecb3fdd1c850eda162cbf00",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 56
+    }
+  ],
+  "preliminaryScenarioMeasurements": [
+    {
+      "name": "actual31union_saved2corrections_emptyExperience_lowerBound",
+      "complete": true,
+      "promptUTF8bytes": 129289,
+      "promptSHA256": "a8983823f650211ab13b18d9974993f5f15000f9e21d5ada731e97aa9bf25e54",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": 1783,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 3040,
+          "sha256": "8336c36523a3c110e2065cb946be63b8a1b07fd162d8e2b86321677c75d0bff9",
+          "count": 2
+        },
+        "originals": {
+          "UTF8bytes": 92441,
+          "sha256": "aea57584c300dcb3b88ad4e3ee8c3c3fe6c01459a51f760a9f518ce001a7fafa",
+          "count": 31
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "other": {
+          "UTF8bytes": 29856,
+          "sha256": "97f9872f4a414a4f96ddb1bc460dc70271b58157b1ad4d7035934093cb550728",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 126542,
+          "sha256": "f5b87ccbc80bc9caedc621dd923c0b4df65c10a87b8ed4fdb2b7c0da2549a320",
+          "count": 1
+        }
+      },
+      "correctionsCount": 2,
+      "selectedCount": 0,
+      "exclusionsCount": 0
+    },
+    {
+      "name": "actual31union_plus49metadata_plusMaxChineseThirdCorrection_conservativeScenario",
+      "complete": false,
+      "promptUTF8bytes": 147061,
+      "promptSHA256": "868423da485ff6e8d37a16fdb439c06240768d7cae344fca4ac030c46dc363a6",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": -15989,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 11845,
+          "sha256": "aca5dd5b3d1c0fda7140a90d0431325b1574738ef3a920f4ac5c15ae3149fa91",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 92441,
+          "sha256": "aea57584c300dcb3b88ad4e3ee8c3c3fe6c01459a51f760a9f518ce001a7fafa",
+          "count": 31
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 8968,
+          "sha256": "80555d65b299fc1083663d99a13d01c7cd55b8e9d6c47831427a3609ba2f70f5",
+          "count": 49
+        },
+        "other": {
+          "UTF8bytes": 29857,
+          "sha256": "159c2fb4eb48f07e80870b61c4c1dc5ace2be26358a0c4e9fc0760d81535a565",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 144314,
+          "sha256": "6b10b229a0649f446227d29e1674e4375ca062a56a8606f6b1bccd89ff9d6fca",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 49
+    },
+    {
+      "name": "diagnosticOnly_noDuplicateHistory_orRepeatedTopLevelProvenance_notImplemented",
+      "complete": true,
+      "promptUTF8bytes": 124480,
+      "promptSHA256": "c6e5ad67be7a09e3aab8c1eeb8032aecf6031d6d758039e6cd85ff3834e9a818",
+      "limitUTF8bytes": 131072,
+      "remainingUTF8bytes": 6592,
+      "components": {
+        "goal": {
+          "UTF8bytes": 340,
+          "sha256": "a8a3e7527dce81b05f0f8e743a9f9c7dcc3409506e22355524322c8a910e28fe",
+          "count": 1
+        },
+        "criteria": {
+          "UTF8bytes": 765,
+          "sha256": "fe2f977ca052f7d0c6ea2f9fb53bd115409828f3ef14808cd5e811095c26c622",
+          "count": 3
+        },
+        "corrections": {
+          "UTF8bytes": 11845,
+          "sha256": "aca5dd5b3d1c0fda7140a90d0431325b1574738ef3a920f4ac5c15ae3149fa91",
+          "count": 3
+        },
+        "originals": {
+          "UTF8bytes": 85590,
+          "sha256": "3ccf3690f62955a0fd8ad28d982d21d2a60bd1740ec06d922a985d50b0d36136",
+          "count": 31
+        },
+        "selected": {
+          "UTF8bytes": 2,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "count": 0
+        },
+        "exclusions": {
+          "UTF8bytes": 8968,
+          "sha256": "80555d65b299fc1083663d99a13d01c7cd55b8e9d6c47831427a3609ba2f70f5",
+          "count": 49
+        },
+        "other": {
+          "UTF8bytes": 14127,
+          "sha256": "3914495925b33f93f1dab2adf38a00c37021cd9062494d446040fc94034e2828",
+          "count": 1
+        },
+        "total": {
+          "UTF8bytes": 121733,
+          "sha256": "deb674e3340336c025c8875bd11c856a7430f49b2ea27ddc781fdc6e46824f3b",
+          "count": 1
+        }
+      },
+      "correctionsCount": 3,
+      "selectedCount": 0,
+      "exclusionsCount": 49
+    }
+  ],
+  "limits": [
+    "Pure offline saved-byte helper/projector invocation; no tests, build, provider/network or old intent replay.",
+    "Actual frozen complete intent has56 exclusion records, not the earlier stated49. Selected array is empty. Exact saved actual third correction is appended; no synthetic replacement of corrections.",
+    "Source task revision is inferred expectedTaskRevision+2 only in the history fingerprint; the full required frozen model fields and all raw original bytes come from saved input/results.",
+    "Future run is explicitly a capacity reserve only, not a dispatched/signed receipt; it adds one bounded synthetic4096B fact and fixed-length source metadata.",
+    "Compaction alternatives are byte measurements only, not source edits, deployed changes or weakened original validation. Frozen audit and sourceBindings must remain complete; table arrays and manifest would only be omitted from redundant model serialization.",
+    "No provider context acceptance or total131072B practical provider limit is proven."
+  ]
+}

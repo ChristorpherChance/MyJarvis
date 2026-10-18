@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="本次监管流程已完成；产品、客户和长期自治独立验收继续保留。">
+  <meta name="jarvis-source-sha256" content="570f853bce717397c1416698388f5dd0d274afbb6fae3b2061897aafb7ceb4ce">
+  <title>软件工厂监督推进检查点</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">监督推进检查点 · 建设340</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%9B%91%E7%9D%A3%E6%8E%A8%E8%BF%9B%E6%A3%80%E6%9F%A5%E7%82%B9.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 46 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">当前：R53上线，本次真实可见监管闭环完成（建设340，2026-10-18）</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">record338：R51r1／R52真实修复与整平台交接（2026-10-18）</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">当前：R50健康，两例及自动补证已核；完整审阅容量返修中（建设329，2026-10-18）</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">当前：R49r1健康，12＋5与真实监管过程已可见；自动审阅仍受阻（建设321，2026-10-18）</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">当前：R49已健康，有限报告判断已走通；首屏返修中（建设317，2026-10-18）</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">建设316：新R48r2健康，ZIP报告独核，自动判断仍待监管返修</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">建设315及以前检查点原文（历史保持）</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">建设315固定范围：旧R48已恢复，正式权限返修处理中</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">建设314及以前检查点原文（历史保持）</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">record310及以前检查点原文（完整保留）</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">建设310 · 现行12＋5已保存，正式监管任务已运行；结果未收（2026-10-18）</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">建设309 · 当前明确受阻，测试与修复未交付（2026-10-18）</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">建设308 · 2026-10-18 · R46r1已上线，原页真实测试已claim但无结果</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">建设307 · 2026-10-18 · R45r3统一项目入口已上线，有限只读现场通过</a>
+<a class="toc-link level-2" href="#section-15" data-parent="15">建设306：Tasks未知Token白屏已修复并112 R44r1原tab有限验收（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-16" data-parent="16">建设305：R7旧lazy闭包有限恢复，登录后监管页仍待验（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-17" data-parent="17">建设304检查点：R7双代码上线与配置46当前资格完成，原apply失败保原（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-18" data-parent="18">建设303固定检查点：R9结果及R10仅START（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-19" data-parent="19">建设302固定cut：R8真实有限结果、B两cut恢复、R9仅START（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-20" data-parent="20">建设301固定cut：R7真实有限结果与R8只START（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-21" data-parent="21">建设300固定cut：R6结果、R7仅START（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-22" data-parent="22">建设299固定cut：R5结果与R6仅START（2026-10-17）</a>
+<a class="toc-link level-2" href="#section-23" data-parent="23">最新单次授权发布：R40已上线112；十分钟跟进保持暂停（记录293）</a>
+<a class="toc-link level-2" href="#section-24" data-parent="24">平台操作实效修复R40已上线112，自动跟进保持暂停（记录293）</a>
+<a class="toc-link level-2" href="#section-25" data-parent="25">记录292及更早检查点原文（完整保留）</a>
+<a class="toc-link level-2" href="#section-26" data-parent="26">本人设置保存修复已上线R39，原偏好保留（记录292）</a>
+<a class="toc-link level-2" href="#section-27" data-parent="27">批准任务自动测试桥有限验证通过，计划108推进真实AI评审（记录291）</a>
+<a class="toc-link level-2" href="#section-28" data-parent="28">真实CI合成机制与保护门已通过，计划106推进批准后自动单测桥（记录290）</a>
+<a class="toc-link level-2" href="#section-29" data-parent="29">真实CI前置与31迁移已核，启动目录缺失已定位（记录289，计划105）</a>
+<a class="toc-link level-2" href="#section-30" data-parent="30">记录288及以前检查点完整原文</a>
+<a class="toc-link level-2" href="#section-31" data-parent="31">四回调与18表原行文本已完成有限独立验收，计划104推进真实CI（记录288）</a>
+<a class="toc-link level-2" href="#section-32" data-parent="32">记录287及以前检查点完整原文</a>
+<a class="toc-link level-2" href="#section-33" data-parent="33">四用例原始报告全部通过，资源收尾已核；执行封装解析异常已定位（记录287，计划103）</a>
+<a class="toc-link level-2" href="#section-34" data-parent="34">配置标记修正的新验证已启动，计划100等待终态（记录286 START-only）</a>
+<a class="toc-link level-2" href="#section-35" data-parent="35">本次资源收尾已核，配置标记完成单源修正（记录285）</a>
+<a class="toc-link level-2" href="#section-36" data-parent="36">新验证已启动，计划97等待实际终态（记录284 START-only）</a>
+<a class="toc-link level-2" href="#section-37" data-parent="37">当前进展（记录283）：配置中断及资源收尾已核，禁用接口误判完成单源修正</a>
+<a class="toc-link level-2" href="#section-38" data-parent="38">当前进展（记录282）：加载修正的新验证已启动，计划93等待终态独审</a>
+<a class="toc-link level-2" href="#section-39" data-parent="39">当前进展（记录281）：本次保护与资源收尾已核对，新的四用例仍在准备</a>
+<a class="toc-link level-2" href="#section-40" data-parent="40">建设280检查点原文（整字节保留）</a>
+<a class="toc-link level-2" href="#section-41" data-parent="41">当前进展（记录280）：加载修正单源已核，607内容不变，独立固定属性保护版本已选择</a>
+<a class="toc-link level-2" href="#section-42" data-parent="42">记录279检查点原文快照</a>
+<a class="toc-link level-2" href="#section-43" data-parent="43">当前进展（记录279）：错误原件已读并定位框架上下文，单项加载修正已选择</a>
+<a class="toc-link level-2" href="#section-44" data-parent="44">记录278检查点原文快照</a>
+<a class="toc-link level-2" href="#section-45" data-parent="45">记录277时点检查点原文</a>
+<a class="toc-link level-2" href="#section-46" data-parent="46">记录276时点检查点原文</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">真实监管 / 有限闭环 / 后续工作</p>
+        <h1 id="document-title">软件工厂监督推进检查点</h1>
+        <p class="subtitle">本次监管流程已完成；产品、客户和长期自治独立验收继续保留。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>C6</strong><span>本次流程收尾</span></div><div class="stat"><strong>3／3</strong><span>原标准达标</span></div><div class="stat"><strong>独验另列</strong><span>完整工厂未签收</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><!-- record340-current-block-begin -->
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">当前：R53上线，本次真实可见监管闭环完成（建设340，2026-10-18）</h2>
+<p><strong>本轮结果：</strong> 贾维斯已实际走通“测试结果→问题反馈→修复安排→回收原件→重新判断→自然停止”。同目标新运行42c4f476完成只读回收，真实review207对原三条标准全部判定满足；S79/G10 achieved、enabled=false。非作者独立核32件71,683B原件、36条来源绑定及全部标准引用通过；原两项PolicyService PostgreSQL16回归为2通过/0失败/0跳过/0未运行，最新运行未重跑它们。</p>
+<p><strong>当前阶段：</strong> 主事项第35版 completed，计划B17/currentC6，仅表示这次文字监管演练及可见流程收尾；independentAcceptance=false。主管的本轮回报由当前绑定事件自动生成，不依赖Root手工事项简报；任务没有被伪改为completed。真实页面已见最近指令、CC回应、判断、下一步、阻塞与可展开三标准/32来源，截图只覆盖页面中部视口。13:20至13:26三次观测无新指令、排队或运行，停止的是继续派发，不冒OS停止确认；十分钟PAUSED保持。</p>
+<p><strong>实现与上线：</strong> 112独立副本APP f46749926b0ec6bf12fa060a0267518c8400527d已验证并发布R53；完整4,591,049,206B快照、隔离恢复、10SQLite检查与独立健康通过。13个唯一针对场景及API/Web类型/构建通过，重跑的受影响用例不重复计数。旧ab候选140433B超限、package父目录ENOENT与初reply的DECISION_CONTEXT_CHANGED拒绝均保原；明确current-followup更正及授权重绑后只产生一次新只读后继。最终实际完整prompt125663B小于131072B，含4条更正；候选119065B与预留123466B分别保留测量含义，不冒供应商最大容量。</p>
+<p><strong>仍未完成：</strong> 全局覆盖率28.2%旧失败保留，lines90/branches80门不降；其他infra/隔离环境、素材ZIP读取与完整浏览器验证继续。完整12项能力+5项监管、客户12、完整交付与24—72h持续自治未独立签收；完整dirty/index原件运输和旧f9历史生产者身份未独验，当前可信运输不冒历史作者签名。全域旧待办通知、移动端和SSE唯一来源不在本次验收中。</p>
+<p><strong>费用：</strong> 新CC运行642,862Token（输入640,602已含cache-read633,088，输出2,260），目录估算USD0.410614非账单；不再加cache或原生累计，Pi/内部编排/账单未知不补零。费用仅记、金额无cap，10M为软技术窗。旧338费用cut与339以及330—337存储/迁移/AI历史原文保留。</p>
+<p><a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/R53-%E6%9C%89%E9%99%90%E7%9C%9F%E5%AE%9E%E7%9B%91%E7%AE%A1%E9%97%AD%E7%8E%AF%E5%AE%8C%E6%88%90%E7%AE%80%E6%8A%A5-20261018.md">本轮完成简报</a> · <a href="../artifacts/closed-loop-r53/closed-loop-final-evidence.json">最终闭环证据</a> · <a href="../artifacts/closed-loop-r53/independent-loop-saved-evidence-review.json">独立保存原件复核</a> · <a href="../artifacts/closed-loop-r53/browser-visible-loop-readback.json">现场页面核对</a> · <a href="../artifacts/closed-loop-r53/completed-item-and-plan-readback.json">事项与阶段收尾</a>。</p>
+<!-- record340-current-block-end --></section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">record338：R51r1／R52真实修复与整平台交接（2026-10-18）</h2>
+<p>112 R52健康，真实Pi入口与131072B完整门已实现并独审；本轮两个自然模型决定为continue→自动补证→wait_user，最后三标准false。item33／B16C5blocked，S71/G10等待且未启用，无活动Factoryrun；C6及全工厂未签。</p>
+<p>下一步在112独立源码副本修跨轮原件连续合并、无损传输和f9可信来源，不重测求绿或让本人重复批准。有限浏览器已见最新状态，但等待本人主标题语义待修。指南R3已本地定稿、MDHTML同源；旧R2真实62文件已交112，新R3快照尚待后续传送。代码PR7e0a OPEN/DRAFT。</p>
+<p>已知109367601Token／目录USD67.884218非账单，cache已含/native不加；Pi内部与账单未知，金额无cap、10M软技术窗、十分钟PAUSED。下方337及更早检查点全文原样保留。</p>
+<h1>建设329更新：两例与真实自动补证已核，C5完整审阅容量待修</h1>
+<!-- record329-current-block-begin -->
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">当前：R50健康，两例及自动补证已核；完整审阅容量返修中（建设329，2026-10-18）</h2>
+<p><strong>当前：</strong> 真实监管已完成“指令→101修复→两用例通过回报→贾维斯要求补原件→自动续发→收回原件”。现回归原件已保存，审阅容量不足待修，完整工厂未验收。</p>
+<p><strong>阻塞：</strong> 补齐13份原件后完整审阅输入44830字节，超过现30000字节门；当前停在待判断。两用例保存原报告2通过0失败0跳过不等于完整交付。</p>
+<p><strong>下一步：</strong> 调整有界完整证据审阅容量并核验，再以新绑定审阅已保存原件；保旧意图和失败，不为补证重跑测试。通过后推进其余真实测试及交付目标。</p>
+<p>item28blocked、计划B11/currentC5。新Jarvis goal9已正式派发R51候选，固定cut08:28:23Z仍queued；只选共享64KiB完整prompt字节门，保32K Token上下文/4096输出声明与全部严格门，provider接受未验，未实现/包/上线。</p>
+<p>112正式R50健康；页面已见真实回报→判断补件→自动续发→后继受阻，未证SSE独占传输，英文故障码仍待中文化。12＋5和当前/后续阶段保持，旧74仅历史；完整工厂与正常全自动未签。</p>
+<p>已知父Token78,990,076（cache已含），目录估算USD50.984673非账单，Pi/内部/新R51未知null；费用无金额cap，10M软技术窗。十分钟PAUSED、101 R7/config46。迁移322–328及AI环境原文全保，不混量费。后继结果另记。</p>
+<!-- record329-current-block-end --><p>以下检查点旧全文按原时点完整保留。</p>
+<h1>建设321更新：R49r1简明监管已核，C4数据库回归与自动审阅仍受阻</h1>
+<!-- record321-current-block-begin -->
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">当前：R49r1健康，12＋5与真实监管过程已可见；自动审阅仍受阻（建设321，2026-10-18）</h2>
+<p>112 R49r1已上线并独立健康。桌面简明六卡、默认折叠，以及不刷新后的12项工厂能力＋5项监管、当前六/后续六阶段已实查；手机仅视觉，完整监管与自动流程未签。</p>
+<p><strong>当前：</strong> 现行12项工厂能力和5项监管已清楚展示。101已两次回报数据库隔离入口失败，两用例尚未运行；已停止盲试并安排查明连接约定。</p>
+<p><strong>阻塞：</strong> 数据库初始化连接仍异常，两用例未跑；监管自动审阅输入超限也待修，未达到本组或完整工厂验收。</p>
+<p><strong>下一步：</strong> 先核对镜像真实启动与连接约定，再据实安排入口修复；监管自动审阅返修已另交101，核验后继续判断和复验。</p>
+<p>item26blocked、计划B9/currentC4；新Jarvis goal8于07:54:23Z真实running，只修输入安全预算，R50未实现/包/上线。Factory goal4/5/6的同两例均未跑，清理等原日志未独立收全，signed success0不冒测试通过。此为固定cut，后继另记。</p>
+<p>12＋5与全部阶段标准/历史保持，旧74仅历史。已知父Token68,722,968（cache已含），目录估算USD45.246465非账单；Pi/内部/新R50量价未知null。费用无金额cap，10M仅软技术窗；十分钟PAUSED，101仍R7/config46。上方迁移与终端AI补充原文完整保留，不混本轮量费。</p>
+<!-- record321-current-block-end --><p>以下检查点旧全文按原时点完整保留。</p>
+<h1>建设317更新：R49健康、有限判断达标，简明首屏返修中</h1>
+<!-- record317-current-block-begin -->
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">当前：R49已健康，有限报告判断已走通；首屏返修中（建设317，2026-10-18）</h2>
+<p><strong>已核实：</strong> 112 R49正式上线并独立健康；Factory c390新签名只读报告经真实Pi审阅，两项本轮有限标准达标，session25 achieved/disabled、无活动Factoryrun。不是完整工厂或客户交付验收。</p>
+<p><strong>正在处理：</strong> 首屏真实截图仍被长目标文字压屏，未达到简明要求。正式Jarvis goal7已交101CC返修，item24写前核87ed真实running；事项主task/run为Factory843/c390报告来源，不跨项目混绑。计划B7/currentC2/inactive，C3有限审阅已发生，整体产品未签。</p>
+<p><strong>下一步：</strong> 回收R49r1源码/限定验证/同源包→独审→全新发布与独立健康→原页面简明首屏和SSE现场。此条截止06:46:14Z，不纳goal7后继结果；当前12＋5及当前六/后续六阶段、所有标准与历史保持，旧74仅历史。</p>
+<p>新103e切换309.282秒；4,484,061,686B/64文件59目录/10SQLite完整快照与隔离恢复同manifest54680a通过，权限0/973/416保持、无liveData还原。源审/包核和新模型有限成功不替代浏览器与完整产品验收；原SSR/Web失败保留。</p>
+<p>本窗口已知九run共57,557,208Token（cache已含），目录估算USD38.082965非账单；Pi/内部与goal7量价未知null。goal6真实22,893,109Token超过10M技术窗，未冒硬墙或金额cap、未清账。费用只留账无金额上限；十分钟PAUSED，101仍R7/config46。</p>
+<!-- record317-current-block-end --><p>以下检查点旧全文按原时点完整保留。</p>
+<!-- record316-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">建设316：新R48r2健康，ZIP报告独核，自动判断仍待监管返修</h2>
+<p>112新6e9成功并独立健康；Factory8261报告与保存样本独核，自动判断EXPERIENCE_SCHEMA未关闭。Jarvis建设会话goal6写前核真实running；item23running不代表Factory20恢复，planB6/currentC3。</p>
+<p>等真实源码/包→发布与独立健康→新绑定判断→有限复验；R49/新分组/完整闭环未验收。十分钟PAUSED，12＋5及旧历史保留。</p>
+<!-- record316-checkpoint-end --></section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">建设315及以前检查点原文（历史保持）</h2>
+<!-- record315-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">建设315固定范围：旧R48已恢复，正式权限返修处理中</h2>
+<p>112旧R48已恢复，独立健康核实双服务active、primary/statusok/businessHealthy。发布权限问题已通过贾维斯正式交101CC返修；本条只纳goal5派发与保存running观察，后续结果另记。监督项21running，计划B4/currentC3/inactive，6项/4简报保持。</p>
+<p>候选R48r2未上线；完整快照/隔离恢复通过，配置gid丢失故障和原失败保留。下步按planB4等待返修→审源→新切换与独立健康→判断报告→素材ZIP；无新产品签收或定时恢复。</p>
+<!-- record315-checkpoint-end --></section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">建设314及以前检查点原文（历史保持）</h2>
+<h1>当前检查点 · record311（固定至2026-10-18T04:23:58.074Z）</h1>
+<p>现行12项工厂能力＋5项监管已保存并有限可见，旧74仅历史；当前分母与通过数null，不以工具、Token或阶段数推算完成率。
+R48已上线及有限页面核验；B3/currentC3保原f9、监督项18blocked、6项4简报。R48r2源/包/前三phase过，activate失败原件保留，新只读确认旧R48双active/ok；根因unknown，r2health未调用。
+Jarvis正式goal3 run7f85已由101CC真实running，结果尚无；仅编写受控发布sidecar，未新activation，工厂ZIPgoal2未派。
+四次Pi不同binding仍invalid，无可靠decision。已知父Token16,186,326/cache已含；目录估算USD11.108672999999996非账单，Pi/internal/newgoal3未知null。record-only无金额cap/技术10M不清历史；十分钟PAUSED。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">record310及以前检查点原文（完整保留）</h2>
+<!-- record310-checkpoint-prefix -->
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">建设310 · 现行12＋5已保存，正式监管任务已运行；结果未收（2026-10-18）</h2>
+<p>旧74仅保历史，不再作为当前目标或完成分母；项目47、新计划e2986095/1、监督项15running已真实保存。112正式workbench派发至101，session4123716c/taskcd7d9551/rune23ccda8截至02:48:41Z仍running/resultReceived=false。当前先修兼容及简洁界面→消费既有报告/主管判断→101产品修复→回收回归；12＋5和当前/后续六阶段见确认基线。</p>
+<p>R19构建包核通过但链接P1拒部署，112仍R46r1/101R7config46；旧主说明、监督goal和74当前显示尚待修复。原3CAS尾验失败经限定只读对账确认写入，未重放、旧失败保留。产品完整能力未验收、当前run量费待回收、未知null，十分钟PAUSED。下方309及所有旧检查点保持当时原文，不倒填。
+证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/cc-supervisor-r43/r48-current-baseline-record310.txt">确认基线</a> · <a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/cc-supervisor-r43/r48-goal-transition-record310-final-safe-summary.json">固定cut安全摘要</a>。</p>
+<!-- record309-checkpoint-prefix -->
+</section>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">建设309 · 当前明确受阻，测试与修复未交付（2026-10-18）</h2>
+<p>本次业务三回执和3967B事实报告已回收：207断言通过/36skip，server coverage28.2&lt;90/exit1；原型分母独立、大原件仍索引。question:null阻塞第三报告消费；R17/R18两次provider API失败，2/2仅限定null fixture与四件199544B未提交partial，没有类型/构建/包/部署。停止盲第三次调用。112仍R46r1健康、101R7/config46。e900rev13blocked/event74、6项4brief/29base+1rolling，决定8保历史。覆盖率/环境、ZIP、浏览器问题owner101CC依赖/验收已列且仅planned。</p>
+<p>业务父3026319/估算3.308299非账单，R17 failed父14680817与R18 reported0均signed接纳，费用未知null。factory108/PG29/Env23/74zero/customer12未交付/十分钟PAUSED保持。下方308及所有旧检查点全文保留，不倒填。</p>
+<!-- record308-checkpoint -->
+</section>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">建设308 · 2026-10-18 · R46r1已上线，原页真实测试已claim但无结果</h2>
+<p>正式112 R46r1/101仍R7config46；开始按钮submit P1修复，原tab ordinaryclick已产生task843dd1bf/runb9229790并running，结果未回收。已有e900rev11/event65 running、6项/4完成简报原保。五phase/4.300GB完整快照及10库隔离restore实过，prodnotrestored。SSR与真实点击分列，原307漏检纠错追加不覆写。PR7 OPEN draft/e801原作者未合并；39,009,654维护父Token含cache、费用null/旧R15未知保，新业务费用待回收。两项running文案P2未修。plan108/74=0/PG29Env23/旧task12/global与十分钟PAUSED保持，真实测试后续结果309另记。
+证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/cc-supervisor-r43/r46-entry-repair-and-first-business-start-final-safe-summary.json">本次安全摘要</a>。</p>
+<!-- record307-checkpoint -->
+</section>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">建设307 · 2026-10-18 · R45r3统一项目入口已上线，有限只读现场通过</h2>
+<p>112正式20261018-unified-projects-r45-r3，101仍R7/config46；R13四P1和R14duplicate残留均拒部署，R15CLI143/nativefinal0保留，保存1/1/types/build及严格包独验另列。五phase/4.286GB完整备份与隔离restore实际通过，原tab统一项目/旧焦点/资料/6事项4简报与390×844有限只读通过；未发生产kickoff/reply/pause或新模型/CC轮。源码PR7 OPEN draft c687ec6，未合并。决定84f修订4implemented但独立验收false；plan108/PG29/Env23/74=0及十分钟PAUSED保持。R13+14已知Token125695853含cache，R15/R11未知null，金额null。后续文档Git由Root单独发布。
+证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/cc-supervisor-r43/r45-project-unification-final-safe-summary.json">本次安全摘要</a>。</p>
+<!-- record306-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">建设306：Tasks未知Token白屏已修复并112 R44r1原tab有限验收（2026-10-17）</h2>
+<p>24rows真实5个缺失tokensUsed触发旧toLocaleString卸载根，前305补资源未解决此不同bug。R11源码仅UI既有formatter及2标签，无后台补0/过滤；真实SSR混合6行通过但整体600.789秒timeout/143/native0。unknown签名只incomplete/5字段省略/costnull，默认0不冒已知0。R12只完成报告/双包，456.783秒/exit0/21turn，源码app9b0a712/final8046、未重跑tests/build；父12085695 signed/costnull，17.96191仅R11+R12区间估算非单轮或账单。</p>
+<p>112五phaseR44r1上线及4.248GB/9库完整备份、隔离restore过，健康双active；101仍R7/config46不重装。原登录tab两Tasks URL真实24行(5未知/12零/7正)、27任务及监管6事项/4简报显示，新error0；只导航/读取，未启动/变更，不冒全操作和模型CC业务闭环。两决定实施rev2、PR6 OPEN/DRAFT8046，不merge；选择409和发布pre-intent参数误拒保原。</p>
+<p>原74/customer12未交付、factory108/PG29Env23/global/自治blocked/十分钟PAUSED保持；通用旧资源/404/lazy机制仍待实现。下方305及全部旧记录原文保留。</p>
+<!-- record306-checkpoint-end --><!-- record305-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">建设305：R7旧lazy闭包有限恢复，登录后监管页仍待验（2026-10-17）</h2>
+<p>用户页面打不开后，Root实查API和双service健康，旧Ops JS/CSS却200/text-html/519B=indexH，证实旧资源缺失。首probe公域误套LAN CA错误保原，distinct标准TLS才确证。固定R41→R7旧闭包25资源/18same/7missing851685B/0collision，独审通过后唯一aa39ab6e WX补7；currentR7/index/双manifest不改，0覆盖/服务/API/DB/源码操作，不新build或回填304。</p>
+<p>外网旧25+当前4共29/29 MIME/H/size正确。Root承认部署健康验收漏旧lazy兼容；决定79734e7e实施rev2保旧actions，首400漏risk/rollbackPlan由distinctr2补合同，选定intent在前/平台同步在后。浏览器只到登录页，无owner态，已请用户登录未答，未注cookie/绕登录，actualLoggedInPageVerified=false。永久发布保旧闭包及冲突/MIME门、404/lazy提示尚未实施，不当全页验收。</p>
+<p>112仍R7、101配置46沿304，factory108/PG29Env23/原74=0/74/customer未交付，十分钟PAUSED。下方304及全部旧检查点原文保留。</p>
+<!-- record305-checkpoint-end --><!-- record304-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">建设304检查点：R7双代码上线与配置46当前资格完成，原apply失败保原（2026-10-17）</h2>
+<p>R10 exit0/653.553秒/28turn/0子agent/cgroup0，app2bd2e27/report3c047fc2/27commit私bundle；唯一标签资格P1两端关闭，修前真实fail保留，最终2/2、types/build0。R7双包2163 ZIP/1823 Git/5node同源；112已R7健康，4.2GB/60文件57目录/6库完整快照与隔离恢复验证通过；101受控升级及167原native全H备份、5件新码/原identity/native/journal历史保持。</p>
+<p>原sameID apply false/interrupted/restart-intent不改绿；central45→46/node安装已发生。Roothelper格式化保存rawH假定及丢错误缺陷有独立源码分析，原restart错误不补造。唯一后继readonly完整资格过：原candidate+固定serializer派生expected bytes，raw/canonical/全部身份文件状态门、双node及central task/source/history/13zero稳定、fresh signed heartbeat，0mutation/重启/CAS/state写。3b504ecc实现rev2非用户验收。</p>
+<p>父18858397 Token signed/costnull；目录差9.702009非账单，unknown保原。PR6 OPEN/DRAFT/head3c047fc2已同步实际配置；现场Jarvis真模型/101CC/browser尚未验，登录待本人。factory108/PG29Env23/原74=0/74/customer12未交付、十分钟PAUSED保持。下方303旧cut及全文不倒填。</p>
+<!-- record304-checkpoint-end --><!-- record303-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="18"><h2 id="section-18" tabindex="-1">建设303固定检查点：R9结果及R10仅START（2026-10-17）</h2>
+<p>R9 b6981bbb正常终态exit0/2208.763秒/cgroup0，appd466338/reporta09cd249、7原件/25commit私存；11/11 affected和2/2边界不相加，types/build0。三child新native重绑后继、over10M保旧历史、queued pause零child及决定/通知有限scope有真实日志。B唯一确定P1为标签提升资格，A的确定缺陷属于Root r4控制同代native历史兼容，r5未ready；其他未验矩阵不写失败。</p>
+<p>r6收到双包2163 ZIP/1823 Git源码/5node核同。首编译产物字节误判/r2纠正与patch超边界排除保留，未重跑项目或部署。父70242296已signed external/costnull，目录累计344.685576差38.042878非账单。R9结果335aa rev3→R10 d37ea483 rev1/START rev2，d3bd002f原task/session/900秒/0retry/0子agent，约12:57Z onlySTART；不预填后继。模板同ID转换仅selected/source，未执行。112R41、101旧agent、plan108/PG29Env23/74=0/74、自治20、十分钟PAUSED保持。</p>
+<p>后继仅跟踪R10真实终态、验证标签资格修复及Root控制独审，匹配包与受控现场发布另记。下方302及全部旧检查点原文保持。</p>
+<!-- record303-checkpoint-end --><!-- record302-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="19"><h2 id="section-19" tabindex="-1">建设302固定cut：R8真实有限结果、B两cut恢复、R9仅START（2026-10-17）</h2>
+<p>R8 e1b6a5e6实际0/2272.126秒/124turn/cgroup0，app1046761/reportf9efea4，21commit312653B bundle私存，8原件37832B与GitH同；10111未跟踪，不称clean。unknown首child→policy→两同task/session后继ACK及fd3/真实child stop/首新lineage是有限正向；7/7、3/3、1/1重叠不加、types/build0。A1+B2P1和资格/动作/通知缺口仍阻发布；包仅作者r5报告。父65598223 signed/costnull；累计306.642698及差78.035574估算非invoice。</p>
+<p>B被引用后同路径扩充错误，已按首次AddFile工具input原bytes恢复15276B/a580e344，21893B/cab03353另存distinct final，52f1ff13回执；旧summary/决定不改且refs核同，没重跑CC/tests。R8结果07e3 rev3、R9选择335aa rev1→START2：b6981bbb原task/session/headf9efea4，2400秒/0retry/native2.1.296bypass，只有active/terminalfalse，未填后继。task12/config45/node全H/其它templateH保持；112R41/101原agent和冷备/factory108/PG29Env23/74=0/74/6项/自治20/十分钟PAUSED。301和此前全文保留；不触碰被拒可选checkpoint文件。</p>
+<p>依据：docs/版本记录/cc-supervisor-r43/maintenance-round8-outcome-safe-summary.json、A/B两cut与恢复回执、maintenance-round9-start-boundary-readback.json/start-decision-readback.json。仅跟踪原R9真实回包，不重派/倒填。</p>
+<!-- record302-checkpoint-end --><!-- record301-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="20"><h2 id="section-20" tabindex="-1">建设301固定cut：R7真实有限结果与R8只START（2026-10-17）</h2>
+<p>R7 6661a48c实际0/2211.558秒/137turn/cgroup0；appc78e507/reportf8d23de、18commit269773B私bundle。createApp/TaskDTO/Runtime+TCP签名agent/3fixturechild/ACK两同task/session后继1/1，受影响10/10、types/build0；不是供应商/101/browser全验。unknown/over10M/restart撤销矩阵仍缺；A3P1、B2P1+2P2分列，196/198bind初疑已撤回。链log r3和最终r4候选cut分开；包未传/独验/上线。父62470931 signed external账/costnull；累计估算228.607124及差69.894643非账单，原unknown保留。</p>
+<p>R7结果042f rev3，R8选择07e3 rev1后真实START rev2：e1b6a5e6/headf8d23de/原task-session/native2.1.296bypass，2400秒/0retry，只有active-running/terminalfalse。旧config45/task12blocked/node全H/其它模板H保持；不填后继源码测试费用。112R41/101原agent和冷备/factory108/PG29Env23/74=0/74/6项/自治20/十分钟PAUSED保持；300及本检查点此前全文保留。</p>
+<p>依据：docs/版本记录/cc-supervisor-r43/maintenance-round7-outcome-safe-summary.json、两round7 SOURCE、usage账和maintenance-round8-start-boundary-readback.json/start-decision-readback.json。只跟踪原R8，不重派、不倒填。</p>
+<!-- record301-checkpoint-end --><!-- record300-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="21"><h2 id="section-21" tabindex="-1">建设300固定cut：R6结果、R7仅START（2026-10-17）</h2>
+<p>R6 4427dea7实际0/1323.813秒/92turn/cgroup0，6原件12366B核同，15commit225303B bundle私存。Node24 types/build0、affected10/10和signed partial DTO1/1；正式连续两后继/unknown grant/restart矩阵未验，A/B与awaiting-cost均静审，无新包/发布。101九脏条目，Root只读材料clean不扩大。父34539607 signed external账/costnull；累计估算158.712481及差41.826859非账单。idle control r2最窄串行delta过，仅SOURCE未填spec/执行。299 publisher预写拒后一次文档Gitc588保原，不追填299。</p>
+<p>决定505d rev3记录R6；042f rev1选40分钟原会话有界窗口，实际START后rev2。R7 6661a48c/head e5c5754/native2.1.296 bypass、2400秒/0retry，只有START/active-running，未含后继结果；目标持续授权与经验操作只是已选择给CC。task12/config45及node全H/其它templateH回读保持。112R41/factory108/PG29Env23/74=0/74/6项/自治20/十分钟PAUSED，101冷备不启。只跟踪当前原R7，不重派。</p>
+<p>依据：docs/版本记录/cc-supervisor-r43/maintenance-round6-outcome-safe-summary.json、两round6 SOURCE及awaiting-cost补充、maintenance-round7-start-boundary-readback.json、maintenance-round7-start-decision-readback.json。旧299和本检查点此前全文保留。</p>
+<!-- record300-checkpoint-end --><!-- record299-checkpoint-begin -->
+</section>
+<section class="doc-section" data-section="22"><h2 id="section-22" tabindex="-1">建设299固定cut：R5结果与R6仅START（2026-10-17）</h2>
+<p>R5 f7a378a4正常exit0/1389.515秒/104turn/限定cgroup0；10收集件277240B核同。types/build0、多phase8/8；17/18、3/6、1/3保失败，fixture原因与协议5P1/纠错3P1分列。真实父32,877,121已external-cli留账，costUSD null，累计116.885622及差32.708590是非账单估算。候选包runtime/archive不一致、节点升级只prepare；112正式R41未部署R43。</p>
+<p>决定7013 rev3保存R5结果，505d rev1→2只选择及真实START。R6 4427dea7原task/session、1440秒/retry0、native2.1.296/bypass，只有active-running；不预填后继。start后本地回执重名WX EEXIST只补收，native未重派；config45/task12和节点configH回读保持。继续只跟踪当前运行，真实结果后另记；factory108/PG29Env23/74=0/74/6项/自治20/十分钟PAUSED保原。</p>
+<p>依据：docs/版本记录/cc-supervisor-r43/maintenance-round5-outcome-safe-summary-r2.json，maintenance-round5-usage-ledger-readback.json，两份round5 SOURCE与maintenance-round6-start.json。旧298及本检查点此前全文保留，不追填。</p>
+<!-- record299-checkpoint-end --><!-- record298-checkpoint-begin -->
+<h1>最新接续：建设298 / R4结果partial，R5仅确认启动（2026-10-17）</h1>
+<p>R4 c56f3899 owner-authorized maintenance已exit0/1093.218秒/no timeout/cgroup0；非central派发，原task12/config45与账保原。CC源码607f4a62/patchc094...498404B，types/build0、真实TCP/SQLite3/3仅model/execution fixtures，不是createApp/runner/真实模型节点链。原combined9/10保，后5/5、晚8/8+4/4分切片；runtime39的quota失败仅消息无raw，不冒复现。</p>
+<p>非作者协议5P1/更正3P1，仍不部署。三phase92+1+1父23,791,456已实际signed external ledger报告，costUSD null；native累计84.177032及差25.773801为估算非账单，旧unknown保原，不记末phase代整体。101两误改文档经私备份授权恢复，Root正式297不受影响；其余报告/oldlog仍脏，不称clean。</p>
+<p>用户新授权已到，native profile bypass2.1.296实见，原297待许可不回写。R4决定5f rev3保旧；R5选择7013 rev1后START f7a378a4/原task-session/1440秒/retry0/noncentral，现保存观察running无final；后继源码/测试/费用尚无，本条不预填。</p>
+<p>112正式R41/工厂108/PG29Env23/74=0/74/6项/自治20/十分钟PAUSED保持；R43无发布，101冷备不启。待R5实际产物及审查再后继，旧297检查点原字节保留如下。</p>
+<!-- record298-checkpoint-end --><!-- record297-checkpoint-begin -->
+<h1>最新接续：建设297 / R43第三轮仍partial，未部署（2026-10-17）</h1>
+<p>R2 timeout/143和unknown费用保原；R3 ab0f0356已08:12:23Z signed round-limit/exit0/needs_more_work=true，代码d5d418b7。真实有限child/helper4/4不等于runner/HTTP/模型链验收。非作者协议SOURCE2P1+2P2、更正SOURCE3P1，静态类型问题未冒实际tsc失败，当前不可部署。</p>
+<p>R3父本轮10,960,354完整；native session估算58.403231美元非账单或本轮独立费用，costCompletefalse，首轮父8,704,976和19.139964估算独列，R2归属unknown不盲差。任务已记10,960,354≥max10M，未尝试下一派发/清账/新task/directCLI；数值门是派发/轮间阈值非CLI硬cap、非美元消费cap。需合法续轮授权与累计核算兼容。</p>
+<p>该运行ACK、idle、children0；远端Git状态5项，不称clean。101误改两脏文档保原且排除提交，未恢复；npm及原文通道许可待用户，不绕门。两经验候选inbox/unverified与7组清单未执行。决定3ff2 rev4 077e063f保前三版和动作。ProjectDecision投影、自动经验capture与生命周期、实际模型复用、HTTP/浏览器/session lineage、核算仍缺。</p>
+<p>112正式R41/工厂108/PG29/Env23/74=0/74/6项/自治20/十分钟PAUSED保持，R43无发布，101冷备不启。旧296与更早检查点原字节保留如下。</p>
+<!-- record297-checkpoint-end --><!-- record296-checkpoint-begin -->
+<h1>最新接续：建设296 / R43部分实现和有界续轮（2026-10-17）</h1>
+<p>112正式R41未变；101 CC负责R43代码和测试，Root只监管、收集与记录。首轮5a70ea0d partial，协议fixture8/8不是实际监管链验收；非作者审查4项P1阻断、2项P2，当前不可部署。中央failed/exit0/usage incomplete保原，签名日志7831完整native补证父8,704,976与含子agent28,029,420分列，目录估算19.139964美元非账单。</p>
+<p>实际原session追加一次10M父Token/1200秒/1round窗口，101开发agent与中央config45仅目标maxTokens改500k→10M，其余保留；原task/session/历史不重置。e3334033最近07:43:47Z仍running，无本cut后继测试/部署结论。limits回读schema trim尾换行误拒保原，未重写limits只完成原resume。</p>
+<p>决定3ff2b23d rev1实施本次续轮，07:44 rev2 cd6b6888只补版本费用前提：签名init2.1.296，官方2.1.277起正常resume恢复历史估算金额；父usage与modelUsage/金额范围不同，不盲算Token差，不冒核算算法已修或账单认证。异常/判断/结果/本人纠错及有条件经验复用仍待当前轮正常回包后下一指令。</p>
+<p>原factory108/PG29/Env23/74=0/74/6项/自治20保持，十分钟PAUSED；112无R43发布、101冷备不启。旧295检查点及更早原字节保留如下。</p>
+<!-- record296-checkpoint-end --><!-- record295-checkpoint-begin -->
+<h1>最新接续：建设295 / 101 cc单次测试回传（2026-10-17）</h1>
+<p>本次用户指令已实际完成派发、测试和报告收集：a42f1bcf/run64ed8add，签名round-limit/exit0/1round，旧固定路径后置验证器未调用。432项430通过/1失败/1跳过，完整矩阵未全执行且回归未通过。核心失败是存储直链编码断言；材料工具api.read错误、浏览器/覆盖/沙箱缺口分列，不能合并为产品业务失败。</p>
+<p>Root237核心原件/74命令222日志/3测试JSON及非作者限定保存审已核；原目录和测试副本各617源文件无改，精确7新建资源缺席。1672产物未全收，真实页面、认证、业务AI、重启耐久和完整交付未验。CC节点上报3,124,624 Token、目录价估算3.408248美元，内部用量/价格未知分列。</p>
+<p>112正式R41无发布；十分钟跟进PAUSED，当前无运行，不自动续修。6事项4完成/1blocked/1planned，既有广义事项rev9/event48与1条blocker通知；新增技术决定2dc17590 rev1 implemented/独验false，旧54决定完整。计划108/自治20blocked/原74签收0/74及客户12未交付保持。后续按用户安排先处理存储断言/材料工具，再补覆盖、浏览器和独立沙箱。旧294及更早检查点原字节保留如下。</p>
+<!-- record295-checkpoint-end --><!-- record294-checkpoint-begin -->
+<h1>最新接续：建设294 / R41独立监管台（2026-10-17）</h1>
+<p>112正式20261017-project-oversight-r41。软件工厂从一级“项目监管”查看实际运行、待本人处理、重点/阻塞/下一步、完成简报与时间线；高级执行和证据另展开。只读核对不启动工厂。</p>
+<p>计划108、自治20 blocked、原74为0/74、客户12未交付；6事项保持，监管台完成事项revision3，新增实施决定及1条持久通知。十分钟自动跟进仍PAUSED。R9真实AI评审仍只有SOURCE资格，无新模型/工厂实际派发。用户使用验收及离线推送仍待。旧293检查点及更早原文如下原字节保留。</p>
+<!-- record294-checkpoint-end --></section>
+<section class="doc-section" data-section="23"><h2 id="section-23" tabindex="-1">最新单次授权发布：R40已上线112；十分钟跟进保持暂停（记录293）</h2>
+<!-- record293-current-block-begin -->
+</section>
+<section class="doc-section" data-section="24"><h2 id="section-24" tabindex="-1">平台操作实效修复R40已上线112，自动跟进保持暂停（记录293）</h2>
+<p>用户要求复核R40完善程度、无阻断后部署并提交。R40修复真实文档上传意图误复用、记忆后台刷新丢草稿、重试0值丢失、公开直接命令回执指纹不匹配和知识检索重放先做IO；任务状态、执行回执、独立验收分别显示，恢复手册入口改至备份恢复页。</p>
+<p>原客户端4/4、代表HTTP5/5（58请求/5重启）、API两条分cut通过、类型检查/构建与非作者SOURCE限域审查保持；补充完整createApp原DTO验证后的取消请求重启重放1/1。Root真实隔离浏览器已核后台保稿、目标遗忘清稿；两份同name/size/mtime、不同内容PDF均独立入库且原件字节回读同。此前错误approval归因/坏候选撤回、demo误判和modal外点击更正均保原，不洗旧失败。</p>
+<p><strong>112正式已切换20261017-action-effectiveness-r40，受控发布、完整备份及隔离恢复、健康与公开关键资源读回通过。</strong> 原通知values和11persona完整记录保持，修订号单列。包2059文件，source1448c17，PR4 draft OPEN已push未merge；101本轮未升级/启动。</p>
+<p>上述只是限定操作与发布验收；真实用户UI、实体播报/设备、实际模型/恢复演练与全27类操作现场效果未全签。4个早期超时测试临时目录因自动审查拒绝删除而保留，未绕过。模型调用0，内部Token和金额未知分列，费用只记录无上限。</p>
+<p>软件工厂仍plan108 inactive/74签收0、自治rev20 blocked、6项4完成简报/1推进/1待推进，item7/event41只R9来源进展，真实模型未验。<strong>用户已暂停每十分钟跟进，本轮没有恢复自动推进。</strong> 原292及全部更早历史、备注、标准保持。</p>
+<!-- record293-current-block-end --></section>
+<section class="doc-section" data-section="25"><h2 id="section-25" tabindex="-1">记录292及更早检查点原文（完整保留）</h2>
+<h1>记录292当前检查点：本人设置修复已上线R39，工厂计划108保持</h1>
+<!-- record292-current-block-begin -->
+</section>
+<section class="doc-section" data-section="26"><h2 id="section-26" tabindex="-1">本人设置保存修复已上线R39，原偏好保留（记录292）</h2>
+<p>用户当前优先的安静时段、允许播报等设置保存问题已修复：通知系统权限与偏好保存解耦，冲突保留草稿并可显式重读；关闭安静时段保存两个空值，身份、隐私、时区和CAS门保持。冻结前修正初始GET晚回包和共享会话边界，未据静审冒现场重现。</p>
+<p>新增HTTP组1/1、客户端组4/4、最终前端类型检查通过；Root隔离浏览器实际保存/刷新、两页409恢复、关闭安静时间和autoSpeak通过。客户端组非DOM，晚GET与storage时序仍限静审；旧失败、准备更正及两次必要API输出布局编译分别保留，旧通过测试不重。</p>
+<p><strong>112正式已由R36切换为20261017-personal-settings-r39，健康与关键设置资源读回符合包。</strong> 包2053文件，源码固定f13fa921；完整data快照及隔离恢复核验60文件/57目录、3,907,459,574B、6 SQLite通过，未覆盖live data。</p>
+<p>通知values和11个persona完整记录均保留；notification revision12→13，原因unknown，不写修订号全保。原验证器错误要求revision不变而拒，原私快照和原件保留，r2不重偏好GET、Root生产偏好PUT为0。</p>
+<p>正式浏览器未登录，真实用户UI保存、实体发声及实际安静排程未验；101本轮未更新，不启动其业务或独立工厂。源码PR3已推送但draft未merge，后续文档commit不冒包源码。软件工厂原计划108/事项6/event40及记录291全文保留，R9后继不纳本设置修复cut，74未提升。</p>
+<p>供应商模型新增0；内部Token与金额未知分列，费用只记不设上限。完整安全来源与实际回执见本条公开摘要。</p>
+<!-- record292-current-block-end --><h1>记录291当前检查点：批准任务自动测试服务机制有限通过，计划108继续真实AI评审</h1>
+<!-- record291-current-block-begin -->
+</section>
+<section class="doc-section" data-section="27"><h2 id="section-27" tabindex="-1">批准任务自动测试桥有限验证通过，计划108推进真实AI评审（记录291）</h2>
+<p><strong>固定范围：真实计划108、PG29、Env23；112正式R36保持。</strong> 旧290/106原文与时点完整保留。107只selected一次；原publisher误拒context默认、recovery1无写误拒GET.revisions，两失败保原。Root r2核当前+唯一history后仅补原item/plan两CAS成功，不叫原整publisher通过，也不是产品故障。</p>
+<p>R7 nullable-run竞态P1/旧源与distinct修正保留，SOURCE73497d40通过；竞态只controlled/source，未冒本次并发PG重现。actual8在32迁移/source16/direct12后scope fixture/source准备ENOENT、0CI，SAVED44a0只签保存；原无syscall/path/stack，静态首次root初始化链不冒现场native路径证明。R8 SOURCE8df0和首次真实registerSource定向组首过、compile首fail后emit0分别保，旧组不重。</p>
+<p><strong>actual9唯一103.282秒exit0/CLOSED，SAVED42a6b00f/6733限定17步骤通过。</strong> source17/direct12末核同，32迁移，两真实CI/16原件/4collector，36原整数string/8超safe无丢精度。批准tick正向unit1，重复请求不重跑；pause后late真实1pass/覆盖100仍unit0、run paused/op cancelled且task/PR不变。lateCode=null不声称tick必抛。七predispatch拒绝、缺源block、source同号重放/改commit拒绝及新32四immutable守卫按原保存范围成立。下一tick明确AI_REVIEW_EXECUTOR_REQUIRED，0mock评审/合并。</p>
+<p>每synthetic fixture一次CommandBus批准，不是公共approveStart/kickRunner定时入口；未认证完整自动工厂。数据库比较是既有真实harness保存断言，无全PG前后row快照或新审员查询。PG原清理与13旧CID集合同/新增残留0，候选清理源绑定而非独立kernel逐CI关闭，旧CID相等不认证旧容器全部状态。</p>
+<p>真实计划108 H5eac5a8e464a26b4c8d9be23fc0326bc3d71a129d45bcbb61befff09a2a09466 inactive/0签收；事项revision6 Hfa90663ba6353321c822feeffec70ff7622621055ecb382644c4cf26668c84d1仍running；原决定revision2 H19b0507f94fa2d8d611b7fd759490f399907c05d1ff505ee7257328cc5c40ed8 implemented/独验false，原revision1全文与动作前缀/GET两history保留。event40/一条summary持久通知，六项1planned/1running/4completed。完整before795/after、52其它决定/5items/legacy整H相同；before无notes，首写前后两项目notes私补充晚于快照、投影同/0写入截断。五步/25tasks/自治20blocked/global/config/PG29Env23及74保持。</p>
+<p>下一真实AI评审只读方案已定位，执行器/完整输出及当前版本可信消费未接线；模型route声明不代表实际配置合格，不新增模型调用。HTTP、真实编码/Gitmerge、全server/工厂、OBJ035整体、ABI、PG4/74与客户交付未签，74仍0/74。无发布，业务供应商模型新增0，内部Token/金额未知分列，费用只记不设上限。</p>
+<!-- record291-current-block-end --><h1>记录290当前检查点：真实CI合成机制有限通过，计划106继续自动派发桥</h1>
+<!-- record290-current-block-begin -->
+</section>
+<section class="doc-section" data-section="28"><h2 id="section-28" tabindex="-1">真实CI合成机制与保护门已通过，计划106推进批准后自动单测桥（记录290）</h2>
+<p><strong>固定范围：真实计划106、PG29、Env23；112正式R36保持。</strong> 旧289/计划105原文与时点完整保留。R38仍为MSF apps/server OBJ035有限切片；本次通过的是合成fixture的直接服务CI机制，不是目标server全suite或完整交付。</p>
+<p>R4固定空挂载目录、R5关闭结果缓存、R6保失败覆盖报告完成最窄SOURCE及受影响编译，源码和依赖只读不放宽。第五次1pass/覆盖100但整体exit1，ResultsCache.mkdir ENOENT原错误保留；第六次A通过而B覆盖采集不完整，native errno未存、actual execution null不倒填。第六次末核false只因未到完整尾部，不冒源码漂移。原三/四次与105旧cut同样保留。</p>
+<p><strong>第七次唯一实际47.921秒exit0/CLOSED，SAVED62c6a732/6751限定通过全部13步骤必要断言。</strong> A正例、B真实1fail反例、lateA共3receipt/24原件/6collector；54原整数string中12超JSsafe，无精度丢失。31迁移、并发与终态同号重放、质量去重、缺改原件恢复及拒绝、旧绑定/迟到结果拒绝、四UPDATE/DELETE与重复终态保护通过。4attempt/3result，source11/directemit9最终稳定；PG+3CI清理，13旧CID集合保持/新增残留0。这些数据库断言是既存真实harness保存证据，不是本次审员重新查询或kernel trace。</p>
+<p>实际计划106 Haad9bc638e18b9041b820324356de41e77517fdac8ae57fd4d26baf4ea238079 inactive/0签收，事项revision4 H57e23777637a77ed146f2e5d6ca72d9a1fb10f38fd7fd2605666ad3a59a55809仍running；event38/一条summary持久通知，六项1planned/1running/4completed不变。两写只更新简报与下一行动，0决定写；52旧决定/5未改事项/legacy整H前后同，五步及任务运行绑定、25tasks/自治20blocked/global/config/PG29Env23保持。before e74不含notes，首写前后两项目notes私补充晚于原快照、投影相等/0写入截断，未冒whole补充文件H相同。</p>
+<p>下一步只已定位read-only方案：复用已有批准scope与任务版本锁，加入可信候选仓库/fullcommit绑定后的自动单测派发；缺源码明确阻塞，不猜HEAD/分支/合并后提交，也不逐次增加CI批准。本条未实施该桥，未签HTTP、目标server全suite、正向平台或真实Git合并、AIreview、autopilot、OBJ035整体、ABI、完整PG4/74或客户交付；74仍0/74。供应商模型新增0、无发布，内部Token与金额未知分列，费用只记录无上限。</p>
+<!-- record290-current-block-end --><!-- record289-checkpoint-prefix-begin -->
+<h1>当前监督检查点：CI启动目录问题已定位，继续真实验证（记录289/计划105）</h1>
+<!-- record289-current-block-begin -->
+</section>
+<section class="doc-section" data-section="29"><h2 id="section-29" tabindex="-1">真实CI前置与31迁移已核，启动目录缺失已定位（记录289，计划105）</h2>
+<p><strong>固定范围：实际计划105、PG29、Env23；112正式R36保持。</strong> 旧288/计划104全文与时点完整保留。独立R38仅MSF apps/server OBJ035手动REST有限切片，非贾维斯R36 apps/api。R2 SOURCE9ca29180通过，reports宿主盘配额、Git隐式fetch两个P1以固定32MiB/1024inode tmpfs与no-lazy-fetch最窄关闭；原两个必要定向组各首轮1/1、最终compile与三态更正分列，非实际集成资格。</p>
+<p>Node镜像已准备；PG初始超时、manifest lookup超时和缓存成功都保原。Linux npm实际exit0/70072ms与outer约240s超时同时成立；native103f6644/501152仅补1810文件/35539222B后验核验，1845读句柄关闭/1828物理refs，不重安装、容器或测试。合成fixture A/B只改单assert，预期覆盖及失败退出不能冒充实际结果。</p>
+<p><strong>本cut四次实际尝试均失败，候选测试0；这不是后继现况的声明。</strong> 第二/三/四次隔离库31迁移真实通过；第一次在PowerShell启动阶段、第二次在private-root门、第三次在create后的start阶段失败。第三次原传输缺失，cause UNKNOWN保留。第四次R3 SOURCEea83420a后的实际返回start错误留存经c2248209限定核验，exit1、stdout0B/stderr761B原H保留；精确错误指向CI启动所需目录缺失，即node_modules挂载目标mkdir被只读文件系统拒绝。只签本次返回错误的留存成功，不回填第三次、不扩可写源码、不签完整runtime或CI通过。</p>
+<p>真实计划105 H4b31aee5 inactive/0签收；事项revision3 Hea1d6829 running，event37/一条summary持久通知，六项1planned/1running/4completed。新决定bf0bfc14 selected1→implemented2 He17653d9且独验false，实施仅R2/R3 SOURCE、31迁移和本次诊断留存；下一行动为预建固定空目录且保持源码/依赖只读，后续正负CI、幂等、过期与质量/合并门另凭真实证据。R4与第五次结果不纳本cut，后继时点不回填。</p>
+<p>完整before7ac60470已持久，51旧决定/5未改事项/legacy整H前后同，五步、任务运行绑定、25tasks、自治20blocked/global/config/PG29Env23保持。原before没有notes；两项目notes四写前后私有补充晚于原快照，投影相等、0写入/截断，仅公开整H/size/count。105初稿括号错误先被Root语法检查拒绝且0API；distinct v3修括号并将继续mock的compliesWithGoals改no，正确检查后唯一四写成功，所有旧稿与拒绝保原。</p>
+<p>本条未签成功CI、quality/merge、自治执行桥、ABI、完整PG4、74或客户交付；74仍0/74。供应商模型新增0、无发布，内部Token与金额未知分列。原四回调/18表有限验收范围不被重做或扩大。</p>
+<!-- record289-current-block-end --></section>
+<section class="doc-section" data-section="30"><h2 id="section-30" tabindex="-1">记录288及以前检查点完整原文</h2>
+<!-- record289-checkpoint-prefix-end --><!-- record288-checkpoint-prefix-begin -->
+<h1>当前监督检查点：四回调有限验收完成，真实CI推进中（记录288/计划104）</h1>
+<!-- record288-current-block-begin -->
+</section>
+<section class="doc-section" data-section="31"><h2 id="section-31" tabindex="-1">四回调与18表原行文本已完成有限独立验收，计划104推进真实CI（记录288）</h2>
+<p><strong>固定范围：实际计划104、PG29、Env23；112正式R36保持，旧287计划103全文与时点完整保留。</strong> 合同6464b6fb的七门经有限回执3ce22805/85542与非作者复核2e67832a/66367逐项通过：4个选定回调执行及断言通过，0失败、0未完成；15项中另11项非选定skip，双hook通过。18业务表原server-row-text按UTF8原字节、顺序、计数与H前后相等，bootstrap30迁移按源/order/H/size及原结果绑定；同attempt资源收尾只消费既有e2208d32 SAVED，不是未来fresh。</p>
+<p>新回执域独立派生callbackCodeExecuted=true，原producer workerfailed、codeExecuted/reported null保持。75个选定框架源/四角色片段与当时runtime绑定，pool-end只属固定源码await语义，没有独立pool-end事件；未认证实际worker runner实例、插件对象、完整transitive或框架ABI。旧oracle columns+rows门未运行、输入仍不完整，不从18个空结果补造列/catalog/sequence。完整PG4、原74与客户交付均未签，74仍0/74。</p>
+<p>专用报告封装修复worker e0585f96/96271仅改两函数，57函数和其它字节与旧源相同；来源独审abfb55e2/12686与唯一新定向组首轮1/1通过。结果改从专用原件读取并保协议/source/attempt/非0/firstFailure门，独立核固定Root保留副本stat9/H/size及immutable回读，after-hooks SQL仍在finally。stdout保诊断原件，不再当整个结果JSON。它仅LOCAL单源完成，未生成新family/activation/C/DATA/ENTRY/nonce或实际新QA；两源码发布不等于部署。</p>
+<p>实际计划104 H584d8e71 inactive、0签收；有限复验事项revision22 completed，后继事项revision2 running。两条新决定各selected1→implemented2、independentAcceptance=false。六项1planned/1running/4completed，latestSequence36，两条实际持久通知分别由completionSummary及summary匹配。原publisher七次写入已提交，末汇总却误用summary匹配完成通知而以PLAN104_FINAL_READBACK_REQUIRED拒绝，4c6b9085/2713保原；恢复291c5d26/24392仅消费已有只读快照/回执，没有重放写入，也不是业务或有限回执失败。35/36事件号是串行成功修改和latest36的源绑定派生，未另称原event-row快照。</p>
+<p>完整before旧decision快照及全域H未持久，不冒称事后重算；49旧decision与4未改事项按更新时间/版本及原七次写入范围限定核对。五步/25tasks/自治20blocked/PG29/Env23及R22、notes的保持只按恢复报告明确边界陈述。后继OBJ035已选并在独立R38复制源码中LOCAL进行，目标MSF apps/server真实repo/fullcommit→单测/CI原报告→quality/merge同源消费；不是监督贾维斯R36 apps/api，本cut不纳后继SOURCE、验证、真实CI或merge完成。</p>
+<p>旧失败、作者及非作者LOCAL准备拒绝/更正均保原；不重四个通过用例或旧组。新增供应商模型0、无生产发布；内部Token/金额未知单列，费用只记账不设上限。完整开发交付、12客户使用与安装升级恢复链仍待推进。</p>
+<!-- record288-current-block-end --></section>
+<section class="doc-section" data-section="32"><h2 id="section-32" tabindex="-1">记录287及以前检查点完整原文</h2>
+<!-- record288-checkpoint-prefix-end --><h1>软件工厂监督推进检查点：记录287当前范围</h1>
+<!-- record287-current-block-begin -->
+</section>
+<section class="doc-section" data-section="33"><h2 id="section-33" tabindex="-1">四用例原始报告全部通过，资源收尾已核；执行封装解析异常已定位（记录287，计划103）</h2>
+<p><strong>固定范围：真实计划103、PG29、Env23；112正式R36保持，旧286 START-only/计划100全文与时点完整保留。</strong> 本轮唯一CHECK33addb86/3059于12:37:57.958208UTC读出producer failed，保存独审2b8a8dd1/15406；原首错driver/PG4_R33_UNKNOWN/OtherException/errno null保留，不能据此判四业务失败。五原件实际4617ea0b/4275、SAVEDa81380c6/26398保25955B原bytes。reports真实LIST5/5retained/0missing，先前absent摘要以84e19831/1797追加更正，旧摘要、pins与原字节不改。</p>
+<p>旧e18 helper与9ce6 observer状态门静态不兼容且未试跑。Root选D-only failed-five successor，新SOURCE b97d73da/28768、实际纯DATA9985安全事实、具体ENTRY92a90581分别核定；历史DReview6da/C708与futureDReview分离。唯一新D2186a52c/2598以54.532秒exit0完成，SAVEDe2208d32/53528及Root77实体引用核仅签本次13:10四资源与五报告、前后完整保护收尾；原actual saved false不回填，本次不是未来fresh。</p>
+<p><strong>实际成果：4个选定用例原始报告全部passed，0失败、0未完成；15总项中另外11项为非选定skip。</strong> beforeAll/afterAll双pass、unhandled0；bootstrap真实30迁移、前后18业务表原rowText与schema同，after-hooks不是第二次迁移。报告域事实16940a52/17716并未签独立pool-end事件、framework bundle/source-config资格或sequence/catalog全范围。框架ABI、完整PG4、74目标独立验收和产品交付仍未通过，74保持0/74，不能用旧0/0/4盖过真实报告通过，也不能把4pass提升为74签收。</p>
+<p>执行封装异常已定位：tool exit0、stderr0、无timeout；8992B stdout前多56B单行前缀，整体json.loads offset0失败，末尾唯一driver JSON与retained原body共同字段及resultRef H/size完整对应。原41Bmessage和636Btrace也匹配。JSONDecodeError只属本机解析原bytes所得类，不后填原OtherException；前缀生产者未独立归属，后继最窄修复与验收派生研究均不纳本cut，不重4个通过用例。</p>
+<p>独立D中段146组stat9/1314原整数/292unsafe，两个scan各265全读；5source-copy一致、0missing、2SQL、四资源source/标签、owner-stop/unit/CG/FD/socket/ACK闭合。前后44捕获=12raw+32parsed：before native267×2、build259×2全读；after native256×2全读，build首256列出/255读/1绑定EXIT17、次255全读，unknown0。不冒全读、HUP16新等待、owner退出或kernel trace。库存607/a952与native608/build621分域；queue parsed非SQLwire、node与ACK文件身份分域。所有原wire及private原值只私存。</p>
+<p>真实计划102保旧29证据完整有序进immutable索引，新直接6不是旧29字面前缀；103保旧6 literal有序prefix再加6共12。计划103 Hebd25e0d inactive/0签收，事项21 H732a886c/event34/1通知、六项1推进2待3完成；43f决定rev2 H31c75f45仅D读取implemented/独验false，旧actions全前缀与9a rev3保持。五步/25tasks/自治20blocked/global/config/PG29/Env23/notes均不变。费用只记无cap，新增模型0、内部Token和金额未知，无发布；12客户、Agent成熟及软件/文档包安装使用升级恢复完整链仍待验收。少量LOCAL准备与长路径/投影更正保原，不重复旧组或现场。</p>
+<!-- record287-current-block-end --><hr>
+<p>以下完整保留记录286检查点原文；不回填旧100/101/102或本条之后的修复和验收派生结果。</p>
+<h1>软件工厂监督推进检查点：记录286当前范围</h1>
+<!-- record286-current-block-begin -->
+</section>
+<section class="doc-section" data-section="34"><h2 id="section-34" tabindex="-1">配置标记修正的新验证已启动，计划100等待终态（记录286 START-only）</h2>
+<p><strong>固定范围：实际计划100、PG29、Env23；112正式R36保持。</strong> 旧285原文与时点完整保留。本批新七源/两host完成PRE6d400dc6、纯SOURCE-DATAbe13、完整family/A/D/P aggregate59bc及latecb846，C708/A121保旧C672/639/600与A83/50有序前缀。具体ENTRY971be616/369494经Root729实体引用核后，唯一START6513c13e/2837于2026-10-16 12:20:23.628425 UTC以Node33.547秒exit0返回，本次调用CLOSED。</p>
+<p>启动保存独审2c651568/45808和Root66引用加报告双根核通过，只签本次启动保存。原START公开saved仍null、readyfalse/status owner-state-unknown，不由后继SAVED回填；ACK只是时点loaded/active/running，原owner/stop/state及框架ctx/module实际执行仍未知，不签本轮current closure或四用例。</p>
+<p>A原wire/四witness/JP参数与单派发ACK分别核定，16组stat9保144原整数/32unsafe。fresh22=6原stdout+16parsed：native254与253、oldbuild253与254均全读/0EXIT/0unknown，本批没有退出或新HUP等待实证。库存607/a952前后同，native608/build621是各自原目标；没有607完整metadataRows。node与ACK文件身份分域；queue是parsed而非SQLwire。719ms及原双fresh/最终nonce前无await为source-bound，不冒独立kernel或时钟trace。</p>
+<p>终态五原件读取器SOURCE690a0a25/16702只确认literal、新namespace/sourcepins/C及完整机器头，exact5/stat9/双held/nofollow/close/先私WX原方法不变；实际context、terminal、pins和读取均不纳该SOURCE。本批0AST/syntax/holder/功能组，上批曾重复语法检查的历史保原。</p>
+<p>真实计划100 H9352724a inactive/0签收，事项rev18 He1a9ebf7/event31/1持久通知、六项1推进2待3完成；决定rev3 H9b219946 implemented仅performed-start-only/独验false。原五步、25tasks、自治/global/R22/notes、PG29/Env23保持。四用例0/0/4、74 0/74；框架ABI、PG4产品、12客户/交付链未完成。新增供应商模型0次、无发布，内部Token/金额未知分列、费用不设上限。</p>
+<p>唯一CHECK须守2026-10-16 12:37:23.628425 UTC，Root按12:37:24（北京20:37:24）保守取整，不能用更早JP receipt放松，不得重START/A。本条固定START-only；后继CHECK、actualterminal、terminalDATA/ENTRY、五原件、D及用例全部不纳，即使另已发生也不倒填本条或旧cut。按真实终态再分别核对通过、失败、未完成与资源收尾。</p>
+<!-- record286-current-block-end --><hr>
+<p>以下完整保留记录285检查点原文；不回填旧计划99或本次START之后结果。</p>
+<h1>软件工厂监督推进检查点：记录285当前范围</h1>
+<!-- record285-current-block-begin -->
+</section>
+<section class="doc-section" data-section="35"><h2 id="section-35" tabindex="-1">本次资源收尾已核，配置标记完成单源修正（记录285）</h2>
+<p><strong>固定范围：实际计划99、PG29、Env23；112正式R36保持。</strong> 旧284仅启动时点、计划97及原文完整保留。本轮框架核对中断、五原件、当前资源收尾和单driver修正分别核定。下一七源/两host只已选择LOCAL准备，本条完整SOURCE家族、实际DATA、具体ENTRY和新QA均未完成，后继不倒填。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>已发生事项</th>
+<th>真实结果与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CHECK与计划98</td>
+<td>b816e368/3041唯一CLOSED，Node9.531秒exit0读出producer failed；context/reporter首错和SAVED13c961f4/13896保原。98当时五原件读取未做，后继另记</td>
+</tr>
+<tr>
+<td>五原件与保存</td>
+<td>terminalDATA7a92、ENTRYfc11682e经Root37引用后，58c8079e/4248唯一Node1.172秒exit0。SAVED r3 b9e3/24954经Root24引用；45整数/10unsafe、24748B原body/原wire/5pin同</td>
+</tr>
+<tr>
+<td>D来源、参数及入口</td>
+<td>原995e因aggregate.kind缺项pre-WX拒，0远端/0输出；SOURCE4fe7缺漏保原。distinctR2 cd7c只SELF+1kind，SOURCEfe5753ed通过后pureDATA72293/2.0317399秒；C742保672/639/600前缀，具体ENTRY0031208c经Root747实体核</td>
+</tr>
+<tr>
+<td>当前资源收尾</td>
+<td>D84f225ad/2640唯一Node55.641秒exit0/CLOSED，SAVED3fc5f10a/29604经Root75引用加报告核，本次11:31四资源/标签/owner-stop当前路径/unit/CG/FD/socket/ACK和前后whole闭合，不代futurefresh</td>
+</tr>
+<tr>
+<td>静态缺陷与单源修正</td>
+<td>9ad5432d的九条件/11来源证明禁用配置文件与resolved undefined哨兵充分不兼容；actual ctx和历史首短路未知。新driver592db92f/39752最小修正及私有闭集条件记录，SOURCEe8355125/17640经Root15引用；controlled唯一1/1，非真实框架/用例</td>
+</tr>
+<tr>
+<td>真实计划99</td>
+<td>item17/event30/1持久通知，24证据、六项1推进2待3完成。新决定rev2 implemented仅single-driver-source-only/独验false；下一最窄新入口只LOCAL选择准备</td>
+</tr>
+</tbody></table></div>
+<p><strong>原件与资格分开。</strong> 五原件r1/r2保持；r2只补真实fixtureImportMayHaveOccurred=null，r3只补供D消费的boundAttempt/exact5 bindingRefs。state.phase sql-after-hooks及driverEntryAttemptedtrue不代表用例通过。原firstFailure与driver次错分列，1 retained、4原errno2；9050B驱动报告双alias同H783ff38d但缺actual ctx/条件快照，producer claims不代独立执行验收，candidate/code/framework仍null。</p>
+<p>中段137=136原pins+1alias，134正文/3私环境withheld；1233原整数/274unsafe，Node投影135行270值变化，依据原wire核H；namespace另126/28unsafe、source625另144/32unsafe。两中段扫描各256全读/0EXIT/0未知。whole44=12原stdout+32parsed：before native257×2、build257与256，after native256×2、build257×2，均全读/0EXIT。本批无退出/HUP等待实证，不沿用旧批；queue是parsed而非SQLwire。库存607/a952前后同，native608/build621是其他保护目标，没有607全metadataRows。</p>
+<p>owner/stop当前路径absent不是原kernel退出；双held/read-close、625来源和runtime/PG原witness是source-bound保存资格，不冒独立kernel/系统调用trace。原actual savedfalse保当时cut。原kind拒绝/漏头/R2修正、本机schema selector拒绝和ACK文件身份假定更正保原；原相对key列表只曾工具输出，未写公开文件，不误称全程没有此越界。</p>
+<p>计划99 H422fc3fc inactive/0签收，事项17 He17b8f1e；五步、25tasks、自治/global/R22/notes、PG29/Env23保持。四用例0通过/0业务失败/4未完成、74为0/74；ABI、PG4产品、12客户及交付链未完成。供应商模型0次、无发布；内部Token/金额未知单列、费用不设上限。后继须新完整来源、实际参数与具体入口、未来fresh后才安排实际复验；旧已CLOSED机会不重放。</p>
+<!-- record285-current-block-end --><hr>
+<p>以下完整保留记录284检查点原文；不回填旧计划97或START-only时点。</p>
+<!-- record284-checkpoint-prefix-begin -->
+<h1>软件工厂监督推进检查点：记录284，计划97启动保存范围</h1>
+<!-- record284-current-block-begin -->
+</section>
+<section class="doc-section" data-section="36"><h2 id="section-36" tabindex="-1">新验证已启动，计划97等待实际终态（记录284 START-only）</h2>
+<p>旧记录283原cut完整保留。禁API守卫单源修正后，本次独立新七源加两host已完成来源与参数接线；sourceDATA048e0bb7、完整family/A/D/P四头aggregate4c32b234、lateDATA9dd37b11及具体ENTRY76180db6分别封定，Root在实际启动前核693份实体引用，旧C639/A50有序前缀保持。新wiring唯一1/1通过，不以准备数或工具通过当产品进度。</p>
+<p>Root唯一START091624bf/2821于2026-10-16 10:46:01.751142 UTC返回，Node32.829秒exit0。ACK只代表该启动时点的loaded/active/running，owner/stop/state及框架ctx、module执行均未知。启动保存独审856632e0/45280和Root67引用核对通过；原START公开saved-null仍原样保留，后继SAVED单列，不回填原cut。A原wire553756B、四witness及16组stat9保144原整数，32项超JSsafe；JP只一START，9control/6tool/8provided绑定，私wire与parsed投影分清。</p>
+<p>fresh22capture=6原stdout+16parsed；native两扫243全读，build首244=243read+1boundEXIT、次245=244read+1boundEXIT，0incomplete。EXIT为原pidfd-POLLIN/poll17来源绑定，非全read、新HUP实测或owner退出。库存前后两frame固定607/a952，native608、build621属各自原保护目标；未取得607全metadataRows。proof至JPintended694ms和原双fresh门、nonce前无await是source-bound，不冒额外kernel/时钟trace。</p>
+<p>终态五原件读取器SOURCE c004ef57/17949只确认literal绑定、完整机器头与继承的exact5/stat9/nofollow双读close/先私WX语义。实际终态、pins、DATA、具体ENTRY、读取均未纳入本cut。作者和非作者各3AST+1syntax是重复语法检查，功能组未重复。旧NULL两个派生scopeHash叶值在唯一wiring前更正、Root helper pre-WX collision及辅助schema/selector错误均保原边界；实际35核用三字段selectionEvidence、actualCurrentMainWitness、actualCurrentMainAudit，不改原件或为更正复跑现场。</p>
+<p>真实计划97保持inactive/0签收，事项rev15/event28/1持久通知、6项1推进2待3完成。关联修正决定rev3 implemented但独验false，仅performed-start-only。PG29/Env23及五步、25tasks、自治/global/R22/notes均保原。四用例仍0/0/4、74仍0/74，ABI/产品/当前closure/12客户/实际交付链不因START通过。供应商模型0次，内部Token及金额未知单列、费用不设上限；无发布。</p>
+<p>唯一CHECK不得早于2026-10-16 11:03:01.751142 UTC（北京时间19:03:02保守取整），不得重START/A。本条固定START-only；后继CHECK、terminalactual、D及其结果完全不纳，不回填任何旧cut。取得实际结果后，再分别核对用例、错误记录与资源收尾。</p>
+<!-- record284-current-block-end --><hr>
+<p>以下完整保留记录283检查点原文；本条不回填旧cut。</p>
+<h1>软件工厂监督推进检查点（记录283：计划96，单源修正已核，新入口只已选择）</h1>
+<!-- record283-current-block-begin -->
+</section>
+<section class="doc-section" data-section="37"><h2 id="section-37" tabindex="-1">当前进展（记录283）：配置中断及资源收尾已核，禁用接口误判完成单源修正</h2>
+<p><strong>固定cut：实际计划96、PG29、Env23；112正式R36保持。</strong> 本轮CHECK失败、五原件与当前资源收尾已分别保存独审；同版源码充分证明一项“禁用API”守卫误判，最小单源修正通过。下一七源/两host新入口只已选择LOCAL准备，本cut其家族、参数、ENTRY、nonce及新QA均未做，后继不倒填记录282或本条。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>已发生范围</th>
+<th>真实结果与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CHECK与保存</td>
+<td>actual786ba851/3041，Node9.922秒exit0读出producer failed；normalized-config首错与SAVEDc5bbee7f/17019保原，不计四业务失败</td>
+</tr>
+<tr>
+<td>五原件与保存</td>
+<td>actual3bcba143/4233唯一1.204秒exit0，SAVED4066b423/30442经Root核42refs；45原整数/10超JSsafe，来源绑定双读关闭不冒kernel trace</td>
+</tr>
+<tr>
+<td>当前资源与保护</td>
+<td>D actual8d977702/2637唯一53.781秒exit0/CLOSED，SAVED8b66f6ea/33053经Root核72refs，本次09:48四资源/labels/owner-stop/unit/CG/FD/socket/ACK及前后whole闭合，不代futurefresh</td>
+</tr>
+<tr>
+<td>信息缺口与95选择</td>
+<td>9046仅40B消息，无stack/ctx/21条件快照；三阶段预期配置同。计划95只选LOCAL诊断准备，未实施或执行，旧cut保原</td>
+</tr>
+<tr>
+<td>静态缺陷与改选</td>
+<td>三精确同版body+独立7d3a59c0证明api:false归一对象足以被旧!c.api拒；原ctx、短路首项和另20项未知。关联改选supersede旧诊断，取消额外现场config-only</td>
+</tr>
+<tr>
+<td>最小单源修正</td>
+<td>driver0fd0414f/37845只加严格对象helper并替换一谓词，SOURCE6824bada/14471经Root核17refs；controlled唯一1组1/1，非实际Vitest/bootstrap/worker或四用例</td>
+</tr>
+<tr>
+<td>真实计划96</td>
+<td>item14/event27/1通知、6项1推进2待3完成；新决定rev2 implemented仅single-driver-source-only/独立验收false，最小新入口df5a0769只已选择</td>
+</tr>
+</tbody></table></div>
+<p><strong>旧cut及失败全部保原。</strong> 计划94初API400因29旧+3新=32超schema30，GET核item11/plan93/event24未变；r2完整索引保29旧顺序+3新后唯一成功，原工具与API门不改，不写成地址错误。94当时terminal未读、95当时仅准备与其后改选分别记，旧d1a5 rev2 superseded保原。原TAP统计/GBK包装错误据原raw追加correction64ba，不重组；本机类型/投影/文件名准备拒绝保边界，不扩大资格。</p>
+<p>中段137行=136原pins+1driver alias，134正文/3私环境withheld；1233原整数/274unsafe，137投影行274值舍入，依据原wire。namespace另126/28unsafe，source625另144/32unsafe；两扫各255全读/0EXIT/0未知。whole44=12原stdout+32parsed；后native259=256读+3boundEXIT、后build256=255读+1boundEXIT/poll17，不能写全读或新HUP等待。owner当前路径缺席不反推原kernel退出，parsed不冒SQL/HTTP wire。retained1个9046原件与4真实ENOENT、primary与secondary分列保留。</p>
+<p>修正仍要求严格plain data、精确ownKeys/data descriptor/枚举性及内部UUIDv4形态，端口/主机/strictPort/额外键/symbol/accessor等仍拒；另20条件、reporter/plugin、13字节模块合同/12host+1source-only、callbacks/hooks/SQL/fixture/fresh/首错私存/close逐byte保持。静态充分不兼容与单源通过不等原ctx恢复、完整家族或框架ABI。</p>
+<p>plan96 Ha127491b… inactive/0签收、事项rev14 Heccbc692…；五步标准、25tasks、自治/global/R22/notes及PG29/Env23保持。candidateMayHaveExecuted null、ABI false、四用例0通过/0业务失败/4未完成、74为0/74；客户12/devCI/完整软件文档包安装使用升级恢复与Agent成熟链待交付。费用只记录无上限，新增供应商模型0，内部Token/金额未知分列，没有生产发布；旧START/CHECK/terminal5/D不重放。</p>
+<!-- record283-current-block-end --><hr>
+<p>以下完整保留记录282检查点原文；本条不回填旧cut。</p>
+<h1>软件工厂监督推进检查点（记录282：计划93，新验证已启动，终态待独审）</h1>
+<!-- record282-current-block-begin -->
+</section>
+<section class="doc-section" data-section="38"><h2 id="section-38" tabindex="-1">当前进展（记录282）：加载修正的新验证已启动，计划93等待终态独审</h2>
+<p><strong>固定cut：实际计划93、PG29、Env23；112正式R36保持。</strong> 新七源、两个host、完整family/A/D/P来源、实际SOURCE-DATA/late DATA和具体ENTRY已完成，Root唯一START已有保存独审。本条只记启动时段；CHECK、终态DATA、五原件实际读取、D和其后用例结果不纳本cut，不回填记录281。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>已完成范围</th>
+<th>事实与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>候选与P1修正</td>
+<td>NULL旧候选保原，r2只修SQL两相driver指针；旧P自身路径真实P1 f982保留，新Pd676仅一literal改正，NULL-r3关联新H，其余六源/两host不变</td>
+</tr>
+<tr>
+<td>来源与入口</td>
+<td>完整SOURCE bc377ef8与family/A/D/P四头已封；SOURCE-DATA7dab、late1e24/CTX d917各唯一一次；ENTRY914721ba/339150经Root核663引用</td>
+</tr>
+<tr>
+<td>唯一START</td>
+<td>actual646e97f3/2821，34.172秒exit0，09:09:45.518550Z的单元ACK loaded/active/running；ready false、owner-state-unknown，owner/stop/state/originalRecords均null，仅本次调用CLOSED</td>
+</tr>
+<tr>
+<td>有限保存资格</td>
+<td>SAVED5190859b/26977经Root核65引用；A原wire553756B、4witness、9control/6tool/8provided与原JP和单ACK绑定，不签worker/ABI/用例或资源收尾</td>
+</tr>
+<tr>
+<td>新鲜保护</td>
+<td>22capture=6原stdout+16parsed；native两245全读，build244全读及246=245读取+1绑定EXIT/poll17，0未知。proof至JP intended741ms，不冒新HUP等待或独立kernel trace</td>
+</tr>
+<tr>
+<td>后继读取来源</td>
+<td>终态五原件SOURCE d73c7542/18509及22refs已核；实际context/terminal/pins/nonce/DATA/ENTRY仍null，不表示已读取或验收</td>
+</tr>
+</tbody></table></div>
+<p>A的16组metadata9保144原整数，32超JS安全范围，原wire/witness按原整数域核；parsed JSON不冒HTTP/SQL wire。应用runtime和PG双读为来源绑定见证，625来源/624未变/37B overlay与607主目录保护分别核。固定607/a952及旧061期望、失败和全部CLOSED机会保持；本次保护资格不替代后继新鲜门。</p>
+<p><strong>引用归属澄清。</strong> addendum c1e690ed/4481将shell辅助35项末3（selection/currentMainWitness/audit）与本人在原65项内实核的三历史method/HUP refs分列，并本机核实际新增3项。原519、65项实核、原public/safeFacts的saved-null、平台93cut及A/fresh分母/741ms/START资格不改，不新增功能或kernel资格。原wiring harness失败、更正同组通过、精准P组首轮1/1、inverse matcher和AST字面量准备失误保原，未重旧passed组或现场。</p>
+<p>实际计划93 H9a474d05… inactive/0签收；PG4事项rev11/Hf700e15d… running、event24和1条持久通知已读回，6项1推进2待3完成。driver决定rev4 implemented仅performed-start-only，independentAcceptance false；五步标准、25tasks、自治/global/R22/notes及PG29/Env23保持。计划93回执时CHECK尚未执行，唯一后继不得早于09:26:45.518550Z（北京17:26:46）；本条不倒填其后继，不重START/A。</p>
+<p>仅精确vitest/runners一项source-only/deferred；13项字节合同、其它12项host import/export及4callbacks/hooks/SQL/config/fixture保持，不fake worker global。candidateMayHaveExecuted null、ABI false、四用例0通过/0业务失败/4未完成、74为0/74。客户12、devCI、完整软件文档包安装使用升级恢复与Agent成熟链尚待交付。费用只记录无上限，新增供应商模型0，内部Token/金额未知分列，没有生产发布。
+证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E6%96%B0%E9%AA%8C%E8%AF%81%E6%BA%90%E7%A0%81%E5%8F%82%E6%95%B0%E5%85%A5%E5%8F%A3%E6%A0%B8%E5%AF%B9-20261016.json">来源参数入口</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E5%90%8E%E6%96%B0%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%99%85%E5%90%AF%E5%8A%A8-20261016.json">实际启动</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E5%90%8E%E6%96%B0%E9%AA%8C%E8%AF%81%E5%90%AF%E5%8A%A8%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">启动保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E6%96%B0%E9%AA%8C%E8%AF%81%E5%90%AF%E5%8A%A8%E8%AE%A1%E5%88%9293%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">计划93监督读回</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%9C%AC%E8%BD%AE%E7%BB%88%E6%80%81%E4%BA%94%E5%8E%9F%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%9D%A5%E6%BA%90%E7%8B%AC%E5%AE%A1-20261016.json">终态五原件来源</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E6%96%B0%E9%AA%8C%E8%AF%81%E5%90%AF%E5%8A%A8%E4%BF%9D%E5%AD%98%E5%BC%95%E7%94%A8%E5%BD%92%E5%B1%9E%E6%BE%84%E6%B8%85-20261016.json">引用归属澄清</a>。</p>
+<!-- record282-current-block-end --><hr>
+<p>以下完整保留记录281检查点原文；后继结果不回填本cut。</p>
+<h1>软件工厂监督推进检查点</h1>
+<p>2026-10-16，最新建设281/head 846b5f038f638f73fc9f48d04c0c28220d24048c7889e3b24b8b26ffae2b8a5d；archive3.91/首2.56/plan92/PG29/Env23。本次08:00Z左右已保存epoch的固定属性完整保护与3164当前资源核查通过；后继七源QA仅已选择LOCAL准备，SOURCE家族、实际参数、入口和新QA尚未完成，不倒填。112正式R36保持。</p>
+<!-- record281-current-block-begin -->
+</section>
+<section class="doc-section" data-section="39"><h2 id="section-39" tabindex="-1">当前进展（记录281）：本次保护与资源收尾已核对，新的四用例仍在准备</h2>
+<p><strong>固定cut：实际计划92、PG29、Env23；112正式R36保持。</strong> 本次固定属性版本的前保护／当前资源／后保护已实际读取并完成保存独审，只资格于08:00Z左右的已保存时段。新的七源QA集成仅已选择LOCAL准备，源码家族、实际参数、入口和新四用例尚未完成，不倒填后继。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>已完成范围</th>
+<th>真实结果与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>六源来源与参数</td>
+<td>handoff f55fb5a1、保护SOURCE f941ffd2及current SOURCE a8c67fe8；保护与current纯DATA各唯一一次，封556e50f5/99f3e88c；ENTRY066dda41/346917经Root核679引用</td>
+</tr>
+<tr>
+<td>本次唯一实际</td>
+<td>actual3c5e561a/2556，50.25秒exit0、CLOSED；前后完整保护与3164当前资源收尾合格，不重新运行任何旧once</td>
+</tr>
+<tr>
+<td>保存独审</td>
+<td>SAVEDd3f2938c/33853经Root核76引用；原68202014报告只因字段命名歧义另立r2澄清，旧原件与实际savedfalse当时值全保</td>
+</tr>
+<tr>
+<td>当前范围</td>
+<td>四资源、标签、owner/stop当前路径、unit/CG、FD/socket/ACK均在本次范围内闭合；中段两扫各255列出/255读取/0退出/0未知</td>
+</tr>
+<tr>
+<td>下一步选择</td>
+<td>已审driver9bfd与新固定属性保护集成为七个最窄来源后继；仅固定一个模块source-only/deferred，原13字节合同、其它12模块与callbacks/hooks/SQL/config/fixture保持</td>
+</tr>
+</tbody></table></div>
+<p>固定607仍为18151378B/content3d08e339…与a952d757 metadata；旧06189a46期望、失败和CLOSED机会保原，未来任何新差异仍拒，不重设旧基准、不改权限或时间凑匹配。当前source625见证与607主目录保护分别核对。</p>
+<p><strong>原件与投影分开。</strong> 137行metadata9共1233原整数，274超JS安全范围；137行解析投影有舍入，资格依据原wire整数canonical H。前后保护44份捕获为12份原transport stdout与32份parsed JSON，中段另1份原transport；parsed JSON不冒HTTP或SQL wire。after-native首扫为267列出=265读取+2绑定EXIT、0未知，不能写267全读，也不冒新HUP实测。原owner/stop当前缺席不反推原kernel退出；双读、关闭与EXIT为来源绑定保存证据，非独立kernel trace。</p>
+<p>旧QA保留1报告、缺4报告及module-import首错；candidateMayHaveExecuted null、框架ABI false、四用例0通过/0业务失败/4未完成和原74的0/74保持。客户12、devCI、软件文档包安装使用升级恢复与Agent成熟链尚未交付。本次已保存时段资格不代未来START前的新鲜保护。</p>
+<p>计划92 H62a6ac25… inactive/0签收，PG4事项rev10 running/Hdcde8181…、event23及1条持久通知均真实读回；6项1推进、2待推进、3完成简报。新meta决定rev2 implemented与driver决定rev3 implemented的independentAcceptance均false，新QA动作仍planned。五步标准、25旧任务、自治/global/R22、notes与PG29/Env23保持，推进简报不增加原74签收。</p>
+<p>费用只记录不设上限；供应商新增模型调用0，内部Token及金额未知分列。没有本次生产发布。旧建设280全文与账本前缀保原，七源QA后继结果不回填本cut。
+证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%9B%BA%E5%AE%9A%E5%B1%9E%E6%80%A7%E4%BF%9D%E6%8A%A4%E6%9D%A5%E6%BA%90%E5%8F%82%E6%95%B0%E5%85%A5%E5%8F%A3%E6%A0%B8%E5%AF%B9-20261016.json">来源参数入口</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%BA%E5%AE%9A%E5%B1%9E%E6%80%A7%E4%BF%9D%E6%8A%A4%E4%B8%8E%E5%BD%93%E5%89%8D%E8%B5%84%E6%BA%90%E5%AE%9E%E9%99%85%E6%A0%B8%E6%9F%A5-20261016.json">本次实际</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%BA%E5%AE%9A%E5%B1%9E%E6%80%A7%E4%BF%9D%E6%8A%A4%E4%B8%8E%E8%B5%84%E6%BA%90%E6%94%B6%E5%B0%BE%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%A1%86%E6%9E%B6%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E5%90%8E%E6%96%B0%E5%9B%9B%E7%94%A8%E4%BE%8B%E9%9B%86%E6%88%90%E6%9C%80%E7%BB%88%E9%80%89%E6%8B%A9-20261016.json">新QA最终选择</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%9C%AC%E6%AC%A1%E8%B5%84%E6%BA%90%E6%94%B6%E5%B0%BE%E5%90%88%E6%A0%BC%E4%B8%8E%E5%9B%9B%E7%94%A8%E4%BE%8B%E5%87%86%E5%A4%87%E8%AE%A1%E5%88%9292%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">计划92监督读回</a>。</p>
+<!-- record281-current-block-end --></section>
+<section class="doc-section" data-section="40"><h2 id="section-40" tabindex="-1">建设280检查点原文（整字节保留）</h2>
+<h1>软件工厂监督推进检查点</h1>
+<p>2026-10-16，最新建设280/head 8770d6b836b829d6ba10e1239de5c5f7c841d68cebdb3130cb163f4079f92077；archive3.90/首2.55/plan91/PG29/Env23。固定cut为新driver单源已核、main-only观察和四metadata差异已保存独审、新固定属性版本仅已选择；后继保护SOURCE/DATA/ENTRY/现场未完成，不倒填。112正式R36保持。</p>
+<!-- record280-current-block-begin -->
+</section>
+<section class="doc-section" data-section="41"><h2 id="section-41" tabindex="-1">当前进展（记录280）：加载修正单源已核，607内容不变，独立固定属性保护版本已选择</h2>
+<p><strong>固定cut：实际计划91、PG29、Env23；112正式R36保持。</strong> 计划inactive、签收0；PG4事项revision9 running，event22和1条对应持久通知已读回，6项1推进中、2待推进、3完成简报。archive3.90/首2.55/goal91。新metadata保护SOURCE、DATA、ENTRY和现场本cut未完成，不倒填后继。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>已发生范围</th>
+<th>结果与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新driver单源</td>
+<td>SOURCE692eb068/19088、Root核19源；new9bfd只供futureQA，13项字节合同及其余12 import/export、4callbacks/hooks/SQL/config/fixture保持；延后1项不签worker/exports/ABI</td>
+</tr>
+<tr>
+<td>作者针对性组</td>
+<td>唯一新组首轮0/1与原stdout保留，修正后同组1/1；不是实际Vitest模块/四用例验收，本轮不重旧组</td>
+</tr>
+<tr>
+<td>计划90真实cut</td>
+<td>driver决定rev2 implemented只表单源实施；main诊断选择rev1 selected，plan90/item8/event21/1通知已读回，6项1推进2待3完成</td>
+</tr>
+<tr>
+<td>新main-only实际</td>
+<td>actual7f37d66d/5994，Root核ENTRY18refs后唯一rootCalls1，tool wall1.4515205秒exit0，readComplete/close/两帧stable，机会CLOSED</td>
+</tr>
+<tr>
+<td>main保存独审</td>
+<td>SAVED49c061c1/13632、Root核23refs；原transport=host bytes、DATA13/ENTRY14绑定、1214行metadata9保整数；source-bound不冒kernel trace</td>
+</tr>
+<tr>
+<td>有限差异比较</td>
+<td>diff98f827de/2903：0增0删0内容改，607内容全同；仅4metadata变，rootMetadata9不变、作者/原因unknown，不重读旧607</td>
+</tr>
+</tbody></table></div>
+<p>仍607文件/18151378B/content3d08e339…/root66306:14417953；旧期望metadata06189a46…与新观察a952d757…不同。expectedMatches content/files/root true、metadata false，不写成旧607全部匹配。两个test文件design.integration.test.ts、platform/doc-sections.test.ts为0644→0664及mtime/ctime变；generate.service.ts、doc-sections.ts仅mtime/ctime变，mode0664保持。四件identity/owner/links/size均不变。</p>
+<p><strong>新选择：独立新purpose的精确metadata保护版本。</strong> Root选择3aea1f54/4471固定同一content/files/bytes/root和a952d757 metadata。旧v1 tuple/来源/真实失败和全部once保原；不重设旧607，不chmod或改时间凑匹配，无通配放宽/自动采样/fallback，未来任何不同仍拒。该新版本本cut仅已选择且后继实施授权限LOCAL，已同步真实计划91；本cut新保护SOURCE、DATA、ENTRY和现场尚未完成，不能冒新保护已通过。</p>
+<p>下一current仍绑定failed attempt3164、worker51b、driver911、MAIN8bae、C344b旧历史；new9bfd仅futureQA，不替换原driver911。完整保护/fullP/current资源收尾合格后才可启动新的四用例。当前四case0通过/0业务失败/4未完成，原74为0/74；客户12/devCI/软件文档包安装使用升级恢复与Agent成熟链未交付。</p>
+<p>原279、r1绿审漏producer兼容/两P1/真实失败、r2原件及SAVED全保，所有旧QA/D/读取机会CLOSED。本条不回填未来driver集成或新保护结果。费用只记录不设上限，供应商新模型0，内部Token/金额未知分列；没有生产发布。</p>
+<p>计划91 Hb0e0171e…、事项rev9 H89af1ebf…均真实读回。main诊断342fe80f…rev2 implemented只表示诊断读取已实施，independentAcceptance false；新meta决定db8b2ca6…rev1 selected也未独立验收。原五步标准、25旧任务、自治rev20 blocked、global/R22、notes和PG29/Env23全部保持，推进简报不增加原74签收。
+证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B8%8A%E4%B8%8B%E6%96%87%E6%9C%80%E5%B0%8F%E4%BF%AE%E6%AD%A3%E6%BA%90%E7%A0%81%E7%8B%AC%E5%AE%A1-20261016.json">driver单源独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E6%BA%90%E7%A0%81%E4%B8%8E%E4%B8%BB%E7%9B%AE%E5%BD%95%E8%AF%8A%E6%96%AD%E9%80%89%E6%8B%A9%E8%AE%A1%E5%88%9290-20261016.json">计划90</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%AA%8C%E8%AF%81%E5%90%8E%E4%B8%BB%E7%9B%AE%E5%BD%95%E5%8F%98%E5%8C%96%E8%AF%8A%E6%96%AD%E9%80%89%E6%8B%A9-20261016.json">main诊断选择</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%AA%8C%E8%AF%81%E5%90%8E%E4%B8%BB%E7%9B%AE%E5%BD%95%E6%96%B0%E8%A7%82%E5%AF%9F%E5%AE%9E%E9%99%85%E7%BB%93%E6%9E%9C-20261016.json">实际观察</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%AA%8C%E8%AF%81%E5%90%8E%E4%B8%BB%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%AF%B9607%E5%B1%9E%E6%80%A7%E5%B7%AE%E5%BC%82-20261016.json">607差异</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%AA%8C%E8%AF%81%E5%90%8E%E4%B8%BB%E7%9B%AE%E5%BD%95%E5%B1%9E%E6%80%A7%E5%B7%AE%E5%BC%82%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82607%E5%9B%BA%E5%AE%9A%E5%B1%9E%E6%80%A7%E6%96%B0%E4%BF%9D%E6%8A%A4%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9-20261016.json">新属性版本选择</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E4%B8%BB%E7%9B%AE%E5%BD%95%E5%B7%AE%E5%BC%82%E4%B8%8E%E5%9B%BA%E5%AE%9A%E5%B1%9E%E6%80%A7%E6%96%B0%E7%89%88%E6%9C%AC%E8%AE%A1%E5%88%9291%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">计划91监督读回</a>。</p>
+<!-- record280-current-block-end --><p>全部旧QA/D/报告/main诊断机会保持CLOSED，不重caller/once。旧607-v1的06189a46 tuple与真实拒绝保原，新独立版本只精确固定a952d757；不chmod/改时间，不容忍未来变化。current closure/fullP/PG4未签，四case0/0/4、原74为0/74。费用未知分列，供应商新模型0、无发布。</p>
+</section>
+<section class="doc-section" data-section="42"><h2 id="section-42" tabindex="-1">记录279检查点原文快照</h2>
+<p>以下旧279全文逐字节保留，不回填后继单源、main观察或新版本结果。</p>
+<h1>软件工厂监督推进检查点</h1>
+<p>2026-10-16，最新建设279/head 5a15ec5fb8d66a08364dd48a9d8efa13e56f0973790cf2d95186bd95e4717e22；archive3.89/首2.54/plan89/PG29/Env23。固定cut为错误原件已读取并独审、加载修正已选；后继driver SOURCE/集成/现场尚未完成，不倒填后继。112正式R36保持。</p>
+<!-- record279-current-block-begin -->
+</section>
+<section class="doc-section" data-section="43"><h2 id="section-43" tabindex="-1">当前进展（记录279）：错误原件已读并定位框架上下文，单项加载修正已选择</h2>
+<p><strong>固定cut：实际计划89、PG29、Env23；112正式R36保持。</strong> 计划inactive、签收0；PG4监督事项revision7 running，event20与1条对应持久通知已读回，6项为1推进中、2待推进、3完成简报。推进状态不表示四用例正在运行，原五步标准、25旧任务、自治rev20 blocked、global/R22、notes和运行绑定保持。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>本次已发生范围</th>
+<th>结果与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r1初审与真实失败</td>
+<td>SOURCE63245/ENTRYa7c5初审绿、Root核30refs后唯一actuala3d8cfcc/10095，Node0.719秒exit1，FAILED CLOSED；未读到2066B正文</td>
+</tr>
+<tr>
+<td>两项真实P1</td>
+<td>producer retain_reports/store固定0444，r1reader错要0600；thin成功files集合门遮住原PG4_D_RECORD_UNTRUSTED而返回PG4_OR_RETURN_CONTEXT_CHANGED。原wire1181B/status0已保，不推断FD泄露或业务失败</td>
+</tr>
+<tr>
+<td>r1失败保存</td>
+<td>SAVED8d634f1c/15383、Root核18refs；旧绿报告和漏审producer兼容联查缺口明确保留，所有原件/旧机会不改不重放</td>
+</tr>
+<tr>
+<td>r2来源、参数与入口</td>
+<td>SOURCE1a130c9b/15352、Root核27源；purehelper68ca实际0.445222秒exit0，CTX8b726/1720、seal0ab57/7625；ENTRYffcfd2/19683、Root核33refs后才唯一soleouter6352</td>
+</tr>
+<tr>
+<td>r2实际与保存</td>
+<td>actual9b80e88f/2552，Node0.813秒exit0、ready true，2066B原件H2e456ec4与wire/历史pin相同；SAVED9b03bf39/14333、Root核16refs，机会成功CLOSED</td>
+</tr>
+<tr>
+<td>字节与元数据范围</td>
+<td>真实UID/GID0、0444、nlink1、metadata9原整数、双held稳定/关闭由source-bound原wire签回；只签保存原字节，不冒独立kernel trace或当前资源闭合</td>
+</tr>
+</tbody></table></div>
+<p>原message完整382B、H0ba923c8…、无截断；stack明确unavailable，不补造，不公开错误正文、操作路径、身份或Base64。真实firstFailure为module-import，operation对应固定13modules中唯一index2的 <strong>vitest/runners（不是根vitest）</strong>，入口H3276eddc…/8959。保留message与同版官方getWorkerState源码支持worker-state上下文解释；原因报告明确这是有来源支持的推断，未认证全部transitive。fixtureLaunchAttempted false、startsAttempted0和candidateMayHaveExecuted null保原，不把null写成false，也不把该中断算四业务失败。</p>
+<p><strong>下一已选：仅固定一项source-only/deferred加载修正。</strong> 新决定5d37103d…rev1 selected；13项源码身份/字节合同全部保持，只对精确vitest/runners元组延后host import，其余12项原import/export检查、4callbacks、hooks、SQL、config/plugin/reporter、fixture及默认runner不变。延后项与实际loaded分列，actualImportReturned/exportTypesVerified/workerExecutionVerified false、sourceBytesVerified true，frameworkABIQualified false、actualWorkerTestRunnerInstance null；不fake worker global、不吞import错误。<strong>后继driver SOURCE、完整集成和现场本cut尚未完成，不倒填后继。</strong></p>
+<p>诊断决定d480ee2c…rev2 implemented只表示单报告诊断读取已实施，independentAcceptance false；不表示driver修复已实施。计划89 H83e65362…、事项rev7 H0a393110…及简报通知为真实读回；原actual或原因报告当时savedEvidenceIndependentlyAudited false字段保原，后继SAVED另引，不回填旧cut。</p>
+<p>Root外层初稿错误host指纹在执行前发现，保v1、distinct v2仅一处literal修正；r2外层由真实NULL机械派生。本机matcher/重复镜像WX拒、SAVED对stack存在的过严假设均留边界，没有为补记录重跑旧passed组或现场。</p>
+<p>主目录变化、完整607保护/fullP与当前资源收尾仍未合格；不重设607或旧602基准，不重QA/D/旧454或任何CLOSED机会。四case仍0通过、0业务失败、4未完成，原74为0/74；客户12/devCI/软件文档包安装使用升级恢复和Agent成熟链未交付。费用只记录不设上限，新增供应商模型0，内部Token与金额未知分列；无生产发布。记录278及更旧快照保原文。</p>
+<p>证据：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%94%99%E8%AF%AF%E5%8E%9F%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%A4%B1%E8%B4%A5%E4%B8%8E%E8%84%9A%E6%9C%AC%E5%85%BC%E5%AE%B9%E7%BC%BA%E5%8F%A3-20261016.json">r1失败与兼容缺口</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%94%99%E8%AF%AF%E5%8E%9F%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%A4%B1%E8%B4%A5%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">r1保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%94%99%E8%AF%AF%E8%AF%BB%E5%8F%96%E8%84%9A%E6%9C%AC%E7%BC%BA%E5%8F%A3%E4%B8%8E%E8%AE%A1%E5%88%9288%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">计划88</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%94%99%E8%AF%AF%E5%8E%9F%E4%BB%B6%E5%8D%95%E6%96%87%E4%BB%B6%E7%9C%9F%E5%AE%9E%E8%AF%BB%E5%8F%96-20261016.json">单文件实际读取</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%94%99%E8%AF%AF%E5%8E%9F%E4%BB%B6%E5%8D%95%E6%96%87%E4%BB%B6%E7%9C%9F%E5%AE%9E%E8%AF%BB%E5%8F%96%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">r2保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%9B%9B%E7%94%A8%E4%BE%8B%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%B8%8A%E4%B8%8B%E6%96%87%E7%9C%9F%E5%AE%9E%E5%A4%B1%E8%B4%A5%E5%8E%9F%E5%9B%A0-20261016.json">真实原因与限界</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E9%80%89%E6%8B%A9-20261016.json">单项修正选择</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%94%99%E8%AF%AF%E5%8E%9F%E5%9B%A0%E4%B8%8E%E5%8A%A0%E8%BD%BD%E4%BF%AE%E6%AD%A3%E9%80%89%E6%8B%A9%E8%AE%A1%E5%88%9289%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">计划89监督读回</a>。</p>
+<!-- record279-current-block-end --><p>旧QA、START/CHECK、terminal5、D、单报告r1/r2所有已有机会保持CLOSED。当前主目录变化/fullP/current closure未收尾；case0通过/0业务失败/4未完成，原74为0/74。供应商新模型0、内部Token/金额未知分列；无生产发布。</p>
+</section>
+<section class="doc-section" data-section="44"><h2 id="section-44" tabindex="-1">记录278检查点原文快照</h2>
+<p>以下旧278全文逐字节保留，不回填新的原因或结果。</p>
+<h1>软件工厂监督推进检查点</h1>
+<p>2026-10-16，最新建设278/head f11e4b30bd62ed2cd7e3c10d7e2afd7782ac725863917b433954d5edef4a1824；archive3.88/首2.53/plan87/PG29/Env23。112正式R36保持。此cut截至D失败保存独审与单报告选择，不纳后继结果。</p>
+<p><strong>新QA START、唯一CHECK、terminal5及新D均CLOSED，禁止重放。</strong> 唯一CHECK actual429c6d2a/162566（05:52:53.698057Z，Node7.484秒exit0）取得生产者failed；首错module-import/R33_PG4_DRIVER_STAGE_INCOMPLETE、source-bound-driver且输入绑定通过，具体模块原因仍未知。首次51字符ENTRY H在Node前本机预拒5a2966e0/1153，无Node/远端或CHECK机会消耗，原快照不变。</p>
+<p>五binding原件actual5ea51a2a/4062，state+四created共23881B；SAVED6efaa337/11149及19refs Root核同。它们不是五份框架报告：driver pin2e456ec4/2066B保留，另四份报告有真正ENOENT历史。CHECK SAVEDc72b999c/12654及18refs Root核通过，仅保存终态资格；unit not-found/inactive/dead/Main0及历史owner/stop不代当前资源闭合。</p>
+<p>D purehelper91304ca5/34249已实际封639refs，保600顺序前缀；seal1f640aa1/167072、D C393997d8/161726、CTXcff5e5ff/2522、参数391232c2/389376（canonical3af9775a）。ENTRY60efd56e/165920及645refs由Root实体初末核后，Root唯一outerv2 5fc5455a/4588实际执行。actual3f8b8854/2573、Node18.516秒exit1、06:23:23.311967Z FAILED CLOSED，R33_PROTECTION_CAPTURE_TRANSPORT_INCOMPLETE。D middle未进，2066B driver正文未读。</p>
+<p>D SAVED84e0d8c9/28837及32refs Root核同：20包=16 parsed+4raw；前后两whole各inventory-before status1/stdout0/stderr182，原RuntimeError R28_HOST_MAIN_CHANGED。空before/after不等于0remote。异常链未透传whole captureEvidence直接索引，SAVED仅固定prefix/保存时间/source参数H/串行顺序关联原包，不冒explicit runtime index。原actual savedEvidenceIndependentlyAudited:false不倒填。当前closure/fullP/清理/PG4均未签；不推定任何四case业务失败。</p>
+<p><strong>下一仅新窄单报告诊断。</strong> Root已选决定d480ee2c-745c-44dd-ad79-4bda8335668e rev1selected，independentAcceptance:false；plan87 Heeab6e4e40fc29c34c4ba1ffd4b59d3690a174cc5e9fb60dbe8add43130ccf42 inactive/0签收。将固定2066B已保存错误原字节诊断与完整保护/资源资格分开，不把moving main当读取该原件的前提；fullP/currentclosure/PG4门不变，不重设607或旧602、不重QA/D。新单报告仅LOCAL来源准备，实际DATA、具体ENTRY和读取本cut未完成，后续必须另cut记录。</p>
+<p>PG4事项f66e7c7a…rev5 running H6ed294033276a803c7191870b04672e4afec4edba46c0bdc7e0dcf5d27070d99，event18/1条持久通知；6项1推进2待3完成。原五步标准及task/run/title/goal/mode、25旧任务、自治rev20 blocked、global/R22/notes、PG29/Env23保持。四case0通过0业务失败4未完成、原74为0/74；客户12/devCI/文档软件包安装使用升级恢复及Agent成熟链仍未交付。14变化作者/新增web功能未验。费用只记无上限/内部Token量价未知，新供应商模型0、无生产发布。</p>
+<p>所有remote/API仅Root严格串行，agents LOCAL；不为补文档重读现场、运行旧测试或模型。重要变化更新既有监督事项和construction，未变安静。</p>
+<p>参考：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%9B%E7%94%A8%E4%BE%8B%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E4%B8%AD%E6%96%AD%E5%AE%9E%E9%99%85%E7%BB%88%E6%80%81-20261016.json">CHECK终态</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%9B%E7%94%A8%E4%BE%8B%E4%BA%94%E5%8E%9F%E4%BB%B6%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">五binding保存</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%9B%E7%94%A8%E4%BE%8B%E5%BD%93%E5%89%8D%E8%B5%84%E6%BA%90%E6%A0%B8%E6%9F%A5%E5%8F%97%E4%BF%9D%E6%8A%A4%E6%8B%92%E7%BB%9D-20261016.json">D实际拒绝</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%9B%E7%94%A8%E4%BE%8B%E4%BF%9D%E6%8A%A4%E6%8B%92%E7%BB%9D%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">D保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E4%BF%9D%E6%8A%A4%E6%8B%92%E7%BB%9D%E4%B8%8E%E7%8B%AC%E7%AB%8B%E9%94%99%E8%AF%AF%E8%AF%BB%E5%8F%96%E9%80%89%E6%8B%A9%E8%AE%A1%E5%88%9287-20261016.json">独立错误读取选择与计划87</a>。</p>
+</section>
+<section class="doc-section" data-section="45"><h2 id="section-45" tabindex="-1">记录277时点检查点原文</h2>
+<p>以下保留完整旧277检查点原字节，包括当时待办；最新进展以上文为准，不执行下列已关闭历史入口。</p>
+<h1>软件工厂监督推进检查点</h1>
+<p>2026-10-16，最新建设277/head a3f4403c32ac878f3dc9e0a3d8c05ca89cc7b2a34fc890a7828b185dfb9b63de；archive3.87/首2.52/plan85/PG29/Env23。112正式R36保持。</p>
+<p><strong>新QA唯一START真实成功CLOSED，严禁再start/A或重派。</strong> public goals-r29/r37-pg4-qa-first-error-main607-main-actual-start-observation-1792128867065-d3b81f55-8353-42b5-8d3d-7c3c4bd21496.json Hd2b27af8/162579；START at05:34:27.065643Z、30.813秒exit0。attempt3164f5048c2562a9c29c915f73bfd124，unit jarvis-pg4-qa-r37-first-error-main607-3164f5048c2562a9c29c915f73bfd124.service，ACK loaded/active/running/Main57931/Inv0fec4a6bc1a346818d6df93e1718df72。owner-state-unknown，owner/stop/original/state均NULL。Root session64047已结束；当前无Root session，服务当前状态未知，不盲轮询。</p>
+<p>唯一CHECK不得早于2026-10-16T05:51:27.065643Z（北京时间13:51:28）。到时Root串行以 .jarvis-dev/maintenance/run-r37-pg4-qa-first-error-main607-reviewed-main.py action check，CTX H a0cd401a159fa8c4d76a0c75fb2b1baadc15ac54c394b288d5a6787fc0c36220，ENTRY artifacts/software-factory/goals-r29/r37-qa-first-error-main607-specific-entry-independent-local-review-final.json H b146d8eadad65fbf3b2988b6ad84ec08e9085915e9ce4ef1a9365e9fd1073dda，最多一次/noRetry。禁止提前check/独立systemctl/重start。</p>
+<p>完整SOURCE95807a7f及4消费头已真通过；pure DATA seal60f70f24/154224已唯一封600refs，exec344b/CTXa0cd；ENTRYb146/159476由Root核610实体refs后才START。START SAVED a32b9af5/23445核48physicalRefs、Root补安全镜后全核。A原wire、新fresh607、原payload/dispatchACK、source/start意图绑定通过，proof至记录意向614ms/最老frame7817ms；native244全读、246=244+2mask17原pidfd退出，build253双全读，0unknown/related。只保存启动资格，非workerReady/用例/终态或currentclosure。</p>
+<p>ParentJP原byte snapshot .jarvis-dev/maintenance/r37-qa-main607-actual-start-parent-journal-snapshot-84c2dd99-8cae-4d33-8fe6-71ee17dae802.json Heb20eeb1/3882854，start机会已dispatchedtrue/startUncertainfalse。公开仅allowlist dac4acf/1749，首safe-facts原命令投影仅LOCAL不得发布。</p>
+<p>终态5原件新SOURCE5f1ffc7b/13393及16refs Root核通过，outer cffbc5eb/4288及静审addendum1a752329/5146（Root核6refs）通过，仅LOCAL来源。actual terminal/context/五pins/具体ENTRY仍NULL。实际CHECK后才按其原wire封DATA/ENTRY，再唯一5原byte和独立D9资源收口；不得拿旧454或START凑终态。</p>
+<p>平台计划85 H49a20459…inactive/0签收，PG4原item f66e7c7a…rev3 running、event16及1持久通知；现有6项1推进2待3完成。repair rev6completed只前置范围。原五步标准/25tasks/自治rev20 blocked/notes/global/R22/PG29/Env23保持。四用例仍0通过0业务失败4未完成、原74为0/74、客户12与devCI/安装使用升级恢复/Agent成熟链待交付。费用只记无上限/内部未知分列，无新供应商模型或发布。所有remote/API仅Root串行，agents LOCAL。重要变化写原监督事项和construction，未变安静。</p>
+<p>参考：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%9B%9B%E7%94%A8%E4%BE%8B%E6%96%B0%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%99%85%E5%90%AF%E5%8A%A8-20261016.json">实际启动</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%96%B0%E5%9B%9B%E7%94%A8%E4%BE%8B%E5%90%AF%E5%8A%A8%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">启动保存独审</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%9B%9B%E7%94%A8%E4%BE%8B%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%AE%A1%E5%88%9285%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">计划85监督读回</a>。</p>
+</section>
+<section class="doc-section" data-section="46"><h2 id="section-46" tabindex="-1">记录276时点检查点原文</h2>
+<p>2026-10-16，建设276/计划84/PG29/Env23。112正式R36、101冷备业务停用及独立工厂保持。当前6监督项1推进2待3完成：repair4fbfd87a rev6 completed，PG4 f66e7c7a rev2 running（仅新入口准备），diagnostic a24cdb77 rev3 completed；event15及本次2持久通知读回。plan84 He12ff2f3438db9cf8511ee00b95eb19ff0959b7dee7f93e94e667452bcc864b2 inactive/0签收，原五步/25tasks/自治rev20 blocked/global/R22/notes全保。</p>
+<p>新607 current唯一观察已成功CLOSED、不得重放：artifacts/software-factory/goals-r29/r37-pg4-incomplete-driver-current-main607-actual-observation-1792126120107-45faed5d-51d7-4dce-8021-94a3563a6a18.json Hf10c390079550a8937a36b4724d8c49432e350a1bf9a3e4f095dd068977c0464/4182；Root567refs后唯一outer，Node49.406秒exit0/noTimeout，前whole/current/后whole均ready。Root session6033已经结束，无当前Root会话。</p>
+<p>SAVED artifacts/factory-resume-r37/main607-current-saved-independent-local-audit-final.json Hb3330edb0d184435762a2b1bb316f4a5f6ce28c86c530893a36c2395e3df753f/28473，readytrue，verdict保存/wire/前后capture/观测current闭合均true、p1[]；Root61 physicalRefs全核（不是sourceRefs字段）。两whole索引44包，含middle13原transport+32parsed；137原件metadata原整数274超JSsafe保持，134原件字节保留、3敏感件仅指纹不公开；2namespace各7目录。before native255双全读；build274=262读+12boundEXIT后265全读；middle256双全读；after native/build各254双全读，unknown/related均0。12原proof是pidfd-POLLIN/events17，未证明新HUP-only等待。4资源/两labels/2已知actor及ownerstop/CG/FD/socket/ACK在本次观测闭合，不是产品通过。</p>
+<p>固定607 tuple content3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa，607/18151378B，meta06189a46f80c38b5e87594abde7dcdc2cb06fbee6dbce9e1cb806758bf545a0e，root66306:14417953。决定25580b0e rev2implemented H40e2dee7cea606acc3fe23795ce0f377e99a8e4550ede0211d8075cb4f056ddd仅固定现状保护，作者及功能未知保持；不自动重设或覆盖旧602保护/冻结候选。</p>
+<p>current SOURCE00903055三保护/e52d40da三入口；initial ESM P1 91eca保留，corrected-r2仅5文字变化。actual whole activation .jarvis-dev/maintenance/r37-current-main607-actual-whole-activation.json Hff8b7648dfc6c7785f7b9034a96d3ec54ee463ba82ec1157888ad63966ca234b/3242可作未来新fresh配置，不能把旧时点proof当fresh。actual contract41aa3b36/CTX4c8340af、ENTRYa79f685f/567refs、当前outer/thin/caller/once全部CLOSED。旧454 START/CHECK/terminal5/current-r1/r2/main-only/change14/有限诊断同样CLOSED，禁止复读或重启。</p>
+<p>下一工作由offline_capture_review仅LOCAL在 .jarvis-dev/factory-resume-r37 实际实施新QA家族；先读实际final/handoff，不能把未封文件或本提示当ready。新first-error pair已实现：driver scripts/factory-pg4-qa-startup-driver-r37-first-error.mjs H911aee0f/34797，worker scripts/factory-pg4-qa-startup-worker-r37-first-error.py Hc0992f09/90629；author handoff4197d017/4012，独审 artifacts/software-factory/goals-r29/r37-qa-first-error-pair-independent-local-source-review-final.json H564a2be3070fc02bef9fe1d4e24813d74b534890f909a26c2c251782814eb565/15607，Root13refs核。首轮新controlled1组1/1 pass，旧组不重。仅pair SOURCE，旧r7 BASE/门保留，不能运行。</p>
+<p>Root已读并选择最窄7 successor+2静态host方案 artifacts/software-factory/goals-r29/r37-new-qa-main607-minimal-family-local-plan.json H9b7a6de1a7a98700c42f6de86952016db16fea69b38fe489e5292a3dc5e3f3ef/16541，NULL接口42b25bb1/41858；还只是实施依据。新purpose r37-pg4-qa-first-error-main607，BASE /var/lib/jarvis-development/101/r37-pg4-qa-first-error-main607，resource stem jarvis-pg4-qa-r37-first-error-main607-。A caller/program、driver、hook/SQL按原byte复用。worker+physical必须完整接607固定tuple/全部receipts/schema；parent nonce前新fresh300，normal D5report门保留且另显式incomplete-first-error缺件原证路径，不放宽4资源/actor/CG/FD/socket/ACK/source/前后whole。当前SAVED作为新增历史前置，oldprior原件不覆盖。所有新actual DATA/ENTRY/nonce/QA在本cut未做。</p>
+<p>所有remote/API仅Root严格串行，agents只LOCAL。无新模型或发布。四用例0通过0业务失败4未完成，原74为0/74，客户12及devCI/文档软件包安装使用升级恢复/Agent成熟链待办。费用只记录无上限，内部Token和量价未知分列。实质变化写现有监督事项并主动通知，未变安静。</p>
+<p>参考：<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E5%89%8D%E7%BD%AE%E6%A0%B8%E6%9F%A5%E5%AE%8C%E6%88%90%E4%B8%8E%E8%AE%A1%E5%88%9284%E7%9B%91%E7%9D%A3%E8%AF%BB%E5%9B%9E-20261016.json">本次简报及平台读回</a>、<a href="%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82607%E4%BF%9D%E6%8A%A4%E4%B8%8E%E5%BD%93%E5%89%8D%E8%B5%84%E6%BA%90%E6%A0%B8%E6%9F%A5%E4%BF%9D%E5%AD%98%E7%8B%AC%E5%AE%A1-20261016.json">保存独审</a>。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%9B%91%E7%9D%A3%E6%8E%A8%E8%BF%9B%E6%A3%80%E6%9F%A5%E7%82%B9.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

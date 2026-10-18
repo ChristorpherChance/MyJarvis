@@ -22,3 +22,13 @@ export function planGoalGroups(goal:string){
  return groups.filter(g=>g.lines.length);
 }
 export function planStageGroups(plan:WorkbenchPlan){return [{title:'当前阶段',steps:plan.steps.filter(s=>/^C[1-6]$/.test(s.id))},{title:'后续阶段',steps:plan.steps.filter(s=>/^N[1-6]$/.test(s.id))},{title:'其他阶段原文',steps:plan.steps.filter(s=>!/^([CN])[1-6]$/.test(s.id))}].filter(g=>g.steps.length);}
+
+/** The server binds current facts; manually maintained project items remain historical context. */
+export function workbenchLoopView(context:any,planView:ReturnType<typeof planWorkbenchView>){
+ const s=context?.supervisor?.session,loop=context?.currentLoopBrief;
+ return {loop:loop??null,blocker:loop?loop.blocker:s?s.blocker:context?.brief?.unresolved?.reason,
+  nextAction:loop?.nextAction||s?.nextAction||planView?.nextAction||'本轮下一步待核',
+  ownerQuestion:loop?loop.ownerQuestion:s?.status==='waiting_user'?'请核对本轮本人待办':null,
+  ownerActionRequired:loop?.ownerActionRequired??s?.status==='waiting_user',
+  judgmentLabel:loop?.judgment&&!loop.judgment.currentResult?'最近主管判断（上一回包）':'最近主管判断'};
+}

@@ -1,0 +1,22 @@
+✖ R49 routed workbench first screen uses plan and actual instruction/feedback/judgment with real submit (145.000874ms)
+{"scope":"fake EventSource, no network","singleOwner":true,"closedDistinct":true,"ready":true,"authCleanup":true,"noCommands":true}
+✔ R49 single owner SSE separates CLOSED/CONNECTING, ready refresh, filtering/dedupe and auth cleanup (11.600324ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 250.464003
+
+✖ failing tests:
+
+test at scripts/test-r49-workbench.mjs:2:1
+✖ R49 routed workbench first screen uses plan and actual instruction/feedback/judgment with real submit (145.000874ms)
+  ReferenceError: lastInstruction is not defined
+      at EntityWorkbench (file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/.r43-tools/r49-ui-tffXpl/ui.mjs:6013:23)
+      at TestContext.<anonymous> (file:///home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/scripts/test-r49-workbench.mjs:4:79)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)

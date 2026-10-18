@@ -7,7 +7,7 @@ import { defineTool, type ToolDefinition } from '@earendil-works/pi-coding-agent
 import { Type } from 'typebox';
 import { IdentityRuntime, RuntimeAccessError, type RuntimePrincipal } from './identity.js';
 
-export const PLATFORM_BUILD = '20261018-project-goals-r48-r2';
+export const PLATFORM_BUILD = '20261018-project-goals-r49';
 const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/);
 const absolutePath = z.string().min(1).max(1000).refine(value => resolve(value) === value, 'Absolute path required');
 const baseUrl = z.string().url().refine(value => { const u = new URL(value); return u.protocol === 'https:' && !u.username && !u.password && !u.search && !u.hash && u.pathname === '/'; });

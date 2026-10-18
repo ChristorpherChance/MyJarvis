@@ -11,6 +11,11 @@ const NOT_CONFIGURED = 'MODEL_NOT_CONFIGURED';
 
 
 export const modelDiagnosticReasons=['RESPONSE_TOO_LARGE','JSON_SYNTAX','ROOT_TYPE','EXPERIENCE_SCHEMA','KEY_SET','ACTION','DIRECTIVE','REASON','SELECTED_OPTION','CRITERIA_SCHEMA','CITATION_SCHEMA','REVIEW_COVERAGE','REVIEW_EXPECTED','REVIEW_CRITERION','REVIEW_EMPTY_EVIDENCE','REVIEW_FOREIGN_EVIDENCE','TERMINAL_REJECTED','RUN_EXCEPTION'] as const;
+const experienceReasons=['INPUT_ARRAY','INPUT_REFERENCE','MISSING','ARRAY_TYPE','COUNT','ENTRY_TYPE','ENTRY_KEYS','ID_TYPE','UNKNOWN_ID','DUPLICATE_ID','DISPOSITION','REASON_TYPE','REASON_EMPTY','REASON_LENGTH','UNVERIFIED_ADOPTION'] as const;
+const valueType=(v:unknown)=>v===null?'null':Array.isArray(v)?'array':typeof v==='object'?'object':['string','number','boolean','undefined'].includes(typeof v)?typeof v:'other';
+function experienceFailure(subtype:typeof experienceReasons[number],actual:unknown,expectedCount:number|null,responseCount:number|null):never{
+ throw Object.assign(error(INVALID,'EXPERIENCE_SCHEMA','$.experienceReferences'),{experienceDiagnostic:{subtype,actualType:valueType(actual),expectedCount,responseCount}});
+}
 type DiagnosticReason=typeof modelDiagnosticReasons[number];
 function error(code: string,reasonEnum?:DiagnosticReason,schemaPath='$'): Error {
   return Object.assign(new Error(code), { code,...(reasonEnum?{rejection:{reasonEnum,schemaPath}}:{}) });
@@ -29,7 +34,9 @@ export function modelFailureObservation(value:unknown){
   let model=null;if(typeof r.model==='string'&&/^[a-zA-Z0-9._:/-]{1,200}$/.test(r.model))try{assertPublicSupervisorContent(r.model);model=r.model;}catch{}
   return [{usageId:r.usageId,runId:r.runId,model}];
  }):[];
- return {reasonEnum:d.reasonEnum,schemaPath:d.schemaPath,responseSHA256:digest,UTF8bytes:Number.isSafeInteger(d.UTF8bytes)&&d.UTF8bytes>=0?d.UTF8bytes:null,terminal:['complete','failed','cancelled','partial'].includes(d.terminal)?d.terminal:null,usageReferences};
+ const ex=d.experience;
+ const experience=ex&&experienceReasons.includes(ex.subtype)&&['null','array','object','string','number','boolean','undefined','other'].includes(ex.actualType)?{subtype:ex.subtype,actualType:ex.actualType,expectedCount:Number.isSafeInteger(ex.expectedCount)&&ex.expectedCount>=0?ex.expectedCount:null,responseCount:Number.isSafeInteger(ex.responseCount)&&ex.responseCount>=0?ex.responseCount:null}:null;
+ return {...(experience?{experience}:{}),reasonEnum:d.reasonEnum,schemaPath:d.schemaPath,responseSHA256:digest,UTF8bytes:Number.isSafeInteger(d.UTF8bytes)&&d.UTF8bytes>=0?d.UTF8bytes:null,terminal:['complete','failed','cancelled','partial'].includes(d.terminal)?d.terminal:null,usageReferences};
 }
 
 function ownRecord(value: unknown): value is Record<string, unknown> {
@@ -54,8 +61,32 @@ function parseResponse(text: string): Record<string, unknown> {
 
 function validate(parsed: Record<string, unknown>, input: any): Record<string, unknown> {
   const allowed = ['action', 'directive', 'reason', 'selectedOption', 'criteria', 'experienceReferences'];
-  input={...input,experienceReferences:input.experienceReferences??[]};
-  if(input.experienceReferences!==undefined){if(!Array.isArray(parsed.experienceReferences))throw error(INVALID,'EXPERIENCE_SCHEMA','$.experienceReferences');const given=new Map(input.experienceReferences.map((r:any)=>[r.experienceId,r]));if(parsed.experienceReferences.length!==given.size)throw error(INVALID,'EXPERIENCE_SCHEMA','$.experienceReferences');const seen=new Set();for(const ref of parsed.experienceReferences as any[]){if(!ownRecord(ref)||!given.has(ref.experienceId)||seen.has(ref.experienceId)||!['adopted','not_adopted'].includes(ref.disposition as string)||typeof ref.reason!=='string'||!ref.reason||ref.reason.length>1000)throw error(INVALID,'EXPERIENCE_SCHEMA','$.experienceReferences');seen.add(ref.experienceId);if(ref.disposition==='adopted'&&!(given.get(ref.experienceId) as any).verified)throw error(INVALID,'EXPERIENCE_SCHEMA','$.experienceReferences');}}
+  const supplied=input?.experienceReferences;
+  if(!Array.isArray(supplied))experienceFailure('INPUT_ARRAY',supplied,null,null);
+  const given=new Map<string,any>();
+  for(const ref of supplied){
+    if(!ownRecord(ref)||typeof ref.experienceId!=='string'||!ref.experienceId||given.has(ref.experienceId))experienceFailure('INPUT_REFERENCE',ref,supplied.length,null);
+    given.set(ref.experienceId,ref);
+  }
+  const refs=parsed.experienceReferences,expectedCount=given.size;
+  if(!Object.hasOwn(parsed,'experienceReferences'))experienceFailure('MISSING',undefined,expectedCount,null);
+  if(!Array.isArray(refs))experienceFailure('ARRAY_TYPE',refs,expectedCount,null);
+  if(refs.length!==expectedCount)experienceFailure('COUNT',refs,expectedCount,refs.length);
+  const seen=new Set<string>();
+  for(const ref of refs){
+    const reject=(kind:typeof experienceReasons[number],actual:unknown):never=>experienceFailure(kind,actual,expectedCount,refs.length);
+    if(!ownRecord(ref))reject('ENTRY_TYPE',ref);
+    if(Object.keys(ref).length!==3||!['experienceId','disposition','reason'].every(k=>Object.hasOwn(ref,k)))reject('ENTRY_KEYS',ref);
+    if(typeof ref.experienceId!=='string')reject('ID_TYPE',ref.experienceId);
+    if(!given.has(ref.experienceId))reject('UNKNOWN_ID',ref.experienceId);
+    if(seen.has(ref.experienceId))reject('DUPLICATE_ID',ref.experienceId);
+    seen.add(ref.experienceId);
+    if(!['adopted','not_adopted'].includes(ref.disposition))reject('DISPOSITION',ref.disposition);
+    if(typeof ref.reason!=='string')reject('REASON_TYPE',ref.reason);
+    if(!ref.reason.trim())reject('REASON_EMPTY',ref.reason);
+    if(ref.reason.length>1000)reject('REASON_LENGTH',ref.reason);
+    if(ref.disposition==='adopted'&&given.get(ref.experienceId).verified!==true)reject('UNVERIFIED_ADOPTION',given.get(ref.experienceId).verified);
+  }
   if (Object.keys(parsed).length !== allowed.length || allowed.some(key => !Object.hasOwn(parsed, key))) throw error(INVALID,'KEY_SET','$');
   if (!['continue', 'wait_user', 'review', 'stop'].includes(parsed.action as string)) throw error(INVALID,'ACTION','$.action');
   if (typeof parsed.directive !== 'string' || parsed.directive.length > MAX_DIRECTIVE) throw error(INVALID,'DIRECTIVE','$.directive');
@@ -100,7 +131,6 @@ function validate(parsed: Record<string, unknown>, input: any): Record<string, u
 
 export function createProjectSupervisorModel(pi: PiService): (input: any) => Promise<any> {
   return async (input: any): Promise<any> => {
-    input={...input,experienceReferences:input.experienceReferences??[]};
     const health = pi.health('project-supervisor');
     if (!health.configured) throw error(NOT_CONFIGURED);
     if (utf8Bytes(JSON.stringify(input)) > 30_000) throw error('MODEL_CONTEXT_INCOMPLETE');
@@ -132,10 +162,10 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
       if(result.status!=='complete')throw error('MODEL_RUN_FAILED','TERMINAL_REJECTED');
       return validate(parseResponse(result.text),input);
     }catch(e){
-      const failure=e as Error&{rejection?:{reasonEnum:DiagnosticReason;schemaPath:string};diagnostics?:unknown};
+      const failure=e as Error&{rejection?:{reasonEnum:DiagnosticReason;schemaPath:string};diagnostics?:unknown;experienceDiagnostic?:unknown};
       const text=typeof result?.text==='string'?result.text:null;
       const terminal=['complete','failed','cancelled','partial'].includes(result?.status??'')?result!.status:null;
-      failure.diagnostics={...(failure.rejection??{reasonEnum:'RUN_EXCEPTION',schemaPath:'$'}),responseSHA256:text===null?null:createHash('sha256').update(text,'utf8').digest('hex'),UTF8bytes:text===null?null:utf8Bytes(text),terminal,usageReferences};
+      failure.diagnostics={...(failure.rejection??{reasonEnum:'RUN_EXCEPTION',schemaPath:'$'}),responseSHA256:text===null?null:createHash('sha256').update(text,'utf8').digest('hex'),UTF8bytes:text===null?null:utf8Bytes(text),terminal,usageReferences,...(failure.experienceDiagnostic?{experience:failure.experienceDiagnostic}:{})};
       throw failure;
     }
   };

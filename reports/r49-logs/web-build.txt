@@ -1,0 +1,13 @@
+
+> @jarvis/web@0.1.0 build:stage
+> tsc --noEmit && vite build --outDir .dist-next
+
+src/features/operations/ProjectWorkbenchPage.tsx(38,503): error TS18047: 'plan' is possibly 'null'.
+src/features/operations/ProjectWorkbenchPage.tsx(38,527): error TS18047: 'plan' is possibly 'null'.
+npm error Lifecycle script `build:stage` failed with error:
+npm error code 2
+npm error path /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/web
+npm error workspace @jarvis/web@0.1.0
+npm error location /home/superopen/All-Projects/jarvis-supervisor-r43-3f744a89/apps/web
+npm error command failed
+npm error command sh -c tsc --noEmit && vite build --outDir .dist-next

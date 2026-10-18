@@ -1,0 +1,171 @@
+{
+  "kind": "r55-persistent-static-assets-repair-author-source-handoff",
+  "preparedAtUTC": "2026-10-18T15:15:30.512566Z",
+  "workingCopy": "D:/AI/workspaces/MyJevis/.jarvis-dev/web-assets-repair-r55",
+  "branch": "fix/retain-web-assets-r55",
+  "base": "5fbb24cd008c638f260025d8e0e588b9485609ac",
+  "files": [
+    {
+      "path": ".jarvis-dev/web-assets-repair-r55/scripts/package-capture-release.mjs",
+      "bytes": 24275,
+      "sha256": "b51bc8c2c45af99231612a55700187f50a48e6d5c586322b7267bf13a84da206",
+      "repositoryPath": "scripts/package-capture-release.mjs",
+      "change": "modified",
+      "baseBytes": 22490,
+      "baseSHA256": "d049d3be24cc8f7eb1c6a8273331e19b2ee6acb946a7e92b5af0ee4e1fec987c"
+    },
+    {
+      "path": ".jarvis-dev/web-assets-repair-r55/scripts/release-web-assets.py",
+      "bytes": 13692,
+      "sha256": "dd8eee8d1e6bd7c9314be7a7504e698c0a878b196ea5a903340d855af506d60f",
+      "repositoryPath": "scripts/release-web-assets.py",
+      "change": "new"
+    },
+    {
+      "path": ".jarvis-dev/web-assets-repair-r55/scripts/capture-managed-release.py",
+      "bytes": 15182,
+      "sha256": "aa50cb3ddf086cd28176a509df607c3ead4b1d8b17c37a12a638bf76ebad3e72",
+      "repositoryPath": "scripts/capture-managed-release.py",
+      "change": "modified",
+      "baseBytes": 14393,
+      "baseSHA256": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504"
+    },
+    {
+      "path": ".jarvis-dev/web-assets-repair-r55/scripts/test-release-web-assets.py",
+      "bytes": 10820,
+      "sha256": "4eb3c3a755190460f81949855d85a0b48308fc283dc28a4ad885d9db0b7c1455",
+      "repositoryPath": "scripts/test-release-web-assets.py",
+      "change": "new"
+    },
+    {
+      "path": ".jarvis-dev/web-assets-repair-r55/scripts/test-package-capture-release.mjs",
+      "bytes": 15014,
+      "sha256": "9dfbd8419013cf10cfbaf55dd529d2f0a02085cffa672f78f953e632d6371ecb",
+      "repositoryPath": "scripts/test-package-capture-release.mjs",
+      "change": "modified",
+      "baseBytes": 13569,
+      "baseSHA256": "eaf2b6b72e7e47efe3f22a653799452db08f6815912c1de85d4f1430263afbbc"
+    },
+    {
+      "path": ".jarvis-dev/web-assets-repair-r55/docs/发布静态资源兼容保留.md",
+      "bytes": 3566,
+      "sha256": "a80992c6e0fdd3b472335c749e83c44458ccbb43d044b74a84ec44ec5140c7a0",
+      "repositoryPath": "docs/发布静态资源兼容保留.md",
+      "change": "new"
+    }
+  ],
+  "contract": {
+    "previousPackageCLI": "--previous-package=<lowercase SHA256>:<ZIP path>",
+    "repeatable": true,
+    "atLeastOneRequired": true,
+    "implicitInitialMode": false,
+    "priorZIPWholeSHAAndManifestInventoryPayloadHashesModesCRCVerified": true,
+    "onlyManifestRegisteredJSAndCSSUnder": "apps/web/dist/assets/",
+    "samePathSameHashDeduplicated": true,
+    "samePathDifferentHashRejected": true,
+    "recognizedLocalDependencyMissingRejected": true,
+    "oldIndexServiceWorkerOfflineManifestInherited": false,
+    "allRetainedAssetsListedInNewManifest": true,
+    "firstRepairInputs": [
+      "independently verified R55 ZIP",
+      "independently verified R54 ZIP"
+    ],
+    "limitsApplyToFinalCurrentAndInheritedUnion": {
+      "files": 4096,
+      "bytes": 33554432
+    },
+    "activationGuard": "actual current JS/CSS disk inventory INCLUDING unregistered add-only overlays must match candidate manifest and candidate disk bytes",
+    "activationOrdering": "after actual current identity binding, before control creation and before service stop",
+    "actualCurrentManifestMustBeExplicitCompatibilityInput": true,
+    "currentAndCandidateDirectoryAndFileSnapshotsRechecked": true,
+    "productionVerifyPermissions": "uid0, non-group/other-writable parents and files, regular/nlink1, no links",
+    "historicalPinnedSidecarsChanged": false
+  },
+  "validation": {
+    "uniqueNewGroups": 5,
+    "finalPassed": 5,
+    "finalFailed": 0,
+    "finalSkipped": 0,
+    "newGroupsOnly": true,
+    "oldGroupsRerun": false,
+    "realZIPAndFilesystem": true,
+    "actualInheritCLIAndMissingInputPackagerCLI": true,
+    "productionServiceActionsOrRemoteTests": false,
+    "ownedFSFixtureOwnerCheck": "owner_uid=None explicitly for ordinary temp trees; not a Linux uid0 permission acceptance",
+    "firstFailure": "Windows path stat versus fd stat ctime meaning differed; four assertions plus one error retained. POSIX full stamp checks retained, Windows now independently checks both complete before/after stamps.",
+    "finalUnionBoundaryCounterexample": "one current plus one inherited asset with fixture limit one rejects; not separate-per-input limits",
+    "finalRawLogs": [
+      {
+        "path": "artifacts/static-assets-r55/targeted-final.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-final.stderr.txt",
+        "bytes": 983,
+        "sha256": "17702e367450257e763b91d128b720c7bcad3da87a908b2256c330efd49f02a8"
+      }
+    ],
+    "priorFailureAndIntermediateLogs": [
+      {
+        "path": "artifacts/static-assets-r55/targeted-after-windows-stat-fix.stderr.txt",
+        "bytes": 983,
+        "sha256": "24e734b1494037f5ccfb18a00335734c37fbc7042995842adf70212444eceedc"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-after-windows-stat-fix.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-final-subset.stderr.txt",
+        "bytes": 483,
+        "sha256": "8dcf4ee5b18600bf3a9a0f0dea99f05f62b91189f294cebb82cf31fd824a35a9"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-final-subset.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-first.stderr.txt",
+        "bytes": 7133,
+        "sha256": "03a41370d3923cbe00b3b22829e5dc061e1c6599d8191a4cf1fe72867383245a"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-first.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "nodeSyntaxChecks": [
+      "scripts/package-capture-release.mjs",
+      "scripts/test-package-capture-release.mjs"
+    ],
+    "pythonASTChecks": "three Python sources and five existing managed phase programs; final helper/test also parsed by the final real targeted run",
+    "diffCheck": "passed with cr-at-eol; no historical line-ending rewrite requested",
+    "legacyTestFixtureChange": "only supply explicit owned previous ZIP and copy the new helper; existing assertions unchanged, not rerun"
+  },
+  "sourceScope": "publisher/helpers/tests/one focused doc only; no apps, node protocol, package or dependency changes",
+  "notPerformed": [
+    "Git commit/network",
+    "application build",
+    "R56 package",
+    "deployment or service operation",
+    "new model or factory run",
+    "construction append/render"
+  ],
+  "notClaimed": [
+    "end-to-end user access recovered",
+    "this missing-asset issue is sole access-failure cause",
+    "historical sidecars automatically enforce new main guard",
+    "independent review or production acceptance"
+  ],
+  "cost": {
+    "internalTokens": null,
+    "internalUSD": null,
+    "supplierModelCalls": 0,
+    "currencyCap": null
+  },
+  "next": "Independent reviewer pins these six files; Root integrates with current R55 main and selects any future release purpose separately. Existing pinned sidecars remain unchanged and require explicit equivalent guard qualification before future reuse."
+}

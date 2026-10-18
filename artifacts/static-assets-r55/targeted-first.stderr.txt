@@ -1,0 +1,93 @@
+test_1_two_real_zip_inputs_union_and_actual_inherit_cli (__main__.AssetCompatibility.test_1_two_real_zip_inputs_union_and_actual_inherit_cli) ... FAIL
+test_2_wrong_archive_hash_inventory_and_missing_dependency_rejected (__main__.AssetCompatibility.test_2_wrong_archive_hash_inventory_and_missing_dependency_rejected) ... FAIL
+test_3_identical_path_deduplicates_but_changed_path_never_overwrites (__main__.AssetCompatibility.test_3_identical_path_deduplicates_but_changed_path_never_overwrites) ... ERROR
+test_4_actual_overlay_is_mandatory_before_stop_and_valid_union_is_read_only (__main__.AssetCompatibility.test_4_actual_overlay_is_mandatory_before_stop_and_valid_union_is_read_only) ... FAIL
+test_5_tampered_candidate_hardlink_and_concurrent_directory_change_rejected (__main__.AssetCompatibility.test_5_tampered_candidate_hardlink_and_concurrent_directory_change_rejected) ... FAIL
+
+======================================================================
+ERROR: test_3_identical_path_deduplicates_but_changed_path_never_overwrites (__main__.AssetCompatibility.test_3_identical_path_deduplicates_but_changed_path_never_overwrites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\test-release-web-assets.py", line 136, in test_3_identical_path_deduplicates_but_changed_path_never_overwrites
+    self.assertEqual(len(assets.inheritance([first, same], web)['assets']), 1)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 202, in inheritance
+    origin, assets = previous_package(spec)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 96, in previous_package
+    data, _ = stable_bytes(Path(path))
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 65, in stable_bytes
+    need(stamp(os.fstat(fd)) == stamp(before), 'ASSET_FILE_CHANGED')
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 25, in need
+    raise ValueError(code)
+ValueError: ASSET_FILE_CHANGED
+
+======================================================================
+FAIL: test_1_two_real_zip_inputs_union_and_actual_inherit_cli (__main__.AssetCompatibility.test_1_two_real_zip_inputs_union_and_actual_inherit_cli)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\test-release-web-assets.py", line 100, in test_1_two_real_zip_inputs_union_and_actual_inherit_cli
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 267, in <module>
+    main()
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 262, in main
+    result = inheritance(args.previous_package, args.web_root) if args.action == 'inherit' else verify_current_assets(args.previous_root, args.candidate_root)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 202, in inheritance
+    origin, assets = previous_package(spec)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 96, in previous_package
+    data, _ = stable_bytes(Path(path))
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 65, in stable_bytes
+    need(stamp(os.fstat(fd)) == stamp(before), 'ASSET_FILE_CHANGED')
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\release-web-assets.py", line 25, in need
+    raise ValueError(code)
+ValueError: ASSET_FILE_CHANGED
+
+
+======================================================================
+FAIL: test_2_wrong_archive_hash_inventory_and_missing_dependency_rejected (__main__.AssetCompatibility.test_2_wrong_archive_hash_inventory_and_missing_dependency_rejected)
+----------------------------------------------------------------------
+ValueError: ASSET_FILE_CHANGED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\test-release-web-assets.py", line 113, in test_2_wrong_archive_hash_inventory_and_missing_dependency_rejected
+    with self.assertRaisesRegex(ValueError, 'ASSET_PRIOR_ARCHIVE_HASH'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "ASSET_PRIOR_ARCHIVE_HASH" does not match "ASSET_FILE_CHANGED"
+
+======================================================================
+FAIL: test_4_actual_overlay_is_mandatory_before_stop_and_valid_union_is_read_only (__main__.AssetCompatibility.test_4_actual_overlay_is_mandatory_before_stop_and_valid_union_is_read_only)
+----------------------------------------------------------------------
+ValueError: ASSET_FILE_CHANGED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\test-release-web-assets.py", line 152, in test_4_actual_overlay_is_mandatory_before_stop_and_valid_union_is_read_only
+    with self.assertRaisesRegex(ValueError, 'ASSET_CURRENT_SUBSET_MISSING_OR_CHANGED'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "ASSET_CURRENT_SUBSET_MISSING_OR_CHANGED" does not match "ASSET_FILE_CHANGED"
+
+======================================================================
+FAIL: test_5_tampered_candidate_hardlink_and_concurrent_directory_change_rejected (__main__.AssetCompatibility.test_5_tampered_candidate_hardlink_and_concurrent_directory_change_rejected)
+----------------------------------------------------------------------
+ValueError: ASSET_FILE_CHANGED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\AI\workspaces\MyJevis\.jarvis-dev\web-assets-repair-r55\scripts\test-release-web-assets.py", line 175, in test_5_tampered_candidate_hardlink_and_concurrent_directory_change_rejected
+    with self.assertRaisesRegex(ValueError, 'ASSET_CANDIDATE_BYTES_CHANGED'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "ASSET_CANDIDATE_BYTES_CHANGED" does not match "ASSET_FILE_CHANGED"
+
+----------------------------------------------------------------------
+Ran 5 tests in 2.726s
+
+FAILED (failures=4, errors=1)

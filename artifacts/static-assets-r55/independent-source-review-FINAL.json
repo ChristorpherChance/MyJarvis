@@ -1,0 +1,151 @@
+{
+  "kind": "r55-static-assets-publisher-independent-source-review",
+  "reviewedAtUTC": "2026-10-18T15:16:51.850097Z",
+  "accepted": true,
+  "scope": "Finite independent local source review of six frozen publisher/helper/test/doc files, with saved targeted-test stdout/stderr inspection. Not a deployment or end-to-end browser acceptance.",
+  "baseCommit": "5fbb24cd008c638f260025d8e0e588b9485609ac",
+  "authorHandoff": {
+    "path": "artifacts/static-assets-r55/source-handoff-FINAL.json",
+    "bytes": 7725,
+    "sha256": "406ced67a874b6a758613d00eb149f2c4ef8143ec75c38f9ee5f7d45dd11bec5"
+  },
+  "reviewedFiles": [
+    {
+      "repositoryPath": "scripts/package-capture-release.mjs",
+      "bytes": 24275,
+      "sha256": "b51bc8c2c45af99231612a55700187f50a48e6d5c586322b7267bf13a84da206",
+      "change": "modified",
+      "baseBytes": 22490,
+      "baseSHA256": "d049d3be24cc8f7eb1c6a8273331e19b2ee6acb946a7e92b5af0ee4e1fec987c"
+    },
+    {
+      "repositoryPath": "scripts/release-web-assets.py",
+      "bytes": 13692,
+      "sha256": "dd8eee8d1e6bd7c9314be7a7504e698c0a878b196ea5a903340d855af506d60f",
+      "change": "new"
+    },
+    {
+      "repositoryPath": "scripts/capture-managed-release.py",
+      "bytes": 15182,
+      "sha256": "aa50cb3ddf086cd28176a509df607c3ead4b1d8b17c37a12a638bf76ebad3e72",
+      "change": "modified",
+      "baseBytes": 14393,
+      "baseSHA256": "38d1572ed71b07c881083f4c7fd50fd6167fa2c3ec8e52f8982b6ecf415e5504"
+    },
+    {
+      "repositoryPath": "scripts/test-release-web-assets.py",
+      "bytes": 10820,
+      "sha256": "4eb3c3a755190460f81949855d85a0b48308fc283dc28a4ad885d9db0b7c1455",
+      "change": "new"
+    },
+    {
+      "repositoryPath": "scripts/test-package-capture-release.mjs",
+      "bytes": 15014,
+      "sha256": "9dfbd8419013cf10cfbaf55dd529d2f0a02085cffa672f78f953e632d6371ecb",
+      "change": "modified",
+      "baseBytes": 13569,
+      "baseSHA256": "eaf2b6b72e7e47efe3f22a653799452db08f6815912c1de85d4f1430263afbbc"
+    },
+    {
+      "repositoryPath": "docs/发布静态资源兼容保留.md",
+      "bytes": 3566,
+      "sha256": "a80992c6e0fdd3b472335c749e83c44458ccbb43d044b74a84ec44ec5140c7a0",
+      "change": "new"
+    }
+  ],
+  "p0P1Findings": [],
+  "verifiedSourceBehavior": [
+    "Packager requires at least one explicit SHA256:ZIP input, allows repeats, verifies each pinned ZIP inventory, regular file types, hashes, sizes, modes and CRC, then retains manifest-registered JS/CSS only.",
+    "Same path and same bytes deduplicate; same path with different hash/size rejects. Recognized static/literal JS, Vite map and CSS references must resolve. Current plus inherited union is bounded at 4096 files and 32MiB; every inherited file enters the new payload manifest with compatibility provenance.",
+    "Managed activate verifies actual current release identity and role, then invokes the read-only asset subset check before creating the activation directory and before any service stop.",
+    "Subset validation inventories real current JS/CSS including unregistered emergency overlays, checks candidate manifest and physical bytes, and rechecks both directory/file snapshots and manifest identities. Production CLI requires uid0, non-group/other-writable ancestry/files, regular single-link files and no symlinks.",
+    "Existing package-fixture edits only supply an owned explicit previous package and copy the helper; original assertions are retained. Historical sidecars and recovery algorithms are unchanged."
+  ],
+  "orderingLines": {
+    "managedAssetGuard": 115,
+    "managedControlCreation": 131,
+    "managedFirstStop": 144,
+    "combinedAssetLimit": 219
+  },
+  "savedValidation": {
+    "groupsPassed": 5,
+    "groupsFailed": 0,
+    "groupsSkipped": 0,
+    "rawLogs": [
+      {
+        "path": "artifacts/static-assets-r55/targeted-final.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/static-assets-r55/targeted-final.stderr.txt",
+        "bytes": 983,
+        "sha256": "17702e367450257e763b91d128b720c7bcad3da87a908b2256c330efd49f02a8"
+      }
+    ],
+    "scope": [
+      "Two real pinned ZIPs and inherit CLI union without old index/service worker",
+      "Wrong SHA/inventory/recognized dependency, missing required CLI input and final union limit rejection",
+      "Identical deduplication and changed-path collision rejection",
+      "Actual unregistered overlay required; valid verification remains read-only; managed ordering statically checked",
+      "Candidate tamper, hardlink and concurrent directory mutation rejection"
+    ],
+    "fixturesUseOwnerUidNone": true,
+    "productionRootPermissionsIndependentlyExecuted": false,
+    "reviewerReranTests": false,
+    "oldGroupsRerun": false
+  },
+  "correctedBeforeFinalSeal": [
+    {
+      "topic": "Union size/count limit",
+      "result": "Final source checks the combined fresh-plus-inherited inventory and the saved five-group run includes a 1+1 limit counterexample."
+    },
+    {
+      "topic": "Windows path/fd ctime difference",
+      "result": "Author initial refusal remains saved; final code preserves each full before/after stamp and excludes cross-API ctime only on Windows. This is local fixture compatibility, not a production incident."
+    }
+  ],
+  "limits": [
+    "Only the new main managed.activate entry is qualified by this review. Existing hash-pinned sidecars do not call the new gate; future use requires explicit equivalent pre-stop validation, as the focused document states.",
+    "Inheritance covers manifest-registered JS/CSS and the finite recognized dependency forms, not arbitrary historical HTML/service-worker or arbitrary module parsing. Actual-current overlays are checked at activation.",
+    "No application build, release package, deployment, service operation, model invocation, browser operation or remote call was performed by this reviewer.",
+    "Saved five-group tests are local ZIP/filesystem tests with owner checks disabled for owned fixtures; they do not certify Linux uid0 production permissions.",
+    "The prior 119-asset live repair and current gateway HTTP/TLS evidence do not establish that the user browser access problem has ended."
+  ],
+  "historicalFailedLogsPreserved": [
+    {
+      "path": "artifacts/static-assets-r55/targeted-after-windows-stat-fix.stderr.txt",
+      "bytes": 983,
+      "sha256": "24e734b1494037f5ccfb18a00335734c37fbc7042995842adf70212444eceedc"
+    },
+    {
+      "path": "artifacts/static-assets-r55/targeted-after-windows-stat-fix.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/static-assets-r55/targeted-final-subset.stderr.txt",
+      "bytes": 483,
+      "sha256": "8dcf4ee5b18600bf3a9a0f0dea99f05f62b91189f294cebb82cf31fd824a35a9"
+    },
+    {
+      "path": "artifacts/static-assets-r55/targeted-final-subset.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/static-assets-r55/targeted-first.stderr.txt",
+      "bytes": 7133,
+      "sha256": "03a41370d3923cbe00b3b22829e5dc061e1c6599d8191a4cf1fe72867383245a"
+    },
+    {
+      "path": "artifacts/static-assets-r55/targeted-first.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "newSupplierModelCallsByReviewer": 0,
+  "internalUsage": null,
+  "invoiceAmount": null,
+  "productionOrFullProductAcceptance": false
+}

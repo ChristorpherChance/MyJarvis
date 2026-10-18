@@ -10,6 +10,7 @@
 
 ## 112 迁移后的开发环境
 
+- 常规开发只使用112的 `~/All-Projects/MyJevis`。本轮R55应用功能与主线发布修复已合并并完成独立Linux类型/构建和18项定向验证；后续从该目录main建立有明确基线的任务副本。`MyJevis-ai-development-ops` 等旧特性副本保留追溯，不再作为新的平行常规开发入口。见[统一源码验证](artifacts/code-unification-r55/linux-integration-validation.json)；最终Git与目录同步以其后实际回执为准，不把旧R54导入时点当最新HEAD。
 - 使用 112 普通账号 `superopen`，从 `~/All-Projects/MyJevis` 开发。终端连接与使用见 `docs/112开发迁移使用说明.md`；`CLAUDE.md` 指向本文件。
 - `npm run dev` 与 `npm run dev:112` 均使用 `scripts/dev-112.mjs`：API 为 `127.0.0.1:43140`，前端为 `127.0.0.1:45173`，代理指向该开发 API。`npm run dev -- --check` 只检查配置和端口。不要改用正式 API 3140、观测服务 3141 或正式运行目录作为开发入口。
 - 开发数据独立保存在 passwd 账号真实主目录的 `~/.local/share/jarvis-dev-112`。启动器以白名单构造子环境；不要把生产家庭数据、生产模型配置、运维队列或继承的密钥接到开发运行数据。终端 Claude Code 通道与平台开发数据分别管理。

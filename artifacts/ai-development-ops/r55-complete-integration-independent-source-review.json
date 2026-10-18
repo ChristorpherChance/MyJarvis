@@ -1,0 +1,105 @@
+{
+  "kind": "r55-complete-integration-independent-local-source-review",
+  "atUTC": "2026-10-18T15:39:34.972307Z",
+  "acceptedWithinSourceMergeScope": true,
+  "mergeCommit": "083a638bfaa3994590d7dd9c8de91cc16b7bf6b3",
+  "parentsInOrder": [
+    "44bc75f0e4ed3d0e0c1250105316d1b3ea5abc56",
+    "4f279c21e3b15e125cf70d86d25c2d9fc00e36c2"
+  ],
+  "mergeBase": "bc4fcd21e3cec9a3cfec92f492ee85304b90ff16",
+  "wholeTrackedTree": {
+    "files": 3293,
+    "exactThreeWayUnionVerified": true,
+    "onlyDifferentBothSidesPaths": [
+      "docs/建设记录/events.jsonl",
+      "docs/贾维斯建设日志.html",
+      "docs/贾维斯建设日志.md",
+      "docs/贾维斯建设档案.html",
+      "docs/贾维斯建设档案.md"
+    ],
+    "fiveCanonicalFilesWholeMainBlobPreserved": true
+  },
+  "applicationAndPackageTreesExactlyFeature": true,
+  "featureAppPaths": [
+    "apps/api/src/app.ts",
+    "apps/api/src/runtime/ai-development.ts",
+    "apps/api/src/runtime/cluster-runtime.ts",
+    "apps/api/test/ai-development.test.ts",
+    "apps/web/src/features/operations/ActualInfrastructurePages.tsx",
+    "apps/web/src/features/operations/ActualOperationsControl.tsx",
+    "apps/web/src/features/operations/AiDevelopmentPanel.tsx",
+    "apps/web/src/features/operations/ai-development.css"
+  ],
+  "featureAIopsScripts": [
+    "scripts/ai-development/controller.mjs",
+    "scripts/ai-development/install-controller.py",
+    "scripts/ai-development/install-node.py",
+    "scripts/ai-development/node-dispatcher.py",
+    "scripts/ai-development/profile-manifest.json",
+    "scripts/ai-development/provision.py",
+    "scripts/ai-development/terminal-statusline.py",
+    "scripts/ai-development/test-controller.mjs",
+    "scripts/ai-development/test-provision.py",
+    "scripts/ai-development/test_node_dispatcher.py",
+    "scripts/remote-ops-dispatcher.py"
+  ],
+  "mainPublisherSixExact": {
+    "scripts/package-capture-release.mjs": {
+      "bytes": 24275,
+      "sha256": "b51bc8c2c45af99231612a55700187f50a48e6d5c586322b7267bf13a84da206",
+      "blob": "d94a29816af5977f87111ef005855af924df4ee4"
+    },
+    "scripts/release-web-assets.py": {
+      "bytes": 13692,
+      "sha256": "dd8eee8d1e6bd7c9314be7a7504e698c0a878b196ea5a903340d855af506d60f",
+      "blob": "581e2f8d83ffcd94d2aabd1f8f1a08440e896ded"
+    },
+    "scripts/capture-managed-release.py": {
+      "bytes": 15182,
+      "sha256": "aa50cb3ddf086cd28176a509df607c3ead4b1d8b17c37a12a638bf76ebad3e72",
+      "blob": "b38b9ead8ab0619bd2178dc472f4ae5e342b88a8"
+    },
+    "scripts/test-release-web-assets.py": {
+      "bytes": 10820,
+      "sha256": "4eb3c3a755190460f81949855d85a0b48308fc283dc28a4ad885d9db0b7c1455",
+      "blob": "00c3ab3c65b59e5db2ef530c95dfde79a07feef2"
+    },
+    "scripts/test-package-capture-release.mjs": {
+      "bytes": 15014,
+      "sha256": "9dfbd8419013cf10cfbaf55dd529d2f0a02085cffa672f78f953e632d6371ecb",
+      "blob": "77c11ac539997b3eb94f5af6aa45cc491b6fb2a7"
+    },
+    "docs/发布静态资源兼容保留.md": {
+      "bytes": 3566,
+      "sha256": "a80992c6e0fdd3b472335c749e83c44458ccbb43d044b74a84ec44ec5140c7a0",
+      "blob": "5b1b09cd6c062aee00ad4aa3b53f877d0372ee98"
+    }
+  },
+  "packageAndLockFilesExactlyBothParents": [
+    "package.json",
+    "package-lock.json",
+    "apps/api/package.json",
+    "apps/web/package.json"
+  ],
+  "canonical": {
+    "mainRecords": 349,
+    "featureRecords": 347,
+    "feature347WholeRawBytesAreMainPrefix": true,
+    "main349WholeBytesPreserved": true,
+    "mainHead": "03a9a2d8dbd6a04cd01264b54cc5f2ab5cb4212fb9aa8bf21ed28e8df82b072c",
+    "noFeatureOnlyEventIDsLost": true
+  },
+  "selectedPhysicalFilesMatchMergeGitBlobs": 37,
+  "selectedPhysicalFileInventorySHA256": "f6bf08fa45afd87b5e349bba9bf44478a88219ba15ffeb2cd859166ee9c6b601",
+  "AGENTS_CLAUDE_handoffGuideExactlyMain": true,
+  "workingTreeStatusAtReview": "",
+  "sourceConcerns": [],
+  "validationBoundary": [
+    "This reviewer read only local Git objects and selected physical bytes; no merge, edit, test, build, API, network, model or production operation.",
+    "Reuse saved R55 feature review and static-retention five-group evidence as prior scoped evidence; Root performs the stated integrated Linux API8/assets5/types/build/dev-check separately.",
+    "No full factory/customer acceptance, new model or production publication is implied. Internal orchestration usage/cost remains unknown, not zero."
+  ],
+  "p0Findings": [],
+  "p1Findings": []
+}

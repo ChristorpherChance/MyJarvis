@@ -41,6 +41,7 @@ import {ClusterRuntime,registerClusterRoutes,createClusterTools,PLATFORM_BUILD,t
 import {canonicalLocalMachine,unifiedDevices} from './runtime/managed-devices.js';
 import {ApplicationRuntime,registerApplicationRoutes,createApplicationTools} from './runtime/application-runtime.js';
 import {RemoteOperationsRuntime,registerRemoteOperations,createRemoteOperationsTools} from './runtime/remote-operations.js';
+import {AiDevelopmentRuntime,registerAiDevelopment} from './runtime/ai-development.js';
 import {PowerRuntime,registerPowerRoutes,createPowerTool} from './runtime/power-runtime.js';
 import {WebRuntime,registerWebRoutes,webOwnAuthRoute,createWebTools} from './runtime/web-runtime.js';
 import {familyHandlers} from './v1/family-domains.js';
@@ -89,7 +90,7 @@ const capabilities = [
   {id:'web',name:'联网资料',status:'ready',description:'真实搜索、公开网页与新闻源；按本人隐私策略查询'},
   {id:'connectors',name:'外部知识',status:'ready',description:'动态目录与HTTP知识源、真实同步及授权过滤'},
 ];
-export async function createApp(options: {dataDir: string; pi?: PiService; webDir?: string; pythonExecutable?:string; whisperModelDirectory?:string; weatherProvider?:WeatherProvider; allowedHosts?:string[]; tls?:{key:Buffer;cert:Buffer};healthInstanceId?:string;nodeConfiguration?:NodeConfiguration|null;remoteOperations?:{queue?:string;configPath?:string}}) {
+export async function createApp(options: {dataDir: string; pi?: PiService; webDir?: string; pythonExecutable?:string; whisperModelDirectory?:string; weatherProvider?:WeatherProvider; allowedHosts?:string[]; tls?:{key:Buffer;cert:Buffer};healthInstanceId?:string;nodeConfiguration?:NodeConfiguration|null;remoteOperations?:{queue?:string;configPath?:string};aiDevelopment?:{queue?:string;configPath?:string;now?:()=>number}}) {
   let shuttingDown=false;
   const startupCleanup:(()=>unknown|Promise<unknown>)[]=[];let startupApp:ReturnType<typeof Fastify>|undefined;
   try {
@@ -168,6 +169,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   const executionPolicy=()=>[...v1!.list('settings',ACTOR).filter(r=>r.kind==='policy'),...v1!.list('operations',ACTOR).filter(r=>r.kind==='resource-policy')].sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)))[0];
   const stopped=()=>[...v1!.list('settings',ACTOR).filter(r=>r.kind==='policy'),...v1!.list('operations',ACTOR).filter(r=>r.kind==='resource-policy')].some(r=>r.emergency===true)||governance.policy().values.paused;
   remoteOps=new RemoteOperationsRuntime(identity,v1,applications,options.dataDir,stopped,options.remoteOperations);
+  const aiDevelopment=new AiDevelopmentRuntime(identity,v1,options.dataDir,stopped,options.aiDevelopment);
   startupCleanup.push(()=>remoteOps?.close());
   knowledge=new KnowledgeRuntime(v1,pi,{uploadsDirectory:join(options.dataDir,'knowledge-uploads'),workDirectory:join(options.dataDir,'knowledge-runtime'),pythonExecutable,stopped,member:actualMember});
   startupCleanup.push(()=>knowledge?.close());
@@ -420,6 +422,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   app.addHook('preClose',async()=>projectSupervisor.close());
   projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
+  registerAiDevelopment(app,aiDevelopment);
   knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');
   if(existsSync(webDir)){
@@ -429,7 +432,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   // Stop SDK streams before Fastify waits for existing SSE connections to close.
   app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();supervisionWork.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
   app.addHook('onClose',async()=>{supervisionPlans.close();projectDecisions.close();web?.close();identity.close();billing.close();governance.close();store.close();});
-  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,softwareFactory,autonomy,projectSupervisor,projectWorkbench};
+  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,aiDevelopment,softwareFactory,autonomy,projectSupervisor,projectWorkbench};
   }catch(error){
     try{await startupApp?.close();}catch{/* Preserve the initialization error. */}
     for(const close of startupCleanup.reverse())try{await close();}catch{/* Other handles must still be released. */}

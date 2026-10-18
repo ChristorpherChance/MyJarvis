@@ -1,0 +1,66 @@
+{
+  "complete": true,
+  "at": "2026-10-18T14:12:16.633234+00:00",
+  "readOnly": true,
+  "modelCalls": 0,
+  "cli": {
+    "root": {
+      "exitCode": 0,
+      "help": "Unified management for Claude Code, Codex, Gemini, and OpenCode CLI provider configurations, MCP\nservers, skills, prompts, local proxy routes, and environment checks.\n\nRun without arguments to enter interactive mode.\n\nUsage: cc-switch [OPTIONS] [COMMAND]\n\nCommands:\n  auth         Manage ChatGPT Codex OAuth accounts\n  provider     Manage providers (list, switch, export, speedtest, stream-check, fetch-models, quota)\n  use          Switch to a provider (shortcut for `provider switch <id>`)\n  mcp          Manage MCP servers (list, add, edit, delete, sync)\n  prompts      Manage prompts (list, current, live, import, activate, create, rename, edit)\n  skills       Manage skills and skill repositories\n  config       Manage configuration, backups, common snippets, and WebDAV sync\n  proxy        Manage local multi-app proxy\n  settings     Manage persisted UI and integration settings\n  failover     Manage automatic failover and provider queue\n  sessions     Manage saved assistant sessions\n  hermes       Hermes-specific commands (memory blobs etc.)\n  start        Start an app with a provider selector without switching the global current provider\n  daemon       Manage the cc-switch supervisor daemon (start/stop/status/logs)\n  env          Manage environment variables and local CLI tool checks\n  deeplink     Import a resource (provider/mcp/prompt/skill) from a ccswitch:// deep link URL\n  update       Update cc-switch binary to latest release\n  interactive  Enter interactive mode\n  completions  Generate, install, inspect, or uninstall shell completions\n  help         Print this message or the help of the given subcommand(s)\n\nOptions:\n  -a, --app <APP>\n          Specify the application type\n          \n          [possible values: claude, codex, gemini, open-code, hermes, open-claw, pi]\n\n  -v, --verbose\n          Enable verbose output\n\n  -h, --help\n          Print help (see a summary with '-h')\n\n  -V, --version\n          Print version\n"
+    },
+    "start": {
+      "exitCode": 0,
+      "help": "Start an app with a provider selector without switching the global current provider\n\nUsage: cc-switch start [OPTIONS] <COMMAND>\n\nCommands:\n  claude  Start Claude with a provider selector without switching the global current provider\n  codex   Start Codex with a provider selector without switching the global current provider\n  help    Print this message or the help of the given subcommand(s)\n\nOptions:\n  -a, --app <APP>  Specify the application type [possible values: claude, codex, gemini, open-code,\n                   hermes, open-claw, pi]\n  -v, --verbose    Enable verbose output\n  -h, --help       Print help\n"
+    },
+    "start-claude": {
+      "exitCode": 0,
+      "help": "Start Claude with a provider selector without switching the global current provider\n\nUsage: cc-switch start claude [OPTIONS] <SELECTOR> [-- <NATIVE_ARGS>...]\n\nArguments:\n  <SELECTOR>\n          Provider selector: exact ID first, then exact Name\n\n  [NATIVE_ARGS]...\n          Native Claude CLI arguments to pass through after `--`\n\nOptions:\n  -a, --app <APP>\n          Specify the application type\n          \n          [possible values: claude, codex, gemini, open-code, hermes, open-claw, pi]\n\n      --dry-run\n          Preview the resolved launch without starting Claude\n\n  -v, --verbose\n          Enable verbose output\n\n  -h, --help\n          Print help (see a summary with '-h')\n\nExamples:\n  cc-switch start claude demo\n  cc-switch start claude demo --dry-run\n  cc-switch start claude demo -- --dangerously-skip-permissions\n"
+    },
+    "common": {
+      "exitCode": 0,
+      "help": "Manage common configuration snippet (per app)\n\nUsage: cc-switch config common [OPTIONS] <COMMAND>\n\nCommands:\n  show     Show current common config snippet\n  format   Format a common config snippet and print the normalized result\n  extract  Extract a common config snippet from a provider or settings payload\n  set      Set common config snippet for the selected app\n  clear    Clear common config snippet for the selected app\n  help     Print this message or the help of the given subcommand(s)\n\nOptions:\n  -a, --app <APP>  Specify the application type [possible values: claude, codex, gemini, open-code,\n                   hermes, open-claw, pi]\n  -v, --verbose    Enable verbose output\n  -h, --help       Print help\n"
+    },
+    "common-set": {
+      "exitCode": 0,
+      "help": "Set common config snippet for the selected app\n\nUsage: cc-switch config common set [OPTIONS]\n\nOptions:\n  -a, --app <APP>\n          Specify the application type\n          \n          [possible values: claude, codex, gemini, open-code, hermes, open-claw, pi]\n\n      --snippet <SNIPPET>\n          Inline snippet text (Claude/Gemini/OpenCode: JSON object; Codex: TOML)\n\n      --file <FILE>\n          Read snippet text from file using the selected app's format rules\n\n  -v, --verbose\n          Enable verbose output\n\n      --apply\n          Compatibility flag; changes already try to refresh the current live config when applicable\n\n  -h, --help\n          Print help (see a summary with '-h')\n\nCompatibility:\n  --json <SNIPPET>  Legacy alias for --snippet <SNIPPET>.\n"
+    },
+    "provider": {
+      "exitCode": 0,
+      "help": "Manage providers (list, switch, export, speedtest, stream-check, fetch-models, quota)\n\nUsage: cc-switch provider [OPTIONS] <COMMAND>\n\nCommands:\n  list                List all providers\n  current             Show current provider\n  switch              Switch to a provider\n  add                 Add a new provider (non-interactive; use the TUI for interactive add)\n  edit                Edit a provider\n  delete              Delete a provider\n  duplicate           Duplicate a provider\n  import-live         Import providers from the current live app config\n  remove-from-config  Remove a provider from additive live app config without deleting it\n  set-default         Set the default provider/model for apps that support it\n  speedtest           Test provider endpoint speed\n  stream-check        Run stream health check for a provider\n  fetch-models        Fetch remote model list for a provider\n  quota               Query provider quota or usage\n  usage-query         Configure provider Usage Query\n  export              Export a Claude provider to a standalone settings file\n  help                Print this message or the help of the given subcommand(s)\n\nOptions:\n  -a, --app <APP>  Specify the application type [possible values: claude, codex, gemini, open-code,\n                   hermes, open-claw, pi]\n  -v, --verbose    Enable verbose output\n  -h, --help       Print help\n"
+    }
+  },
+  "databaseMetadata": {
+    "tables": [
+      "providers",
+      "provider_endpoints",
+      "sqlite_sequence",
+      "mcp_servers",
+      "prompts",
+      "skills",
+      "skill_repos",
+      "settings",
+      "provider_health",
+      "proxy_request_logs",
+      "model_pricing",
+      "stream_check_logs",
+      "proxy_live_backup",
+      "proxy_failover_live_snapshots",
+      "usage_daily_rollups",
+      "profiles",
+      "session_log_sync",
+      "session_usage_dedup",
+      "proxy_config"
+    ],
+    "settingsColumns": [
+      "key",
+      "value"
+    ],
+    "settingsKeys": [
+      "common_config_claude",
+      "common_config_upstream_semantics_migrated_v1",
+      "default_skill_repos_initialized",
+      "gemini_common_config_credentials_scrubbed_v1",
+      "official_providers_seeded"
+    ]
+  }
+}

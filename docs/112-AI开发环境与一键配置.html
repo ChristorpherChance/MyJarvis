@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="普通账号使用 Claude、K3 与 CC Switch，以及通过贾维斯复用可信开发环境模板。">
-  <meta name="jarvis-source-sha256" content="b2e46e456182aaa47abf9726ddd98aad85e30c1b81007f8ff7043f419421cccb">
+  <meta name="jarvis-source-sha256" content="34e29a80c05b1ffc373c2fcaabeb811a685876a5ee544957fb22d9ef4500b11a">
   <title>112 AI 开发环境与一键配置</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -65,14 +65,15 @@
         <div class="stats"><div class="stat"><strong>3 个</strong><span>固定版本的核心工具</span></div><div class="stat"><strong>11 个</strong><span>已配置通道元数据</span></div><div class="stat"><strong>1 次</strong><span>K3真实调用已核验</span></div></div>
       </header>
       <article class="article">
-        <div class="intro"><p>112 的普通账号 <code>superopen</code> 已完成本轮终端配置，重复执行没有再次改动配置，既有默认通道与受保护设置保持。K3 已完成一次真实调用；其余通道的配置存在不代表都已实际调用。本文根据 2026-10-18 的公开回执编写。</p>
+        <div class="intro"><p><strong>后续统一开发入口：</strong> 日常项目目录为 <code>~/All-Projects/MyJevis</code>，包含本轮R55功能与最新主线修复。原 <code>~/All-Projects/MyJevis-ai-development-ops</code> 保留为R55实施与追溯副本；以下终端工具与生产配置核验结论仍保持原范围。</p>
+<p>112 的普通账号 <code>superopen</code> 已完成本轮终端配置，重复执行没有再次改动配置，既有默认通道与受保护设置保持。K3 已完成一次真实调用；其余通道的配置存在不代表都已实际调用。本文根据 2026-10-18 的公开回执编写。</p>
 <p><strong>本轮 R55 已在 112 正式上线，HTTPS 健康检查返回 200、R55、primary，真实配置任务成功。</strong> 桌面与手机视觉验收仍未完成，不能用 API 成功代替视觉验收。原生交互 SSH 终端已实际观察到四行状态栏，未输入 prompt、未新增模型调用；前三次 Python PTY 停在目录信任提示的失败边界继续保留。</p>
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
         <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">连接后直接开始</h2>
 <p>在已配置好 <code>112</code> SSH 别名的终端执行：</p>
 <pre><code class="language-sh">ssh 112
-cd /home/superopen/All-Projects/MyJevis-ai-development-ops
+cd /home/superopen/All-Projects/MyJevis
 claude
 </code></pre>
 <p>这是本轮已就绪、有真实 Git 基线的独立源码工作副本，对应正式源码 <code>a16a1eb9e0109bc31fefcb9325f74379529bd5cd</code>。其中 <code>node_modules</code> 复用 <code>/home/superopen/All-Projects/MyJevis-r53-closed-loop/node_modules</code>，已核对相同 package lock；依赖并非全部物理独立复制。日常修改先阅读该目录的 <code>AGENTS.md</code>；正式部署目录与原件快照各有用途，不在原件树中启动旧项目。此前完整迁移目录和文件来源见<a href="112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">112 开发迁移使用说明</a>。</p>

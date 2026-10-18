@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-concurrent-publication-readonly-check",
+  "sample": 2,
+  "complete": true,
+  "startedAt": "2026-10-18T10:05:48.996Z",
+  "finishedAt": "2026-10-18T10:05:49.344Z",
+  "machine": {
+    "startedAt": "2026-10-18T10:05:48.324028+00:00",
+    "finishedAt": "2026-10-18T10:05:48.360640+00:00",
+    "readOnly": true,
+    "publicationLock": {
+      "held": false,
+      "holders": [],
+      "inspectedProcLocksOnly": true,
+      "lockAcquiredByAudit": false
+    },
+    "publisherProcesses": [],
+    "publisherChildProcessCount": 0,
+    "publisherRunningChildCount": 0,
+    "processCountersAreCumulativeSingleSample": true,
+    "currentLinkTarget": "/opt/jarvis/releases/20261018-project-goals-r52",
+    "currentRealpath": "/opt/jarvis/releases/20261018-project-goals-r52",
+    "currentRelease": "20261018-project-goals-r52",
+    "snapshotPayloadCount": 3,
+    "snapshotPayloads": [
+      {
+        "capture": "capture-activate-sidecar-4d4f040f-01c6-4594-81a5-6be886ba5314",
+        "payloadPresent": true,
+        "manifestReadStatus": "stable",
+        "associatedRelease": "20261018-project-goals-r52",
+        "createdAt": "2026-10-18T10:01:18.860768+00:00",
+        "scope": "primary",
+        "manifestSchema": 1,
+        "manifestInventoryPresent": true,
+        "listedFiles": 64,
+        "listedDirectories": 59,
+        "operationDeclaredRelease": "20261018-project-goals-r52",
+        "terminalReceipt": {
+          "kind": "success",
+          "ok": true,
+          "release": "20261018-project-goals-r52",
+          "snapshotPassed": true,
+          "restorePassed": true,
+          "snapshotCompleteTreeReceipt": true,
+          "restoreCompleteTreeReceipt": true,
+          "rollbackAttempted": false,
+          "rollbackOK": null
+        }
+      },
+      {
+        "capture": "capture-activate-sidecar-be313536-1589-4ab4-94b2-9e2987f34769",
+        "payloadPresent": true,
+        "manifestReadStatus": "stable",
+        "associatedRelease": "20261018-project-goals-r50",
+        "createdAt": "2026-10-18T08:10:44.031128+00:00",
+        "scope": "primary",
+        "manifestSchema": 1,
+        "manifestInventoryPresent": true,
+        "listedFiles": 64,
+        "listedDirectories": 59,
+        "operationDeclaredRelease": "20261018-project-goals-r50",
+        "terminalReceipt": {
+          "kind": "success",
+          "ok": true,
+          "release": "20261018-project-goals-r50",
+          "snapshotPassed": true,
+          "restorePassed": true,
+          "snapshotCompleteTreeReceipt": true,
+          "restoreCompleteTreeReceipt": true,
+          "rollbackAttempted": false,
+          "rollbackOK": null
+        }
+      },
+      {
+        "capture": "capture-activate-sidecar-c6e2f76b-401d-4c85-9465-5798f7e297ca",
+        "payloadPresent": true,
+        "manifestReadStatus": "stable",
+        "associatedRelease": "20261018-project-goals-r51-r1",
+        "createdAt": "2026-10-18T09:05:00.922803+00:00",
+        "scope": "primary",
+        "manifestSchema": 1,
+        "manifestInventoryPresent": true,
+        "listedFiles": 64,
+        "listedDirectories": 59,
+        "operationDeclaredRelease": "20261018-project-goals-r51-r1",
+        "terminalReceipt": {
+          "kind": "success",
+          "ok": true,
+          "release": "20261018-project-goals-r51-r1",
+          "snapshotPassed": true,
+          "restorePassed": true,
+          "snapshotCompleteTreeReceipt": true,
+          "restoreCompleteTreeReceipt": true,
+          "rollbackAttempted": false,
+          "rollbackOK": null
+        }
+      }
+    ],
+    "retainedSmallSnapshotManifestCount": 18,
+    "restoredCheckCount": 1,
+    "releaseDirectories": [
+      "20261018-project-goals-r49-r1",
+      "20261018-project-goals-r50",
+      "20261018-project-goals-r51-r1",
+      "20261018-project-goals-r52"
+    ],
+    "services": {
+      "jarvis-platform.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "4109137",
+        "comm": "MainThread"
+      },
+      "jarvis-observer.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "4109144",
+        "comm": "MainThread"
+      },
+      "jarvis-voice.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "2900037",
+        "comm": "python"
+      }
+    },
+    "availableBytes": 158951284736,
+    "directoryTraversal": "capture/direct snapshot roots only; no recursive scan or content hashes",
+    "serviceOperations": 0,
+    "modelsInvoked": false
+  },
+  "publicHealth": {
+    "complete": true,
+    "httpStatus": 200,
+    "status": "ok",
+    "build": "20261018-project-goals-r52",
+    "role": "primary"
+  },
+  "readOnly": true,
+  "polling": false,
+  "lockAcquisitions": 0,
+  "serviceOperations": 0,
+  "modelsInvoked": false
+}

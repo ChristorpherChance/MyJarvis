@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-retention-maintenance-policy-install",
+  "complete": true,
+  "executed": true,
+  "ready": true,
+  "at": "2026-10-18T09:53:36.933952+00:00",
+  "cleanupReceiptSHA256": "4f4cdcc06fe58797af5bdf9f87496f139c758e3e9f06badea04f91232cb6fac0",
+  "toolsRoot": "/var/lib/jarvis-control/retention-tools-20261018",
+  "toolsMode": "0700",
+  "sourceAndInstalledFiles": [
+    {
+      "path": "/var/lib/jarvis-control/retention-tools-20261018/jarvis-backup-retention.py",
+      "sha256": "88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124",
+      "bytes": 22704,
+      "mode": "0o600",
+      "readbackVerified": true
+    },
+    {
+      "path": "/var/lib/jarvis-control/retention-tools-20261018/maintain-backup-retention.py",
+      "sha256": "a35fd0559c7d485affe6072371b634d7b22c68f45c867ac18c7bea622d35f86b",
+      "bytes": 15258,
+      "mode": "0o600",
+      "readbackVerified": true
+    },
+    {
+      "path": "/var/lib/jarvis-control/retention-tools-20261018/backup-retention-policy.json",
+      "sha256": "b86ece15471dbd5633e32a25ed843d73c54ee2c3e38246d6c5fa6b427058d1c5",
+      "bytes": 196,
+      "mode": "0o600",
+      "readbackVerified": true
+    },
+    {
+      "path": "/etc/systemd/system/jarvis-backup-retention.service",
+      "sha256": "7848a41a3286d211e79e89ec3bf7d8e5a815213991c3e70db74d7cd366d234fa",
+      "bytes": 665,
+      "mode": "0o644",
+      "readbackVerified": true
+    },
+    {
+      "path": "/etc/systemd/system/jarvis-backup-retention.timer",
+      "sha256": "46fbab1e64c9ddb2270235ffcb4ec9b7ee30a5b70f3fad59ca937e3d5648335e",
+      "bytes": 194,
+      "mode": "0o644",
+      "readbackVerified": true
+    }
+  ],
+  "previousConfigurationEvidence": [
+    {
+      "path": "/var/lib/jarvis-control/retention-tools-20261018/jarvis-backup-retention.py",
+      "existed": true,
+      "sourceSHA256": "88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124",
+      "sourceBytes": 22704,
+      "targetMode": "0o600",
+      "previousSHA256": "88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124",
+      "previousBytes": 22704,
+      "previousMode": "0o600"
+    },
+    {
+      "path": "/var/lib/jarvis-control/retention-tools-20261018/maintain-backup-retention.py",
+      "existed": false,
+      "sourceSHA256": "a35fd0559c7d485affe6072371b634d7b22c68f45c867ac18c7bea622d35f86b",
+      "sourceBytes": 15258,
+      "targetMode": "0o600"
+    },
+    {
+      "path": "/var/lib/jarvis-control/retention-tools-20261018/backup-retention-policy.json",
+      "existed": false,
+      "sourceSHA256": "b86ece15471dbd5633e32a25ed843d73c54ee2c3e38246d6c5fa6b427058d1c5",
+      "sourceBytes": 196,
+      "targetMode": "0o600"
+    },
+    {
+      "path": "/etc/systemd/system/jarvis-backup-retention.service",
+      "existed": false,
+      "sourceSHA256": "7848a41a3286d211e79e89ec3bf7d8e5a815213991c3e70db74d7cd366d234fa",
+      "sourceBytes": 665,
+      "targetMode": "0o644"
+    },
+    {
+      "path": "/etc/systemd/system/jarvis-backup-retention.timer",
+      "existed": false,
+      "sourceSHA256": "46fbab1e64c9ddb2270235ffcb4ec9b7ee30a5b70f3fad59ca937e3d5648335e",
+      "sourceBytes": 194,
+      "targetMode": "0o644"
+    }
+  ],
+  "privateConfigurationBackup": "/var/lib/jarvis-control/retention-tools-20261018/install-history/20261018T095335Z-9c6b1794d523",
+  "effectiveUnitBindingVerified": true,
+  "service": {
+    "LoadState": "loaded",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "FragmentPath": "/etc/systemd/system/jarvis-backup-retention.service",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainPID": "4082547",
+    "ExecMainStatus": "0"
+  },
+  "timer": {
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "waiting",
+    "FragmentPath": "/etc/systemd/system/jarvis-backup-retention.timer",
+    "UnitFileState": "enabled",
+    "NextElapseUSecRealtime": "",
+    "NextElapseUSecMonotonic": "1w 2d 21h 23min 33.766720s",
+    "LastTriggerUSec": ""
+  },
+  "initialMaintenance": {
+    "schemaVersion": 1,
+    "kind": "jarvis-112-keep-two-capture-maintenance",
+    "startedAt": "2026-10-18T09:53:36.858805+00:00",
+    "complete": true,
+    "executed": true,
+    "guardSHA256": "88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124",
+    "deletedDirectories": 0,
+    "deletedLogicalBytes": 0,
+    "modelsInvoked": false,
+    "serviceOperations": 0,
+    "preBackupsTouched": false,
+    "releasesTouched": false,
+    "policySHA256": "b86ece15471dbd5633e32a25ed843d73c54ee2c3e38246d6c5fa6b427058d1c5",
+    "retainedSnapshots": 2,
+    "candidateDirectories": 0,
+    "protectedUnknownCaptures": 3,
+    "protectedUnknownCodes": [
+      "LEGACY_RECOVERY_INCOMPLETE",
+      "OS_GUARD_FAILED",
+      "ROLLBACK_TERMINAL_INCOMPLETE"
+    ],
+    "selectionSHA256": "5274f42666f10506ecb22c0531dc05901b05fccd0b5355867080a1eee1dd45bc",
+    "protectedSHA256": "bf946b6d556336ef68908d1fe1e880077472a8e19b8baf17dac1a5af158a7405",
+    "retainedSnapshotBindingsSHA256": "5274f42666f10506ecb22c0531dc05901b05fccd0b5355867080a1eee1dd45bc",
+    "recoveryToolPinsSHA256": "277676108b2e34a4970f1625637b849aa8e0bf999e7d7d9ed1be550cf5acf6eb",
+    "heldLiveReferenceDirectories": 0,
+    "eligibleDirectories": 0,
+    "candidatePlanSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "recoveryContentsVerifiedThisRun": false,
+    "phase": "no-deletion-needed",
+    "finishedAt": "2026-10-18T09:53:36.891425+00:00"
+  },
+  "businessServicePIDsUnchanged": true,
+  "businessServices": {
+    "jarvis-platform.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "3973256"
+    },
+    "jarvis-observer.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "3973258"
+    }
+  },
+  "businessServiceOperations": 0,
+  "daemonReloads": 1,
+  "maintenanceStarts": 1,
+  "modelsInvoked": false,
+  "transportPayloadStoredRemotely": false,
+  "preBackupsTouched": false,
+  "releasesTouched": false,
+  "localCleanupReceiptPath": "artifacts/migration-112/retention-backup-cleanup-public.json",
+  "localSourceSHA256": {
+    "jarvis-backup-retention.py": "88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124",
+    "maintain-backup-retention.py": "a35fd0559c7d485affe6072371b634d7b22c68f45c867ac18c7bea622d35f86b",
+    "backup-retention-policy.json": "b86ece15471dbd5633e32a25ed843d73c54ee2c3e38246d6c5fa6b427058d1c5"
+  },
+  "installerSHA256": "31c8ff9fececaf7b5969a11a8435f197d102fda92454386e215e5c8d5e4444d5"
+}

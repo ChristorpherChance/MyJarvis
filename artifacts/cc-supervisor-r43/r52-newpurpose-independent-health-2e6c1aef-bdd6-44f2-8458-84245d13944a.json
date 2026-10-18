@@ -1,0 +1,59 @@
+{
+  "kind": "r52-newpurpose-independent-health",
+  "at": "2026-10-18T10:05:06Z",
+  "healthOperationId": "2e6c1aef-bdd6-44f2-8458-84245d13944a",
+  "activationOperationId": "4d4f040f-01c6-4594-81a5-6be886ba5314",
+  "producerReceipt": {
+    "path": "artifacts/cc-supervisor-r43/r52-root-sidecar-activation-4d4f040f-01c6-4594-81a5-6be886ba5314-outcome.json",
+    "bytes": 1532,
+    "sha256": "4787d5c38a467ccdd9edbbf5c2b77705d6cf0d98e9ddc098c4facf633e053046"
+  },
+  "activationFinalFingerprint": {
+    "sha256": "cf7a86ddfc266e1ad85e2634b64473f6c2461164dfaf9a1891b353e8d5d551c8",
+    "bytes": 12927
+  },
+  "release": "20261018-project-goals-r52",
+  "sourceCommit": "0ae044826235fd7f7908db786dc2b186fdebf984",
+  "exitCode": 0,
+  "timeout": false,
+  "childEnded": true,
+  "elapsedSeconds": 0.45300000021234155,
+  "independentHealthQualified": true,
+  "health": {
+    "node": "112",
+    "release": "20261018-project-goals-r52",
+    "role": "primary",
+    "currentRelease": "20261018-project-goals-r52",
+    "platformService": "active",
+    "observerService": "active",
+    "observerBuild": "20261018-project-goals-r52",
+    "businessHealthy": true,
+    "healthBuild": "20261018-project-goals-r52",
+    "healthStatus": "ok"
+  },
+  "failureCode": null,
+  "rawPrivateFingerprints": {
+    "health.stdout": {
+      "bytes": 322,
+      "sha256": "984f116e46829137608b1300205c403e524270591a9ccaed6c7e54fc54d95c36"
+    },
+    "health.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "producerQualifiedPreviously": true,
+  "producerConfigurationMetadataAccepted": {
+    "uid": 0,
+    "gid": 973,
+    "mode": 416
+  },
+  "producerPreviousConfigSHA256Accepted": "41696fef717c9d2b8f07adef54ac3e5cd35b65c96d12eef20cd7b153f4d93c6b",
+  "productAccepted": false,
+  "fullSupervisionFlowAccepted": false,
+  "oldHealthPhaseInvokedOrOverwritten": false,
+  "oldFailedActivationChanged": false,
+  "serviceRecoveryStageInstallOrActivateCalled": false,
+  "APIAuthenticationUsed": false,
+  "automaticRetry": false
+}

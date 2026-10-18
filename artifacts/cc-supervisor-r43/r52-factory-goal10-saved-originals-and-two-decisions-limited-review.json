@@ -1,0 +1,398 @@
+{
+  "kind": "r52-factory-goal10-two-parent-saved-originals-and-natural-decisions-limited-review",
+  "scope": "Non-author LOCAL saved-byte review. No app/source execution, tests, provider/model requests, API/SSH/Git calls or deployment.",
+  "receivedSourceSemantics": "signed-agent status and verification are preserved from received central API originals; this review recomputes result JSON hashes and decoded evidence hashes, not node signatures.",
+  "rawSavedFingerprints": [
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal9-observation-a8240aed-6ce6-466f-901a-7be20ba14657/run.json",
+      "bytes": 85644,
+      "sha256": "8f35b36f0901c8abd1ebf003c379f0e9168b2e6be012b1038b1f7316cd10adb9"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-dc37bd23-3aa1-46da-b54d-6dd84f6a6f3d/run.json",
+      "bytes": 89215,
+      "sha256": "71014d45b40a6467b829a96784852b2d2adf0c349bb39e4b3806b0577c1aa3c8"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-dc37bd23-3aa1-46da-b54d-6dd84f6a6f3d/workbench.json",
+      "bytes": 400032,
+      "sha256": "263dab8563247c2d0a370481ff1224a6df6db5b9e18c872c82887348838a6978"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-f75ebb4e-7166-4797-9bed-5773471bbf2f/run.json",
+      "bytes": 42326,
+      "sha256": "1b95c02f40b4967cbbea0ef9e4747bbd8ffbcefaa8c80cfdf144be125efcc98b"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-f75ebb4e-7166-4797-9bed-5773471bbf2f/workbench.json",
+      "bytes": 409193,
+      "sha256": "358e26cb68aa113ede7ccc4a67cd2d92fc59442ad722d17b3498ce587131516c"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-03329d8b-20b3-472e-a7f8-507506413d69/run.json",
+      "bytes": 42326,
+      "sha256": "1b95c02f40b4967cbbea0ef9e4747bbd8ffbcefaa8c80cfdf144be125efcc98b"
+    },
+    {
+      "path": ".jarvis-dev/maintenance/r45-release-private/r52-factory-goal10-observation-03329d8b-20b3-472e-a7f8-507506413d69/workbench.json",
+      "bytes": 428849,
+      "sha256": "49cc7cf3369233545bfa2505d04206e80325a7ad4f34062b3aec925f244948ae"
+    }
+  ],
+  "resultHashMethod": "Node crypto SHA-256 over JSON.stringify(result), identical byte convention to current supervisor hash; raw file hashes are separate.",
+  "first": {
+    "runId": "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+    "resultSHA256": "def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "nativeSessionId": "d482f9f6-f0a5-48fc-a603-20ccb5a919f4",
+    "status": "succeeded",
+    "outcome": "success",
+    "exitCode": 0,
+    "receivedSource": "signed-agent",
+    "receivedVerification": "executor-observed-not-human-accepted",
+    "cryptographicSignatureIndependentlyReverified": false,
+    "feedback": {
+      "strictSevenFieldsAndBasicTypes": true,
+      "state": "ready_for_review",
+      "questionIsString": true,
+      "questionEmpty": true,
+      "evidenceCount": 26,
+      "receiptPathHashPairsExact": true
+    },
+    "originals": {
+      "count": 26,
+      "totalBytes": 52123,
+      "allCanonicalBase64": true,
+      "allDecodedSHA256AndSizeVerified": true,
+      "allStrictUTF8": true,
+      "allWithinCollectorItemAndTotalLimits": true
+    },
+    "usage": {
+      "inputTokens": 395823,
+      "outputTokens": 3217,
+      "cacheReadTokens": 388864,
+      "cacheWriteTokens": 0,
+      "totalTokens": 399040,
+      "usageComplete": true,
+      "costComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogMicroUSD": 309652,
+      "catalogUSD": 0.309652,
+      "invoiceUSD": null,
+      "PiInternalCostUSD": null,
+      "nativeCumulativeAdded": false
+    }
+  },
+  "automaticFollowup": {
+    "runId": "667f4896820efb461c79185c662933a10f3ad180",
+    "resultSHA256": "97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "nativeSessionId": "d482f9f6-f0a5-48fc-a603-20ccb5a919f4",
+    "status": "succeeded",
+    "outcome": "success",
+    "exitCode": 0,
+    "receivedSource": "signed-agent",
+    "receivedVerification": "executor-observed-not-human-accepted",
+    "cryptographicSignatureIndependentlyReverified": false,
+    "feedback": {
+      "strictSevenFieldsAndBasicTypes": true,
+      "state": "blocked",
+      "questionIsString": true,
+      "questionEmpty": false,
+      "evidenceCount": 9,
+      "receiptPathHashPairsExact": true
+    },
+    "originals": {
+      "count": 9,
+      "totalBytes": 22201,
+      "allCanonicalBase64": true,
+      "allDecodedSHA256AndSizeVerified": true,
+      "allStrictUTF8": true,
+      "allWithinCollectorItemAndTotalLimits": true
+    },
+    "usage": {
+      "inputTokens": 820951,
+      "outputTokens": 3026,
+      "cacheReadTokens": 811520,
+      "cacheWriteTokens": 0,
+      "totalTokens": 823977,
+      "usageComplete": true,
+      "costComplete": true,
+      "costKind": "catalog-estimate",
+      "catalogMicroUSD": 528565,
+      "catalogUSD": 0.528565,
+      "invoiceUSD": null,
+      "PiInternalCostUSD": null,
+      "nativeCumulativeAdded": false
+    }
+  },
+  "old25Preservation": {
+    "baselineRunId": "8278fcb5a9258957994f510ff07690159d1f7f4d",
+    "baselineCount": 25,
+    "baselineBytes": 49501,
+    "firstSamePathsAndEntireBytes": 25,
+    "firstMissing": [],
+    "firstAdded": [
+      {
+        "path": "artifacts/goal10-original-facts.json",
+        "bytes": 2622,
+        "sha256": "1d1e1d70276aabc1c9abca7646ec650470de004236ecf180420a899e0575d3b7"
+      }
+    ],
+    "followupSamePathsAndEntireBytes": 4,
+    "followupMissingOldPaths": [
+      "artifacts/goal9-original-facts.json",
+      "artifacts/goal7-policy/result.json",
+      "artifacts/goal7-policy/harness.diff",
+      "artifacts/goal7-policy/commands.json",
+      "artifacts/goal7-policy/vitest.json",
+      "artifacts/goal7-policy/policy-post.stdout.log",
+      "artifacts/goal7-policy/policy-post.stderr.log",
+      "artifacts/goal7-policy/docker-entrypoint.sh.txt",
+      "artifacts/goal7-policy/entrypoint-read-commands.json",
+      "artifacts/goal7-policy/resource.json",
+      "artifacts/goal7-policy/cleanup.json",
+      "artifacts/goal7-policy/cleanup-remove.stdout.log",
+      "artifacts/goal7-policy/cleanup-inspect.stderr.log",
+      "artifacts/goal7-policy/database-before.stdout.log",
+      "artifacts/goal7-policy/database-after.stdout.log",
+      "reports/supervision-20261017-1843/server-tests.stderr.log",
+      "apps/server/src/modules/policy/policy.integration.test.ts",
+      "apps/server/src/modules/policy/policy.service.ts",
+      "docker-compose.yml",
+      "apps/server/vitest.config.ts",
+      "artifacts/goal6-policy/container-log.stderr.log"
+    ],
+    "followupNewArtifacts": [
+      {
+        "path": "artifacts/policy-evidence-supplement/facts.json",
+        "bytes": 3166,
+        "sha256": "6e4094ceb15da54183eebee3a578e04f5e6f43e5c4af3ad77262ef8467d88c6b"
+      },
+      {
+        "path": "artifacts/goal7-policy/run-policy.py",
+        "bytes": 7053,
+        "sha256": "31a030b51566fc31aaa6af5601ef46917bddf3d3acacd2cbe6f355ad6c60615d"
+      },
+      {
+        "path": "artifacts/policy-evidence-supplement/git-commit-proof.txt",
+        "bytes": 3302,
+        "sha256": "6950259c30924fde6f5018adadb9de5ed4c61610d9cddee49cf8ae056d9154d7"
+      },
+      {
+        "path": "artifacts/policy-evidence-supplement/source-link.json",
+        "bytes": 1011,
+        "sha256": "373a150821710fc71228e1c8ed3908e7115423ed77329a2c71338498b6b05b1b"
+      },
+      {
+        "path": "reports/supervision-20261017-1843/handoff.json",
+        "bytes": 1047,
+        "sha256": "52ece676082beefcc7c348011489ab93f9ad6027a8f90a8cbebf963a82e2aa73"
+      }
+    ],
+    "oldOriginalsStillSavedLocally": true,
+    "old25NotAutomaticallyReissuedInFollowup": true,
+    "mergedAcrossRoundInputQualificationNotAssumed": true
+  },
+  "followupSourceEvidence": {
+    "launcher": {
+      "path": "artifacts/goal7-policy/run-policy.py",
+      "bytes": 7053,
+      "sha256": "31a030b51566fc31aaa6af5601ef46917bddf3d3acacd2cbe6f355ad6c60615d"
+    },
+    "completeReceivedBytes": true,
+    "launcherCommittedBytesMatchProducerClaim": true,
+    "gitCommitProof": {
+      "path": "artifacts/policy-evidence-supplement/git-commit-proof.txt",
+      "bytes": 3302,
+      "sha256": "6950259c30924fde6f5018adadb9de5ed4c61610d9cddee49cf8ae056d9154d7"
+    },
+    "sourceLink": {
+      "path": "artifacts/policy-evidence-supplement/source-link.json",
+      "bytes": 1011,
+      "sha256": "373a150821710fc71228e1c8ed3908e7115423ed77329a2c71338498b6b05b1b"
+    },
+    "sourceLinkStructuralEqualityProducerClaim": true,
+    "gitHEADParentIndexOrCommittedBytesIndependentlyQueried": false,
+    "dirtyStatusAndBinaryIndexEntireOriginalsReceived": false,
+    "missingDirtyIndexScope": "Producer reports dirty proof exceeds one-item cap and binary index has no lossless permitted delivery. Their missing full bytes are not replaced with hashes or a claim of verified completeness.",
+    "externalF9AliasOrSignatureIndependentlyVerified": false,
+    "sourceRelationshipCannotBeUpgradedFromProducerStatementToSignedOrigin": true
+  },
+  "savedTests": {
+    "scope": "Existing PolicyService database pair in preserved goal7 vitest JSON; no new test command in this review or these read-only rounds.",
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "frameworkSuccess": true,
+    "reportedBySupplement": {
+      "exit": 0,
+      "pass": 2,
+      "fail": 0,
+      "skip": 0,
+      "notRun": 0
+    },
+    "fullSuiteOrCoverageReexecuted": false,
+    "wholeFactoryAccepted": false
+  },
+  "firstDecision": {
+    "sequence": 191,
+    "eventId": "024e3ccc-26e0-4467-8093-5bc0f32ae953",
+    "eventHash": "fe1a052e74f6b823a3c2a31d384362fa53f901a8a6e872e61b217c81db7db89b",
+    "kind": "decision",
+    "goalRevision": 10,
+    "runId": "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+    "resultHash": "def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003",
+    "modelIntentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:10:0:9531d5b862d3538ac3ae7449b9555d134c9c3df0:def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003",
+    "action": "continue",
+    "criteria": [
+      {
+        "ordinal": 1,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 3
+      },
+      {
+        "ordinal": 2,
+        "criterionExact": true,
+        "met": true,
+        "evidenceCount": 9
+      },
+      {
+        "ordinal": 3,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 5
+      }
+    ],
+    "reason": {
+      "bytes": 434,
+      "sha256": "2ff93af541adb2c636298d5493c349af943ca9f4de68b24c9dc445c94360676e"
+    },
+    "directive": {
+      "bytes": 1433,
+      "sha256": "77ecbc9ef661b40726162cfde7fa43ff5ed03ee038c3b2d236585ebab519b543"
+    },
+    "independentAcceptance": false
+  },
+  "secondDecision": {
+    "sequence": 197,
+    "eventId": "35a1a398-8bb9-454a-94ad-ad9ad561feff",
+    "eventHash": "5b017acd3c22727f4cedeede431a57585870a31f6cffae463162ceeca0ec8395",
+    "kind": "decision",
+    "goalRevision": 10,
+    "runId": "667f4896820efb461c79185c662933a10f3ad180",
+    "resultHash": "97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+    "modelIntentId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:10:0:667f4896820efb461c79185c662933a10f3ad180:97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+    "action": "wait_user",
+    "criteria": [
+      {
+        "ordinal": 1,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 3
+      },
+      {
+        "ordinal": 2,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 2
+      },
+      {
+        "ordinal": 3,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 3
+      }
+    ],
+    "reason": {
+      "bytes": 499,
+      "sha256": "3ab8f794832881073f9c9c27aec19a8a0090ffb67360be999c0064d084888304"
+    },
+    "directive": {
+      "bytes": 1704,
+      "sha256": "9a22a26ee1c8cec8b766e7e8114123cb5d8a100f357178cf8a81e31f05247d16"
+    },
+    "independentAcceptance": false
+  },
+  "naturalChain": {
+    "event191StableAcrossThreeSavedSnapshots": true,
+    "event191ReferencesFirstExactResult": true,
+    "event192DispatchIntentAnd193InstructionPresent": true,
+    "secondRunSourceBindingToFirst": true,
+    "event197ReferencesFollowupExactResult": true,
+    "events191Through197ConsecutiveHashLinksConsistent": true,
+    "eventHashesAreDeliveredProjectionFields": true,
+    "rawStoredEventHashPreimageNotIndependentlyCollected": true,
+    "goalAndCriteriaUnchanged": true,
+    "correctionContextPrefixRetained": true,
+    "contextCountBefore": 1,
+    "contextCountFinal": 2
+  },
+  "deploymentFactCorrection": {
+    "publicReceipt": {
+      "path": "artifacts/cc-supervisor-r43/r52-current-deployment-fact-correction-readback.json",
+      "bytes": 1886,
+      "sha256": "dbb3480c30d6b5c2212acb12aca880054c57bb190d149cd2a219057c913c191e"
+    },
+    "applyTo": "future_reference",
+    "goalCriteriaAndCurrentRunPreserved": true,
+    "newExecutionStarted": false,
+    "oldIntentRetried": false,
+    "scope": "Current R52 deployment fact was appended; old 65536/30000 statements remain historical. Not an approval of missing evidence."
+  },
+  "finalSavedSession": {
+    "revision": 71,
+    "goalRevision": 10,
+    "status": "waiting_user",
+    "enabled": false,
+    "runId": "667f4896820efb461c79185c662933a10f3ad180",
+    "consumedRunId": "667f4896820efb461c79185c662933a10f3ad180",
+    "resultHash": "97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+    "secondDecisionAction": "wait_user",
+    "noFurtherSupervisorRunInSavedSession": true,
+    "reasonClass": "Technical complete-originals/provenance evidence remains insufficient; not a lack of the owner goal authorization."
+  },
+  "providerBoundary": {
+    "twoActualNaturalJudgmentsReturned": true,
+    "firstAction": "continue",
+    "secondAction": "wait_user",
+    "notAClaimOfMaximum128KiBProviderCompatibility": true,
+    "notAClaimOfGeneralTokenCapacity": true,
+    "notFactoryC6OrWholeProductAcceptance": true
+  },
+  "usageTwoParentAddendum": {
+    "runIDs": [
+      "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+      "667f4896820efb461c79185c662933a10f3ad180"
+    ],
+    "inputTokens": 1216774,
+    "outputTokens": 6243,
+    "totalTokens": 1223017,
+    "catalogMicroUSD": 838217,
+    "catalogUSD": 0.838217,
+    "costKind": "catalog-estimate",
+    "invoiceUSD": null,
+    "PiInternalUsageAndCost": null,
+    "cacheAlreadyIncludedInInput": true,
+    "nativeSessionCumulativeAdded": false,
+    "globalCanonicalTotalChanged": false
+  },
+  "nextWorkScope": [
+    "Maintain complete verified original continuity across report rounds without silently merging unproven source bindings.",
+    "Represent trusted signature provenance at the actual signed source granularity; do not invent the f9 alias signature.",
+    "Design bounded lossless dirty/index transport and verification, preserving existing originals and safety constraints.",
+    "Keep current Root deployment facts available to new legal model input. Develop and verify in a new independent 112 source copy after legacy task handoff."
+  ],
+  "acceptance": {
+    "savedByteReviewPassed": true,
+    "technicalEvidenceClosure": false,
+    "C5AcceptancePassed": false,
+    "C6Signed": false,
+    "wholeFactoryAccepted": false,
+    "oldFailuresAndResultsPreserved": true
+  }
+}

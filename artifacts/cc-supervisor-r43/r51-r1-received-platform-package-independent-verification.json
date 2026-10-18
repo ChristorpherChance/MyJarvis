@@ -1,0 +1,350 @@
+{
+  "kind": "r51-r1-formal-received-platform-package-independent-verification",
+  "at": "2026-10-18T08:58:35.525782+00:00",
+  "sourceRunId": "5444eafb2a76094ab80f838453da4e628a228826",
+  "sourceResultSHA256": "539ce86abc4b2adaecee9d2e6e14cb4357d5de520ebe7934d8a08773ef487385",
+  "sourceCommit": "e5cc87f15c800a021e5dca58dedc71db022123d0",
+  "reportCommit": "7ad29ad297d9fe1102b82a5eb194d35f667ec87b",
+  "baseCommit": "99a0ecad68f59271c0c0d24192f0bf9501268174",
+  "runtimeBuild": "20261018-project-goals-r51-r1",
+  "archiveVersion": "20261018-project-goals-r51-r1",
+  "formalSignedSourceReceipt": {
+    "path": "artifacts/cc-supervisor-r43/r51-r1-goal10-signed-candidate-receipt.json",
+    "bytes": 2766,
+    "sha256": "f4564759f4427eb207be1a61e5616a63b142d656b9fd21dfdecc95176476436c"
+  },
+  "signedCompactFacts": {
+    "bytes": 1174,
+    "sha256": "d09d270e11631d6eff5a361fdfc2f77168b8ebdc86f26c55f2e22cbd6b38fea5",
+    "originalIndexEntries": 17
+  },
+  "transferReceipt": {
+    "path": "artifacts/cc-supervisor-r43/r51-r1-three-package-transfer.json",
+    "bytes": 1448,
+    "sha256": "0faa41ce0fadecb6baabd2bd9f7efff60bee5334e3dd36a73a547297b26fdd5d"
+  },
+  "extraOriginalsReceipt": null,
+  "externalPackageIndexUsed": true,
+  "declaredIndexBoundToSignedFacts": {
+    "path": "reports/r51-r1-artifact-index.json",
+    "bytes": 3335,
+    "sha256": "85d85c848512bf41347976d23872d70bc54640af53675feb10dbef0e68879851",
+    "gitTrackingClaimed": false
+  },
+  "actualHeadObservation": {
+    "path": "artifacts/cc-supervisor-r43/r51-r1-goal10-head-observation-162ba040-87d2-483a-ae86-7225229ad194-readback.json",
+    "bytes": 1043,
+    "sha256": "3167c878b0e83da39f07ca34008d530120237dec9e71cc910c7520e450c14a84"
+  },
+  "reportedArtifacts": [
+    {
+      "file": ".jarvis-dev/releases/r51-r1/platform/20261018-project-goals-r51-r1.zip",
+      "bytes": 24073265,
+      "sha256": "231a82a26ff6b5de0af3087338cedc7ba0bf772e4ee509f8dee359ee252a5dda"
+    },
+    {
+      "file": ".jarvis-dev/releases/r51-r1/platform/20261018-project-goals-r51-r1.zip.sha256",
+      "bytes": 100,
+      "sha256": "5a34ecd364d0a61896a375d38f06e9d4af63412835ab347bba7d40026e88135f"
+    },
+    {
+      "file": ".jarvis-dev/releases/r51-r1/platform/release-manifest.json",
+      "bytes": 453433,
+      "sha256": "5ff92b272de82e7801a74c5d030ee080d0594da8fb747b45ee2acc10aa849ae6"
+    }
+  ],
+  "platformPayloadFilesVerified": 2289,
+  "packagedTrackedSourceFilesComparedToExactGitBlob": 1871,
+  "allPackagedAppSourceFilesVerifiedAgainstExactGitBlob": 308,
+  "platformClusterRuntimeBuildMarkerVerified": true,
+  "originalSourceAndLogFilesVerified": [
+    {
+      "path": "apps/api/src/pi.ts",
+      "bytes": 50817,
+      "sha256": "e71cbf000fea2f70d6418823a2056767fc646816a93088e27840a760e37d6b0f",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "apps/api/test/pi-supervisor-entry-r51-r1.test.ts",
+      "bytes": 3744,
+      "sha256": "e7bb3623ff39c12b27dbed74c37dde564489974fdc14d940327eacc5721957ce",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-app.patch",
+      "bytes": 39014,
+      "sha256": "35bb5eaff10033ac917b29b219b841c85a9da6045e51d4b05493c44e02f536e8",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-delivery.md",
+      "bytes": 1355,
+      "sha256": "a20397ac1682d8c9a7ba32e26ed027a1149d0d10fe19bf408f0db1f17c838b4b",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/api-build.txt",
+      "bytes": 71,
+      "sha256": "2d6c05ac08c27220e314ad5b600caacd3a40c8ef58522c164f31598e1e2522d4",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/api-types.txt",
+      "bytes": 64,
+      "sha256": "55ea586aa490ce93a098c95bde0732c397242e590fec5b8d9f8fec31b61c8b1d",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/assets.json",
+      "bytes": 23890,
+      "sha256": "545f66301053d853a44e3de6751c4dc9f5b6b2a96025954d0ea57d6e17718621",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/construction.txt",
+      "bytes": 48,
+      "sha256": "339302e0d48ad5fe1e8dd4bfd211bdf8a2fd27b38624e03888b9da921a33481a",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/package.txt",
+      "bytes": 764,
+      "sha256": "3cfc4860c1a5806dcbb452cb621bc6b987562fdc1e4a0d7dba2b82190807711c",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/pi-entry.tap",
+      "bytes": 528,
+      "sha256": "885f8936ddc2b401f383b9fbcf53adc6dcc975139fdc8bdafb6f90d0fb9834a3",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/readback.json",
+      "bytes": 609,
+      "sha256": "2d40d7f7a34c99546a1beafbaeed8f8181f8cebc88cfeddb6c9def03ae8359ff",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/web-build.txt",
+      "bytes": 3049,
+      "sha256": "5f7b4f64f03a111ace9a57f490bafafc0d230a1c00a7656fbe16f24d86524a15",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "reports/r51-r1-logs/web-types.txt",
+      "bytes": 47,
+      "sha256": "f5a86bc53ee1616b4ad49800b67ed0fef011afeaff9a8eb36324aaba960d47f1",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    },
+    {
+      "path": "scripts/capture-activate-r51-r1-sidecar.py",
+      "bytes": 26413,
+      "sha256": "2eb88fd77857218c3d574f7542f2d29219444d499e93508abcb14dc3688714e8",
+      "receivedAsPrivateExtra": false,
+      "gitTrackingClaimed": false
+    }
+  ],
+  "savedValidationRange": {
+    "signedIndexedOriginalLogsHsizeVerified": true,
+    "applicationReviewerOwnsOutcomeInterpretation": true,
+    "executionWasNotRepeated": true,
+    "notFullProductTests": true
+  },
+  "newNodePackageReceived": false,
+  "existingAcceptedNodeFilesReverified": 5,
+  "nodeCompatibilityContract": {
+    "releaseVersionInjectionRequired": false,
+    "existingAcceptedR44FiveFilesReverified": [
+      {
+        "file": "jarvis-node.mjs",
+        "bytes": 984069,
+        "sha256": "f282a7823d386b70c6fe63a1ff6392533fa482972ee3284a70926a579010d58e",
+        "existingAcceptedArtifact": true
+      },
+      {
+        "file": "agent-supervisor.js",
+        "bytes": 3196,
+        "sha256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c",
+        "existingAcceptedArtifact": true
+      },
+      {
+        "file": "prepare-development-node.mjs",
+        "bytes": 5967,
+        "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572",
+        "existingAcceptedArtifact": true
+      },
+      {
+        "file": "使用说明.md",
+        "bytes": 7945,
+        "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e",
+        "existingAcceptedArtifact": true
+      },
+      {
+        "file": "package.json",
+        "bytes": 92,
+        "sha256": "dc96d7f5167ea7dd8b03f7908b30cc7e028db9cb7a686a64405f76cb20914d44",
+        "existingAcceptedArtifact": true
+      }
+    ],
+    "newNodePackageReceived": false,
+    "nodeCompatibleSourceCommit": "9b0a71273a103ca5c2f1db7a63f07969beeabc49",
+    "platformSourceCommit": "e5cc87f15c800a021e5dca58dedc71db022123d0",
+    "builderSHA256": "189b49a029bd7f410944398bda56e81c625dec509a48a358465fcc32918eae60",
+    "entrySourceFiles": [
+      "apps/agent/src/index.ts",
+      "apps/api/src/runtime/agent-supervisor.ts"
+    ],
+    "copiedSourceFiles": {
+      "prepare-development-node.mjs": "scripts/prepare-development-node.mjs",
+      "使用说明.md": "docs/开发监督与双机接入.md"
+    },
+    "running101Agent": "R7/config46 unchanged; no install performed by this verifier",
+    "compiledReproducibilityClaimed": false,
+    "requiredSourceInputsVerifiedAgainstCandidateGitBlobs": [
+      "apps/agent/src/index.ts",
+      "apps/api/src/runtime/agent-supervisor.ts",
+      "docs/开发监督与双机接入.md",
+      "scripts/build-development-node-package.mjs",
+      "scripts/prepare-development-node.mjs"
+    ],
+    "fiveSourceInputsByteSameAsBase": [
+      {
+        "path": "apps/agent/src/index.ts",
+        "bytes": 1590,
+        "sha256": "6f76415c6e05c12ace1882026735efc359ff315f124eab63ae615da5f266ea6f"
+      },
+      {
+        "path": "apps/api/src/runtime/agent-supervisor.ts",
+        "bytes": 2773,
+        "sha256": "bcd78ab8213884dd6d4998ea605b5f326a1ea665a823c65ed2a7a3c9f42215c9"
+      },
+      {
+        "path": "docs/开发监督与双机接入.md",
+        "bytes": 7945,
+        "sha256": "beb3e8bf672b50d24c309eb8bff5105073c3e82f977b233960bf5e19b45ea97e"
+      },
+      {
+        "path": "scripts/build-development-node-package.mjs",
+        "bytes": 1374,
+        "sha256": "189b49a029bd7f410944398bda56e81c625dec509a48a358465fcc32918eae60"
+      },
+      {
+        "path": "scripts/prepare-development-node.mjs",
+        "bytes": 5967,
+        "sha256": "c59eeb712986825d7252b42544934f8c54f70db5eb1f4009de8873c4a771c572"
+      }
+    ],
+    "scope": "Five explicit source inputs and preserved accepted node artifacts; not a new compiler reproducibility or deployment claim. Independent final source review must confirm the authorized central-only delta introduces no agent behavior change."
+  },
+  "dualWorkerBuildContract": {
+    "platformWorkerCompilation": "TypeScript per-module emit",
+    "nodeWorkerCompilation": "existing accepted esbuild standalone bundle target node24",
+    "bytesExpectedIdentical": false,
+    "sameEntrySourcePath": "apps/api/src/runtime/agent-supervisor.ts",
+    "entrySourceSHA256": "bcd78ab8213884dd6d4998ea605b5f326a1ea665a823c65ed2a7a3c9f42215c9",
+    "nodeWorkerSHA256": "465c441976588ed3127c5820eacc97e15705e3714f9ad295d574efd5cf143a2c",
+    "platformWorkerSHA256": "3202e01590ef2a3d133ab8cc701e4b8d676c03d0412f982648f3673d8eaa575a"
+  },
+  "legacySevenComparedToOriginalR41": 7,
+  "priorR7AssetsPreserved": 54,
+  "priorR44AssetsPreserved": 67,
+  "priorR45AssetsPreserved": 92,
+  "priorR46r1AssetsPreserved": 98,
+  "priorR48AssetsPreserved": 104,
+  "manifestSHA256": "5ff92b272de82e7801a74c5d030ee080d0594da8fb747b45ee2acc10aa849ae6",
+  "artifactAuditPassed": true,
+  "compiledReproducibilityClaimed": false,
+  "applicationExecuted": false,
+  "projectTestsOrBuildExecuted": false,
+  "remoteOrAPIExecuted": false,
+  "productionDeployed": false,
+  "productAccepted": false,
+  "sourceReviewAndRuntimeBrowserAcceptanceSeparate": true,
+  "provenanceBoundary": "Saved central signed-agent result locally Node-JSON.stringify hash checked; exact1174B facts declare exact3335B artifact index. Full source/log originals match APP/final Git blobs; the index itself is received and not Git tracked. Payload counts recomputed. Original HTTP signature headers are not independently reverified offline. APP and later ops source are separate. No old unit/native/terminal read.",
+  "compiledPayloadSignatureChecks": {
+    "apiModel": {
+      "path": "apps/api/dist/runtime/project-supervisor-model.js",
+      "bytes": 13423,
+      "sha256": "2f7cda366e5b82d06291b7e17b737f5d53c239e1d19961a93c6b8a03185baa37"
+    },
+    "apiContract": {
+      "path": "apps/api/dist/runtime/project-supervisor-contract.js",
+      "bytes": 2284,
+      "sha256": "1869e86cb4c261a1a449d49de8dc8df42a33ff7d2e5b1dbdc270e23805efb357"
+    },
+    "diagnosticSubtypes": [
+      "INPUT_ARRAY",
+      "INPUT_REFERENCE",
+      "MISSING",
+      "ARRAY_TYPE",
+      "COUNT",
+      "ENTRY_TYPE",
+      "ENTRY_KEYS",
+      "ID_TYPE",
+      "UNKNOWN_ID",
+      "DUPLICATE_ID",
+      "DISPOSITION",
+      "REASON_TYPE",
+      "REASON_EMPTY",
+      "REASON_LENGTH",
+      "UNVERIFIED_ADOPTION"
+    ],
+    "webEntry": {
+      "path": "apps/web/dist/assets/index-CGJFQ6li.js",
+      "bytes": 2700,
+      "sha256": "92ee30873a9d19e23fbda7462865ad4d591fea6063ac36603f311522f3985af3"
+    },
+    "currentOperations": {
+      "path": "apps/web/dist/assets/OperationsPage-DuT_6MdK.js",
+      "bytes": 400279,
+      "sha256": "44fa353fe0e45530c9c057956c359f1af43764efab25d2617b0173f630fe47cc"
+    },
+    "currentEntryReachableJSAssets": 15,
+    "sourceSignaturePresenceVerified": true,
+    "compilerReproducibilityClaimed": false,
+    "realPiEntry": {
+      "path": "apps/api/dist/pi.js",
+      "bytes": 54093,
+      "sha256": "195ab0e7e91ad4f83ccaf0559786e0130c284928cfb8426a4194d616ed502914",
+      "sharedSupervisorUTF8GateAndOtherPurposeOriginalCharacterGatePresent": true,
+      "codeExecuted": false
+    }
+  },
+  "sidecarFourPinSourceContract": {
+    "oldSourceSHA256": "b3207527dc813bdf7ba9e627202d8443f274232ad48a611b1d0824fb16a0ffc6",
+    "newSourceSHA256": "2eb88fd77857218c3d574f7542f2d29219444d499e93508abcb14dc3688714e8",
+    "bytes": 26413,
+    "fourPinForwardInverseExact": true,
+    "permissionsBudgetLockBackupRestoreReadinessAlgorithmBytesUnchanged": true,
+    "appArchiveContainsOriginalSidecar": true,
+    "r51r1SidecarOnlyInLaterOpsCommit": true,
+    "futureRootExpectedCurrentConfigSHA256": "e18961e879899ad538831715e03de36aa83f904df1b2bc88fb193970c00040b3",
+    "currentConfigNotReadOrRepinned": true
+  },
+  "priorR48r2AssetsPreserved": 104,
+  "priorR49AssetsPreserved": 113,
+  "checksumUpstreamReported": true,
+  "checksumDerivedStrictlyVerified": false,
+  "reportedChecksumAndStrictFormatVerified": true,
+  "priorR49r1AssetsPreserved": 120,
+  "priorR50AssetsPreserved": 120,
+  "compiledR51r1CompletePromptAndPiEntry": {
+    "path": "apps/api/dist/runtime/supervisor-model-input.js",
+    "bytes": 3197,
+    "sha256": "baf90e94ff99e65da73169abfe823d601a63037b40235ecf2447c9798e0db9ea"
+  },
+  "resultHashVerifiedByLocalNodeJSONstringify": true
+}

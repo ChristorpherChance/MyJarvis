@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "kind": "r51-r1-factory-goal8-saved-runs-and-budget-correction-independent-review",
+  "scope": "LOCAL saved bytes only; no API, SSH, native, provider, app/test/build, dispatch or record append",
+  "rawSignedResultHeadersReverified": false,
+  "signatureScope": "API saved source signed-agent plus exact result JSON.stringify SHA256; not independent agent-signature verification",
+  "runs": [
+    {
+      "runId": "d2523e399abb8c5fd135e80881f0c77483d5ab78",
+      "rawFile": {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal8-observation-6dadaafd-aee8-4152-8c5b-307be95fd630/run.json",
+        "bytes": 14310,
+        "sha256": "d5c007bd35d879481ae7ce1b09d7297bba767c6be739dcd1d00cae281648d725"
+      },
+      "workbenchFile": {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal8-observation-6dadaafd-aee8-4152-8c5b-307be95fd630/workbench.json",
+        "bytes": 293438,
+        "sha256": "8b9c29c42fc2dd8e7b9ff80f8e8ab28e5e3fea678ff53cf85432fac7525b32a5"
+      },
+      "resultSHA256": "89b410279990a354b7c18e8b0ef149d1688701bb2cabbc05bee2ad973f849138",
+      "status": "succeeded",
+      "outcome": "success",
+      "exitCode": 0,
+      "source": "signed-agent",
+      "verification": "executor-observed-not-human-accepted",
+      "feedback": {
+        "sevenKeysExact": true,
+        "allStringFieldsTyped": true,
+        "optionsArray": true,
+        "evidenceArray": true,
+        "state": "blocked",
+        "evidenceCount": 1,
+        "fullUnderlyingOriginalSetDelivered": false
+      },
+      "evidence": [
+        {
+          "path": "artifacts/goal8-original-facts.json",
+          "bytes": 2627,
+          "sha256": "ced305aac866d0a1fbdad621e7aaf98bc3fb4cb0ec9d04b2408c0eb2cade4d43",
+          "canonicalBase64AndUtf8AndFingerprintMatch": true,
+          "role": "derived-fact-json",
+          "topLevelFieldCount": 20,
+          "underlyingIndexedOriginalsNotIncludedInThisReceipt": true
+        }
+      ],
+      "usage": {
+        "inputTokens": 724793,
+        "outputTokens": 3088,
+        "cacheReadTokens": 716800,
+        "cacheWriteTokens": 0,
+        "totalTokens": 727881,
+        "provider": "claude-cli",
+        "model": "gpt-6.1-sol[1m]",
+        "usageComplete": true,
+        "costUSD": 0.47556500000000135,
+        "costKind": "catalog-estimate",
+        "knownCostUSD": 0.47556500000000135,
+        "costComplete": true
+      },
+      "sessionCumulativeNotAdded": true,
+      "supervisorBinding": {
+        "sessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+        "goalRevision": 8,
+        "supervisorRevision": 50,
+        "expectedTaskRevision": 31,
+        "consumedRunId": "d2c14227054efd4f2020a0818a30000d61e9edd8",
+        "resultHash": "77c64824cc4e1b72af9e25dcfeb9125e4ec80dae321a929d2eb101f643b953f5",
+        "fingerprint": "afea9973d39353b2c696022f2d2ff76254722dba5c9ea8e039f61bfc5569b9ab",
+        "policyWindowId": "399466c7e17fe926c9487d9f2082ee917ea97b78aab427c29358eedfacfba97e"
+      }
+    },
+    {
+      "runId": "fe7cdd37eb94dc9cbd4eec5e3a7043150ca0f4c6",
+      "rawFile": {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal8-observation-79a98276-4b44-4671-8d6b-96a976be5996/run.json",
+        "bytes": 14032,
+        "sha256": "ddca020fecb443ed50203e63cb34df30d874608d869af0e92dfdbc05fd762fbc"
+      },
+      "workbenchFile": {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-factory-goal8-observation-79a98276-4b44-4671-8d6b-96a976be5996/workbench.json",
+        "bytes": 312987,
+        "sha256": "e4d94630c4a49b501d13a7cf468ab23553cba5faa3a2603c257a859a5967420c"
+      },
+      "resultSHA256": "52192afc7dd683206f84c2f2038c36bd6f7c454848504fd93eea54f36d192d93",
+      "status": "succeeded",
+      "outcome": "success",
+      "exitCode": 0,
+      "source": "signed-agent",
+      "verification": "executor-observed-not-human-accepted",
+      "feedback": {
+        "sevenKeysExact": true,
+        "allStringFieldsTyped": true,
+        "optionsArray": true,
+        "evidenceArray": true,
+        "state": "blocked",
+        "evidenceCount": 1,
+        "fullUnderlyingOriginalSetDelivered": false
+      },
+      "evidence": [
+        {
+          "path": "artifacts/goal8-batch1-budget-facts.json",
+          "bytes": 3539,
+          "sha256": "d1bd033a9ca5661b7394a9efc7353f05c2b834ffb9e06b9689b44c3efdcb828f",
+          "canonicalBase64AndUtf8AndFingerprintMatch": true,
+          "role": "derived-fact-json",
+          "topLevelFieldCount": 14,
+          "underlyingIndexedOriginalsNotIncludedInThisReceipt": true
+        }
+      ],
+      "usage": {
+        "inputTokens": 559103,
+        "outputTokens": 2686,
+        "cacheReadTokens": 554752,
+        "cacheWriteTokens": 0,
+        "totalTokens": 561789,
+        "provider": "claude-cli",
+        "model": "gpt-6.1-sol[1m]",
+        "usageComplete": true,
+        "costUSD": 0.36628100000000074,
+        "costKind": "catalog-estimate",
+        "knownCostUSD": 0.36628100000000074,
+        "costComplete": true
+      },
+      "sessionCumulativeNotAdded": true,
+      "supervisorBinding": {
+        "sessionId": "b98926a6-c143-4e69-be44-ee767858c8fc",
+        "goalRevision": 8,
+        "supervisorRevision": 53,
+        "expectedTaskRevision": 34,
+        "consumedRunId": "d2523e399abb8c5fd135e80881f0c77483d5ab78",
+        "resultHash": "89b410279990a354b7c18e8b0ef149d1688701bb2cabbc05bee2ad973f849138",
+        "fingerprint": "af93ea9a07ed4db5a056d0ba140020480d2fd0a58f7bb212fe1c92e2e7cb07e2",
+        "policyWindowId": "9b93a6201d9141cd0d83b8fd572c2d1da3ca581e721b6052ae75e853f5fd7690"
+      }
+    }
+  ],
+  "automaticChain": {
+    "firstDecision": {
+      "sequence": 159,
+      "eventId": "18b7d46e-206c-4124-a77a-9b92cf1c8962",
+      "sha256": "022edd1b5fa5901ad10d43d4e8bb84cf22bd97d7cf414128e09b66af1bf808c6",
+      "action": "continue",
+      "criteriaCount": 3,
+      "metCount": 0
+    },
+    "dispatch": {
+      "sequence": 161,
+      "eventId": "cad469b2-b4fc-47c2-bb0d-63d4dd3e5b43",
+      "sha256": "a29ea08118918fde3ab41e90014144c37668610270586e3076058f1c4c8ae47b",
+      "runId": "fe7cdd37eb94dc9cbd4eec5e3a7043150ca0f4c6",
+      "sourceDecisionId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:8:0:d2523e399abb8c5fd135e80881f0c77483d5ab78:89b410279990a354b7c18e8b0ef149d1688701bb2cabbc05bee2ad973f849138"
+    },
+    "lastDecision": {
+      "sequence": 164,
+      "eventId": "a07924ec-4766-4eab-bcaf-2787c4da9d67",
+      "sha256": "34bafa2c95f429c6489be13cc86a02833d177648b350fbb9b4769b3d60779278",
+      "action": "wait_user",
+      "criteriaCount": 3,
+      "metCount": 0
+    },
+    "selectedEvent159Through164HashesAndLinksChecked": true,
+    "eventHashMethod": "Reconstruct original eventId,kind,...remaining JSON order; API view prepends sequence,kind, which is not the original hash byte order.",
+    "finalSession": {
+      "id": "b98926a6-c143-4e69-be44-ee767858c8fc",
+      "revision": 56,
+      "goalRevision": 8,
+      "status": "waiting_user",
+      "enabled": false,
+      "runId": "fe7cdd37eb94dc9cbd4eec5e3a7043150ca0f4c6",
+      "consumedRunId": "fe7cdd37eb94dc9cbd4eec5e3a7043150ca0f4c6",
+      "resultHash": "52192afc7dd683206f84c2f2038c36bd6f7c454848504fd93eea54f36d192d93",
+      "decisionId": "model:b98926a6-c143-4e69-be44-ee767858c8fc:8:0:fe7cdd37eb94dc9cbd4eec5e3a7043150ca0f4c6:52192afc7dd683206f84c2f2038c36bd6f7c454848504fd93eea54f36d192d93"
+    },
+    "goalAndAllThreeCriteriaUnchangedAcrossRuns": true,
+    "wholeProductAccepted": false,
+    "allUnderlyingOriginalsOrTestsIndependentlyAccepted": false
+  },
+  "correction": {
+    "files": [
+      {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-budget-fact-correction-0f9b6e58-59e4-4e5c-918a-4b1b5a1ffb97/before.json",
+        "bytes": 265407,
+        "sha256": "4a5e33cb9f9cb1cd0e6441c77ab34f112207314ed03b3a6cffb1e16ea7e6bad5"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-budget-fact-correction-0f9b6e58-59e4-4e5c-918a-4b1b5a1ffb97/request.json",
+        "bytes": 1396,
+        "sha256": "13453f9bc312846c3423c16501a0ff101298d8080f30dc628d00b370793db3d4"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-budget-fact-correction-0f9b6e58-59e4-4e5c-918a-4b1b5a1ffb97/response.json",
+        "bytes": 5960,
+        "sha256": "a50730dba12d0fefa5d337caec7e07b172c964a98b970e2cf1816d985a03e48b"
+      },
+      {
+        "path": ".jarvis-dev/maintenance/r45-release-private/r51-r1-budget-fact-correction-0f9b6e58-59e4-4e5c-918a-4b1b5a1ffb97/after.json",
+        "bytes": 269342,
+        "sha256": "4620b38f0c17cae2f917eb96b0b9ebbe14ca95d91798aebffab6aee25ccd66d9"
+      }
+    ],
+    "targetSequence": 159,
+    "targetEventId": "18b7d46e-206c-4124-a77a-9b92cf1c8962",
+    "targetSHA256": "022edd1b5fa5901ad10d43d4e8bb84cf22bd97d7cf414128e09b66af1bf808c6",
+    "targetRunId": "d2523e399abb8c5fd135e80881f0c77483d5ab78",
+    "targetResultSHA256": "89b410279990a354b7c18e8b0ef149d1688701bb2cabbc05bee2ad973f849138",
+    "type": "fact",
+    "applyTo": "future_reference",
+    "purpose": "Correct obsolete 30000-byte budget premise to current complete-prompt 64KiB contract without treating provider capacity or business acceptance as proven",
+    "requestMentions30000": true,
+    "requestMentions65536": true,
+    "oldEventsWholePreserved": true,
+    "goalCriteriaBindingPolicyHistoryUnchanged": true,
+    "sessionChangedKeys": [
+      "revision",
+      "correctionContext"
+    ],
+    "revisionBefore": 56,
+    "revisionAfter": 57,
+    "finalStatus": "waiting_user",
+    "enabled": false,
+    "newEvent": {
+      "sequence": 165,
+      "eventId": "695c8640-b178-418c-aa08-0c7946ff36ad",
+      "sha256": "9f40e41395ac2a123960895ef3b0af318690b7529ff2144e6c45cd5c71dfaa59",
+      "previousHash": "34bafa2c95f429c6489be13cc86a02833d177648b350fbb9b4769b3d60779278"
+    },
+    "noNewDispatchOrDecisionEvent": true,
+    "correctionContextAppendedOnce": true,
+    "responseMatchesSavedSession": true,
+    "oldRunOrModelIntentReplayed": false
+  },
+  "limitations": [
+    "The two received evidence receipts contain derived fact JSON only; their indexed underlying full original files were not received by this audit.",
+    "success/exit0 is execution outcome, not product acceptance. Both model decisions mark all three criteria false.",
+    "No test/build, provider prompt, private original contents or runtime state was independently executed or fetched."
+  ],
+  "counters": {
+    "API": 0,
+    "network": 0,
+    "models": 0,
+    "appTests": 0,
+    "dispatches": 0,
+    "recordAppends": 0
+  }
+}

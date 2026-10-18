@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-storage-retention-selection",
+  "status": "selected-not-yet-executed",
+  "objective": "Retain the two most recent complete recoverable backup snapshots on 112 and substantially reduce historical logs.",
+  "backupPolicy": {
+    "keepCompleteSnapshots": 2,
+    "sortBy": "snapshot manifest createdAt, independent of whether the associated deployment succeeded",
+    "preserve": ["the selected complete snapshot payloads and manifests", "active or otherwise referenced recovery operations", "small historical manifests, activation and validation evidence", "current production data and the complete migrated project originals"],
+    "cleanupCandidates": ["older completed snapshot payloads", "finished isolated restoration validation copies", "old pre-upgrade backup trees", "unreferenced historical release copies after retaining the live release and releases required by the two recovery points"]
+  },
+  "logPolicy": {
+    "journalMaximumBytes": 268435456,
+    "journalMaximumAgeDays": 7,
+    "semantics": "Age and size are upper bounds; capacity may evict logs before seven days. This is not a seven-day minimum retention guarantee.",
+    "remove": "verified inactive ordinary rotated logs",
+    "preserve": "current log files",
+    "applyConfiguration": "reload the existing journald service only when its supported CanReload contract has been verified"
+  },
+  "alternatives": ["Continue retaining all historical data; inspection showed approximately 140.4 GB of backup and recovery materials.", "Delete every backup; this would remove the requested recovery coverage.", "Retain the latest two complete recoverable points and their required release material, remove obsolete data under publication locks, and cap journal retention."],
+  "selectedAlternative": 3,
+  "reason": "The user explicitly chose two recent backups and authorized substantial log cleanup. Retaining complete recovery points and necessary release dependencies preserves the requested recovery scope while releasing large obsolete copies.",
+  "executionConditions": ["verify the selected recovery points with their pinned manifests", "hold the existing publication lock exclusively during destructive backup operations", "refuse active references, unexpected symlinks, mounts or changed target identities", "record actual freed space and production health after execution"],
+  "rollbackBoundary": "Deletion of old backup data and old logs is intentional and irreversible; the retained recovery points are preserved. New retention configuration may be reverted without restoring deleted historical data.",
+  "modelsInvoked": false,
+  "businessServicesRestarted": false
+}

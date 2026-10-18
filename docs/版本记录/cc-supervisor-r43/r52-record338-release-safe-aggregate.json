@@ -1,0 +1,150 @@
+{
+  "kind": "r51r1-r52-source-release-independent-health-safe-aggregate",
+  "scope": "Completed source/package/release evidence only; no whole-product acceptance.",
+  "R51RejectedCandidate": {
+    "sourceReview": {
+      "path": "artifacts/cc-supervisor-r43/r51-goal9-independent-application-delta-source-review.json",
+      "bytes": 11882,
+      "sha256": "c851557247384c0cb6ab0168333a63cc589f5d2fb6976ac50691bd2317359e5c"
+    },
+    "reason": "实际PiService旧32000字符门仍在，fakepi.run测试未覆盖真实入口；拒发布，原失败保。"
+  },
+  "R51r1QualifiedPrior": {
+    "APP": "e5cc87f15c800a021e5dca58dedc71db022123d0",
+    "sourceReview": {
+      "path": "artifacts/cc-supervisor-r43/r51-r1-goal10-independent-application-delta-source-review.json",
+      "bytes": 15917,
+      "sha256": "91e05f8c971d9970fb5efbf262058fadd7ec6a0fd984fd03322da0dd0c1285cd"
+    },
+    "packageReview": {
+      "path": "artifacts/cc-supervisor-r43/r51-r1-received-platform-package-independent-verification.json",
+      "bytes": 13980,
+      "sha256": "226a7b7c778f51bebe0250b73b68572538493cc5d7e9d2596bf48ba40b1cb910"
+    },
+    "producer": {
+      "path": "artifacts/cc-supervisor-r43/r51-r1-root-sidecar-activation-c6e2f76b-401d-4c85-9465-5798f7e297ca-outcome.json",
+      "bytes": 1534,
+      "sha256": "fcbd8f92931985532dede9a725f0256ece72fd92ea925431ad7059fbdb910595"
+    },
+    "independentHealth": {
+      "path": "artifacts/cc-supervisor-r43/r51-r1-newpurpose-independent-health-f56b783e-7ace-414d-af45-a475481c2e4b.json",
+      "bytes": 2079,
+      "sha256": "de2cd39f3edb61c0436c9e98538101c6dcf3bce4a06f491386f56c55e19fb2c9"
+    },
+    "realPiServiceOfflineDriverValidationOnly": true,
+    "providerWholeCapacityAcceptanceClaimed": false
+  },
+  "R52": {
+    "APP": "0ae044826235fd7f7908db786dc2b186fdebf984",
+    "HEAD": "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+    "build": "20261018-project-goals-r52",
+    "sharedCompletePromptUTF8HardBytes": 131072,
+    "declaredContextTokens": 32768,
+    "declaredOutputTokens": 4096,
+    "declaredUnitsAreDifferent": true,
+    "sourceReview": {
+      "path": "artifacts/cc-supervisor-r43/r52-goal11-independent-application-delta-source-review.json",
+      "bytes": 16295,
+      "sha256": "7558e6edc33aa5d409312a8603c35a6922852d677014750d8a1f18705694496a"
+    },
+    "packageReview": {
+      "path": "artifacts/cc-supervisor-r43/r52-received-platform-package-independent-verification.json",
+      "bytes": 15694,
+      "sha256": "f10b070781a57f84c612016e1d5d997f53d77eb02ea6bb4d6b849b712f24875b"
+    },
+    "producer": {
+      "path": "artifacts/cc-supervisor-r43/r52-root-sidecar-activation-4d4f040f-01c6-4594-81a5-6be886ba5314-outcome.json",
+      "bytes": 1532,
+      "sha256": "4787d5c38a467ccdd9edbbf5c2b77705d6cf0d98e9ddc098c4facf633e053046"
+    },
+    "independentHealth": {
+      "path": "artifacts/cc-supervisor-r43/r52-newpurpose-independent-health-2e6c1aef-bdd6-44f2-8458-84245d13944a.json",
+      "bytes": 2059,
+      "sha256": "006295aab7d29ed23fe616e0877c2193bf1c8f000ff86d9305aad46937b621d3"
+    },
+    "sourceGitPublication": {
+      "path": "artifacts/cc-supervisor-r43/r52-source-pr7-publication-receipt.json",
+      "bytes": 674,
+      "sha256": "87a94d994f76bbf5bf378453d84290f71e9ace68a881c61f176a34654e7a9402"
+    },
+    "uniqueActivationOperationId": "4d4f040f-01c6-4594-81a5-6be886ba5314",
+    "uniqueActivationElapsedSeconds": 316.1879999998491,
+    "fullSnapshot": {
+      "status": "passed",
+      "operation": "snapshot-created",
+      "release": "20261018-project-goals-r52",
+      "scope": "primary",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4540811766,
+      "manifestSha256": "b41e538aa40c42f96cc2a33ebb1b5abc373adf59833e660464f979e4ee6227be",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "isolatedRestore": {
+      "status": "passed",
+      "operation": "isolated-restore-verified",
+      "release": "20261018-project-goals-r52",
+      "scope": "primary",
+      "files": 64,
+      "directories": 59,
+      "bytes": 4540811766,
+      "manifestSha256": "b41e538aa40c42f96cc2a33ebb1b5abc373adf59833e660464f979e4ee6227be",
+      "sqliteDatabasesChecked": 10,
+      "sqliteIntegrity": "ok",
+      "completeTreeVerified": true,
+      "liveDirectoryModified": false,
+      "automaticRollback": false
+    },
+    "firstError": null,
+    "rollbackAttempted": false,
+    "liveDataRestored": false,
+    "configurationPermission": {
+      "uid": 0,
+      "gid": 973,
+      "mode": 416
+    },
+    "health": {
+      "node": "112",
+      "release": "20261018-project-goals-r52",
+      "role": "primary",
+      "currentRelease": "20261018-project-goals-r52",
+      "platformService": "active",
+      "observerService": "active",
+      "observerBuild": "20261018-project-goals-r52",
+      "businessHealthy": true,
+      "healthBuild": "20261018-project-goals-r52",
+      "healthStatus": "ok"
+    },
+    "sourcePR7": {
+      "url": "https://github.com/ChristorpherChance/MyJarvis/pull/7",
+      "head": "e0a919ddf1e9e6c15609d256ad4f23b7432acbe6",
+      "state": "OPEN",
+      "draft": true,
+      "normalFastForward": true,
+      "merged": false
+    },
+    "newDecisionImplementation": {
+      "originalRef": {
+        "path": "artifacts/cc-supervisor-r43/r52-review-payload-decision-implementation-r2-readback.json",
+        "bytes": 1330,
+        "sha256": "cf962b42e8c8876dbebc39c55c487fb0a19b90fa9cd7a6bbc03f2592f48494c2"
+      },
+      "id": "6ddade88-8d6f-493d-b4f4-5c5f18313946",
+      "revision": 2,
+      "status": "implemented",
+      "chosenId": "shared-complete-128kib",
+      "selectedRevisionHistoryPreserved": true,
+      "independentAcceptance": false
+    }
+  },
+  "boundaries": [
+    "81717与131072边界测试为受控真实Pi入口离线driver，非真实provider最大容量资格。",
+    "实际新G10两个自然模型判断证明该绑定输入可被调用；不扩大为所有模型/上下文或完整工厂验收。",
+    "旧R51候选、旧门拒与所有失败/费用保；101R7/config46与十分钟PAUSED不改。"
+  ],
+  "freshRemoteOrApplicationTestsExecutedForThisAggregate": false
+}

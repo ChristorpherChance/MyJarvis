@@ -1,0 +1,217 @@
+{
+  "kind": "r51-goal9-independent-application-delta-source-review",
+  "scope": "Non-author LOCAL complete changed production-source read, actual saved test/build originals, and finite direct call-chain trace. No application/helper/test/provider/model/network execution and no source modification.",
+  "cut": {
+    "BASE": "745936fe9083ddf1e27622466afcb09e8bce71ef",
+    "APP": "53806ff7eee4f8ae541001b222b40d6005c2a45c",
+    "HEAD": "99a0ecad68f59271c0c0d24192f0bf9501268174",
+    "release": "20261018-project-goals-r51",
+    "sourceTree": "D:\\AI\\workspaces\\MyJevis\\.jarvis-dev\\cc-supervisor-r51-final"
+  },
+  "conclusion": {
+    "confirmedP0": 0,
+    "confirmedP1": 1,
+    "limitedSourceReviewPassed": false,
+    "releaseEligible": false,
+    "RootMustNotActivateThisCandidate": true,
+    "realProviderOrPiAccepted": false,
+    "realBrowserAccepted": false,
+    "wholeFactoryProductAccepted": false
+  },
+  "physicalEvidence": {
+    "path": "artifacts/cc-supervisor-r43/r51-source-review-physical-facts.json",
+    "bytes": 10686,
+    "sha256": "fe29e6b0ea3b4553d25dc8e9fcfd659e2e13f702d95a13297ffe20d60017a8da"
+  },
+  "findings": [
+    {
+      "id": "R51-P1-REAL-PI-CHARACTER-GATE",
+      "priority": "P1",
+      "file": "apps/api/src/pi.ts",
+      "line": 413,
+      "actualCondition": "!input.text.trim() || input.text.length > 32000 -> PI_INPUT_INVALID",
+      "newProducer": "apps/api/src/runtime/supervisor-model-input.ts:3,17-22 and project-supervisor-model.ts:136-146 allow full contract+JSON <=65536 UTF8 bytes and pass projected.text.",
+      "callChain": [
+        "app.ts:205 constructs actual createProjectSupervisorModel(pi).",
+        "project-supervisor-runtime.ts:90 bounded frozen input -> options.model(projected.input).",
+        "project-supervisor-model.ts:136 bounded input -> runInput.text=projected.text -> actual pi.run.",
+        "pi.ts:413 rejects >32000 JavaScript UTF16 code units before initialize/provider/session.prompt.",
+        "project-supervisor-model.ts wraps this PiService throw as MODEL_RUN_FAILED/RUN_EXCEPTION; no real provider request has proved 64KiB supported."
+      ],
+      "staticCounterexamples": [
+        {
+          "projectedJSONUTF8bytes": 31000,
+          "contractUTF8bytes": 2101,
+          "separatorUTF8bytes": 35,
+          "fullRunInputTextUTF8bytes": 33136,
+          "JavaScriptUTF16CodeUnitsASCII": 33136,
+          "shared64KiBPasses": true,
+          "PiService32000CharacterGateRejects": true,
+          "staticArithmeticOnly": true,
+          "applicationTestOrModelExecuted": false
+        },
+        {
+          "projectedJSONUTF8bytes": 44830,
+          "contractUTF8bytes": 2101,
+          "separatorUTF8bytes": 35,
+          "fullRunInputTextUTF8bytes": 46966,
+          "JavaScriptUTF16CodeUnitsASCII": 46966,
+          "shared64KiBPasses": true,
+          "PiService32000CharacterGateRejects": true,
+          "staticArithmeticOnly": true,
+          "applicationTestOrModelExecuted": false
+        }
+      ],
+      "actualFactory44830InputCharacterLengthUnknown": true,
+      "savedTestGap": {
+        "file": "apps/api/test/supervisor-prompt-budget-r51.test.ts",
+        "line": 2,
+        "actual": "pi:any has fake health and fake run; adapter invokes this stub, not PiService.run. Its assertions prove adapter text equality/budget and strict response path only.",
+        "savedTAP": "One passing controlled test group does not cover the real 32000-character dispatch guard."
+      },
+      "narrowFix": "For purpose=project-supervisor, consume the same shared complete-text UTF8 constant/validation in actual PiService.run. Keep other-purpose original32000-character gate and nonempty rule, existing32K Token model/4096-output declarations, bounded ephemeral/privacy/strict terminal/source/CAS gates. Do not remove all input guards or infer Token counts from UTF8 bytes.",
+      "minimumEvidence": "Extend the same controlled group through real PiService entry with a controlled driver/no provider, proving allowed >32000-character <=65536-byte text reaches that driver; over65536 does not; other-purpose32000 rule retained. Preserve old fake-adapter TAP and failure/source."
+    }
+  ],
+  "directChainOtherSizeGates": {
+    "reviewedFiles": [
+      "apps/api/src/app.ts",
+      "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "apps/api/src/runtime/supervisor-model-input.ts",
+      "apps/api/src/runtime/project-supervisor-model.ts",
+      "apps/api/src/pi.ts",
+      "apps/api/src/runtime/project-supervisor-contract.ts"
+    ],
+    "additional30000Or32000HardRejectionFound": false,
+    "onlyRemainingCodeGate": "pi.ts:413",
+    "intentionalDeclarations": "pi.ts:307 contextWindow32768/maxTokens4096 and485 ephemeral max output4096 remain Token/output declarations, not UTF8 payload proof.",
+    "providerEnvelopeBoundary": "pi.ts:476 retains existing system contract and546 session.prompt receives input.text. The R51 metric measures the full prepared runInput.text; SDK/provider serialized envelope or exact Token size/acceptance was not observed. No second confirmed hardcoded byte/character blocker is asserted."
+  },
+  "positiveFiniteFacts": [
+    "New projector constructs literal shared contract + separator + complete JSON and measures exact UTF8 text/H. Adapter uses that exact returned text; WeakMap reuses the constructed object only if projected input JSON H is unchanged, so runtime->adapter does not reassemble it under a different diagnostic snapshot.",
+    "Required goal/criteria/corrections/originals/selected/source binding remain full; excluded experience metadata and private full audit behavior retain R50 semantics. Over65536 at projector remains explicit MCI before adapter Pi invocation.",
+    "Parser/strict six keys, review exact criterion+coverage/allmet+citation, experience verification/stale/counterexample, current source/CAS/stop/policy, response16000B, partial/non-complete rejection and no automatic retry were not changed.",
+    "Only MCI first-screen text maps to Chinese; raw unresolved code remains in existing detail. Other blockers return unchanged; no blocked->success mutation.",
+    "Sidecar is a new four-named-literal derivative of b320; actual AST/static byte transform checked. Old managed/recovery code/body not edited; this does not qualify execution of the rejected candidate."
+  ],
+  "protectedWholeFileEvidence": [
+    {
+      "path": "apps/api/src/pi.ts",
+      "bytes": 50612,
+      "sha256": "6da5eddd9760e8829398cb182496f6a4c5da4cfbb701cb23f68eeff3f29c5fdf"
+    },
+    {
+      "path": "apps/api/src/app.ts",
+      "bytes": 54529,
+      "sha256": "f6cbad578cf6f6d4ad74b659a0a8152f6d2a2c1d10b9553a65217fdb37e2a421"
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-runtime.ts",
+      "bytes": 50483,
+      "sha256": "55d7eecff1de4f904dbfc319fe798dd1f7aa0aa93c0b926a3a1b701363bc7668"
+    },
+    {
+      "path": "apps/api/src/runtime/project-supervisor-contract.ts",
+      "bytes": 2227,
+      "sha256": "09f2b47cdc25abf1260e06876f55e62130e900affac672527a6b426d9b3ccf08"
+    },
+    {
+      "path": "apps/api/src/runtime/supervisor-intents.ts",
+      "bytes": 2819,
+      "sha256": "26865ed66027076d72c8f61f7c516a807248f7cad3513fb454975f982ab737fe"
+    },
+    {
+      "path": "apps/api/src/runtime/supervisor-review.ts",
+      "bytes": 9955,
+      "sha256": "ebe9b050b602ddc013c0cc821194b9a7ff0df097f1f30c97be170d38fb4da79c"
+    },
+    {
+      "path": "apps/api/src/runtime/public-privacy-guard.ts",
+      "bytes": 1746,
+      "sha256": "a66c0a6cb3a766037d8328bca278afcb5a49f96ac4b51d00fac202e070113ce4"
+    },
+    {
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 131800,
+      "sha256": "d8c36cb859060e271c84946b5427c627658491923f6092c916ed21f0ab4eb3e4"
+    }
+  ],
+  "savedValidation": {
+    "test": {
+      "path": "apps/api/test/supervisor-prompt-budget-r51.test.ts",
+      "bytes": 3552,
+      "sha256": "7cd121151e05174966339bc0c3145dfc0342bcb7fdb2912ee9935c04981374a9"
+    },
+    "TAP": {
+      "path": "reports/r51-logs/prompt-budget.tap",
+      "bytes": 489,
+      "sha256": "3c5e913b9f39ea68d20f9270de8af83003854584a9704de68ecef88dd48b1c18"
+    },
+    "reportedGroupCount": 1,
+    "reportedPass": 1,
+    "reportedFail": 0,
+    "scope": "Controlled adapter/projector fixture, synthetic31K/44830B13-original shape; not Factory input replay or actual PiService/provider. Exact full-text65536, multibyte overlimit zero fakecalls, unchanged original bytes and partial response rejection asserted.",
+    "APITypeLog": {
+      "path": "reports/r51-logs/api-types.txt",
+      "bytes": 64,
+      "sha256": "55ea586aa490ce93a098c95bde0732c397242e590fec5b8d9f8fec31b61c8b1d"
+    },
+    "APIBuildLog": {
+      "path": "reports/r51-logs/api-build.txt",
+      "bytes": 71,
+      "sha256": "2d6c05ac08c27220e314ad5b600caacd3a40c8ef58522c164f31598e1e2522d4"
+    },
+    "WebTypeLog": {
+      "path": "reports/r51-logs/web-types.txt",
+      "bytes": 47,
+      "sha256": "f5a86bc53ee1616b4ad49800b67ed0fef011afeaff9a8eb36324aaba960d47f1"
+    },
+    "WebBuildLog": {
+      "path": "reports/r51-logs/web-build.txt",
+      "bytes": 3049,
+      "sha256": "e990186680947937fee6f093cccc8c5ea590f849e890cbec281f540ed35819cd"
+    },
+    "buildEvidenceLimit": "API/type logs contain invocation headers and no errors, not standalone exit receipts; web build includes successful built-in6.11s. Author native success/report claims do not remove the source P1.",
+    "indexOriginalNonPackagePhysicalCount": 17,
+    "allSeventeenMatchActualIndexBytesAndSHA256": true,
+    "testBuildOrModelRerunByReviewer": false,
+    "packageVerificationNotRepeatedHere": true
+  },
+  "nonProductConstructionDocs": {
+    "candidateJournal": {
+      "BASErecords": 306,
+      "APPrecords": 307,
+      "FINALrecords": 308,
+      "newCandidateIDs": [
+        "JARVIS-20261018-R51-FULL-PROMPT-BUDGET",
+        "JARVIS-20261018-R51-PACKAGE-SEAL"
+      ],
+      "originalCCBASEPrefixPreserved": true,
+      "RootCanonicalCurrentRecords": 329,
+      "RootCanonicalSHA256": "9da369b36728e7ef34cf96d26d8d691cc06745d2d7c0ca83d8db7da2f1d426f7",
+      "RootCanonicalHead": "e2bf2b4ac3fe16eeffaf390de88e4d9da272dc14f6897b86e9c1fea5f067d8b0",
+      "candidateAndRootCommonParsedPrefix": 294,
+      "canonicalRootNotChangedByReview": true
+    },
+    "integrationRestriction": "Candidate CC journal306->APP307->FINAL308 and its generated MD/HTML are branch-local evidence. Root canonical329 remains authoritative and unmodified. Do not overwrite or silently merge candidate journal/rendered docs over Root329; reconcile desired summaries through existing construction-record append workflow with source refs, not by replacing history.",
+    "claimBoundary": "Candidate docs accurately call tests controlled/real provider unverified, but statement runtime/adapter shared budget is not evidence real PiService route passed. Preserve these original claims and this counter-finding; do not rewrite old logs.",
+    "newApplicationP1CountDoesNotIncludeThisKnownCanonicalIntegrationRestriction": true
+  },
+  "remainingUnverified": [
+    "No actual R51 Pi/provider or browser acceptance; no product tests rerun.",
+    "Exact current Factory batch JS character length and provider acceptance are unknown; source counterexamples suffice for the confirmed dispatch mismatch.",
+    "No helper/deployment/rollback executed by reviewer; packages handled separately by B."
+  ],
+  "actionsExecuted": {
+    "localReadAndHash": true,
+    "staticASCIIArithmetic": true,
+    "sidecarASTParseOnly": true,
+    "GitLocalReads": true,
+    "projectTests": false,
+    "modelOrProvider": false,
+    "networkOrAPI": false,
+    "sourceEdits": false,
+    "deploy": false
+  },
+  "safePublication": "Only code paths, static constructed counts and saved physical fingerprints; no raw signed private text, provider response/config, credentials or original chats included."
+}

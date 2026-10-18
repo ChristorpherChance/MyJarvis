@@ -10,6 +10,6 @@ export function supervisionConsoleView(value:SupervisionConsole){
   {code:'idle',label:'当前没有平台受控运行',detail:'监管事项的“推进中”是工作记录，不代表执行器正在运行。'};
  const work=[...value.items].filter(x=>x.status!=='completed').sort((a,b)=>Number(!!b.blocker)-Number(!!a.blocker)||b.updatedAt.localeCompare(a.updatedAt)||a.id.localeCompare(b.id));
  const done=[...value.items].filter(x=>x.status==='completed').sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)||a.id.localeCompare(b.id));
- return {state,focus:work[0]??null,work,done,acceptance:value.acceptance.available?`${value.acceptance.accepted} / ${value.acceptance.total}`:'尚未建立',recordedCompletion:value.counts.completed,
+ return {state,focus:work[0]??null,work,done,acceptance:value.acceptance.pending?'待验证':value.acceptance.available?`${value.acceptance.accepted} / ${value.acceptance.total}`:'尚未建立',recordedCompletion:value.counts.completed,
   focusState:work[0]?.blocker?'存在阻塞':state.code==='running'&&work[0]?.runId&&r.runningRunIds.includes(work[0].runId)?'关联执行中':work[0]?.status==='planned'?'待安排':'待接续'};
 }

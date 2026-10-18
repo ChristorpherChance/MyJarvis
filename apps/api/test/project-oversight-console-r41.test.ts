@@ -37,6 +37,14 @@ test('R41 real overview keeps recorded work, actual dispatch and independent acc
   const unrelated={...data,runtime:{...data.runtime,running:1,runningRunIds:['another-run']},items:data.items.map((x:any)=>({...x,blocker:'',runId:'stale-run'}))};assert.equal(supervisionConsoleView(unrelated).focusState,'待接续','another run must not make this work item look executing');
  }finally{await f.close()}
 });
+test('R48 replaced goals cannot fall back to historical autonomy in the console',async()=>{
+ const f=await fixture();try{
+  const original=f.runtime.console('p',admin);assert.equal(original.acceptance.total,74);
+  f.setPlan({goalBasis:'plan',supersedesPlanId:randomUUID(),revision:1,currentStepId:'verify',steps:[{id:'verify',title:'本轮核验',state:'planned',goal:'核验真实成果',nextAction:'按证据修复'}],independentProgress:{available:false,totalObjectives:null,verifiedObjectives:null}});
+  const value=f.runtime.console('p',admin);assert.equal(value.acceptance.available,false);assert.equal(value.acceptance.total,null);assert.equal(value.acceptance.accepted,null);assert.equal(value.runtime.autonomyStatus,null);assert.equal(supervisionConsoleView(value).acceptance,'待验证');assert.equal(value.plan?.steps[0].title,'本轮核验');
+ }finally{await f.close();}
+});
+
 test('R41 only project-bound receipts count; human actions exclude technical blockers and foreign approvals',async()=>{
  const f=await fixture();try{
   f.seed('tasks','active',{projectId:'p',title:'真实已派发',status:'running',executionRequest:{id:'run'},machineId:'m',worktree:'/work/p'});f.runs.set('run',{id:'run',domain:'tasks',taskId:'active',projectId:'p',machineId:'m',workspace:'/work/p',status:'running'});

@@ -85,7 +85,8 @@ export class SupervisionWorkRuntime {
  console(projectId:string,p:RuntimePrincipal){
   const project=this.assertAccess(projectId,p),overview=this.overview(projectId,p);
   let plan:any=null,planUnavailable=false;try{plan=this.options.plans?.get(projectId,p.actorId)??null;}catch{planUnavailable=true;}
-  let profile:any=plan?.independentProgress??null;if(!profile)try{profile=this.options.autonomy?.(projectId,p.actorId)??null;}catch{planUnavailable=true;}
+  const ownGoals=plan?.goalBasis==='plan'&&!!plan.supersedesPlanId;
+  let profile:any=ownGoals?null:plan?.independentProgress??null;if(!profile&&!ownGoals)try{profile=this.options.autonomy?.(projectId,p.actorId)??null;}catch{planUnavailable=true;}
   const tasks=this.repository.list('tasks',p.actorId).filter(t=>t.projectId===projectId&&t.scope===project.scope);
   // Only bound persisted execution receipts count as dispatched work, across all tasks.
   const runs=new Map<string,any>();for(const task of tasks){const run=task.executionRequest?.id?this.execution.getRun(task.executionRequest.id):null;if(run&&run.domain==='tasks'&&run.projectId===projectId&&(run.taskId??run.objectId)===task.id&&(!task.machineId||run.machineId===task.machineId)&&(!task.worktree||run.workspace===task.worktree))runs.set(run.id,run);}
@@ -103,7 +104,7 @@ export class SupervisionWorkRuntime {
   const accepted=Number.isSafeInteger(profile?.verifiedObjectives)?profile.verifiedObjectives:ids&&Array.isArray(profile?.verifiedObjectiveIds)?new Set(profile.verifiedObjectiveIds.filter((id:any)=>ids.has(id))).size:null;
   return {...overview,reportedAt:new Date().toISOString(),project:{id:projectId,name:safeSummary(project.name??project.title),goal:safeSummary(project.goal)},
    runtime:{running,queued,runningRunIds:[...runs.values()].filter(r=>r.status==='running').map(r=>String(r.id)),scope:'bound-persisted-task-runs' as const,unavailable:planUnavailable,autonomyStatus:typeof profile?.status==='string'?profile.status:null,reason:safeSummary(profile?.reason),revision:profile?.revision??null},
-   acceptance:{available:total!==null&&accepted!==null,total,accepted,source:'independent-objectives' as const},
+   acceptance:{available:total!==null&&accepted!==null,total,accepted,...(ownGoals?{pending:true}:{}),source:'independent-objectives' as const},
    plan:plan?{revision:plan.revision,currentStepId:plan.currentStepId,steps:plan.steps.map((s:any)=>({id:s.id,title:safeSummary(s.title),state:s.state,goal:safeSummary(s.goal),nextAction:safeSummary(s.nextAction)}))}:null,
    attention:{total:decisions.length,items:decisions.slice(0,30),truncated:decisions.length>30},activity:this.activity(projectId,p)};
  }

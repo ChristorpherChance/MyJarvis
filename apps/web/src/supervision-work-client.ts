@@ -18,7 +18,7 @@ export interface SupervisionActivity {items:(SupervisionChange&{title:string;sum
 export interface SupervisionConsole extends SupervisionWorkOverview {
  reportedAt:string;project:{id:string;name:string;goal:string};
  runtime:{running:number;queued:number;runningRunIds:string[];scope:'bound-persisted-task-runs';unavailable:boolean;autonomyStatus:string|null;reason:string;revision:number|null};
- acceptance:{available:boolean;total:number|null;accepted:number|null;source:'independent-objectives'};
+ acceptance:{available:boolean;total:number|null;accepted:number|null;pending?:boolean;source:'independent-objectives'};
  plan:{revision:number;currentStepId:string|null;steps:{id:string;title:string;state:string;goal:string;nextAction:string}[]}|null;
  attention:{total:number;items:{id:string;kind:'approval'|'task';title:string;reason:string;route:string}[];truncated:boolean};activity:SupervisionActivity;
 }

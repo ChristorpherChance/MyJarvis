@@ -16,7 +16,7 @@ const bodySchema=z.object({mode:z.enum(['development','acceptance']),title:text(
  steps:z.array(stepSchema).min(1).max(50),currentStepId:text(80).nullable().default(null),
  nextAction:text(2000).nullable().default(null)}).strict();
 export const projectSupervisionPlanCreateSchema=bodySchema.extend({commandId:z.string().uuid(),expectedVersion:z.literal(0),
- supersedesPlanId:z.string().uuid().nullable().default(null),supersedesRevision:z.number().int().positive().nullable().default(null)}).strict();
+ supersedesPlanId:z.string().uuid().nullable().default(null),supersedesRevision:z.number().int().positive().nullable().default(null),goalBasis:z.enum(['legacy-autonomy','plan']).optional()}).strict();
 export const projectSupervisionPlanRevisionSchema=bodySchema.extend({commandId:z.string().uuid(),expectedVersion:z.number().int().positive(),reason:text(2000)}).strict();
 type Body=z.infer<typeof bodySchema>;
 export interface SupervisionPlanPrincipal {actorId:string;administrator:boolean}
@@ -24,7 +24,7 @@ export interface SupervisionPlanExecutionReader {runsForTask(taskId:string):any[
 export interface SupervisionPlanOptions {directory:string;executionDirectory?:string;autonomy?:(projectId:string,actorId:string)=>any}
 export interface ProjectSupervisionPlan extends Body {
  planId:string;projectId:string;ownerId:string;scope:string;revision:number;createdAt:string;updatedAt:string;
- supersedesPlanId:string|null;supersedesRevision:number|null;revisionReason:string;previousHash:string;hash:string;
+ supersedesPlanId:string|null;supersedesRevision:number|null;goalBasis?:'legacy-autonomy'|'plan';revisionReason:string;previousHash:string;hash:string;
 }
 const canonical=(value:any):string=>value===null||typeof value!=='object'?JSON.stringify(value):Array.isArray(value)?'['+value.map(canonical).join(',')+']':'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';
 const sha=(value:unknown)=>createHash('sha256').update(canonical(value)).digest('hex');
@@ -161,6 +161,7 @@ export class ProjectSupervisionPlanRuntime {
  create(projectId:string,input:unknown,principal:SupervisionPlanPrincipal){const parsed=projectSupervisionPlanCreateSchema.parse(input);
   return this.command(projectId,principal,'create',parsed,project=>{const {commandId,expectedVersion,supersedesPlanId,supersedesRevision,...body}=parsed;this.validateBody(project,body);
    if((supersedesPlanId===null)!==(supersedesRevision===null))fail('替代计划须同时指定原计划和版本');
+   if(body.goalBasis==='plan'&&!supersedesPlanId)fail('使用自身目标须明确替代的原计划和版本');
    if(supersedesPlanId&&this.current(projectId,principal.actorId,supersedesPlanId).revision!==supersedesRevision)fail('原计划已更新，请刷新后安排','CONFLICT',409);
    const now=new Date().toISOString();return this.append({...body,planId:randomUUID(),projectId,ownerId:project.ownerId,scope:project.scope,revision:1,createdAt:now,updatedAt:now,supersedesPlanId,supersedesRevision,revisionReason:'建立监管计划',previousHash:'0'.repeat(64)});});
  }
@@ -191,10 +192,13 @@ export class ProjectSupervisionPlanRuntime {
    if(Number.isSafeInteger(tokens)&&tokens>=0)knownTokens+=tokens;
    if(!Number.isSafeInteger(tokens)||tokens<0||usage.usageComplete===false)unknownTokenRuns++;
   }
-  const profile=this.options.autonomy?.(project.id,project.ownerId);
+  const ownGoals=plan.goalBasis==='plan'&&!!plan.supersedesPlanId;
+  const profile=ownGoals?null:this.options.autonomy?.(project.id,project.ownerId);
   const requiredIds=Array.isArray(profile?.spec?.objectives)?new Set<string>(profile.spec.objectives.filter((o:any)=>o.required!==false&&typeof o.id==='string').map((o:any)=>o.id)):null;
   const verifiedIds=requiredIds&&Array.isArray(profile?.verifiedObjectiveIds)?[...new Set<string>(profile.verifiedObjectiveIds.filter((v:any)=>typeof v==='string'&&requiredIds.has(v)))]:null;
-  const independentProgress=profile?{available:true,status:profile.status??null,reason:profile.reason??null,revision:profile.revision??null,goalSpecHash:profile.goalSpecHash??null,
+  // Only an explicitly version-bound goal replacement stops inheriting autonomy goals.
+  // Execution receipts and step counts are not independent acceptance mappings.
+  const independentProgress=ownGoals?{available:false,status:null,reason:null,revision:null,goalSpecHash:null,totalObjectives:null,verifiedObjectives:null,verifiedObjectiveIds:null}:profile?{available:true,status:profile.status??null,reason:profile.reason??null,revision:profile.revision??null,goalSpecHash:profile.goalSpecHash??null,
    totalObjectives:requiredIds?.size??null,verifiedObjectives:verifiedIds?.length??null,verifiedObjectiveIds:verifiedIds}:null;
   return {...plan,steps,stageViews:steps,currentStep:steps.find(s=>s.id===plan.currentStepId)??null,activeStepIds:steps.filter(s=>s.activeRunIds.length).map(s=>s.id),active:!!currentRun,
    currentExecution:currentRun?{taskId:currentRun.taskId??currentRun.objectId,runId:currentRun.id,status:currentRun.status,machineId:currentRun.machineId??null,workspace:currentRun.workspace??null}:null,

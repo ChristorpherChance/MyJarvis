@@ -1,0 +1,57 @@
+{
+  "kind": "r54-independent-live-health-and-owner-workbench-readback",
+  "operationId": "4ad08adb-78a6-4866-b13f-10735bba5a7a",
+  "at": "2026-10-18T14:22:49.028Z",
+  "release": "20261018-simple-workbench-r54",
+  "independentHealthQualified": true,
+  "health": {
+    "node": "112",
+    "release": "20261018-simple-workbench-r54",
+    "role": "primary",
+    "currentRelease": "20261018-simple-workbench-r54",
+    "platformService": "active",
+    "observerService": "active",
+    "observerBuild": "20261018-simple-workbench-r54",
+    "businessHealthy": true,
+    "healthBuild": "20261018-simple-workbench-r54",
+    "healthStatus": "ok"
+  },
+  "configuration": {
+    "uid": 0,
+    "gid": 973,
+    "mode": 416,
+    "sha256": "1ecd8de51162d823593bebbe69f94d2c92ac89ac2915fed59da64e876886be58"
+  },
+  "live": {
+    "supervisor": {
+      "revision": 79,
+      "status": "achieved",
+      "enabled": false,
+      "goalRevision": 10,
+      "runId": "42c4f4761defa4de21ed4e2b8baaffb1573c0e34"
+    },
+    "activity": {
+      "bindingVerified": true,
+      "phase": {
+        "id": "achieved",
+        "label": "本轮主管判定达标，独立验收另列",
+        "status": "ended"
+      },
+      "updatedAt": "2026-10-18T13:18:56.742Z",
+      "items": 11,
+      "logCursor": 11315,
+      "percent": null,
+      "ownerOnly": true
+    },
+    "tasks": {
+      "active": 0,
+      "planned": 3,
+      "attention": 17,
+      "ended": 7
+    },
+    "legacyFalseActiveCorrected": true,
+    "rawConversationPublished": false,
+    "businessCommands": 0
+  },
+  "privateDirectory": ".jarvis-dev/maintenance/r54-live-4ad08adb-78a6-4866-b13f-10735bba5a7a"
+}

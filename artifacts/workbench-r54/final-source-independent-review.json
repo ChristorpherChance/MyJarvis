@@ -1,0 +1,286 @@
+{
+  "kind": "r54-final-application-independent-cross-layer-source-review",
+  "baseCommit": "95af1062ee61db6323162f2271f8092ba178a71b",
+  "applicationCommit": "e9d9ad684c578b578cd76994f4b397b992b8d0a7",
+  "sourceQualifiedWithinReviewedScope": true,
+  "p0Findings": [],
+  "p1Findings": [],
+  "resolvedFinding": {
+    "classification": "stale-read functional acceptance gap, not authorization bypass",
+    "priorCommit": "399457f06f6ef51f5e3af868d7361be1a872d1a0",
+    "priorBehavior": "Age>45s displayed a warning but did not disable commands when a GET was still pending.",
+    "finalBehavior": "All four main command handlers compare current Date.now against last successful workbench read, and six command-button conditions include stale.",
+    "wholeInverseToPrior": true
+  },
+  "checks": [
+    "Owner/project/task/machine/workspace/executor/scope/session/goal binding before private current-run projection; optional native identities agree when present.",
+    "Only real bound queued/running runs are active execution records. Registered queued tasks without run IDs remain planned; terminal/round-limit/stop-request states are explicit.",
+    "Owner-bound last80 SQL read is read-only; signed terminal/resultHash qualifies feedback and judgment, not native process text.",
+    "CurrentActivity projection omits thinking, signatures, prompts, tool arguments and unknown stdout; raw execution SSE text is never rendered.",
+    "Successful workbench GET alone refreshes readAt; workbench failure preserves old information with warning and disables commands. Auth expiry clears context and closes subscriptions.",
+    "Run SSE effect is keyed to bound run, not every cursor; same status and duplicate log IDs do not cause repeated read invalidation. GET remains authoritative; 15-second fallback retained.",
+    "Achieved primary action opens revise form. Save sends revise only, preserves version/criteria and does not issue start or authorizeContinuous. Active text remains an unsent draft.",
+    "Latest three real interactions, task groups and one primary focus replace duplicate summary cards; complete goals/criteria/history remain folded and accessible.",
+    "Five daily development overlay files match reviewed actual bytes. Existing dependency versions, remaining scripts, offline build and proxy changeOrigin behavior remain intact.",
+    "Only cluster build label changes outside the author manifests and five development overlay paths."
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 643,
+      "sha256": "7f248a8cb9c82d95e54bd17b08544622cdc24fe9f78574bed6d61189762873a5"
+    },
+    {
+      "path": "README.md",
+      "bytes": 15297,
+      "sha256": "6ae5e86ec98a25b17582db49edc909cfe6ef2845fa38d7e15580aff0ba31ee94"
+    },
+    {
+      "path": "apps/api/src/runtime/cluster-runtime.ts",
+      "bytes": 11770,
+      "sha256": "6d33e7a6acb95076bb3d04dc8d45ae393c4c646c0600c2701e9fc11bbe415e11"
+    },
+    {
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "bytes": 132209,
+      "sha256": "7873b278c159a357135d145954a87a1f933961c17e248c7b47de8a0afdf53285"
+    },
+    {
+      "path": "apps/api/src/runtime/project-workbench-activity.ts",
+      "bytes": 12168,
+      "sha256": "ac048fb556834b73ca1b2560128256b975a19638aa7cdafb2af152ca189abb13"
+    },
+    {
+      "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+      "bytes": 19070,
+      "sha256": "ee3147239232cb20a7d8eed4a8be4a9d75d4230ab5e9f5f856436521ee3f3bee"
+    },
+    {
+      "path": "apps/api/test/project-workbench-activity-r54.test.ts",
+      "bytes": 9778,
+      "sha256": "fed545137c67f0bd257b16c15da1a9189b69c92098dc41e4f6dd044ca6396a60"
+    },
+    {
+      "path": "apps/api/test/project-workbench-loop-r53.test.ts",
+      "bytes": 10602,
+      "sha256": "a6d55c6f74120db20f13653d6b907c1be4815dae8577b9234835cca516f79836"
+    },
+    {
+      "path": "apps/web/src/features/operations/OperationsPage.tsx",
+      "bytes": 2823,
+      "sha256": "e2f57ae54bbd2823464a8863050447f523b8f5aea3622bd31acc6b004844efa6"
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "bytes": 28766,
+      "sha256": "bca04ca6330e40dc6fa7cb70280e56f19fea5c316a2413a3c1a3557553c34122"
+    },
+    {
+      "path": "apps/web/src/features/operations/project-plan-workbench-view.ts",
+      "bytes": 9035,
+      "sha256": "8c574c9a2a83b3b9411c06a1b6548f360c8aaaa50dbbeec20e5eba674930e63f"
+    },
+    {
+      "path": "apps/web/src/features/operations/project-workbench.css",
+      "bytes": 5842,
+      "sha256": "4bf9134070e96c2b7d6c2fa7f61f5c9761430661582b8af1180bfe2bc1827f87"
+    },
+    {
+      "path": "apps/web/src/supervisor-workbench-stream.ts",
+      "bytes": 2836,
+      "sha256": "3aa58d94253bd09e3dcff79916a3fbb68ec729c35d8e8a928b1d55f2caa285bb"
+    },
+    {
+      "path": "apps/web/vite.config.ts",
+      "bytes": 460,
+      "sha256": "9c574bf9eb4ab7a3d854310b7c1e60ee06ab4174debfb5e4972bf9450a723712"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1571,
+      "sha256": "b6cea8cf31981080e9c58f689c949ab0ae9e1800d2a6573a14351d01d7475b68"
+    },
+    {
+      "path": "scripts/dev-112.mjs",
+      "bytes": 6807,
+      "sha256": "b23b83428ad86b782bffd8603e210ce86d5d2b09274e95e0e2165a4e8c839b5d"
+    },
+    {
+      "path": "scripts/test-r54-workbench.mjs",
+      "bytes": 9536,
+      "sha256": "d230b63687f6785dd5084f172ae3f5a01a30fe3bd7d6076c631471ecb10a9496"
+    }
+  ],
+  "authorManifestChecks": [
+    {
+      "path": "apps/api/src/runtime/project-workbench-activity.ts",
+      "author": {
+        "bytes": 12168,
+        "sha256": "ac048fb556834b73ca1b2560128256b975a19638aa7cdafb2af152ca189abb13"
+      },
+      "actual": {
+        "bytes": 12168,
+        "sha256": "ac048fb556834b73ca1b2560128256b975a19638aa7cdafb2af152ca189abb13"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": false
+    },
+    {
+      "path": "apps/api/src/runtime/project-workbench-runtime.ts",
+      "author": {
+        "bytes": 19071,
+        "sha256": "ec5ec0a638811ab5f9df5af06dd2d9cfe0b5ded9ccee04a5a82714ff6caa2c13"
+      },
+      "actual": {
+        "bytes": 19070,
+        "sha256": "ee3147239232cb20a7d8eed4a8be4a9d75d4230ab5e9f5f856436521ee3f3bee"
+      },
+      "delta": "one-added-line-CRLF-to-LF-only; whole-inverse-exact",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/api/src/runtime/execution-runtime.ts",
+      "author": {
+        "bytes": 132210,
+        "sha256": "95101a1a2f3c5238138563bfe4994e2ec33369bde06adb923119a1acaf0d1c38"
+      },
+      "actual": {
+        "bytes": 132209,
+        "sha256": "7873b278c159a357135d145954a87a1f933961c17e248c7b47de8a0afdf53285"
+      },
+      "delta": "one-added-line-CRLF-to-LF-only; whole-inverse-exact",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/api/test/project-workbench-activity-r54.test.ts",
+      "author": {
+        "bytes": 9778,
+        "sha256": "fed545137c67f0bd257b16c15da1a9189b69c92098dc41e4f6dd044ca6396a60"
+      },
+      "actual": {
+        "bytes": 9778,
+        "sha256": "fed545137c67f0bd257b16c15da1a9189b69c92098dc41e4f6dd044ca6396a60"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": false
+    },
+    {
+      "path": "apps/api/test/project-workbench-loop-r53.test.ts",
+      "author": {
+        "bytes": 10602,
+        "sha256": "a6d55c6f74120db20f13653d6b907c1be4815dae8577b9234835cca516f79836"
+      },
+      "actual": {
+        "bytes": 10602,
+        "sha256": "a6d55c6f74120db20f13653d6b907c1be4815dae8577b9234835cca516f79836"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/web/src/features/operations/OperationsPage.tsx",
+      "author": {
+        "bytes": 2823,
+        "sha256": "e2f57ae54bbd2823464a8863050447f523b8f5aea3622bd31acc6b004844efa6"
+      },
+      "actual": {
+        "bytes": 2823,
+        "sha256": "e2f57ae54bbd2823464a8863050447f523b8f5aea3622bd31acc6b004844efa6"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/web/src/features/operations/project-plan-workbench-view.ts",
+      "author": {
+        "bytes": 9035,
+        "sha256": "8c574c9a2a83b3b9411c06a1b6548f360c8aaaa50dbbeec20e5eba674930e63f"
+      },
+      "actual": {
+        "bytes": 9035,
+        "sha256": "8c574c9a2a83b3b9411c06a1b6548f360c8aaaa50dbbeec20e5eba674930e63f"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/web/src/features/operations/project-workbench.css",
+      "author": {
+        "bytes": 5842,
+        "sha256": "4bf9134070e96c2b7d6c2fa7f61f5c9761430661582b8af1180bfe2bc1827f87"
+      },
+      "actual": {
+        "bytes": 5842,
+        "sha256": "4bf9134070e96c2b7d6c2fa7f61f5c9761430661582b8af1180bfe2bc1827f87"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/web/src/features/operations/ProjectWorkbenchPage.tsx",
+      "author": {
+        "bytes": 28468,
+        "sha256": "b25b4572e1c028ef777cea3fa1236ecf6428e0109a05aeb62fe73a3a2ba9ab45"
+      },
+      "actual": {
+        "bytes": 28766,
+        "sha256": "bca04ca6330e40dc6fa7cb70280e56f19fea5c316a2413a3c1a3557553c34122"
+      },
+      "delta": "exact-author-plus-four-runtime-and-six-button-age-guards; whole-inverse-exact",
+      "baselineVerified": true
+    },
+    {
+      "path": "apps/web/src/supervisor-workbench-stream.ts",
+      "author": {
+        "bytes": 2836,
+        "sha256": "3aa58d94253bd09e3dcff79916a3fbb68ec729c35d8e8a928b1d55f2caa285bb"
+      },
+      "actual": {
+        "bytes": 2836,
+        "sha256": "3aa58d94253bd09e3dcff79916a3fbb68ec729c35d8e8a928b1d55f2caa285bb"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": true
+    },
+    {
+      "path": "scripts/test-r54-workbench.mjs",
+      "author": {
+        "bytes": 9536,
+        "sha256": "d230b63687f6785dd5084f172ae3f5a01a30fe3bd7d6076c631471ecb10a9496"
+      },
+      "actual": {
+        "bytes": 9536,
+        "sha256": "d230b63687f6785dd5084f172ae3f5a01a30fe3bd7d6076c631471ecb10a9496"
+      },
+      "delta": "exact-author-bytes",
+      "baselineVerified": false
+    }
+  ],
+  "manifestRefs": [
+    {
+      "path": ".jarvis-dev/r54-api-local/manifest.json",
+      "bytes": 3033,
+      "sha256": "4690d4f032d27056cc43cfc1c1361500b321f9271ac575c3ebc5ef434b5e2945"
+    },
+    {
+      "path": ".jarvis-dev/r54-api-local/contract.json",
+      "bytes": 4208,
+      "sha256": "cf7472ab49e5c596431eff28543159b5bcc8de896048d39bfb4be747cf6e1fa4"
+    },
+    {
+      "path": ".jarvis-dev/r54-ui-local/manifest.json",
+      "bytes": 4929,
+      "sha256": "d0bd9ee0b6b6daf6a2060cb4d5e0d4b87c995e5b275926d7960195d60535a9fb"
+    }
+  ],
+  "workingTreeExactToCommit": true,
+  "workingTreeCleanAtRead": true,
+  "scopeLimits": [
+    "Static source and byte review only; no reviewer-run tests, types, build, browser, API, model or deployment.",
+    "Prepared synthetic/SSR/event-source tests do not substitute for actual browser interactions and 112 runtime validation.",
+    "Accepted-node process logs are owner-facing progress summaries; they do not certify OS execution correctness or full product acceptance.",
+    "This does not accept full 12+5 capabilities/customer delivery, mobile layout or exclusive SSE refresh, nor resume the paused ten-minute automation."
+  ],
+  "newModelCallsByThisReview": 0,
+  "networkOrRemote": false
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "r54-isolated-112-validation-and-build",
+  "operationId": "326dbffb-bf26-431f-ae26-66137c7abdd9",
+  "sourceCommit": "e9d9ad684c578b578cd76994f4b397b992b8d0a7",
+  "status": "failed",
+  "steps": [
+    {
+      "name": "bound-head",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0017030519666150212,
+      "stdoutBytes": 41,
+      "stdoutSHA256": "0f8b01acff5e757b1f8838435825535553e766c9bae0e1cde2226c08a45116cf",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bound-clean",
+      "exitCode": 0,
+      "elapsedSeconds": 0.005961738992482424,
+      "stdoutBytes": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "api-and-loop-tests",
+      "exitCode": 0,
+      "elapsedSeconds": 0.7031510510714725,
+      "stdoutBytes": 1441,
+      "stdoutSHA256": "e019d76e1077793512ef74f2b8ab413fcab695b227ff2408ef2bce4245392c8e",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ui-stream-tests",
+      "exitCode": 1,
+      "elapsedSeconds": 0.1578081389889121,
+      "stdoutBytes": 4845,
+      "stdoutSHA256": "0ff2fc913d8508e792dcddaf5dddcf90a4929c33d4dad6df1e36febc3408c1e2",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "error": "ui-stream-tests: LoaderThread (node:internal/modules/esm/loader:714:38)\n      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:746:52)\n      at #resolve (node:internal/modules/esm/loader:679:17)\n      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:599:35)\n      at ModuleJob.syncLink (node:internal/modules/esm/module_job:162:33) {\n    code: 'ERR_MODULE_NOT_FOUND'\n  }\n\ntest at scripts/test-r54-workbench.mjs:51:1\n✖ actual primary button opens revise form; save is one revise POST with no start, and stale reads block handlers (0.075898ms)\n  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from /tmp/jarvis-r54-ui-yUytCl/page.mjs\n      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n      at packageResolve (node:internal/modules/esm/resolve:764:81)\n      at moduleResolve (node:internal/modules/esm/resolve:855:18)\n      at defaultResolve (node:internal/modules/esm/resolve:988:11)\n      at #cachedDefaultResolve (node:internal/modules/esm/loader:697:20)\n      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:714:38)\n      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:746:52)\n      at #resolve (node:internal/modules/esm/loader:679:17)\n      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:599:35)\n      at ModuleJob.syncLink (node:internal/modules/esm/module_job:162:33) {\n    code: 'ERR_MODULE_NOT_FOUND'\n  }\n\ntest at scripts/test-r54-workbench.mjs:57:1\n✖ execution SSE deduplicates identical statuses/new log ids and never exposes raw text or runs commands (0.069573ms)\n  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'react' imported from /tmp/jarvis-r54-ui-yUytCl/page.mjs\n      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n      at packageResolve (node:internal/modules/esm/resolve:764:81)\n      at moduleResolve (node:internal/modules/esm/resolve:855:18)\n      at defaultResolve (node:internal/modules/esm/resolve:988:11)\n      at #cachedDefaultResolve (node:internal/modules/esm/loader:697:20)\n      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:714:38)\n      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:746:52)\n      at #resolve (node:internal/modules/esm/loader:679:17)\n      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:599:35)\n      at ModuleJob.syncLink (node:internal/modules/esm/module_job:162:33) {\n    code: 'ERR_MODULE_NOT_FOUND'\n  }\n",
+  "privateOutput": "/home/superopen/All-Projects/MyJevis-r54-workbench/.r54-validation/326dbffb-bf26-431f-ae26-66137c7abdd9",
+  "automaticRetry": false
+}

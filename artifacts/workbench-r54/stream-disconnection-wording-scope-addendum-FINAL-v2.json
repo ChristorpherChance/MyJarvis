@@ -1,0 +1,27 @@
+{
+  "kind": "r54-stream-disconnection-document-wording-scope-correction",
+  "scope": "One sentence only; no application, event, state, test or other current document changes.",
+  "originalCanonicalMarkdown": {
+    "path": "artifacts/workbench-r54/R54维护接手说明-16f88f-original-before-wording-v2.md",
+    "bytes": 9286,
+    "sha256": "16f88f298a8e11cbfa2414a24f1558fd37c15ae31dfb4a43004669b74f00aad8"
+  },
+  "correctedCanonicalMarkdown": {
+    "path": "docs/版本记录/R54工作台维护与接手补充-20261018.md",
+    "bytes": 9379,
+    "sha256": "de6aecec7a1f3247fe2d4156534f449b40a7cabce66d361f84c27f64e3af6ac3"
+  },
+  "streamDisconnectedAloneBlocksAction": false,
+  "freshGETAndValidBindingAllowsExistingAction": true,
+  "readFailureOrAgeOver45SecondsBlocksExecution": true,
+  "oldSentence": "读取失败、断线或超过45秒的陈旧状态不能继续使执行按钮可用；点击时仍重新核对最后成功读取时间。",
+  "correctedSentence": "流断线会显示连接提示，并保留GET刷新兜底；只要GET数据新鲜且符合原绑定，仍可操作。读取失败或超过45秒的陈旧状态禁用执行按钮；点击时仍重新核对最后成功读取时间。",
+  "wholeByteLiteralInverseExact": true,
+  "historicalArtifactFinalPreserved": {
+    "path": "artifacts/workbench-r54/R54工作台维护与接手补充-FINAL.md",
+    "bytes": 9048,
+    "sha256": "fbe417c2de40c9e9c0ddcb95f335f8fd454fb8b928702b959303983d9b3110df"
+  },
+  "otherFiveHTMLAndThreeCurrentBlocksUnchanged": true,
+  "noRecordAppendLogRenderNetworkTestsGit": true
+}

@@ -1,0 +1,65 @@
+{
+  "kind": "r54-isolated-112-validation-and-build",
+  "operationId": "1d9ad628-f8d2-47a4-8f1c-07b9b0a88472",
+  "sourceCommit": "e9d9ad684c578b578cd76994f4b397b992b8d0a7",
+  "status": "failed",
+  "steps": [
+    {
+      "name": "before-head",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0016178280347958207,
+      "stdoutBytes": 41,
+      "stdoutSHA256": "b863099d0fb7eec63d6288f962d80c068a0f65ade71e79d7be5321c60a3d6cc1",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "before-clean",
+      "exitCode": 0,
+      "elapsedSeconds": 0.3232562920311466,
+      "stdoutBytes": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundle-verify",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0036500130081549287,
+      "stdoutBytes": 190,
+      "stdoutSHA256": "356f8e8f8b16479086def9917f7240c905199b7ac4a18fff0daf44a8e5b8480e",
+      "stderrBytes": 126,
+      "stderrSHA256": "8977b8bc0d905ffc0c2d70664fc047562f2d19c35b90261ff6cd3f35fe135c6c"
+    },
+    {
+      "name": "bundle-fetch",
+      "exitCode": 0,
+      "elapsedSeconds": 0.05812419601716101,
+      "stdoutBytes": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 169,
+      "stderrSHA256": "8b4d2d9cb0a12f1a2c398d811580ac547ac2ff447b1b0ab84c99adc1ca69f102"
+    },
+    {
+      "name": "fetch-head",
+      "exitCode": 0,
+      "elapsedSeconds": 0.0014159079873934388,
+      "stdoutBytes": 41,
+      "stdoutSHA256": "0f8b01acff5e757b1f8838435825535553e766c9bae0e1cde2226c08a45116cf",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "source-update",
+      "exitCode": 0,
+      "elapsedSeconds": 0.014183722087182105,
+      "stdoutBytes": 1439,
+      "stdoutSHA256": "8748b613c770bd67a592bcd0763b25c8eb49bd12d33b42a32d4415bb45d411ac",
+      "stderrBytes": 0,
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "error": "[Errno 13] Permission denied: 'node'",
+  "privateOutput": "/home/superopen/All-Projects/MyJevis-r54-workbench/.r54-validation/1d9ad628-f8d2-47a4-8f1c-07b9b0a88472",
+  "automaticRetry": false
+}

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="R54工作台实现、验证、发布、现场边界及常规开发Git同步。">
+  <meta name="jarvis-source-sha256" content="fbe417c2de40c9e9c0ddcb95f335f8fd454fb8b928702b959303983d9b3110df">
+  <title>R54 工作台维护与开发接手补充</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">R54维护与接手补充</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="R54%E5%B7%A5%E4%BD%9C%E5%8F%B0%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%8E%A5%E6%89%8B%E8%A1%A5%E5%85%85-FINAL.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 4 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1 从哪里接着开发</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2 最小设计与源码入口</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3 实际验证、失败保留与上线</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4 未完事项与最终封口</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">112开发 / 真实互动 / 分层验收</p>
+        <h1 id="document-title">R54 工作台维护与开发接手补充</h1>
+        <p class="subtitle">R54工作台实现、验证、发布、现场边界及常规开发Git同步。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>R54</strong><span>112正式版本</span></div><div class="stat"><strong>真实阶段</strong><span>不虚构百分比</span></div><div class="stat"><strong>112开发</strong><span>源码与数据隔离</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>R54让项目工作台直接呈现真实执行阶段、CC与贾维斯的近期互动，以及待安排、需处理和已结束的任务。本页覆盖贾维斯平台维护；软件工厂仍是独立受监管项目，没有为本次界面维护重新派发业务任务或调用供应商模型。</p>
+<p><strong>已发生切面：</strong> 2026-10-18 14:34:34.993 UTC（北京时间22:34:34.993）。112正式平台已为 <code>20261018-simple-workbench-r54</code>，发布、独立健康、限定桌面/手机及按钮现场核对通过；常规开发目录已同步并导入真实Git历史。本轮没有新发业务命令。最终Git发布/合并及最后文档快进同步尚待各自实际回执，本页不提前确认。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1 从哪里接着开发</h2>
+<p>常规开发使用112普通账号的 <code>/home/superopen/All-Projects/MyJevis</code>。本次独立工作副本为 <code>/home/superopen/All-Projects/MyJevis-r54-workbench</code>；正式release、数据和常规开发入口继续隔离。APP为 <code>bc4fcd21e3cec9a3cfec92f492ee85304b90ff16</code>，增加独立激活脚本后的源码main为 <code>f8ac8a5648c16e4164dff6ced2d30f96024299b6</code>。</p>
+<p><a href="daily-development-sync.json">常规开发同步回执</a>已核3158个跟踪文件、773项更新和26件旧版本私备份；真实Git对象与index已导入，跟踪工作树干净。原337条账本作为新历史的完整前缀保持，<code>.migration-original</code>、私有运行数据、依赖与未知未跟踪文件未删除。不是以release整树覆盖，也没有通过reset/clean/checkout清理活动目录。上述是当时核验，开工前仍须检查实际HEAD和dirty。最终文档提交后的常规目录快进同步仍待Root回执，不能把本次源码同步当未来文档也已同步。</p>
+<p>先读根部 <code>CLAUDE.md</code>、<code>AGENTS.md</code> 与当前建设档案，再用 <code>npm run dev -- --check</code> 检查配置和端口；需要开发时才启动 <code>npm run dev</code>。API/前端为127.0.0.1的43140/45173，数据为账号home下 <code>~/.local/share/jarvis-dev-112</code>，使用白名单环境。此次同步只执行check，未启动开发服务。Linux开发入口、代理和隔离规则已经纳入源码；不要把正式3140/3141、生产数据库或模型配置接入开发数据。详见<a href="../../docs/112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">112开发迁移使用说明</a>。同一需求只在选定工作副本推进，避免112与101并发覆盖。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2 最小设计与源码入口</h2>
+<p>界面使用真实阶段，不显示虚构百分比。任务queued但没有绑定run归“待安排”；真实run queued为“等待领取”，running为“正在执行”。失败、round-limit、等待处理的暂停归需处理。暂停尚无节点停止证明时显示等待确认，不冒节点已停；终态结果不能被旧过程日志覆盖。<code>achieved</code>须核对当前review与已签正常结果，不等于整个项目或独立验收完成。</p>
+<p>本人项目的 <code>GET /api/v1/projects/:id/workbench</code> 增加可选 <code>currentActivity</code>：项目/任务/run绑定、实际阶段、真实活动时间和最多12条有来源的互动，默认只显示最近3条。<code>updatedAt</code>取保存事件时间，不取GET现在时；<code>progress.percent</code>为null。旧接口缺少该字段时保兼容投影，不能拿无run的queued任务冒活跃。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>源码</th>
+<th>维护职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>apps/api/src/runtime/project-workbench-activity.ts</code></td>
+<td>纯阶段与互动投影、来源核对、任务分类</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/project-workbench-runtime.ts</code></td>
+<td>已有本人项目GET接线；修正historicalActive误报</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/execution-runtime.ts</code></td>
+<td>owner-bound单run最近80条日志只读查询，不改派发/claim</td>
+</tr>
+<tr>
+<td><code>apps/web/src/features/operations/ProjectWorkbenchPage.tsx</code></td>
+<td>首屏三块、最近互动、任务分组与最小修订目标表单</td>
+</tr>
+<tr>
+<td><code>apps/web/src/supervisor-workbench-stream.ts</code></td>
+<td>SSE去重、生命周期与只读刷新</td>
+</tr>
+<tr>
+<td><code>apps/api/test/project-workbench-activity-r54.test.ts</code>、<code>scripts/test-r54-workbench.mjs</code></td>
+<td>本次受影响定向验证</td>
+</tr>
+</tbody></table></div>
+<p>既有执行流 <code>/api/v1/execution/runs/:id/events</code> 只对真正绑定的queued/running run订阅，前端根据log ID和状态变化重新GET，不直接渲染SSE原text。主管会话流继续提供修订提醒；15秒读取是兜底。换项目/run、鉴权失效和旧响应必须隔离。读取失败、断线或超过45秒的陈旧状态不能继续使执行按钮可用；点击时仍重新核对最后成功读取时间。达标后的修订目标表单只保存，不自动start。</p>
+<p>日志沿已有本人有权读取和脱敏层：允许真实assistant文本、工具名与安全描述、贾维斯指令及判断理由；thinking、用户prompt、工具参数/argv/env和工具结果正文不进入时间线，未知结构不作正文兜底。本人界面的过程详情与公开档案边界不同；公开报告不复制原聊天、凭据或私有环境。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3 实际验证、失败保留与上线</h2>
+<p>112保存的API/loop组11通过、UI组4通过；开发入口check、API/Web类型与构建通过。不重复计入已过组。API覆盖owner和错run、无run queued/round-limit、日志白名单、终态与暂停、GET无派发副作用及SQLite顺序/80条/owner隔离；UI覆盖刷新、鉴权/陈旧数据与修订不自动开始。</p>
+<p>准备阶段PATH误指受保护Node在测试前拒绝（0tests）；随后UI测试加载器从/tmp找不到React，API11已通过。只改测试临时路径3处后，UI与构建通过；普通账号读取生产assets又被权限拒绝，保原失败。最终从已保存的普通R53构建资产取兼容件，132项旧资产逐H核同，未放宽生产权限。最终APP与前一次源审仅测试路径3处差异，产品逻辑未顺带改变。见<a href="final-source-independent-review.json">源码审核</a>、<a href="final-source-package-independent-verification.json">最终源包核验</a>及<a href="package-result.json">包结果</a>。</p>
+<p>交付包2327文件，ZIP SHA-256为 <code>f9eb4c09c06e6a1c2dc09889cdfd10b6ba062907ea7660c2ad4f4f0111eb0b97</code>，manifest为 <code>edb35ffb4bf1d0890fa46943e81718b2bf3aea9192dbb1a4c9f6b4fad65b3512</code>。全部载荷、源码对应与旧资产闭包独立核同；101节点五项输入未改，没有重新安装节点。</p>
+<p><a href="activation-outcome.json">真实激活</a>通过：完整快照与隔离恢复各4,607,605,238B、64文件59目录、10SQLite，manifest相同，配置权限保持，未回写live数据，也未触发回退。<a href="112-live-verification.json">独立健康与本人工作台读取</a>核正式R54和双服务active；G10/S79 achieved、enabled=false，原run42c4保持，真实任务分组为活跃0、待安排3、需处理17、已结束7，业务命令0。该切面没有真实运行中的CC，不能据此宣称已现场验证新的运行中流或所有停止路径。见<a href="post-activation-and-live-independent-saved-review.json">保存证据独审</a>。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4 未完事项与最终封口</h2>
+<p><a href="browser-visible-readback.json">现场浏览器回执</a>确认1280桌面当前焦点、最近真实互动和三组任务；主按钮打开并聚焦目标表单，“保存不开始”提示可见，表单可收起，执行中0筛选无伪任务，完成简报可展开。390×844手机documentWidth为384，无横向溢出，互动和任务筛选可见，随后已恢复视口。浏览器多动作工具60秒限时只影响自动化检查，未产生业务POST。当前是真实已结束/achieved状态；运行中流、鉴权、陈旧数据保护来自受控组，不冒新CC现场演练或完整产品验收。</p>
+<p>项目决定已保留选定→实施两版，版本2仅记录本轮实际实现与验证，<code>independentAcceptance=false</code>，工厂计划、事项和notes未改，见<a href="decision-implementation-readback.json">决定回执</a>。</p>
+<p><strong>后续独立留证：</strong> Git发布/合并和最后文档快进到112尚未在本cut完成，须各自真实回执。建设343仍是待追加输入，准备时账本342/head89a05b74；Root追加前重核真实next/head，通过原记录工具追加并生成日志。本地已生成本页与当前状态文档的同源HTML，没有调用建设记录append或日志render；实际记录执行以后续单独回执确认，不把准备说明误称最终未执行。</p>
+<p>R53有限闭环的32件原件、三标准与review207不重做。全工厂12＋5、客户产品、全局coverage28.2%旧失败与lines90/branches80门、其他infra/环境、完整产品及持续自治验收仍按原范围，不能从这次UI维护改写完成。十分钟跟进保持PAUSED；本轮未新增供应商模型或工厂run，内部编排与作者会话费用 <strong>unknown</strong>，不写零，费用只记录不设金额上限。参阅<a href="../../docs/%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95/R53%E7%9B%91%E7%AE%A1%E9%97%AD%E7%8E%AF%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%8E%A5%E6%89%8B%E8%A1%A5%E5%85%85-20261018.md">R53接手补充</a>。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="R54%E5%B7%A5%E4%BD%9C%E5%8F%B0%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%8E%A5%E6%89%8B%E8%A1%A5%E5%85%85-FINAL.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "kind": "r54-ui-test-external-react-loader-r2-correction",
+  "oldSource": {
+    "path": "artifacts/workbench-r54/test-loader-r2-correction/before-test-r54-workbench.mjs",
+    "bytes": 9536,
+    "sha256": "d230b63687f6785dd5084f172ae3f5a01a30fe3bd7d6076c631471ecb10a9496"
+  },
+  "newSource": {
+    "path": ".jarvis-dev/r54-ui-local/scripts/test-r54-workbench.mjs",
+    "bytes": 9569,
+    "sha256": "a56b624cbb71df049393de40fc56997207e3a0cdce097116e2080cebb65a9afb"
+  },
+  "forwardPatch": {
+    "path": "artifacts/workbench-r54/test-loader-r2-correction/forward.patch",
+    "bytes": 1412,
+    "sha256": "e4637b3508befec3fddb8cc9751e8c67ef85026721ffca79c997dc44078db2e1"
+  },
+  "inversePatch": {
+    "path": "artifacts/workbench-r54/test-loader-r2-correction/inverse.patch",
+    "bytes": 1412,
+    "sha256": "de11ec547c76e69bb48821d9416995be5bb6c907de90b66d24af47a61b9056d7"
+  },
+  "wholeInverseExact": true,
+  "changes": [
+    "Add mkdir import",
+    "Remove tmpdir import",
+    "Create repo .r54-tools parent and put mkdtemp child there; unchanged packages external can resolve repo node_modules"
+  ],
+  "syntaxCheckExitCode": 0,
+  "productSourceChanged": false,
+  "testCasesOrAssertionsChanged": false,
+  "applicationTestsRunHere": false,
+  "APIOrRemoteUsedHere": false,
+  "originalFailureReceipt": "artifacts/workbench-r54/validation-326dbffb-bf26-431f-ae26-66137c7abdd9.json",
+  "originalUIManifestPreserved": " .jarvis-dev/r54-ui-local/manifest.json"
+}

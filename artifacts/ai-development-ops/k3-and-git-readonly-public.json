@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "kind": "jarvis-112-k3-and-bounded-git-readonly-followup",
+  "at": "2026-10-18T14:08:18.234435+00:00",
+  "readOnly": true,
+  "remoteWrites": false,
+  "modelCalls": 0,
+  "serviceOperations": 0,
+  "businessDataQueries": 0,
+  "configurationValuesExcludedExceptModelLabelsAndEndpointOrigin": true,
+  "k3Provider": {
+    "matches": 1,
+    "providers": [
+      {
+        "name": "Kimi For Coding-699",
+        "current": false,
+        "modelLabels": {
+          "ANTHROPIC_MODEL": "k3[1M]",
+          "ANTHROPIC_DEFAULT_OPUS_MODEL": "k3[1M]",
+          "ANTHROPIC_DEFAULT_SONNET_MODEL": "k3[1M]",
+          "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-for-coding-highspeed"
+        },
+        "topLevelModel": null,
+        "baseURLOrigin": "https://api.kimi.com",
+        "baseURLPath": "/coding/",
+        "credentialAndHookValuesExcluded": true
+      }
+    ],
+    "readMode": "immutable-read-only"
+  },
+  "existingSafetyAndHooksStructure": {
+    "hooksPresent": false,
+    "hookEventCount": 0,
+    "stopHookPresent": false,
+    "permissionsPresent": false,
+    "permissionDefaultMode": null,
+    "dangerouslySkipPermissionsKeyPresent": false,
+    "skipDangerousModePermissionPromptKeyPresent": true,
+    "disableAllHooksKeyPresent": false,
+    "statusLinePresent": false,
+    "rawValuesExcluded": true
+  },
+  "boundedGitSearch": {
+    "roots": [
+      "/home/superopen/All-Projects",
+      "/home/superopen/All-Projects/MyJevis/.jarvis-dev",
+      "/home/superopen/.jarvis-dev",
+      "/var/lib/jarvis-development/112",
+      "/opt/jarvis-worktrees"
+    ],
+    "maxChildDirectoryDepth": 2,
+    "directoriesVisited": 10,
+    "directoryLimit": 1500,
+    "excludedDependenciesArchivesTranscriptAndRuntimeDirectories": true,
+    "jarvisRepositories": [
+      {
+        "path": "/home/superopen/All-Projects/MyJevis-r54-workbench",
+        "gitEntryType": "file",
+        "headCommit": "e9d9ad684c578b578cd76994f4b397b992b8d0a7"
+      },
+      {
+        "path": "/home/superopen/All-Projects/MyJevis-r53-closed-loop",
+        "gitEntryType": "directory",
+        "headCommit": "95af1062ee61db6323162f2271f8092ba178a71b"
+      }
+    ],
+    "otherProjectRepositoriesCount": 0,
+    "wholeFilesystemSearchPerformed": false,
+    "gitCommandsReadOnlyOptionalLocksDisabled": true
+  }
+}

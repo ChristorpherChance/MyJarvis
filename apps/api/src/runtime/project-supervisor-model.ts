@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import type { PiRunInput, PiService } from '../pi.js';
 import {assertPublicSupervisorContent} from './public-privacy-guard.js';
+import {boundedSupervisorModelInput} from './supervisor-model-input.js';
 import {PROJECT_SUPERVISOR_CONTRACT} from './project-supervisor-contract.js';
 
 const MAX_RESPONSE_BYTES = 16_000;
@@ -133,6 +134,7 @@ export function createProjectSupervisorModel(pi: PiService): (input: any) => Pro
   return async (input: any): Promise<any> => {
     const health = pi.health('project-supervisor');
     if (!health.configured) throw error(NOT_CONFIGURED);
+    input=boundedSupervisorModelInput(input).input;
     if (utf8Bytes(JSON.stringify(input)) > 30_000) throw error('MODEL_CONTEXT_INCOMPLETE');
     const usageReferences:{usageId:string;runId:string;model:string|null}[]=[];
     const runInput: PiRunInput = {

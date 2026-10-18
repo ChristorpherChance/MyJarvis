@@ -23,8 +23,8 @@ export function selectSupervisorExperienceContext(records:any[],binding:any){
   else if(m.projectId!==binding.projectId)reason='project-mismatch';
   else if(m.unknownConditions?.length||!['machineId','executor','version'].every(k=>conditions[k]&&binding[k]&&conditions[k]===binding[k]))reason=m.unknownConditions?.length?'unknown-condition':'condition-mismatch';
   else if(r.verified!==true||r.verifiedContent!==r.content||r.verifiedConditions!==r.conditions||!r.evidence?.trim())reason='unverified';
-  if(reason){excluded.push({experienceId:r.id,revision:r.revision,reason,status:r.status,verified:r.verified===true,conditions,content:String(r.content??'').slice(0,2000)});continue;}
-  selected.push({experienceId:r.id,revision:r.revision,hash:supervisorHash(r),status:r.status,verified:true,conditions,content:String(r.content??'').slice(0,2000),use:'qualified-reference'});
+  if(reason){excluded.push({experienceId:r.id,revision:r.revision,reason,hash:supervisorHash(r),status:r.status,verified:r.verified===true,conditions,sourceConditions:r.conditions,authorization:m,content:String(r.content??'')});continue;}
+  selected.push({experienceId:r.id,revision:r.revision,hash:supervisorHash(r),status:r.status,verified:true,conditions,content:String(r.content??''),sourceConditions:r.conditions,verifiedConditions:r.verifiedConditions,evidence:r.evidence,authorization:m,use:'qualified-reference'});
  }
  selected.sort((a,b)=>String(a.experienceId).localeCompare(String(b.experienceId)));
  excluded.sort((a,b)=>String(a.experienceId).localeCompare(String(b.experienceId)));

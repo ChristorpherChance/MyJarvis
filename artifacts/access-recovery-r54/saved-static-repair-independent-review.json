@@ -1,0 +1,133 @@
+{
+  "kind": "r55-static-compatibility-saved-evidence-independent-review",
+  "at": "2026-10-18T15:10:58.367Z",
+  "scope": "LOCAL saved public receipts only; no remote/API/app/test/service/model/construction tool execution",
+  "passed": true,
+  "operationId": "1d3afc54-11cd-4b00-a873-d2b2f40c5afa",
+  "sourceRelease": "20261018-simple-workbench-r54",
+  "currentRelease": "20261018-ai-development-ops-r55",
+  "assetReconciliation": {
+    "verifiedAssets": 139,
+    "sameUntouched": 20,
+    "created": 119,
+    "createdBytes": 16010280,
+    "allSourceBytes": 16949379,
+    "createdSetMatchesSpec": true,
+    "all139RowsMatchSpec": true,
+    "filesOverwritten": 0
+  },
+  "manifestReconciliation": {
+    "baseFiles": 2231,
+    "baseSHA256": "46c8412dcf8f5e255e8feba84f720e64e8278f6ef027221fea17636a0b8a23c8",
+    "basePreservedPerIndependentReadback": true,
+    "supplementalFiles": 119,
+    "totalQualifiedPayloadFiles": 2350,
+    "originalManifestCoversSupplement": false
+  },
+  "httpReconciliation": {
+    "checkedAssets": [
+      {
+        "name": "index-BK-LH72-.js",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 2700,
+        "sha256": "0a50792ec8c8ee9b104494500f0b6739e4f2bfe6f520ba5a2bbe41552fbc8e69"
+      },
+      {
+        "name": "OperationsPage-Dfcc5PJY.js",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 411905,
+        "sha256": "9b325a19fcfe9c292912bd825a36fec0344178d761c55e1290ff224ddeef0775"
+      },
+      {
+        "name": "DemoApp-26AGksUP.js",
+        "status": 200,
+        "contentType": "application/javascript; charset=utf-8",
+        "bytes": 186426,
+        "sha256": "a6d72a437413776a2cc3a14c3fa978e83e4e1cbd4059bb0ed0830bbbd5553482"
+      },
+      {
+        "name": "OperationsPage-BN3Pys14.css",
+        "status": 200,
+        "contentType": "text/css; charset=utf-8",
+        "bytes": 57471,
+        "sha256": "409afcb23f51782dcda1cf205f158f1724dd5b30ae3d228370b3d264d739d5de"
+      }
+    ],
+    "allFourExact": true,
+    "all139PublicHTTPRequestsClaimed": false
+  },
+  "serviceReconciliation": {
+    "platformPID": "626441",
+    "observerPID": "626443",
+    "bothNRestarts": 0,
+    "unchangedAcrossRepair": true,
+    "repairServiceActions": 0,
+    "priorReleaseTransition": {
+      "platformStoppedAt": "2026-10-18T14:50:51.516082+00:00",
+      "platformStartedAt": "2026-10-18T14:55:30.849904+00:00",
+      "elapsedSeconds": 279.333,
+      "scope": "logged service stopped-to-started interval, not end-to-end user outage measurement"
+    }
+  },
+  "knownFailure": {
+    "oldHashedJSMissingBeforeRepair": true,
+    "missingRouteReturnedCurrentHTML": true,
+    "causesAllBrowserConnectionErrors": false
+  },
+  "remaining": {
+    "userBrowserRecovery": "unknown",
+    "permanentPublisherAssetRetention": "await actual source and targeted validation",
+    "all139PublicURLFetches": "not performed"
+  },
+  "cost": {
+    "repairModelCalls": 0,
+    "newReleaseOrDeployment": 0,
+    "internalAgentCostUSD": null,
+    "invoiceUSD": null
+  },
+  "observedCanonical": {
+    "records": 347,
+    "head": "e80517b4e297434c8aae659ce5e675d6edb6983f098abc0d0ea8ac693ebf7ab8",
+    "ledgerSHA256": "bb85156beee96409362d9721ccf299a750c26c140d62e02187ca626878f0a97f",
+    "recordNumberReserved": false
+  },
+  "evidence": [
+    {
+      "path": "artifacts/access-recovery-r54/static-compatibility-spec.json",
+      "bytes": 27147,
+      "sha256": "07a662bd07d181ee2ee158467e942a2dc3900af51cb9a975fa8cd639d1c0aa21"
+    },
+    {
+      "path": "artifacts/access-recovery-r54/static-compatibility-preflight.json",
+      "bytes": 26462,
+      "sha256": "6f56ceb5e46b04f740d2b603764dde055408677c7862f7113aa4e4f1f0f1c622"
+    },
+    {
+      "path": "artifacts/access-recovery-r54/static-compatibility-apply.json",
+      "bytes": 30095,
+      "sha256": "aea9c060ce8411b86f206d255fb4ca625b028315a694ad8f325ed87aee42e765"
+    },
+    {
+      "path": "artifacts/access-recovery-r54/restored-assets-independent-readback.json",
+      "bytes": 2111,
+      "sha256": "bbe4b80f7820a3bd65c64249ef7ae6f8d400f2033200949c1954cf46367da189"
+    },
+    {
+      "path": "artifacts/access-recovery-r54/initial-readback.json",
+      "bytes": 2186,
+      "sha256": "fab10ab629d0acccfc309e92e1eee9d9689a19cd74c7adb010db384903f91561"
+    },
+    {
+      "path": "artifacts/access-recovery-r54/asset-readback.json",
+      "bytes": 1759,
+      "sha256": "e1e390829054a4e1f81fe416a6ffb669ae5bb86b2e424ce1d575a3e86f33bdf3"
+    },
+    {
+      "path": "artifacts/access-recovery-r54/service-transition-readback.json",
+      "bytes": 938,
+      "sha256": "3c2bc7cc82463cbcd150d4e933d49e30a8dfedbbce4ccc28d88ba627eaa36b69"
+    }
+  ]
+}

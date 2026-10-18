@@ -1,0 +1,45 @@
+{
+  "kind": "ai-development-linux-validation",
+  "at": "2026-10-18T14:34:32.193405+00:00",
+  "complete": true,
+  "target": "/home/superopen/All-Projects/MyJevis-ai-development-ops",
+  "dependencyReuse": "/home/superopen/All-Projects/MyJevis-r53-closed-loop/node_modules",
+  "samePackageLock": true,
+  "checks": [
+    {
+      "name": "provision",
+      "exitCode": 0,
+      "passed": true,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "40f360ac3e0dffd1e742682de52805010ef7f3cd68ccf9e6267c676781b47e6b",
+      "testSummary": [
+        "Ran 9 tests in 0.031s",
+        "OK"
+      ],
+      "failureTail": null
+    },
+    {
+      "name": "node-dispatcher",
+      "exitCode": 0,
+      "passed": true,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "6a5161b3cf086718f005a0ea6d682568d0515d223388a0eecf7c27866f37699d",
+      "testSummary": [
+        "Ran 11 tests in 0.008s",
+        "OK"
+      ],
+      "failureTail": null
+    },
+    {
+      "name": "controller",
+      "exitCode": 0,
+      "passed": true,
+      "stdoutSHA256": "df3c9fec1f86257b8a756f041086e7580cd0c04c13d173b2da9a2272a26b5b66",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testSummary": [],
+      "failureTail": null
+    }
+  ],
+  "serviceOperations": 0,
+  "modelCalls": 0
+}

@@ -110,6 +110,14 @@ except BlockingIOError:raise RuntimeError('ACTIVATION_IN_PROGRESS')
 m=manifest_verify();need((base/'.capture-install.json').is_file(),'INSTALL_REQUIRED')
 config_path=Path('/etc/jarvis/node.json');s=regular(config_path);old=config_path.read_bytes();config=json.loads(old);prior=Path('/opt/jarvis/current').resolve()
 need(config.get('release')==p['expectedCurrent'] and prior.name==p['expectedCurrent'],'CURRENT_RELEASE_CHANGED');need(config.get('role')==('primary' if p['node']=='112' else 'standby'),'NODE_ROLE_CHANGED')
+# Inspect all actual JS/CSS files, including add-only emergency overlays not in
+# the old manifest. Fail before control creation, service stop or snapshot.
+asset_guard=base/'scripts/release-web-assets.py';regular(asset_guard)
+asset_check=subprocess.run(['python3','-I',str(asset_guard),'verify','--previous-root',str(prior),'--candidate-root',str(base)],capture_output=True,text=True,timeout=60)
+need(asset_check.returncode==0,'CURRENT_WEB_ASSET_COMPATIBILITY_FAILED')
+try:asset_receipt=json.loads(asset_check.stdout)
+except Exception:raise RuntimeError('CURRENT_WEB_ASSET_COMPATIBILITY_RESPONSE')
+need(asset_receipt.get('verified') is True and asset_receipt.get('previousRelease')==p['expectedCurrent'] and asset_receipt.get('release')==release,'CURRENT_WEB_ASSET_COMPATIBILITY_BINDING')
 business_state=subprocess.run(['systemctl','is-active','jarvis-platform.service'],capture_output=True,text=True,timeout=8).stdout.strip()
 need(business_state==('active' if p['node']=='112' else 'inactive'),'BUSINESS_SERVICE_STATE_CHANGED')
 if p['node']=='112':

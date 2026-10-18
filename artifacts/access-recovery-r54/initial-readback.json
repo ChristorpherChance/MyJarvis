@@ -1,0 +1,80 @@
+{
+  "operationId": "e112555b-33de-469a-99c8-5421cbd81518",
+  "at": "2026-10-18T14:56:21.267Z",
+  "requests": [
+    {
+      "id": "public-index",
+      "at": "2026-10-18T14:56:20.225Z",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 519,
+      "sha256": "2a704704bd4433c1149ad827cbeea72acc77b49cc56c62170c8c07c22583d250",
+      "health": null,
+      "assets": [
+        "/assets/index-CWFuS72E.js",
+        "/assets/client-OI5hagxP.js",
+        "/assets/index-C4A9K3Js.css"
+      ]
+    },
+    {
+      "id": "public-health",
+      "at": "2026-10-18T14:56:20.573Z",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 117,
+      "sha256": "64e32f0495d54936c996c7cba73ca97d4d4835ee2719b8431429cfdb3f9efd06",
+      "health": {
+        "status": "ok",
+        "build": "20261018-ai-development-ops-r55",
+        "role": "primary"
+      }
+    },
+    {
+      "id": "112-health",
+      "at": "2026-10-18T14:56:20.628Z",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 117,
+      "sha256": "64e32f0495d54936c996c7cba73ca97d4d4835ee2719b8431429cfdb3f9efd06",
+      "health": {
+        "status": "ok",
+        "build": "20261018-ai-development-ops-r55",
+        "role": "primary"
+      }
+    }
+  ],
+  "server": {
+    "current": "/opt/jarvis/releases/20261018-ai-development-ops-r55",
+    "units": [
+      {
+        "unit": "jarvis-platform.service",
+        "properties": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "626441",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainStatus": "0"
+        }
+      },
+      {
+        "unit": "jarvis-observer.service",
+        "properties": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "626443",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainStatus": "0"
+        }
+      }
+    ],
+    "load": [
+      "1.40",
+      "1.78",
+      "1.42"
+    ]
+  },
+  "privateEvidenceDirectory": ".jarvis-dev/maintenance/access-recovery-e112555b-33de-469a-99c8-5421cbd81518",
+  "productionActions": 0
+}

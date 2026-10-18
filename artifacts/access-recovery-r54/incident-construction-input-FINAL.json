@@ -1,0 +1,80 @@
+{
+  "id": "JARVIS-20261018-R55-ACCESS-STATIC-COMPATIBILITY-INCIDENT",
+  "kind": "incident",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-18T15:20:15.835Z",
+  "title": "R55旧页面119件资源补齐，发布保留门独审通过；用户连接仍待确认",
+  "objective": "恢复已打开R54页面所需的已验静态资源，同时保留R55当前版本、清单、配置和运行服务，并修补后续发布的资产继承缺口。",
+  "changes": [
+    "在R55当前assets目录仅新增R54已验缺失119件、16010280字节；20件已有同H资产保持，139件逐项核同。",
+    "R55基础manifest2231件逐H保持；新增119件以独立补层留证，合计2350件，不把基础manifest冒作增量全清单。",
+    "本次补件无覆盖、无应用源码/API/数据库变更、无服务重启、无新版本发布。",
+    "独立副本完成6件publisher/helper/tests/文档：显式上一版ZIP/H继承JS/CSS、异H拒绝、最终并集限额和停服前实际current资产子集门；5组通过、非作者源码审查通过。"
+  ],
+  "decisions": [
+    "选择已验旧资产add-only恢复：保当前R55和现有文件，异H碰撞拒绝；不为恢复旧页回退当前版本或重启服务。",
+    "永久发布门显式接收固定上一版ZIP；首次修复须同时纳入R55与R54已验包，保留全部纳管JS/CSS并列入新manifest。切换前还核实际current磁盘资产（包括未进基础manifest的补层），在停服前拒绝遗漏；不继承旧index、SW或offline清单。",
+    "HTTP资源恢复、服务健康和用户实际浏览器连接分开确认，未把四资源HTTP通过当作用户连接问题已解决。"
+  ],
+  "facts": [
+    "此前R55发布日志显示平台14:50:51.516Z停止至14:55:30.850Z启动，约279.333秒；这是服务日志窗口，不是用户端完整故障时长。",
+    "14:56Z公网首页和health、112health均200且R55/primary；两服务active，但不能据此否定用户浏览器当时连接错误。",
+    "14:58Z旧index-BK-LH72-.js及OperationsPage-Dfcc5PJY.js返回200 text/html、519字节当前index；当前R55入口资源MIME和H正常，旧hash资源缺件已证实。",
+    "15:07Z唯一apply成功新增119件；15:08Z独立读取4个旧JS/CSS均200且MIME、H、size与R54已验原件一致。",
+    "平台PID626441和observer PID626443、NRestarts0在本次补件前后保持；原manifest及当前index保持。",
+    "本次补件与核验新增模型调用0、新发布0；内部编排及作者会话金额、供应商账单未知，费用只记录，不将未知记作零费用。",
+    "永久门6件与author handoff逐项核同，5个新定向组最终5通过/0失败/0跳过；非作者最终source review accepted。代码提交5ead335ffe9d3790b3db5adc06470e040a79684e已推送PR11，当前cut尚未合并或同步112。",
+    "15:14Z网关nginx/frps active、loopback HTTPS200，TLS1.2/1.3客户端health均200；这是有限路径观测，不能证明用户浏览器连接已恢复。",
+    "用户仍回复无法访问；新标签页和具体错误码尚未反馈，端到端acceptance保持pending，不能称事故全部解决。",
+    "未构建或发布R56；旧指纹固定的历史sidecar未自动改写或继承新主工具门，未来复用须显式取得等效资格。",
+    "建设项目重要决定aeae310a-c500-4288-812b-19d17f129d35保留selected→implemented两版，版本2仅限补件和发布门；independentAcceptance=false，工厂plan/items及notes未改。"
+  ],
+  "verification": [
+    "已保存preflight与apply同operation/spec绑定一致；created集合精确等于spec119缺件，apply139项H/size/原状态逐项核同。",
+    "独立公开读取的4个旧资源逐项匹配spec；R55基础2231件逐H全保持，新增119件明确单独记录。",
+    "原错误CLI pin在读spec、创建输出及远端执行前被拒，随后使用真实pin；首拒不属于生产改动。",
+    "LOCAL只读对账6个候选文件和最终/历史日志H、size；保存最终5组真实日志，未重跑任何测试。普通用户临时fixture显式owner_uid=None，不冒Linux root所有权现场验收。",
+    "首轮Windows path stat与fd stat的ctime语义差异产生4失败+1error，原日志保留；修正后与最终加并集边界反例的5组日志均保留，不累计成更多唯一测试。",
+    "Root对公网网关、证书匹配及loopback HTTPS、TLS1.2/1.3作有限只读排查，均200；非作者只核本地保存原件，没有新远端/API/服务操作。"
+  ],
+  "pending": [
+    "用户浏览器仍反馈不可访问；新标签页/具体错误码结果未回，需继续按真实用户链路定位，不能以资源HTTP通过替代。",
+    "PR11的真实合并与112源码同步须后续各自回执，不倒填当前cut。未构建或发布R56；将来实际包仍须包括R55和R54固定输入并通过新门。",
+    "历史指纹固定sidecar保持原件；新主工具准入门不会自动覆盖旧sidecar，未来使用须显式核等效资产子集门。",
+    "完整软件工厂/客户产品与持续自治验收仍按原记录边界；本次访问事故修复不扩大产品完成结论。"
+  ],
+  "lessons": [
+    "新工作副本只保留当前dist并不能继承上一正式版本的immutable资源；必须以固定上一版包和清单显式求并集并核同名H。",
+    "非API缺资源fallback200 HTML会掩盖JS缺失；恢复核验必须同时查MIME、size与H，HTTP200本身不足。",
+    "应预告正式切换存在停服窗口；发布可用性与快照/恢复耗时分别记录，不拿服务active冒作浏览器已恢复。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "partial",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/access-recovery-r54/static-compatibility-spec.json",
+    "artifacts/access-recovery-r54/static-compatibility-preflight.json",
+    "artifacts/access-recovery-r54/static-compatibility-apply.json",
+    "artifacts/access-recovery-r54/restored-assets-independent-readback.json",
+    "artifacts/access-recovery-r54/initial-readback.json",
+    "artifacts/access-recovery-r54/asset-readback.json",
+    "artifacts/access-recovery-r54/service-transition-readback.json",
+    "artifacts/access-recovery-r54/saved-static-repair-independent-review.json",
+    "artifacts/ai-development-ops/release-inspect-public.json",
+    "artifacts/ai-development-ops/package-review-public.json",
+    "artifacts/static-assets-r55/source-handoff-FINAL.json",
+    "artifacts/static-assets-r55/targeted-final.stdout.txt",
+    "artifacts/static-assets-r55/targeted-final.stderr.txt",
+    "artifacts/static-assets-r55/targeted-first.stdout.txt",
+    "artifacts/static-assets-r55/targeted-first.stderr.txt",
+    "artifacts/static-assets-r55/targeted-after-windows-stat-fix.stderr.txt",
+    "artifacts/static-assets-r55/targeted-final-subset.stderr.txt",
+    "artifacts/access-recovery-r54/gateway-tls-readback.json",
+    "artifacts/static-assets-r55/independent-source-review-FINAL.json",
+    "artifacts/access-recovery-r54/decision-readback.json"
+  ]
+}

@@ -123,6 +123,10 @@ class Operation:
         syncdir(parent)
         self.budget, self.runner = budget or Budget(), runner or ChildRunner()
         self.first, self.unended, self.stopped = None, False, False
+        self.operation_id, self.pins = operation_id, pins
+        self.binding = {'operationId': operation_id, 'node': pins.get('node'), 'release': pins.get('release'), 'prior': pins.get('expectedCurrent'), 'sourceCommit': pins.get('sourceCommit'), 'archiveSHA256': pins.get('archiveSHA256'), 'manifestSHA256': pins.get('manifestSHA256'), 'installSHA256': pins.get('installSHA256'), 'inputSHA256': None, 'selfSHA256': digest(Path(__file__)), 'recoverySHA256': None}
+        self.observed = {}
+        self.snapshot, self.restore, self.health, self.rollback_health = None, None, None, None
         wx(self.control / 'operation.json', {'operationId': operation_id, 'pins': pins})
 
     def record_failure(self, phase, code, details=None):
@@ -132,7 +136,7 @@ class Operation:
             wx(self.control / 'first-error.json', value)
         return value
 
-    def phase(self, name, action, cap=10, tail=0, rollback=False):
+    def phase(self, name, action, cap=10, tail=0, rollback=False, observation=False):
         start = self.budget.clock()
         try:
             timeout = self.budget.timeout(cap, tail, rollback)
@@ -150,10 +154,11 @@ class Operation:
             code = e.code if isinstance(e, Fault) else 'PHASE_EXCEPTION'
             # Exception text is private; public records never interpolate it.
             wx(self.control / (name + '-exception.txt'), str(e).encode('utf-8', errors='replace'))
-            self.record_failure(name, code)
+            if not observation or code not in ('CHILD_EXIT', 'CHILD_TIMEOUT'):
+                self.record_failure(name, code)
             raise Fault(code, name) from None
 
-    def child(self, name, argv, cap, tail=0, rollback=False):
+    def child(self, name, argv, cap, tail=0, rollback=False, observation=False):
         def run(timeout):
             paths = [self.control / (name + suffix) for suffix in ('.stdout', '.stderr')]
             streams = []
@@ -176,13 +181,45 @@ class Operation:
                 wx(self.control / (name + '-child.json'), record)
                 if self.unended or value['timeout'] or value['exitCode'] != 0:
                     code = 'CHILD_NOT_ENDED' if self.unended else 'CHILD_TIMEOUT' if value['timeout'] else 'CHILD_EXIT'
-                    self.record_failure(name, code, record)
+                    if not observation or code not in ('CHILD_EXIT', 'CHILD_TIMEOUT'):
+                        self.record_failure(name, code, record)
                     raise Fault(code)
                 return paths[0]
             finally:
                 for stream in streams:
                     stream.close()
-        return self.phase(name, run, cap, tail, rollback)
+        return self.phase(name, run, cap, tail, rollback, observation)
+
+    def readiness(self, name, release, rollback=False, sleep=time.sleep):
+        # Twenty observations, never a new operation or an independent time window.
+        for attempt in range(20):
+            probe = name + '-probe-' + str(attempt + 1)
+            try:
+                path = self.child(probe, ['python3', '-I', '-c', HEALTH, release], 25, rollback=rollback, observation=True)
+                value = json.loads(path.read_bytes())
+                need(value == {'healthy': True}, 'HEALTH_RESPONSE_INVALID')
+                return {'release': release, 'healthy': True, 'probe': probe, 'response': {'bytes': path.stat().st_size, 'sha256': digest(path)}}
+            except Fault as e:
+                if e.code not in ('CHILD_EXIT', 'CHILD_TIMEOUT') or self.unended:
+                    self.record_failure(probe, e.code)
+                    raise
+                if attempt == 19:
+                    self.record_failure(probe, 'READINESS_EXHAUSTED', {'lastProbe': json.loads((self.control / (probe + '-child.json')).read_bytes())})
+                    raise Fault('READINESS_EXHAUSTED', probe) from None
+                # Budget.timeout also reserves this operation's own child cleanup.
+                self.phase(name + '-wait-' + str(attempt + 1), lambda _timeout: sleep(1), 1, rollback=rollback)
+        raise Fault('READINESS_EXHAUSTED', name)
+
+    def finalize(self, ok, rollback):
+        # All paths here are our exclusive private files; public output contains hashes,
+        # fixed identity fields and safe parsed responses, never raw output/configuration.
+        logs = []
+        for path in sorted(self.control.iterdir()):
+            if path.is_file() and not path.is_symlink():
+                logs.append({'path': path.name, 'bytes': path.stat().st_size, 'sha256': digest(path)})
+        value = {'ok': ok, **self.binding, 'observedBindings': self.observed, 'snapshot': self.snapshot, 'restore': self.restore, 'health': self.health, 'firstError': self.first, 'rollback': {**rollback, 'health': self.rollback_health}, 'logs': logs, 'liveDataRestored': False}
+        wx(self.control / ('activation.json' if ok else 'activation-failed.json'), value)
+        return value
 
     def rollback(self, action):
         if self.unended:
@@ -193,6 +230,7 @@ class Operation:
                 result = {'attempted': True, 'ok': True}
             except Exception as e:
                 result = {'attempted': True, 'ok': False, 'classification': e.code if isinstance(e, Fault) else 'ROLLBACK_EXCEPTION'}
+        result['health'] = self.rollback_health
         wx(self.control / 'rollback.json', result)
         return result
 
@@ -256,7 +294,19 @@ def config_write(path, data, mode, operation_id):
     syncdir(path.parent)
 
 
-def activate(pins, operation_id):
+def recovery_summary(value):
+    fields = ('status', 'operation', 'release', 'scope', 'files', 'directories', 'bytes', 'manifestSha256', 'sqliteDatabasesChecked', 'sqliteIntegrity', 'completeTreeVerified', 'liveDirectoryModified', 'automaticRollback')
+    result = {}
+    for key in fields:
+        item = value.get(key)
+        if isinstance(item, bool) or isinstance(item, int) and item >= 0:
+            result[key] = item
+        elif isinstance(item, str) and 0 < len(item) <= 80 and all(c in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in item):
+            result[key] = item
+    return result
+
+
+def activate(pins, operation_id, input_sha256):
     need(os.geteuid() == 0, 'ROOT_REQUIRED')
     need(set(pins) == {'node', 'release', 'expectedCurrent', 'sourceCommit', 'archiveSHA256', 'manifestSHA256', 'installSHA256', 'configSHA256', 'managedPath', 'recoveryPath'}, 'INPUT_KEYS')
     need(pins['node'] == '112' and pins['release'] == RELEASE and pins['expectedCurrent'] == EXPECTED and pins['sourceCommit'] == APP and pins['archiveSHA256'] == ZIP_HASH, 'INPUT_BINDING')
@@ -270,22 +320,28 @@ def activate(pins, operation_id):
         need(stat.S_ISREG(s.st_mode) and s.st_uid == 0 and s.st_nlink == 1 and stat.S_IMODE(s.st_mode) == 0o600, 'UNSAFE_LOCK')
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
         op = Operation(parent, operation_id, pins)
+        op.binding['inputSHA256'] = input_sha256
         base = Path('/opt/jarvis/releases') / RELEASE
         config_path = Path('/etc/jarvis/node.json')
         prior = Path('/opt/jarvis/releases') / EXPECTED
-        safe(prior, directory=True)
-        safe(config_path)
-        old, mode = config_path.read_bytes(), stat.S_IMODE(config_path.stat().st_mode)
-        need(hashlib.sha256(old).hexdigest() == pins['configSHA256'], 'CONFIG_PIN')
-        config = json.loads(old)
-        need(config['release'] == EXPECTED and config['role'] == 'primary' and Path('/opt/jarvis/current').resolve() == prior, 'CURRENT_BINDING')
-        wx(op.control / 'node-before.json', old)
-        wx(op.control / 'previous-release.txt', str(prior).encode())
         try:
+            safe(prior, directory=True)
+            safe(config_path)
+            old, mode = config_path.read_bytes(), stat.S_IMODE(config_path.stat().st_mode)
+            need(hashlib.sha256(old).hexdigest() == pins['configSHA256'], 'CONFIG_PIN')
+            config = json.loads(old)
+            need(config['release'] == EXPECTED and config['role'] == 'primary' and Path('/opt/jarvis/current').resolve() == prior, 'CURRENT_BINDING')
+            op.observed.update(node='112', release=config['release'], prior=Path('/opt/jarvis/current').resolve().name, configSHA256=hashlib.sha256(old).hexdigest())
+            wx(op.control / 'node-before.json', old)
+            wx(op.control / 'previous-release.txt', str(prior).encode())
             managed, recovery = Path(pins['managedPath']), Path(pins['recoveryPath'])
             for path, expected in [(managed, MANAGED_HASH), (recovery, RECOVERY_HASH)]:
                 safe(path)
-                need(digest(path) == expected, 'TOOL_PIN')
+                actual = digest(path)
+                op.observed['managedSHA256' if path == managed else 'recoverySHA256'] = actual
+                if path == recovery:
+                    op.binding['recoverySHA256'] = actual
+                need(actual == expected, 'TOOL_PIN')
             # Reuse the original complete manifest verifier, extracted as data, not its CLI.
             tree = ast.parse(managed.read_text())
             common = next(n.value.value for n in tree.body if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'common' for t in n.targets))
@@ -294,11 +350,17 @@ def activate(pins, operation_id):
             op.child('manifest-verify', ['python3', '-I', '-c', verify], 40, 130)
             for name, key in [('release-manifest.json', 'manifestSHA256'), ('.capture-install.json', 'installSHA256')]:
                 safe(base / name)
-                need(digest(base / name) == pins[key], 'CANDIDATE_PIN')
+                actual = digest(base / name)
+                op.observed[key] = actual
+                need(actual == pins[key], 'CANDIDATE_PIN')
             manifest = json.loads((base / 'release-manifest.json').read_bytes())
+            source = manifest.get('sourceCommit')
+            op.observed['sourceCommit'] = source if isinstance(source, str) and len(source) == 40 and all(c in '0123456789abcdef' for c in source) else None
             need(manifest['sourceCommit'] == APP and manifest['archiveVersion'] == RELEASE and manifest['runtimeBuild'] == RELEASE, 'SOURCE_PIN')
             safe(base / '.managed-release.sha256')
-            need((base / '.managed-release.sha256').read_text().strip() == ZIP_HASH, 'ARCHIVE_PIN')
+            archive_hash = (base / '.managed-release.sha256').read_text().strip()
+            op.observed['archiveSHA256'] = archive_hash if len(archive_hash) == 64 and all(c in '0123456789abcdef' for c in archive_hash) else None
+            need(op.observed['archiveSHA256'] == ZIP_HASH, 'ARCHIVE_PIN')
             receipt = json.loads((base / '.capture-install.json').read_bytes())
             need(receipt.get('node') == '112' and receipt.get('release') == RELEASE and receipt.get('installed') is True and receipt.get('lifecycleScriptsExecuted') is False and receipt.get('manifestStillMatches') is True and receipt.get('businessServiceChanged') is False and receipt.get('lockfileSha256') == digest(base / 'package-lock.json'), 'INSTALL_RECEIPT')
             op.child('old-health', ['python3', '-I', '-c', HEALTH, EXPECTED], 25, 110)
@@ -313,10 +375,12 @@ def activate(pins, operation_id):
             snapshot = op.child('snapshot', ['python3', '-I', str(recovery), 'snapshot', '--source', '/var/lib/jarvis/data', '--snapshot', str(op.control / 'data-snapshot'), '--release', RELEASE, '--scope', 'primary'], 300, 100)
             snap = json.loads(snapshot.read_bytes())
             need(snap.get('status') == 'passed' and snap.get('completeTreeVerified') is True and snap.get('sqliteIntegrity') == 'ok' and snap.get('operation') == 'snapshot-created', 'SNAPSHOT_INVALID')
+            op.snapshot = recovery_summary(snap)
             op.phase('restore-tool-pin', lambda _timeout: need(digest(recovery) == RECOVERY_HASH, 'TOOL_PIN'), 2, 85)
             restored = op.child('restore', ['python3', '-I', str(recovery), 'restore', '--snapshot', str(op.control / 'data-snapshot'), '--target', str(op.control / 'restored-check'), '--expect-manifest-sha256', snap['manifestSha256'], '--release', RELEASE], 360, 85)
             restored = json.loads(restored.read_bytes())
             need(restored.get('status') == 'passed' and restored.get('completeTreeVerified') is True and restored.get('sqliteIntegrity') == 'ok' and restored.get('operation') == 'isolated-restore-verified' and restored.get('manifestSha256') == snap['manifestSha256'], 'RESTORE_INVALID')
+            op.restore = recovery_summary(restored)
             def change(_timeout):
                 need(digest(config_path) == pins['configSHA256'] and Path('/opt/jarvis/current').resolve() == prior, 'CURRENT_CHANGED')
                 config_write(config_path, encoded({**config, 'release': RELEASE}), mode, operation_id)
@@ -324,9 +388,8 @@ def activate(pins, operation_id):
             op.phase('switch', change, 5, 75)
             for unit in ['jarvis-platform.service', 'jarvis-observer.service']:
                 op.child('start-' + unit, ['systemctl', 'start', unit], 25, 30)
-            op.child('new-health', ['python3', '-I', '-c', HEALTH, RELEASE], 25)
-            wx(op.control / 'activation.json', {'ok': True, 'snapshot': snap, 'restore': restored, 'liveDataRestored': False})
-            return {'ok': True, 'operationId': operation_id}
+            op.health = op.readiness('new-health', RELEASE)
+            return op.finalize(True, {'attempted': False, 'reason': 'NOT_REQUIRED'})
         except Exception as e:
             op.record_failure(getattr(e, 'phase', None) or 'validation', e.code if isinstance(e, Fault) else 'ACTIVATION_EXCEPTION')
             def rollback():
@@ -338,11 +401,11 @@ def activate(pins, operation_id):
                 op.phase('rollback-switch', revert, 5, 85, True)
                 for unit in ['jarvis-platform.service', 'jarvis-observer.service']:
                     op.child('rollback-start-' + unit, ['systemctl', 'start', unit], 25, 30, True)
-                op.child('rollback-health', ['python3', '-I', '-c', HEALTH, EXPECTED], 25, rollback=True)
+                op.rollback_health = op.readiness('rollback-health', EXPECTED, rollback=True)
             result = op.rollback(rollback) if op.stopped else {'attempted': False, 'reason': 'NOT_STOPPED'}
             if not op.stopped:
                 wx(op.control / 'rollback.json', result)
-            return {'ok': False, 'operationId': operation_id, 'firstError': op.first, 'rollback': result, 'liveDataRestored': False}
+            return op.finalize(False, result)
     finally:
         os.close(fd)
 
@@ -357,7 +420,9 @@ def main():
         path = Path(args.input)
         safe(path, private=True)
         need(digest(path) == args.input_sha256, 'INPUT_PIN')
-        result = activate(json.loads(path.read_bytes()), args.operation_id)
+        raw = path.read_bytes()
+        need(hashlib.sha256(raw).hexdigest() == args.input_sha256, 'INPUT_CHANGED')
+        result = activate(json.loads(raw), args.operation_id, args.input_sha256)
     except Exception as e:
         result = {'ok': False, 'classification': e.code if isinstance(e, Fault) else 'SIDECAR_PREFLIGHT_FAILED'}
     print(json.dumps(result, separators=(',', ':')))

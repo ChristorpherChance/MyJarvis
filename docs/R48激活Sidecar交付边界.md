@@ -12,7 +12,15 @@ Root提供新UUID、私有0600完整输入JSON及其SHA256；仅接受node、rel
 
 每调用前WX/fsync intent含elapsed/remaining/selectedTimeout。child stdout/stderr从启动写0600私件，完整H/bytes、退出/timeout/时长另记；只terminate/kill自己Popen并有界wait，无法确认结束时拒绝回退且明示需要Root处理，绝不扫杀其它PID。首错误先持久化，回退结果独立文件，失败不改绿。raw异常仅私文件，公开只固定enum/H/bytes与安全结构；没有导出配置/秘密。
 
-## 实际验证和未验证
+## 后继P1修复：readiness及最终绑定（仍未部署）
+
+接续ops a37b57d，仅修sidecar与新相邻纯fixture。正常启动及rollback启动后各最多20次完整HEALTH探测，未就绪间隔1秒；所有探测、wait和自己的child收尾仍共用原normal650/total900预算，不重新起钟，不重试operation/stop/switch/backup/restore。probe/wait逐次唯一名称，避免WX冲突。初始非零退出/timeout但child已结束仅保观察原件，不提前污染first-error；子进程未结束、预算不足或20次耗尽才终态失败，原首错保留。健康条件保role/config/current、双服务active、observer build/businessHealthy及API build/status，未缩成进程检查。
+
+成功和失败均新增完整activation/activation-failed私有0600回执及相同安全公开结构：operation/node/release/prior/sourceCommit(APP)/archive/manifest/install/input/self/recovery H，实际观测候选指纹另列，snapshot/restore安全响应、正常health或rollback health、原first-error、独立rollback结果及本次私日志完整H/bytes索引。缺执行结果为null，不填新health；不输出原配置、原stdout/stderr或provider文本。self H读实际执行文件，input H为校验后原输入字节；新ops来源不冒旧APP或ZIP提交。
+
+只运行新增两项隔离fixture（各normal/rollback子场景）：先未ready后成功不造首错；截止耗尽不新增窗口且保旧首错；成功/失败最终回执原日志指纹与self/recovery/input绑定可重算。控制语法一次通过。旧两fixture原日志保持，未重跑；未执行activate、recovery、systemctl、真实DB、应用types/build或打包。Root仍须审源码/完整回执安全性和实机时序，候选尚无部署资格。
+
+## 实际验证和未验证（前一ops历史）
 
 两项纯隔离fixture使用fake clock/runner、临时目录及假Popen，覆盖首错＋回退双错仍保首错、原stdout/stderr完整H、预算动态timeout、terminate/kill/wait只管自己child及同UUID拒绝。首轮及最窄收尾修正后最终两项均通过，语法AST通过。没有实机超时/服务/恢复/部署资格，不能据fixture或进程exit0冒独验。
 

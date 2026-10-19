@@ -2,7 +2,7 @@
 
 开始本项目工作前阅读并遵循 [AGENTS.md](AGENTS.md)，再阅读 [112 开发迁移使用说明](docs/112开发迁移使用说明.md) 和建设档案的最新状态。
 
-常规开发在 112 普通账号的 `~/All-Projects/MyJevis`：进入目录后运行 `claude`；`npm run dev` 使用独立开发 API 43140、前端 45173 和 passwd home 开发数据。生产平台与 101 的既有职责按 AGENTS.md 保持。
+常规开发在 112 普通账号的 `~/All-Projects/MyJarvis`：进入目录后运行 `claude`；`npm run dev` 使用独立开发 API 43140、前端 45173 和 passwd home 开发数据。生产平台与 101 的既有职责按 AGENTS.md 保持。
 
 本机整个原件保留在 `.migration-original/local`，历史资料只作查阅，不从原件树启动旧生产。活动 `artifacts` 仅保存新形成的公开报告；新增建设证据必须是真实文件，不使用符号链接。
 

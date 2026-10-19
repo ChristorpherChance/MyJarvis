@@ -5,13 +5,13 @@
 ## 开始工作
 
 - 阅读 `docs/贾维斯建设档案.md` 和 `docs/贾维斯建设日志.md` 的最新记录；涉及软件工厂时另读 `docs/软件工厂首项目交付计划.md`。
-- 当前正式平台在 112；101 是平台冷备，同时运行独立的软件工厂开发节点。常规开发位于 112 的 `~/All-Projects/MyJevis`；联想原有独立 `.jarvis-dev` 文件随整树留存，本轮没有迁移或关闭其既有执行器。不要误启旧本机生产目录。
+- 当前正式平台在 112；101 是平台冷备，同时运行独立的软件工厂开发节点。常规开发位于 112 的 `~/All-Projects/MyJarvis`；联想原有独立 `.jarvis-dev` 文件随整树留存，本轮没有迁移或关闭其既有执行器。不要误启旧本机生产目录。
 - 以实时接口、源代码和明确范围的验收证据核对现状；旧设计、历史测试数量和看板模拟状态不能代替当前事实。
 
 ## 112 迁移后的开发环境
 
-- 常规开发只使用112的 `~/All-Projects/MyJevis`。本轮R55应用功能与主线发布修复已合并并完成独立Linux类型/构建和18项定向验证；后续从该目录main建立有明确基线的任务副本。`MyJevis-ai-development-ops` 等旧特性副本保留追溯，不再作为新的平行常规开发入口。见[统一源码验证](artifacts/code-unification-r55/linux-integration-validation.json)；最终Git与目录同步以其后实际回执为准，不把旧R54导入时点当最新HEAD。
-- 使用 112 普通账号 `superopen`，从 `~/All-Projects/MyJevis` 开发。终端连接与使用见 `docs/112开发迁移使用说明.md`；`CLAUDE.md` 指向本文件。
+- 常规开发只使用112的 `~/All-Projects/MyJarvis`。本轮R55应用功能与主线发布修复已合并并完成独立Linux类型/构建和18项定向验证；后续从该目录main建立有明确基线的任务副本。2026-10-20 目录已由 MyJevis 更名为 MyJarvis，旧特性副本（MyJevis-ai-development-ops 等）已按用户要求清理，其提交均在 main 历史中，追溯以 Git 历史与 artifacts 为准。见[统一源码验证](artifacts/code-unification-r55/linux-integration-validation.json)；最终Git与目录同步以其后实际回执为准，不把旧R54导入时点当最新HEAD。
+- 使用 112 普通账号 `superopen`，从 `~/All-Projects/MyJarvis` 开发。终端连接与使用见 `docs/112开发迁移使用说明.md`；`CLAUDE.md` 指向本文件。
 - `npm run dev` 与 `npm run dev:112` 均使用 `scripts/dev-112.mjs`：API 为 `127.0.0.1:43140`，前端为 `127.0.0.1:45173`，代理指向该开发 API。`npm run dev -- --check` 只检查配置和端口。不要改用正式 API 3140、观测服务 3141 或正式运行目录作为开发入口。
 - 开发数据独立保存在 passwd 账号真实主目录的 `~/.local/share/jarvis-dev-112`。启动器以白名单构造子环境；不要把生产家庭数据、生产模型配置、运维队列或继承的密钥接到开发运行数据。终端 Claude Code 通道与平台开发数据分别管理。
 - 本机整个原始项目树保存在 `.migration-original/local`，只作查阅、追溯和指纹核对；不要从其中启动旧生产、旧常驻服务或旧平台数据。Windows 的 `node_modules`、`.runtime-venv`、原 `.jarvis/.jarvis-dev` 与历史工作副本是保留资料，活动开发使用重新安装的 Linux 依赖。历史维护脚本的 Windows 路径、外部 SSH 私钥和现场运行条件不因文件复制自动可用。

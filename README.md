@@ -2,11 +2,11 @@
 
 ## 112 开发入口
 
-常规开发目录为 112 的 `~/All-Projects/MyJevis`，使用普通账号：
+常规开发目录为 112 的 `~/All-Projects/MyJarvis`，使用普通账号：
 
 ```bash
 ssh 112
-cd ~/All-Projects/MyJevis
+cd ~/All-Projects/MyJarvis
 claude
 ```
 

@@ -1,0 +1,50 @@
+{
+  "id": "JARVIS-20261019-112-SSH-DIRECT-39527",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T14:53:19.898003Z",
+  "title": "112首选39527已公网直连核通，29527保兼容；密码实登仍未验",
+  "objective": "按用户“使用39527”要求新增112直连入口，保留29527兼容、既有认证策略和业务；不把通道核通冒实际密码认证或116完成。",
+  "changes": [
+    "112仅追加FRPC ssh-direct-39527映射，原29527/2212配置全文前缀保留，只重启本轮已有jarvis-ssh-tunnel服务。",
+    "广州确认39527原无占用并新增按IP限速UFW规则；未重启网关服务，不发布应用。",
+    "连接说明顶部将112首选改为39527，29527作为兼容入口；353和352全文保留为历史。"
+  ],
+  "decisions": [
+    "为用户指定新端口追加独立映射，不移除或改写已可用29527。",
+    "保持superopen原密码、sshd认证策略和公钥；现场只核通道和公开身份，不代输或读取用户密码。"
+  ],
+  "facts": [
+    "112 ssh-112.ikvein.com:39527已从本机无Jump真实公钥登录，exit0且主机名superopen-ProDesk-i7。日本独立SSH握手和Ed25519指纹与112身份核同。",
+    "服务提供password认证，但未提交用户密码，actualPasswordLoginVerified=false；不能写成密码登录已经验收。",
+    "原sshd_config H、原业务与新sshd PID保护保持；本次仅重启新增隧道服务，原29527兼容。",
+    "116未修改、未重测；沿用上轮29528外部未通的记录，不从112端口成功推定116可用。",
+    "112仍R55，无应用发布、工厂操作或自动跟进恢复；新增供应商模型0，内部Token/金额和账单未知分列，费用只记录。"
+  ],
+  "verification": [
+    "新增前日本连接为无listener refused，新增后独立SSH握手通过；前后事实分别保留，不覆盖旧结果。",
+    "实际activation回执确认配置旧前缀、SSH策略和原受保护单元不变，public-validation另确认真实公网登录。",
+    "本轮文档仅本地原工具追加和同源渲染；没有重测旧组、网络连接、服务或模型操作。"
+  ],
+  "pending": [
+    "实际密码登录仍待本人在SSH终端使用既有密码确认；无需向聊天或仓库提供密码。",
+    "116上轮29528链路和身份/密码验收仍待处理，本轮没有重复探测。",
+    "本cut后重要决定追加动作、文档Git及112文档同步若未纳入，另留实际回执，不倒填。"
+  ],
+  "lessons": [
+    "用户指定端口可通过追加映射实现，保原可用入口与认证策略；通道、身份和密码认证分别验收。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/ssh-direct-39527/gateway-preflight.json",
+    "artifacts/ssh-direct-39527/external-preflight.json",
+    "artifacts/ssh-direct-39527/activation-result.json",
+    "artifacts/ssh-direct-39527/public-validation.json"
+  ]
+}

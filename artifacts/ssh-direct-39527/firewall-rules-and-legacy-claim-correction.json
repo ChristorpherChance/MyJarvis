@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-19T14:52:42.861Z",
+  "rules": [
+    "39527/tcp                  LIMIT       Anywhere                   # jarvis-home-ssh-112-port39527",
+    "29528/tcp                  LIMIT       Anywhere                   # jarvis-home-ssh-116-direct",
+    "29527/tcp                  ALLOW       Anywhere",
+    "39527/tcp (v6)             LIMIT       Anywhere (v6)              # jarvis-home-ssh-112-port39527",
+    "29528/tcp (v6)             LIMIT       Anywhere (v6)              # jarvis-home-ssh-116-direct",
+    "29527/tcp (v6)             ALLOW       Anywhere (v6)"
+  ],
+  "port39527RateLimited": true,
+  "port29527RateLimited": false,
+  "port29527LegacyAllowStillPresent": true,
+  "priorReport": "artifacts/ssh-domain-access-20261019/direct29527-firewall-limit.json",
+  "priorBeforeAndAfterFirewallHashesIdentical": true,
+  "correction": "Earlier newRateLimitPort=29527 described an attempted command, not a newly effective LIMIT rule. No such rule was added; the original ALLOW remained. This observation corrects that limited claim without modifying the original receipt or legacy rule.",
+  "port29527RuleChangedByThisCorrection": false,
+  "port39527MappingAndLimitVerified": true
+}

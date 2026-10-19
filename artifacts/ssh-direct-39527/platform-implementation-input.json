@@ -1,0 +1,20 @@
+{
+  "commandId": "fe0d744f-2250-4371-8d0c-5f285563bc3a",
+  "expectedVersion": 1,
+  "reason": "用户指定112改用39527，已追加并验证公网映射，旧29527保持兼容，116不改。",
+  "origin": "ai",
+  "actions": [
+    {
+      "summary": "112新增39527→新SSH监听2222；原FRP配置全文前缀及29527/2212保留，仅重启新增tunnel。无跳板公网公钥登录和独立日本SSH主机指纹核对通过，服务提供密码认证但未代输用户密码。",
+      "at": "2026-10-19T14:50:45.184Z",
+      "state": "performed",
+      "evidenceRefs": [
+        {
+          "reference": "artifacts/ssh-direct-39527/public-validation.json",
+          "sha256": "7d72ae6575c5dddc496ba46cd14bebee86a0710a8c55ef368c5adbf1ddf19dd5",
+          "kind": "test-report"
+        }
+      ]
+    }
+  ]
+}

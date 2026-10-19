@@ -78,6 +78,7 @@ export interface ProjectSupervisorDispatchInput {
 }
 export interface ExecutionRuntimeOptions {
  powerReading?:(agent:{machineId:string;capabilities?:string[]},raw:unknown)=>import('./power-runtime.js').CpuPowerSample|undefined;
+ powerConfiguration?:()=>{version:number;profiles:any[]};
  directory:string; machine:(id:string)=>Record<string,any>|undefined; stopped:()=>boolean;
  actorId?:string; runPi?:(input:PiDevelopmentInput)=>Promise<PiDevelopmentResult>;
  piReady?:()=>boolean; supervised?:()=>boolean;

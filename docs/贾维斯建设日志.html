@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。">
-  <meta name="jarvis-source-sha256" content="d141bcb756da7f31e16288bc8100d5d1405c8c0761900726ac6d3650fff221c8">
+  <meta name="jarvis-source-sha256" content="e80ca079f6b82de8386655f00cd90b54627adbb10f75a509e7d9eaa55475361c">
   <title>贾维斯建设日志</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -42,7 +42,7 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 356 章 · Ctrl / ⌘ + K 查找</div>
+    <div class="search-status" id="search-status" aria-live="polite">共 357 章 · Ctrl / ⌘ + K 查找</div>
     <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</a>
 <a class="toc-link level-3" href="#section-1-1" data-parent="1">本次改变</a>
 <a class="toc-link level-3" href="#section-1-2" data-parent="1">决策与原因</a>
@@ -2840,7 +2840,13 @@
 <a class="toc-link level-3" href="#section-356-4" data-parent="356">验证结果</a>
 <a class="toc-link level-3" href="#section-356-5" data-parent="356">待办与未确认事项</a>
 <a class="toc-link level-3" href="#section-356-6" data-parent="356">经验候选</a>
-<a class="toc-link level-3" href="#section-356-7" data-parent="356">证据与当时指纹</a></nav>
+<a class="toc-link level-3" href="#section-356-7" data-parent="356">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-357" data-parent="357">JARVIS-20261020-MONITORING-MULTI-AGENT-UPTIME-LOCAL-FIX · 101多来源遥测覆盖与广州长uptime拒收本地修复验证通过，待提交安全发布</a>
+<a class="toc-link level-3" href="#section-357-1" data-parent="357">本次改变</a>
+<a class="toc-link level-3" href="#section-357-2" data-parent="357">事实与边界</a>
+<a class="toc-link level-3" href="#section-357-3" data-parent="357">验证结果</a>
+<a class="toc-link level-3" href="#section-357-4" data-parent="357">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-357-5" data-parent="357">证据与当时指纹</a></nav>
     <div class="sidebar-foot">更新于 2026-10-19<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
@@ -2852,11 +2858,11 @@
         <h1 id="document-title">贾维斯建设日志</h1>
         <p class="subtitle">保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。</p>
         <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-19</span><span>与 Markdown 同源生成</span></div>
-        <div class="stats"><div class="stat"><strong>356 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
+        <div class="stats"><div class="stat"><strong>357 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
       </header>
       <article class="article">
         <div class="intro"><p>本页由 <a href="%E5%BB%BA%E8%AE%BE%E8%AE%B0%E5%BD%95/events.jsonl">建设记录原始账本</a> 生成。详细维护方式见 <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">建设档案</a>。历史回顾以现有文档为依据，不补写缺失的决定动机或现场验收。日期时间为 ISO 格式，Z 表示 UTC；中国时间加八小时。证据指纹记录当时文件内容，后续文件可能另有更新。</p>
-<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：daf62f61444753f50018ebfb449e7ccd62a9e0e729cc4564aec6ec981aa1dd21。</p>
+<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：17abd1cdce3072d943cbb4c09258d601f36987a776fea0559160e47d0e5001f7。</p>
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
         <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</h2>
@@ -20526,6 +20532,43 @@
 <li><a href="../artifacts/ssh-port-assignment-correction/final-validation.json">artifacts/ssh-port-assignment-correction/final-validation.json</a> · SHA-256：c55660aee33c93b74f72e8bc9a735f9751deda404eb01539eac8c0de22cacda9</li>
 </ul>
 <p>记录指纹：daf62f61444753f50018ebfb449e7ccd62a9e0e729cc4564aec6ec981aa1dd21；前一条：5b76ff025ee3819e0b1559466fb0029c02b43369692d820fd30a0f43b22fab6d。</p>
+</section>
+<section class="doc-section" data-section="357"><h2 id="section-357" tabindex="-1">JARVIS-20261020-MONITORING-MULTI-AGENT-UPTIME-LOCAL-FIX · 101多来源遥测覆盖与广州长uptime拒收本地修复验证通过，待提交安全发布</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-19T16:06:13.096Z；项目：贾维斯；类型：change。</p>
+<p>目标：修复用户反馈101及广州设备监控数据缺失，不重启机器清运行时长，不启动冷备或工厂任务。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-357-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>从main18bfa33建立独立MyJevis-monitoring-fix分支；不混入项目验收副本未提交功能。</li>
+<li>uptime单独安全数值范围贯通心跳/历史/严格合同；每agent最新快照独立存储，按指标合成，附来源和真实接收/测量时间。</li>
+<li>普通指标60秒、硬件与RAPL30秒，GET与功耗/资源门消费有效投影；撤销来源与配置变化剔除；历史只记录本次测量。</li>
+<li>UI区分心跳与指标时间，NAS派生容量使用实际存储时间；无采样投影省略telemetry避免合同错误。</li>
+</ul>
+<h3 id="section-357-2" tabindex="-1">事实与边界</h3>
+<ul>
+<li>未提交或部署；现有安全packager要求源码与真实commit逐字节绑定，未获commit明确请求，不绕门。</li>
+<li>生产无写入/重启/工厂派发/冷备启动，十分钟暂停保持；供应商模型调用0，内部用量金额未知。</li>
+</ul>
+<h3 id="section-357-3" tabindex="-1">验证结果</h3>
+<ul>
+<li>最终定向28项通过，含签名HTTP inject/临时SQLite、双agent交替、同源缺项、撤销、跨机、重开回读、uptime边界、历史和前端投影SSR。</li>
+<li>真实隔离HTTP/Chromium5组通过：初始化注册、双来源完整到CPU-only卡片、再次CPU-only保留、明确未来时钟helper过期、390px布局；0外域/浏览器错误/清理错误。过期非真实浏览器等待61秒证据。</li>
+<li>类型检查与构建通过，独立只读审查发现NAS时间问题后已修并有回归；原API测试样例/浏览器bootstrap/产品null合同/显示定位失败保存。</li>
+</ul>
+<h3 id="section-357-4" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>明确授权提交后形成可追溯候选，沿上一包资产继承/current校验、完整快照隔离恢复与健康流程发布112。</li>
+<li>上线后跨多个采样周期观察101指标稳定及广州relay400消失、中央时间前进，不能以本地通过替代现场恢复。</li>
+</ul>
+<h3 id="section-357-5" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/monitoring-fix/local-validation-summary.json">artifacts/monitoring-fix/local-validation-summary.json</a> · SHA-256：d6ec4a342895fc75ac356cc741d606e3c63805362d98a55872c1bd327f56719b</li>
+<li><a href="../artifacts/monitoring-fix/regression-final-readonly-fix.log">artifacts/monitoring-fix/regression-final-readonly-fix.log</a> · SHA-256：753722676b631f84b7ef9d15886341b1441f50dd6cdaba15c8a721655fa749d9</li>
+<li><a href="../artifacts/monitoring-fix/qa-5e26a7d0-7572-40e5-bdf8-6cf7df59a2a6/report.json">artifacts/monitoring-fix/qa-5e26a7d0-7572-40e5-bdf8-6cf7df59a2a6/report.json</a> · SHA-256：343379d720275c4d146c7ca993e0142d9e7bd8b8ffcc109945f6a18cd5fbf163</li>
+<li><a href="../artifacts/monitoring-fix/build-final.log">artifacts/monitoring-fix/build-final.log</a> · SHA-256：2656a8be57d8971ba7cad569aa25877d735e8e00b8de9a46290e2da0af34e7fe</li>
+<li><a href="../artifacts/monitoring-fix/typecheck.log">artifacts/monitoring-fix/typecheck.log</a> · SHA-256：7f40097f385352126d4f4b2e7841c213a79435b0dd9e4746bba86938a1adf3ac</li>
+</ul>
+<p>记录指纹：17abd1cdce3072d943cbb4c09258d601f36987a776fea0559160e47d0e5001f7；前一条：daf62f61444753f50018ebfb449e7ccd62a9e0e729cc4564aec6ec981aa1dd21。</p>
 </section>
       </article>
       <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.md">打开源文档</a></footer>

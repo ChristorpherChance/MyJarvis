@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="在112使用Claude Code接续贾维斯平台：源码与模块、隔离开发、验证发布、当前缺口和后续任务。">
+  <meta name="jarvis-source-sha256" content="3d601b952c74414b9b5679d6b46a375d5c32cdf436e97d04c6ca52f261bf0ab5">
+  <title>贾维斯平台开发接手指南</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+  <style>
+    :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
+    :root[data-theme=dark]{color-scheme:dark;--bg:#101a16;--paper:#17241d;--ink:#e4eee7;--muted:#b0c0b6;--line:#33483b;--accent:#8edbb3;--soft:#203e2d;--code:#112018;--nav:#132019;--shadow:0 10px 32px #0003}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;line-height:1.85;font-size:15px}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .skip{position:fixed;top:-80px;left:20px;z-index:30;background:var(--paper);padding:8px 16px;border:1px solid var(--line)}.skip:focus{top:10px}
+    .topbar{height:64px;position:fixed;inset:0 0 auto;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}.logo{display:grid;place-items:center;width:34px;height:34px;background:var(--accent);color:var(--paper);border-radius:10px;font-weight:800;flex-shrink:0}.brand-name{font-weight:750;letter-spacing:.05em}.version{font-size:12px;color:var(--muted);padding:2px 8px;border:1px solid var(--line);border-radius:6px;white-space:nowrap}
+    .tools{display:flex;align-items:center;gap:8px}.tool{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;min-height:36px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px;text-decoration:none;white-space:nowrap}.tool:hover{background:var(--soft)}.menu-toggle{display:none}
+    .sidebar{position:fixed;left:0;top:64px;bottom:0;width:278px;background:var(--nav);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 18px;z-index:15}.sidebar-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.16em;margin:0 8px 12px}.search-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.search{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:13px}.search-status{font-size:11px;color:var(--muted);min-height:26px;margin:4px 2px 7px}.toc{overflow:auto;flex:1;scrollbar-width:thin;padding-right:4px}.toc-link{display:block;padding:6px 9px;line-height:1.5;font-size:12px;color:var(--muted);text-decoration:none;border-radius:5px;border-left:2px solid transparent;margin-bottom:2px}.toc-link.level-2{font-size:13px;font-weight:650;color:var(--ink);margin-top:9px}.toc-link.level-3{padding-left:19px}.toc-link:hover,.toc-link[aria-current]{background:var(--soft);color:var(--accent);border-left-color:var(--accent)}.sidebar-foot{padding:14px 8px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);margin-top:14px}
+    .layout{margin-left:278px;padding:98px 36px 64px}.document{max-width:1120px;margin:0 auto}.hero{position:relative;padding:35px 38px 30px;background:var(--paper);border:1px solid var(--line);border-radius:13px 13px 0 0;box-shadow:var(--shadow);border-top:4px solid var(--accent)}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.15em;font-weight:750;margin:0 0 12px}.hero h1{font-size:clamp(25px,2.8vw,36px);line-height:1.4;letter-spacing:-.02em;margin:0 0 15px;font-weight:750}.subtitle{font-size:16px;color:var(--muted);margin:0;max-width:780px}.meta{display:flex;gap:10px 16px;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--muted)}.meta span{display:inline-flex;align-items:center;gap:6px}.dot{height:6px;width:6px;border-radius:50%;background:var(--accent)}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:25px;padding-top:20px;border-top:1px solid var(--line)}.stat+.stat{border-left:1px solid var(--line);padding-left:24px}.stat strong{font-size:24px;line-height:1.3;display:block;font-weight:750}.stat span{font-size:12px;color:var(--muted)}
+    .article{padding:14px 38px 38px;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 13px 13px;min-width:0}.intro blockquote{margin:20px 0 30px}.doc-section{border-top:1px solid var(--line);margin-top:34px;padding-top:18px}.doc-section[hidden],.toc-link[hidden]{display:none!important}h2{font-size:23px;line-height:1.5;margin:8px 0 20px;font-weight:750;color:var(--ink)}h3{font-size:17px;margin:27px 0 12px;font-weight:700;line-height:1.5}p{margin:12px 0}ul,ol{padding-left:25px;margin:14px 0}li{padding-left:3px;margin:6px 0}li p{margin:6px 0}strong{font-weight:700}blockquote{padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft);color:var(--muted);border-radius:0 7px 7px 0;margin-left:0;margin-right:0;font-size:13px}blockquote p{margin:5px 0}
+    .table-wrap{max-width:100%;overflow:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:8px;scrollbar-width:thin}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.75}th,td{padding:12px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line);min-width:115px;overflow-wrap:anywhere}th{background:var(--soft);font-size:12px;font-weight:700;position:sticky;top:0;color:var(--ink)}td:first-child{font-weight:600}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:var(--nav)}pre{overflow:auto;padding:20px 22px;background:var(--code);border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.8;tab-size:4}code{font-family:Consolas,"SFMono-Regular","Microsoft YaHei",monospace;font-size:.92em}p code,li code{background:var(--code);padding:2px 5px;border-radius:4px}pre code{font-size:inherit}.no-results{padding:30px;border:1px dashed var(--line);border-radius:8px;margin-top:25px;color:var(--muted)}.no-results[hidden]{display:none}.footer{font-size:12px;color:var(--muted);padding:23px 5px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.overlay{display:none}.reading-progress{position:fixed;top:63px;left:278px;height:2px;width:0;background:var(--accent);z-index:25}
+    @media(max-width:1180px){.sidebar{width:246px}.layout{margin-left:246px;padding-left:24px;padding-right:24px}.reading-progress{left:246px}.hero,.article{padding-left:26px;padding-right:26px}body{font-size:14px}}
+    @media(max-width:820px){html{scroll-padding-top:80px}.topbar{padding:0 15px;gap:8px}.brand{gap:8px}.brand-name{font-size:14px}.version{display:none}.menu-toggle{display:inline-flex}.tools{gap:5px}.tool{padding:6px 9px;font-size:12px}.source-tool{display:none}.sidebar{width:min(310px,85vw);transform:translateX(-101%);transition:transform .18s}.sidebar.open{transform:translateX(0)}.overlay.open{display:block;position:fixed;inset:64px 0 0;background:#0005;z-index:14;border:0;padding:0}.layout{margin-left:0;padding:84px 14px 35px}.reading-progress{left:0}.hero{padding:25px 20px}.hero h1{font-size:25px}.subtitle{font-size:14px}.article{padding:5px 20px 25px}.stats{gap:8px}.stat strong{font-size:21px}.stat+.stat{padding-left:13px}.stat span{font-size:11px}h2{font-size:20px}h3{font-size:16px}.doc-section{margin-top:28px;padding-top:16px}th,td{min-width:135px;padding:10px 12px}pre{font-size:12px;padding:15px}.footer{font-size:11px}}
+    @media(max-width:820px){.sidebar{transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sidebar{transition:none}}
+    @media print{:root,:root[data-theme=dark]{color-scheme:light;--paper:#fff;--ink:#111;--muted:#444;--line:#bbb;--accent:#155f46;--soft:#f0f3f0;--code:#f4f4f4;--nav:#fff}body{background:#fff;font-size:10pt;line-height:1.6}.topbar,.sidebar,.overlay,.reading-progress,.skip,.no-results{display:none!important}.layout{margin:0;padding:0}.document{max-width:none}.hero{border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 14px;box-shadow:none}.hero h1{font-size:24pt}.subtitle{font-size:11pt}.stats{margin-top:12px;padding-top:12px}.stat strong{font-size:16pt}.article{border:0;padding:0}.doc-section,.doc-section[hidden]{display:block!important;padding-top:12px;margin-top:20px}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}p,li{orphans:3;widows:3}.table-wrap{overflow:visible;border-radius:0;break-inside:auto}table{font-size:8.5pt;width:100%;table-layout:fixed}th,td{min-width:0;padding:6px 7px;word-break:break-word}thead{display:table-header-group}tr{break-inside:avoid}th{position:static}pre{white-space:pre-wrap;font-size:8.5pt;break-inside:avoid}blockquote{break-inside:avoid}.footer{font-size:8pt}@page{size:A4;margin:16mm}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main-content">跳至正文</a>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">平台开发接手 R3 · R52</span></div>
+    <div class="tools">
+      <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
+      <a class="tool source-tool" href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E6%8E%A5%E6%89%8B%E6%8C%87%E5%8D%97.md">Markdown 源文档</a>
+      <button class="tool" id="theme-toggle" aria-pressed="false">切换主题</button>
+      <button class="tool" id="print-button">打印</button>
+    </div>
+  </header>
+  <aside class="sidebar" id="sidebar" aria-label="文档导航">
+    <p class="sidebar-label">目录与查找</p>
+    <label class="search-label" for="search">按关键词筛选章节</label>
+    <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
+    <div class="search-status" id="search-status" aria-live="polite">共 21 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">1 接手时先认清四种目录和三种状态</a>
+<a class="toc-link level-3" href="#section-1-1" data-parent="1">1.1 接手所需的当前状态</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">2 接手开工五步</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">3 建立真实 Git 基线再对齐最新源码</a>
+<a class="toc-link level-3" href="#section-3-1" data-parent="3">3.1 已保存的no.git状态意味着什么</a>
+<a class="toc-link level-3" href="#section-3-2" data-parent="3">3.2 建议的首次对齐顺序</a>
+<a class="toc-link level-3" href="#section-3-3" data-parent="3">3.3 Windows 与 112 的路径映射</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">4 项目的架构和读码顺序</a>
+<a class="toc-link level-3" href="#section-4-1" data-parent="4">4.1 目录地图</a>
+<a class="toc-link level-3" href="#section-4-2" data-parent="4">4.2 API 运行器地图</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">5 数据和配置必须隔离</a>
+<a class="toc-link level-3" href="#section-5-1" data-parent="5">5.1 数据不只有一个数据库</a>
+<a class="toc-link level-3" href="#section-5-2" data-parent="5">5.2 开发环境变量</a>
+<a class="toc-link level-3" href="#section-5-3" data-parent="5">5.3 凭据怎样取得而不泄漏</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">6 Linux 依赖和重建</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">7 一条平台改动应该怎样走完</a>
+<a class="toc-link level-2" href="#section-8" data-parent="8">8 项目工作台和 101 固定 CC 监管</a>
+<a class="toc-link level-3" href="#section-8-1" data-parent="8">8.1 两个项目对象与一个平台</a>
+<a class="toc-link level-3" href="#section-8-2" data-parent="8">8.2 正式运行链</a>
+<a class="toc-link level-3" href="#section-8-3" data-parent="8">8.3 修改这些地方时必须保留的门</a>
+<a class="toc-link level-2" href="#section-9" data-parent="9">9 主管报告和自动判断合同</a>
+<a class="toc-link level-3" href="#section-9-1" data-parent="9">9.1 CC 最终反馈</a>
+<a class="toc-link level-3" href="#section-9-2" data-parent="9">9.2 Pi 判断</a>
+<a class="toc-link level-3" href="#section-9-3" data-parent="9">9.3 完整输入的计量与容量门</a>
+<a class="toc-link level-2" href="#section-10" data-parent="10">10 测试怎样选才能有用</a>
+<a class="toc-link level-2" href="#section-11" data-parent="11">11 打包与旧浏览器资源兼容</a>
+<a class="toc-link level-2" href="#section-12" data-parent="12">12 正式发布与回退</a>
+<a class="toc-link level-3" href="#section-12-1" data-parent="12">12.1 目前采用的阶段</a>
+<a class="toc-link level-3" href="#section-12-2" data-parent="12">12.2 激活不可丢的保护</a>
+<a class="toc-link level-3" href="#section-12-3" data-parent="12">12.3 主备不是自动接管</a>
+<a class="toc-link level-2" href="#section-13" data-parent="13">13 用户界面应该保持怎样的产品含义</a>
+<a class="toc-link level-2" href="#section-14" data-parent="14">14 建设档案和候选历史不能互相覆盖</a>
+<a class="toc-link level-2" href="#section-15" data-parent="15">15 费用和空间</a>
+<a class="toc-link level-2" href="#section-16" data-parent="16">16 当前未完事项和下一工作顺序</a>
+<a class="toc-link level-3" href="#section-16-1" data-parent="16">16.1 第一优先是让接手基线可信</a>
+<a class="toc-link level-3" href="#section-16-2" data-parent="16">16.2 平台本身仍要按真实目标推进</a>
+<a class="toc-link level-2" href="#section-17" data-parent="17">17 可以直接给 Claude Code 的开工提示词</a>
+<a class="toc-link level-2" href="#section-18" data-parent="18">18 接手完成时的交付检查</a>
+<a class="toc-link level-3" href="#section-18-1" data-parent="18">开发目录</a>
+<a class="toc-link level-3" href="#section-18-2" data-parent="18">本次代码和验证</a>
+<a class="toc-link level-3" href="#section-18-3" data-parent="18">发布与用户结果</a>
+<a class="toc-link level-3" href="#section-18-4" data-parent="18">档案和接续</a>
+<a class="toc-link level-2" href="#section-19" data-parent="19">19 主要参考和证据入口</a>
+<a class="toc-link level-3" href="#section-19-1" data-parent="19">长期规则与使用</a>
+<a class="toc-link level-3" href="#section-19-2" data-parent="19">本轮固定保存证据</a>
+<a class="toc-link level-2" href="#section-20" data-parent="20">20 接手首轮应留下的结果</a>
+<a class="toc-link level-2" href="#section-21" data-parent="21">本版编制与后继记录边界</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-18<br>需求与设计稿 · 可离线浏览</div>
+  </aside>
+  <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <main class="layout" id="main-content" aria-labelledby="document-title">
+    <div class="document">
+      <header class="hero">
+        <p class="eyebrow">112开发 / 全平台 / 真实交接</p>
+        <h1 id="document-title">贾维斯平台开发接手指南</h1>
+        <p class="subtitle">在112使用Claude Code接续贾维斯平台：源码与模块、隔离开发、验证发布、当前缺口和后续任务。</p>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-18</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>整个平台</strong><span>架构 · 模块 · 数据 · 运维</span></div><div class="stat"><strong>112</strong><span>独立开发与正式发布边界</span></div><div class="stat"><strong>真实状态</strong><span>已完成与待改事项分开</span></div></div>
+      </header>
+      <article class="article">
+        <div class="intro"><p>更新：2026-10-18。正式平台为R52，112已完成发布与独立健康。真实监管已出现报告、判断、自动补证和自然停派；完整工厂验收仍未通过。本指南针对整个平台在112的后续开发：先建立可信源码副本和隔离开发环境，再修复明确未完事项。编制前正式建设链为337条，详见第14节；文档快照交付与后续建设记录由各自真实回执确认。</p>
+<p>本指南供在 <strong>112 上使用 Claude Code 继续开发贾维斯平台本身</strong>的人使用。贾维斯同时承担家庭对话、知识与记忆、项目工作台、AI 开发监管、设备及服务运维等功能。软件工厂是它监管的一个外部项目，不等于贾维斯平台，也不是另一套需要在 101 启动的贾维斯正式中心。</p>
+<p>本版接手资料的约定目标目录为（交付完成以同目录清单和正式回执为准）：</p>
+<pre><code class="language-text">/home/superopen/All-Projects/MyJevis/handoff/20261018-r52/
+</code></pre>
+<p>快照内以<code>docs/贾维斯平台开发接手指南.md</code>为阅读入口，根有<code>AGENTS.md</code>和<code>CLAUDE.md</code>，文档与安全证据保持相对结构。先核实际清单，再从快照读资料，到活动或新独立副本开发；快照本身不启动。源码路径相对于源码工作副本，文档链接相对于快照docs。旧R2目录<code>handoff/20261018-r51-r1/</code>的62件/9,412,327B已真实核同并保留；新快照另交付，不覆盖旧快照或活动源码、四项开发适配及数据。</p>
+<p>接手先核对源码、Git和开发数据。112正式平台R52已经健康，但09:32 UTC检查的普通账号开发目录仍保留迁移时的Linux适配，没有<code>.git</code>，尚无它已同步最新应用源码的证据。保留该目录、适配和历史资料，在独立副本取得真实Git历史后再对齐R52；不将生产release覆盖到开发目录。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">1 接手时先认清四种目录和三种状态</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>已核对的位置或来源</th>
+<th>应怎样使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>112 日常开发目录</td>
+<td><code>/home/superopen/All-Projects/MyJevis</code></td>
+<td>普通账号 <code>superopen</code>；保留迁移后的启动器、文档和隔离开发数据规则。先核对来源，再开发。</td>
+</tr>
+<tr>
+<td>112 正式发布目录</td>
+<td><code>/opt/jarvis/current</code> 指向版本目录</td>
+<td>只经既有受控发布流程更新，不作为编辑代码、安装开发依赖或试运行入口。</td>
+</tr>
+<tr>
+<td>112 正式运行数据</td>
+<td>发布工具当前绑定 <code>/var/lib/jarvis/data</code></td>
+<td>含家庭资料、会话、认证及执行记录；不接入开发实例，不直接改数据库修状态。</td>
+</tr>
+<tr>
+<td>Windows 原项目完整留存</td>
+<td>112 开发目录中的 <code>.migration-original/local</code></td>
+<td>按原相对路径查历史源码、报告和现场材料；不从这里启动旧平台、旧执行器或旧常驻服务。</td>
+</tr>
+<tr>
+<td>本轮原作者候选源码</td>
+<td>已核验 Git 历史，当前公开源码分支见第 3 节</td>
+<td>用于对齐最新平台源代码；候选文档和建设账本不自动成为 Root 正式档案。</td>
+</tr>
+<tr>
+<td>101 开发节点</td>
+<td>中央平台登记的独立执行节点与项目工作区</td>
+<td>接收贾维斯正式任务、运行原生 CC、签名回传；与 101 平台冷备职责分开。</td>
+</tr>
+</tbody></table></div>
+<p>“代码已提交”“包已核验”“正式平台已切换”“用户流程已验收”是不同事实。页面显示 <code>achieved</code> 也只代表该轮目标的标准被判断满足，不能自动推成整个平台或软件工厂全部完成。</p>
+<h3 id="section-1-1" tabindex="-1">1.1 接手所需的当前状态</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>已发生的事实与接手动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正式平台</td>
+<td>112的R52已完成stage/install/inspect、316.188秒激活和10:05 UTC独立健康；平台与observer均active，业务健康。101节点未随平台专用包重装。</td>
+</tr>
+<tr>
+<td>本版源码</td>
+<td>APP为<code>0ae044826235fd7f7908db786dc2b186fdebf984</code>，后续ops为<code>e0a919ddf1e9e6c15609d256ad4f23b7432acbe6</code>。共享完整prompt上限131072 UTF-8字节；有限源码/包审及离线真实入口组通过，未宣称provider全容量。</td>
+</tr>
+<tr>
+<td>112开发目录</td>
+<td>09:32 UTC检查属UID1000，规则、包脚本及开发启动器存在，<code>.git</code>不存在，<code>pi.ts</code>不同于已核新版来源；没有新源码同步记录。先按第3节建立真实Git独立副本。</td>
+</tr>
+<tr>
+<td>遗留101平台会话</td>
+<td>保存状态为S67/goal11、waiting_user、enabled=false；当前run <code>3c694…</code>已succeeded，没有发pause/stop或继续指令。7276候选已回收并发布，当前未再派发；接手核是否有后来变化并明确移交，避免两端同时改同需求。</td>
+</tr>
+<tr>
+<td>软件工厂专项</td>
+<td>R52下goal10首轮完整交回旧25件并获真实continue判断，自动补证轮交9件、最终wait_user。S71/goal10 waiting_user、enabled=false，无新run；材料连续性、来源绑定和无损传输未闭合，事项33/计划B16停C5，C6未签。已有监管授权，不需要用户再次授权来弥补技术缺口。</td>
+</tr>
+<tr>
+<td>文档与源码协作</td>
+<td>编制前Root正式链337条/head<code>68881e6157898cbd076750dc020916ea9a1f8b1383f3cd873a3034b9d49b7fa1</code>。PR7已正常快进到<code>e0a919dd…</code>，OPEN/DRAFT、未合并；128KiB决定已追加implemented第2版，有限实施不等于产品验收。候选CC308分叉不得覆盖Root链。</td>
+</tr>
+</tbody></table></div>
+<p>R52页面已fresh reload，六卡与目标折叠可见；最终只读页面也已显示事项33的真实材料缺口和112下一步。但先前“当前主管判断/下一步”曾回退到旧事项32容量摘要，且最终标题仍显示“等待本人”。本轮Root手工更新事项只是更正资料，自动同步和语义文案的代码尚未修复，不能称简洁性全部达标。存储已实际清理并安装每小时两恢复点维护，当前保留R52和R51r1；完整回执放第19节，日常开工不必重演历史操作。
+对应保存证据见第 19 节。新接手时仍需用实际目录和最新回执核对，不从本指南日期外推后续运行。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-2" tabindex="-1">2 接手开工五步</h2>
+<ol>
+<li><strong>先读规则和接手状态。</strong> 读活动目录<code>AGENTS.md</code>、<code>CLAUDE.md</code>，再读本次已交付快照中的本指南、建设档案/日志最新段落；涉及工厂才追加读专项计划。</li>
+<li><strong>只读核对来源与工作归属。</strong> 确认账号、目录、Node/npm/Claude版本、Git是否真实存在、dirty及开发数据；对遗留101平台任务核最新终态并明确移交，同一需求不在两端并行改动。</li>
+<li><strong>建立真实Git独立副本。</strong> 保原目录和迁移原件，从已核公开分支或完整bundle取得原作者历史，验证实际提交；逐项合入四项Linux开发适配，不把release ZIP覆盖活动开发目录。详细步骤见第3节。</li>
+<li><strong>在隔离副本重建和启动。</strong> 按实际锁文件安装必要Linux依赖，先执行开发配置检查，再用43140/45173端口和home下独立开发数据启动。生产数据库、队列、模型配置和TLS不继承。</li>
+<li><strong>给Claude一个明确任务。</strong> 使用第17节开工提示词，写本次目标和2至4条客观标准；只验证受影响入口，保首次失败、修复、类型/构建和交付证据，按第18节交接。</li>
+</ol>
+<p>下面的目录与版本检查可以在原目录只读执行；安装、开发服务和代码修改在第3步建立并核对后的独立副本中进行。已有 Windows SSH 别名的电脑可以运行：</p>
+<pre><code class="language-powershell">ssh 112
+</code></pre>
+<p>其他电脑使用自己的已授权 SSH 登录方式；本项目不会自动迁移电脑外部的 SSH 私钥、GitHub 登录态或浏览器 Cookie。进入服务器后：</p>
+<pre><code class="language-bash">cd /home/superopen/All-Projects/MyJevis
+pwd
+id
+node --version
+npm --version
+claude --version
+</code></pre>
+<p>先阅读活动根的 <code>CLAUDE.md</code>、<code>AGENTS.md</code>，同时明确让Claude读取上述接手快照中的规则、本指南及建设档案/日志最新段落。活动源码中的旧文档与快照有差异时，先按来源和真实cut核对，不能用旧候选档案覆盖最新正式链。不要执行 <code>sudo claude</code>、<code>sudo npm</code>，不要把正式服务账号的私有数据复制给开发账号。</p>
+<p>在保留并核对四项Linux适配的源码副本中，已有安全开发检查入口：</p>
+<pre><code class="language-bash">npm run dev -- --check
+</code></pre>
+<p>它只检查配置和端口，不启动应用或写数据库。确认当前cwd是已核开发副本、仍保留112适配且数据/端口隔离后，再启动：</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>从自己的电脑建立浏览器转发：</p>
+<pre><code class="language-powershell">ssh -L 45173:127.0.0.1:45173 112
+</code></pre>
+<p>然后访问 <code>http://localhost:45173</code>。<code>npm run dev</code> 和 <code>npm run dev:112</code> 应都走 <code>scripts/dev-112.mjs</code>，API 为 <code>127.0.0.1:43140</code>，前端为 <code>127.0.0.1:45173</code>。开发前端 <code>/api</code> 代理必须指向这个开发 API。</p>
+<p>需要断线继续工作时：</p>
+<pre><code class="language-bash">tmux new -As jarvis-dev
+</code></pre>
+<p>在 tmux 中进入项目，再启动开发服务或 Claude。离开 tmux 与终止程序不同；浏览器仍需要自己的 SSH 转发连接。开发启动器收到 INT、TERM、HUP 时按它的所有权规则收尾，只处理本次进程组。它拒绝占用端口，不会为了启动自己而杀掉已有服务。</p>
+<p><strong>保留112开发入口。</strong> 本版上游源码的根脚本仍是普通并行API/Web入口，Vite默认5173、API默认3140；迁移时另有四文件Linux开发适配。直接覆盖<code>package.json</code>或<code>vite.config.ts</code>会丢掉端口和环境隔离。</p>
+</section>
+<section class="doc-section" data-section="3"><h2 id="section-3" tabindex="-1">3 建立真实 Git 基线再对齐最新源码</h2>
+<h3 id="section-3-1" tabindex="-1">3.1 已保存的no.git状态意味着什么</h3>
+<p>发布 ZIP 不含 <code>.git</code>。来源清单中的提交号是出处，不等于提交对象已在本目录中。09:32 UTC保存检查中112开发根<code>.git</code>不存在；没有新的来源核对前不能直接<code>git pull</code>，也不能用<code>git init</code>后声称恢复了上游历史。</p>
+<p>Git 依赖的打包器会实际读取提交对象、树、索引和工作文件字节；仅有一个写在文本中的 SHA 无法满足这些条件。不要伪造上游提交，也不要将整个迁移原件、私有运行数据和依赖目录 <code>git add .</code>。</p>
+<h3 id="section-3-2" tabindex="-1">3.2 建议的首次对齐顺序</h3>
+<ol>
+<li>只读保存现有开发目录的来源、四项 Linux 适配文件、现行 <code>AGENTS.md</code>/<code>CLAUDE.md</code> 和正式建设文档指纹。开发数据位于 home 下的独立目录，保持原样。保存清单不能包含密钥正文或原始聊天。</li>
+<li>在新的相邻目录取得已有公开源码分支或已核验完整 Git bundle。保留原作者和提交历史，不把 ZIP 直接覆盖现有开发目录。</li>
+<li>核对实际对象存在、提交祖先关系、工作树状态和明确的来源提交。需要使用 Git 网络时，按现有仓库授权执行；本指南本身没有执行网络命令。</li>
+<li>在新仓库中建立本次任务独立分支或 worktree。将迁移的 Linux 开发适配作为明确补丁合入：<code>package.json</code>、<code>.gitignore</code>、<code>apps/web/vite.config.ts</code>、<code>scripts/dev-112.mjs</code>。逐项比较，不能整体覆盖最新包清单。</li>
+<li>保留 Root 正式建设档案、账本和本次保留策略记录。候选分支中的 CC 建设记录有自己的历史，不能覆盖 Root 正式账本。文档合并详见第 14 节。</li>
+<li>在隔离副本安装 Linux 依赖、检查开发配置、验证受影响功能。核对无生产数据、正式端口或生产队列被继承，再决定哪个目录作为后续日常开发入口。</li>
+<li>原开发目录和 <code>.migration-original/local</code> 继续保留；不要为了让 Git “干净”删除历史原件、未知状态或私有恢复材料。</li>
+</ol>
+<p>以本指南保存的公开分支为来源时，可在<strong>尚不存在的新目录</strong>取得真实历史，再从已核ops提交建立开发分支。下面命令由接手者在112普通账号终端执行；目录已存在就停止核对，不覆盖：</p>
+<pre><code class="language-bash">cd /home/superopen/All-Projects
+test ! -e MyJevis-r52-dev || exit 1
+git clone --branch feat/unified-projects-r45 --single-branch https://github.com/ChristorpherChance/MyJarvis.git MyJevis-r52-dev
+cd MyJevis-r52-dev
+git cat-file -e e0a919ddf1e9e6c15609d256ad4f23b7432acbe6^{commit}
+git merge-base --is-ancestor 0ae044826235fd7f7908db786dc2b186fdebf984 e0a919ddf1e9e6c15609d256ad4f23b7432acbe6
+git switch -c dev/112-platform-handoff e0a919ddf1e9e6c15609d256ad4f23b7432acbe6
+</code></pre>
+<p>这一步只取得源代码。随后逐项合入原目录的四项Linux适配，并合入最新Root正式文档，才能按第2、6节启动。若网络不可用，改用已交付完整Git bundle并核同样的对象与祖先关系；只有ZIP或SHA文本时仍视为缺真实Git基线。</p>
+<p>可用的 Git 核对命令形态：</p>
+<pre><code class="language-bash">git status --short
+git rev-parse --show-toplevel
+git rev-parse HEAD
+git cat-file -e &lt;已核验的应用提交&gt;^{commit}
+git merge-base --is-ancestor &lt;已核验基线&gt; HEAD
+</code></pre>
+<p>这些命令只适用于已经取得真实仓库的目录。公开仓库为 <code>https://github.com/ChristorpherChance/MyJarvis</code>，但分支的当前远端值仍应在取得时核对；不要把本指南保存值当成无限期锁定的远端状态。</p>
+<h3 id="section-3-3" tabindex="-1">3.3 Windows 与 112 的路径映射</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>原内容</th>
+<th>112 对应含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 项目根 <code>D:\AI\workspaces\MyJevis</code> 的固定窗口原件</td>
+<td><code>~/All-Projects/MyJevis/.migration-original/local/</code></td>
+</tr>
+<tr>
+<td>原件中的 <code>docs/…</code>、<code>artifacts/…</code></td>
+<td><code>.migration-original/local/docs/…</code>、<code>.migration-original/local/artifacts/…</code>，保持原相对结构</td>
+</tr>
+<tr>
+<td>Windows 的 <code>node_modules</code>、<code>.runtime-venv</code></td>
+<td>原件资料，不作为 Linux 活动依赖或 Python 环境</td>
+</tr>
+<tr>
+<td>Windows <code>.jarvis/.jarvis-dev</code>、历史工作副本</td>
+<td>历史及私密状态，不作为新的 Linux 生产或开发数据入口</td>
+</tr>
+<tr>
+<td>活动 Linux 开发数据</td>
+<td>passwd 账号真实 home 下 <code>~/.local/share/jarvis-dev-112</code></td>
+</tr>
+<tr>
+<td>活动 <code>artifacts/</code></td>
+<td>真实目录；按需复制已核对的公开证据，不能链接整个私有原件树</td>
+</tr>
+</tbody></table></div>
+<p>迁移是固定窗口复制，不是持续同步。窗口之后 Windows 生成的 R51/R51r1 等报告，不会因为原件目录存在就自动出现在 112。缺少链接目标时，先在原件树查；若该材料晚于快照，需要实际交付并核对后再使用，不能假称已有。</p>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-4" tabindex="-1">4 项目的架构和读码顺序</h2>
+<p>项目是 npm workspaces 单仓库，主要工作区为 API 和 Web。核心栈是 Node.js 24、TypeScript、Fastify、React/Vite、Node 内置 SQLite，以及 Pi SDK。当前核心开发不要求先引入 PostgreSQL、Redis 或 Kubernetes；软件工厂外接项目使用这些技术，不应反向误写为贾维斯核心依赖。</p>
+<h3 id="section-4-1" tabindex="-1">4.1 目录地图</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>职责与首先要读的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>package.json</code>、<code>package-lock.json</code></td>
+<td>workspace、脚本、精确依赖锁；保留 Linux 开发适配的脚本差异。</td>
+</tr>
+<tr>
+<td><code>apps/api/src/index.ts</code></td>
+<td>启动、数据根、角色门、Host/TLS、实际 listen 和关停。</td>
+</tr>
+<tr>
+<td><code>apps/api/src/app.ts</code></td>
+<td>Fastify 应用组合根：注册身份、Pi、执行、知识、语音、项目工作台、设备、费用等运行器。不要在这里伪造模块状态来绕过真实初始化。</td>
+</tr>
+<tr>
+<td><code>apps/api/src/store.ts</code></td>
+<td><code>jarvis.db</code>、登录、基础记录和审计。</td>
+</tr>
+<tr>
+<td><code>apps/api/src/v1/</code></td>
+<td>版本化业务记录、命令、事件、DTO/OpenAPI 校验；很多业务保存 <code>commandId/expectedVersion/scope/payload</code>。</td>
+</tr>
+<tr>
+<td><code>apps/api/src/pi.ts</code>、<code>pi-routing.ts</code>、<code>pi-gateway.ts</code></td>
+<td>Pi SDK、模型场景路由、会话、流式结果、取消、计量及运行输入门。</td>
+</tr>
+<tr>
+<td><code>apps/api/src/runtime/</code></td>
+<td>各实际领域运行器和路由；详细地图见下一节。</td>
+</tr>
+<tr>
+<td><code>apps/api/resources/</code></td>
+<td>Python OCR/ASR/TTS 等运行资源与依赖文件，模型和生产凭据另配。</td>
+</tr>
+<tr>
+<td><code>apps/api/test/</code></td>
+<td>API/SQLite/执行及 Pi 入口等测试；先辨别真实入口、fixture 与需要外部环境的范围。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/main.tsx</code></td>
+<td>根据 mode 选择入口；默认正式平台来自 <code>DemoApp.tsx</code> 导出的 <code>PlatformApp</code>，不是只看文件名叫 <code>App.tsx</code> 就认定是当前主页面。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/DemoApp.tsx</code></td>
+<td>共享壳、主题和导航；正式 <code>PlatformApp</code> 使用 <code>LiveProvider</code>，演示模式另有数据源。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/features/operations/</code></td>
+<td>项目工作台、监督详情、执行、资料、副本、决策与运维等页面。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/features/family/</code></td>
+<td>对话、家庭身份、语音、模型设置、个人记忆与陪伴。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/features/knowledge/</code></td>
+<td>知识来源、原件、校对、神殿与学习界面。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/project-route.ts</code></td>
+<td>项目入口与旧任务/监管 URL 解析。</td>
+</tr>
+<tr>
+<td><code>apps/web/src/api.ts</code>、<code>v1-client.ts</code>、相关 client 模块</td>
+<td>浏览器实际 HTTP、认证、命令与事件调用；改字段要同时看后端和真实调用者。</td>
+</tr>
+<tr>
+<td><code>apps/agent/src/</code></td>
+<td>远程开发节点：固定执行器、配对与签名、租约、原生进程、可靠递送与计量。使用根依赖，不臆造不存在的 agent workspace 命令。</td>
+</tr>
+<tr>
+<td><code>scripts/</code></td>
+<td>开发、构建、打包、部署、恢复、文档工具及大量历史专用工具。文件存在不等于适合现在执行。</td>
+</tr>
+<tr>
+<td><code>docs/</code>、根设计文档、<code>protoptype/</code></td>
+<td>采用规格、历史设计、使用说明和建设档案。按日期和验证范围阅读，不拿早期测试数作当前状态。</td>
+</tr>
+<tr>
+<td><code>config/</code></td>
+<td>公开示例和模型资源清单；私有服务器连接配置不在公共仓库。</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-4-2" tabindex="-1">4.2 API 运行器地图</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>领域</th>
+<th>主要源码锚点</th>
+<th>修改时联动检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>身份与权限</td>
+<td><code>runtime/identity.ts</code>、<code>v1/family-domains.ts</code></td>
+<td>管理者与成员认证、owner/scope、撤销后的会话和 SSE。选择页面档案不等于登录。</td>
+</tr>
+<tr>
+<td>文字与模型</td>
+<td><code>pi.ts</code>、<code>pi-routing.ts</code>、<code>runtime/platform-runtime.ts</code></td>
+<td>场景模型、网关、终态、部分输出、用量和工具权限。</td>
+</tr>
+<tr>
+<td>统一项目工作台</td>
+<td><code>project-workbench-runtime.ts</code>、<code>project-workbench-routes.ts</code></td>
+<td>只读 context、durable kickoff、任务归属和跨库崩溃恢复。</td>
+</tr>
+<tr>
+<td>主管判断</td>
+<td><code>project-supervisor-runtime.ts</code>、<code>project-supervisor-model.ts</code>、<code>project-supervisor-contract.ts</code></td>
+<td>目标修订、报告消费、严格判断、继续/等待/停止、纠错。</td>
+</tr>
+<tr>
+<td>输入、经验与意图</td>
+<td><code>supervisor-model-input.ts</code>、<code>supervisor-review.ts</code>、<code>supervisor-intents.ts</code>、<code>supervisor-goal-policy.ts</code></td>
+<td>完整输入、有界投影、经验版本/反例/授权、一次消费、持久意图和持续目标授权。</td>
+</tr>
+<tr>
+<td>节点实际执行</td>
+<td><code>execution-runtime.ts</code>、<code>execution-routes.ts</code>、<code>execution-templates.ts</code></td>
+<td>DTO、任务/原生会话绑定、claim、租约、grant、停止证明、签名结果与真实计量。</td>
+</tr>
+<tr>
+<td>报告原件</td>
+<td><code>supervisor-evidence.ts</code>、<code>supervisor-evidence-collector.ts</code></td>
+<td>路径、普通文件/无链接、UTF-8、大小、SHA、原件存在与采集失败分类。</td>
+</tr>
+<tr>
+<td>计划、事项、决定</td>
+<td><code>project-supervision-plan-runtime.ts</code>、<code>supervision-work-runtime.ts</code>、<code>project-decision-runtime.ts</code></td>
+<td>current plan 与历史、阶段标准、事项摘要、selected/implemented/acceptance 分开。</td>
+</tr>
+<tr>
+<td>项目自治</td>
+<td><code>project-autonomy-runtime.ts</code> 与对应 routes</td>
+<td>既有授权、停止、普通调度与主管/待 kickoff 任务的所有权。</td>
+</tr>
+<tr>
+<td>知识与收件</td>
+<td><code>knowledge-runtime.ts</code>、<code>inbox-material-runtime.ts</code>、<code>inbox-document-parser.ts</code>、<code>family-knowledge.ts</code></td>
+<td>授权原件、解析/OCR、校对、发布、精确引用与成员可见范围。</td>
+</tr>
+<tr>
+<td>家庭语音与记忆</td>
+<td><code>voice.ts</code>、<code>voice-intents.ts</code>、<code>memory.ts</code>、<code>companion.ts</code></td>
+<td>ASR→Pi→TTS、音频密钥、云授权、取消、成员隔离、实际设备播放。</td>
+</tr>
+<tr>
+<td>设备与运行服务</td>
+<td><code>cluster-runtime.ts</code>、<code>application-runtime.ts</code>、<code>remote-operations.ts</code>、<code>power-runtime.ts</code></td>
+<td>primary/standby、节点签名、固定服务操作、observer、实际资源与未知读数。</td>
+</tr>
+<tr>
+<td>提醒、天气、联网</td>
+<td><code>notifications.ts</code>、<code>weather-runtime.ts</code>、<code>web-runtime.ts</code></td>
+<td>个人授权、静默时段、真实来源和外部副作用。</td>
+</tr>
+<tr>
+<td>用量与账单</td>
+<td><code>governance.ts</code>、<code>usage-ledger.ts</code>、<code>billing.ts</code></td>
+<td>父 run 与原生累计去重、cache、known/unknown、目录估算和实际账单分开。</td>
+</tr>
+</tbody></table></div>
+<p>上表提供定位，不表示每个外部适配器或每个家庭现场都已通过验收。先从 <code>app.ts</code> 看当前注入与路由，再追该领域的真实调用链和测试，避免只改一个未被生产入口调用的 helper。</p>
+</section>
+<section class="doc-section" data-section="5"><h2 id="section-5" tabindex="-1">5 数据和配置必须隔离</h2>
+<h3 id="section-5-1" tabindex="-1">5.1 数据不只有一个数据库</h3>
+<p>API 基础数据是数据根下的 <code>jarvis.db</code>，V1 业务记录、命令回执和事件也使用这套基础库。Pi 在数据根的 <code>pi/</code> 下保存认证和会话。执行运行器另有 <code>execution/</code>；项目监管、工作台 kickoff、计划、决定、自治和监督事项也有各自目录或数据库。知识原件/处理文件、语音密钥和运行资源亦在数据树内。</p>
+<p>因此，复制一个活动 <code>.db</code> 不等于完整备份；只恢复基础库也可能留下不同步的任务、意图、会话、费用或递送状态。生产发布采用现行完整树快照与隔离恢复工具；<code>scripts/backup.mjs</code> 是较早的停止后备份入口，不能未经核对就当成覆盖现行所有新增数据域的完整生产方案。</p>
+<h3 id="section-5-2" tabindex="-1">5.2 开发环境变量</h3>
+<p>当前 112 开发启动器以白名单构造子环境，固定 loopback 地址、开发端口和真实 passwd home 数据目录。已有公开迁移报告确认它排除继承的模型密钥、生产 <code>JARVIS_*</code>、TLS、生产队列和 <code>NODE_OPTIONS</code> 等。不要通过改成 <code>env: process.env</code> 恢复一整个生产环境。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义与接手方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>JARVIS_DATA_DIR</code></td>
+<td>独立数据根；112 开发入口应固定到用户开发数据，不指向 <code>/var/lib/jarvis/data</code>。</td>
+</tr>
+<tr>
+<td><code>JARVIS_HOST</code>、<code>JARVIS_PORT</code></td>
+<td>监听地址和端口；开发为 127.0.0.1/43140，源代码独立安装默认 127.0.0.1/3140，不要在 112 混用默认值。</td>
+</tr>
+<tr>
+<td><code>JARVIS_DEV_API_TARGET</code></td>
+<td>Linux 开发 Vite 适配使用的 API 代理目标；与实际开发 API 一致。</td>
+</tr>
+<tr>
+<td><code>JARVIS_ALLOW_LAN</code>、<code>JARVIS_ALLOWED_HOSTS</code></td>
+<td>如确有 LAN 部署用途，须显式启用并列出精确主机；不允许通配地址或把地址、端口、路径、凭据混为一个 Host。日常开发优先 SSH 转发。</td>
+</tr>
+<tr>
+<td><code>JARVIS_TLS_KEY</code>、<code>JARVIS_TLS_CERT</code></td>
+<td>必须成对配置的本机文件路径；证书私钥不写入文档或仓库。</td>
+</tr>
+<tr>
+<td><code>JARVIS_NODE_CONFIG</code></td>
+<td>正式节点角色/数据根/版本配置路径；开发不要继承正式值。</td>
+</tr>
+<tr>
+<td><code>JARVIS_PYTHON</code>、<code>JARVIS_WHISPER_MODEL</code></td>
+<td>可选本地 OCR/语音运行器和已经下载的模型位置；Linux 需独立验证。</td>
+</tr>
+<tr>
+<td><code>JARVIS_PACKAGE_PYTHON</code></td>
+<td>打包器使用的 Python；Linux 可明确选 <code>python3</code>，不是运行模型的配置。</td>
+</tr>
+</tbody></table></div>
+<p>程序读取系统环境，不会自动加载 <code>.env</code>。<code>.env.example</code> 仅供理解字段，不应填写真实密钥后提交。模型通常通过平台管理页面保存；终端 Claude Code 的通道由原生客户端/CC Switch 管理，与开发平台数据库中的模型配置分开。</p>
+<h3 id="section-5-3" tabindex="-1">5.3 凭据怎样取得而不泄漏</h3>
+<ul>
+<li>平台模型：在自己初始化的开发平台中配置必要的开发模型账户；生产配置不自动复制。</li>
+<li>终端 Claude：使用运行账号已配置的通道，必要时用 <code>ccswitch</code> 查看或切换；不把私有设置转成 CLI argv、代码常量或报告正文。</li>
+<li>生产节点角色、TLS、observer 身份：由现有维护者按受保护配置和服务定义定位，只查看工作所需元数据。正式节点配置常用 <code>/etc/jarvis/node.json</code>，TLS 位于相应受保护目录；本指南不提供其内容。</li>
+<li>101 Agent：保留现有配对身份、私钥和递送账本，不重新配对来绕历史，也不上传本地 journal.sqlite。</li>
+<li>Git/SSH：使用账号自己的既有授权；迁移项目树不代表已经取得外部账号凭据。</li>
+</ul>
+<p>排错公开输出限定为字段名、版本、布尔状态、数量、错误分类、路径和指纹。不要打印整份环境、配置、原始 prompt、provider text、原始聊天、Cookie、录音或 base64 原件。</p>
+</section>
+<section class="doc-section" data-section="6"><h2 id="section-6" tabindex="-1">6 Linux 依赖和重建</h2>
+<p>已有终端环境曾核验 Node 24.15.0/npm 11.12.1、Claude Code 2.1.292、CC Switch 5.11.2、Git、ripgrep、tmux、编译工具及系统 Python。它们是当时版本，不需要为了接手无理由升级；先读当前版本。</p>
+<p>核心 TypeScript 项目要求 Node <code>&gt;=24</code>，使用内置 <code>node:sqlite</code>。API 依赖 Fastify 5、Zod 4、AJV、Pi SDK 1.0.2；Web 使用 React 19、Vite 7。精确依赖以所选提交的 <code>package-lock.json</code> 为准，不手工改成任意最新版。</p>
+<p>在已核对的独立 Linux 源码副本中：</p>
+<pre><code class="language-bash">npm ci
+npm run typecheck
+npm run build
+</code></pre>
+<p><code>npm ci</code> 在依赖缺失或锁文件变化后进行，不要在正式发布目录或原件目录运行。Windows <code>node_modules</code> 不可当作 Linux 已安装依赖。构建不会替你配置生产模型、TLS、节点角色或运行数据。</p>
+<p>Web 构建先写 <code>.dist-staging</code>，<code>scripts/promote-web.mjs</code> 最后切换 <code>index.html</code> 并保留同一 <code>dist</code> 中的旧哈希资源。API 使用 TypeScript 编译到 <code>apps/api/dist</code>。这只是在当前工作副本构建，不代表生产已发布。</p>
+<p>Python 语音/OCR 是另一个验证层：Windows 的 <code>.runtime-venv</code> 和锁定依赖不能直接搬到 Linux；Linux 对应 Python、原生音频工具、模型目录和实际引擎要按 <code>apps/api/resources/</code> 与专题说明重建。开发 API 健康 200 不证明 ASR、OCR、麦克风、扬声器或房间回声已通过。缺少依赖时如实报告该专项阻塞，不以空实现、跳过或模拟值冒充成功。</p>
+</section>
+<section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">7 一条平台改动应该怎样走完</h2>
+<ol>
+<li><strong>读目标和当前事实。</strong> 用用户目标、客观标准、已保存报告及当前真实代码确定一个有边界的任务。先定位入口和所有调用者。</li>
+<li><strong>建立独立工作副本。</strong> 来源提交、未提交修改、费用策略、技术超时/轮次/重试、验证方式写清。用户要求费用只记录，不设金额消费上限。</li>
+<li><strong>实现最窄改动。</strong> 不扩大到其它产品或未授权配置；必要契约变更同时处理服务端、DTO、实际页面和旧数据。</li>
+<li><strong>验证真实入口。</strong> 适当的定向反例、类型检查、构建，保存原失败及后续修复。已通过组不为凑记录反复运行。</li>
+<li><strong>形成可审交付。</strong> APP 提交、后续 ops/report 提交、准确包与清单、日志和已知/未知费用分开。</li>
+<li><strong>独立审查和受控发布。</strong> 源码/包核对不能自己替代上线；上线不能自己替代用户现场验收。</li>
+<li><strong>同源留档。</strong> 通过原建设工具追加记录，保留决定版本、原证据指纹、失败、未完成项和经验前提。</li>
+</ol>
+<p>如果正在做前端问题，必须验证实际用户事件路径：真实组件、实际 Button 默认类型、表单 submit、handler、路由参数及真实数据形状。SSR 或直接调用 handler 有其价值，但不能冒充真实 DOM click、浏览器会话或网络验收。</p>
+</section>
+<section class="doc-section" data-section="8"><h2 id="section-8" tabindex="-1">8 项目工作台和 101 固定 CC 监管</h2>
+<h3 id="section-8-1" tabindex="-1">8.1 两个项目对象与一个平台</h3>
+<p>“贾维斯平台建设”项目可以监管平台本身的开发和发布工具；“软件工厂”项目监管另一个业务产品。它们在同一 112 平台中，各有项目、目标、任务、原生会话和费用历史。不能把 101 当成另一套正式 Jarvis 中心，也不能把一个项目的成功回执贴到另一个项目上。</p>
+<p><strong>本版R52来自遗留在101上的贾维斯平台返修会话，目标是监管审阅容量；不是软件工厂产品任务。</strong> 7276候选已回收并发布。后继当前run <code>3c694…</code>保存为succeeded，主管S67/goal11 waiting_user且enabled=false，没有另发pause/stop或继续命令。接手仍需核后来是否有新活动、对清费用与交付范围后明确移交；不重启旧run/intent，不在101与112并行改同需求。</p>
+<p>用户未来的常规平台开发在112。遗留101平台返修完成后，可把已核候选在112独立副本审阅合并；继续保留101作为外部执行节点/工厂工作区，并不意味着所有平台改动以后仍必须经过101。平台任务与工厂任务的项目、task、工作区、native lineage、run/resultH和用量始终分开。</p>
+<p>用户在 112 终端直接用 Claude 开发平台，是一条新的日常开发入口，不会自动成为平台已登记的 Agent。若需要由平台正式派发到某个节点，仍须使用已登记的执行器与工作区合同。已有 101 正式链应保留固定原生会话和历史；不要为了绕超窗、未知用量或旧意图失败新建任务洗账。</p>
+<h3 id="section-8-2" tabindex="-1">8.2 正式运行链</h3>
+<pre><code class="language-text">用户在项目工作台发文字目标
+  → 版本保护的 kickoff 或 supervisor command
+  → 任务与 session 绑定、持续 goal policy、持久 dispatch intent
+  → 101 Agent 签名领取、原生 CC 在固定工作区执行
+  → 节点本地 journal 可靠保存日志、结果和用量
+  → 中央核对签名结果与报告原件
+  → 生成绑定 run/resultH/goal revision 的一次模型判断意图
+  → Pi 严格判断 continue / wait_user / review / stop
+  → 继续时才形成新有界 run；等待或停止时不冒执行
+</code></pre>
+<p>工作台 <code>GET /api/v1/projects/:id/workbench</code> 是只读 context；<code>POST …/workbench/kickoff</code> 才建立/恢复明确的启动流程。主管命令、adopt、reconcile、纠错都有实际副作用语义，不能当成“查看状态”调用。</p>
+<p><code>reply</code> 是执行指令；查询状态应用 GET。运行中输入的文字未必已经送到当前 CC stdin，应按界面和实际合同说明是下一轮指令、草稿还是待本人回答。<code>reconcile</code> 也可能在消费有效新结果后触发判断及后继，不能说成纯只读。</p>
+<h3 id="section-8-3" tabindex="-1">8.3 修改这些地方时必须保留的门</h3>
+<ul>
+<li><code>commandId</code> 相同正文重放返回原回执，异正文拒绝；版本冲突刷新和对账，不盲重 POST。</li>
+<li>pending kickoff 有持久归属，普通调度不能在跨库空隙捡走孤儿任务；paused/blocked 或有旧 run/session 的任务不能悄悄新建或自动恢复。</li>
+<li>claim 仍核对项目、任务、机器、工作区、原生会话、目标修订、授权 generation、source run/resultH 和有界 window。</li>
+<li>目标的一次持续授权不等于无限工具权限；每轮仍有技术窗口、超时、重试、停止与撤权门。10M 是当前技术软窗口，不是金额上限，也不能冒称 CLI 硬 token cap。</li>
+<li>未知历史用量不能写 0；已经发生的用量即使超过原窗口仍需真实入账，不能拒收后当作没发生。</li>
+<li>已 complete/failed/uncertain 的模型意图保原历史；不重放同一次提供方调用。新业务应有合法的新 goal/run/source binding。</li>
+<li>停止需要对应节点的真实收尾证明；页面显示停止请求、CLI exit0、无输出或网络断开都不单独证明进程组已空。</li>
+<li>Agent 私有 journal 的 ACK、重送、检查点与本机身份必须保留；不要删除 journal 解决“卡住”。</li>
+</ul>
+</section>
+<section class="doc-section" data-section="9"><h2 id="section-9" tabindex="-1">9 主管报告和自动判断合同</h2>
+<h3 id="section-9-1" tabindex="-1">9.1 CC 最终反馈</h3>
+<p>当前严格反馈对象有七个字段：<code>state</code>、<code>summary</code>、<code>question</code>、<code>options</code>、<code>recommendedOption</code>、<code>evidence</code>、<code>nextSuggestion</code>。按实际 schema 填写；<code>question</code> 使用字符串，没有问题时写空串。已知非 <code>needs_decision</code> 状态的精确 <code>question:null</code> 有中央兼容处理，但不要把它当成可以忽略其它类型错误的通行证。</p>
+<p>最终总结应先写用户能理解的结果、问题和下一步，再提供小份事实报告。优先独立 UTF-8 JSON/TXT 事实文件，约 1.5–4KiB；完整日志、diff、ZIP 另存，事实文件只索引其真实相对路径、字节数和 SHA-256。不能把只列 H 的索引冒充模型已经读到了那些原件。</p>
+<p>当前原件采集硬门为最多 30 件、单件 32768 字节、合计 262144 字节；还要满足安全相对路径、普通文件、无链接、非空、UTF-8、精确哈希等条件。这个限制与 Pi 完整输入限制独立。大 ZIP、整树清单和大 diff 不应直接塞进 <code>evidence</code>。</p>
+<p><code>SUPERVISOR_EVIDENCE_SIZE_INVALID</code> 等采集错误可能覆盖多种分支；未取到具体安全诊断前，不猜某个文件“肯定超限”。合适的用户文案是“报告回传未通过采集检查”，随后用实际原件定位原因。</p>
+<h3 id="section-9-2" tabindex="-1">9.2 Pi 判断</h3>
+<p>共享受信合同在 <code>runtime/project-supervisor-contract.ts</code>。Pi 必须返回六个精确键：</p>
+<pre><code class="language-text">action, directive, reason, selectedOption, criteria, experienceReferences
+</code></pre>
+<p><code>review</code> 要逐字使用输入的每条 criterion，唯一、完整覆盖、全部 <code>met:true</code>，并引用已验证的精确 path/SHA 对。缺证、改写标准、未知或未满足时只能依据真实情况 continue、wait_user 或 stop；不能把自述成功升级成产品验收。</p>
+<p><code>experienceReferences</code> 必须按实际输入逐项回应；输入为空时明确 <code>[]</code>。不得把 exclusions、原件正文里提到的 ID 或已失效版本当作可采用经验。未验证不能 adopted；前提、版本、snapshotHash、counterexample、superseded/deprecated 和采用原因都要保留。</p>
+<h3 id="section-9-3" tabindex="-1">9.3 完整输入的计量与容量门</h3>
+<p>当前R52的完整受信合同与投影JSON使用同一131072B（128KiB）UTF-8上限。运行器、适配器和真实PiService.run沿同一常量/完整text口径；旧R51r1的64KiB门及Factory goal9超限原件保留。其它purpose的32000字符门、32K Token上下文与4096输出声明保持；字节不是Token。生产发布健康不等于provider接受任意128KiB输入。</p>
+<p>被排除经验只投影 ID、版本、H 和固定原因等元数据，完整冻结审计仍在私有意图中。目标、标准、更正、选中经验、已核原件、绑定和反例所需语义不能为过门被默默截断。必需内容仍超过上限时明确阻断，不把 truncated 参考当作完整权威。</p>
+<p>原R51的helper测试绕过真实PiService，旧入口仍按32000字符拒绝，故独审拒发布；R51r1另补真实PiService+SDK离线driver入口组。R52又保存一组生产projection→adapter→真实PiService.run→SDK离线driver的受控组：1/1、4driver、0fetch，构造81717B/25合成原件/49排除与131072B多字节边界可达，超限0新增driver，partial/otherpurpose仍拒异常。它不是实际Factory原prompt回放或真实provider接受；原64KiB组未重跑，源码/包通过不能证明128KiB真实提供方容量。</p>
+</section>
+<section class="doc-section" data-section="10"><h2 id="section-10" tabindex="-1">10 测试怎样选才能有用</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>改动</th>
+<th>最少应核对的入口</th>
+<th>不能替代的验收</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>API/DTO</td>
+<td>实际路由、validator、SQLite 与版本/重放反例</td>
+<td>只测内部 helper 不能证明 HTTP 合同可用。</td>
+</tr>
+<tr>
+<td>Pi 输入/终态</td>
+<td>真实 PiService 入口加受控 SDK driver；合法与超限/partial 反例</td>
+<td>fake adapter、离线 driver 不是真实 provider。</td>
+</tr>
+<tr>
+<td>工作台按钮</td>
+<td>实际 Button 和 form/handler/params；已知和未知数据</td>
+<td>SSR、pattern 匹配不是真实 DOM 点击。</td>
+</tr>
+<tr>
+<td>项目路由</td>
+<td>初始 URL、旧 task focus、返回/刷新和未知任务 fallback</td>
+<td>不能把未知任务送到别的项目。</td>
+</tr>
+<tr>
+<td>节点协议</td>
+<td>当前 DTO、claim、签名结果、ACK/journal、停止和迟到结果</td>
+<td>单 child/helper 不等于 HTTP→runner→真实 CC 全链。</td>
+</tr>
+<tr>
+<td>发布/恢复</td>
+<td>全 payload/manifest、完整数据快照、隔离恢复、服务账号权限和独立 health</td>
+<td>包存在、安装成功或一次 is-active 不等于业务可用。</td>
+</tr>
+<tr>
+<td>语音/OCR</td>
+<td>受控样本、实际引擎和最终现场终端分层</td>
+<td>健康接口不证明声音、收音和识别效果。</td>
+</tr>
+</tbody></table></div>
+<p>根脚本 <code>npm run typecheck</code> 检查工作区；<code>npm run build</code> 构建 Web 和 API。<code>npm test</code> 运行 API 测试组。按当前任务需要选择具体受影响测试，不为本指南重跑历史全部测试、模型或部署。</p>
+<p>例如Pi入口改动可先读本版<code>apps/api/test/pi-supervisor-entry-r52.test.ts</code>及其保存TAP（历史入口修复另见R51r1组），再决定本次变更是否需要同组复验。需要执行单个 API 测试时使用仓库实际依赖入口，例如：</p>
+<pre><code class="language-bash">node --import tsx --test apps/api/test/&lt;本次定向测试&gt;.test.ts
+</code></pre>
+<p>命令中的占位符必须替换为实际已读文件，不能直接复制运行。涉及外部环境或副作用的历史 scripts 先读参数和固定目标；不要靠文件名含 <code>test</code> 就假定无生产操作。</p>
+<p>保存测试命令、退出码、通过/失败/跳过、原始安全日志与指纹。首次失败和后续通过分开，不按文件名 <code>final</code>、<code>verified</code> 或作者总结覆盖真实失败。根建设记录工具只有在自身改变或相关问题出现时才重测，不为追加记录重复跑其测试。</p>
+</section>
+<section class="doc-section" data-section="11"><h2 id="section-11" tabindex="-1">11 打包与旧浏览器资源兼容</h2>
+<p><code>scripts/package-capture-release.mjs</code> 只生成本地候选包，不构建、不联网、不安装、不启服务。它核对选定提交对象、索引/跟踪路径、原始 Git blob、当前字节、API sourcemap、编译身份/时序，以及 Web 离线资源有限闭包。</p>
+<p>实际参数形态：</p>
+<pre><code class="language-bash">JARVIS_PACKAGE_PYTHON=python3 node scripts/package-capture-release.mjs \
+  --version=&lt;新版本&gt; \
+  --source-commit=&lt;真实应用提交全SHA&gt; \
+  --api-dist=&lt;本次API编译目录&gt; \
+  --web-dist=&lt;本次Web编译目录&gt; \
+  --output=&lt;全新候选输出目录&gt;
+</code></pre>
+<p>先完成并保存本次必要验证，再打包；不为了“报告还没结束”重跑已过 build。APP 提交应先于打包；报告和 release-specific sidecar 的后提交可以另列 FINAL/ops，不能拿后者冒应用包中原始 sourceCommit。</p>
+<p>基本交付三件为版本 ZIP、相邻 <code>release-manifest.json</code> 和 ZIP <code>.sha256</code>。包不含 node_modules、生产配置、证书、模型、运行数据或 <code>.git</code>，Linux 依赖另核。构建关联检查不是可复现构建证明，文件类型许可也不是文本隐私审查。</p>
+<p>旧网页会继续请求它缓存的哈希 chunk。曾出现旧资源缺失时服务器把 SPA 的 index.html 以 200 返回给 JS URL，造成页面异常；不能仅用 HTTP200 判断资源正常。新包需要保留已核验的旧 immutable asset 闭包，逐文件 H/size 核对，并纳入新 manifest，不能伪称旧 manifest 已包括新增补件。</p>
+<p>当前受控包核已逐代保留旧资源；下一版仍须以实际前版包和清单为基准。<code>promote-web.mjs</code> 保留工作副本 <code>dist</code> 的旧文件，不自动解决全新目录或跨机器发布时的旧资源缺失。</p>
+<p>101 Agent 协议未变时，平台专用包不要求无意义重建 node ZIP 或伪造新版本 marker。只有实际 Agent/运行输入变化才做相应同源节点包与切换；此前版本必须核对关键源码、builder、编译包和配对/递送状态。不要因平台升版顺手重启或清空 101 journal。</p>
+</section>
+<section class="doc-section" data-section="12"><h2 id="section-12" tabindex="-1">12 正式发布与回退</h2>
+<h3 id="section-12-1" tabindex="-1">12.1 目前采用的阶段</h3>
+<pre><code class="language-text">source 独审 + package 全件核对
+  → stage
+  → install
+  → inspect
+  → 全新 operation 的 activate-only sidecar
+  → 独立新 purpose health
+  → 实际页面与业务验收
+</code></pre>
+<p><code>scripts/capture-managed-release.py</code>保留stage/install/inspect/health合同；本版实际激活源为<code>scripts/capture-activate-r52-sidecar.py</code>，H <code>736e5c25043e4355a24be50ff2194a07291a8a6b719fdd20733b8eaaa3d3b309</code>。它从上一版仅改EXPECTED/RELEASE/APP/ZIP_HASH四named literal，650＋250预算、锁、权限、readiness、完整快照、隔离恢复和回退主体保持。完整恢复工具仍是<code>scripts/capture-release-recovery.py</code>。R52已在全新operation完成激活和独立健康，完整快照/隔离恢复为4,540,811,766B、64文件/59目录，10个SQLite可读且manifest相同；旧operation不重放。</p>
+<p>历史R51r1 sidecar固定expected R50；本版R52 sidecar固定expected R51r1及本版APP、ZIP H。这些是各版来源，不是下次可以照抄的输入。下一版形成新的明确候选、独审和新operation，不复用旧once、旧失败或旧CLOSED operation。历史 Windows Root helper 的私有路径/认证入口不会因为迁到 112 就自动可用，不能作为用户日常开发必须依赖的控制器。</p>
+<h3 id="section-12-2" tabindex="-1">12.2 激活不可丢的保护</h3>
+<ul>
+<li>新旧 release、APP、ZIP、manifest、install、配置 H、原工具 H、操作 UUID 和私有输入全部绑定；不从现场重新采样后把漂移值写成新的 expected。</li>
+<li>拿独占发布锁，核对当前 release/config，确保没有另一个激活同时切换。</li>
+<li>停机前检查空间；在当前预算内完成完整数据快照和独立 <code>restored-check</code>，核对全部文件/数据库及 manifest；不只备份某个 DB。</li>
+<li>正常阶段和回退阶段保留有界 readiness 等待。一次 activation 不重试，不等于服务刚 start 就必须瞬间响应；就绪等待必须共用既定预算。</li>
+<li>本轮 sidecar 使用 normal 650 秒、rollback reserve 250 秒、overall 900 秒的技术界限；以后改变应作为新选择记录，不能倒填成旧失败原因。</li>
+<li>正常写配置和回退都保留原 UID/GID/mode，并且原子写入。已知现场正式配置元数据曾核对为 root/组973/0640；UID/GID 是该现场绑定，不可机械套到另一台新机器。</li>
+<li>首个失败、phase、子进程状态、snapshot/restore、readiness、rollback 和最终 source/manifest/self/input/recovery 指纹持久保存；未知错误不变成“肯定超时”。</li>
+<li>回退代码/配置不自动把旧数据覆盖当前生产。<code>liveDataRestored:false</code> 不是丢功能，而是保留切换期间新数据的边界；真实数据恢复须按另一个明确范围执行。</li>
+<li>producer qualified 与独立 health 是两个回执；还要实际页面和业务验收，不能用 publisher 自签“产品通过”。</li>
+</ul>
+<p>现有 restore 校验副本可在严格核对保留的完整 snapshot/payload、清单和全 H 后按独立维护范围删除，完整备份与 live data 不一起删。原始 sidecar 的排序紧凑 JSON 与 stdout JSON 字节不同，应按各自真实编码核 H，不能拿 stdout H 直接冒远端 <code>activation.json</code> H。</p>
+<h3 id="section-12-3" tabindex="-1">12.3 主备不是自动接管</h3>
+<p>112 为正式中心；101 平台冷备与独立开发节点分开。代码部署相同、旧快照完整、observer active，都不能证明 101 当前资料新鲜或可以自动接替。旧恢复点新鲜度、角色代次、唯一主、旧主隔离、任务/外部调用对账和语音启用仍按已有主备文档检查。</p>
+<p>不能因 112 网络失联就启动另一套 primary；不能把冷备平台启动和 101 开发节点继续执行混为一件事。主备演练与平台功能交付分别留证。</p>
+</section>
+<section class="doc-section" data-section="13"><h2 id="section-13" tabindex="-1">13 用户界面应该保持怎样的产品含义</h2>
+<p>项目、项目管理和开发监管统一为一个项目入口。首屏优先让用户一眼读到当前项目阶段、当前运行、最近指令、CC 回应、本轮判断、下一步和阻塞；资料、副本、决定、技术绑定、完整目标与完整标准按需展开。</p>
+<p>保留旧 <code>tasks</code>、任务深链接和 <code>supervision</code> URL 的兼容解析；部分旧 URL 可以继续保留原地址但渲染同一工作台，不要求为了“合并”强制改 URL。未知 task 应提示未匹配，不能跳到别的项目。资料/副本登记入口必须可达，新项目不能要求先存在不可创建的副本而无入口。</p>
+<p>显示状态依据实际绑定 run 和当前 goal。旧 summary 标明上次判断；<code>queued</code> 不写成已运行；当前轮 <code>achieved</code> 不写成项目所有阶段完成。最新 blocked/failed 反馈没有新成功证据前，不写“暂无问题”。waiting_user 的本人问题要能看见，完整问题和理由仍可展开；不要被旧 issue 或技术 directive 吞没。</p>
+<p>未知 Token/费用显示未知，不对缺字段直接 <code>toLocaleString()</code> 或补 0。共享 <code>Button</code> 默认 type 是 button；表单提交按钮必须明确 <code>type=&quot;submit&quot;</code>，并验证真实事件链。</p>
+<p>R51r1和R52的有限页面观察已确认六卡、折叠目标、能力/阶段分组和中文容量提示。R52真实新增两次判断，但页面简报仍曾用旧事项摘要遮住最新主管判断，需要自动以最新绑定决策/运行证据为主真源并同步简报。最终事项33已由Root手工纠正，标题“等待本人”的技术阻塞语义仍未修。上述观察不证明全部页面、手机交互或独占SSE均验收；正式入口与LiveProvider仍按真实路由辨别。</p>
+</section>
+<section class="doc-section" data-section="14"><h2 id="section-14" tabindex="-1">14 建设档案和候选历史不能互相覆盖</h2>
+<p>正式规则见 <a href="../AGENTS.md">AGENTS.md</a>。有意义的改动通过 <code>scripts/construction-records.mjs</code> 追加；建设日志 MD/HTML 由原工具生成，不手写 events.jsonl 或生成日志。开发、测试、包、发布、现场验收分别记录。</p>
+<p>本轮有三条需要特别保留的历史：</p>
+<ol>
+<li><strong>Root正式建设链。</strong> 本轮工作前为329；其它线程已依次追加330保留策略、331日志清理、332保留计划以及333–337的安全门修复、实际清理、恢复点核验和收尾同步。编制前当前337、head <code>68881e6157898cbd076750dc020916ea9a1f8b1383f3cd873a3034b9d49b7fa1</code>。迁移322–328、AI终端说明、各时点current block与全部后继原文完整保留。</li>
+<li><strong>CC 候选建设链。</strong> R51/R51r1 来源中有候选 CC 记录至 308；与 Root 链有历史分叉。候选某次追加被 <code>PRIVATE_VALUE_NOT_ALLOWED</code> 明确拒绝，原失败保留，没有绕过保护。</li>
+<li><strong>迁移原件快照。</strong> 它保留捕获时的文件，不持续跟随以后本机记录。不能根据原件树有 docs 就认定其中包含最新 Root 正式链。</li>
+</ol>
+<p>不能将候选308账本、日志或整份docs覆盖Root正式337条及后继历史。接手导入新源码时分别审代码和文档，以执行前完整正式前缀为追加基线。旧按329准备的330工作流永久仅保稿，不执行；后继记录可能在本指南后追加，编号及head每次现读，不能硬编码338或任何下一条。</p>
+<p>公开证据必须是实际可读的普通文件，保持路径/字节/H。原建设工具会拒绝经符号链接的证据；不要把私有整个原件树 symlink 到活动 artifacts。需要的公开报告核对后复制，私密原件继续私存。</p>
+<p>重要决定保存当时真实选项、原因、适用环境、影响、实施证据与回退条件；同步项目“决策记录”。selected 是选定，implemented 可以只是明确的一段源实施记录，均不能自动变成独立验收。纠错追加关联新版本，不洗掉原错误。经验保留前提、版本、反例和停用/替代关系，验证前仅候选，不自动发布 Skill。</p>
+</section>
+<section class="doc-section" data-section="15"><h2 id="section-15" tabindex="-1">15 费用和空间</h2>
+<p>用户指定费用只记录、不设金额上限。技术窗口、超时、轮次和重试是执行边界，不是金额 cap。未知用量和未知金额分开保留；目录估算不是供应商账单，cache read 已含 input 时不能重复加，原生 session 累计也不能再加到每个 parent run 的用量上。</p>
+<p>本指南固定切面的已知累计为109,367,601 Token、catalog estimate USD67.884218，非供应商账单；按唯一父run追加，含平台自动后继3c694及工厂9531、667f，未重复7276或原生累计。Pi/internal、账单及历史未知部分保持未知，不写零。这是保存时点总账，后继实际用量另追加；费用与产品完成率分开。</p>
+<p>112 空间曾直接阻止发布。原清理严格核对两份 disposable restored-check 后删除约9.00GB逻辑数据；清理后13.64GB是当时可用空间，不能写成删除13.64GB。</p>
+<p>存储治理现在要区分三步：330选定策略；331已精确删除8份旧rotation，并执行官方journal rotate/vacuum，日志分配占用减少6,232,645,632B（约6.23GB）。同期文件系统free只增加4,046,274,560B，报告注明可能包含并发维护，不能把两种指标混为同一释放量。journald已reload而非restart，SystemMaxUse=256M、MaxRetentionSec=7day；它们是容量和时长上限，不保证一定保足7天。平台/observer未因这次日志维护重启。</p>
+<p>332是当时仅选定的计划；后续333–337已完成安全门修复、136个目录和三项残留清理、保留点完整验证，并实际安装原生<code>jarvis-backup-retention.timer</code>每小时维护。R52发布后按同一策略又验证最新两点并清理两目录。10:09 UTC最终保留R52、R51r1关联的两份<strong>发布前恢复点</strong>，零completed restored-check；四次恢复内容verify覆盖三个不同恢复点。release标签是关联发布目标，不表示快照就是发布后实时数据。</p>
+<p>小时维护不依赖本机Codex，与发布共用排他锁；占锁跳过，未知/不完整材料保护。有清理对象时先完整核验保留两份，自动范围仅旧完整snapshot payload及已完成restore副本，不自动删程序release或pre-*。10:09 UTC保存的两payload、四个程序版本、约168GB可用空间及累计约173GB目标分配/日志释放是固定时点指标，不是实时余量。下一发布先读最新策略、锁和恢复点，不重放旧清理attempt，不按年龄递归删备份、原生会话或journal。</p>
+</section>
+<section class="doc-section" data-section="16"><h2 id="section-16" tabindex="-1">16 当前未完事项和下一工作顺序</h2>
+<h3 id="section-16-1" tabindex="-1">16.1 第一优先是让接手基线可信</h3>
+<ol>
+<li>核对 112 普通账号当前目录、Linux开发适配、独立数据与 Git 状态，保存只读事实。</li>
+<li>保原目录建立真实 Git 基线/独立副本，对齐已发布R52应用与原作者历史，同时单独保留 Root 正式档案与迁移适配。</li>
+<li>确认本指南及本批正式记录实际已交付到112，引用的公开文件存在；未到的只列缺项，不伪造同名文件或指纹。</li>
+<li>在新副本先配置检查、安装必要 Linux 依赖、类型与构建，按当前目标选定向验证，不先重跑历史模型。</li>
+</ol>
+<h3 id="section-16-2" tabindex="-1">16.2 平台本身仍要按真实目标推进</h3>
+<ol>
+<li><strong>监管简报使用最新真源。</strong> 以当前goal绑定的运行、反馈和最新主管决策生成首屏，再自动同步事项/计划简报；旧资料不能把当前判断回退成“128KiB仍是候选”。本轮Root转抄事项33仅修正资料，尚未修自动同步代码。技术材料不足不应只写“等待本人”，避免暗示用户还需重复授权。</li>
+<li><strong>跨轮完整原件连续性。</strong> goal10第一轮26件中完整保留了旧25件/49,501B；自动补证轮9件只重交其中4件，缺实际测试、数据库和清理等21个旧路径。材料不能因换轮丢失，也不能无可信来源绑定就由Root伪合并成通过；需在112独立源码副本设计并验证有界、可追溯的连续收集。</li>
+<li><strong>明确签名粒度和具体缺件。</strong> f9签名回传的小事实索引关联历史<code>report.json</code> H <code>083379…</code>，后继已收该完整报告；这不证明报告生成run就是f9。仍缺<code>reports/supervision-20261017-1843/binding.json</code>，准确H为<code>c3ffa4cc7c4334f0c6bf7f45e9c25bc8105cf3f4319adf435a67395f31b9fe2a</code>。先按已存在原件取证，不伪造绑定或为找来源重跑测试。报告中的36是全suite跳过总数，不是36个Policy case。</li>
+<li><strong>dirty/index无损交付。</strong> 完整启动脚本、source-link、commit/baseline等补件已收到；超单件32KiB的dirty证明和二进制index仍缺可验证的无损运输。保原文件、权限、H、严格验收与大小门，不能截断后冒全量或用摘要/H替代完整待审内容。Root当前部署事实也应稳定进入新合法审阅上下文。</li>
+<li><strong>真实运行边界和专项验收。</strong> R52下两次provider正常返回真实判断，已见continue→自动补证→wait_user；不证明任意128KiB输入或普遍Token适配。Factory最终S71/goal10 waiting_user、enabled=false，无后继；事项33/计划B16仍C5待验，C6未签，全部12能力＋5监管、customer12和正常全自治均未通过。先修材料/呈现技术缺口，再以新合法报告判断，不重旧intent，不靠新任务洗历史。</li>
+<li><strong>整个平台后续功能。</strong> 手机与各页面真实状态、长期连续运行/停止/撤权/重启矩阵仍按具体场景验收；语音/OCR/ASR、房间麦克风/回声、自然声音、专业唤醒/声纹、离线投递、外部账单和硬件适配逐专项核实。持续主备数据复制、故障接管/回切和网络分区唯一主不能由observer健康或冷快照替代。</li>
+<li><strong>开发与运维资源长期分开。</strong> Linux源码/Git对齐还未发生，现有四项开发适配和独立数据保留。原生两恢复点维护已实施；后继发布应核最新恢复点、磁盘、并发锁及活引用，不回用旧“备份仅方案”结论，也不让构建和原件挤占生产资源。</li>
+</ol>
+<p>确定下一任务时，先讲用户要看到的结果和客观标准，再写技术范围。不把全部历史欠项一次塞给一个 CC run，也不因存在未测矩阵就拒绝所有小步发布。</p>
+</section>
+<section class="doc-section" data-section="17"><h2 id="section-17" tabindex="-1">17 可以直接给 Claude Code 的开工提示词</h2>
+<p>下面文字用于 112 上的平台源码工作；把最后的“本次目标/标准”换成用户本次要求。它不授权新的生产操作或费用上限。</p>
+<pre><code class="language-text">你接手的是贾维斯平台项目本身，软件工厂只是受监管专项。请在112普通账号的独立开发副本工作。
+
+先读活动根CLAUDE.md、AGENTS.md，并明确读取handoff/20261018-r52/内实际已交付的规则、docs/贾维斯平台开发接手指南.md和正式建设档案/日志最新记录；快照只读，不作为开发cwd。涉及工厂再读首项目计划。先核当前目录、Git对象/分支/dirty、来源版本、Linux开发启动器和数据隔离。当前迁移目录曾确认没有.git，不可直接git pull，也不可git init后冒称有上游历史。
+
+保留已有迁移原件、Linux dev-112适配、开发数据和Root正式建设链。不要将候选CC308账本覆盖Root正式337条或后来记录；真正next编号以当前账本为准。先保存差异并建立真实来源的独立工作副本，再对齐代码。
+
+日常开发只用127.0.0.1:43140/45173和真实home下jarvis-dev-112数据；不读生产私密正文，不连接生产数据库/队列，不启动旧原件里的平台或执行器。终端Claude通道与平台模型设置分开。费用只记录无金额cap；本任务采用明确的超时、轮次、重试和验证范围，未知量价保持未知。
+
+若接续遗留R52同需求，727666…只是已回收并发布的候选来源。后继当前3c694…已保存succeeded、S67/goal11 waiting_user/enabled=false；开工仍核最新状态，明确移交后才在112继续，不同时在101和112改同一需求，不重旧run/intent。平台与Factory绑定严格分开。
+
+按本次目标定位真实入口及所有相关调用者，给最窄实现。任何状态或操作要有真实证据，不用自报、Token、耗时、模拟进度证明完成。保存首个失败、修复、定向测试、types/build和实际退出结果；不要重跑已经通过且本次未影响的旧组，也不为记录额外调用模型。
+
+如触及监管，保严格反馈/原件/criteria/citation/经验前提版本反例/授权与stale门；不重放已关闭模型意图或旧run，不新任务洗账，不把report-only achieved写成全项目完成。无法完成时保原件并明确阻塞和未做。
+
+结束给出：APP提交、后续ops/report/final提交关系、变更文件、真实验证范围及失败/跳过、包/清单/H、已知父run用量与未知部分、未完事项。小份UTF-8事实报告约1.5–4KiB，完整日志/diff/ZIP只索引并保原件。需要发布时形成可独审候选，使用新operation和现有完整快照/隔离恢复/权限/回退门；不自行重放旧维护工具。
+
+按AGENTS使用原construction-records工具追加同源记录；只在正确最新基线上生成，不手改ledger或生成日志。重要决定同步项目版本记录，selected、实施和验收分开。不要输出密钥、私配置、raw chat/provider prompt、Cookie或录音。
+
+本次目标：&lt;用户本次目标&gt;
+客观验收标准：&lt;可观察的2至4条结果&gt;
+范围与技术边界：&lt;允许改动/超时/轮次/重试/需要的验证&gt;
+</code></pre>
+</section>
+<section class="doc-section" data-section="18"><h2 id="section-18" tabindex="-1">18 接手完成时的交付检查</h2>
+<h3 id="section-18-1" tabindex="-1">开发目录</h3>
+<ul>
+<li>能说明当前源自哪个真实对象，哪些是Linux适配、哪些是未提交修改；不靠 release 文本冒 Git 对象存在。</li>
+<li>112普通账号可进入独立副本，Node/npm/Claude可用；开发代理、数据目录、端口和退出收尾符合既有入口。</li>
+<li>原件、开发数据、Root正式档案和生产数据不被覆盖；缺失历史链接可定位原件或明确待交付。</li>
+</ul>
+<h3 id="section-18-2" tabindex="-1">本次代码和验证</h3>
+<ul>
+<li>给出真实APP/ops/report/final关系，保原作者；真实入口、类型和构建结果都有当时原件与指纹。</li>
+<li>fixture、SSR、HTTP/SQLite、离线SDK driver、真实provider、浏览器、真实CC、部署分别写范围，不相互冒充。</li>
+<li>所有异常写清原因已证还是未知、采取的处理及真实结果；成本未知不写零，已知不重复累计。</li>
+</ul>
+<h3 id="section-18-3" tabindex="-1">发布与用户结果</h3>
+<ul>
+<li>包、manifest、checksum及旧资源闭包可核；新旧版本、源码、配置和恢复输入一致。</li>
+<li>新operation的完整快照、隔离恢复、原权限保留、失败/回退及独立健康都有结果；未发布则明确只是候选。</li>
+<li>原用户入口实际可操作，首屏简明；项目阶段、本轮判断与全项目完成清楚分开；继续/停止/等待符合真实绑定。</li>
+</ul>
+<h3 id="section-18-4" tabindex="-1">档案和接续</h3>
+<ul>
+<li>正式指南、同源HTML（如按现有文档流程生成）及建设记录在用户实际112目录可读；没有把本机草稿当作已交付。</li>
+<li>新增记录基于执行前当前链，完整保留其它线程已追加的330–337以及并发文档改动；旧330准备稿永不执行。</li>
+<li>交付一份下一步摘要：当前目标、未解决问题、下一动作、相关任务/报告/决定、真实来源指纹；技术全文按需查看。</li>
+</ul>
+</section>
+<section class="doc-section" data-section="19"><h2 id="section-19" tabindex="-1">19 主要参考和证据入口</h2>
+<p>这些链接是入口，不应将历史正文的旧版本、测试数量或状态当成当前事实。</p>
+<h3 id="section-19-1" tabindex="-1">长期规则与使用</h3>
+<ul>
+<li><a href="../AGENTS.md">项目工作约定</a>、<a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">建设档案</a>、<a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.md">建设日志</a>。</li>
+<li><a href="112%E5%BC%80%E5%8F%91%E8%BF%81%E7%A7%BB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">112开发迁移使用说明</a>、<a href="112%E7%BB%88%E7%AB%AFAI%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md">112终端AI开发环境</a>。</li>
+<li><a href="GitHub%E6%BA%90%E7%A0%81%E5%BF%AB%E7%85%A7%E8%AF%B4%E6%98%8E.md">源码快照边界</a>、<a href="%E5%90%8E%E5%8F%B0%E5%AE%8C%E6%95%B4%E5%AE%9E%E7%8E%B0%E4%B8%8E%E9%AA%8C%E6%94%B6.md">后台实现与历史验收</a>。</li>
+<li><a href="execution-runtime.md">执行与节点</a>、<a href="%E5%BC%80%E5%8F%91%E7%9B%91%E7%9D%A3%E4%B8%8E%E5%8F%8C%E6%9C%BA%E6%8E%A5%E5%85%A5.md">开发监督与双机接入</a>。</li>
+<li><a href="Linux%E4%B8%BB%E5%A4%87%E9%83%A8%E7%BD%B2%E4%B8%8E%E9%AA%8C%E6%94%B6.md">Linux主备部署与历史验收</a>、<a href="%E5%A4%9A%E8%8A%82%E7%82%B9%E4%B8%BB%E5%A4%87%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%A5%E6%9B%BF%E6%96%B9%E6%A1%88.md">主备接替方案</a>。</li>
+<li><a href="%E7%81%B5%E6%84%9F%E7%9F%A5%E8%AF%86%E8%AE%B0%E5%BF%86%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md">知识与记忆使用</a>、<a href="%E4%B8%AD%E5%A4%AE%E8%AF%AD%E9%9F%B3%E4%B8%8E%E5%AE%B6%E5%BA%AD%E8%BA%AB%E4%BB%BD%E5%AE%9E%E7%8E%B0.md">中央语音与家庭身份</a>。</li>
+<li><a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E9%A6%96%E9%A1%B9%E7%9B%AE%E4%BA%A4%E4%BB%98%E8%AE%A1%E5%88%92.md">软件工厂首项目计划</a>、<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E7%9B%AE%E6%A0%87%E9%A9%B1%E5%8A%A8%E9%AA%8C%E6%94%B6%E4%B8%8E%E6%8E%A8%E8%BF%9B%E8%AE%A1%E5%88%92.md">目标驱动验收与推进</a>、<a href="%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%8E%82%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E4%BA%A4%E4%BB%98%E6%80%BB%E7%BA%B2.md">无人值守交付总纲</a>。这些是专项，不取代平台总目标。</li>
+</ul>
+<h3 id="section-19-2" tabindex="-1">本轮固定保存证据</h3>
+<ul>
+<li>112开发目录只读切面：<code>artifacts/cc-supervisor-r43/r51-r1-112-development-handoff-state-24ca028a-6ae6-410c-89f4-b9971a829b88.json</code>，2637B，SHA-256 <code>322ab0342d8af877e9e3c57e571eccbc2a6053eb785dae9737503a45059a4efa</code>。</li>
+<li>Linux迁移与开发入口：<code>artifacts/migration-112/final-migration-public.json</code>、<code>artifacts/migration-112/linux-development-overlay-public.json</code>、<code>artifacts/migration-112/development-final-public.json</code>。入口脚本已核指纹 <code>b23b83428ad86b782bffd8603e210ce86d5d2b09274e95e0e2165a4e8c839b5d</code>，6807B。</li>
+<li>R51拒发布源码审：<code>artifacts/cc-supervisor-r43/r51-goal9-independent-application-delta-source-review.json</code>。</li>
+<li>R51r1真实入口修复源码审：<code>artifacts/cc-supervisor-r43/r51-r1-goal10-independent-application-delta-source-review.json</code>。</li>
+<li>R51r1包核：<code>artifacts/cc-supervisor-r43/r51-r1-received-platform-package-independent-verification.json</code>。</li>
+<li>历史R51r1激活：<code>artifacts/cc-supervisor-r43/r51-r1-root-sidecar-activation-c6e2f76b-401d-4c85-9465-5798f7e297ca-outcome.json</code>；独立健康：<code>artifacts/cc-supervisor-r43/r51-r1-newpurpose-independent-health-f56b783e-7ace-414d-af45-a475481c2e4b.json</code>。</li>
+<li>历史有限UI：<code>artifacts/cc-supervisor-r43/r51-r1-live-pre-review-finite-ui-acceptance.json</code>；当前源码PR7：<code>artifacts/cc-supervisor-r43/r52-source-pr7-publication-receipt.json</code>，674B/H87a94d99…，正常FF至e0a919…、OPEN/DRAFT、未合并。</li>
+<li>真实后继与纠错保存审：<code>artifacts/cc-supervisor-r43/r51-r1-factory-goal8-saved-chain-and-budget-correction-independent-review.json</code>；费用：<code>artifacts/cc-supervisor-r43/r51-r1-four-parent-runs-usage-addendum-for-record330.json</code>、<code>artifacts/cc-supervisor-r43/r51-r1-factory-goal8-two-parent-runs-usage-addendum-for-record330.json</code>（同目录）。后两文件名保其准备时名称，不代表占用已追加的正式第330条。</li>
+<li>Factory goal9限定保存审：<code>artifacts/cc-supervisor-r43/r51-r1-factory-goal9-saved-originals-limited-review.json</code>；输入诊断：<code>artifacts/cc-supervisor-r43/r51-r1-goal9-input-diagnostic-63b8f76e-4cd3-4631-9ec5-a6dd7ea75777.json</code>（同目录）；事项31/B14：<code>artifacts/cc-supervisor-r43/r51-r1-goal9-progress-item31-planB14-db34bf59-6815-4917-90b9-a461f3ae8bd8-readback.json</code>（同目录）。</li>
+<li>历史Jarvis goal11/R52派发切面：<code>artifacts/cc-supervisor-r43/r52-jarvis-formal-goal11-f29c79d4-5e55-4889-96ac-cbd360d82e69-readback.json</code>。它只记录当时派发，后续实际交付、发布另见以下回执。</li>
+<li>R52源码/包来源：APP <code>0ae044826235fd7f7908db786dc2b186fdebf984</code>，ops <code>e0a919ddf1e9e6c15609d256ad4f23b7432acbe6</code>；ZIP H <code>18b66d384c64d4b8e2a0a02aae4e2f8353504db6b0680367acb961d8a362586b</code>、manifest H <code>ef779ddbfe4633c61c62fca4aa434ab267ce9933bbfd9a98736cc593263df0a8</code>。7276结果观察：<a href="../artifacts/cc-supervisor-r43/r52-jarvis-goal11-observation-7347d3c3-8f90-408f-bfb0-547e5133cf56.json">已收候选</a>。</li>
+<li>R52有限独审：<a href="../artifacts/cc-supervisor-r43/r52-goal11-independent-application-delta-source-review.json">应用源码</a>，16295B/H7558e6ed…；<a href="../artifacts/cc-supervisor-r43/r52-received-platform-package-independent-verification.json">包核</a>，15694B/Hf10b0707…；<a href="../artifacts/cc-supervisor-r43/r52-received-git-originals-local-byte-reconciliation.json">收到Git原件字节对账</a>。它们的范围是源码/保存字节，不替代provider或用户结果。</li>
+<li>R52前置阶段：<a href="../artifacts/cc-supervisor-r43/release-r52/112-stage.json">stage</a>、<a href="../artifacts/cc-supervisor-r43/release-r52/112-install.json">install</a>、<a href="../artifacts/cc-supervisor-r43/release-r52/112-inspect.json">inspect</a>，均exit0/phaseVerified；耗时32.829/5.917/0.913秒。</li>
+<li>R52正式切换：<a href="../artifacts/cc-supervisor-r43/r52-root-sidecar-activation-4d4f040f-01c6-4594-81a5-6be886ba5314-outcome.json">新operation激活</a>，1532B/H4787d5c3…，316.188秒、qualified；<a href="../artifacts/cc-supervisor-r43/r52-newpurpose-independent-health-2e6c1aef-bdd6-44f2-8458-84245d13944a.json">独立健康</a>，2059B/H006295aa…，112 primary、平台/observer active、businessHealthy true。</li>
+<li>R52有限页面：<a href="../artifacts/cc-supervisor-r43/r52-live-pre-review-finite-ui-acceptance.json">fresh reload观察</a>，1230B/H6237c740…；六卡与折叠目标、旧容量错误中文提示，不含新业务结果或全功能验收。</li>
+<li>遗留101平台任务：<a href="../artifacts/cc-supervisor-r43/r52-legacy-Jarvis-handoff-current-state.json">接手状态保存</a>，S67/goal11 waiting_user/enabled=false；<code>artifacts/cc-supervisor-r43/r52-automatic-followup-parent-usage-and-result-hash-calibration-safe.json</code>已按Node JSON.stringify校准3c694结果H，匹配且不需改写旧回执。未同步112开发源码、未发pause/stop或继续指令。</li>
+<li>Factory goal10：<a href="../artifacts/cc-supervisor-r43/r52-factory-goal10-originals-review-534d9037-03c6-4184-a461-bc21bb136846-readback.json">正式派发</a>，1991B/H2e3db09b…；<a href="../artifacts/cc-supervisor-r43/r52-factory-goal10-observation-03329d8b-20b3-472e-a7f8-507506413d69.json">最终保存观察</a>，1020B/H5676a3dd…，667f succeeded、S71 waiting_user。只读既有原件，不重测试/旧Pi意图。</li>
+<li>两次真实判断和原件：有限保存审为<code>artifacts/cc-supervisor-r43/r52-factory-goal10-saved-originals-and-two-decisions-limited-review.json</code>，15719B/H9e7b069b…。9531的26件/52,123B逐H核同、旧25整字节保留；event191 continue，三条false/true/false；自动667f的9件/22,201B逐H核同，event197 wait_user、三条全false。原件未丢本地，但当前轮未连续提供全25件，未签C6。</li>
+<li>来源具体边界：<code>artifacts/cc-supervisor-r43/r52-f9-historical-report-saved-lineage-limited-review.json</code>，6197B/H27596809…；缺件binding.json/Hc3ffa…如第16节，不把f9嵌套索引冒报告生成run身份。</li>
+<li>Root事实更正：<code>artifacts/cc-supervisor-r43/r52-current-deployment-fact-correction-readback.json</code>，1886B/Hdbb3480c…，future_reference追加当前R52事实，保原目标/标准/当前run，不新派发。</li>
+<li>实际事项/计划：<code>artifacts/cc-supervisor-r43/r52-factory-goal10-progress-item33-planB16-5a25ec3e-909a-4f69-9335-9579915aeecc-readback.json</code>，1430B/Hebb436da…，两CAS后item33 blocked/C5、planB16 currentC5，全部12阶段标准/历史/其它5事项保留。</li>
+<li>决定实施版本：<code>artifacts/cc-supervisor-r43/r52-review-payload-decision-implementation-r2-readback.json</code>，1330B/Hcf962b42…，6ddade88第2版implemented只记录128KiB实施/健康与有限真实判断，independentAcceptance=false。</li>
+<li>最新页面截图：<code>artifacts/cc-supervisor-r43/screenshots/r52-real-supervision-two-decisions-and-next-step.png</code>，101835B/Hbc8ca8b4…；Root只读页面已显示事项33材料缺口，标题“等待本人”与自动简报真源仍待修。</li>
+<li>最终量费：<code>artifacts/cc-supervisor-r43/r52-record338-cost-safe-aggregate.json</code>，3086B/H032943aa…；文件名是准备时命名，不证明已追加正式338。</li>
+<li>R2真实文档交付：<a href="../artifacts/handoff/20261018-r51-r1/112-delivery-receipt.json">旧快照回执</a>，982B/H0d7d8b70…，62件核同，未覆盖源码/数据。R3约定另交付<code>handoff/20261018-r52/</code>，完成以新清单/回执为准，旧R2保留。</li>
+<li>存储治理：早期选择与计划保历史；实际收尾为<code>artifacts/migration-112/retention-final-public.json</code>，10080B/H075f0292…，原生策略为<code>artifacts/migration-112/retention-maintenance-policy-public.json</code>，6505B/Ha0dcb141…。后继维护清理、日志与原件指纹在两报告中引用；不把计划当最终现状。</li>
+</ul>
+<p>若活动 artifacts 尚未包含上述晚于迁移的文件，应将经过隐私核对的公开报告实际交付到112并核H；私有 run、完整prompt和原始聊天不随指南公开。技术状态更新应以新的真实cut补充本指南及建设记录，不改写这些旧回执。</p>
+</section>
+<section class="doc-section" data-section="20"><h2 id="section-20" tabindex="-1">20 接手首轮应留下的结果</h2>
+<p>接手完成首轮后，留下以下实际结果，便于下一位开发者继续：</p>
+<ol>
+<li>实际采用的112最新Git仓库/工作副本位置、对象与分支；是否完成R52＋Linux开发适配对齐。</li>
+<li>R52健康与源码来源、遗留101会话的明确移交；Factory最终S71停派和材料/简报未完清单保真，以新的合法报告验证修复，不重放旧判断。</li>
+<li>正式下一条建设记录编号/head、指南及安全报告已在112落地的路径/H；保并发新增330–337及后来记录。</li>
+<li>实际两恢复点/小时维护及最新磁盘/锁切面；R52、R51r1保留点和原程序依赖保持，后继发布按新事实更新，不回用旧计划。</li>
+<li>用户在112实际使用Claude开发、启动独立开发页面和完成一次本平台改动的最终验收范围。</li>
+</ol>
+<p>这些结果通过既有文档和建设记录工具追加，不覆盖接手快照、原始失败、并发记录或旧候选。若某项尚未完成，保留对应任务和实际阻塞；不要为补接手材料重跑模型、生产测试或发布。</p>
+</section>
+<section class="doc-section" data-section="21"><h2 id="section-21" tabindex="-1">本版编制与后继记录边界</h2>
+<p>本版固定事实为：R52健康、PR7 e0a919… OPEN/DRAFT；Jarvis S67与Factory S71均enabled=false，Factory C5待验/C6未签；编制前正式建设链337条/head68881e…；已知父run累计109,367,601 Token、catalog USD67.884218。后继建设记录及<code>handoff/20261018-r52/</code>资料快照尚不在这里预写完成。</p>
+<p>新快照交付后以<code>artifacts/handoff/20261018-r52/112-delivery-receipt.json</code>作为约定的独立回执入口；在它实际产生并核验前不视为已交付。本指南不预填它的指纹，也不把后续记录编号当成已经追加。旧R2快照及原失败、原件、费用和文档链继续保留。</p>
+<p>112是未来常规平台开发入口。正式发布、PR推送与文档到达均不代表112活动开发目录已经同步源码或具有Git对象。先保迁移原件、四项Linux适配和独立数据，取得真实Git独立副本并完成遗留同需求移交，再开始新平台改动。</p>
+</section>
+      </article>
+      <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E6%8E%A5%E6%89%8B%E6%8C%87%E5%8D%97.md">打开源文档</a></footer>
+    </div>
+  </main>
+  <script>
+    const sidebar=document.getElementById('sidebar');
+    const menu=document.getElementById('menu-toggle');
+    const overlay=document.getElementById('overlay');
+    const search=document.getElementById('search');
+    const status=document.getElementById('search-status');
+    const sections=[...document.querySelectorAll('.doc-section')];
+    const links=[...document.querySelectorAll('.toc-link')];
+    const themeButton=document.getElementById('theme-toggle');
+    const indexed=sections.map(section=>({section,text:section.textContent.toLocaleLowerCase()}));
+    const setMenu=open=>{sidebar.classList.toggle('open',open);overlay.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))};
+    menu.addEventListener('click',()=>setMenu(!sidebar.classList.contains('open')));
+    overlay.addEventListener('click',()=>setMenu(false));
+    links.forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+    search.addEventListener('input',()=>{
+      const query=search.value.trim().toLocaleLowerCase();
+      const visible=new Set();
+      indexed.forEach(({section,text})=>{const matches=!query||text.includes(query);section.hidden=!matches;if(matches)visible.add(section.dataset.section)});
+      links.forEach(link=>{link.hidden=!visible.has(link.dataset.parent)});
+      document.getElementById('no-results').hidden=visible.size!==0;
+      status.textContent=query?'匹配 '+visible.size+' / '+sections.length+' 章':'共 '+sections.length+' 章 · Ctrl / ⌘ + K 查找';
+    });
+    document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(matchMedia('(max-width:820px)').matches)setMenu(true);search.focus()}if(event.key==='Escape')setMenu(false)});
+    const updateThemeButton=()=>{const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'浅色':'深色';themeButton.setAttribute('aria-pressed',String(dark));themeButton.setAttribute('aria-label',dark?'切换浅色主题':'切换深色主题')};
+    themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('jarvis-doc-theme',next)}catch(e){}updateThemeButton()});
+    updateThemeButton();
+    document.getElementById('print-button').addEventListener('click',()=>window.print());
+    const updateProgress=()=>{const left=parseFloat(getComputedStyle(document.getElementById('reading-progress')).left)||0;const total=document.documentElement.scrollHeight-innerHeight;const ratio=total>0?Math.min(1,Math.max(0,scrollY/total)):0;document.getElementById('reading-progress').style.width=(innerWidth-left)*ratio+'px'};
+    addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);search.addEventListener('input',updateProgress);updateProgress();
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})}})},{rootMargin:'-75px 0px -65% 0px'});document.querySelectorAll('.doc-section h2').forEach(heading=>observer.observe(heading))}
+    document.querySelectorAll('a[href^="https://"]').forEach(link=>{link.target='_blank';link.rel='noopener noreferrer'});
+  </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-qa-worker-context-main607-meta-r2-root-selection",
+  "at": "2026-10-16T08:18:24.700357+00:00",
+  "scope": "LOCAL minimal seven-source QA successor integration; no actual QA dispatch at this selection",
+  "basis": [
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-current-main607-fixed-metadata-r2-actual-observation-1792137636968-112a1422-b017-496f-a3c6-2d8353431bd6.json",
+      "sha256": "3c5e561ac86c66ef300ce162d69344bafcd996fb8615c27e6181b3de59d2ad57",
+      "bytes": 2556
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-pg4-current-main607-fixed-metadata-r2-saved-evidence-independent-local-review-final-r2.json",
+      "sha256": "d3f2938c0a4789f25e6ebf6fcc56ef1e2bca41030e557a9a42bb8e2befcc1207",
+      "bytes": 33853
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-future-qa-worker-context-fixed-metadata-r2-static-integration-plan.json",
+      "sha256": "5a5feb218c4a6e8ea75c168e78b313ef78df50be352d24b25ed51bc78af551a6",
+      "bytes": 23952
+    },
+    {
+      "path": "artifacts/software-factory/goals-r29/r37-worker-context-driver-independent-local-source-review-final.json",
+      "sha256": "692eb0686f78d7e7b5c3f1815f373c6ca1c10cf9be96dfb0e593c3e6329a3a31",
+      "bytes": 19088
+    }
+  ],
+  "adoptedStaticIntegrationPlanSHA256": "5a5feb218c4a6e8ea75c168e78b313ef78df50be352d24b25ed51bc78af551a6",
+  "minimumCoreSourceSuccessors": 7,
+  "namespace": {
+    "status": "proposal-not-generated-or-selected",
+    "purpose": "r37-pg4-qa-worker-context-main607-meta-r2",
+    "remoteBASE": "/var/lib/jarvis-development/101/r37-pg4-qa-worker-context-main607-meta-r2",
+    "remoteUnitAndResourceStem": "jarvis-pg4-qa-r37-worker-context-main607-meta-r2-",
+    "remoteBASEObservedVirgin": null,
+    "attempt": null,
+    "executionNonce": null,
+    "parentJournal": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-once.json",
+    "parentCheckOnce": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-once.json.check-once.json",
+    "mainContext": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-context.json",
+    "mainEntryFiles": {
+      "sourceIntent": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-source-read-once.json",
+      "sourceOutcome": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-source-read-outcome.json",
+      "parentActivation": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-parent-activation.json",
+      "driverInput": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-driver-input-template.json",
+      "sqlBootstrap": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-sql-bootstrap-request.json",
+      "sqlAfter": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-sql-after-request.json",
+      "startIntent": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-start-once.json",
+      "startOutcome": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-start-outcome.json",
+      "checkIntent": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-check-once.json",
+      "checkOutcome": ".jarvis-dev/maintenance/factory-r37-pg4-qa-worker-context-main607-meta-r2-entry-check-outcome.json"
+    },
+    "currentContext": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-entry-context.json",
+    "currentReadOnce": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-read-once.json",
+    "currentOperatorOutcome": ".jarvis-dev/maintenance/r37-pg4-qa-worker-context-main607-meta-r2-current-operator-outcome.json",
+    "newSourceTargets": {
+      "worker": "scripts/factory-pg4-qa-startup-worker-r37-worker-context-meta-r2.py",
+      "physicalAdmission": "scripts/factory-pg4-physical-admission-r37-worker-context-meta-r2.mjs",
+      "currentScopeObserver": "scripts/factory-pg4-qa-current-scope-observer-r37-worker-context-meta-r2.py",
+      "currentScopeCaller": "scripts/verify-factory-pg4-qa-current-scope-r37-worker-context-meta-r2.mjs",
+      "starter": "scripts/factory-pg4-qa-startup-r37-worker-context-meta-r2.mjs",
+      "mainEntry": ".jarvis-dev/maintenance/run-r37-pg4-qa-worker-context-main607-meta-r2-once.mjs",
+      "currentEntry": ".jarvis-dev/maintenance/read-r37-pg4-qa-worker-context-main607-meta-r2-current-once.mjs"
+    },
+    "allProposedLocalPathsAbsent": true
+  },
+  "fixedMetadataProtection": {
+    "kindsAndVersion": "exact values from new whole/physical exports and fixed NULL",
+    "fixedMain": {
+      "sha256": "3d08e339e0c0ca78288400b46dae1f24e146ecba2e08e7c69bfbd9ffc9bd91fa",
+      "files": 607,
+      "bytes": 18151378,
+      "metadataSHA": "a952d757430ebd43fa943754e419209b0ab9d399551cb0436f622d47302f8200",
+      "stable": true,
+      "identity": {
+        "device": 66306,
+        "inode": 14417953
+      }
+    },
+    "inventoryId": "e02d34e1-0a82-502e-8011-6119ad717b5e",
+    "contractVersion": "r37-main607-fixed-metadata-r2-protection-v1",
+    "consumerSHA256": "d26ee32cd9bbbb516baab41e7e68c89938d192fe4ae8738cf0805665eec09e0e",
+    "physicalSourceSHA256": "95c9f2f19a447a22ddb34d232f1d16ad08738885365f05fc297e4cf005ac00a4",
+    "adapterSHA256": "402c5b20d5ec08fda99d5c97b92e4be8366eb654cece5ff5c6ad8b7b4769c788",
+    "activationCanonicalSHA256": "d308b6cefb860b30c1f2f6ba15a43c4acdec130413dfbf2dc42f1d1cbc3a560f",
+    "wholeSourceContractCanonicalSHA256": "de39f1fa5bbc9f596b7af154d985c3044664bfad228b5f173ed05a40c6f904d9",
+    "inventoryActivationCanonicalSHA256": "5ca2f14c07345e6d7c49f9d2eead6a859d5dd56a10c4b120f9b38046a2592413",
+    "stockProgramSHA256": "280e37068301774f12fe89e6f9df4fe0c8ea9da98760396f29317d3c38d2d917",
+    "stockParametersCanonicalSHA256": "279d5bf89a0206c6a7a327a74e682827b0d881dcc3e7dfcf5a52d9f983cf169b",
+    "mustAlsoRebind": [
+      "receiptMethodSHA256",
+      "sourceMethodSHA256",
+      "programs[0] and [3]",
+      "parameters[0] and [3]",
+      "originalPrograms[0] and [3]",
+      "executedSources.orchestrator and adapter"
+    ],
+    "keepExactPriorMethodEntries": [
+      "native/build HUP program hashes and parameters",
+      "original native/build program hashes",
+      "generator/pureModule/HUP transformer/helper pins",
+      "4stage order and canonical response hash domain",
+      "all protected inventory/queue/SQL/nodeACK/profile/sourceReceipt flags",
+      "physical frame equality and remaining fresh300 age gates"
+    ],
+    "remainingDerivedPins": null,
+    "doNotUseTheseActualDataBytesAsFresh": "These are fixed configuration/ref hashes, not proof timestamps for the future START."
+  },
+  "modulePolicy": {
+    "manifestModuleCount": 13,
+    "manifestModulesSHA256": "e714debb38cd2b8d04f234ada9058e2acb557e72dc7b4e1902d9251232ac1e20",
+    "all13SourceByteChecksRequired": true,
+    "requiredHostImportModuleCount": 12,
+    "oneExactWorkerOnlyDeferredTuple": {
+      "index": 2,
+      "specifier": "vitest/runners",
+      "sha256": "3276eddc378f604738661e561131b1ac8eacee927dc7b551e54b862a5b73b39c",
+      "bytes": 8959,
+      "exports": [
+        {
+          "name": "VitestTestRunner",
+          "type": "function"
+        }
+      ]
+    },
+    "deferredActualImportReturned": false,
+    "deferredExportTypesVerified": false,
+    "deferredWorkerExecutionVerified": false,
+    "actualHostImportsReturnedCount": null,
+    "actualWorkerTestRunnerInstance": null,
+    "frameworkABIQualified": false,
+    "priorTenLaterHostImportsNotRetrospectivelyPassed": true,
+    "noFakeGlobalWorkerStateSetupFilesOrCustomRunner": true
+  },
+  "reuse": {
+    "driver": {
+      "path": "scripts/factory-pg4-qa-startup-driver-r37-worker-context.mjs",
+      "sha256": "9bfd4b546c29a0ab052a564037ecdaececf355d4e3ea815abc89c22ed3108c12",
+      "bytes": 37137
+    },
+    "phaseA": {
+      "path": "scripts/factory-pg4-source-admission-r33-main602-pgready-r7.mjs",
+      "sha256": "7c34121bca87a635158408e9eb062bb7f512e6192e0ab712b7761c02bde74204",
+      "bytes": 17891
+    },
+    "phaseAObserver": {
+      "path": "scripts/factory-pg4-source-admission-r33-main602-pgready-r7.py",
+      "sha256": "f9032754148f7eed1726676b32aa10af1d3feb238abfecb00905e8c8a82579ce",
+      "bytes": 27301
+    },
+    "hookReporter": {
+      "path": "scripts/factory-pg4-hook-reporter-r33.mjs",
+      "sha256": "ea8fc9d658cc19c9cca9a9e00a615756f4943c9f5e41e80fed998330d1d7f342",
+      "bytes": 3464
+    },
+    "independentSQL": {
+      "path": "scripts/factory-pg4-independent-sql-r33.mjs",
+      "sha256": "988081055a915f095e66f8bee11d2e52e5d21b936c51f5cf101d3803bc0f1e45",
+      "bytes": 24472
+    },
+    "pgConsumer": {
+      "path": "scripts/factory-independent-pg-cjs-consumer-r29.mjs",
+      "sha256": "45d888de21d3221a66d43d7d601de358338892f26d3d14c9b1ddb5dd32850c99",
+      "bytes": 10125
+    },
+    "fixedMetadataProtection": {
+      "physical": {
+        "path": "scripts/verify-factory-main607-fixed-metadata-r2-protection-r37.mjs",
+        "sha256": "95c9f2f19a447a22ddb34d232f1d16ad08738885365f05fc297e4cf005ac00a4",
+        "bytes": 36723
+      },
+      "adapter": {
+        "path": "scripts/factory-main607-fixed-metadata-r2-protection-observer-r37.mjs",
+        "sha256": "402c5b20d5ec08fda99d5c97b92e4be8366eb654cece5ff5c6ad8b7b4769c788",
+        "bytes": 9432
+      },
+      "whole": {
+        "path": "scripts/verify-factory-main607-fixed-metadata-r2-whole-protection-r37.mjs",
+        "sha256": "d26ee32cd9bbbb516baab41e7e68c89938d192fe4ae8738cf0805665eec09e0e",
+        "bytes": 46108
+      }
+    }
+  },
+  "invariants": [
+    "Frozen effective QA625 source/fixture overlay, four callbacks, hooks, SQL phases/content/config/plugins/default runner, process/runtime limits and original image/runtime bytes stay unchanged. Main607 protection is a separate inventory role; never globally replace QA625 or legacy main602 resource locators.",
+    "Private first error is retained before parse; CLI/input errors, structured incomplete exit0 and afterSQL secondary error logic copied byte-for-byte. Original immutable failed cases/old911a driver/oldopportunities remain.",
+    "Fresh whole proof must be reobtained for future START after SOURCE/DATA/ENTRY; check again after all awaits and before nonce, with no await remaining before nonce. Historical3164/current or fixed activation object hashes are not future freshness.",
+    "Do not clone the current3164 b7c caller or dedc thin with retained historical attempt pins into the new QA. The generic743b D source is the correct narrow basis for future run bindings.",
+    "Real current3164 SAVED and explicit Root choice are prerequisites to implementation/actual execution; existing older prior-r6 and f10/b333 closure evidence remain and are not overwritten."
+  ],
+  "authorization": [
+    "The current3164 saved epoch and both whole readbacks are independently qualified; no old failed/closed opportunity or source pin is changed.",
+    "Implement only the seven necessary successors and complete worker/P protection spec from the frozen plan; derive static hosts only when required. Reuse driver9bfd and protection95c/402c/d26 bytes.",
+    "Keep old 3164 sourceExpected/driver911a/worker51b/MAIN8bae/C344 and current closed records intact; future bindings refer only to the future attempt and generic D caller743b basis.",
+    "Preserve original executionC600 source graph prefix, frozen product/runtime and effective QA625 overlay, thirteen module identities and four callbacks/hooks/SQL/config/default runner. No fake global worker state.",
+    "The single source-only/deferred tuple is exactly vitest/runners index2; other12 host imports/exports retain their gates. Deferred import/exports/worker flags and framework ABI stay unverified until their real evidence; do not count controlled test imports as actual imports.",
+    "Preserve private first-error bytes before parse, CLI/input/structured incomplete exit0 rejection, retained0444 reports and primary/secondary distinctions.",
+    "SOURCE/default actualDATA/ENTRY/nonce remain null until staged Root/non-author qualification. No supplier model, production release, new namespace existence claim or remote call during local preparation.",
+    "Before future START obtain new full fresh protection, all source and P gates, and recheck fresh300 after all awaited persistence/rechecks with no await before nonce. This saved epoch and fixed configuration hashes are not future freshness.",
+    "After true SOURCE and Root actual DATA, non-author complete specific ENTRY and Root physical refs checks precede the sole future START. START and CHECK each remain at most one; check no earlier than actual START plus900+120 seconds.",
+    "Only the minimum new wiring/spec group is necessary; do not repeat the old module/600/639/529 tests or previous successful groups. Errors and distinct repairs remain append-only."
+  ],
+  "currentSavedEpochQualified": true,
+  "futureFreshProtectionRequired": true,
+  "implementationAuthorizedLocalOnly": true,
+  "sourceFamilyGenerated": false,
+  "actualDATA": null,
+  "actualENTRY": null,
+  "executionNonce": null,
+  "newQAStarted": false,
+  "actualPG4Qualified": false,
+  "original74AcceptanceChanged": false,
+  "modelsInvoked": false
+}

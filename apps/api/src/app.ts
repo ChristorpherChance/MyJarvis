@@ -42,6 +42,7 @@ import {canonicalLocalMachine,unifiedDevices} from './runtime/managed-devices.js
 import {ApplicationRuntime,registerApplicationRoutes,createApplicationTools} from './runtime/application-runtime.js';
 import {RemoteOperationsRuntime,registerRemoteOperations,createRemoteOperationsTools} from './runtime/remote-operations.js';
 import {AiDevelopmentRuntime,registerAiDevelopment} from './runtime/ai-development.js';
+import {registerCcSwitchRoutes,type CcSwitchOptions} from './runtime/cc-switch.js';
 import {PowerRuntime,registerPowerRoutes,createPowerTool} from './runtime/power-runtime.js';
 import {WebRuntime,registerWebRoutes,webOwnAuthRoute,createWebTools} from './runtime/web-runtime.js';
 import {familyHandlers} from './v1/family-domains.js';
@@ -90,7 +91,7 @@ const capabilities = [
   {id:'web',name:'联网资料',status:'ready',description:'真实搜索、公开网页与新闻源；按本人隐私策略查询'},
   {id:'connectors',name:'外部知识',status:'ready',description:'动态目录与HTTP知识源、真实同步及授权过滤'},
 ];
-export async function createApp(options: {dataDir: string; pi?: PiService; webDir?: string; pythonExecutable?:string; whisperModelDirectory?:string; weatherProvider?:WeatherProvider; allowedHosts?:string[]; tls?:{key:Buffer;cert:Buffer};healthInstanceId?:string;nodeConfiguration?:NodeConfiguration|null;remoteOperations?:{queue?:string;configPath?:string};aiDevelopment?:{queue?:string;configPath?:string;now?:()=>number}}) {
+export async function createApp(options: {dataDir: string; pi?: PiService; webDir?: string; pythonExecutable?:string; whisperModelDirectory?:string; weatherProvider?:WeatherProvider; allowedHosts?:string[]; tls?:{key:Buffer;cert:Buffer};healthInstanceId?:string;nodeConfiguration?:NodeConfiguration|null;remoteOperations?:{queue?:string;configPath?:string};aiDevelopment?:{queue?:string;configPath?:string;now?:()=>number};ccSwitch?:CcSwitchOptions}) {
   let shuttingDown=false;
   const startupCleanup:(()=>unknown|Promise<unknown>)[]=[];let startupApp:ReturnType<typeof Fastify>|undefined;
   try {
@@ -423,6 +424,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
   registerAiDevelopment(app,aiDevelopment);
+  registerCcSwitchRoutes(app,identity,v1,options.ccSwitch);
   knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');
   if(existsSync(webDir)){

@@ -37,6 +37,8 @@ test('runtime regeneration retains strict telemetry, NAS, power and service-reso
     for(const name of ['metricSources','metricMeasuredAt'])assert.equal(object.properties[name].additionalProperties,false);
    }
    for(const name of ['gpuPercent','powerWatts'])assert(s.InfrastructureRecord.properties.telemetry.properties[name]);
+   assert.equal(s.InfrastructureRecord.properties.telemetry.properties.metricFreshness.additionalProperties,false);
+   assert.equal(s.ExecutionHeartbeatInput.properties.metrics.properties.uptimeSec.maximum,Number.MAX_SAFE_INTEGER);
    const values=s.MonitorPoint.properties.values;assert.equal(values.additionalProperties,false);
    for(const name of ['diskPercent','diskFreeGB','diskTotalGB','diskUsedGB','cpuPackageWatts'])assert(values.required.includes(name));
    for(const name of ['QnapStorageSample','QnapStorageReading','PiModelSettings','BillDocument'])assert.deepEqual(s[name],original.components.schemas[name],`${name} was unintentionally replaced`);
@@ -48,6 +50,8 @@ test('runtime regeneration retains strict telemetry, NAS, power and service-reso
 test('strict heartbeat contract permits configured measurements and resources, but rejects forged extra fields and range errors',()=>{
  const measured=new Date().toISOString(),body={metrics:{cpuPercent:10,memoryPercent:20,gpuPercent:30,powerWatts:40},observationVersion:1,metricSources:{gpuPercent:'gpu-source',powerWatts:'meter-source'},metricMeasuredAt:{gpuPercent:measured,powerWatts:measured},cpuPower:{source:'intel-rapl',watts:5,observedAt:measured,windowSeconds:2},serviceProcesses:[{serviceId:'service',unit:'jarvis.service',activeState:'active',subState:'running',observedAt:measured,resources:{cpuPercent:4,memoryUsedGB:0.1,directory:'/srv/jarvis',diskUsedGB:2,diskObservedAt:measured}}]};
  assertDto('ExecutionHeartbeatInput',body);
+ assertDto('ExecutionHeartbeatInput',{metrics:{uptimeSec:10981939.5}});
+ assert.equal(validateDto('ExecutionHeartbeatInput',{metrics:{uptimeSec:Number.MAX_SAFE_INTEGER+1}}).valid,false);
  const invalid=[{...body,unexpected:true},{...body,metrics:{...body.metrics,gpuPercent:101}},{...body,metrics:{...body.metrics,powerWatts:10000000}},{...body,metricSources:{gpuPercent:'x'.repeat(201)}},{...body,metricMeasuredAt:{gpuPercent:'not-a-date'}},{...body,cpuPower:{...body.cpuPower,source:'unverified-meter'}},{...body,serviceProcesses:[{...body.serviceProcesses[0],resources:{memoryUsedGB:100001}}]},{...body,serviceProcesses:[{...body.serviceProcesses[0],resources:{command:'run-anything'}}]}];
  for(const input of invalid)assert.equal(validateDto('ExecutionHeartbeatInput',input).valid,false);
  assert.equal(validateDto('ServiceResourceMetrics',{directory:'relative/path'}).valid,false);

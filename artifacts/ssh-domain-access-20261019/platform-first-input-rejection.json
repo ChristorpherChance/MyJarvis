@@ -1,0 +1,12 @@
+{
+  "observedInRootTool": true,
+  "httpStatus": 400,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "决策摘要或版本格式不正确"
+  },
+  "cause": "Rejected alternative used compliesWithGoals=partial; source schema permits yes/no/unknown only.",
+  "writesSucceeded": 0,
+  "priorInput": "platform-decision-input.json",
+  "source": "apps/api/src/runtime/project-decision-runtime.ts"
+}

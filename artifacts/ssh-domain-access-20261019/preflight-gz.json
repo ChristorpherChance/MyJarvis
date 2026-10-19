@@ -1,0 +1,106 @@
+{
+  "at": "2026-10-19T13:20:40.794Z",
+  "hostname": "iZ7xvajmsh6gcih1g6729bZ",
+  "units": {
+    "frps.service": {
+      "MainPID": "161084",
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/etc/systemd/system/frps.service",
+      "UnitFileState": "enabled",
+      "execStartSHA256": "332a4f845fb5f9318efe094b7cd6bd37babb556ae9406561916972b679b72f18",
+      "configPaths": [
+        "/etc/frps.toml"
+      ]
+    },
+    "nginx.service": {
+      "MainPID": "863337",
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/lib/systemd/system/nginx.service",
+      "UnitFileState": "enabled",
+      "execStartSHA256": "9dfbb8e1d136ec4b0bb45e9183c4fdbf2a5e1c2ff6f9beff0e4d0cf850e60e44",
+      "configPaths": []
+    },
+    "ssh.service": {
+      "MainPID": "407844",
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/lib/systemd/system/ssh.service",
+      "UnitFileState": "enabled",
+      "execStartSHA256": "28269223b7b5e2720601fbbbc0c5ec2fe58245bf30826e81d14ddcb68c818d2d",
+      "configPaths": []
+    },
+    "sshd-keygen.service": {
+      "MainPID": "0",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "",
+      "UnitFileState": "",
+      "execStartSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "configPaths": []
+    }
+  },
+  "frpConfigs": [
+    {
+      "path": "/etc/frps.toml",
+      "sha256": "519781831e79ba1ac9229616c758e14f6e67162ca20f86bab01c425e44ff5047",
+      "parsed": false
+    }
+  ],
+  "sshEffective": {
+    "port": [
+      "22"
+    ],
+    "listenaddress": [
+      "[::]:22",
+      "0.0.0.0:22"
+    ],
+    "permitrootlogin": [
+      "yes"
+    ],
+    "pubkeyauthentication": [
+      "yes"
+    ],
+    "passwordauthentication": [
+      "yes"
+    ],
+    "kbdinteractiveauthentication": [
+      "no"
+    ],
+    "authorizedkeysfile": [
+      ".ssh/authorized_keys .ssh/authorized_keys2"
+    ]
+  },
+  "hostKeys": [
+    {
+      "name": "ssh_host_ecdsa_key.pub",
+      "fingerprint": "256 SHA256:x1dKikFXpVFnCBxI3l/7u4B/vpIiyIUVJHpsDG8WPuI root@iZ7xvajmsh6gcih1g6729bZ (ECDSA)"
+    },
+    {
+      "name": "ssh_host_ed25519_key.pub",
+      "fingerprint": "256 SHA256:tZOGpZJGiAM7MMMMgNRYqsPh8KvgTCVjpJt/X042FYg root@iZ7xvajmsh6gcih1g6729bZ (ED25519)"
+    },
+    {
+      "name": "ssh_host_rsa_key.pub",
+      "fingerprint": "3072 SHA256:iRvlGxYf5s2C+LC+Xts8FlrejEgvFhA52nRK9nb26AM root@iZ7xvajmsh6gcih1g6729bZ (RSA)"
+    }
+  ],
+  "tcpListeners": [
+    "LISTEN 0      511        127.0.0.1:8787  0.0.0.0:*",
+    "LISTEN 0      511          0.0.0.0:443   0.0.0.0:*",
+    "LISTEN 0      128          0.0.0.0:22    0.0.0.0:*",
+    "LISTEN 0      4096   127.0.0.53%lo:53    0.0.0.0:*",
+    "LISTEN 0      511          0.0.0.0:80    0.0.0.0:*",
+    "LISTEN 0      4096               *:6000        *:*",
+    "LISTEN 0      4096               *:7000        *:*",
+    "LISTEN 0      4096               *:18080       *:*",
+    "LISTEN 0      4096               *:7500        *:*",
+    "LISTEN 0      511             [::]:443      [::]:*",
+    "LISTEN 0      128             [::]:22       [::]:*",
+    "LISTEN 0      511             [::]:80       [::]:*"
+  ],
+  "ufwStatus": "Status: active\n\nTo                         Action      From\n--                         ------      ----\n22/tcp                     ALLOW       Anywhere                  \n80/tcp                     ALLOW       Anywhere                  \n443/tcp                    ALLOW       Anywhere                  \n7000/tcp                   ALLOW       Anywhere                  \n7500/tcp                   ALLOW       Anywhere                  \n6000/tcp                   ALLOW       Anywhere                  \n29527/tcp                  ALLOW       Anywhere                  \n20022/tcp                  ALLOW       Anywhere                  \n2201:2299/tcp              ALLOW       Anywhere                  \n18080/tcp                  DENY        Anywhere                  \n22/tcp (v6)                ALLOW       Anywhere (v6)             \n80/tcp (v6)                ALLOW       Anywhere (v6)             \n443/tcp (v6)               ALLOW       Anywhere (v6)             \n7000/tcp (v6)              ALLOW       Anywhere (v6)             \n7500/tcp (v6)              ALLOW       Anywhere (v6)             \n6000/tcp (v6)              ALLOW       Anywhere (v6)             \n29527/tcp (v6)             ALLOW       Anywhere (v6)             \n20022/tcp (v6)             ALLOW       Anywhere (v6)             \n2201:2299/tcp (v6)         ALLOW       Anywhere (v6)             \n18080/tcp (v6)             DENY        Anywhere (v6)",
+  "privateConfigPrinted": false,
+  "changes": 0
+}

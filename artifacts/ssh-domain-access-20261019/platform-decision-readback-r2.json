@@ -1,0 +1,278 @@
+{
+  "data": {
+    "questionSummary": "112与116如何提供可靠的公网SSH访问，同时保留现有局域网SSH和业务通道？",
+    "context": {
+      "observedAt": "2026-10-19T13:40:26.416Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+      "sourceVersion": "20261018-ai-development-ops-r55",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [],
+      "constraints": [
+        "用户授权112和116公网SSH映射；密钥不离开本机或进入公开材料。",
+        "原SSH22、平台/语音/现有FRP与公网网关均不重启；101冷备和工厂不改。",
+        "费用只记录未知分列；十分钟监督仍暂停；不覆盖旧notes或旧决定。"
+      ],
+      "situation": "两节点独立key-only loopback2222及FRP2212/2216已安装。新公网端口从本机和独立日本节点timeout，网关本地SSH可达；根因未独立认证。已实际使用现有公网22跳板分别登录superopen1000，主机身份与既有hostkey核对，所有原服务PID/配置不变。"
+    },
+    "options": [
+      {
+        "id": "reuse-pinned-ssh-bastion",
+        "title": "沿用既有公网SSH22跳板并自动选择目标通道",
+        "advantages": [
+          "公网端到端密钥登录已验证，两节点可用。",
+          "不变更云防火墙、网关FRPS或原业务服务。"
+        ],
+        "disadvantages": [
+          "其他客户端需配置跳板与对应密钥，不能把新端口当成裸直连已通。"
+        ],
+        "impact": "每节点新增两个独立服务；本机SSH配置前置Include且保留原全文。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [],
+        "operationalImpact": 1
+      },
+      {
+        "id": "new-direct-public-ports",
+        "title": "直接从公网连接2212/2216",
+        "advantages": [
+          "标准host:port连接简单。"
+        ],
+        "disadvantages": [
+          "两处外部探测均timeout，尚不可用；需要另行查明上游网络策略。"
+        ],
+        "impact": "本次保留失败证据，不继续扩大云网络变更范围。",
+        "compliesWithGoals": "unknown",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [
+          "公网TCP2212/2216实际可达"
+        ],
+        "reversibility": "bounded",
+        "coveredObjectives": [],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "reuse-pinned-ssh-bastion",
+    "decisionRationale": "选择已真实验证可用且复用现有公网入口的连接路径；客户端自动跳板保持单条SSH命令，原业务和配置保持。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+        "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+        "kind": "test-report"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [],
+    "rollbackPlan": {
+      "plan": "停用或禁用本次新增jarvis-ssh-tunnel.service和jarvis-ssh-public.service，保留新配置与意图证据；本机移除本次Include即可，原配置全文备份仍保留。",
+      "triggers": [
+        "目标主机/密钥不符",
+        "新通道异常或影响原业务"
+      ],
+      "impact": "仅撤销本次新增公网SSH入口，不改原SSH22和业务。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "112与116独立SSH/FRP各两服务已安装并启用；通过公网22跳板实际密钥登录两台指定服务器，原服务PID/配置和广州网关不变。",
+        "at": "2026-10-19T13:37:38.353Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+            "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+            "kind": "test-report"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "e08fe424-8e35-4303-ac65-b59452f8354f",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 1,
+    "createdAt": "2026-10-19T13:40:26.796Z",
+    "updatedAt": "2026-10-19T13:40:26.796Z",
+    "changeOf": null,
+    "changeOfRevision": null,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": "reuse-pinned-ssh-bastion",
+      "status": "recommended",
+      "candidates": [
+        {
+          "id": "reuse-pinned-ssh-bastion",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "new-direct-public-ports",
+          "eligible": false,
+          "reasons": [
+            "GOAL_COMPLIANCE_UNKNOWN",
+            "ENVIRONMENT_EVIDENCE_MISSING"
+          ],
+          "rank": null
+        }
+      ],
+      "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "revisionReason": "记录当时的问题与选择",
+    "hash": "92c2aa7fb41773066a9066ea21715fbb3509913b27e111d1635e09b73f629025",
+    "revisions": [
+      {
+        "questionSummary": "112与116如何提供可靠的公网SSH访问，同时保留现有局域网SSH和业务通道？",
+        "context": {
+          "observedAt": "2026-10-19T13:40:26.416Z",
+          "goalSpecHash": null,
+          "sourceFingerprint": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+          "sourceVersion": "20261018-ai-development-ops-r55",
+          "runId": null,
+          "taskId": null,
+          "machineId": null,
+          "objectives": [],
+          "constraints": [
+            "用户授权112和116公网SSH映射；密钥不离开本机或进入公开材料。",
+            "原SSH22、平台/语音/现有FRP与公网网关均不重启；101冷备和工厂不改。",
+            "费用只记录未知分列；十分钟监督仍暂停；不覆盖旧notes或旧决定。"
+          ],
+          "situation": "两节点独立key-only loopback2222及FRP2212/2216已安装。新公网端口从本机和独立日本节点timeout，网关本地SSH可达；根因未独立认证。已实际使用现有公网22跳板分别登录superopen1000，主机身份与既有hostkey核对，所有原服务PID/配置不变。"
+        },
+        "options": [
+          {
+            "id": "reuse-pinned-ssh-bastion",
+            "title": "沿用既有公网SSH22跳板并自动选择目标通道",
+            "advantages": [
+              "公网端到端密钥登录已验证，两节点可用。",
+              "不变更云防火墙、网关FRPS或原业务服务。"
+            ],
+            "disadvantages": [
+              "其他客户端需配置跳板与对应密钥，不能把新端口当成裸直连已通。"
+            ],
+            "impact": "每节点新增两个独立服务；本机SSH配置前置Include且保留原全文。",
+            "compliesWithGoals": "yes",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [],
+            "reversibility": "bounded",
+            "coveredObjectives": [],
+            "operationalImpact": 1
+          },
+          {
+            "id": "new-direct-public-ports",
+            "title": "直接从公网连接2212/2216",
+            "advantages": [
+              "标准host:port连接简单。"
+            ],
+            "disadvantages": [
+              "两处外部探测均timeout，尚不可用；需要另行查明上游网络策略。"
+            ],
+            "impact": "本次保留失败证据，不继续扩大云网络变更范围。",
+            "compliesWithGoals": "unknown",
+            "withinAuthority": "yes",
+            "environmentEvidence": "available",
+            "missingEvidence": [
+              "公网TCP2212/2216实际可达"
+            ],
+            "reversibility": "bounded",
+            "coveredObjectives": [],
+            "operationalImpact": 1
+          }
+        ],
+        "chosenId": "reuse-pinned-ssh-bastion",
+        "decisionRationale": "选择已真实验证可用且复用现有公网入口的连接路径；客户端自动跳板保持单条SSH命令，原业务和配置保持。",
+        "basisRefs": [
+          {
+            "reference": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+            "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+            "kind": "test-report"
+          }
+        ],
+        "risk": "medium",
+        "affectedObjectives": [],
+        "rollbackPlan": {
+          "plan": "停用或禁用本次新增jarvis-ssh-tunnel.service和jarvis-ssh-public.service，保留新配置与意图证据；本机移除本次Include即可，原配置全文备份仍保留。",
+          "triggers": [
+            "目标主机/密钥不符",
+            "新通道异常或影响原业务"
+          ],
+          "impact": "仅撤销本次新增公网SSH入口，不改原SSH22和业务。",
+          "requiresNewExecutionPlan": true
+        },
+        "actions": [
+          {
+            "summary": "112与116独立SSH/FRP各两服务已安装并启用；通过公网22跳板实际密钥登录两台指定服务器，原服务PID/配置和广州网关不变。",
+            "at": "2026-10-19T13:37:38.353Z",
+            "state": "performed",
+            "evidenceRefs": [
+              {
+                "reference": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+                "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+                "kind": "test-report"
+              }
+            ]
+          }
+        ],
+        "status": "implemented",
+        "origin": "ai",
+        "id": "e08fe424-8e35-4303-ac65-b59452f8354f",
+        "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+        "revision": 1,
+        "createdAt": "2026-10-19T13:40:26.796Z",
+        "updatedAt": "2026-10-19T13:40:26.796Z",
+        "changeOf": null,
+        "changeOfRevision": null,
+        "supersededBy": null,
+        "recommendation": {
+          "algorithm": "bounded-evidence-r1",
+          "chosenId": "reuse-pinned-ssh-bastion",
+          "status": "recommended",
+          "candidates": [
+            {
+              "id": "reuse-pinned-ssh-bastion",
+              "eligible": true,
+              "reasons": [],
+              "rank": [
+                1,
+                1
+              ]
+            },
+            {
+              "id": "new-direct-public-ports",
+              "eligible": false,
+              "reasons": [
+                "GOAL_COMPLIANCE_UNKNOWN",
+                "ENVIRONMENT_EVIDENCE_MISSING"
+              ],
+              "rank": null
+            }
+          ],
+          "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+          "independentAcceptance": false,
+          "usesPaidModel": false
+        },
+        "selfReported": true,
+        "independentAcceptance": false,
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revisionReason": "记录当时的问题与选择",
+        "hash": "92c2aa7fb41773066a9066ea21715fbb3509913b27e111d1635e09b73f629025"
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "kind": "home-ssh-v2-auth-default-independent-local-delta-review",
+  "at": "2026-10-19T13:33:39.744244+00:00",
+  "acceptedForFiniteSourceDelta": true,
+  "P0": 0,
+  "P1": 0,
+  "source": {
+    "path": ".jarvis-dev/maintenance/install-home-ssh-mapping-v2.py",
+    "bytes": 9161,
+    "sha256": "c1d9cc4cb54e6092a9ede6271ab06681722d471a1a5549bc16c8463e8f5c797d"
+  },
+  "baseSHA256": "a5baf463f064a007ac6063517f63c165a3f5863764ec268d6ac0b251ff517f21",
+  "oneLiteralWholeByteInverse": true,
+  "change": "auth.get('method') -> auth.get('method','token')",
+  "semantics": "Only an absent auth.method receives token default. Explicit other methods remain rejected; existing literal-token type/length, config H, TLS, key-only listener and all other guards stay byte-identical.",
+  "savedPreIntentReconciliation": {
+    "path": "artifacts/ssh-domain-access-20261019/reconcile-116-pre-intent.json",
+    "bytes": 219,
+    "sha256": "7cf81c11ef829d6cea9742a69b9f7b21cd4049c3b4585bc031bfdcb20ea31090"
+  },
+  "actualInputBoundary": "Root reports new116operation3731ff8d-c728-43e1-8b84-b7946dd102ff with other bindings unchanged; this delta review did not certify an unavailable r2 binding file.",
+  "oldFailurePreserved": true,
+  "validation": "AST parse only; no helper import/evaluation, remote call or tests."
+}

@@ -1,0 +1,218 @@
+{
+  "at": "2026-10-19T13:20:39.615Z",
+  "hostname": "superopen-ProDesk-400-i5-6400",
+  "units": {
+    "frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/etc/systemd/system/frpc.service",
+      "UnitFileState": "enabled",
+      "MainPID": "3605",
+      "execStartSHA256": "dc716460e87978faa7114bcb519cada7edc25a54732e493cd49e5361ab9251b0",
+      "configPaths": [
+        "/home/superopen/frpc/frpc.toml"
+      ]
+    },
+    "mybid-frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/etc/systemd/system/mybid-frpc.service",
+      "UnitFileState": "enabled",
+      "MainPID": "1573651",
+      "execStartSHA256": "aed0d598080ddef1bd79914680b2512a0e0c47627602da8f8dd7eb2cf45ed5c4",
+      "configPaths": [
+        "/etc/mybid-frpc/frpc.toml"
+      ]
+    },
+    "ssh.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/usr/lib/systemd/system/ssh.service",
+      "UnitFileState": "disabled",
+      "MainPID": "1702383",
+      "execStartSHA256": "28269223b7b5e2720601fbbbc0c5ec2fe58245bf30826e81d14ddcb68c818d2d",
+      "configPaths": []
+    },
+    "sshd-keygen.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "/usr/lib/systemd/system/sshd-keygen.service",
+      "UnitFileState": "enabled",
+      "MainPID": "0",
+      "execStartSHA256": "8ac03c24b5cbf571cd3712aaf6ba642b35c5703b8e56173eb4bf97853b61757f",
+      "configPaths": []
+    },
+    "sshd@sshd-keygen.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "/usr/lib/systemd/system/sshd@.service",
+      "UnitFileState": "static",
+      "MainPID": "0",
+      "execStartSHA256": "a8576e2b21da6b3d57aaa1cf0a58c0af9056b8b7b42517619d0b1e2733f81fae",
+      "configPaths": []
+    },
+    "sssd-ssh.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "/usr/lib/systemd/system/sssd-ssh.service",
+      "UnitFileState": "indirect",
+      "MainPID": "0",
+      "execStartSHA256": "13d825a953823ff584e0dceb55e6ce5ae7b4b9aab68f1650c5393526bf48b125",
+      "configPaths": []
+    }
+  },
+  "frpConfigs": [
+    {
+      "path": "/etc/mybid-frpc/frpc.toml",
+      "sha256": "def377ee69015c9d2fa3d98e53e719455f768db83fd57b08b35c2448dab9e1e3",
+      "uid": 0,
+      "gid": 1000,
+      "mode": 416,
+      "parsed": true,
+      "server": {
+        "serverAddr": "8.163.127.192",
+        "serverPort": 7000
+      },
+      "hasAuthentication": true,
+      "proxies": [
+        {
+          "name": "cc-bid",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18921,
+          "subdomain": "cc-bid"
+        }
+      ]
+    },
+    {
+      "path": "/home/superopen/frpc/frpc.toml",
+      "sha256": "1d2de05636dd2a1faa95b47b4741cceaa189313ad40ca86c01208e3d04b2a43f",
+      "uid": 1000,
+      "gid": 1000,
+      "mode": 384,
+      "parsed": true,
+      "server": {
+        "serverAddr": "8.163.127.192",
+        "serverPort": 7000
+      },
+      "hasAuthentication": true,
+      "proxies": [
+        {
+          "name": "cc-inspire",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18903,
+          "subdomain": "cc-inspire"
+        },
+        {
+          "name": "cc-family",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18907,
+          "subdomain": "cc-family"
+        },
+        {
+          "name": "cc-ghradar",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18908,
+          "subdomain": "cc-ghradar"
+        },
+        {
+          "name": "cc-marrow",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18909,
+          "subdomain": "cc-marrow"
+        },
+        {
+          "name": "cc-gateway",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 3456,
+          "subdomain": "cc-gateway"
+        },
+        {
+          "name": "cc-game1",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18912,
+          "subdomain": "cc-game1"
+        },
+        {
+          "name": "cc-msf",
+          "type": "http",
+          "localIP": "127.0.0.1",
+          "localPort": 18920,
+          "subdomain": "cc-msf"
+        }
+      ]
+    }
+  ],
+  "sshEffective": {
+    "port": [
+      "22"
+    ],
+    "listenaddress": [
+      "[::]:22",
+      "0.0.0.0:22"
+    ],
+    "permitrootlogin": [
+      "prohibit-password"
+    ],
+    "pubkeyauthentication": [
+      "yes"
+    ],
+    "passwordauthentication": [
+      "yes"
+    ],
+    "kbdinteractiveauthentication": [
+      "no"
+    ],
+    "authorizedkeysfile": [
+      ".ssh/authorized_keys .ssh/authorized_keys2"
+    ]
+  },
+  "hostKeys": [
+    {
+      "name": "ssh_host_ecdsa_key.pub",
+      "fingerprint": "256 SHA256:DOrQTDcZ0Hl5zzBQCAsBbj7BdHjIx6CLjPK5qZUKFDA root@superopen-ProDesk-400-i5-6400 (ECDSA)"
+    },
+    {
+      "name": "ssh_host_ed25519_key.pub",
+      "fingerprint": "256 SHA256:v1YJWJjMgcLh+JCJsZBFD+a0/oG9iHF3yB4xJiX1QmM root@superopen-ProDesk-400-i5-6400 (ED25519)"
+    },
+    {
+      "name": "ssh_host_rsa_key.pub",
+      "fingerprint": "3072 SHA256:YSF9dZMG7NPXbgO/NG89hsiQXgwvDljlnfa7/gLKkls root@superopen-ProDesk-400-i5-6400 (RSA)"
+    }
+  ],
+  "tcpListeners": [
+    "LISTEN 0      4096       127.0.0.1:38719 0.0.0.0:*",
+    "LISTEN 0      4096       127.0.0.1:5432  0.0.0.0:*",
+    "LISTEN 0      4096       127.0.0.1:6379  0.0.0.0:*",
+    "LISTEN 0      4096       127.0.0.1:9000  0.0.0.0:*",
+    "LISTEN 0      4096       127.0.0.1:9001  0.0.0.0:*",
+    "LISTEN 0      4096       127.0.0.1:631   0.0.0.0:*",
+    "LISTEN 0      4096   127.0.0.53%lo:53    0.0.0.0:*",
+    "LISTEN 0      511          0.0.0.0:18912 0.0.0.0:*",
+    "LISTEN 0      2048         0.0.0.0:18901 0.0.0.0:*",
+    "LISTEN 0      511          0.0.0.0:18907 0.0.0.0:*",
+    "LISTEN 0      2048         0.0.0.0:18908 0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:3458  0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:3456  0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:3457  0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:3000  0.0.0.0:*",
+    "LISTEN 0      4096      127.0.0.54:53    0.0.0.0:*",
+    "LISTEN 0      4096         0.0.0.0:22    0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:18903 0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:18909 0.0.0.0:*",
+    "LISTEN 0      511        127.0.0.1:18921 0.0.0.0:*",
+    "LISTEN 0      4096           [::1]:631      [::]:*",
+    "LISTEN 0      511                *:18920       *:*",
+    "LISTEN 0      4096            [::]:22       [::]:*"
+  ],
+  "ufwStatus": "状态：不活动",
+  "privateConfigPrinted": false,
+  "changes": 0
+}

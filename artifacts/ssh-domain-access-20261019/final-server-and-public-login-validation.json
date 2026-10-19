@@ -1,0 +1,183 @@
+{
+  "at": "2026-10-19T13:37:38.353Z",
+  "status": "verified",
+  "results": [
+    {
+      "node": "112",
+      "domain": "ssh-112.ikvein.com",
+      "frpPort": 2212,
+      "authenticatedPublicLogin": true,
+      "login": {
+        "hostname": "superopen-ProDesk-i7",
+        "uid": 1000,
+        "user": "superopen",
+        "via": "public-gateway22/fixed-FRP/key-only-SSH"
+      },
+      "sourceConfigUnchanged": true,
+      "protectedUnitsUnchanged": true,
+      "units": {
+        "ssh.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "disabled",
+          "MainPID": "4082721",
+          "NRestarts": "0"
+        },
+        "ssh.socket": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled"
+        },
+        "jarvis-platform.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "848520",
+          "NRestarts": "0"
+        },
+        "jarvis-observer.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "626443",
+          "NRestarts": "0"
+        },
+        "jarvis-voice.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "2900037",
+          "NRestarts": "0"
+        },
+        "jarvis-frpc.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "2045",
+          "NRestarts": "0"
+        },
+        "myoperation-frpc.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "3844904",
+          "NRestarts": "0"
+        },
+        "jarvis-ssh-public.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "551596",
+          "NRestarts": "0"
+        },
+        "jarvis-ssh-tunnel.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "551598",
+          "NRestarts": "0"
+        }
+      },
+      "authenticationPolicy": {
+        "permitrootlogin": "no",
+        "passwordauthentication": "no",
+        "kbdinteractiveauthentication": "no",
+        "allowusers": "superopen",
+        "authenticationmethods": "publickey"
+      }
+    },
+    {
+      "node": "116",
+      "domain": "ssh-116.ikvein.com",
+      "frpPort": 2216,
+      "authenticatedPublicLogin": true,
+      "login": {
+        "hostname": "superopen-ProDesk-400-i5-6400",
+        "uid": 1000,
+        "user": "superopen",
+        "via": "public-gateway22/fixed-FRP/key-only-SSH"
+      },
+      "sourceConfigUnchanged": true,
+      "protectedUnitsUnchanged": true,
+      "units": {
+        "ssh.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "disabled",
+          "MainPID": "1702383",
+          "NRestarts": "0"
+        },
+        "ssh.socket": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled"
+        },
+        "frpc.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "3605",
+          "NRestarts": "16"
+        },
+        "mybid-frpc.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "1573651",
+          "NRestarts": "0"
+        },
+        "jarvis-ssh-public.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "2005595",
+          "NRestarts": "0"
+        },
+        "jarvis-ssh-tunnel.service": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "2005600",
+          "NRestarts": "0"
+        }
+      },
+      "authenticationPolicy": {
+        "permitrootlogin": "no",
+        "passwordauthentication": "no",
+        "kbdinteractiveauthentication": "no",
+        "allowusers": "superopen",
+        "authenticationmethods": "publickey"
+      }
+    }
+  ],
+  "gateway": {
+    "units": {
+      "frps.service": {
+        "MainPID": "161084",
+        "ActiveState": "active"
+      },
+      "nginx.service": {
+        "MainPID": "863337",
+        "ActiveState": "active"
+      },
+      "ssh.service": {
+        "MainPID": "407844",
+        "ActiveState": "active"
+      }
+    },
+    "frpsConfigSHA256": "519781831e79ba1ac9229616c758e14f6e67162ca20f86bab01c425e44ff5047",
+    "unchanged": true
+  },
+  "route": "Client SSH22 to existing public gateway, then FRP remote2212/2216 to each new key-only loopback2222 SSH",
+  "directPublicPortsReachable": false,
+  "directPortFailure": "Timed out from local client and independent Japan server; gateway-local SSH banners reachable. Upstream filtering cause not independently authenticated.",
+  "privateKeysTransferred": false,
+  "existingServicesRestarted": false,
+  "newServicesPerNode": 2,
+  "platformAppRelease": false,
+  "cost": {
+    "supplierModelCalls": 0,
+    "internalTokens": null,
+    "internalAmount": null
+  }
+}

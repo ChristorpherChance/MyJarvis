@@ -1,0 +1,99 @@
+{
+  "node": "112",
+  "operationId": "0fd47261-74d6-44b2-b4f3-180fc0db8440",
+  "startedAt": "2026-10-19T13:30:54.416Z",
+  "endedAt": "2026-10-19T13:30:56.163Z",
+  "elapsedSeconds": 1.7429169999999998,
+  "exitCode": 0,
+  "transportError": null,
+  "sourceSHA256": "a5baf463f064a007ac6063517f63c165a3f5863764ec268d6ac0b251ff517f21",
+  "inputSHA256": "86cc953fbbe5443aea63fbb48ac5bd16140ddadf9314067463c5414c0743ad09",
+  "transportSHA256": "2ead0d8440477cad134e3b74a5b9d90ebdaeb468b6e9a421077d0816c92fee22",
+  "stderrBytes": 0,
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "result": {
+    "node": "112",
+    "hostname": "superopen-ProDesk-i7",
+    "domain": "ssh-112.ikvein.com",
+    "remotePort": 2212,
+    "loopbackSSHPort": 2222,
+    "publicLoginUser": "superopen",
+    "authentication": "publickey-only",
+    "rootLoginAllowed": false,
+    "TLSControlTunnel": true,
+    "binarySHA256": "142f447f43fef286acc8da8a6852dda80631db631d604b2e63634b2db4d6848c",
+    "sourceConfigUnchanged": true,
+    "protectedUnitsUnchanged": true,
+    "protectedUnits": {
+      "ssh.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "disabled",
+        "MainPID": "4082721",
+        "NRestarts": "0"
+      },
+      "ssh.socket": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled"
+      },
+      "jarvis-platform.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "848520",
+        "NRestarts": "0"
+      },
+      "jarvis-observer.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "626443",
+        "NRestarts": "0"
+      },
+      "jarvis-voice.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2900037",
+        "NRestarts": "0"
+      },
+      "jarvis-frpc.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2045",
+        "NRestarts": "0"
+      },
+      "myoperation-frpc.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "3844904",
+        "NRestarts": "0"
+      }
+    },
+    "newUnits": {
+      "jarvis-ssh-public.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "551596",
+        "NRestarts": "0"
+      },
+      "jarvis-ssh-tunnel.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "551598",
+        "NRestarts": "0"
+      }
+    },
+    "hostPublicKeySHA256": "592fe40f4145de5bbc490bb5c28854cf79dd13e5e03fc9b4ac93b7b6b9d9aff0",
+    "publicKeySHA256": "de12c2fd400bf05cefc8fa076cac40f9a125aae9a0891e30943cc9dd7add1b61",
+    "privateCredentialsPrinted": false,
+    "operationId": "0fd47261-74d6-44b2-b4f3-180fc0db8440",
+    "created": true,
+    "externalLoginVerified": false
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "at": "2026-10-19T15:13:18.755Z",
+  "hostname": "superopen-HP-ProDesk-600-G3-SFF",
+  "units": {
+    "ssh.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "246452",
+      "NRestarts": "0"
+    },
+    "ssh.socket": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled"
+    },
+    "jarvis-platform.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "UnitFileState": "disabled",
+      "MainPID": "0",
+      "NRestarts": "0"
+    },
+    "jarvis-observer.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "3592730",
+      "NRestarts": "0"
+    },
+    "jarvis-voice.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "UnitFileState": "disabled",
+      "MainPID": "0",
+      "NRestarts": "0"
+    },
+    "jarvis-frpc.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "UnitFileState": "disabled",
+      "MainPID": "0",
+      "NRestarts": "0"
+    },
+    "docker.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "1689193",
+      "NRestarts": "0"
+    },
+    "cc-pdf-frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "2259435",
+      "NRestarts": "0"
+    },
+    "jarvis-msf-baseline-a36952c2-35af-4816-a8e4-1a3437c209f6.service": {
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "UnitFileState": "transient",
+      "MainPID": "0",
+      "NRestarts": "0"
+    },
+    "jarvis-msf-usage.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "UnitFileState": "static",
+      "MainPID": "0",
+      "NRestarts": "0"
+    },
+    "jarvis-software-factory-development.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "59553",
+      "NRestarts": "0"
+    },
+    "msf-app.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "UnitFileState": "enabled",
+      "MainPID": "0",
+      "NRestarts": "0"
+    }
+  },
+  "sourceConfigSHA256": "5bace3dae4f7b5dbdf4cd5021c5078b7b1ae1a2cc5a0715ea13c73d162b8c4ff",
+  "sourceConfigOwner": 0,
+  "sourceConfigMode": 416,
+  "sourceBinarySHA256": "142f447f43fef286acc8da8a6852dda80631db631d604b2e63634b2db4d6848c",
+  "sourceBinaryOwner": 0,
+  "serverAddr": "8.163.127.192",
+  "serverPort": 7000,
+  "authMethod": "token",
+  "tokenConfigured": true,
+  "TLSFieldNames": [
+    "enable"
+  ],
+  "hostPublicKeySHA256": "a8dd88934f00b9ae3f709d7be96cb1d5266d0db3b4c1bd6c4cf88e18bc9a2faf",
+  "hostKeyFingerprint": "SHA256:QBPjkVEK4Ss9A6JBqdcg4SmRzei4bDqeZMrLDgExgj8",
+  "newTargetsAbsent": true,
+  "local2222Free": true,
+  "passwordStatus": "P",
+  "superopenUID": 1000,
+  "privateValuesPrinted": false
+}

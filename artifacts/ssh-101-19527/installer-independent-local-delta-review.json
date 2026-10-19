@@ -1,0 +1,41 @@
+{
+  "kind": "home-ssh-101-19527-independent-local-delta-source-review",
+  "at": "2026-10-19T15:17:23.671681+00:00",
+  "acceptedForFiniteSourceScope": true,
+  "P0": 0,
+  "P1": 0,
+  "source": {
+    "path": ".jarvis-dev/maintenance/install-home-ssh-101.py",
+    "bytes": 9300,
+    "sha256": "032a4d62b94dcc8165c3dcacb3df9ab22d69b9014de74d8a8857386d6895eee1"
+  },
+  "baselineSHA256": "c1d9cc4cb54e6092a9ede6271ab06681722d471a1a5549bc16c8463e8f5c797d",
+  "literalReplacements": 11,
+  "wholeForwardAndInverseExact": true,
+  "ASTParsedOnly": true,
+  "verifiedDelta": [
+    "101 and19527 only; source config/binary root ownership required.",
+    "Existing superopen password-status P only; no password value/hash read or changed.",
+    "Publickey-or-password via AuthenticationMethods any/PasswordAuthentication yes; root no/superopen only/kbd no/loopback2222 unchanged and included in native validation.",
+    "Result does not claim actual password or external login; original key/auth guard, private credentials, directory permissions and failure actual-stop readback remain."
+  ],
+  "protectedDomain": "Source only creates/starts/stops the two new SSH access services. LAN22, cold business/voice/oldFRPC/observer and independent factory are in Root exact protected snapshot; no role promotion or factory action.",
+  "savedPreflight": {
+    "path": "artifacts/ssh-101-19527/preflight-101.json",
+    "bytes": 2956,
+    "sha256": "cd411635740e8e6ecf0b58554b3d771783ea514940d59124e19852187fc03ff4"
+  },
+  "sourceAndInputPins": {
+    "path": "artifacts/ssh-101-19527/source-and-input-pins.json",
+    "bytes": 508,
+    "sha256": "90c4d0be96734f7d2f9c63bef0ddbe11afbf5f3d8d332b15c67df2f97b373f54"
+  },
+  "inputBoundary": "Saved source/input pin receipt checked. Actual embedded p bytes were not provided independently; Root original guards enforce them.",
+  "notPerformed": [
+    "No remote or daemon operation",
+    "No helper import/evaluation",
+    "No tests/models",
+    "No actual external/password login qualification"
+  ],
+  "minorLabel": "Legacy KEY_ONLY_POLICY_NOT_EFFECTIVE error label remains; its checked predicates now correctly require yes/any. Cosmetic, not an authorization bypass."
+}

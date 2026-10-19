@@ -1,0 +1,88 @@
+{
+  "kind": "ssh-101-19527-saved-result-independent-local-review",
+  "reviewedAt": "2026-10-19T15:25:13.108713+00:00",
+  "acceptedForSavedInstallationAndPublicKeyRouteScope": true,
+  "P0": 0,
+  "P1": 0,
+  "operationId": "0a8665bf-f77d-4689-bb0d-e085dbe0d3ef",
+  "actualInstall": {
+    "exitCode": 0,
+    "seconds": 2.0681534000000004,
+    "sourceSHA256": "032a4d62b94dcc8165c3dcacb3df9ab22d69b9014de74d8a8857386d6895eee1",
+    "inputSHA256": "f7b465da04997ad162ef8928020cf28af276abb04a052904548ca769026ca535",
+    "newUnitsEnabledActive": true,
+    "protectedUnitCount": 12,
+    "protectedSnapshotEqualsPreflight": true,
+    "installerBeforeAfterExactAssertionPassed": true,
+    "originalSourceFRPCUnchanged": true
+  },
+  "target": {
+    "node": "101",
+    "domain": "ssh-101.ikvein.com",
+    "port": 19527,
+    "user": "superopen",
+    "hostname": "superopen-HP-ProDesk-600-G3-SFF",
+    "dnsGateway": "8.163.127.192",
+    "directPublicKeyLoginVerified": true,
+    "jumpHostUsed": false,
+    "independentJapanHostFingerprint": "SHA256:QBPjkVEK4Ss9A6JBqdcg4SmRzei4bDqeZMrLDgExgj8",
+    "matchesOriginal101HostKey": true
+  },
+  "preserved": {
+    "coldPlatformVoiceOriginalFRPCInactiveDisabled": true,
+    "observerPID": "3592730",
+    "factoryDevelopmentPID": "59553",
+    "originalLAN22AndOtherProtectedUnitsExact": true,
+    "otherPairLabels": {
+      "112": 29527,
+      "116": 39527
+    }
+  },
+  "passwordBoundary": {
+    "authentication": "publickey-or-password",
+    "passwordAuthenticationOffered": true,
+    "actualPasswordLoginVerified": false,
+    "passwordReadOrChanged": false,
+    "rootLoginAllowed": false
+  },
+  "scopeLimits": [
+    "Saved Root installer source/input/result and final validation are cross-checked; reviewer did not reconnect or rerun a test.",
+    "Protected result includes original unit values plus source-enforced actual before/after equality; this is not an independent new daemon observation.",
+    "Key login and Japan host-key reachability passed; no actual password was entered or changed, so password login is not signed passed.",
+    "112/116 pair labels are preserved in saved final receipt; their routes are not revalidated here.",
+    "No platform takeover, factory job or full product acceptance inferred."
+  ],
+  "physicalReferences": [
+    {
+      "path": "artifacts/ssh-101-19527/preflight-101.json",
+      "bytes": 2956,
+      "sha256": "cd411635740e8e6ecf0b58554b3d771783ea514940d59124e19852187fc03ff4"
+    },
+    {
+      "path": "artifacts/ssh-101-19527/actual-install.json",
+      "bytes": 3986,
+      "sha256": "e4015e1d89fd7db53530d120364251fecded1a451be49894e6443dfb519f29ec"
+    },
+    {
+      "path": "artifacts/ssh-101-19527/final-validation.json",
+      "bytes": 858,
+      "sha256": "2adceb7491d978028ba032d358b32b93a1157527c26dd6fb2857ad6b00a70e9f"
+    },
+    {
+      "path": "artifacts/ssh-101-19527/source-and-input-pins.json",
+      "bytes": 508,
+      "sha256": "90c4d0be96734f7d2f9c63bef0ddbe11afbf5f3d8d332b15c67df2f97b373f54"
+    },
+    {
+      "path": "artifacts/ssh-101-19527/installer-independent-local-delta-review.json",
+      "bytes": 2189,
+      "sha256": "5741d15ddceaf141681cb0a399b5bf3d8301627a677cd8629c14ba9a5082f29b"
+    }
+  ],
+  "reviewExecution": {
+    "remoteRequests": 0,
+    "testsRun": 0,
+    "privateConfigOrPasswordRead": false,
+    "modelCalls": 0
+  }
+}

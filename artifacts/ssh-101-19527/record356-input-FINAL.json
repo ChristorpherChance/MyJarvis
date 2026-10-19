@@ -1,0 +1,54 @@
+{
+  "id": "JARVIS-20261019-101-19527-ORDINARY-SSH-ACCESS",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T15:24:07.933Z",
+  "title": "101独立SSH19527已公网核通，三机准确入口与密码验收边界明确",
+  "objective": "三台机器按101:19527、112:29527、116:39527使用普通SSH域名、用户名和既有密码；本轮仅在101新增独立入口。",
+  "changes": [
+    "按用户明确指定，101新增独立loopback2222 SSH服务及19527 FRPC映射；认证允许superopen原密码或公钥，禁止root登录。",
+    "连接说明主表现为101:19527、112:29527、116:39527；355及更早说明全文作为历史保留。"
+  ],
+  "decisions": [
+    "按用户本次明确授权仅配置101的19527；112与116沿用355正确端口，不再试其他端口。",
+    "101使用独立sshd2222与独立FRPC；原LAN22、冷备平台、voice、旧FRPC、工厂和observer保护域保持。"
+  ],
+  "facts": [
+    "101安装实际exit0，用时2.0681534秒；两项新增服务enabled/active。原LAN22、旧FRPC及业务、工厂59553、observer3592730的状态/PID与preflight逐项相等，冷备平台和voice保持disabled/inactive。",
+    "101本机无Jump公网公钥登录exit0，准确主机superopen-HP-ProDesk-600-G3-SFF；日本独立握手主机指纹匹配，没有传输用户凭据。",
+    "101服务提供password，但未代输用户密码，实际密码登录未验；原密码和hash未读未改。11229527/11639527沿用355验证，本轮未重验。",
+    "本机既有客户端密钥仅由指纹工具使用；没有输出正文或传送到服务器。未追踪文件读取，不把早期privateKeyReadOrTransferred=false冒作操作系统未读文件的证明。",
+    "本次无应用发布、工厂派发或冷备接替，自动跟进仍暂停。供应商模型未新增；内部量价及账单未知分列，费用只记录。",
+    "已有决定889fb910-1add-4e40-95b1-038df8e9db3c已追加实施至revision2，旧action前缀保持，independentAcceptance=false；notes与factory均未写入。"
+  ],
+  "verification": [
+    "实体核对安装、最终公网验证、独立源审与preflight：101身份/19527、公钥通道、日本指纹及全部原保护域匹配。",
+    "112/116仅保留先前验证边界；三台实际密码输入均未验，不把password提供冒作密码实登。",
+    "本地原construction工具一次追加并渲染，保355完整账本前缀、档案/日志全文逆变、指南旧全文后缀及三对MD/HTML源指纹；没有新现场或测试。"
+  ],
+  "pending": [
+    "由本人用三台对应域名/端口及superopen既有密码实际登录确认；密码仅在SSH终端输入，不发聊天或Git。",
+    "Git公开及112文档同步由Root后续独立留证，不倒填本条，不重部署应用。"
+  ],
+  "lessons": [
+    "按用户明确机器与端口配对实施；安装、通道身份验证和实际密码验收分别留证，不把准备或认证能力写成完整使用验收。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/ssh-101-19527/final-validation.json",
+    "artifacts/ssh-101-19527/actual-install.json",
+    "artifacts/ssh-101-19527/installer-independent-local-delta-review.json",
+    "artifacts/ssh-101-19527/preflight-101.json",
+    "artifacts/ssh-101-19527/gateway19527-prepared.json",
+    "artifacts/ssh-101-19527/source-and-input-pins.json",
+    "artifacts/ssh-101-19527/client-key-handling-note.json",
+    "artifacts/ssh-101-19527/decision-implementation-receipt.json",
+    "artifacts/ssh-port-assignment-correction/final-validation.json"
+  ]
+}

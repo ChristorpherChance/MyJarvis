@@ -1,0 +1,8 @@
+{
+  "kind": "local-client-key-handling-scope",
+  "source": "source-and-input-pins.json",
+  "clarification": "The local ssh-keygen fingerprint operation used the existing client key path. No private key contents were printed, copied into reports, or transferred to a server. The earlier privateKeyReadOrTransferred=false field must not be interpreted as an OS-level assertion that the local fingerprint tool performed no file read; file reads were not traced.",
+  "privateKeyContentsPrinted": false,
+  "privateKeyTransferred": false,
+  "localFingerprintOnly": true
+}

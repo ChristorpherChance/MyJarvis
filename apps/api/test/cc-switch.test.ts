@@ -74,6 +74,15 @@ test('CC Switch read projection strips credentials and unknown nested fields',as
   assert.deepEqual(response.json().providers[0].models,roles);assert.equal(response.json().providers[0].credentialConfigured,true);
  }finally{await f.close();}
 });
+test('CC Switch reads and manages native slug providers and empty official configuration',async()=>{
+ const f=await fixture();try{
+  const slug='official-native_2026.10';
+  f.setHandler(async r=>({ok:true,value:r.action==='machines'?{configured:true,machines:knownMachines}:{...snapshot(),currentProviderId:slug,providers:[{...snapshot().providers[0],id:slug,name:'N'.repeat(250),baseUrl:'',model:'',models:{opus:'',sonnet:'',haiku:'',fable:'',subagent:''},credentialConfigured:false}]}}));
+  const response=await f.app.inject({url:providers,headers:f.headers});assert.equal(response.statusCode,200);assert.equal(response.json().providers[0].id,slug);assert.equal(response.json().providers[0].baseUrl,'');assert.equal(response.json().providers[0].model,'');
+  assert.equal((await f.app.inject({method:'POST',url:providers+'/'+slug+'/switch',headers:f.headers,payload:{expectedRevision:revision}})).statusCode,200);assert.equal(f.calls.at(-1)!.providerId,slug);
+  assert.equal((await f.app.inject({method:'PATCH',url:providers+'/'+slug,headers:f.headers,payload:{expectedRevision:revision,provider:{...input,baseUrl:''}}})).statusCode,400);
+ }finally{await f.close();}
+});
 test('CC Switch CRUD uses explicit worker actions and opaque version checks; audits contain identifiers only',async()=>{
  const f=await fixture();try{
   const commandId=randomUUID();
@@ -109,7 +118,7 @@ test('CC Switch validates new key, update key preservation, version and provider
 });
 test('CC Switch translates conflict, active deletion, uncertain result and unexpected worker errors without echoing secrets',async()=>{
  const f=await fixture();try{
-  for(const [code,status] of [['CONFLICT',409],['ACTIVE_PROVIDER',409],['NOT_FOUND',404],['INVALID_INPUT',400],['UNKNOWN_RESULT',503],['SOMETHING_PRIVATE',503]] as const){
+  for(const [code,status] of [['CONFLICT',409],['ACTIVE_PROVIDER',409],['NOT_FOUND',404],['INVALID_INPUT',400],['APPLY_FAILED',503],['UNKNOWN_RESULT',503],['SOMETHING_PRIVATE',503]] as const){
    f.setHandler(async r=>r.action==='machines'?{ok:true,value:{configured:true,machines:knownMachines}}:{ok:false,code,status:500,message:secret});
    const response=await f.app.inject({method:'DELETE',url:providers+'/'+providerId,headers:f.headers,payload:{expectedRevision:revision}});
    assert.equal(response.statusCode,status);assert.ok(!response.body.includes(secret));if(code==='UNKNOWN_RESULT')assert.match(response.json().error.message,/刷新核实/);
@@ -134,11 +143,13 @@ test('CC Switch request bodies are capped at 64 KiB without returning oversized 
 });
 test('CC Switch Unix transport accepts one fragmented newline envelope and rejects malformed or oversized output',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'jarvis-cc-socket-')),path=join(dir,'control.sock');let mode='ok',request:any;
- const server=createServer(socket=>{let data='';socket.on('error',()=>{});socket.on('data',chunk=>{data+=chunk.toString();if(!data.includes('\n'))return;request=JSON.parse(data.split('\n')[0]);if(mode==='ok'){socket.write('{"ok":true,');socket.end('"value":{"configured":true,"machines":[]}}\n');}else if(mode==='invalid')socket.end(secret+'\n');else socket.end('x'.repeat(1024*1024+1));});});
+ const server=createServer(socket=>{let data='';socket.on('error',()=>{});socket.on('data',chunk=>{data+=chunk.toString();if(!data.includes('\n'))return;request=JSON.parse(data.split('\n')[0]);if(mode==='ok'){socket.write('{"ok":true,');socket.end('"value":{"configured":true,"machines":[]}}\n');}else if(mode==='invalid')socket.end(secret+'\n');else if(mode==='dropped')socket.end();else socket.end('x'.repeat(1024*1024+1));});});
  await new Promise<void>(resolve=>server.listen(path,resolve));const transport=createCcSwitchSocketTransport(path);
  try{
   assert.deepEqual(await transport({action:'machines'}),{ok:true,value:{configured:true,machines:[]}});assert.deepEqual(request,{action:'machines'});
   for(mode of ['invalid','oversized'])await assert.rejects(transport({action:'machines'}),error=>error instanceof RuntimeAccessError&&error.code==='UNAVAILABLE'&&!error.message.includes(secret));
+  mode='dropped';await assert.rejects(transport({action:'switch',machineId:machineIds[0],providerId,expectedRevision:revision}),error=>error instanceof RuntimeAccessError&&error.code==='UNKNOWN_RESULT'&&/刷新核实/.test(error.message));
+  await assert.rejects(transport({action:'machines'}),error=>error instanceof RuntimeAccessError&&error.code==='UNAVAILABLE');
  }finally{await new Promise<void>(resolve=>server.close(()=>resolve()));await rm(dir,{recursive:true,force:true});}
 });
 test('createApp exposes CC Switch injection through the existing authenticated platform boundary',async()=>{

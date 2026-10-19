@@ -6,21 +6,22 @@ import {MEMBER_COOKIE,RuntimeAccessError,type IdentityRuntime,type RuntimePrinci
 
 const prefix='/api/runtime/cc-switch';
 const id=z.string().uuid();
+const providerIdentifier=z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_.-]{0,99}$/);
 const revision=z.string().regex(/^[a-f0-9]{64}$/);
 const text=(max:number)=>z.string().trim().min(1).max(max).refine(v=>!/[\u0000-\u001f\u007f]/.test(v));
 const model=text(300);
 const baseUrl=text(2048).refine(value=>{try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)&&!url.username&&!url.password&&!url.search&&!url.hash;}catch{return false;}});
 const models=z.object({opus:model,sonnet:model,haiku:model,fable:model,subagent:model}).strict();
 const apiKey=z.string().max(8192).refine(v=>!/[\u0000-\u001f\u007f]/.test(v));
-const provider=z.object({name:text(120),baseUrl,model,models,authType:z.enum(['auth-token','api-key']),apiKey:apiKey.optional()}).strict();
+const provider=z.object({name:text(200),baseUrl,model,models,authType:z.enum(['auth-token','api-key']),apiKey:apiKey.optional()}).strict();
 const createBody=z.object({commandId:id,provider:provider.refine(p=>!!p.apiKey?.trim())}).strict();
 const updateBody=z.object({expectedRevision:revision,provider}).strict();
 const versionBody=z.object({expectedRevision:revision}).strict();
 const host=z.enum(['101','112','116']);
 const machineSchema=z.object({id,name:text(200),address:text(200),host});
 const machineListSchema=z.object({machines:z.array(machineSchema).max(3),configured:z.boolean()});
-const publicProvider=z.object({id,name:text(120),baseUrl,model,models:z.object({opus:z.string().max(300),sonnet:z.string().max(300),haiku:z.string().max(300),fable:z.string().max(300),subagent:z.string().max(300)}),authType:z.enum(['auth-token','api-key']),credentialConfigured:z.boolean(),isCurrent:z.boolean(),revision});
-const snapshotSchema=z.object({machineId:id,host,application:z.literal('claude'),observedAt:z.string().datetime({offset:true}),currentProviderId:id.nullable(),providers:z.array(publicProvider).max(500)});
+const publicProvider=z.object({id:providerIdentifier,name:text(300),baseUrl:z.union([z.literal(''),baseUrl]),model:z.string().max(300),models:z.object({opus:z.string().max(300),sonnet:z.string().max(300),haiku:z.string().max(300),fable:z.string().max(300),subagent:z.string().max(300)}),authType:z.enum(['auth-token','api-key']),credentialConfigured:z.boolean(),isCurrent:z.boolean(),revision});
+const snapshotSchema=z.object({machineId:id,host,application:z.literal('claude'),observedAt:z.string().datetime({offset:true}),currentProviderId:providerIdentifier.nullable(),providers:z.array(publicProvider).max(200)});
 export type CcSwitchProviderInput=z.infer<typeof provider>;
 export type CcSwitchRequest={action:'machines'|'list'|'create'|'update'|'switch'|'delete';machineId?:string;providerId?:string;expectedRevision?:string;commandId?:string;provider?:CcSwitchProviderInput};
 /** Transport returns only the worker protocol envelope, never a raw configuration. */
@@ -34,6 +35,7 @@ const messages:Record<string,{status:number;message:string}>={
  INVALID_INPUT:{status:400,message:'请检查模型、地址和密钥的填写格式'},
  UNAVAILABLE:{status:503,message:'机器暂时无法连接，请稍后重试'},
  NOT_CONFIGURED:{status:503,message:'模型管理连接尚未配置'},
+ APPLY_FAILED:{status:503,message:'配置应用失败，请刷新核实当前配置后再重试'},
  UNKNOWN_RESULT:{status:503,message:'操作结果尚未确认，请先刷新核实，避免重复提交'},
  FORBIDDEN:{status:403,message:'当前机器不允许管理模型配置'},
 };
@@ -43,12 +45,12 @@ export function createCcSwitchSocketTransport(socketPath:string):CcSwitchTranspo
  return request=>new Promise((resolve,reject)=>{
   const data=JSON.stringify(request)+'\n';
   if(Buffer.byteLength(data)>64*1024){reject(new RuntimeAccessError('INVALID_INPUT',messages.INVALID_INPUT.message,400));return;}
-  const socket=connect({path:socketPath});let settled=false,size=0;const chunks:Buffer[]=[];
+  const socket=connect({path:socketPath});let settled=false,size=0,sentMutation=false;const chunks:Buffer[]=[];
   const finish=(error?:unknown,value?:unknown)=>{if(settled)return;settled=true;socket.destroy();if(error)reject(error);else resolve(value);};
-  const unavailable=()=>new RuntimeAccessError('UNAVAILABLE',messages.UNAVAILABLE.message,503);
+  const unavailable=()=>{const code=sentMutation?'UNKNOWN_RESULT':'UNAVAILABLE';return new RuntimeAccessError(code,messages[code].message,503);};
   socket.setTimeout(45_000,()=>finish(unavailable()));
   socket.on('error',()=>finish(unavailable()));
-  socket.on('connect',()=>socket.write(data));
+  socket.on('connect',()=>{sentMutation=!['machines','list'].includes(request.action);socket.write(data);});
   socket.on('data',chunk=>{
    size+=chunk.length;if(size>1024*1024){finish(unavailable());return;}
    chunks.push(Buffer.from(chunk));const bytes=Buffer.concat(chunks),end=bytes.indexOf(10);
@@ -118,7 +120,7 @@ export function registerCcSwitchRoutes(app:FastifyInstance,identity:IdentityRunt
   }
  };
  const mutation=async(req:any,p:RuntimePrincipal,action:'create'|'update'|'switch'|'delete')=>{
-  const machineId=id.parse(req.params.machineId),providerId=action==='create'?undefined:id.parse(req.params.providerId);
+  const machineId=id.parse(req.params.machineId),providerId=action==='create'?undefined:providerIdentifier.parse(req.params.providerId);
   const body=action==='create'?createBody.parse(req.body):action==='update'?updateBody.parse(req.body):versionBody.parse(req.body);
   const m=await machine(p,machineId);current(p);
   const request:CcSwitchRequest={action,machineId,...(providerId?{providerId}:{}),...body};

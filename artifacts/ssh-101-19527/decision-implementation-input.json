@@ -1,0 +1,20 @@
+{
+  "commandId": "638764e7-4746-44f2-8265-e7501866e0d0",
+  "expectedVersion": 1,
+  "actions": [
+    {
+      "summary": "按用户追加要求，仅为101新增独立SSH监听与FRP通道19527；公网无跳板公钥登录核到101，日本独立主机指纹匹配，superopen密码认证可用但实际密码登录未代输。原密码未读改；101冷备业务及工厂状态和PID保持。11229527、11639527保持。",
+      "at": "2026-10-19T15:22:35.764Z",
+      "state": "performed",
+      "evidenceRefs": [
+        {
+          "reference": "artifacts/ssh-101-19527/final-validation.json",
+          "sha256": "2adceb7491d978028ba032d358b32b93a1157527c26dd6fb2857ad6b00a70e9f",
+          "kind": "test-report"
+        }
+      ]
+    }
+  ],
+  "reason": "用户明确选定101使用19527，云端端口由用户开放；完成服务器配置及真实公网验证，保存有限实施结果。",
+  "origin": "ai"
+}

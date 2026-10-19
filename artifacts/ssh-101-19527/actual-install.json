@@ -1,0 +1,131 @@
+{
+  "kind": "ssh-101-19527-actual-install",
+  "at": "2026-10-19T15:20:54.739Z",
+  "seconds": 2.0681534000000004,
+  "exitCode": 0,
+  "transportError": null,
+  "sourceSHA256": "032a4d62b94dcc8165c3dcacb3df9ab22d69b9014de74d8a8857386d6895eee1",
+  "inputSHA256": "f7b465da04997ad162ef8928020cf28af276abb04a052904548ca769026ca535",
+  "result": {
+    "node": "101",
+    "hostname": "superopen-HP-ProDesk-600-G3-SFF",
+    "domain": "ssh-101.ikvein.com",
+    "remotePort": 19527,
+    "loopbackSSHPort": 2222,
+    "publicLoginUser": "superopen",
+    "authentication": "publickey-or-password",
+    "actualPasswordLoginVerified": false,
+    "passwordReadOrChanged": false,
+    "rootLoginAllowed": false,
+    "TLSControlTunnel": true,
+    "binarySHA256": "142f447f43fef286acc8da8a6852dda80631db631d604b2e63634b2db4d6848c",
+    "sourceConfigUnchanged": true,
+    "protectedUnitsUnchanged": true,
+    "protectedUnits": {
+      "ssh.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "246452",
+        "NRestarts": "0"
+      },
+      "ssh.socket": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled"
+      },
+      "jarvis-platform.service": {
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "NRestarts": "0"
+      },
+      "jarvis-observer.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "3592730",
+        "NRestarts": "0"
+      },
+      "jarvis-voice.service": {
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "NRestarts": "0"
+      },
+      "jarvis-frpc.service": {
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "NRestarts": "0"
+      },
+      "docker.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "1689193",
+        "NRestarts": "0"
+      },
+      "cc-pdf-frpc.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2259435",
+        "NRestarts": "0"
+      },
+      "jarvis-msf-baseline-a36952c2-35af-4816-a8e4-1a3437c209f6.service": {
+        "ActiveState": "failed",
+        "SubState": "failed",
+        "UnitFileState": "transient",
+        "MainPID": "0",
+        "NRestarts": "0"
+      },
+      "jarvis-msf-usage.service": {
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "static",
+        "MainPID": "0",
+        "NRestarts": "0"
+      },
+      "jarvis-software-factory-development.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "59553",
+        "NRestarts": "0"
+      },
+      "msf-app.service": {
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "enabled",
+        "MainPID": "0",
+        "NRestarts": "0"
+      }
+    },
+    "newUnits": {
+      "jarvis-ssh-public.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2352614",
+        "NRestarts": "0"
+      },
+      "jarvis-ssh-tunnel.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2352617",
+        "NRestarts": "0"
+      }
+    },
+    "hostPublicKeySHA256": "a8dd88934f00b9ae3f709d7be96cb1d5266d0db3b4c1bd6c4cf88e18bc9a2faf",
+    "publicKeySHA256": "cc4ca921ac3f3915ab473ae1d7025f4e8e081da1a94c210dad4136b77548ca93",
+    "privateCredentialsPrinted": false,
+    "operationId": "0a8665bf-f77d-4689-bb0d-e085dbe0d3ef",
+    "created": true,
+    "externalLoginVerified": false
+  }
+}

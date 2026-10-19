@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-19T15:01:58.800Z",
+  "status": "corrected-and-public-routes-verified",
+  "results": [
+    {
+      "node": "112",
+      "domain": "ssh-112.ikvein.com",
+      "port": 29527,
+      "user": "superopen",
+      "directPublicKeyLoginVerified": true,
+      "hostname": "superopen-ProDesk-i7",
+      "exitCode": 0,
+      "jumpHostUsed": false,
+      "passwordAuthenticationOffered": true,
+      "actualPasswordLoginVerified": false,
+      "passwordReadOrChanged": false
+    },
+    {
+      "node": "116",
+      "domain": "ssh-116.ikvein.com",
+      "port": 39527,
+      "user": "superopen",
+      "directPublicKeyLoginVerified": true,
+      "hostname": "superopen-ProDesk-400-i5-6400",
+      "exitCode": 0,
+      "jumpHostUsed": false,
+      "passwordAuthenticationOffered": true,
+      "actualPasswordLoginVerified": false,
+      "passwordReadOrChanged": false
+    }
+  ],
+  "independent": {
+    "vantage": "independent-japan-server",
+    "results": [
+      {
+        "node": "112",
+        "port": 29527,
+        "hostFingerprint": "SHA256:mblMezmNEMdlO1dyohXFwwlKSwceT4k7Rje4120RZ5c",
+        "targetIdentityMatched": true
+      },
+      {
+        "node": "116",
+        "port": 39527,
+        "hostFingerprint": "SHA256:v1YJWJjMgcLh+JCJsZBFD+a0/oG9iHF3yB4xJiX1QmM",
+        "targetIdentityMatched": true
+      }
+    ],
+    "credentialsTransferred": false
+  },
+  "wrong112Port39527MappingRemoved": true,
+  "old116Port29528MappingReplaced": true,
+  "oldSSH2212And2216Preserved": true,
+  "earlierRequestToOpen29528Withdrawn": true,
+  "server101Modified": false,
+  "actualPasswordLoginVerified": false
+}

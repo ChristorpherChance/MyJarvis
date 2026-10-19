@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-19T15:00:30.133Z",
+  "node": "116",
+  "operationId": "f7d11009-04fd-4571-9236-a3705dc80992-116",
+  "installed": true,
+  "FRPConfigSHA256": "b604b2529418f758d7ff190fcf8044d892ff381b9aaad53d5c73fb0e66ab7c85",
+  "proxies": [
+    {
+      "name": "ssh",
+      "port": 2216
+    },
+    {
+      "name": "ssh-direct",
+      "port": 39527
+    }
+  ],
+  "protectedUnitsAndSSHPolicyUnchanged": true,
+  "onlyNewTunnelRestarted": true,
+  "tunnel": {
+    "jarvis-ssh-tunnel.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "2260927",
+      "NRestarts": "0"
+    }
+  },
+  "passwordReadOrChanged": false
+}

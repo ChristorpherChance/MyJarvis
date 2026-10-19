@@ -1,0 +1,51 @@
+{
+  "id": "JARVIS-20261019-112-29527-116-39527-ASSIGNMENT-CORRECTION",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T15:06:20.357469Z",
+  "title": "端口分配已纠正：112用29527、116用39527；两端无跳板通道核对通过",
+  "objective": "让其他机器使用普通SSH域名、对应端口、用户名和既有密码连接；纠正误把39527加到112的操作，不扩大其他服务器或端口任务。",
+  "changes": [
+    "按用户明确分配，112保29527并移除误加39527第三proxy；116原29528替换为39527，原2212/2216代理保持。",
+    "仅重启两个新增tunnel；原LAN22、业务、sshd策略和旧FRPC保持，原密码和hash未读未改。",
+    "当前说明改为准确两目标主表；354误解下的真实操作及全部更早说明保为历史，此前让用户放行29528的提示作废。"
+  ],
+  "decisions": [
+    "354保留当时误解下的真实操作与核验，355追加纠正；不改写旧事实或让错误端口继续充当当前指南。",
+    "此前让用户放行29528的提示作废，不再要求用户据此操作；本次只处理这两项准确映射。"
+  ],
+  "facts": [
+    "112域名29527与116域名39527均从本机无Jump真实公钥登录成功，分别核对i7/i5准确主机；日本独立Ed25519指纹对应通过。",
+    "两端均提供password认证，但未代输用户密码；actualPasswordLoginVerified=false，不称已实际用密码登录。",
+    "首轮Python tuple/list投影比较在任何写入前拒绝；distinct r2只改投影为JSON同构lists，原失败和源码保留。",
+    "101候选19527/49527在网关无占用、主机LIMIT项已加，但日本探测仍timeout；101未修改、未配SSH映射、未验登录，19527仅候选，不列为可用入口。",
+    "112仍R55，101冷备和软件工厂未操作，自动跟进仍暂停；无应用发布。新增供应商模型0，内部量价及账单未知分列，费用只记录。"
+  ],
+  "verification": [
+    "实际两份r2结果确认仅新增tunnel重启、原保护域与认证策略保持；final-validation分别记录无跳板公钥登录、独立身份与密码提供边界。",
+    "保存首轮写前拒和101候选端口有限探测，不把未配置或timeout写成成功。",
+    "本地仅读取已保存公开回执并生成文档，没有新增现场、测试、模型或其他端口任务。"
+  ],
+  "pending": [
+    "两端真实密码输入仍待本人在SSH终端验收；密码不发聊天或仓库，公钥核通不能替代。",
+    "101仅候选端口，未配置/未验SSH；本记录不授权或实现其他服务器任务。",
+    "本cut后平台metadata、文档Git及112文档同步另留回执，不倒填旧记录或重部署应用。"
+  ],
+  "lessons": [
+    "端口必须与具体目标机器绑定理解；不能仅按最新端口数字默认加到上一台机器。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/ssh-port-assignment-correction/final-validation.json",
+    "artifacts/ssh-port-assignment-correction/result-112-r2.json",
+    "artifacts/ssh-port-assignment-correction/result-116-r2.json",
+    "artifacts/ssh-port-assignment-correction/prewrite-guard-correction.json",
+    "artifacts/ssh-port-assignment-correction/server101-candidate-ports.json"
+  ]
+}

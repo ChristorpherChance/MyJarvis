@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-19T15:02:09.765Z",
+  "gateway": {
+    "gateway": "8.163.127.192",
+    "candidates": [
+      {
+        "port": 19527,
+        "occupied": false,
+        "candidateHostLimitRuleAdded": true
+      },
+      {
+        "port": 49527,
+        "occupied": false,
+        "candidateHostLimitRuleAdded": true
+      }
+    ],
+    "server101Changed": false,
+    "servicesRestarted": false
+  },
+  "external": {
+    "vantage": "independent-japan-server",
+    "results": [
+      {
+        "port": 19527,
+        "result": "TimeoutError"
+      },
+      {
+        "port": 49527,
+        "result": "TimeoutError"
+      }
+    ]
+  },
+  "SSH101MappingConfigured": false,
+  "SSH101LoginVerified": false,
+  "server101Modified": false
+}

@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-19T15:00:29.223Z",
+  "node": "116",
+  "operationId": "f7d11009-04fd-4571-9236-a3705dc80992-116",
+  "hostname": "superopen-ProDesk-400-i5-6400",
+  "protectedUnits": [
+    "ssh.service",
+    "ssh.socket",
+    "frpc.service",
+    "mybid-frpc.service",
+    "jarvis-ssh-public.service"
+  ],
+  "originalUnits": {
+    "ssh.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "disabled",
+      "MainPID": "1702383",
+      "NRestarts": "0"
+    },
+    "ssh.socket": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled"
+    },
+    "frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "3605",
+      "NRestarts": "16"
+    },
+    "mybid-frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled",
+      "MainPID": "1573651",
+      "NRestarts": "0"
+    }
+  },
+  "oldHash": "fd0d7787da8fd052a4f11719f1c1e71fd6adcc6a7b866c9c3694aaae23743172",
+  "oldProxies": [
+    [
+      "ssh",
+      2216
+    ],
+    [
+      "ssh-direct",
+      29528
+    ]
+  ]
+}

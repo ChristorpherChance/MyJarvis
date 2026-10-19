@@ -1,0 +1,184 @@
+{
+  "data": {
+    "questionSummary": "如何按用户明确的112端口29527、116端口39527提供其他机器普通SSH账号口令接入？",
+    "context": {
+      "observedAt": "2026-10-19T15:05:52.030Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": "c55660aee33c93b74f72e8bc9a735f9751deda404eb01539eac8c0de22cacda9",
+      "sourceVersion": "20261018-ai-development-ops-r55",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [],
+      "constraints": [
+        "固定112→29527、116→39527，不按单个数字猜目标机器。",
+        "普通账号superopen；保留原密码及公钥，root禁止；不读取、重设或代输密码。",
+        "仅操作本次新增FRP通道；原LAN22、业务、旧FRPC和SSH监听器保持。",
+        "101只检查19527/49527候选，未改101或配置其SSH转发。"
+      ],
+      "situation": "112误加的39527代理已移除，原29527保持；116原29528仅改39527。两个公网无跳板公钥登录及日本独立主机指纹分别匹配112/116，服务提供口令认证，实际口令登录仍未代用户验证。此前29528放行提示作废；候选端口测试和无用规则已独立清理。"
+    },
+    "options": [
+      {
+        "id": "explicit-host-port-pair",
+        "title": "严格采用11229527、11639527并逐一核目标身份",
+        "advantages": [
+          "符合用户明确配对，两个公网入口均核到指定机器。",
+          "保持原业务、认证配置和既有密码，保留历史错误以供复查。"
+        ],
+        "disadvantages": [
+          "实际口令认证需要用户输入其既有密码确认。"
+        ],
+        "impact": "只重启两台本次新增tunnel；普通SSH密码认证策略不改，101未修改。",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [],
+        "operationalImpact": 1
+      },
+      {
+        "id": "previous-root-misassignment",
+        "title": "保留Root之前11239527、11629528的错误分配",
+        "advantages": [
+          "原动作已保存可追溯。"
+        ],
+        "disadvantages": [
+          "与用户明确配对不符。"
+        ],
+        "impact": "仅保历史，不再作为现行连接方式。",
+        "compliesWithGoals": "no",
+        "withinAuthority": "no",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [],
+        "operationalImpact": 1
+      }
+    ],
+    "chosenId": "explicit-host-port-pair",
+    "decisionRationale": "以用户明确的主机与端口配对纠正Root此前错误理解，每个公网端口都核验到相应主机；方法提供与实际口令登录分别记录。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+        "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/ssh-domain-access-20261019/password-direct-current-validation.json",
+        "sha256": "33e1cb7b95ece8c6d6e94db1ce335f296c27a256ac6c9179a69bd328be2aba22",
+        "kind": "test-report"
+      },
+      {
+        "reference": "artifacts/ssh-port-assignment-correction/final-validation.json",
+        "sha256": "c55660aee33c93b74f72e8bc9a735f9751deda404eb01539eac8c0de22cacda9",
+        "kind": "test-report"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [],
+    "rollbackPlan": {
+      "plan": "保持11229527和原运维通道；如新11639527身份或服务不符，仅暂停受影响新增代理并从本次私存资料制定恢复步骤，不自动恢复11239527的错误分配。",
+      "triggers": [
+        "目标主机身份不符",
+        "新增通道异常影响连接"
+      ],
+      "impact": "仅本次新增FRPC代理配置，不触碰原业务和原SSH22。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [
+      {
+        "summary": "112与116独立SSH/FRP各两服务已安装并启用；通过公网22跳板实际密钥登录两台指定服务器，原服务PID/配置和广州网关不变。",
+        "at": "2026-10-19T13:37:38.353Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+            "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf",
+            "kind": "test-report"
+          }
+        ]
+      },
+      {
+        "summary": "两节点新增SSH入口已允许superopen既有密码，新增FRP direct29527/29528且保留旧proxy；112公网直连及密码认证可用性已核，116等待云侧端口放行。原密码未读未改，原业务不重启。",
+        "at": "2026-10-19T14:12:00.070Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/ssh-domain-access-20261019/password-direct-current-validation.json",
+            "sha256": "33e1cb7b95ece8c6d6e94db1ce335f296c27a256ac6c9179a69bd328be2aba22",
+            "kind": "test-report"
+          }
+        ]
+      },
+      {
+        "summary": "112新增39527→新SSH监听2222；原FRP配置全文前缀及29527/2212保留，仅重启新增tunnel。无跳板公网公钥登录和独立日本SSH主机指纹核对通过，服务提供密码认证但未代输用户密码。",
+        "at": "2026-10-19T14:50:45.184Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/ssh-direct-39527/public-validation.json",
+            "sha256": "7d72ae6575c5dddc496ba46cd14bebee86a0710a8c55ef368c5adbf1ddf19dd5",
+            "kind": "test-report"
+          }
+        ]
+      },
+      {
+        "summary": "移除112误加39527并保持29527，把11629528改为39527；两条公网无跳板登录和独立主机指纹逐一通过，认证配置及原密码不变。29528提示作废，101未改。",
+        "at": "2026-10-19T15:01:58.800Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/ssh-port-assignment-correction/final-validation.json",
+            "sha256": "c55660aee33c93b74f72e8bc9a735f9751deda404eb01539eac8c0de22cacda9",
+            "kind": "test-report"
+          }
+        ]
+      }
+    ],
+    "status": "implemented",
+    "origin": "ai",
+    "id": "889fb910-1add-4e40-95b1-038df8e9db3c",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "revision": 1,
+    "createdAt": "2026-10-19T15:05:52.060Z",
+    "updatedAt": "2026-10-19T15:05:52.060Z",
+    "changeOf": "346c2ed8-76ed-4e23-8b20-a50cd0e98238",
+    "changeOfRevision": 2,
+    "supersededBy": null,
+    "recommendation": {
+      "algorithm": "bounded-evidence-r1",
+      "chosenId": "explicit-host-port-pair",
+      "status": "recommended",
+      "candidates": [
+        {
+          "id": "explicit-host-port-pair",
+          "eligible": true,
+          "reasons": [],
+          "rank": [
+            1,
+            1
+          ]
+        },
+        {
+          "id": "previous-root-misassignment",
+          "eligible": false,
+          "reasons": [
+            "CONFLICTS_WITH_FROZEN_GOALS",
+            "OUTSIDE_AUTHORITY"
+          ],
+          "rank": null
+        }
+      ],
+      "rationale": "在已提供的事实中，该方案覆盖全部目标、符合授权，优先可逆性，再比较运行影响。",
+      "independentAcceptance": false,
+      "usesPaidModel": false
+    },
+    "selfReported": true,
+    "independentAcceptance": false,
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "revisionReason": "纠正Root将39527误分配给112的理解错误：用户明确要求112使用29527、116使用39527。已逐一更正映射并核对应主机，原错误动作及记录保留。",
+    "hash": "2b1cc25b8123ea8f93b44b6194288cf011563010adc8e64ff3769d6c8040b036"
+  }
+}

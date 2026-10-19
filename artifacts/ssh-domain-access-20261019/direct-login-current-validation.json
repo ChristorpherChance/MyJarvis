@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-19T14:12:00.070Z",
+  "public112KeyAuthenticatedDirectLogin": {
+    "exitCode": 0,
+    "stdout": "superopen-ProDesk-i7",
+    "stderr": "",
+    "viaJumpHost": false,
+    "domain": "ssh-112.ikvein.com",
+    "port": 29527
+  },
+  "passwordAvailability": {
+    "exitCode": 255,
+    "passwordAdvertised": true,
+    "passwordSubmitted": false,
+    "actualPasswordAuthenticationTested": false
+  },
+  "outside": {
+    "vantage": "independent-japan-server",
+    "ports": [
+      {
+        "domain": "ssh-112.ikvein.com",
+        "port": 29527,
+        "status": "connected",
+        "banner": "SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.8"
+      },
+      {
+        "domain": "ssh-116.ikvein.com",
+        "port": 29528,
+        "status": "TimeoutError",
+        "banner": null
+      }
+    ],
+    "host112Fingerprint": "SHA256:mblMezmNEMdlO1dyohXFwwlKSwceT4k7Rje4120RZ5c",
+    "host112IdentityVerified": true,
+    "credentialsTransferred": false
+  },
+  "account": "superopen",
+  "serverPasswordsReadOrChanged": false,
+  "server116Prepared": true,
+  "server116DirectVerified": false,
+  "missingRequirement": "Cloud-side inbound TCP29528 still blocked/timeout; user action requested.",
+  "newCloudSecurityGroupRuleAppliedByAgent": false
+}

@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {Button,Empty,KV,Note,Panel,Tag,type RecordItem} from './common';
 import {dateTime,number} from './infrastructure-widgets';
 import {usePrivateRuntime} from './usePrivateRuntime';
+import CcSwitchPanel from './CcSwitchPanel';
 import './ai-development.css';
 
 type Profile={id:string;revision:number;name:string;tools:{name:string;version:string}[];providers:{id:string;name:string;model:string|null;credentialConfigured:boolean}[];statuslineVersion:string};
@@ -72,7 +73,7 @@ function AiMachineEnvironment({machineId,capabilities,navigate}:{machineId:strin
     <KV items={[["对话状态栏",inventory.statusline?.configured?'已配置':'尚未配置'],['机器资源显示',inventory.statusline?.configured&&inventory.statusline.resources?'已启用':'未核实']]}/>
    </>:<Empty title="还没有工具盘点回执" detail="点击检查环境后，版本、模型通道与状态栏配置会保存到本机运维记录。"/>}
   </Panel>
-  <Panel title="模型通道"><div className="ai-development-providers">{inventory?.providers.map(p=><article key={p.id}><div className="op-row between"><strong>{p.name}</strong>{p.current&&<Tag>默认通道</Tag>}</div><p>{p.model||'模型未提供'}</p><small>{p.credentialConfigured?'凭据已配置':'凭据待配置'}</small></article>)}</div>{!inventory?.providers.length&&<p>模型通道尚未采集。</p>}<Note>配置存在与模型实际调用分别核验；这里不展示凭据。</Note></Panel>
+  <CcSwitchPanel machineId={machineId}/>
   <div className="ai-development-grid"><Panel title="机器资源">{snapshot?.resourcesObservedAt&&<small>资源采样：{dateTime(snapshot.resourcesObservedAt)}</small>}<KV items={[["CPU",resourceFresh?pct(resources?.cpuPercent):'等待近期采样'],['内存占用',resourceFresh?gib(resources?.ramUsedBytes,resources?.memoryUsedGB):'等待近期采样'],['内存总量',resourceFresh?gib(resources?.ramTotalBytes,resources?.memoryTotalGB):'等待近期采样'],['磁盘可用',resourceFresh?gib(resources?.diskFreeBytes,resources?.diskFreeGB):'等待近期采样'],['一分钟负载',resourceFresh&&present(resources?.load1m)?number(resources.load1m):'未采样']]}/></Panel>
    <Panel title="最近终端状态"><KV items={[["观察时间",session?.observedAt?dateTime(session.observedAt):'尚未收到状态栏采样'],['通道 / 模型',[session?.provider,session?.model].filter(Boolean).join(' / ')||'未提供'],['当前上下文',`${tokens(session?.contextTokens)} / ${tokens(session?.contextWindow)}`],['最近响应输入 / 输出',`${tokens(session?.currentInputTokens)} / ${tokens(session?.currentOutputTokens)}`],['本会话费用估算',session?.billingStatus==='estimated'&&present(session.sessionCostUSD)?`USD ${session.sessionCostUSD.toFixed(4)}（CLI估算）`:'未提供'],['五小时 / 七天额度用量',`${quota(session?.rateLimitFiveHourPercent)} / ${quota(session?.rateLimitSevenDayPercent)}`]]}/><Note>上下文和最近响应 Token 不作为累计账单；供应商未返回的额度保持未知。</Note><Button kind="ghost" onClick={()=>navigate('operations/usage')}>查看实际用量账本</Button></Panel></div>
   <Panel title="环境运维记录">{snapshot?.jobs.length?<div className="ai-development-history">{snapshot.jobs.map(j=><article key={j.id}><div className="op-row between"><strong>{actions[j.action]??j.action}</strong><Tag tone={j.status==='succeeded'?'complete':j.status==='failed'?'failed':''}>{states[j.status]??'待核实'}</Tag></div><small>{dateTime(j.createdAt)}</small>{(j.reason||j.result?.summary)&&<p>{j.reason?reasonText(j.reason):j.result?.summary}</p>}</article>)}</div>:<p>暂无环境配置记录。</p>}</Panel>

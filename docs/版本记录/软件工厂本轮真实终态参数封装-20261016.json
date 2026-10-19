@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-normalized-api-main607-meta-r2-terminal5-actual-data-seal",
+  "input": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-terminal5-actual-data-input.json",
+    "sha256": "8fecca764c8c6924b34122f0a04b989e18e3195ecf4987d1c7dcefd0b868233b"
+  },
+  "sourceReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-normalized-api-meta-r2-terminal5-independent-local-source-review-final.json",
+    "sha256": "c004ef57f36f3470d29a3d18a27d0c51ab980b15831e06607c8a05c8417c06b6",
+    "bytes": 17949
+  },
+  "sourceHandoff": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-normalized-api-meta-r2-terminal5-final-handoff.json",
+    "sha256": "82dd8f923a06335813d3f06be862e1e2b9e528f19fb07235be6c3d9a201cfbbf",
+    "bytes": 11110
+  },
+  "references": {
+    "start": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-original-start-parent-frame-fd386b47985279f15a49ce90a511f8e728d978df1daf050a36c685e9c41714f5.json",
+      "sha256": "fd386b47985279f15a49ce90a511f8e728d978df1daf050a36c685e9c41714f5",
+      "bytes": 2408
+    },
+    "check": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-original-check-parent-frame-4aec96370307005515fb9b190511820ddbcfe69e6f068419af41079d6c77203f.json",
+      "sha256": "4aec96370307005515fb9b190511820ddbcfe69e6f068419af41079d6c77203f",
+      "bytes": 21354
+    },
+    "context": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-terminal-binding-byte-entry-context.json",
+      "sha256": "edfabcb9de84bd2309ba181d54e61c9776d4ee366b2226af6cd60455dca9ebcc",
+      "bytes": 1164
+    }
+  },
+  "parentJournal": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-actual-check-parent-journal-snapshot.json",
+    "sha256": "3a9f5bfa0784d92b00a877ea79b694bd9bca4ca7f017c3f7880e6b52090a05f1",
+    "bytes": 6008976
+  },
+  "originalStartSnapshot": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-actual-start-parent-journal-snapshot.json",
+    "sha256": "61d85fb271ab73458392aff21568d0924396309b49e4c5ef3bb868baedd10e2c",
+    "bytes": 6008686
+  },
+  "originalCheckWire": {
+    "path": ".jarvis-dev/maintenance/pg4-r37-normalized-api-meta-r2-parent-private-1792148604228-a375c621-f937-473e-8fb1-c76533f4e270.json",
+    "sha256": "d286e9662fc5aed9f6d824ed49f1b1d27efb6a1e4eae514989994e32d7b90a6b",
+    "bytes": 28793
+  },
+  "actualCheckPublic": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-normalized-api-main607-meta-r2-main-actual-check-observation-1792148605232-a84d0905-07f6-4168-ba84-db3ed5324e74.json",
+    "sha256": "b816e3682492c516b5c22598036c80e19e4ca97dda8a1fe6ab3ad15bfcfb0f73",
+    "bytes": 3041
+  },
+  "actualCheckPrivate": {
+    "path": ".jarvis-dev/maintenance/pg4-r37-normalized-api-meta-r2-entry-private-check-outcome-1792148605012-02be8b93-64b4-4845-a284-868528a7a36e.json",
+    "sha256": "bc588c7183f24a147962e154cfd9c08cdc7de10899587410f76e7248f309d62f",
+    "bytes": 323407
+  },
+  "attempt": "786776888de2385cd335e6c9517c4019",
+  "terminalStatus": "failed",
+  "firstFailurePresent": true,
+  "firstFailurePreservedInOriginalTerminal": true,
+  "fiveFilePins": {
+    "state.json": {
+      "sha256": "f2e32325bd41e9a82c18d4555f695f5e878358e0e64e800a9441a2cd88e7e5b0",
+      "bytes": 23467
+    },
+    "work/postgres.created.json": {
+      "sha256": "8cae4b43d6178b460ea0c43b44ad841130638791f39d906b25824c6b15486a03",
+      "bytes": 313
+    },
+    "work/pg4-runner.created.json": {
+      "sha256": "4ea9e9035ab365b91d915b91401edd3eceed6398b0bc793dbd2e6d09543b4ca6",
+      "bytes": 315
+    },
+    "work/internal-network.created.json": {
+      "sha256": "245144b158aad2014ee7a181901b9dd437fe178ec9222c02d20b9b0f0c151c11",
+      "bytes": 321
+    },
+    "work/postgres-data.created.json": {
+      "sha256": "ebbc718f4b6ae6040e3a0156838d26707764efb2fb332cec6ae9c24efd774056",
+      "bytes": 332
+    }
+  },
+  "knownActorCount": 2,
+  "exactContextKeyCount": 8,
+  "originalParentStdoutBytesPreserved": true,
+  "originalIntegersNeverReserialized": true,
+  "stateBytesExported": false,
+  "fiveBindingBytesObserved": false,
+  "entryReview": null,
+  "specificEntryQualified": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "remoteOperationsPerformed": false,
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "subjectFunctionsExecuted": 0,
+  "testsRun": 0,
+  "automaticRetry": false,
+  "privateDataSeal": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-normalized-api-main607-meta-r2-terminal5-actual-data-seal.json",
+    "sha256": "49f40a61aac55c56b6ac65d0a555474397610670ac50869d85ead3240e40ffff",
+    "bytes": 4542
+  }
+}

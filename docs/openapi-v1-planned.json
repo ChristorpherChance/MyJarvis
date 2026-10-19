@@ -48172,7 +48172,8 @@
               },
               "uptimeSec": {
                 "type": "number",
-                "minimum": 0
+                "minimum": 0,
+                "maximum": 9007199254740991
               },
               "source": {
                 "const": "signed-agent"
@@ -48241,6 +48242,416 @@
               },
               "storage": {
                 "$ref": "#/components/schemas/QnapStorageReading"
+              },
+              "metricFreshness": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "diskPercent": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "diskFreeGB": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "diskTotalGB": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "cpuPercent": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "memoryPercent": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "memoryUsedGB": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "memoryTotalGB": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "load1": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "uptimeSec": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "gpuPercent": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "powerWatts": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "cpuPower": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  },
+                  "storage": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "agentId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeBasis": {
+                        "enum": [
+                          "received",
+                          "measured"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "agentId",
+                      "observedAt",
+                      "expiresAt",
+                      "timeBasis"
+                    ]
+                  }
+                },
+                "required": []
               }
             },
             "required": [
@@ -53901,7 +54312,7 @@
               "uptimeSec": {
                 "type": "number",
                 "minimum": 0,
-                "exclusiveMaximum": 10000000
+                "maximum": 9007199254740991
               },
               "diskPercent": {
                 "type": "number",

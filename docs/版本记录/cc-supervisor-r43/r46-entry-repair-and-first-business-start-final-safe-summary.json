@@ -1,0 +1,326 @@
+{
+  "kind": "r46-live-supervision-entry-repair-and-business-start-safe-summary",
+  "at": "2026-10-17T18:44:45.414Z",
+  "record": 308,
+  "release": {
+    "node112": "20261018-unified-projects-r46-r1",
+    "fivePhasesPassed": true,
+    "activateSeconds": 284.2918109893799,
+    "dataBackupAndIsolatedRestore": {
+      "bytes": 4300765686,
+      "files": 64,
+      "directories": 59,
+      "SQLiteDatabases": 10,
+      "completeTreeAndIntegrityPassed": true,
+      "productionDataRestored": false
+    }
+  },
+  "objective": "从本人原页面真实启动软件工厂完整测试，回收报告与问题并安排修复；本cut只到修复发布和真实业务启动，测试结果后续另记。",
+  "correction": {
+    "observedOriginalP1": "原有有效字段和form内Button实际type=button，普通click未触发submit；初始sessionnull/pending0/tasks26/modelreadytrue。",
+    "priorReviewOmissionAcknowledged": true,
+    "priorRecord307ReadOnlyScopePreserved": true,
+    "original307NotOverwritten": true
+  },
+  "maintenance": {
+    "operationId": "f8cea7ce-a681-4a5f-be9e-12e025dfc934",
+    "controllerExitCode": 0,
+    "wallSeconds": 1141.7445686199935,
+    "nativeResultCount": 1,
+    "nativeTurns": 44,
+    "cgroupProcesses": 0,
+    "completeCLIReceiptIndependentlyQualified": true,
+    "originalControllerNativeQualifiedFlag": false,
+    "APP": "0bf30a48d3ea2c3f94ba87b875affddb1b3b5ff8",
+    "finalHEAD": "e8012e8629c496447c31be19d2025a003153d6d1",
+    "appChange": "仅为共用composer主按钮显式type=submit；保存结果/问题/下一步简明展示及blocked/review等显式详情入口，未改全局Button默认。",
+    "sourceReviewsNoNewConfirmedP1": true,
+    "savedTestsScope": "真实组件+共用Button的预载context SSR证明type=submit和说明；不冒DOM click/HTTP。修前AssertionError与UX正则SyntaxError保存，之后三个283B同字节pass记录不是三个不同suite；types/build保存证据未由Root重跑。"
+  },
+  "package": {
+    "payloadFiles": 2225,
+    "packagedGitBlobs": 1837,
+    "allAppSrcExactGitBlobs": 306,
+    "nodeFiles": 5,
+    "oldAssets": {
+      "R45": 92,
+      "R44": 67,
+      "R7": 54,
+      "R41Compatibility": 7
+    },
+    "platformMarkerVerified": true,
+    "node101": "R7/config46 unchanged; compatible exact five files, no fakeR46 node marker"
+  },
+  "actualBusinessStart": {
+    "originalAuthenticatedTabOrdinaryClick": true,
+    "helperDirectPOSTUsedInsteadOfClick": false,
+    "projectId": "70ec346f-6520-46ed-abed-22cac770a3e4",
+    "sessionRevision": 3,
+    "sessionStatus": "running",
+    "taskId": "843dd1bf-1f6a-4666-a7f2-d87574189734",
+    "runId": "b9229790af042425b3d06597221041302e71d7df",
+    "actualExecutionState": "running",
+    "resultReceived": false,
+    "pendingCount": 0,
+    "taskCount": 27,
+    "eventsObserved": [
+      "goal",
+      "command",
+      "dispatch-intent",
+      "instruction"
+    ],
+    "feedbackOrResultAccepted": false,
+    "fullTestComplete": false
+  },
+  "supervisionItem": {
+    "itemId": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+    "previousRevision": 10,
+    "revision": 11,
+    "status": "running",
+    "latestSequence": 65,
+    "totalItems": 6,
+    "completedBriefs": 4,
+    "oldHistoryEvidenceAndOtherFiveItemsPreserved": true,
+    "newSeventhItemCreated": false,
+    "message": "入口修复上线且新任务已claim；完整测试仍进行，尚无本次结果，后续回收报告、反馈问题和安排修复。"
+  },
+  "Git": {
+    "kind": "r46-source-publication-readback",
+    "url": "https://github.com/ChristorpherChance/MyJarvis/pull/7",
+    "head": "e8012e8629c496447c31be19d2025a003153d6d1",
+    "base": "8046ffaf822403390abfbed60abc80ff257d4bd0",
+    "state": "OPEN",
+    "draft": true,
+    "merged": false,
+    "originalAuthorsPreserved": true,
+    "forcePush": false,
+    "bodyScope": "R46 deployed and true first-click running; final business result pending",
+    "receiptFolder": "D:/AI/workspaces/MyJevis/artifacts/cc-supervisor-r43/r46-source-publication"
+  },
+  "usage": {
+    "kind": "r46-round16-maintenance-parent-usage-summary",
+    "sourceRecordId": "owner-maintenance:f8cea7ce-a681-4a5f-be9e-12e025dfc934:native-parent-phase1",
+    "inputTokens": 38999385,
+    "outputTokens": 10269,
+    "cacheReadTokens": 38232320,
+    "cacheWriteTokens": 0,
+    "totalTokens": 39009654,
+    "inputIncludesCache": true,
+    "doNotAddCacheAgain": true,
+    "costUSD": null,
+    "costKnown": false,
+    "recordOnlyNoMoneyCap": true,
+    "signedPost": {
+      "statusCode": 200,
+      "acceptedItems": 1,
+      "duplicate": false,
+      "sourceEvidence": {
+        "path": "artifacts/cc-supervisor-r43/r46-round16-usage-post-receipt.json",
+        "sha256": "5b903e6919e22050d00de9c6f5b449200a37e21cb0c8ead478b9752b2b592681",
+        "bytes": 2110
+      }
+    },
+    "reportedUsageEvidence": {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-usage-item.json",
+      "sha256": "d5a834693dd25a83be4de0a4fbb6510c87a6307ddf43d594ab57f8f8a0a96abf",
+      "bytes": 843
+    },
+    "priorR15UnknownPreserved": true,
+    "newBusinessRunUsageAndResult": null
+  },
+  "pendingP2": [
+    {
+      "id": "active-headline-reuses-draft-summary",
+      "priority": "P2",
+      "meaning": "A new supervisor is successfully started and its bound run has been claimed. The first paragraph still says the goal is saved but supervision is not enabled.",
+      "narrowNext": "Prefer a factual current-stage headline derived from the bound execution/session status: queued means waiting to be claimed, execution.running means claimed and executing, judging means analyzing feedback. Present persisted summary separately as the last judgment/recorded explanation when relevant. This small display change avoids rewriting historical summary, command receipts or the live session DB. Never infer claimed running solely from supervisor.status=running, because a just-dispatched run can still be queued.",
+      "fixed": false
+    },
+    {
+      "id": "active-disabled-button-keeps-start-label",
+      "priority": "P2",
+      "meaning": "session.status is running, judging or dispatching with no pending kickoff. The main button is correctly disabled but its caption still says start advancing.",
+      "narrowNext": "Add active-state captions such as waiting for executor, executing, or analyzing feedback using the same factual stage mapping as the lead paragraph. Keep the existing disabled predicate and unsent-draft explanation. Do not enable start/reply, inject stdin, create another task, or bypass pending recovery.",
+      "fixed": false
+    }
+  ],
+  "pending": [
+    "本次新业务测试最终结果、模型判断、问题反馈和后继修复安排尚未发生，本cut不预填。",
+    "真实running时主说明仍复用draft summary、disabled主按钮仍用开始文案，两项P2记录待后续窄修，未并发改活任务。",
+    "原74=0/74及客户12未交付，不能以入口恢复或任务claim冒验收。"
+  ],
+  "preserved": {
+    "oldCentralTaskRevision": 12,
+    "configurationRevision": 46,
+    "oldExhaustedAutonomyPackageNotRestarted": true,
+    "factoryPlan": 108,
+    "PG": 29,
+    "Env": 23,
+    "original74Accepted": 0,
+    "original74Total": 74,
+    "tenMinuteAutomation": "PAUSED",
+    "noNode101Reinstall": true
+  },
+  "localInputCorrection": {
+    "scope": "发布DATA本机手抄toolH多fd，执行前核实际原toolH发现，未进任何phase/once/API；distinctfinal-r2自动更正该字段。",
+    "originalDataSHA256": "068cc16bd002cff74f524fff0a2a46c3ba3bda4ec8379065deb48c94a4679ebe",
+    "correctedDataSHA256": "4c9be95a5776e905053e4176d68efc292303b2631abda252a14a45fb528138ca",
+    "onlineFailureClaimed": false,
+    "modelRerun": false
+  },
+  "publicEvidence": [
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-supervision-initial-readback-record308-public.json",
+      "sha256": "9da4ce99f467fc2a2b8163c6c03ae741c5fcc442f0ca33370bc66c778c44a3aa",
+      "bytes": 7053
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r45-composer-submit-live-failure-independent-source-review-record308-public.json",
+      "sha256": "e7f050cb24eb8b9633d554f87c71e6b5672c2f0d73bae7af22e7c5c8a51703b6",
+      "bytes": 7874
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-round16-ui-submit-independent-source-review-record308-public.json",
+      "sha256": "682746d2af4159c0cee0f23d5aab78995c99b0d26803224382d754c7b595f39b",
+      "bytes": 16556
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-round16-api-and-evidence-independent-source-review-record308-public.json",
+      "sha256": "110c682438d7aa473364a0d2d2e7859c8ff34bade8befcb34ba18a5a63385023",
+      "bytes": 14491
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-round16-received-dual-package-verification-record308-public.json",
+      "sha256": "38c9bc1c47fd82a1869f37f1dad6fc731fecc1c0247bda6e7c490f1a175e3fab",
+      "bytes": 6716
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-business-snapshot-first-real-click-record308-public.json",
+      "sha256": "9a78c5b454f24ede47aa97562a70db58b06019dc156b71c77283108b809ae93a",
+      "bytes": 6669
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-test-blocker-item-readback-record308-public.json",
+      "sha256": "873ca87da7249abce70eb328c079ff05b12cc0c64fb828272cd81da4be8f1a13",
+      "bytes": 1650
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-test-started-item-readback-record308-public.json",
+      "sha256": "5fc4a964594b1ded10f23e226d0e722a5c2239bca38aff0a63f4dabc157dee91",
+      "bytes": 2163
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-source-git-publication-readback-record308-public.json",
+      "sha256": "8150fd586b3589609fed8f006ee8964060da3f31ca8d3f9a992d0246c1716466",
+      "bytes": 792
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-live-running-copy-local-source-followup-record308-public.json",
+      "sha256": "367decaf29684a3b94f815320cc116a787b3f81b7da6b9da7c92a2c0808b7f1d",
+      "bytes": 5979
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-r1-five-phase-release-record308-public.json",
+      "sha256": "5c48608208940e6729ed968f6d8cc9e69443cd5a8a9669156423905d69b69103",
+      "bytes": 3469
+    },
+    {
+      "path": "docs/版本记录/cc-supervisor-r43/r46-round16-maintenance-usage-record308-public.json",
+      "sha256": "cf3fb2225ce062a2fd5cc9925e4736db384485b9ca7136ad3c5f91fe5ca6d7ce",
+      "bytes": 1017
+    }
+  ],
+  "sourceEvidenceFingerprints": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-supervision-initial-readback.json",
+      "sha256": "728b13a30695f3d7acc12c2149eb00552d566b725ebefc8502289f750892dc47",
+      "bytes": 7902
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r45-composer-submit-live-failure-independent-source-review.json",
+      "sha256": "a40789edf85c3af63cd1cfe34b5d6bd2b5b859eeda157db609ab16a551aecad5",
+      "bytes": 7081
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-ui-submit-independent-source-review.json",
+      "sha256": "25f676745db66a30b58efbc3ed787db0ee328077b08240fe294cdd999c033f44",
+      "bytes": 16498
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-api-and-evidence-independent-source-review.json",
+      "sha256": "f90b2e3995082f181a38913ad7ab2975727d2e1201777b26e866a596cb1e6c1d",
+      "bytes": 14104
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-terminal-native-observation.json",
+      "sha256": "1efb6e6e63701757a974ba8862958f73ed3190f9840d3230968575212fa8f5ff",
+      "bytes": 3294
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-received-dual-package-verification.json",
+      "sha256": "87a02ca3c07ff573a0917bdd45f2d4ba0342c8a644d5ae4300f8868b7d58ac93",
+      "bytes": 6338
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r46-r1/112-stage.json",
+      "sha256": "d84f3d40b2f08bea2338594f80a9a799c32784c7d06086d9c350934b4431265e",
+      "bytes": 1581
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r46-r1/112-install.json",
+      "sha256": "1f975d89b533827c568cb18574ea05170c07ed052b56304871d5cb84fbade66a",
+      "bytes": 1568
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r46-r1/112-inspect.json",
+      "sha256": "e8561e34d58eb0c8f07c0588344dd90d4134ee1cffc2c41b1c81450f9200b52f",
+      "bytes": 1608
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r46-r1/112-activate.json",
+      "sha256": "fef98e93283e9e82f06f6b19a46fef3d64da11f4e03cc10ae5bc42a5b82c8827",
+      "bytes": 2981
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/release-r46-r1/112-health.json",
+      "sha256": "adfae2e9cba410d77c325b3414ca6acc81ceba6b0e2e6048d87c48ca1ce4e222",
+      "bytes": 1659
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-business-snapshot-first-real-click.json",
+      "sha256": "c6b4a780b38fd863216eeaa132cd6bd262bcd20165e3c93c55a4cadad76e4992",
+      "bytes": 6432
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-blocker-item-readback.json",
+      "sha256": "b5f28184426b5b8b76feee56e7a3238e9d4da481a20bde83ecff19f547afeb4c",
+      "bytes": 1283
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-test-started-item-readback.json",
+      "sha256": "9f088a502298d9b7d88844edcf0d7f0ebe927455268c02f91f737583579cdcef",
+      "bytes": 1796
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-source-git-publication-readback.json",
+      "sha256": "5d904e0331695e8f0805250fef996cf2d5cd6bce4e7efd3fe93a7eab32edbb0e",
+      "bytes": 537
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-live-running-copy-local-source-followup.json",
+      "sha256": "8c47fe9918dec56a56b1bb4676952f5d6e884f8faafdd870d904bc42996f2e65",
+      "bytes": 5441
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-usage-item.json",
+      "sha256": "d5a834693dd25a83be4de0a4fbb6510c87a6307ddf43d594ab57f8f8a0a96abf",
+      "bytes": 843
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r46-round16-usage-post-receipt.json",
+      "sha256": "5b903e6919e22050d00de9c6f5b449200a37e21cb0c8ead478b9752b2b592681",
+      "bytes": 2110
+    }
+  ],
+  "privacy": "不公开原native/聊天、私配置、环境、authority、native会话或bundle内容；只安全投影与原证据指纹。"
+}

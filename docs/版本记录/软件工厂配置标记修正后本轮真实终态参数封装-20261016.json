@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "kind": "r37-pg4-qa-context-sentinel-main607-meta-r2-terminal5-actual-data-seal",
+  "input": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal5-actual-data-input.json",
+    "sha256": "d746f6bf16721cd3cb2273d1289d562f557f0ab83a42014ad80437b96d873fa1"
+  },
+  "sourceReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-context-sentinel-meta-r2-terminal5-independent-local-source-review-final.json",
+    "sha256": "690a0a25bee55daf6657001f3ee076f59e521880b942aaeffdaa99d5ca51fedf",
+    "bytes": 16702
+  },
+  "sourceHandoff": {
+    "path": "artifacts/software-factory/goals-r29/r37-qa-context-sentinel-meta-r2-terminal5-final-handoff.json",
+    "sha256": "383e3d5d935fc397c744179eafbea233811d5e54e6cb66dbe9256603a2d8da02",
+    "bytes": 11982
+  },
+  "references": {
+    "start": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-original-start-parent-frame-b5cc0d834cdaefa044f323ba1347953b4e7ce5b3225290ca04a2e0018985e5d3.json",
+      "sha256": "b5cc0d834cdaefa044f323ba1347953b4e7ce5b3225290ca04a2e0018985e5d3",
+      "bytes": 2424
+    },
+    "check": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-original-check-parent-frame-40c5990a1ac92833c864d984dadb21cd32aa7b7374b69187204c9e12a0ed5e50.json",
+      "sha256": "40c5990a1ac92833c864d984dadb21cd32aa7b7374b69187204c9e12a0ed5e50",
+      "bytes": 21888
+    },
+    "context": {
+      "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal-binding-byte-entry-context.json",
+      "sha256": "d2f776d2c91f790df0c1e04041b448dc3362b38a78b6ed984320e580df94bccf",
+      "bytes": 1172
+    }
+  },
+  "parentJournal": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-actual-check-parent-journal-snapshot.json",
+    "sha256": "11c927869f64679ead3ce367fbf3c620432cd1645d0ba60d0c921970ba3896a8",
+    "bytes": 5244319
+  },
+  "originalStartSnapshot": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-actual-start-parent-journal-snapshot.json",
+    "sha256": "78ddd2615adaae537104ff2a82a01c51699c50a37a982d9dcc2305c41d004401",
+    "bytes": 5244027
+  },
+  "originalCheckWire": {
+    "path": ".jarvis-dev/maintenance/pg4-r37-context-sentinel-meta-r2-parent-private-1792154276873-5ce22ca8-f524-497c-bf8c-6847ec718343.json",
+    "sha256": "ff34bcad36841b74c22f6f0e18a06b04207b97c8c4dcb3496e43f5afff67b030",
+    "bytes": 29505
+  },
+  "actualCheckPublic": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-main-actual-check-observation-1792154277958-8f37b03d-de5a-4ff4-b87e-4a996da71b6c.json",
+    "sha256": "33addb86877106ab63ba4d2300b74da53f327f1b9b8311ac25e18b79a47fe1b6",
+    "bytes": 3059
+  },
+  "actualStartPublic": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-main-actual-start-observation-1792153223628-dca7c6b7-20fc-49e9-9b79-2fa2f9431c89.json",
+    "sha256": "6513c13e88131c895e2cfb88bd45f74167cc099ece8d645c13e47b5b12a8b912"
+  },
+  "actualCheckPrivate": {
+    "path": ".jarvis-dev/maintenance/pg4-r37-context-sentinel-meta-r2-entry-private-check-outcome-1792154277731-8bbd830b-9c44-44d5-bc21-92d7131a9978.json",
+    "sha256": "edf1ece10846a51f8e1e3706648b9c2eea1314f6bc527391a347bbae8df0e012",
+    "bytes": 338727
+  },
+  "attempt": "c1feff1f0eb21d90187d3f8201c384ac",
+  "terminalStatus": "failed",
+  "firstFailurePresent": true,
+  "firstFailurePreservedInOriginalTerminal": true,
+  "fiveFilePins": {
+    "state.json": {
+      "sha256": "69cd9bc72caccaf3ae74bc1ad603360b580e91dacfd326e805eec2e3a2303410",
+      "bytes": 24672
+    },
+    "work/postgres.created.json": {
+      "sha256": "9f5f23b86546d37da90fdf26602ab71417cf0083ee61832e46120daae4e291e8",
+      "bytes": 313
+    },
+    "work/pg4-runner.created.json": {
+      "sha256": "08d53e9761a4d5f4dc0e24d65fb7a224d89a9b71d03cac80443aa885e382f108",
+      "bytes": 315
+    },
+    "work/internal-network.created.json": {
+      "sha256": "4b71df0ad67e233302cc9b7a057d39137f679c1e96010274461e8848e9714043",
+      "bytes": 321
+    },
+    "work/postgres-data.created.json": {
+      "sha256": "0c6944d83095047355dce94553cfad6013155a688b4e548cc4d9b91e3beed964",
+      "bytes": 334
+    }
+  },
+  "knownActorCount": 2,
+  "exactContextKeyCount": 8,
+  "originalParentStdoutBytesPreserved": true,
+  "originalIntegersNeverReserialized": true,
+  "stateBytesExported": false,
+  "fiveBindingBytesObserved": false,
+  "entryReview": null,
+  "specificEntryQualified": false,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "fullProtectionQualified": false,
+  "remoteOperationsPerformed": false,
+  "RootCalls": 0,
+  "APIRequests": 0,
+  "subjectFunctionsExecuted": 0,
+  "testsRun": 0,
+  "automaticRetry": false,
+  "privateDataSeal": {
+    "path": ".jarvis-dev/maintenance/r37-pg4-qa-context-sentinel-main607-meta-r2-terminal5-actual-data-seal.json",
+    "sha256": "b7789955828206a918cd08dadc49ae55605bd02dbf2f57e884d2b0e507b82099",
+    "bytes": 4859
+  }
+}

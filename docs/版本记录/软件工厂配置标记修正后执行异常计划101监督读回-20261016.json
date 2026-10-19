@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-16T12:42:54.139Z",
+  "plan": {
+    "planId": "40066986-8253-4cc4-9876-ae6eaede9e0b",
+    "revision": 101,
+    "hash": "4bd6d437d120b6d05bfc97f0407fdf26b185ac124c67dd48ad73d3e82a16f4cc",
+    "active": false,
+    "verifiedObjectives": 0,
+    "nextAction": "读取并核对本轮原始错误、测试报告和资源收尾证据，定位具体原因后选择必要的最小修正。"
+  },
+  "item": {
+    "id": "f66e7c7a-bf6e-40e3-bfe3-84601f1053c2",
+    "title": "完成四个关键用例的独立复验",
+    "status": "running",
+    "revision": 19,
+    "hash": "a29529a5b1315c3d1fad337eb3a253b7f5e31ade47a3c763ac2d17d80522da96",
+    "summary": "本轮复验在验证执行阶段中断，四个用例结果仍待核对。正在核对原始错误报告和资源收尾。",
+    "nextAction": "读取并核对本轮原始错误、测试报告和资源收尾证据，定位具体原因后选择必要的最小修正。",
+    "blocker": "终态记录到驱动阶段异常，原始错误和实际测试报告尚待核对；资源收尾尚未独立确认。",
+    "validationScope": "仅本轮唯一CHECK及原字节保存：确认失败、driver/PG4_R33_UNKNOWN/OtherException、141原pins及Main0；不确定具体根因或四个用例结果，实际终态五原件和当前资源收尾尚未完成。"
+  },
+  "counts": {
+    "total": 6,
+    "planned": 2,
+    "running": 1,
+    "blocked": 0,
+    "completed": 3
+  },
+  "latestSequence": 32,
+  "matchingPersistedNotifications": 1,
+  "evidenceCount": 29,
+  "actualCheck": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-main-actual-check-observation-1792154277958-8f37b03d-de5a-4ff4-b87e-4a996da71b6c.json",
+    "sha256": "33addb86877106ab63ba4d2300b74da53f327f1b9b8311ac25e18b79a47fe1b6",
+    "bytes": 3059
+  },
+  "actualCheckSavedReview": {
+    "path": "artifacts/software-factory/goals-r29/r37-pg4-qa-context-sentinel-main607-meta-r2-check-saved-evidence-independent-local-review-final.json",
+    "sha256": "2b8a8dd10521eca1e719a70a8b4400254b701c9a23dc7f967d7be3c0d212b808",
+    "bytes": 15406
+  },
+  "producerStatus": "failed",
+  "checkSavedIndependentlyQualified": true,
+  "actualStartsAndCHECKsClosed": true,
+  "actualPG4Qualified": false,
+  "currentResourceScopeClosedVerified": false,
+  "cases": {
+    "passed": 0,
+    "businessFailed": 0,
+    "uncompleted": 4
+  },
+  "original74AcceptanceChanged": false,
+  "allOriginalFiveStepCriteriaBindingsAndTitlesGoalsPreserved": true,
+  "oldAutonomyGlobalAnd25TasksUnchanged": true,
+  "notesWritten": false,
+  "PG4LayerUnchanged": 29,
+  "environmentLayerUnchanged": 23,
+  "newSupplierModelCalls": 0,
+  "productionRelease": false
+}

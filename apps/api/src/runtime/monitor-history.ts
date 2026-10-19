@@ -1,3 +1,4 @@
+import {validTelemetryMetric} from './telemetry-aggregation.js';
 import {cpus,freemem,totalmem,uptime} from 'node:os';
 import type {DatabaseSync} from 'node:sqlite';
 import {z} from 'zod';
@@ -14,7 +15,7 @@ export class MonitorHistory {
  CREATE INDEX IF NOT EXISTS execution_monitor_time ON execution_monitor_raw(kind,owner_id,observed_at);
  CREATE TABLE IF NOT EXISTS execution_monitor_rollup(kind TEXT NOT NULL,owner_id TEXT NOT NULL,bucket INTEGER NOT NULL,json TEXT NOT NULL,PRIMARY KEY(kind,owner_id,bucket));`);this.cleanup();}
  record(kind:'machine'|'service',id:string,sampler:string,source:'local-os'|'signed-agent'|'network-probe',metrics:Metrics,health?:'healthy'|'degraded'|'down',observedAt=this.now(),hardwareAuthorized=false){
-  const values:Metrics={};for(const k of fields){if((k==='gpuPercent'||k==='powerWatts'||k==='cpuPackageWatts')&&(!hardwareAuthorized||source!=='signed-agent'||kind!=='machine'))continue;const n=metrics[k];if(typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<10000000&&(!k.endsWith('Percent')||n<=100))values[k]=n;}
+  const values:Metrics={};for(const k of fields){if((k==='gpuPercent'||k==='powerWatts'||k==='cpuPackageWatts')&&(!hardwareAuthorized||source!=='signed-agent'||kind!=='machine'))continue;const n=metrics[k];if(validTelemetryMetric(k,n))values[k]=n;}
   const bucket=Math.floor(observedAt/10000)*10000,rollup=Math.floor(observedAt/900000)*900000;
   this.db.exec('BEGIN IMMEDIATE');try{
    const insert=this.db.prepare('INSERT OR IGNORE INTO execution_monitor_raw VALUES(?,?,?,?,?,?,?)').run(kind,id,sampler,bucket,observedAt,source,JSON.stringify({metrics:values,health:health??null}));

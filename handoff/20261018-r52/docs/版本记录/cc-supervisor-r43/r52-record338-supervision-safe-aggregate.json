@@ -1,0 +1,193 @@
+{
+  "kind": "r52-two-real-judgments-and-C5-blocked-safe-aggregate",
+  "scope": "Saved originals plus actual metadata/UI; no new execution or acceptance.",
+  "firstRun": {
+    "runId": "9531d5b862d3538ac3ae7449b9555d134c9c3df0",
+    "resultSHA256": "def24fb098371a2122736bfbf95726cfa7146990f34ff23f17737db2a7da5003",
+    "status": "succeeded",
+    "outcome": "success",
+    "exitCode": 0,
+    "originals": {
+      "count": 26,
+      "totalBytes": 52123,
+      "allCanonicalBase64": true,
+      "allDecodedSHA256AndSizeVerified": true,
+      "allStrictUTF8": true,
+      "allWithinCollectorItemAndTotalLimits": true
+    }
+  },
+  "firstOriginal25Preserved": {
+    "sameWholeFiles": 25,
+    "firstExtraFactsFile": 1
+  },
+  "firstDecision": {
+    "sequence": 191,
+    "eventId": "024e3ccc-26e0-4467-8093-5bc0f32ae953",
+    "eventHash": "fe1a052e74f6b823a3c2a31d384362fa53f901a8a6e872e61b217c81db7db89b",
+    "action": "continue",
+    "criteria": [
+      {
+        "ordinal": 1,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 3
+      },
+      {
+        "ordinal": 2,
+        "criterionExact": true,
+        "met": true,
+        "evidenceCount": 9
+      },
+      {
+        "ordinal": 3,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 5
+      }
+    ]
+  },
+  "automaticFollowup": {
+    "runId": "667f4896820efb461c79185c662933a10f3ad180",
+    "resultSHA256": "97a53063081eca086ede1ba1bfb973b83863b61b6ca3ee91d9bf623373b5e806",
+    "status": "succeeded",
+    "outcome": "success",
+    "exitCode": 0,
+    "originals": {
+      "count": 9,
+      "totalBytes": 22201,
+      "allCanonicalBase64": true,
+      "allDecodedSHA256AndSizeVerified": true,
+      "allStrictUTF8": true,
+      "allWithinCollectorItemAndTotalLimits": true
+    }
+  },
+  "secondDecision": {
+    "sequence": 197,
+    "eventId": "35a1a398-8bb9-454a-94ad-ad9ad561feff",
+    "eventHash": "5b017acd3c22727f4cedeede431a57585870a31f6cffae463162ceeca0ec8395",
+    "action": "wait_user",
+    "criteria": [
+      {
+        "ordinal": 1,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 3
+      },
+      {
+        "ordinal": 2,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 2
+      },
+      {
+        "ordinal": 3,
+        "criterionExact": true,
+        "met": false,
+        "evidenceCount": 3
+      }
+    ]
+  },
+  "latestFactorySession": {
+    "revision": 71,
+    "goalRevision": 10,
+    "status": "waiting_user",
+    "enabled": false,
+    "runId": "667f4896820efb461c79185c662933a10f3ad180",
+    "activeRuns": 0
+  },
+  "metadata": {
+    "item": {
+      "id": "e900e02d-bcbe-4801-9597-6b2165f1764a",
+      "revision": 33,
+      "hash": "d934fa682027ac49590caf6777e9fb7291638fe8ac261781168d5502fb888e3e",
+      "status": "blocked",
+      "stepId": "C5"
+    },
+    "plan": {
+      "id": "ae836819-d391-4ecf-a5d8-875412a0128a",
+      "revision": 16,
+      "hash": "77cfe145b38d3cd46a57da5d3e3895e3be4428f9c9151c29cc697c6163af5525",
+      "currentStepId": "C5"
+    },
+    "twoCAS": true,
+    "first29RefsAndOldTailHistoryPreserved": true,
+    "other5ItemsAndAllStageStandardsPreserved": true,
+    "taskStatusOrSupervisorFeedbackWritten": false
+  },
+  "browser": {
+    "observedAt": "2026-10-18T10:16:32.771869+00:00",
+    "actualBrowserObserved": true,
+    "latestMetadataResultBlockerAnd112NextStepVisible": true,
+    "headlineStillWaitsForHuman": true,
+    "SSEExclusiveTransportProved": false,
+    "C6Accepted": false,
+    "fullProductAccepted": false
+  },
+  "f9Association": {
+    "exactAssociationProved": "The f9 signed-agent persisted result carried the small derived-facts original which indexed the exact historical report SHA256; later same-project/task/native runs returned that report as a complete top-level original, including current G10 receipt19.",
+    "producerBindingNotProved": "The old report only references binding.json by SHA256. That file was not found in the examined saved receipt inventories or local matching originals. Report-producing run/native identity cannot be elevated from the nested f9 index.",
+    "f9IsRecoveryNotOriginalTestRun": true,
+    "noNewRunNeededForKnownAssociation": true,
+    "remainingEvidence": "If original producing-run identity is required, collect the exact already-existing reports/supervision-20261017-1843/binding.json matching c3ffa4cc7c4334f0c6bf7f45e9c25bc8105cf3f4319adf435a67395f31b9fe2a and any referenced source originals through the already dispatched read-only followup; do not rerun tests or fabricate the binding.",
+    "activeFollowupNotTouched": true
+  },
+  "f9Boundary": {
+    "signatureProvenance": "signed-agent is persisted central protocol provenance. Offline original HTTP signature headers were not supplied and are not independently reverified here.",
+    "nestedIndexIsNotFullOriginalReceipt": true,
+    "fullHistoricalLogSetRevalidated": false,
+    "fullFactoryOrProductAccepted": false
+  },
+  "nextTechnicalWork": [
+    "112独立源码副本实现跨轮可信原件连续性",
+    "dirty/index32KiB与二进制无损运输",
+    "收齐既存binding.json并核f9报告内容关联与原生产run不同边界",
+    "将现有授权可继续的技术工作与UI等待本人状态区分，不重复索取相同授权"
+  ],
+  "readOnlyTestScope": {
+    "scope": "Existing PolicyService database pair in preserved goal7 vitest JSON; no new test command in this review or these read-only rounds.",
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "frameworkSuccess": true,
+    "reportedBySupplement": {
+      "exit": 0,
+      "pass": 2,
+      "fail": 0,
+      "skip": 0,
+      "notRun": 0
+    },
+    "fullSuiteOrCoverageReexecuted": false,
+    "wholeFactoryAccepted": false
+  },
+  "acceptance": {
+    "C5": "blocked",
+    "C6": false,
+    "wholeFactory12Plus5": false,
+    "customer12": false,
+    "normalFullAutonomy": false
+  },
+  "evidenceRefs": [
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-factory-goal10-saved-originals-and-two-decisions-limited-review.json",
+      "bytes": 15719,
+      "sha256": "9e7b069bada5c8ad904b4d011ea3d0bb68da70e7ce96d7344efcb9e05762d6c4"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-factory-goal10-progress-item33-planB16-5a25ec3e-909a-4f69-9335-9579915aeecc-readback.json",
+      "bytes": 1430,
+      "sha256": "ebb436da14415dbc51a1fd7565aca37ce31908c59abf18d20f5d6c0a6028b0be"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-real-supervision-visible-finite-browser-check.json",
+      "bytes": 1088,
+      "sha256": "aab51365bae669abbc47d8177af813028ee77127dbd19191d2092c06d3f4d3c3"
+    },
+    {
+      "path": "artifacts/cc-supervisor-r43/r52-f9-historical-report-saved-lineage-limited-review.json",
+      "bytes": 6197,
+      "sha256": "27596809bff58cec5519abe6b0d64e721d865cb816a5ba939cf62d195b0ef6bd"
+    }
+  ],
+  "automaticTenMinuteFollowup": "PAUSED"
+}

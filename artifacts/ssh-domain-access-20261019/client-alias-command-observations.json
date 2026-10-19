@@ -1,0 +1,12 @@
+{
+  "kind": "root-observed-client-alias-login-results",
+  "at": "2026-10-19T13:38:12Z",
+  "source": "Two actual Root SSH tool calls after installing the client Include; commands were not repeated to create this report.",
+  "results": [
+    {"command": "ssh -o BatchMode=yes ssh-112.ikvein.com hostname", "exitCode": 0, "stdout": "superopen-ProDesk-i7", "toolChunkId": "cae9d9"},
+    {"command": "ssh -o BatchMode=yes ssh-116.ikvein.com hostname", "exitCode": 0, "stdout": "superopen-ProDesk-400-i5-6400", "toolChunkId": "ed2576"}
+  ],
+  "route": "Existing public gateway SSH22 -> fixed FRP loopback port -> new home loopback SSH2222",
+  "directPublic2212or2216Qualified": false,
+  "privateKeyTransferred": false
+}

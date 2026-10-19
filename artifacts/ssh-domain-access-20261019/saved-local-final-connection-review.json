@@ -1,0 +1,123 @@
+{
+  "kind": "ssh-domain-access-saved-local-final-review",
+  "at": "2026-10-19T13:43:51.155Z",
+  "passed": true,
+  "blockingFindings": [],
+  "scope": "Saved public receipts, final guide and hash-only local client configuration reconciliation; no SSH/API/remote/Git/test execution",
+  "nodes": [
+    {
+      "node": "112",
+      "hostname": "superopen-ProDesk-i7",
+      "uid": 1000,
+      "user": "superopen",
+      "protectedUnitCount": 7,
+      "protectedUnitsSavedFieldsExact": true,
+      "sourceConfigBeforeSHA256": "5bace3dae4f7b5dbdf4cd5021c5078b7b1ae1a2cc5a0715ea13c73d162b8c4ff",
+      "sourceConfigPreservedByBoundApplyAndFinal": true,
+      "originalFrpcRestartCount": null
+    },
+    {
+      "node": "116",
+      "hostname": "superopen-ProDesk-400-i5-6400",
+      "uid": 1000,
+      "user": "superopen",
+      "protectedUnitCount": 4,
+      "protectedUnitsSavedFieldsExact": true,
+      "sourceConfigBeforeSHA256": "1d2de05636dd2a1faa95b47b4741cceaa189313ad40ca86c01208e3d04b2a43f",
+      "sourceConfigPreservedByBoundApplyAndFinal": true,
+      "originalFrpcRestartCount": "16"
+    }
+  ],
+  "gateway": {
+    "protectedThreeServicePIDsExact": true,
+    "frpsConfigSHA256Exact": true
+  },
+  "client": {
+    "installedConfigSHA256": "8eeded2e20eba9ad3268908023a6156711ddec7075179cea311f6b03946e98f4",
+    "profileSHA256": "0a703f20a543365fdae43720a73284be5485087f1bc6dd4ebb802e5f7299e654",
+    "knownHostsSHA256": "c07aa14a1dc2fb3a3a2f4b3388b36f12688c5bbd60068eb10ff5e7ec5ee525ac",
+    "oldConfigWholeSuffixIndependentlyHashMatched": true,
+    "oldSuffixStartsAtByte": 54,
+    "twoDomainAliasesUseExistingGateway22ProxyJump": true,
+    "strictHostKeyChecking": true,
+    "privateKeyBodyRead": false
+  },
+  "routeBoundary": {
+    "qualified": "Existing public gateway22 -> gateway loopback FRP2212/2216 -> target loopback SSH2222",
+    "barePublic2212or2216Working": false,
+    "upstreamFailureCause": "unknown",
+    "aliasCommandObservationsSavedAndMatched": true,
+    "newInferenceOrProbePerformed": false
+  },
+  "guide": {
+    "path": "docs/112与116公网SSH连接说明.md",
+    "bytes": 3412,
+    "sha256": "273c757619e85035b6755c9ce30d8707bcc5326dfb21564beeb24985ebdae935",
+    "HTML": {
+      "path": "docs/112与116公网SSH连接说明.html",
+      "bytes": 19718,
+      "sha256": "8c44419bf2c1dc0edd5bb76a5c4f95a9b7c9c8e29456ceac56ec2b145626158b"
+    },
+    "embeddedMarkdownHashMatches": true,
+    "oldDraftRetainedAndNotDelivery": true
+  },
+  "actionBoundary": {
+    "newServicesPerNode": 2,
+    "protectedServicesRestarted": false,
+    "privateKeysTransferred": false,
+    "platformAppRelease": false
+  },
+  "evidence": [
+    {
+      "path": "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+      "bytes": 5404,
+      "sha256": "e9db71170ed471983910cbe7b6a4f840f93e4e8ef20ade5fbe6c2d6cac75e5cf"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/client-profile-installation.json",
+      "bytes": 757,
+      "sha256": "bfa7e1868b3e6efe6004ab9a66968ccf7da1d912039d2b1a0cc4a09ff359eb5c"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/client-alias-command-observations.json",
+      "bytes": 714,
+      "sha256": "19058ba8ba5c5bec11796db1673c1d47731dbbcbd839678648550191e6a6c4d8"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/connection-guide-FINAL-source.json",
+      "bytes": 374,
+      "sha256": "4095fc56518ed40bf03a5405cc248bbb0a0925e396e002b8a070bd9f741b3ef5"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/binding-112.json",
+      "bytes": 1826,
+      "sha256": "41ed9429613dc4e27ff5b91211c7fc61c992166f5b92fe32a689c137e3f186bd"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/binding-116.json",
+      "bytes": 1273,
+      "sha256": "607f05caa0a2dce174ddd1fafd537ade37d4ba9f9aaf1f7c2b6e51794feaa311"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/apply-112-result.json",
+      "bytes": 3171,
+      "sha256": "531b71a225fee43f038a7101a0d84438388d1c5584b126647b0adf0d4238ce6d"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/apply-116-r2-result.json",
+      "bytes": 2466,
+      "sha256": "5c43e107458151578eb13b129377794fface6fe2a66a437f8390464f66883df5"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/preflight-gz.json",
+      "bytes": 4718,
+      "sha256": "28c5e2d8962f64aff66dc9f9b1a0442b140e7e67b2ecf7add447199e958c0271"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/external-port-probe.json",
+      "bytes": 573,
+      "sha256": "d078feb6e8ea1946a2d1041defa4246a309dc9dcebceeb0118b91aa6514dc39b"
+    }
+  ],
+  "note": "Source-config preservation is reconciled from the already bound apply/final guards, not a fresh remote reread. This review does not requalify installer source, network availability on another device or a naked public-port route."
+}

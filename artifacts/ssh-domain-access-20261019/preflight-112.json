@@ -1,0 +1,167 @@
+{
+  "at": "2026-10-19T13:20:38.331Z",
+  "hostname": "superopen-ProDesk-i7",
+  "units": {
+    "jarvis-frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/etc/systemd/system/jarvis-frpc.service",
+      "UnitFileState": "enabled",
+      "MainPID": "2045",
+      "execStartSHA256": "08d8fdb756857917c612fb0318d62e9dc68881108ecabccd0083a2cfa6b5c6b9",
+      "configPaths": [
+        "/etc/jarvis-frpc/frpc.toml"
+      ]
+    },
+    "myoperation-frpc.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/etc/systemd/system/myoperation-frpc.service",
+      "UnitFileState": "enabled",
+      "MainPID": "3844904",
+      "execStartSHA256": "320962a2cfe8d32e66f4f0f703cd8214c29053b2bf94e0ab790b06060f680217",
+      "configPaths": [
+        "/etc/myoperation-frpc/frpc.toml"
+      ]
+    },
+    "ssh.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/usr/lib/systemd/system/ssh.service",
+      "UnitFileState": "disabled",
+      "MainPID": "4082721",
+      "execStartSHA256": "28269223b7b5e2720601fbbbc0c5ec2fe58245bf30826e81d14ddcb68c818d2d",
+      "configPaths": []
+    },
+    "sshd-keygen.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "/usr/lib/systemd/system/sshd-keygen.service",
+      "UnitFileState": "enabled",
+      "MainPID": "0",
+      "execStartSHA256": "8ac03c24b5cbf571cd3712aaf6ba642b35c5703b8e56173eb4bf97853b61757f",
+      "configPaths": []
+    },
+    "sshd@sshd-keygen.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "/usr/lib/systemd/system/sshd@.service",
+      "UnitFileState": "static",
+      "MainPID": "0",
+      "execStartSHA256": "a8576e2b21da6b3d57aaa1cf0a58c0af9056b8b7b42517619d0b1e2733f81fae",
+      "configPaths": []
+    },
+    "sssd-ssh.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": "/usr/lib/systemd/system/sssd-ssh.service",
+      "UnitFileState": "indirect",
+      "MainPID": "0",
+      "execStartSHA256": "13d825a953823ff584e0dceb55e6ce5ae7b4b9aab68f1650c5393526bf48b125",
+      "configPaths": []
+    }
+  },
+  "frpConfigs": [
+    {
+      "path": "/etc/jarvis-frpc/frpc.toml",
+      "sha256": "5bace3dae4f7b5dbdf4cd5021c5078b7b1ae1a2cc5a0715ea13c73d162b8c4ff",
+      "uid": 0,
+      "gid": 970,
+      "mode": 416,
+      "parsed": true,
+      "server": {
+        "serverAddr": "8.163.127.192",
+        "serverPort": 7000
+      },
+      "hasAuthentication": true,
+      "proxies": [
+        {
+          "name": "platform",
+          "type": "http",
+          "subdomain": "cc-jarvis"
+        },
+        {
+          "name": "control",
+          "type": "http",
+          "subdomain": "cc-jarvis-control"
+        }
+      ]
+    },
+    {
+      "path": "/etc/myoperation-frpc/frpc.toml",
+      "sha256": "078fb3f96767d838ee6d6119c865a0f7afa19505345d955e956e7ffd0b46968f",
+      "uid": 0,
+      "gid": 970,
+      "mode": 416,
+      "parsed": true,
+      "server": {
+        "serverAddr": "8.163.127.192",
+        "serverPort": 7000
+      },
+      "hasAuthentication": true,
+      "proxies": [
+        {
+          "name": "operation",
+          "type": "http",
+          "localIP": "192.168.10.112",
+          "localPort": 4173,
+          "subdomain": "cc-operation"
+        }
+      ]
+    }
+  ],
+  "sshEffective": {
+    "port": [
+      "22"
+    ],
+    "listenaddress": [
+      "[::]:22",
+      "0.0.0.0:22"
+    ],
+    "permitrootlogin": [
+      "prohibit-password"
+    ],
+    "pubkeyauthentication": [
+      "yes"
+    ],
+    "passwordauthentication": [
+      "yes"
+    ],
+    "kbdinteractiveauthentication": [
+      "no"
+    ],
+    "authorizedkeysfile": [
+      ".ssh/authorized_keys .ssh/authorized_keys2"
+    ]
+  },
+  "hostKeys": [
+    {
+      "name": "ssh_host_ecdsa_key.pub",
+      "fingerprint": "256 SHA256:j/sFNndRVbtB2Fdsow9CqaAR8928+szMIiM5NFIZ6lI root@superopen-ProDesk-i7 (ECDSA)"
+    },
+    {
+      "name": "ssh_host_ed25519_key.pub",
+      "fingerprint": "256 SHA256:mblMezmNEMdlO1dyohXFwwlKSwceT4k7Rje4120RZ5c root@superopen-ProDesk-i7 (ED25519)"
+    },
+    {
+      "name": "ssh_host_rsa_key.pub",
+      "fingerprint": "3072 SHA256:1sL+PLIizJFaIuSL2CiLjz+dxjKvKhAbto9J8q8LTKk root@superopen-ProDesk-i7 (RSA)"
+    }
+  ],
+  "tcpListeners": [
+    "LISTEN 0      4           127.0.0.1:3153 0.0.0.0:*",
+    "LISTEN 0      4096        127.0.0.1:631  0.0.0.0:*",
+    "LISTEN 0      4096       127.0.0.54:53   0.0.0.0:*",
+    "LISTEN 0      511    192.168.10.112:4173 0.0.0.0:*",
+    "LISTEN 0      511           0.0.0.0:3141 0.0.0.0:*",
+    "LISTEN 0      511           0.0.0.0:3140 0.0.0.0:*",
+    "LISTEN 0      511           0.0.0.0:3142 0.0.0.0:*",
+    "LISTEN 0      4096          0.0.0.0:22   0.0.0.0:*",
+    "LISTEN 0      4096    127.0.0.53%lo:53   0.0.0.0:*",
+    "LISTEN 0      4096            [::1]:631     [::]:*",
+    "LISTEN 0      4096             [::]:22      [::]:*"
+  ],
+  "ufwStatus": "状态：不活动",
+  "privateConfigPrinted": false,
+  "changes": 0
+}

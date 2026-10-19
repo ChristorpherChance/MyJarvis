@@ -1,0 +1,76 @@
+{
+  "node": "116",
+  "operationId": "3731ff8d-c728-43e1-8b84-b7946dd102ff",
+  "startedAt": "2026-10-19T13:34:21.557Z",
+  "endedAt": "2026-10-19T13:34:24.817Z",
+  "elapsedSeconds": 3.2246316999999998,
+  "exitCode": 0,
+  "sourceSHA256": "c1d9cc4cb54e6092a9ede6271ab06681722d471a1a5549bc16c8463e8f5c797d",
+  "inputSHA256": "3864ee139296b9bd781545c704a4353ec01ae00e46b3024998844478d11550bb",
+  "transportSHA256": "9f05f3da4e413c21c5547d6cdc61573168506c6f1d91cef7d8ae61efb25c35d9",
+  "stderrBytes": 0,
+  "result": {
+    "node": "116",
+    "hostname": "superopen-ProDesk-400-i5-6400",
+    "domain": "ssh-116.ikvein.com",
+    "remotePort": 2216,
+    "loopbackSSHPort": 2222,
+    "publicLoginUser": "superopen",
+    "authentication": "publickey-only",
+    "rootLoginAllowed": false,
+    "TLSControlTunnel": true,
+    "binarySHA256": "142f447f43fef286acc8da8a6852dda80631db631d604b2e63634b2db4d6848c",
+    "sourceConfigUnchanged": true,
+    "protectedUnitsUnchanged": true,
+    "protectedUnits": {
+      "ssh.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "disabled",
+        "MainPID": "1702383",
+        "NRestarts": "0"
+      },
+      "ssh.socket": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled"
+      },
+      "frpc.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "3605",
+        "NRestarts": "16"
+      },
+      "mybid-frpc.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "1573651",
+        "NRestarts": "0"
+      }
+    },
+    "newUnits": {
+      "jarvis-ssh-public.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2005595",
+        "NRestarts": "0"
+      },
+      "jarvis-ssh-tunnel.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "2005600",
+        "NRestarts": "0"
+      }
+    },
+    "hostPublicKeySHA256": "3d5606a344e4e0ba1d195ac3d0dbfa4bab4cec47f52855d7aa6120106e5f4092",
+    "publicKeySHA256": "6f08dd194c920883c05c874897d17ae251240aa15c993d90d8642bd27e9e5684",
+    "privateCredentialsPrinted": false,
+    "operationId": "3731ff8d-c728-43e1-8b84-b7946dd102ff",
+    "created": true,
+    "externalLoginVerified": false
+  }
+}

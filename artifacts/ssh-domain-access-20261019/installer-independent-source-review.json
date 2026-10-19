@@ -1,0 +1,71 @@
+{
+  "kind": "home-ssh-mapping-installer-independent-local-source-review",
+  "reviewedAt": "2026-10-19T13:28:49.044358+00:00",
+  "source": {
+    "path": ".jarvis-dev/maintenance/install-home-ssh-mapping.py",
+    "bytes": 8705,
+    "sha256": "4d009983fbfbbd52a45aaf120099ff0c7db007b42795618b1dab58d051e4cc38"
+  },
+  "scope": "Complete installer source and saved public preflights only; Root actual p binding and native qualification remain separate. No private config content, credential, remote, daemon, model, application or test execution.",
+  "P0": 0,
+  "determinateP1": [],
+  "finiteSourceChecks": [
+    "Fixed nodes112/116 and remote ports2212/2216; hostname and original protected-unit snapshot guard.",
+    "Dedicated new listener127.0.0.1:2222; no Include of original sshd config; publickey authentication only, AllowUsers superopen, root/password/keyboard-interactive prohibited.",
+    "Root-owned authorized_keys is public metadata at mode0644; target login does not gain FRP token access.",
+    "Original source FRP config and binary fingerprints pinned; gateway fixed8.163.127.192:7000; auth stays in process and new private0640 config; no token argument or public value output.",
+    "Independent new service units; original port22/mainsshd, platform and existing FRPC units are only read, not restarted/stopped.",
+    "New FRPC uses a dedicated nologin system account and TLS; new client name separates each node, local target is loopback2222.",
+    "Native sshd -t/-T, FRPC verify and systemd-analyze are required before new service startup.",
+    "Success distinguishes local creation from externalLoginVerified=false; external host-key/login verification must follow."
+  ],
+  "narrowObservations": [
+    {
+      "priority": "P2",
+      "line": 52,
+      "code": "DIRECTORY_UMASK",
+      "fact": "conf.mkdir(mode0755) and base.mkdir(mode0755) do not override a restrictive inherited umask. Root-run validators can pass while superopen or ingress cannot traverse actual directories.",
+      "minimalCorrection": "Explicitly establish/check root-owned0755 for these two new directories only; do not widen existing home/config permissions."
+    },
+    {
+      "priority": "P2",
+      "line": 170,
+      "code": "STOP_RESULT_NOT_OBSERVED",
+      "fact": "newServicesStopped is assigned created_units, while disable --now is check=False. This flag does not prove service stop succeeded.",
+      "minimalCorrection": "Read both new units after cleanup and derive stopped/disabled status; otherwise false/unknown and reconciliation."
+    },
+    {
+      "priority": "compatibility-check",
+      "code": "AUTH_METHOD_EXPLICIT",
+      "fact": "Installer requires explicit auth.method=token. Saved safe preflights show hasAuthentication but do not expose method. No claim that a currently absent method has been observed.",
+      "minimalCorrection": "Root should confirm actual source schema in memory; if method is legitimately omitted, handle only the documented token default while retaining literal-token/unsupported-auth rejection."
+    }
+  ],
+  "actualFutureNotCertified": [
+    "No source p input was provided for independent binding audit.",
+    "No listener/native policies, service start, public route, external SSH login or original-service preservation has been executed by this reviewer."
+  ],
+  "reviewExecution": {
+    "outerASTOnly": true,
+    "helperImportedOrExecuted": false,
+    "networkRequests": 0,
+    "testsRun": 0
+  },
+  "physicalPreflightReferences": [
+    {
+      "path": "artifacts/ssh-domain-access-20261019/preflight-112.json",
+      "bytes": 5071,
+      "sha256": "186c23cc57a1beda1962b5704284dd2cf9ab06aad58689f16a1325f9d044c41e"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/preflight-116.json",
+      "bytes": 6770,
+      "sha256": "bad74d9b72acd081981e41cf43957b284eb37134e583f6dc41100cfdb08a00e3"
+    },
+    {
+      "path": "artifacts/ssh-domain-access-20261019/preflight-gz.json",
+      "bytes": 4718,
+      "sha256": "28c5e2d8962f64aff66dc9f9b1a0442b140e7e67b2ecf7add447199e958c0271"
+    }
+  ]
+}

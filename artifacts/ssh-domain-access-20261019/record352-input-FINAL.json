@@ -1,0 +1,60 @@
+{
+  "id": "JARVIS-20261019-112-116-PUBLIC-SSH-DOMAINS",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T13:41:35.681676Z",
+  "title": "112与116密钥SSH经广州自动跳板登录通过，原业务保持",
+  "objective": "提供112、116可实际使用的SSH域名别名，保持既有LAN SSH、业务和FRPC，明确直连端口受阻与当前可用跳板路线。",
+  "changes": [
+    "两节点各新增独立loopback2222密钥专用sshd及独立FRPC，新jarvis-ssh-public/tunnel两服务enabled/active；原LAN22和旧隧道不修改、不重启。",
+    "已采用现有广州公网22跳板，经网关127.0.0.1:2212/2216 FRP到目标2222；本机域名命令实际公钥登录两节点成功。",
+    "本机SSH配置仅前置Include独立jarvis-home-remote.conf，原配置whole bytes保留，严格主机指纹固定；私钥始终在本机，不入仓库或转移到远端。"
+  ],
+  "decisions": [
+    "普通公网2212/2216从本机和日本均超时，网关本机可达；自主采用已有广州22跳板，不修改云防火墙或FRPS，也不把上游过滤猜成已证安全组原因。",
+    "新入口独立于原SSH/业务/FRPC；回退只停用本次两项新服务，不通过重启或改写原业务实现。"
+  ],
+  "facts": [
+    "本机ssh ssh-112.ikvein.com与ssh ssh-116.ikvein.com已实际exit0，均uid1000/user superopen，主机名分别superopen-ProDesk-i7与superopen-ProDesk-400-i5-6400。",
+    "域名命令在本机是已安装profile的Host别名，自动走jmp-superopen@8.163.127.192:22；直接加-p 2212/2216仍不可用，不能误述直连公网成功。",
+    "原LAN22、业务和既有FRPC的PID与配置H保持；广州FRPS/nginx/SSH PID和FRPS配置保持。",
+    "116第一次守门把省略的auth.method误作缺少认证，在任何写入前拒绝；v2仅兼容FRP文档默认token语义后成功，原拒绝和非作者审查保留。",
+    "112仍R55，无应用新版本发布；101冷备、独立软件工厂、12＋5标准和十分钟暂停不动。",
+    "本维护新增供应商模型调用0；内部Token、金额和实际账单未知分列，费用只记录不设消费上限。",
+    "重要决定e08fe424-8e35-4303-ac65-b59452f8354f已唯一创建并读回revision1 implemented，independentAcceptance=false；notes、工厂和旧决定均未改。首次备选compliesWithGoals误用partial在API400写前被拒，r2仅改合法unknown后成功，原件保留。"
+  ],
+  "verification": [
+    "两节点终态回执核真实登录身份、新服务公钥策略及原受保护单元/源配置不变。",
+    "本机profile与known-hosts真实安装，原config完整字节保留；严格校验，不输出或读取私钥正文。",
+    "本机与日本的普通端口超时、网关local成功与经跳板两次登录分别保留，不用预检或DNS代替端到端结果。"
+  ],
+  "pending": [
+    "其他设备必须具备三项授权身份与等价profile/指纹，或单独登记新公钥；不把本机配置成功当所有设备已可用。",
+    "上游2212/2216过滤原因仍未知；本次不额外改云侧规则。完整平台/工厂验收不因SSH接通而完成。",
+    "本cut后文档Git发布与112文档同步另留证，不重启或重发平台。"
+  ],
+  "lessons": [
+    "域名、端口、跳板、目标身份和主机指纹必须对应实际可用链路；不能把网关local成功写成公网端口可直连。",
+    "独立入口可保原服务；合法省略的配置默认值须按真实协议核验，失败证据和窄修同时保留。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "accepted"
+  },
+  "evidence": [
+    "artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json",
+    "artifacts/ssh-domain-access-20261019/client-profile-installation.json",
+    "artifacts/ssh-domain-access-20261019/external-port-probe.json",
+    "artifacts/ssh-domain-access-20261019/apply-112-result.json",
+    "artifacts/ssh-domain-access-20261019/apply-116-r2-result.json",
+    "artifacts/ssh-domain-access-20261019/apply-116-result.json",
+    "artifacts/ssh-domain-access-20261019/installer-final-corrected-independent-source-review.json",
+    "artifacts/ssh-domain-access-20261019/installer-v2-auth-default-independent-source-review.json",
+    "artifacts/ssh-domain-access-20261019/platform-decision-receipt-r2.json",
+    "artifacts/ssh-domain-access-20261019/platform-decision-readback-r2.json",
+    "artifacts/ssh-domain-access-20261019/platform-first-input-rejection.json"
+  ]
+}

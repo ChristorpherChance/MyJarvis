@@ -1,0 +1,45 @@
+{
+  "kind": "home-ssh-mapping-final-corrected-source-independent-review",
+  "reviewedAt": "2026-10-19T13:30:24.140480+00:00",
+  "source": {
+    "path": ".jarvis-dev/maintenance/install-home-ssh-mapping.py",
+    "bytes": 9153,
+    "sha256": "a5baf463f064a007ac6063517f63c165a3f5863764ec268d6ac0b251ff517f21"
+  },
+  "parentReview": {
+    "path": "artifacts/ssh-domain-access-20261019/installer-independent-source-review-FINAL.json",
+    "bytes": 4058,
+    "sha256": "ebd14ada06f7b20edb33abe5d10b69d7c980420fbb5856ea3195a8932d203532"
+  },
+  "acceptedForFiniteSourceAndNativeQualification": true,
+  "P0": 0,
+  "P1": 0,
+  "exactInverseToReviewedOriginal": {
+    "bytes": 8705,
+    "sha256": "4d009983fbfbbd52a45aaf120099ff0c7db007b42795618b1dab58d051e4cc38",
+    "wholeByteExact": true
+  },
+  "narrowCorrectionsVerified": [
+    "Both new public directories explicitly chown root:root/chmod0755 and lstat verify after mkdir; original paths/permissions untouched.",
+    "Failure newServicesStopped is derived from actual new-unit inactive/MainPID0/disabled readback, not from unit-file creation. Failure remains nonqualified/requiresReconciliation."
+  ],
+  "preservedScope": [
+    "Dedicated loopback2222 key-only superopen listener; root/password/keyboard-interactive authentication disabled.",
+    "Independent TLS FRPC ports2212/2216; credentials read from pinned existing private config into process only, never public output.",
+    "Original port22/mainsshd/platform/existing FRPC services only observed and protected; new services alone started/stopped.",
+    "Native sshd -t/-T, FRPC verify and systemd-analyze occur before new service startup.",
+    "Success correctly leaves externalLoginVerified=false until Root actual host-key/login verification."
+  ],
+  "sourceAuthMethod": "Explicit token-method guard unchanged. Root reports both actual source configurations have auth.method=token; reviewer did not read their contents.",
+  "limitations": [
+    "Root actual p hashes/protected-unit snapshots must satisfy existing source guards; this report is source only.",
+    "No native/systemd/route/login execution by reviewer, no remote/model/application/test run.",
+    "Does not assert that public external SSH is working before actual qualification."
+  ],
+  "validation": {
+    "outerASTOnly": true,
+    "helperEvaluated": false,
+    "remoteCalls": 0,
+    "testsRun": 0
+  }
+}

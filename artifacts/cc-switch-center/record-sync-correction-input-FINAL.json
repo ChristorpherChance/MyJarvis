@@ -1,0 +1,47 @@
+{
+  "id": "JARVIS-20261020-CC-SWITCH-PLATFORM-SYNC-ATTRIBUTION-CORRECTION",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T18:16:53.938Z",
+  "title": "三机模型管理决定与经验已同步，追加更正112当前模型的主体归因",
+  "objective": "收尾本轮平台版本保护资料同步，并纠正对112既有Kimi选择的证据不足归因，保留历史记录。",
+  "changes": [
+    "建设项目25dcc5cf-bdfe-43f8-bbff-e79e7190161f通过版本保护接口新增决定selected→implemented及经验inbox，实际回读一致。",
+    "使用说明与档案当前补充改为：112核验时已选择Kimi CCR，本轮保留该选择，未核实变更主体或时间；361原文和指纹保持。"
+  ],
+  "decisions": [
+    "环境资料追加会超出既有schema长度上限时跳过该项，不截断原notes或替换其他环境字段。",
+    "仅从核验时配置状态不能推断由哪个人、进程或会话修改；后继更正以追加记录保留旧事实与边界。"
+  ],
+  "facts": [
+    "决定98642d2a-7534-4918-90f4-5b27d926f7c4 revision2 implemented，independentAcceptance=false；经验b83da04a-2a34-447d-b39a-4360ceb361df revision1 inbox、verified=false，未发布Skill。",
+    "environmentInfo notes原19,805字，追加将成20,299字，超过20,000上限，因此status skipped、reason EXISTING_CONTENT_WOULD_EXCEED_SCHEMA_LIMIT；原环境四字段保留，不能称该项已经更新。",
+    "更正361记录JARVIS-20261020-CC-SWITCH-CENTER-R56-LIVE-VERIFICATION及当时说明中的“其他用户动作”归因：证据只确认112核验时已选择Kimi CCR、本轮保留；未核实主体或变更时间。其他发布、API与页面验证事实不变。",
+    "本次sessionCreated/sessionRevoked均true，modelCalls=0、modelCredentialsRead=false、modelConfigurationWrites=0；没有为资料同步重跑测试、部署或模型。内部编排Token/金额及账单未知分列，费用只记录不设上限。"
+  ],
+  "verification": [
+    "实际同步公开回执status passed，准确项目ID、决定/经验ID与版本、实施/未验收标记均回读保存；环境追加超限跳过明确单列。",
+    "本次只更新本功能文档当前表述并通过原construction工具追加记录；361历史不回写，原记录指纹保留。"
+  ],
+  "pending": [
+    "用户本人产品验收仍待确认；经验仍未验证，不由本次资料同步变为已验证Skill。",
+    "环境notes保持原文未更新；本次不扩展资料工作或修改长度限制。"
+  ],
+  "lessons": [
+    "状态快照能证明当前选择，不能单独证明修改者；资料摘要必须区分已写入的决定/经验与因容量限制跳过的环境字段。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/cc-switch-center/platform-sync-public.json",
+    "artifacts/cc-switch-center/live-api-public.json",
+    "artifacts/cc-switch-center/browser-public.json",
+    "docs/CCSwitch三机模型管理.md",
+    "docs/贾维斯建设档案.md"
+  ]
+}

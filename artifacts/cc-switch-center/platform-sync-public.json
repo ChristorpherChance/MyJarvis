@@ -1,0 +1,67 @@
+{
+  "schema": "jarvis-cc-switch-platform-sync-v1",
+  "marker": "[CCSWITCH-R56-20261020]",
+  "startedAt": "2026-10-19T18:16:52.772Z",
+  "status": "passed",
+  "release": "20261020-cc-switch-center-r56",
+  "productAccepted": false,
+  "independentAcceptance": false,
+  "experienceVerified": false,
+  "modelCalls": 0,
+  "modelCredentialsRead": false,
+  "modelConfigurationWrites": 0,
+  "sessionCreated": true,
+  "sessionRevoked": true,
+  "businessWrites": [
+    "decision-selected",
+    "decision-implemented",
+    "experience-inbox"
+  ],
+  "environmentInfo": {
+    "status": "skipped",
+    "reason": "EXISTING_CONTENT_WOULD_EXCEED_SCHEMA_LIMIT",
+    "existingNotesLength": 19805,
+    "attemptedNotesLength": 20299
+  },
+  "refs": [
+    {
+      "reference": "artifacts/cc-switch-center/live-api-public.json",
+      "sha256": "754a0ff477eabc0b426f7e774639b213e4be8b2f513c6cd9cd69b77012d155ab",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/browser-public.json",
+      "sha256": "e8fec3b0a6a2f73654647198306395d1f2fe2d5aaaaadb77c0bf815468f259ae",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/health-public.json",
+      "sha256": "474e00c14ee32def1075bd107061377bc41ec5de9a38f54e07b4a520eb770f0d",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/stage-public.json",
+      "sha256": "8926411d62dd949452609e2a5bc0959f361762c5257863dfe3b48b19b449b3e2",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/api-validation-public.json",
+      "sha256": "6959b59348658b46e4ba5a28eb4094392b487915ef74f164c123f250ef3aa04e",
+      "kind": "test-report"
+    }
+  ],
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decision": {
+    "id": "98642d2a-7534-4918-90f4-5b27d926f7c4",
+    "revision": 2,
+    "status": "implemented",
+    "independentAcceptance": false
+  },
+  "experience": {
+    "id": "b83da04a-2a34-447d-b39a-4360ceb361df",
+    "revision": 1,
+    "status": "inbox",
+    "verified": false
+  },
+  "completedAt": "2026-10-19T18:16:53.938Z"
+}

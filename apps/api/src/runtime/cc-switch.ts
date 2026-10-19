@@ -48,7 +48,7 @@ export function createCcSwitchSocketTransport(socketPath:string):CcSwitchTranspo
   const socket=connect({path:socketPath});let settled=false,size=0,sentMutation=false;const chunks:Buffer[]=[];
   const finish=(error?:unknown,value?:unknown)=>{if(settled)return;settled=true;socket.destroy();if(error)reject(error);else resolve(value);};
   const unavailable=()=>{const code=sentMutation?'UNKNOWN_RESULT':'UNAVAILABLE';return new RuntimeAccessError(code,messages[code].message,503);};
-  socket.setTimeout(45_000,()=>finish(unavailable()));
+  socket.setTimeout(90_000,()=>finish(unavailable()));
   socket.on('error',()=>finish(unavailable()));
   socket.on('connect',()=>{sentMutation=!['machines','list'].includes(request.action);socket.write(data);});
   socket.on('data',chunk=>{

@@ -1,0 +1,73 @@
+{
+  "schema": "jarvis-cc-switch-api-validation-v1",
+  "startedAt": "2026-10-19T17:36:34.633420+00:00",
+  "completedAt": "2026-10-19T17:36:40.808887+00:00",
+  "baseline": "fe4ef1f2ef8fb5302efaf3b72050af0c8d135082",
+  "workspace": "/home/superopen/.local/share/jarvis-development/cc-switch-center-20261020",
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=2",
+    "apps/api/test/cc-switch.test.ts",
+    "apps/api/test/project-acceptance.test.ts",
+    "apps/api/test/telemetry-aggregation.test.ts",
+    "apps/api/test/telemetry-contract.test.ts",
+    "apps/api/test/telemetry-multi-agent.test.ts"
+  ],
+  "exitCode": 1,
+  "status": "failed",
+  "counts": {
+    "tests": 27,
+    "suites": 0,
+    "pass": 23,
+    "fail": 4,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 6137.620545
+  },
+  "failedTestNames": [
+    "real shared identity HTTP routes enforce auth, owner, project, CAS and exact replay",
+    "same contract schemas validate actual create, command, detail, overview and release DTO data",
+    "signed actual heartbeat commits complete machine and service DTOs, NAS detail and empty/measured monitoring history",
+    "signed multi-agent telemetry aggregates fresh per-agent snapshots, isolates machines, and removes revoked or omitted sources",
+    "failing tests:",
+    "real shared identity HTTP routes enforce auth, owner, project, CAS and exact replay",
+    "same contract schemas validate actual create, command, detail, overview and release DTO data",
+    "signed actual heartbeat commits complete machine and service DTOs, NAS detail and empty/measured monitoring history",
+    "signed multi-agent telemetry aggregates fresh per-agent snapshots, isolates machines, and removes revoked or omitted sources"
+  ],
+  "files": [
+    {
+      "path": "apps/api/test/cc-switch.test.ts",
+      "sha256": "e2a6dc8091f3f1709f158239843a89e2299fdd70a67d447438d0c80a3a10e390"
+    },
+    {
+      "path": "apps/api/test/project-acceptance.test.ts",
+      "sha256": "feb54a5496c75932caaacf4a96c7c64590d72eb76d4b5f9394930db678385ee1"
+    },
+    {
+      "path": "apps/api/test/telemetry-aggregation.test.ts",
+      "sha256": "93ba12298a1a38a4745ba380f39c68a024852047a95cd248be17d86f8e0f4f29"
+    },
+    {
+      "path": "apps/api/test/telemetry-contract.test.ts",
+      "sha256": "bc6afc08b43c65113b66a7b985f68fce8a76af6a1c92894593a23031a81c4d8e"
+    },
+    {
+      "path": "apps/api/test/telemetry-multi-agent.test.ts",
+      "sha256": "d51cb645b1bfa9d59dd96e338bcc6864f1ee8ea6a26ffb0f094c8b2a46787e45"
+    }
+  ],
+  "scope": {
+    "isolatedTemporaryData": true,
+    "productionIdentityDatabaseWritten": false,
+    "productionModelConfigurationWritten": false,
+    "productionDeployment": false,
+    "providerModelCalls": 0,
+    "rawLogsPersisted": false,
+    "credentialsPersisted": false
+  }
+}

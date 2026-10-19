@@ -1,0 +1,65 @@
+{
+  "id": "JARVIS-20261020-CC-SWITCH-CENTER-IMPLEMENTATION-VALIDATION",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T17:44:46.724632Z",
+  "title": "三机CC Switch集中管理实现与限定验证通过，R56正式入口待发布",
+  "objective": "在112贾维斯统一管理101、112、116各自CC Switch的查看、模型切换、新增、编辑、删除及API密钥，同时保留各机本地终端入口。",
+  "changes": [
+    "新增运维费用→终端模型与机器详情→AI开发环境管理入口，配置写入明确选中的机器；已有Key不回显，编辑留空保留，当前启用项禁止删除。新增角色覆写留空沿用主模型，明确填写则按角色保存。",
+    "112独立Unix socket控制器使用私有强制SSH密钥调用三机受限模型worker，API进程不持远端SSH私钥；请求中的Key仅经输入流传递，公开回执使用字段白名单。",
+    "常规源码已由并行任务统一更名至112 ~/All-Projects/MyJarvis；本轮后续开发采用 ~/.local/share/jarvis-development/cc-switch-center-20261020，基线fe4ef1f2ef8fb5302efaf3b72050af0c8d135082，避免旧任务目录清理影响。",
+    "历史R55、R54发布ZIP随旧副本清理而缺失；从各自/opt/jarvis/releases的原manifest公开载荷逐项核验并按原zipProgram确定性重建，两包完整SHA与历史pin逐字节相同。",
+    "worker加强CLI前后CAS、超时/OSError/无效live JSON失败恢复，并保护并发本机选择、已有元数据/备份端点与自定义helper。"
+  ],
+  "decisions": [
+    "采用集中界面加受限SSH worker，继续读写各机自身CC Switch资料；不再维护平台侧第二份模型密钥库，原ai/ai manage可共存。",
+    "不让平台Web进程持有通用远程执行权限；独立控制器只登记101、112、116，worker限定本轮模型管理操作。",
+    "保留116 CCR/广州Kimi网关原职责，不因终端模型集中管理改公网转发链路。",
+    "旧包缺失时恢复历史字节并比对已知pin，不换标或绕过当前静态资产继承门；正式发布仍须双上一包输入、完整数据快照、隔离恢复及健康核验。"
+  ],
+  "facts": [
+    "112独立controller及三机worker已实际安装；平台正式应用仍R55，新前端入口和API尚未正式发布，组件安装不能作为整项交付完成。",
+    "增强后的受限worker实际核三机各6项配置，读取、新增、编辑、删除、切换Kimi再恢复原当前项全部通过；临时项已清理，已有Key未回传。原初版桥接回执继续保留，不用其代替最终增强版。",
+    "API联测初次27项23通过4失败，合并装配漏传当前功耗配置、未挂遥测清洗及正常合同生成遗漏验收augmenter；原测试断言保持，修复后27项全部通过。",
+    "R55重建包20,642,575字节/SHA4927a9d264a8bb58023d4d2f55df77f065b32a2444175e8c4d44c5d106414d32；R54包25,202,545字节/SHAf9eb4c09c06e6a1c2dc09889cdfd10b6ba062907ea7660c2ad4f4f0111eb0b97，全部清单项大小、内容、ZIP模式与CRC已核。",
+    "本阶段不新增供应商模型推理调用；费用仅记录不设上限，内部编排Token、金额和供应商账单未知分列，不写为零费用。",
+    "候选runtimeBuild为20261020-cc-switch-center-r56；本轮前端/API仍未正式上线，源码提交及正式包身份由后续真实发布回执另记。"
+  ],
+  "verification": [
+    "增强版最终三机桥接CRUD、Key不回显、临时项清理及当前配置恢复均实际通过；初版与最终回执分别保存。",
+    "API最终27/27通过且无跳过，API类型检查通过；初次4失败原因及修复、两次测试文件指纹均保存在同一版本化回执。",
+    "上线验证helper隔离测试核临时TLS CA、真实短时hash session授权、匿名401、三机同当前项写入、公开快照不变及成功/失败时精确session清理；未对生产身份数据库执行。",
+    "前版ZIP恢复仅sudo读取root-owned不可写公开发布文件，正式payload、服务和业务数据未修改；两包字节完全回到历史SHA，发布保留门未放宽。",
+    "原生CC Switch 5.11.2、临时HOME隔离18项通过，含密钥省略/替换、认证模式清除旧Key、CLI前后CAS、失败恢复及并发本机选择保护；源码SHA绑定最终回执。",
+    "UI组件验证目标锁定/重复提交、401/403清私有状态、409不冒成功、错机回执拒绝、空角色最简新增及明确角色保存；Web类型检查及npm run build的API/网页均通过。"
+  ],
+  "pending": [
+    "尚未把新平台版本发布到112；候选r56需固定真实源码提交与构建，打包时显式继承恢复且历史SHA精确的R55/R54两包、核实际current全部JS/CSS，再按既有完整快照/隔离恢复/健康流程发布。",
+    "正式页面、权限和真实新入口的三机操作应在上线后现场核验；本阶段不冒称用户验收。"
+  ],
+  "lessons": [
+    "平台集中管理与本地终端必须共用同一份目标配置，并把机器、配置修订、密钥留空保留及删除当前项约束贯穿接口与worker。",
+    "删除历史开发副本后，固定manifest载荷与确定性ZIP格式仍可精确恢复发布输入；恢复应验证历史全包SHA，不能只换一个新包名声称历史一致。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "not-deployed",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/cc-switch-center/bridge-public.json",
+    "artifacts/cc-switch-center/bridge-verification-public.json",
+    "artifacts/cc-switch-center/api-validation-public.json",
+    "artifacts/cc-switch-center/api-validation-initial-public.json",
+    "artifacts/cc-switch-center/live-helper-isolated-public.json",
+    "artifacts/cc-switch-center/previous-package-recovery-public.json",
+    "artifacts/cc-switch-center/recover-previous-packages.py",
+    "docs/CCSwitch三机模型管理.md",
+    "artifacts/cc-switch-center/bridge-verification-final-public.json",
+    "artifacts/cc-switch-center/final-validation-public.json",
+    "docs/贾维斯建设档案.md"
+  ]
+}

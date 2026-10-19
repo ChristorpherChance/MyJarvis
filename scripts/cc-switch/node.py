@@ -124,21 +124,94 @@ class Manager:
         (folder / 'operation.json').chmod(0o600)
         return folder
 
-    def invoke(self, args):
-        result = subprocess.run([str(self.cli), '-a', 'claude'] + args, capture_output=True, timeout=25,
-                                env={**os.environ, 'HOME': str(self.home), 'CLAUDE_CONFIG_DIR': str(self.live.parent)}, cwd=self.home)
+    def invoke(self, args, timeout=25):
+        try:
+            result = subprocess.run([str(self.cli), '-a', 'claude'] + args, capture_output=True, timeout=timeout,
+                                    env={**os.environ, 'HOME': str(self.home), 'CLAUDE_CONFIG_DIR': str(self.live.parent)}, cwd=self.home)
+        except (OSError, subprocess.TimeoutExpired):
+            raise Rejected('APPLY_FAILED')
         require(result.returncode == 0, 'APPLY_FAILED')
 
-    def apply(self, provider_id):
-        self.live.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-        self.invoke(['use', provider_id])
+    def equivalent(self, left, right):
+        if set(left) != set(right): return False
+        return all((json.loads(left[k]) == json.loads(right[k]) if k in ['meta', 'settings_config'] and left[k] and right[k]
+                    else left[k] == right[k]) for k in left)
+
+    def same_rows(self, left, right):
+        a, b = {r['id']: r for r in left}, {r['id']: r for r in right}
+        return a.keys() == b.keys() and all(self.equivalent(a[key], b[key]) for key in a)
+
+    def predicted_command(self, args, before):
+        # Let the installed CLI predict its own serialization in an isolated HOME.
+        # This lets us preserve unknown metadata without overwriting real edits.
+        with tempfile.TemporaryDirectory(prefix='cc-switch-apply-', dir=self.state) as folder:
+            home = Path(folder);(home / '.cc-switch').mkdir(mode=0o700);(home / '.claude').mkdir(mode=0o700)
+            with contextlib.closing(self.database()) as source, contextlib.closing(sqlite3.connect(home / '.cc-switch/cc-switch.db')) as target:
+                source.backup(target)
+            for path, relative in [(self.live, '.claude/settings.json'), (self.settings, '.cc-switch/settings.json'),
+                                   (self.home / '.claude.json', '.claude.json')]:
+                if path.is_file(): shutil.copyfile(path, home / relative)
+            child = Manager(home, self.machine_id, self.host, self.cli)
+            with contextlib.closing(child.database()) as db:
+                require(self.same_rows(child.rows(db), before), 'CONFLICT')
+            # Set all HOME-derived paths; inherited XDG settings must not escape.
+            env = {**os.environ, 'HOME': str(home), 'CLAUDE_CONFIG_DIR': str(home / '.claude'),
+                   'XDG_CONFIG_HOME': str(home / '.config'), 'XDG_DATA_HOME': str(home / '.local/share'),
+                   'XDG_STATE_HOME': str(home / '.local/state')}
+            try:
+                result = subprocess.run([str(self.cli), '-a', 'claude'] + args, capture_output=True,
+                                        timeout=5, env=env, cwd=home)
+            except (OSError, subprocess.TimeoutExpired): raise Rejected('APPLY_FAILED')
+            require(result.returncode == 0, 'APPLY_FAILED')
+            with contextlib.closing(child.database()) as db: return child.rows(db)
+
+    def reconcile_use(self, before, predicted, created_id=None):
         with contextlib.closing(self.database()) as db:
-            row = db.execute("SELECT * FROM providers WHERE id=? AND app_type='claude'", (provider_id,)).fetchone()
-        require(row and row['is_current'], 'APPLY_FAILED')
-        live = json.loads(self.live.read_text())
-        wanted = json.loads(row['settings_config']).get('env', {})
-        require(all(live.get('env', {}).get(key) == value for key, value in wanted.items()
-                    if key in set(ROLES.values()) | {'ANTHROPIC_MODEL', 'ANTHROPIC_BASE_URL', 'ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN'}), 'APPLY_FAILED')
+            db.execute('BEGIN IMMEDIATE')
+            latest = self.rows(db)
+            comparison = [dict(row) for row in latest]
+            if created_id:
+                wanted = next((row for row in predicted if row['id'] == created_id), None)
+                for row in comparison:
+                    if row['id'] == created_id and wanted: row['created_at'] = wanted['created_at']
+            expected = self.same_rows(comparison, predicted)
+            require(self.same_rows(latest, before) or expected, 'UNKNOWN_RESULT')
+            if expected:
+                by_id = {row['id']: row for row in latest}
+                for row in before:
+                    after = by_id[row['id']]
+                    settings = row['settings_config'] if json.loads(after['settings_config']) == json.loads(row['settings_config']) else after['settings_config']
+                    db.execute("UPDATE providers SET meta=?,settings_config=? WHERE id=? AND app_type='claude'", (row['meta'], settings, row['id']))
+            db.commit()
+
+    def apply(self, provider_id, expected_row=None):
+        self.live.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+        with contextlib.closing(self.database()) as db:
+            before = self.rows(db)
+        row = next((r for r in before if r['id'] == provider_id), None)
+        require(row is not None and (expected_row is None or self.revision(row) == self.revision(expected_row)), 'CONFLICT')
+        predicted = self.predicted_command(['use', provider_id], before)
+        with contextlib.closing(self.database()) as db:
+            require(self.same_rows(self.rows(db), before), 'CONFLICT')
+        try: self.invoke(['use', provider_id])
+        except Rejected:
+            self.reconcile_use(before, predicted)
+            raise
+        self.reconcile_use(before, predicted)
+        with contextlib.closing(self.database()) as db:
+            current = db.execute("SELECT * FROM providers WHERE id=? AND app_type='claude'", (provider_id,)).fetchone()
+        require(current and current['is_current'], 'UNKNOWN_RESULT')
+        raw_live = None
+        try:
+            raw_live = self.live.read_bytes()
+            live = json.loads(raw_live).get('env', {})
+            wanted = json.loads(row['settings_config']).get('env', {})
+            fields = set(ROLES.values()) | {'ANTHROPIC_MODEL', 'ANTHROPIC_BASE_URL', 'ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN'}
+            require(all(live.get(key) == wanted.get(key) for key in fields), 'APPLY_FAILED')
+        except (OSError, ValueError, TypeError, AttributeError):
+            error = Rejected('APPLY_FAILED')
+            if raw_live is not None: error.invalid_live = raw_live
+            raise error
 
     def merge(self, row, provider):
         settings = json.loads(row['settings_config'])
@@ -151,10 +224,9 @@ class Manager:
         env.update({'ANTHROPIC_BASE_URL': provider['baseUrl'], 'ANTHROPIC_MODEL': provider['model']})
         for key, field in ROLES.items(): env[field] = provider['models'][key]
         if 'model' in settings: settings['model'] = provider['model']
-        # Keep obsolete CCR takeover markers out of local settings on all hosts.
-        for key in ['ANTHROPIC_API_BASE_URL', 'CLAUDE_AGENT_API_BASE_URL', 'CCR_CLAUDE_CODE_MODEL', 'CODEXL_CLAUDE_CODE_MODEL', 'CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY']:
-            env.pop(key, None)
-        settings.pop('apiKeyHelper', None)
+        # A deliberately supplied key replaces dynamic authentication. Ordinary
+        # edits with a blank key preserve custom helpers and unrelated settings.
+        if provider.get('apiKey'): settings.pop('apiKeyHelper', None)
         for key, field in ROLES.items():
             label = field + '_NAME'
             if label in env: env[label] = provider['models'][key].removesuffix('[1M]').removesuffix('[1m]')
@@ -184,7 +256,16 @@ class Manager:
                     path = Path(folder) / 'settings.json'
                     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
                     with os.fdopen(fd, 'w') as out: out.write(canonical(settings))
-                    self.invoke(['provider', 'add', '--id', request['commandId'], '--name', value['name'], '--config-file', str(path)])
+                    args = ['provider', 'add', '--id', request['commandId'], '--name', value['name'], '--config-file', str(path)]
+                    with contextlib.closing(self.database()) as db: before = self.rows(db)
+                    predicted = self.predicted_command(args, before)
+                    with contextlib.closing(self.database()) as db:
+                        require(self.same_rows(self.rows(db), before), 'CONFLICT')
+                    try: self.invoke(args)
+                    except Rejected:
+                        self.reconcile_use(before, predicted, request['commandId'])
+                        raise Rejected('UNKNOWN_RESULT')
+                    self.reconcile_use(before, predicted, request['commandId'])
                 return self.snapshot()
             provider_id = identifier(request.get('providerId'))
             with contextlib.closing(self.database()) as db:
@@ -196,9 +277,12 @@ class Manager:
                 require(action != 'delete' or not row['is_current'], 'ACTIVE_PROVIDER')
                 # Release the transaction before SQLite backup, then recheck before mutation.
                 db.rollback()
-            self.backup(action)
+            backup = self.backup(action)
             if action == 'switch':
-                self.apply(provider_id)
+                try: self.apply(provider_id, row)
+                except Rejected as error:
+                    if error.code == 'APPLY_FAILED': raise Rejected('UNKNOWN_RESULT')
+                    raise
                 return self.snapshot()
             with contextlib.closing(self.database()) as db:
                 db.execute('BEGIN IMMEDIATE')
@@ -213,24 +297,47 @@ class Manager:
                     db.execute("UPDATE providers SET name=?,settings_config=? WHERE id=? AND app_type='claude'", (value['name'], canonical(settings), provider_id))
                     old_url = json.loads(row['settings_config']).get('env', {}).get('ANTHROPIC_BASE_URL')
                     if old_url != value['baseUrl']:
-                        db.execute("DELETE FROM provider_endpoints WHERE provider_id=? AND app_type='claude'", (provider_id,))
-                        db.execute("INSERT INTO provider_endpoints(provider_id,app_type,url,added_at) VALUES(?,?,?,?)", (provider_id, 'claude', value['baseUrl'], int(datetime.datetime.now().timestamp()*1000)))
+                        existing = [endpoint for endpoint in old_endpoints if endpoint['url'] == value['baseUrl']]
+                        if existing:
+                            db.execute("DELETE FROM provider_endpoints WHERE provider_id=? AND app_type='claude' AND url=?", (provider_id, old_url))
+                        else:
+                            changed = db.execute("UPDATE provider_endpoints SET url=? WHERE provider_id=? AND app_type='claude' AND url=?", (value['baseUrl'], provider_id, old_url)).rowcount
+                            if not changed:
+                                db.execute("INSERT INTO provider_endpoints(provider_id,app_type,url,added_at) VALUES(?,?,?,?)", (provider_id, 'claude', value['baseUrl'], int(datetime.datetime.now().timestamp()*1000)))
+                    written_row = dict(db.execute("SELECT * FROM providers WHERE id=? AND app_type='claude'", (provider_id,)).fetchone())
+                    written_endpoints = [dict(e) for e in db.execute("SELECT * FROM provider_endpoints WHERE provider_id=? AND app_type='claude' ORDER BY id", (provider_id,))]
                 db.commit()
             if action == 'update' and row['is_current']:
-                try: self.apply(provider_id)
-                except Rejected:
+                try: self.apply(provider_id, written_row)
+                except Rejected as error:
                     # Restore only our row if no concurrent editor changed it.
+                    require(error.code == 'APPLY_FAILED', 'UNKNOWN_RESULT')
                     restored = False
                     with contextlib.closing(self.database()) as db:
+                        db.execute('BEGIN IMMEDIATE')
                         latest = db.execute("SELECT * FROM providers WHERE id=? AND app_type='claude'", (provider_id,)).fetchone()
-                        if latest and latest['settings_config'] == canonical(settings) and latest['name'] == value['name']:
+                        endpoints = [dict(e) for e in db.execute("SELECT * FROM provider_endpoints WHERE provider_id=? AND app_type='claude' ORDER BY id", (provider_id,))]
+                        if latest and self.revision(dict(latest)) == self.revision(written_row) and endpoints == written_endpoints:
                             db.execute("UPDATE providers SET name=?,settings_config=? WHERE id=? AND app_type='claude'", (row['name'], row['settings_config'], provider_id))
                             db.execute("DELETE FROM provider_endpoints WHERE provider_id=? AND app_type='claude'", (provider_id,))
                             for endpoint in old_endpoints:
-                                db.execute('INSERT INTO provider_endpoints(provider_id,app_type,url,added_at) VALUES(?,?,?,?)', tuple(endpoint[k] for k in ['provider_id','app_type','url','added_at']))
+                                db.execute('INSERT INTO provider_endpoints(id,provider_id,app_type,url,added_at) VALUES(?,?,?,?,?)', tuple(endpoint[k] for k in ['id','provider_id','app_type','url','added_at']))
                             db.commit();restored = True
                     require(restored, 'UNKNOWN_RESULT')
-                    try: self.apply(provider_id)
+                    if hasattr(error, 'invalid_live'):
+                        # The CLI cannot re-apply against corrupt JSON. Restore
+                        # our exact backup only while that failed file is intact.
+                        previous_live = backup / 'claude-settings.json'
+                        require(previous_live.is_file() and self.live.read_bytes() == error.invalid_live, 'UNKNOWN_RESULT')
+                        fd, temporary = tempfile.mkstemp(prefix='.jarvis-restore-', dir=self.live.parent)
+                        try:
+                            with os.fdopen(fd, 'wb') as out:
+                                out.write(previous_live.read_bytes());out.flush();os.fsync(out.fileno())
+                            require(self.live.read_bytes() == error.invalid_live, 'UNKNOWN_RESULT')
+                            os.replace(temporary, self.live)
+                        finally:
+                            if os.path.exists(temporary): os.unlink(temporary)
+                    try: self.apply(provider_id, row)
                     except Exception: raise Rejected('UNKNOWN_RESULT')
                     raise Rejected('APPLY_FAILED')
             return self.snapshot()

@@ -1,0 +1,18 @@
+{
+  "schema": "jarvis-cc-switch-live-helper-isolated-validation-v1",
+  "observedAt": "2026-10-19T17:40:38.609Z",
+  "status": "passed",
+  "checks": [
+    "temporary TLS CA verified",
+    "real 120-second hash-only session authorized requests",
+    "anonymous 401",
+    "three same-current-provider mutations",
+    "public snapshots unchanged",
+    "success cleanup preserved unrelated session",
+    "failure cleanup preserved unrelated session"
+  ],
+  "successExitCode": 0,
+  "controlledFailureExitCode": 1,
+  "productionIdentityDatabaseWritten": false,
+  "productionModelConfigurationWritten": false
+}

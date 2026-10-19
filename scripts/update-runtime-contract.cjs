@@ -46,5 +46,6 @@ require('./software-factory-contract.cjs')(d);
 require('./usage-ledger-contract.cjs')(d);
 require('./project-autonomy-contract.cjs')(d);
 require('./project-decision-contract.cjs')(d);
+require('./project-acceptance-contract.cjs')(d);
 fs.writeFileSync(path,JSON.stringify(d,null,2)+'\n');console.log('Runtime contract merged');
 

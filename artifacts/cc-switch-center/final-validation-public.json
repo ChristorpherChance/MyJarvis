@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-19T17:44:46.724632+00:00",
+  "runtimeBuild": "20261020-cc-switch-center-r56",
+  "sourceRoot": "/home/superopen/.local/share/jarvis-development/cc-switch-center-20261020",
+  "canonicalDevelopmentRoot": "/home/superopen/All-Projects/MyJarvis",
+  "adapter": {
+    "status": "passed",
+    "tests": 18,
+    "isolation": "temporary HOME and real installed CC Switch 5.11.2",
+    "command": "python3 -m unittest discover -s scripts/cc-switch -p test_node.py -v",
+    "independentReviewCompleted": true,
+    "files": {
+      "scripts/cc-switch/node.py": "9a6f22c6839505e933dd1f0dcb1e6c4aad9927c480c31941591f16529bc101db",
+      "scripts/cc-switch/test_node.py": "40ed25b192ed95ebc2c477b2f87b9f58d759e75851e92d19d72f0aa795ab3583"
+    },
+    "coverage": [
+      "create/edit/delete/switch",
+      "key omission and replacement",
+      "auth type changes remove old key",
+      "CAS before and after CLI",
+      "timeouts/OSError/invalid live JSON restore",
+      "concurrent local selection not overwritten",
+      "metadata/backup endpoints/custom helper preserved"
+    ]
+  },
+  "web": {
+    "status": "passed",
+    "componentBoundaryTestCommand": "node --test scripts/test-cc-switch-ui.mjs",
+    "typecheck": "passed",
+    "files": {
+      "apps/web/src/features/operations/CcSwitchPanel.tsx": "b3b650ed242b8e9c449d2fc48ce565052cf629c365ac40035a51173a22c76e63",
+      "scripts/test-cc-switch-ui.mjs": "1a35c7091ecdf90bf4c588120091d821f33c0103242fb7af15ffa0d5eacff1dc"
+    },
+    "coverage": [
+      "target machine locking",
+      "duplicate-submit prevention",
+      "401/403 private state reset",
+      "409 does not fake success",
+      "wrong machine reply rejected",
+      "new configuration with blank roles follows main model",
+      "explicit role model retained"
+    ]
+  },
+  "build": {
+    "status": "passed",
+    "command": "npm run build",
+    "api": true,
+    "web": true
+  },
+  "supplierModelCallsInThisFeatureTask": 0,
+  "internalOrchestrationTokenCount": null,
+  "internalOrchestrationCost": null,
+  "productionUiDeployment": "pending"
+}

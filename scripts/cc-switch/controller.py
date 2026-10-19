@@ -60,7 +60,7 @@ def dispatch(request, config):
         result = subprocess.run(['/usr/bin/ssh', '-F', config['sshConfig'], '-o', 'BatchMode=yes',
                                  '-o', 'ConnectTimeout=8', '-o', 'ServerAliveInterval=5', '-o', 'ServerAliveCountMax=2',
                                  node['alias'], 'cc-switch-manage'], input=raw,
-                                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=35)
+                                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=75)
         if len(result.stdout) > 1024*1024: return error()
         reply = json.loads(result.stdout)
         if reply.get('ok') is not True:
@@ -71,7 +71,7 @@ def dispatch(request, config):
 
 class Handler(socketserver.StreamRequestHandler):
     def handle(self):
-        self.connection.settimeout(45)
+        self.connection.settimeout(90)
         try:
             _, uid, _ = struct.unpack('3i', self.connection.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12))
             if uid not in self.server.allowed_uids: return

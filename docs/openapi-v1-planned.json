@@ -31166,6 +31166,482 @@
           }
         }
       }
+    },
+    "/api/v1/projects/{id}/acceptance": {
+      "get": {
+        "operationId": "ProjectAcceptanceOverview",
+        "tags": [
+          "Project acceptance"
+        ],
+        "summary": "ProjectAcceptanceOverview",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "本地验收事实；引用不代表原件已核验，缺陷关闭不完成任务或部署",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectAcceptanceOverview"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "字段、隐私或状态无效"
+          },
+          "401": {
+            "description": "会话失效"
+          },
+          "403": {
+            "description": "本人管理身份要求"
+          },
+          "404": {
+            "description": "项目或缺陷不可访问"
+          },
+          "409": {
+            "description": "版本、候选或复验代次冲突"
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{id}/defects": {
+      "get": {
+        "operationId": "ProjectDefectList",
+        "tags": [
+          "Project acceptance"
+        ],
+        "summary": "ProjectDefectList",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "本地验收事实；引用不代表原件已核验，缺陷关闭不完成任务或部署",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectDefectCollection"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "字段、隐私或状态无效"
+          },
+          "401": {
+            "description": "会话失效"
+          },
+          "403": {
+            "description": "本人管理身份要求"
+          },
+          "404": {
+            "description": "项目或缺陷不可访问"
+          },
+          "409": {
+            "description": "版本、候选或复验代次冲突"
+          }
+        }
+      },
+      "post": {
+        "operationId": "ProjectDefectCreate",
+        "tags": [
+          "Project acceptance"
+        ],
+        "summary": "ProjectDefectCreate",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "本地验收事实；引用不代表原件已核验，缺陷关闭不完成任务或部署",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectDefectSnapshot"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "字段、隐私或状态无效"
+          },
+          "401": {
+            "description": "会话失效"
+          },
+          "403": {
+            "description": "本人管理身份要求"
+          },
+          "404": {
+            "description": "项目或缺陷不可访问"
+          },
+          "409": {
+            "description": "版本、候选或复验代次冲突"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDefectCreateInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{id}/defects/{defectId}": {
+      "get": {
+        "operationId": "ProjectDefectRead",
+        "tags": [
+          "Project acceptance"
+        ],
+        "summary": "ProjectDefectRead",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "defectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "本地验收事实；引用不代表原件已核验，缺陷关闭不完成任务或部署",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectDefectDetail"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "字段、隐私或状态无效"
+          },
+          "401": {
+            "description": "会话失效"
+          },
+          "403": {
+            "description": "本人管理身份要求"
+          },
+          "404": {
+            "description": "项目或缺陷不可访问"
+          },
+          "409": {
+            "description": "版本、候选或复验代次冲突"
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{id}/defects/{defectId}/commands": {
+      "post": {
+        "operationId": "ProjectDefectCommand",
+        "tags": [
+          "Project acceptance"
+        ],
+        "summary": "ProjectDefectCommand",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "defectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "本地验收事实；引用不代表原件已核验，缺陷关闭不完成任务或部署",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectDefectSnapshot"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "字段、隐私或状态无效"
+          },
+          "401": {
+            "description": "会话失效"
+          },
+          "403": {
+            "description": "本人管理身份要求"
+          },
+          "404": {
+            "description": "项目或缺陷不可访问"
+          },
+          "409": {
+            "description": "版本、候选或复验代次冲突"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDefectCommandInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{id}/releases": {
+      "get": {
+        "operationId": "ProjectReleaseList",
+        "tags": [
+          "Project acceptance"
+        ],
+        "summary": "ProjectReleaseList",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "本地验收事实；引用不代表原件已核验，缺陷关闭不完成任务或部署",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectReleaseCollection"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "字段、隐私或状态无效"
+          },
+          "401": {
+            "description": "会话失效"
+          },
+          "403": {
+            "description": "本人管理身份要求"
+          },
+          "404": {
+            "description": "项目或缺陷不可访问"
+          },
+          "409": {
+            "description": "版本、候选或复验代次冲突"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -48240,9 +48716,6 @@
                 },
                 "required": []
               },
-              "storage": {
-                "$ref": "#/components/schemas/QnapStorageReading"
-              },
               "metricFreshness": {
                 "type": "object",
                 "additionalProperties": false,
@@ -48652,6 +49125,9 @@
                   }
                 },
                 "required": []
+              },
+              "storage": {
+                "$ref": "#/components/schemas/QnapStorageReading"
               }
             },
             "required": [
@@ -74290,6 +74766,1358 @@
           "observedAt",
           "platform",
           "method"
+        ]
+      },
+      "ProjectDefectEvidence": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ]
+      },
+      "ProjectDefectCandidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourceCommit": {
+            "type": "string",
+            "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+          },
+          "buildHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "releaseId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [],
+        "anyOf": [
+          {
+            "required": [
+              "sourceCommit"
+            ]
+          },
+          {
+            "required": [
+              "buildHash"
+            ]
+          },
+          {
+            "required": [
+              "releaseId"
+            ]
+          }
+        ]
+      },
+      "ProjectDefectCreateInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "severity": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "reproduction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "actual": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "criterion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "environment": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "sourceVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "taskId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "runId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "releaseId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidenceRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectDefectEvidence"
+            },
+            "maxItems": 50,
+            "minItems": 0
+          },
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "const": 0
+          }
+        },
+        "required": [
+          "title",
+          "severity",
+          "reproduction",
+          "expected",
+          "actual",
+          "criterion",
+          "environment",
+          "sourceVersion",
+          "commandId",
+          "expectedVersion"
+        ]
+      },
+      "ProjectDefectCommandInput": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commandId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "action": {
+                "const": "update"
+              },
+              "patch": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  },
+                  "severity": {
+                    "enum": [
+                      "P0",
+                      "P1",
+                      "P2",
+                      "P3"
+                    ]
+                  },
+                  "reproduction": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000
+                  },
+                  "expected": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000
+                  },
+                  "actual": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000
+                  },
+                  "criterion": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "environment": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "sourceVersion": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "taskId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "runId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "releaseId": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "evidenceRefs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProjectDefectEvidence"
+                    },
+                    "maxItems": 50,
+                    "minItems": 0
+                  }
+                },
+                "required": []
+              }
+            },
+            "required": [
+              "commandId",
+              "expectedVersion",
+              "reason",
+              "action",
+              "patch"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commandId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "action": {
+                "const": "start_fix"
+              },
+              "fixTaskId": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "commandId",
+              "expectedVersion",
+              "reason",
+              "action"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commandId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "action": {
+                "const": "submit_fix"
+              },
+              "candidate": {
+                "$ref": "#/components/schemas/ProjectDefectCandidate"
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "evidenceRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProjectDefectEvidence"
+                },
+                "maxItems": 50,
+                "minItems": 1
+              }
+            },
+            "required": [
+              "commandId",
+              "expectedVersion",
+              "action",
+              "candidate",
+              "summary",
+              "evidenceRefs"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commandId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "action": {
+                "const": "retest"
+              },
+              "fixId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "candidateFingerprint": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "outcome": {
+                "enum": [
+                  "pass",
+                  "fail",
+                  "blocked"
+                ]
+              },
+              "evidenceRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProjectDefectEvidence"
+                },
+                "maxItems": 50,
+                "minItems": 1
+              },
+              "validationScope": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              }
+            },
+            "required": [
+              "commandId",
+              "expectedVersion",
+              "reason",
+              "action",
+              "fixId",
+              "candidateFingerprint",
+              "outcome",
+              "evidenceRefs",
+              "validationScope"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commandId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "action": {
+                "const": "close"
+              },
+              "fixId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "candidateFingerprint": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "retestId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "required": [
+              "commandId",
+              "expectedVersion",
+              "reason",
+              "action",
+              "fixId",
+              "candidateFingerprint",
+              "retestId"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "commandId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expectedVersion": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              },
+              "action": {
+                "const": "reopen"
+              }
+            },
+            "required": [
+              "commandId",
+              "expectedVersion",
+              "reason",
+              "action"
+            ]
+          }
+        ]
+      },
+      "ProjectDefectTaskBinding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "machineId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "workspace": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "scope",
+          "revision"
+        ]
+      },
+      "ProjectDefectRunBinding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "domain": {
+            "const": "tasks"
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "taskId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "machineId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "workspace": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "resultHash": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "domain",
+          "projectId",
+          "taskId",
+          "machineId",
+          "workspace",
+          "status",
+          "resultHash"
+        ]
+      },
+      "ProjectDefectReleaseBinding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "taskId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "taskId",
+          "version",
+          "revision"
+        ]
+      },
+      "ProjectDefectFix": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "generation": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "candidate": {
+            "$ref": "#/components/schemas/ProjectDefectCandidate"
+          },
+          "candidateFingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "evidenceRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectDefectEvidence"
+            },
+            "maxItems": 50,
+            "minItems": 1
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fixTaskId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "generation",
+          "candidate",
+          "candidateFingerprint",
+          "summary",
+          "evidenceRefs",
+          "startedAt",
+          "submittedAt",
+          "fixTaskId"
+        ]
+      },
+      "ProjectDefectRetest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "fixId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "candidateFingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "outcome": {
+            "enum": [
+              "pass",
+              "fail",
+              "blocked"
+            ]
+          },
+          "evidenceRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectDefectEvidence"
+            },
+            "maxItems": 50,
+            "minItems": 1
+          },
+          "validationScope": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "fixId",
+          "candidateFingerprint",
+          "outcome",
+          "evidenceRefs",
+          "validationScope",
+          "reason",
+          "at"
+        ]
+      },
+      "ProjectDefectSnapshot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "severity": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "reproduction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "actual": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "criterion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "environment": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "sourceVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "taskId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "runId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "releaseId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidenceRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectDefectEvidence"
+            },
+            "maxItems": 50,
+            "minItems": 0
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "ownerId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "enum": [
+              "open",
+              "in_progress",
+              "awaiting_retest",
+              "closed"
+            ]
+          },
+          "fixGeneration": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fixTaskId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currentFix": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProjectDefectFix"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "latestRetest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProjectDefectRetest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "previousHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "revisionReason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "independentAcceptance": {
+            "const": false
+          },
+          "taskSnapshot": {
+            "$ref": "#/components/schemas/ProjectDefectTaskBinding"
+          },
+          "runSnapshot": {
+            "$ref": "#/components/schemas/ProjectDefectRunBinding"
+          },
+          "releaseSnapshot": {
+            "$ref": "#/components/schemas/ProjectDefectReleaseBinding"
+          }
+        },
+        "required": [
+          "title",
+          "severity",
+          "reproduction",
+          "expected",
+          "actual",
+          "criterion",
+          "environment",
+          "sourceVersion",
+          "taskId",
+          "runId",
+          "releaseId",
+          "evidenceRefs",
+          "id",
+          "projectId",
+          "ownerId",
+          "scope",
+          "revision",
+          "status",
+          "fixGeneration",
+          "fixTaskId",
+          "currentFix",
+          "latestRetest",
+          "createdAt",
+          "updatedAt",
+          "previousHash",
+          "hash",
+          "revisionReason",
+          "independentAcceptance"
+        ]
+      },
+      "ProjectDefectCollection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectDefectSnapshot"
+            },
+            "maxItems": 100,
+            "minItems": 0
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "nextOffset": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit",
+          "nextOffset"
+        ]
+      },
+      "ProjectDefectDetail": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "defect": {
+            "$ref": "#/components/schemas/ProjectDefectSnapshot"
+          },
+          "history": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProjectDefectSnapshot"
+                },
+                "maxItems": 100,
+                "minItems": 0
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "nextOffset": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "items",
+              "total",
+              "offset",
+              "limit",
+              "nextOffset"
+            ]
+          }
+        },
+        "required": [
+          "defect",
+          "history"
+        ]
+      },
+      "ProjectReleaseCollection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Release"
+            },
+            "maxItems": 100,
+            "minItems": 0
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "nextOffset": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "readOnly": {
+            "const": true
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit",
+          "nextOffset",
+          "readOnly"
+        ]
+      },
+      "ProjectAcceptanceOverview": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "project": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              },
+              "scope": {
+                "$ref": "#/components/schemas/Scope"
+              },
+              "status": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "scope",
+              "status"
+            ]
+          },
+          "classification": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "manualAcceptance": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "state": {
+                    "const": "human_attestation_only"
+                  },
+                  "independentAcceptance": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "state",
+                  "independentAcceptance"
+                ]
+              },
+              "tasks": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 300
+                        },
+                        "status": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "revision": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "acceptanceOutcome": {
+                          "anyOf": [
+                            {
+                              "enum": [
+                                "pass",
+                                "fail"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "verification": {
+                          "enum": [
+                            "human_attestation",
+                            "declared_external",
+                            "unknown"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "status",
+                        "revision",
+                        "acceptanceOutcome",
+                        "verification"
+                      ]
+                    },
+                    "maxItems": 100000,
+                    "minItems": 0
+                  },
+                  "total": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "items",
+                  "total"
+                ]
+              },
+              "localDefects": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "total": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "open": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "inProgress": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "awaitingRetest": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "closed": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "total",
+                  "open",
+                  "inProgress",
+                  "awaitingRetest",
+                  "closed"
+                ]
+              },
+              "unknownMapping": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "state": {
+                    "const": "unknown"
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  }
+                },
+                "required": [
+                  "state",
+                  "note"
+                ]
+              }
+            },
+            "required": [
+              "manualAcceptance",
+              "tasks",
+              "localDefects",
+              "unknownMapping"
+            ]
+          },
+          "readOnly": {
+            "const": true
+          },
+          "doesNotExecute": {
+            "const": true
+          }
+        },
+        "required": [
+          "project",
+          "classification",
+          "readOnly",
+          "doesNotExecute"
         ]
       }
     },

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="本机已实测通过广州22跳板访问两节点；直接公网2212/2216仍不可用。">
-  <meta name="jarvis-source-sha256" content="273c757619e85035b6755c9ce30d8707bcc5326dfb21564beeb24985ebdae935">
-  <title>112与116公网SSH连接说明</title>
+  <meta name="description" content="112通道已独立直连核通；116仍阻塞，实际密码输入尚未验收。">
+  <meta name="jarvis-source-sha256" content="4aba8ba18c46801f5fc13ab252fc40f33fa0d37fabed8593725e471d7463071e">
+  <title>112与116域名SSH连接说明（密码直连方式与验收边界）</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
     :root{color-scheme:light;--bg:#f4f6f4;--paper:#fff;--ink:#172722;--muted:#53665d;--line:#dce5df;--accent:#176f53;--soft:#eaf5ee;--code:#f0f4f1;--nav:#f9fbf9;--shadow:0 10px 32px #15372909}
@@ -30,7 +30,7 @@
 <body>
   <a class="skip" href="#main-content">跳至正文</a>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">112/116 SSH入口</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">密码直连纠正</span></div>
     <div class="tools">
       <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
       <a class="tool source-tool" href="112%E4%B8%8E116%E5%85%AC%E7%BD%91SSH%E8%BF%9E%E6%8E%A5%E8%AF%B4%E6%98%8E.md">Markdown 源文档</a>
@@ -42,11 +42,14 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 4 章 · Ctrl / ⌘ + K 查找</div>
-    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">在这台电脑怎么连接</a>
-<a class="toc-link level-2" href="#section-2" data-parent="2">当前实际路线与配置</a>
-<a class="toc-link level-2" href="#section-3" data-parent="3">服务范围与撤销</a>
-<a class="toc-link level-2" href="#section-4" data-parent="4">实际验证与保留边界</a></nav>
+    <div class="search-status" id="search-status" aria-live="polite">共 7 章 · Ctrl / ⌘ + K 查找</div>
+    <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">当前使用方式与完成边界</a>
+<a class="toc-link level-2" href="#section-2" data-parent="2">本次范围</a>
+<a class="toc-link level-2" href="#section-3" data-parent="3">历史：352跳板方案原文（不作为当前直连要求的验收）</a>
+<a class="toc-link level-2" href="#section-4" data-parent="4">在这台电脑怎么连接</a>
+<a class="toc-link level-2" href="#section-5" data-parent="5">当前实际路线与配置</a>
+<a class="toc-link level-2" href="#section-6" data-parent="6">服务范围与撤销</a>
+<a class="toc-link level-2" href="#section-7" data-parent="7">实际验证与保留边界</a></nav>
     <div class="sidebar-foot">更新于 2026-10-19<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
@@ -54,23 +57,71 @@
   <main class="layout" id="main-content" aria-labelledby="document-title">
     <div class="document">
       <header class="hero">
-        <p class="eyebrow">远程连接 / 自动跳板 / 密钥登录</p>
-        <h1 id="document-title">112与116公网SSH连接说明</h1>
-        <p class="subtitle">本机已实测通过广州22跳板访问两节点；直接公网2212/2216仍不可用。</p>
+        <p class="eyebrow">域名 / 用户名密码 / 无跳板依赖</p>
+        <h1 id="document-title">112与116域名SSH连接说明（密码直连方式与验收边界）</h1>
+        <p class="subtitle">112通道已独立直连核通；116仍阻塞，实际密码输入尚未验收。</p>
         <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-19</span><span>与 Markdown 同源生成</span></div>
-        <div class="stats"><div class="stat"><strong>2台</strong><span>实际登录身份核对通过</span></div><div class="stat"><strong>自动跳板</strong><span>命令只需域名别名</span></div><div class="stat"><strong>保持</strong><span>原LAN SSH、业务和FRPC</span></div></div>
+        <div class="stats"><div class="stat"><strong>112</strong><span>29527直连通道已核</span></div><div class="stat"><strong>116</strong><span>29528外部仍超时</span></div><div class="stat"><strong>待验</strong><span>两端真实密码认证</span></div></div>
       </header>
       <article class="article">
-        <div class="intro"><h2 id="section-1" tabindex="-1">在这台电脑怎么连接</h2>
+        <div class="intro"><h2 id="section-1" tabindex="-1">当前使用方式与完成边界</h2>
+<p>用户要求其他机器只填域名、端口、用户名及密码，不依赖跳板或客户端密钥。352所选自动跳板方案没有满足这一使用方式；下方352原文完整保留作历史，不再是本次直连需求的当前指南。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可横向滚动的数据表"><table>
+<thead>
+<tr>
+<th>目标</th>
+<th>域名</th>
+<th>端口</th>
+<th>用户</th>
+<th>当前实际状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>112</td>
+<td>ssh-112.ikvein.com</td>
+<td>29527</td>
+<td>superopen</td>
+<td>无跳板公钥直连已核；服务允许password，未实际提交密码验收</td>
+</tr>
+<tr>
+<td>116</td>
+<td>ssh-116.ikvein.com</td>
+<td>29528</td>
+<td>superopen</td>
+<td>服务端已准备，独立外网仍超时；尚不可称直连可用</td>
+</tr>
+</tbody></table></div>
+<p>在没有352旧profile的其他机器上，112的连接命令为（实际密码认证仍待本人验证）：</p>
+<pre><code>ssh -p 29527 superopen@ssh-112.ikvein.com
+</code></pre>
+<p>连接后由本人在SSH终端输入superopen既有密码。图形SSH客户端按上表填写，认证选密码、跳板关闭，不要求配置客户端私钥。本轮没有读取、改变密码或hash，也没有通过自动脚本提交密码；“password已公布”不等于真实密码登录已通过。</p>
+<p>116待29528链路打通后再使用同类方式；目前不要反复输入密码来排查一个尚未连通的TCP端口。已请求用户核云侧TCP29528放行，尚无答复；超时的具体云侧原因未独立证明。</p>
+<p>已装352旧profile的本机仍可能把域名别名改走127.0.0.1/ProxyJump，不能把该路径冒作直连；如需在本机绕开旧profile，可用下面命令；它只给出用法，本次未提交密码实测：</p>
+<pre><code>ssh -F none -o ProxyJump=none -o PubkeyAuthentication=no -o PreferredAuthentications=password -p 29527 superopen@ssh-112.ikvein.com
+</code></pre>
+<p>本说明没有改写既有本机profile；不能把旧别名自动跳板当成直连。</p>
+<p>112服务器身份已由日本独立视点核对为 SHA256:mblMezmNEMdlO1dyohXFwwlKSwceT4k7Rje4120RZ5c。116新外部链路身份待实际核验，不能猜值或关闭主机校验。</p>
+</div>
+        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
+        <section class="doc-section" data-section="1"><h2 id="section-2" tabindex="-1">本次范围</h2>
+<p>仅更新上轮新增SSH服务的password/authentication-method设置，并追加29527/29528代理；原公钥和2212/2216代理保留。由于共用loopback2222，旧2212/2216也将允许password，不再沿用352“仅密钥”的当前措辞。root仍禁用，仅superopen可登录，kbd-interactive关闭。只重启两项上轮新增服务，原LAN22、平台和原FRPC/FRPS不重启。</p>
+<p>112仍R55，101冷备与软件工厂保持，自动跟进仍暂停。本次说明与归档未新增现场连接或密码读取；服务开放密码不代表全部使用方式已经验收。</p>
+<p><a href="../artifacts/ssh-domain-access-20261019/password-direct-current-validation.json">当前有限验证</a> · <a href="../artifacts/ssh-domain-access-20261019/password-direct-independent-source-review.json">配置独审</a>。</p>
+<p><a href="../artifacts/ssh-domain-access-20261019/password-direct-decision-change-receipt.json">重要决定变更回执</a>：新决定已实施，独立验收false；旧决定追加superseded且原版完整保留。</p>
+</section>
+<section class="doc-section" data-section="2"><h2 id="section-3" tabindex="-1">历史：352跳板方案原文（不作为当前直连要求的验收）</h2>
+<hr>
+<h1>112与116公网SSH连接说明</h1>
+<!-- jarvis-doc-meta {"version":"112/116 SSH入口","date":"2026-10-19","eyebrow":"远程连接 / 自动跳板 / 密钥登录","subtitle":"本机已实测通过广州22跳板访问两节点；直接公网2212/2216仍不可用。","stats":[{"value":"2台","label":"实际登录身份核对通过"},{"value":"自动跳板","label":"命令只需域名别名"},{"value":"保持","label":"原LAN SSH、业务和FRPC"}]} --></section>
+<section class="doc-section" data-section="3"><h2 id="section-4" tabindex="-1">在这台电脑怎么连接</h2>
 <p>本机SSH配置已安装，可直接使用：</p>
 <pre><code>ssh ssh-112.ikvein.com
 ssh ssh-116.ikvein.com
 </code></pre>
 <p>也可用别名jarvis-112-remote、jarvis-116-remote。两端用户均为superopen，实际登录均为uid1000；112主机名superopen-ProDesk-i7，116为superopen-ProDesk-400-i5-6400。</p>
 <p><strong>普通直连域名并加-p 2212或-p 2216目前不能使用。</strong> 本机及日本独立探测均超时；网关本机端口可达。上游过滤的具体原因未证实，不能断言就是云安全组。</p>
-</div>
-        <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
-        <section class="doc-section" data-section="1"><h2 id="section-2" tabindex="-1">当前实际路线与配置</h2>
+</section>
+<section class="doc-section" data-section="4"><h2 id="section-5" tabindex="-1">当前实际路线与配置</h2>
 <p>上述命令自动读取本机 ~/.ssh/config 中前置的Include，加载 ~/.ssh/jarvis-home-remote.conf，经现有广州SSH跳板<a href="mailto:jmp-superopen@8.163.127.192">jmp-superopen@8.163.127.192</a>:22，再从网关127.0.0.1:2212（112）或2216（116）进入FRP，最终到各目标127.0.0.1:2222的新密钥专用sshd。</p>
 <p>它们是本机SSH Host别名，不是保证任何设备都能裸连的公网端口。服务器主机身份固定在 ~/.ssh/jarvis-home-known-hosts，并启用严格主机校验；不能用关闭校验来代替这套绑定。</p>
 <p>三项客户端私钥身份均只留本机：</p>
@@ -81,7 +132,7 @@ ssh ssh-116.ikvein.com
 </ul>
 <p>其他设备需具备这三项已授权密钥及等价profile/主机指纹配置，或另行登记该设备的新公钥。私钥正文不发聊天、不进Git，不包含在本文交付中。原 ~/.ssh/config 的完整旧字节保留在新增Include之后。</p>
 </section>
-<section class="doc-section" data-section="2"><h2 id="section-3" tabindex="-1">服务范围与撤销</h2>
+<section class="doc-section" data-section="5"><h2 id="section-6" tabindex="-1">服务范围与撤销</h2>
 <p>112、116各新增且启用了jarvis-ssh-public.service与jarvis-ssh-tunnel.service，配置/程序分别在 /etc/jarvis-ssh-access、/opt/jarvis-ssh-access。新sshd仅监听loopback2222，禁止root、密码和交互式口令，只接受superopen公钥。</p>
 <p>原LAN22、原业务、既有FRPC的配置指纹/PID保持；广州FRPS、nginx、SSH的PID及FRPS配置保持。没有修改云防火墙或FRPS监听规则。</p>
 <p>如维护者需要撤销本次入口，仅停用两项新服务：</p>
@@ -89,7 +140,7 @@ ssh ssh-116.ikvein.com
 </code></pre>
 <p>这只是回退方法，本次没有执行撤销，也不需为此重启原SSH或业务。112仍为R55；101冷备、软件工厂和暂停的自动跟进不变。本次是SSH接入配置，不是平台应用发布。</p>
 </section>
-<section class="doc-section" data-section="3"><h2 id="section-4" tabindex="-1">实际验证与保留边界</h2>
+<section class="doc-section" data-section="6"><h2 id="section-7" tabindex="-1">实际验证与保留边界</h2>
 <p>两节点均经当前跳板profile完成真实公钥登录，用户与主机名核对通过；原服务保持分别留证。116首轮因FRP配置省略auth.method而在任何写入前被拒，后继v2只兼容文档规定的默认token语义，原拒绝与审查保留。</p>
 <p><a href="../artifacts/ssh-domain-access-20261019/final-server-and-public-login-validation.json">服务与真实登录终态</a> · <a href="../artifacts/ssh-domain-access-20261019/client-profile-installation.json">本机profile安装回执</a> · <a href="../artifacts/ssh-domain-access-20261019/external-port-probe.json">独立外网端口探测</a>。</p>
 </section>

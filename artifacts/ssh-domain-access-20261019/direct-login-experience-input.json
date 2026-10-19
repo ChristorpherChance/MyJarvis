@@ -1,0 +1,19 @@
+{
+  "commandId": "1def283b-c339-4bd2-8a96-1d7d9115c74c",
+  "scope": "personal",
+  "expectedVersion": 0,
+  "payload": {
+    "kind": "lesson",
+    "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+    "title": "远程接入按用户实际客户端与认证方式验收",
+    "summary": "本机预配跳板可用不等于其他机器能以域名和口令直连；端口、目标身份与认证方式分别验证。",
+    "conditions": "用户需要从其他机器远程连接家中服务器，既有管理通道采用预配密钥或跳板。",
+    "content": "先明确客户端是否允许预配置以及用户要使用的登录方式。若要求普通SSH客户端以域名、端口和既有普通账号口令接入，应分别记录公网TCP可达、目标主机指纹、服务端认证方式与真实凭据登录。公钥直连成功和服务宣告密码认证不能写成实际密码登录通过；无需读取或重设用户密码。主机防火墙放行和监听存在也不能证明云侧或其他上游可达，外部超时只写实际现象，查明原因后再修复。本次112直连有证，116仍等待上游排查；只形成经验候选，未经跨场景验证或用户复查，不发布Skill。",
+    "source": "artifacts/ssh-domain-access-20261019/direct-login-current-validation.json；artifacts/ssh-domain-access-20261019/direct-login-network-cause-clarification.json",
+    "tags": [
+      "远程接入",
+      "需求纠错",
+      "验收边界"
+    ]
+  }
+}

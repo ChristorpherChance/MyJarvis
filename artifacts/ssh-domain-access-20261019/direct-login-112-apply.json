@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-19T14:11:02.199Z",
+  "endedAt": "2026-10-19T14:11:02.714Z",
+  "node": "112",
+  "exitCode": 0,
+  "elapsedSeconds": 0.5102654,
+  "sourceSHA256": "0cac8d60b76cc67d2fdf49249545e34a01c7b7ad9240e8120953068d8d4972cb",
+  "transportSHA256": "1c48f7b9c04ee08678fd7cd678e55201287ce9f961e3de135af3d2dd1fc91334",
+  "stderrBytes": 0,
+  "result": {
+    "operationId": "6bd55b5f-9fe5-45fe-9bb6-eb63f3f06e9f",
+    "node": "112",
+    "domain": "ssh-112.ikvein.com",
+    "remotePort": 29527,
+    "installed": true,
+    "passwordAuthentication": true,
+    "existingPasswordStatus": "P",
+    "passwordReadOrChanged": false,
+    "publicKeyStillAllowed": true,
+    "rootLoginAllowed": false,
+    "oldProxyPreserved": true,
+    "originalUnitsUnchanged": true,
+    "newUnits": {
+      "jarvis-ssh-public.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "659720",
+        "NRestarts": "0"
+      },
+      "jarvis-ssh-tunnel.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "enabled",
+        "MainPID": "659722",
+        "NRestarts": "0"
+      }
+    },
+    "configHashes": {
+      "sshd_config": "fa44dd6ba22324b3d3fa7a60394f7f28648c70bcbc453d5f41703d9961caabf1",
+      "frpc.toml": "b55f6144a6d462c165a585dadd96bb13bdcc1db3e75c2db308904141411888d4"
+    },
+    "actualExternalDirectLoginVerified": false,
+    "actualPasswordLoginVerified": false
+  }
+}

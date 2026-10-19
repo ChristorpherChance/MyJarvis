@@ -1,0 +1,59 @@
+{
+  "id": "JARVIS-20261019-112-116-PASSWORD-DIRECT-CORRECTION",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T14:20:06.184389Z",
+  "title": "纠正为域名密码直连：112通道已核，116与真实密码验收仍待完成",
+  "objective": "按用户澄清，让其他机器仅用域名、端口、用户名和既有密码连接，不依赖跳板或客户端私钥；保留352既有实现和误读纠正历史。",
+  "changes": [
+    "112/116仅更新上轮新增sshd配置为允许password、AuthenticationMethods any，仍禁root、仅superopen、禁交互式口令；原公钥保留。",
+    "独立FRPC新增29527（112）/29528（116）直连代理，原2212/2216代理全文前缀保留；只重启上轮新SSH/tunnel两个服务。"
+  ],
+  "decisions": [
+    "352自动跳板和密钥方案虽曾登录成功，却不符合用户真正要的任意机器域名+用户名密码使用方式；以新要求纠正当前指南，不删除352历史。",
+    "不读取或改变superopen密码及hash，不把账户P状态或服务器advertise password冒实际密码登录通过。",
+    "116公网29528仍超时，已请求用户核放行；云侧具体过滤原因未独立定位，未假称已改云安全组或整项完成。"
+  ],
+  "facts": [
+    "112 ssh-112.ikvein.com:29527已从本机无ProxyJump直接公钥登录到正确主机；日本独立TCP/banner与Ed25519身份核同。",
+    "服务器已公布password认证方式，BatchMode没有提交密码；两端实际密码认证均尚未验收。",
+    "116服务端已准备，独立日本29528仍timeout；本地原密码保持、两账户passwd状态P，不代表密码输入已测试。",
+    "广州仅新增29527/29528按IP限速UFW项，原FRPS与原LAN/业务/FRPC不重启；未找到可用云SG权限入口且未收到用户放行答复。",
+    "112仍R55，101冷备/工厂/十分钟暂停保持；内部费用与账单未知分列，不将未知填零。",
+    "重要决定已通过change关联新增346c2ed8-76ed-4e23-8b20-a50cd0e98238 revision1 implemented且独立验收false；原e08fe424决定追加revision2 superseded，原revision1全文保留，notes和工厂未改。",
+    "本次归档不新增供应商模型或现场操作；内部Token、金额与账单未知，不写零费用。",
+    "后继真实范围回读确认广州FRPS/nginx/SSH PID与原FRPS配置保持，两个网关listener已存在；116外部仍超时。原报告cloud-side措辞已追加澄清，具体上游原因未知，待用户检查/放行云侧规则后仍须重验，不保证单改一条规则必通。"
+  ],
+  "verification": [
+    "仅按保存回执区分112公钥直连通过、password已开放但未提交、116外部不通三件事实。",
+    "非作者源码审确认只改两份新增配置、追加代理并保原前缀及窄回退；新密码策略因共用2222也适用于旧2212/2216，不继续称它们仅密钥。",
+    "实际POST及新旧决定GET双读回已保存；未把实施状态冒作两台密码登录全部通过。"
+  ],
+  "pending": [
+    "116公网29528仍需链路放通和独立身份核验；已请求用户核放行但无答复，具体过滤原因未独立定位。",
+    "两端实际密码登录仍待本人在SSH终端验证；密码/hash未读未改，不能把公布password或passwd状态P当作密码登录通过。",
+    "本cut后文档Git与112文档同步另行留实际回执；101冷备、工厂与暂停保持，不新增应用发布。"
+  ],
+  "lessons": [
+    "可连接的技术方案不等于满足用户的使用约束；跨设备是否需要跳板、密钥与额外配置须从原需求明确。",
+    "通道可达、服务公布认证方式和真实密码认证是不同验收层次。"
+  ],
+  "state": {
+    "implementation": "partial",
+    "verification": "partial",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/ssh-domain-access-20261019/direct-login-current-validation.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-independent-source-review.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-112-apply.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-116-apply.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-decision-change-receipt.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-decision-change-readback.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-final-scope.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-network-cause-clarification.json",
+    "artifacts/ssh-domain-access-20261019/direct-login-evidence-pins-map.json"
+  ]
+}

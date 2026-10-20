@@ -1,5 +1,6 @@
 import {Button,Panel,Tag,type Props} from './common';
 import {baselineStatus,baselineTaskRoute,type BaselineSnapshot,type BaselineUsage} from './project-baseline-view';
+import {Icon} from '../../icons';
 
 const plan='/api/v1/project-autonomy/acceptance-plan';
 const money=(value:number|null|undefined)=>typeof value==='number'&&Number.isFinite(value)&&value>=0?`USD ${value.toFixed(4)}`:'未报告';
@@ -7,7 +8,7 @@ function Usage({usage}:{usage:BaselineUsage}){return <p className="project-auton
 
 export default function ProjectBaselinePanel({snapshot,navigate}:{snapshot:BaselineSnapshot;navigate:Props['navigate']}){
  const {main,latest}=snapshot;
- return <Panel title="现有成果验收" actions={<a className="project-baseline-plan" href={plan} target="_blank" rel="noreferrer">新验收计划 ↗</a>}>
+ return <Panel title="现有成果验收" actions={<a className="project-baseline-plan" href={plan} target="_blank" rel="noreferrer">新验收计划 <Icon name="external" size={14}/></a>}>
   <p className="project-autonomy-caption">先检查现有工厂，证实问题后再修。主线和冻结候选分别留证；固定检查结果不计入完整目标独立验收。</p>
   <div className="project-baseline-sources">
    <article className="project-baseline-source"><header><h4>main 现有成果 · 主验</h4>{main&&<Tag tone={baselineStatus(main,false).tone}>{baselineStatus(main,false).label}</Tag>}</header>

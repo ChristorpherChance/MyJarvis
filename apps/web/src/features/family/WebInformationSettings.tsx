@@ -1,3 +1,4 @@
+import {Icon} from '../../icons';
 import {useEffect,useRef,useState,type FormEvent} from 'react';
 
 type Feed={id:string;name:string;url:string;language:'zh'|'en'|'other';category:'general'|'international'|'science'|'health'|'technology'|'business';enabled:boolean};
@@ -16,7 +17,7 @@ function editable(value:Settings):Settings {
 function errorText(error:unknown){return error instanceof RequestError&&error.status===409?error.message+'；输入已保留，请重新加载后核对。':error instanceof Error?error.message:'操作未完成';}
 function time(value:string|null|undefined){if(!value)return '未提供';const at=new Date(value);return Number.isNaN(at.getTime())?'未提供':at.toLocaleString('zh-CN',{hour12:false});}
 function sourceUrl(value:string){try{const u=new URL(value);return u.protocol==='https:'||u.protocol==='http:'?u.href:null;}catch{return null;}}
-function SourceTitle({title,url}:{title:string;url:string}){const safe=sourceUrl(url);return safe?<a href={safe} target="_blank" rel="noopener noreferrer">{title} ↗</a>:<strong>{title}</strong>;}
+function SourceTitle({title,url}:{title:string;url:string}){const safe=sourceUrl(url);return safe?<a href={safe} target="_blank" rel="noopener noreferrer">{title} <Icon name="external" size={14}/></a>:<strong>{title}</strong>;}
 const categories=[['general','综合'],['international','国际'],['science','科学'],['health','健康'],['technology','科技'],['business','商业']] as const;
 
 export default function WebInformationSettings(){

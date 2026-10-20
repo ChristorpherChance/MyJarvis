@@ -1,4 +1,7 @@
 /* Keep navigation hierarchy consistent across the desktop sidebar and mobile drawer. */
+.demo-app .demo-sidebar .demo-nav-item{min-height:42px}
+.demo-sidebar svg[data-icon]{display:block}
+@media(max-width:700px){.demo-app.mobile-nav-open .demo-sidebar .demo-nav-item{min-height:46px}}
 .demo-app .demo-sidebar .nav-group-head{gap:11px;border:1px solid transparent;min-height:42px;padding:8px 12px;font-size:13px;text-align:left;white-space:nowrap}
 .demo-app .nav-group-head b{font-weight:500;letter-spacing:.05em}
 .demo-app .nav-group-head .nav-group-icon{display:grid;place-items:center;width:19px;flex-shrink:0;color:var(--accent);font-size:16px;opacity:.65}

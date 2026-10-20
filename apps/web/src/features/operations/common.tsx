@@ -2,6 +2,7 @@ import { useRef, useState, type ReactNode } from 'react';
 import { Button, Dialog, Empty, Panel, Tag } from '../../ui';
 import type { DemoData, DemoRecord } from '../../demo/types';
 import type { V1Record } from '../../v1-client';
+import { Icon, type IconName } from '../../icons';
 export { Button, Dialog, Empty, Panel, Tag };
 export type RecordItem = DemoRecord;
 export type Act = (action: string, payload?: Record<string, unknown>) => void | Promise<unknown>;
@@ -59,14 +60,16 @@ export function Toolbar({ search, setSearch, children, placeholder = '搜索标�
     children?: ReactNode;
     placeholder?: string;
 }) { return <div className="op-toolbar"><div className="op-actions">{children}</div><input aria-label={placeholder} placeholder={placeholder} value={search} onChange={e => setSearch(e.target.value)}/></div>; }
+export type MetricIcon = IconName;
 export function Metrics({ items }: {
     items: {
+        icon: MetricIcon;
         label: string;
         value: ReactNode;
         note?: string;
         percent?: number;
     }[];
-}) { return <div className="op-metrics">{items.map((m, i) => <div key={m.label} className="op-metric"><div className={'op-metric-mark op-mark-' + i}>{m.percent !== undefined ? <svg viewBox="0 0 44 44" aria-label={`${m.label} ${Math.round(m.percent)}%`}><circle cx="22" cy="22" r="17" fill="none" stroke="var(--line)" strokeWidth="4"/><circle cx="22" cy="22" r="17" fill="none" stroke="currentColor" strokeWidth="4" pathLength="100" strokeDasharray={`${Math.max(0, Math.min(100, m.percent))} 100`} transform="rotate(-90 22 22)"/></svg> : <span>{['◈', '◎', '◇', '▥'][i % 4]}</span>}</div><div><span>{m.label}</span><strong>{m.value}</strong>{m.note && <small>{m.note}</small>}</div></div>)}</div>; }
+}) { return <div className="op-metrics">{items.map((m, i) => <div key={m.label} className="op-metric"><div className={'op-metric-mark op-mark-' + i}>{m.percent !== undefined ? <svg viewBox="0 0 44 44" aria-label={`${m.label} ${Math.round(m.percent)}%`}><circle cx="22" cy="22" r="17" fill="none" stroke="var(--line)" strokeWidth="4"/><circle cx="22" cy="22" r="17" fill="none" stroke="currentColor" strokeWidth="4" pathLength="100" strokeDasharray={`${Math.max(0, Math.min(100, m.percent))} 100`} transform="rotate(-90 22 22)"/></svg> : <Icon name={m.icon} size={24} />}</div><div><span>{m.label}</span><strong>{m.value}</strong>{m.note && <small>{m.note}</small>}</div></div>)}</div>; }
 export function Progress({ value, label }: {
     value: number;
     label?: string;

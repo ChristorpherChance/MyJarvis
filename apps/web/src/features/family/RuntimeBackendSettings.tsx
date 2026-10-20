@@ -1,3 +1,4 @@
+import {Icon} from '../../icons';
 import {useEffect,useState} from 'react';
 import RuntimeVoiceSettings from './RuntimeVoiceSettings';
 import WebInformationSettings from './WebInformationSettings';
@@ -55,6 +56,6 @@ function GovernanceSettings(){
 }
 
 export function RuntimeBackendSettings({profiles,onChanged,initialTab}:{profiles?:{id:string;name:string}[];onChanged?:()=>void;initialTab?:string}={}){
- const [tab,setTab]=useState<'voice'|'knowledge'|'web'|'execution'|'governance'>(['voice','knowledge','web','execution','governance'].includes(initialTab||'')?initialTab as 'voice'|'knowledge'|'web'|'execution'|'governance':'voice');return <section className="runtime-backend"><nav className="runtime-tabs" aria-label="运行引擎分类">{[['voice','语音身份'],['knowledge','知识解析'],['web','联网资料'],['execution','节点执行'],['governance','费用治理']].map(([id,title])=><button key={id} aria-selected={tab===id} onClick={()=>setTab(id as typeof tab)}>{title}</button>)}<a href="/?mode=room" target="_blank" rel="noreferrer">房间入口 ↗</a></nav>{tab==='voice'?<RuntimeVoiceSettings profiles={profiles} onChanged={onChanged}/>:tab==='knowledge'?<KnowledgeSettings/>:tab==='web'?<WebInformationSettings/>:tab==='execution'?<ExecutionSettings/>:<GovernanceSettings/>}</section>;
+ const [tab,setTab]=useState<'voice'|'knowledge'|'web'|'execution'|'governance'>(['voice','knowledge','web','execution','governance'].includes(initialTab||'')?initialTab as 'voice'|'knowledge'|'web'|'execution'|'governance':'voice');return <section className="runtime-backend"><nav className="runtime-tabs" aria-label="运行引擎分类">{[['voice','语音身份'],['knowledge','知识解析'],['web','联网资料'],['execution','节点执行'],['governance','费用治理']].map(([id,title])=><button key={id} aria-selected={tab===id} onClick={()=>setTab(id as typeof tab)}>{title}</button>)}<a href="/?mode=room" target="_blank" rel="noreferrer">房间入口 <Icon name="external" size={14}/></a></nav>{tab==='voice'?<RuntimeVoiceSettings profiles={profiles} onChanged={onChanged}/>:tab==='knowledge'?<KnowledgeSettings/>:tab==='web'?<WebInformationSettings/>:tab==='execution'?<ExecutionSettings/>:<GovernanceSettings/>}</section>;
 }
 export default RuntimeBackendSettings;

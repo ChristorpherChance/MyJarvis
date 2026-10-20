@@ -1,0 +1,37 @@
+{
+  "schema": "ssh-120-59527-installer-static-review-v2",
+  "observedAt": "2026-10-20T01:09:57.128077+00:00",
+  "reviewedSource": "/home/superopen/.local/share/jarvis-development/ssh-120-59527-20261020/scripts/ssh-access/install-nas120-tunnel.py",
+  "sourceSha256": "9c9066d1659e840e9757ae4220ab01b9e9a06ae9018775f02cf8f5fe9b2b88fb",
+  "reviewType": "independent static source review; source parsed without execution",
+  "status": "passed",
+  "blockingFindings": [],
+  "priorReview": "artifacts/ssh-120-59527/public-review.json",
+  "resolvedFindings": [
+    {
+      "previousPriority": "P1",
+      "resolution": "Execute holds a target-specific nonblocking root-owned O_NOFOLLOW flock. Failure cleanup requires successful exclusive creation and an activation attempt, and then verifies no symlink, dev/inode identity, complete unit text and loaded FragmentPath before stopping."
+    },
+    {
+      "previousPriority": "P2",
+      "resolution": "Target lexists checks reject dangling links, and LoadState=not-found is required both at preflight and immediately before persistent writes."
+    }
+  ],
+  "retainedChecks": [
+    "Secret remains in memory/root-only configuration and subprocess output is captured, with only sanitized failures reported.",
+    "Generated FRPC configuration adds exactly one target proxy and a distinct FRPC user.",
+    "DynamicUser uses LoadCredential rather than an argv secret or a world-readable token file.",
+    "Existing service PIDs, states and protected configuration hashes remain compared before and after activation.",
+    "Default preparation does not mutate persistent target configuration or start/stop services."
+  ],
+  "verificationBoundary": [
+    "Static review does not execute the installer or independently certify runtime activation.",
+    "A service active for two seconds does not establish public forwarding; independent 59527 strict host-key comparison remains necessary.",
+    "The execution lock serializes cooperating invocations; it does not constrain unrelated privileged administrative tools."
+  ],
+  "productionExecuted": false,
+  "sourceModified": false,
+  "privateCredentialsInspected": false,
+  "serviceMutationsPerformed": false,
+  "syntaxParse": "passed"
+}

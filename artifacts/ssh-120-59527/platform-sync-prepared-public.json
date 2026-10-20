@@ -1,0 +1,279 @@
+{
+  "schema": "jarvis-nas120-ssh-platform-sync-prepared-v1",
+  "status": "prepared",
+  "platformBuild": "20261020-cc-switch-center-r56",
+  "applicationReleaseChanged": false,
+  "sourceSHA256": "9c9066d1659e840e9757ae4220ab01b9e9a06ae9018775f02cf8f5fe9b2b88fb",
+  "projectMatch": "exact name / personal / owner server-admin; 0 or >1 skips without guessing",
+  "session": "jarvis account; 120s in-memory token; finally delete only own hash",
+  "plannedActions": [
+    "selected decision then CAS append implementation; independentAcceptance false",
+    "experience capture inbox and verified false",
+    "do not write project environment/notes; preserve full existing content without truncation or schema expansion"
+  ],
+  "idempotency": "fixed marker plus deterministic command IDs; GET existing marker before writes; no automatic retries",
+  "noModelCredentialReads": true,
+  "noProductCodeChanges": true,
+  "noDeployment": true,
+  "productionExecuted": false,
+  "refs": [
+    {
+      "reference": "artifacts/ssh-120-59527/install-public.json",
+      "sha256": "1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/gateway-public.json",
+      "sha256": "046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/dns-public.json",
+      "sha256": "c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/network-public.json",
+      "sha256": "fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/windows-public.json",
+      "sha256": "74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/lan-target-public.json",
+      "sha256": "2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/public-auth-snapshot.json",
+      "sha256": "d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/final-validation.json",
+      "sha256": "668a2d32648cb184d09ecd38e8eeefca2fee8cec0d095c71a3e9a0ed24735d8c",
+      "kind": "observation"
+    }
+  ],
+  "decisionTemplate": {
+    "commandId": "588338c1-85e8-4181-880e-4adb351d5054",
+    "expectedVersion": 0,
+    "changeOf": null,
+    "questionSummary": "[NAS120-SSH-59527-20261020] NAS120采用112独立SSH转发，沿用ssh-编号域名与原NAS认证边界",
+    "context": {
+      "observedAt": "2026-10-20T01:13:06.117Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": "9c9066d1659e840e9757ae4220ab01b9e9a06ae9018775f02cf8f5fe9b2b88fb",
+      "sourceVersion": "NAS120 SSH 59527 installer SHA256 9c9066d1659e840e9757ae4220ab01b9e9a06ae9018775f02cf8f5fe9b2b88fb / no application release / existing platform 20261020-cc-switch-center-r56",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [
+        "NAS120-SSH-59527",
+        "SSH-NUMBER-DOMAIN",
+        "PRESERVE-NAS-AND-AUTH"
+      ],
+      "constraints": [
+        "公网入口只转发NAS原SSH，不改QTS认证、密码或既有collector权限",
+        "既有112与广州业务、SSH、FRP配置及进程保护域保持",
+        "域名沿用权威DNS精确*.ikvein.com记录覆盖；技术连通和本人密码验收分别记录"
+      ],
+      "situation": "[NAS120-SSH-59527-20261020] 已上线 ssh-120.ikvein.com:59527，遵循用户偏好的 ssh-编号.ikvein.com 命名。\n权威DNS核对既有精确 *.ikvein.com 记录覆盖该主机；没有修改DNS，没有创建无效ssh-*前缀wildcard，没有新增HTTPS入口。\n112新增独立jarvis-nas120-ssh-tunnel.service，DynamicUser与systemd LoadCredential提供单代理FRPC，转发到192.168.10.120:22；公网SSH依赖112在线。广州仅新增LIMIT IN 59527/tcp。\nNAS沿用QTS原SSH、原密码和既有限制collector权限；112原7项服务及配置、广州原3项服务PID与FRPS配置均保持。\nWindows默认SSH客户端、日本及广州公网严格主机指纹比对通过：SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas。没有提交用户密码，普通交互/密码登录和用户本人验收仍待确认。\n112经公网59527沿用既有限制collector身份执行固定snapshot成功且签名/原peer绑定核对通过；原SSH客户端合法使用既有key完成固定snapshot，没有转移私钥。该结果不替代本人普通SSH登录验收。\n本记录是已发生操作的AI事实回顾，independentAcceptance=false；经验仅inbox未验证，不发布Skill。只同步决定和经验，不替换或截断项目既有notes/environment。"
+    },
+    "options": [
+      {
+        "id": "112-independent-tunnel",
+        "title": "112新增独立单代理FRPC转发到NAS原SSH",
+        "advantages": [
+          "沿用NAS原SSH与密码",
+          "无需在QTS新增常驻程序",
+          "DynamicUser和LoadCredential隔离新增转发"
+        ],
+        "disadvantages": [
+          "公网入口依赖112在线",
+          "仍需用户本人完成普通SSH密码登录验收"
+        ],
+        "impact": "112新增独立单代理FRPC转发到NAS原SSH",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "NAS120-SSH-59527",
+          "SSH-NUMBER-DOMAIN",
+          "PRESERVE-NAS-AND-AUTH"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "nas-native-frpc",
+        "title": "在NAS安装原生FRPC常驻转发",
+        "advantages": [
+          "公网转发可独立于112"
+        ],
+        "disadvantages": [
+          "需要新增NAS常驻程序与升级维护",
+          "现有需求不需要扩大QTS持久配置和权限影响"
+        ],
+        "impact": "在NAS安装原生FRPC常驻转发",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "NAS120-SSH-59527",
+          "SSH-NUMBER-DOMAIN",
+          "PRESERVE-NAS-AND-AUTH"
+        ],
+        "operationalImpact": 3
+      }
+    ],
+    "chosenId": "112-independent-tunnel",
+    "decisionRationale": "用户需要NAS120以ssh-编号域名和59527端口直接连接。已选并实施112独立转发，复用NAS原SSH和现有域名覆盖，避免无必要QTS常驻程序和升级影响；公网主机指纹与限制snapshot验证分别留证。此为已发生操作的真实回顾，未冒充事前记录或用户密码验收。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/ssh-120-59527/install-public.json",
+        "sha256": "1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/gateway-public.json",
+        "sha256": "046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/dns-public.json",
+        "sha256": "c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/network-public.json",
+        "sha256": "fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/windows-public.json",
+        "sha256": "74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/lan-target-public.json",
+        "sha256": "2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/public-auth-snapshot.json",
+        "sha256": "d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/ssh-120-59527/final-validation.json",
+        "sha256": "668a2d32648cb184d09ecd38e8eeefca2fee8cec0d095c71a3e9a0ed24735d8c",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "NAS120-SSH-59527",
+      "SSH-NUMBER-DOMAIN",
+      "PRESERVE-NAS-AND-AUTH"
+    ],
+    "rollbackPlan": {
+      "plan": "如新增59527入口出现可用性或安全问题，按新的有范围执行计划停止新增jarvis-nas120-ssh-tunnel.service并移除对应新增防火墙规则；保留NAS原SSH、既有collector、112及广州原业务和配置。无需更改DNS，未声明已经回退。",
+      "triggers": [
+        "新增入口指纹与原NAS pin不匹配",
+        "独立转发影响原保护域",
+        "用户要求撤销新增公网入口"
+      ],
+      "impact": "仅新增公网59527入口可能中断，NAS原LAN SSH及既有采集保持；既有证据和记录保留。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [],
+    "status": "selected",
+    "origin": "ai"
+  },
+  "implementationTemplate": {
+    "commandId": "6ea94c5d-d9e4-47ae-8f5f-9e688745f111",
+    "expectedVersion": 1,
+    "origin": "ai",
+    "reason": "依据已发生112独立转发、广州限速放行及公网/限制snapshot公开证据追加实施；保留选择版本，本人普通SSH/密码验收仍未完成。",
+    "actions": [
+      {
+        "summary": "[NAS120-SSH-59527-20261020] ssh-120.ikvein.com:59527已上线；Windows默认SSH、日本和广州strict hostkey通过，112经公网执行原限制snapshot及签名绑定核对通过。NAS原配置、密码和collector权限保持；未提交用户密码。",
+        "at": "2026-10-20T01:13:06.117Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/ssh-120-59527/install-public.json",
+            "sha256": "1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/gateway-public.json",
+            "sha256": "046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/dns-public.json",
+            "sha256": "c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/network-public.json",
+            "sha256": "fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/windows-public.json",
+            "sha256": "74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/lan-target-public.json",
+            "sha256": "2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/public-auth-snapshot.json",
+            "sha256": "d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/ssh-120-59527/final-validation.json",
+            "sha256": "668a2d32648cb184d09ecd38e8eeefca2fee8cec0d095c71a3e9a0ed24735d8c",
+            "kind": "observation"
+          }
+        ]
+      }
+    ]
+  },
+  "experienceTitle": "[NAS120-SSH-59527-20261020] NAS公网SSH转发的域名、主机指纹与认证验收边界",
+  "experienceTemplate": {
+    "commandId": "7a36699e-3e57-42b1-86a8-f47790507436",
+    "expectedVersion": 0,
+    "scope": "personal",
+    "payload": {
+      "projectId": "00000000-0000-4000-8000-000000000000",
+      "kind": "lesson",
+      "title": "[NAS120-SSH-59527-20261020] NAS公网SSH转发的域名、主机指纹与认证验收边界",
+      "summary": "候选经验：复用NAS原SSH，新增转发独立隔离；核对完整DNS通配记录与原主机pin，区别传输、限制命令和本人密码验收。未验证跨项目通用性。",
+      "conditions": "现有NAS原SSH与既有限制collector绑定已可核对，112在线且已获得新增公网转发授权；其他NAS/网络/QTS版本需重新验证。",
+      "content": "[NAS120-SSH-59527-20261020] 已上线 ssh-120.ikvein.com:59527，遵循用户偏好的 ssh-编号.ikvein.com 命名。\n权威DNS核对既有精确 *.ikvein.com 记录覆盖该主机；没有修改DNS，没有创建无效ssh-*前缀wildcard，没有新增HTTPS入口。\n112新增独立jarvis-nas120-ssh-tunnel.service，DynamicUser与systemd LoadCredential提供单代理FRPC，转发到192.168.10.120:22；公网SSH依赖112在线。广州仅新增LIMIT IN 59527/tcp。\nNAS沿用QTS原SSH、原密码和既有限制collector权限；112原7项服务及配置、广州原3项服务PID与FRPS配置均保持。\nWindows默认SSH客户端、日本及广州公网严格主机指纹比对通过：SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas。没有提交用户密码，普通交互/密码登录和用户本人验收仍待确认。\n112经公网59527沿用既有限制collector身份执行固定snapshot成功且签名/原peer绑定核对通过；原SSH客户端合法使用既有key完成固定snapshot，没有转移私钥。该结果不替代本人普通SSH登录验收。\n本记录是已发生操作的AI事实回顾，independentAcceptance=false；经验仅inbox未验证，不发布Skill。只同步决定和经验，不替换或截断项目既有notes/environment。\n经验候选：先核权威DNS已有完整label通配覆盖，避免无效前缀wildcard或不需要的HTTPS改动；公网严格主机pin匹配与限制snapshot成功不等于本人普通SSH密码登录验收。新增转发使用独立服务和凭据，保留原SSH及QTS权限边界。经验未验证、未发布Skill。",
+      "source": "artifacts/ssh-120-59527/install-public.json SHA256 1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410\nartifacts/ssh-120-59527/gateway-public.json SHA256 046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855\nartifacts/ssh-120-59527/dns-public.json SHA256 c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5\nartifacts/ssh-120-59527/network-public.json SHA256 fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba\nartifacts/ssh-120-59527/windows-public.json SHA256 74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1\nartifacts/ssh-120-59527/lan-target-public.json SHA256 2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d\nartifacts/ssh-120-59527/public-auth-snapshot.json SHA256 d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450\nartifacts/ssh-120-59527/final-validation.json SHA256 668a2d32648cb184d09ecd38e8eeefca2fee8cec0d095c71a3e9a0ed24735d8c",
+      "tags": [
+        "NAS",
+        "SSH",
+        "公网转发",
+        "主机指纹",
+        "候选经验"
+      ]
+    }
+  },
+  "summary": "[NAS120-SSH-59527-20261020] 已上线 ssh-120.ikvein.com:59527，遵循用户偏好的 ssh-编号.ikvein.com 命名。\n权威DNS核对既有精确 *.ikvein.com 记录覆盖该主机；没有修改DNS，没有创建无效ssh-*前缀wildcard，没有新增HTTPS入口。\n112新增独立jarvis-nas120-ssh-tunnel.service，DynamicUser与systemd LoadCredential提供单代理FRPC，转发到192.168.10.120:22；公网SSH依赖112在线。广州仅新增LIMIT IN 59527/tcp。\nNAS沿用QTS原SSH、原密码和既有限制collector权限；112原7项服务及配置、广州原3项服务PID与FRPS配置均保持。\nWindows默认SSH客户端、日本及广州公网严格主机指纹比对通过：SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas。没有提交用户密码，普通交互/密码登录和用户本人验收仍待确认。\n112经公网59527沿用既有限制collector身份执行固定snapshot成功且签名/原peer绑定核对通过；原SSH客户端合法使用既有key完成固定snapshot，没有转移私钥。该结果不替代本人普通SSH登录验收。\n本记录是已发生操作的AI事实回顾，independentAcceptance=false；经验仅inbox未验证，不发布Skill。只同步决定和经验，不替换或截断项目既有notes/environment。",
+  "projectEnvironmentWritePlanned": false
+}

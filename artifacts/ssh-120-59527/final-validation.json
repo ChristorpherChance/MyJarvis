@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-20T01:13:06.117109+00:00",
+  "status": "passed",
+  "endpoint": {
+    "domain": "ssh-120.ikvein.com",
+    "port": 59527,
+    "user": "superopen",
+    "target": "192.168.10.120:22",
+    "hostKeySHA256": "SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas"
+  },
+  "naming": "ssh-<server-id>.ikvein.com",
+  "dns": {
+    "existingWildcard": "*.ikvein.com",
+    "modified": false
+  },
+  "activation": {
+    "node": "112",
+    "unit": "jarvis-nas120-ssh-tunnel.service",
+    "enabled": true,
+    "active": true,
+    "dependency": "112 online and able to reach NAS SSH22"
+  },
+  "validation": [
+    "offline FRPC config validation",
+    "independent static review after concurrency guard repair",
+    "LAN existing host key and signed fixed snapshot",
+    "Windows default SSH client strict host key matching",
+    "Japan and Guangzhou native SSH strict host key matching",
+    "new public endpoint existing restricted snapshot authentication and original peer signature matching",
+    "112 protected units/PIDs/config hashes unchanged",
+    "Guangzhou protected units/PIDs/FRPS config hash unchanged"
+  ],
+  "passwordSubmitted": false,
+  "ordinaryInteractiveLoginTested": false,
+  "userAcceptance": "pending",
+  "newHttpsEndpointCreated": false,
+  "nasSshConfigurationModified": false,
+  "supplierModelCalls": 0,
+  "internalOrchestrationTokens": null,
+  "internalOrchestrationCost": null,
+  "source": {
+    "path": "scripts/ssh-access/install-nas120-tunnel.py",
+    "sha256": "9c9066d1659e840e9757ae4220ab01b9e9a06ae9018775f02cf8f5fe9b2b88fb"
+  },
+  "evidence": [
+    {
+      "path": "artifacts/ssh-120-59527/prepare-public.json",
+      "sha256": "d9198101d171e161ac43507940b2512ae3a15e3ed27bc670a9a08a52ab481929"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/install-public.json",
+      "sha256": "1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/gateway-public.json",
+      "sha256": "046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/dns-public.json",
+      "sha256": "c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/lan-target-public.json",
+      "sha256": "2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/network-public.json",
+      "sha256": "fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/windows-public.json",
+      "sha256": "74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/public-auth-snapshot.json",
+      "sha256": "d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/public-review.json",
+      "sha256": "9d1ad2eb6c12641e10faab95fc4244977fb03f9937072f05d4bd5864171f04e3"
+    },
+    {
+      "path": "artifacts/ssh-120-59527/public-review-final.json",
+      "sha256": "98dd25f8691098489dd29f51d75fee9c4f406c814309403ab356904c33247014"
+    }
+  ]
+}

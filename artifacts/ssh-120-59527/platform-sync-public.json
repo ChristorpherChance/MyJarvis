@@ -1,0 +1,82 @@
+{
+  "schema": "jarvis-nas120-ssh-platform-sync-v1",
+  "marker": "[NAS120-SSH-59527-20261020]",
+  "startedAt": "2026-10-20T01:15:20.880Z",
+  "status": "passed",
+  "platformBuild": "20261020-cc-switch-center-r56",
+  "applicationReleaseChanged": false,
+  "productAccepted": false,
+  "independentAcceptance": false,
+  "experienceVerified": false,
+  "modelCalls": 0,
+  "modelCredentialsRead": false,
+  "modelConfigurationWrites": 0,
+  "sessionCreated": true,
+  "sessionRevoked": true,
+  "businessWrites": [
+    "decision-selected",
+    "decision-implemented",
+    "experience-inbox"
+  ],
+  "environmentInfo": {
+    "status": "skipped",
+    "reason": "OUT_OF_SCOPE_PRESERVE_EXISTING_PROJECT_CONTENT"
+  },
+  "refs": [
+    {
+      "reference": "artifacts/ssh-120-59527/install-public.json",
+      "sha256": "1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/gateway-public.json",
+      "sha256": "046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/dns-public.json",
+      "sha256": "c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/network-public.json",
+      "sha256": "fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/windows-public.json",
+      "sha256": "74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/lan-target-public.json",
+      "sha256": "2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/public-auth-snapshot.json",
+      "sha256": "d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/ssh-120-59527/final-validation.json",
+      "sha256": "668a2d32648cb184d09ecd38e8eeefca2fee8cec0d095c71a3e9a0ed24735d8c",
+      "kind": "observation"
+    }
+  ],
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "decision": {
+    "id": "799944f8-2e27-4d85-9543-c255e318d250",
+    "revision": 2,
+    "status": "implemented",
+    "independentAcceptance": false
+  },
+  "experience": {
+    "id": "fd274547-cf8d-477f-bde7-651b93b89af9",
+    "revision": 1,
+    "status": "inbox",
+    "verified": false
+  },
+  "projectContentPreserved": true,
+  "completedAt": "2026-10-20T01:15:21.552Z"
+}

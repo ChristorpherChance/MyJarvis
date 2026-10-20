@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "kind": "nas120-ssh59527-construction-document-verification",
+  "at": "2026-10-20T01:16:45.454362+00:00",
+  "records": 363,
+  "recordId": "JARVIS-20261020-NAS120-SSH59527-ACCESS",
+  "headHash": "2e2363d507cca87a37c74030e4cb937409ea022a14c4c2435c7c446f017e54dc",
+  "prior362RecordBytesExact": true,
+  "priorGuideEntireBytesPreservedAsSuffix": true,
+  "priorArchiveBytesExactAfterInverseOfMetadataAndNewBlock": true,
+  "record363EvidenceCurrentSizeAndSHA256Matched": true,
+  "installerCurrentSourceMatchesFinalReviewedSHA256": true,
+  "documentPairs": [
+    {
+      "markdown": "docs/112与116公网SSH连接说明.md",
+      "html": "docs/112与116公网SSH连接说明.html",
+      "markdownSHA256": "11e534fc95f64f65a45684c7917af1986b324df559a1ea5d756f756cdf3c63d4",
+      "htmlSHA256": "f70c93627b92b14fa43def9503bf0b8875dd3c40234502986c7f18fee09d7a9e",
+      "sameSourceHashPresent": true
+    },
+    {
+      "markdown": "docs/贾维斯建设档案.md",
+      "html": "docs/贾维斯建设档案.html",
+      "markdownSHA256": "11d80e86969bcab531cf538f26614825881c364c60aa59ac88c2317349626a10",
+      "htmlSHA256": "82c05cad889db5ccd4b27d098e3a1f94bd9aa026d5fd40129020786f28f0cc66",
+      "sameSourceHashPresent": true
+    },
+    {
+      "markdown": "docs/贾维斯建设日志.md",
+      "html": "docs/贾维斯建设日志.html",
+      "markdownSHA256": "ebfd6b29e32d23c3fa6eae0ca5fd3965612297857358f157588605fbc234c2f2",
+      "htmlSHA256": "29feb1a6283fc2ce92978f96efe07e4e022c72e90331fb8d97f7ff34b1091357",
+      "sameSourceHashPresent": true
+    }
+  ],
+  "initialRenderAttempt": {
+    "status": "failed-after-single-successful-append",
+    "code": "CONSTRUCTION_HTML_BUILD_FAILED",
+    "reason": "New worktree lacked local marked dependency; diagnostic MODULE_NOT_FOUND confirmed.",
+    "recovery": "Set documented JARVIS_NODE_MODULES to canonical existing node_modules and invoke render only.",
+    "duplicateAppendPerformed": false,
+    "dependencyInstalled": false,
+    "recoveryStatus": "passed"
+  },
+  "implementation": "complete",
+  "verification": "passed",
+  "deployment": "live",
+  "acceptance": "pending",
+  "ordinaryInteractiveOrPasswordLoginVerified": false,
+  "dnsWritten": false,
+  "newHttpsEndpointCreated": false,
+  "nasConfigurationModified": false,
+  "platformApplicationPublishedByThisTask": false,
+  "modelsInvokedForDocumentation": false,
+  "productionActionsForDocumentation": 0,
+  "internalOrchestrationTokens": null,
+  "internalOrchestrationAmount": null
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "ssh-120-59527-lan-target-v1",
+  "observedAt": "2026-10-20T01:07:28.563890+00:00",
+  "sourceHost": "112",
+  "target": "192.168.10.120",
+  "sshPort": 22,
+  "hostKey": {
+    "source": "/etc/jarvis-cloud-relay/known_hosts",
+    "fingerprint": "256 SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas 192.168.10.120 (ED25519)",
+    "publicKnownHosts": "artifacts/ssh-120-59527/nas-120-known_hosts",
+    "publicKnownHostsSha256": "d8c19a4c1df3b1672d9dff9bc42297e1ae0191d1f56b802e0a8a3546207def8c",
+    "strictPinMatched": true,
+    "firstObservationTrustBoundary": "Existing NAS onboarding pin; independent console comparison not asserted."
+  },
+  "noneAuth": {
+    "tcpConnected": true,
+    "remoteSoftware": "Remote protocol version 2.0, remote software version OpenSSH_10.0",
+    "advertisedAuthentication": [
+      "publickey,password,keyboard-interactive"
+    ],
+    "credentialAuthenticationUsed": false,
+    "interactiveLoginVerified": false
+  },
+  "restrictedCollector": {
+    "attempted": true,
+    "existingRestrictedPath": true,
+    "remoteCommand": "snapshot",
+    "exitCode": 0,
+    "authenticatedAccount": "superopen",
+    "hostnameVerified": false,
+    "normalAccountInteractiveLoginVerified": false,
+    "envelopeVersion": 1,
+    "method": "POST",
+    "storageKind": "qnap",
+    "storageModel": "TS-453Dmini",
+    "observedAt": "2026-10-20T01:07:28Z",
+    "hostnameFieldPresent": false,
+    "signatureVerified": true,
+    "bindingSource": "/etc/jarvis-cloud-relay/config.json"
+  },
+  "hostname": {
+    "historicalName": "NAS9527",
+    "currentVerified": false,
+    "reason": "The existing restricted snapshot does not expose hostname; permissions were not expanded."
+  },
+  "productionConfigurationChanged": false,
+  "nasConfigurationChanged": false,
+  "userPasswordReadOrSent": false,
+  "rawCollectorEnvelopePersisted": false,
+  "privateKeyMaterialExported": false,
+  "existingRestrictedSshIdentityUsed": true,
+  "identityUseBoundary": "OpenSSH used the existing restricted collector identity; agent did not inspect or export private key bytes."
+}

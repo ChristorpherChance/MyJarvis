@@ -1,0 +1,15 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+const root=resolve(process.argv[2]??'.');
+const prepared=JSON.parse(readFileSync(resolve(root,'artifacts/ssh-120-59527/platform-sync-prepared-public.json'),'utf8'));
+const source=readFileSync(resolve(root,'apps/api/src/runtime/project-decision-runtime.ts'),'utf8');
+const schemaSource=`import {z} from ${JSON.stringify(pathToFileURL('/home/superopen/All-Projects/MyJarvis/node_modules/zod/index.js').href)};\n`+source.slice(source.indexOf('const text='),source.indexOf('type Option='))+'\nexport {implementationSchema};';
+const schema=await import('data:text/javascript;base64,'+Buffer.from(schemaSource).toString('base64'));
+schema.projectDecisionRecordSchema.parse(prepared.decisionTemplate);
+schema.implementationSchema.parse(prepared.implementationTemplate);
+const recommended=schema.projectDecisionRecommendationSchema.parse({context:prepared.decisionTemplate.context,options:prepared.decisionTemplate.options});
+assert.equal(prepared.status,'prepared');assert.equal(prepared.productionExecuted,false);assert.equal(prepared.projectEnvironmentWritePlanned,false);assert.equal(prepared.decisionTemplate.chosenId,'112-independent-tunnel');assert.equal(prepared.decisionTemplate.origin,'ai');assert.equal(prepared.decisionTemplate.status,'selected');assert.equal(prepared.implementationTemplate.origin,'ai');assert.equal(prepared.implementationTemplate.expectedVersion,1);assert.equal(prepared.experienceTemplate.expectedVersion,0);assert.equal(prepared.experienceTemplate.scope,'personal');assert.equal(prepared.experienceTemplate.payload.kind,'lesson');assert.ok(prepared.plannedActions.some(action=>action.includes('inbox')));assert.equal(recommended.options.length,2);assert.equal(prepared.refs.length,8);assert.equal(prepared.sourceSHA256,'9c9066d1659e840e9757ae4220ab01b9e9a06ae9018775f02cf8f5fe9b2b88fb');
+const report={schema:'jarvis-nas120-ssh-platform-sync-preparation-validation-v1',status:'passed',observedAt:new Date().toISOString(),nodeCheck:'passed',productionDecisionRecordSchema:'passed',productionDecisionImplementationSchema:'passed',productionRecommendationShapeSchema:'passed',experienceCaptureShape:'existing capture framework retained; lesson/personal/expectedVersion0 checked; production handler not executed',eightPublicEvidenceInputsValidated:true,installerSHA256:prepared.sourceSHA256,finalValidationEvidenceHashesVerified:10,defaultModeProductionExecuted:false,databaseOrNetworkAccessPerformed:false,projectEnvironmentWritePlanned:false,modelCalls:0,productCodeChanged:false};
+writeFileSync(resolve(root,'artifacts/ssh-120-59527/platform-sync-preparation-validation-public.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

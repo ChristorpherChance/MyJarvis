@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "kind": "nas120-independent-ssh-construction-document-verification",
+  "at": "2026-10-20T01:38:22.354824+00:00",
+  "records": 364,
+  "recordId": "JARVIS-20261020-NAS120-INDEPENDENT-SSH",
+  "headHash": "b8fea260f8f08d8def0101cfdc203dd4042aad7346f588e5685abb7f94816c2e",
+  "prior363RecordBytesExact": true,
+  "record363HashPreserved": "2e2363d507cca87a37c74030e4cb937409ea022a14c4c2435c7c446f017e54dc",
+  "priorSshGuideEntireBytesPreservedAsSuffix": true,
+  "priorArchiveBytesExactAfterInverseOfMetadataAndNewBlock": true,
+  "record364EvidenceCurrentSizeAndSHA256Matched": true,
+  "finalThreeSourceAndTwelveOperationEvidencePinsMatched": true,
+  "metadataEvidencePinsMatched": true,
+  "documentPairs": [
+    {
+      "markdown": "docs/112与116公网SSH连接说明.md",
+      "html": "docs/112与116公网SSH连接说明.html",
+      "markdownSHA256": "bd68a56d12074de96d8ac01c14d73980db353bb5cdb7bf1d315eeb39757b4352",
+      "htmlSHA256": "31157c97db30d221ca4def6200d5d8143d8fa5113afcc3261849710dcea0e818",
+      "sameSourceHashPresent": true
+    },
+    {
+      "markdown": "docs/贾维斯建设档案.md",
+      "html": "docs/贾维斯建设档案.html",
+      "markdownSHA256": "d93c809b7868f6be975d1ca54ef8dea17362ca60e3c333f7013a55fbb3e0829e",
+      "htmlSHA256": "356c15803c13ecd9a11a807b2b7b6859f69ffffffcf9f8b694363b7412e2b72a",
+      "sameSourceHashPresent": true
+    },
+    {
+      "markdown": "docs/贾维斯建设日志.md",
+      "html": "docs/贾维斯建设日志.html",
+      "markdownSHA256": "9013a3195374a9b78d7690f80f7958a94aff4b635a78800cc8451b0c288ebad8",
+      "htmlSHA256": "5525728935e80870a35c62de5071001eff7698a3209e2ea14c3c7502237ffaa2",
+      "sameSourceHashPresent": true
+    }
+  ],
+  "boundary": {
+    "newExplicitRequirementNotRetroactivelyAssignedToRecord363": true,
+    "runtimeDependsOn112": false,
+    "old112BridgeDisabled": true,
+    "ordinaryPasswordAndPtyTechnicallyVerified": true,
+    "userAcceptance": "pending",
+    "nasRebootActuallyTested": false,
+    "server112PhysicallyPoweredOff": false,
+    "existingContainerScope": "only documented ten fields; no full Env/config claim",
+    "lastBridgeGuardSyntaxOnlyNoNewSshRerun": true,
+    "platformApplicationReleaseChanged": false
+  },
+  "documentationOnlyActions": {
+    "productionOperations": 0,
+    "providerModelCalls": 0,
+    "runtimeTestsRerun": false,
+    "deploymentRerun": false,
+    "dependencyInstall": false,
+    "renderDependency": "existing canonical node_modules through JARVIS_NODE_MODULES"
+  },
+  "internalOrchestrationTokens": null,
+  "internalOrchestrationAmount": null
+}

@@ -1,0 +1,68 @@
+{
+  "id": "JARVIS-20261020-NAS120-INDEPENDENT-SSH",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-20T01:37:03.478Z",
+  "title": "120已切NAS本机独立SSH，旧112转发停用后普通密码与PTY核验通过",
+  "objective": "满足用户在363后新增明确的120入口完全不依赖112要求，沿用域名59527、NAS原账号密码及QTS SSH策略，保留前一阶段历史。",
+  "changes": [
+    "NAS已有Container Station上新增jarvis-nas120-ssh容器，本地固定静态FRPC构建scratch镜像，NAS自己连接广州FRPS，把59527流量转到本机127.0.0.1:22；不拉外部镜像，私有配置不进入镜像。",
+    "完成NAS本机准备后，仅停用112旧jarvis-nas120-ssh-tunnel.service；旧unit与配置保留，disabled/inactive、PID0，其他7项保护服务PID保持。",
+    "新连接说明置顶NAS独立路径和普通密码技术验证，原363指南全文及建设账本保持历史；平台原R56应用未发布新版本。"
+  ],
+  "decisions": [
+    "这是用户随后追加的“不依赖112”明确要求。前一阶段363已实施112中转是当时事实，本轮通过旧799944f8决定的CAS change入口选NAS本机容器，不倒填或改写旧约束。",
+    "在已核NAS普通密码/管理员及Docker环境后选择NAS本机容器；保留112中转不能满足新要求。依赖改为NAS的Container Station/Docker及广州网关，运行路径不再经过112。",
+    "sudo口令与脚本流分离后再部署；NAS base64解码异常先保留失败部分目录，不带失败状态继续创建image/container；修换行处理并严格核SHA后进行第二prepare。"
+  ],
+  "facts": [
+    "前检真实普通密码SSH核hostname NAS9527、superopen uid1000管理员组与sudo能力；原QTS SSH、账号、host key及受限collector权限不变。NAS密码仅由既有加密vault经私有内存pipe/askpass使用，未显示或新保存到客户端。",
+    "容器CID6e233cce48b04ad3813aed37eafe754986060f7ef8307ce1f6917b8b67a6ba83，NAS PID14788；非root65532、只读rootfs/配置、capdrop ALL、host网络及unless-stopped策略已配置。启动至状态回读约65秒仍running/restart0。",
+    "旧112组件已关闭后，101和116经同一公网域名59527真实普通密码SSH分配PTY、命令退出0，hostname与uid核同，无跳板、无collector公钥；日本及广州另做strict none-auth指纹核验。",
+    "独立性证据为NAS本机运行转发、旧112转发停用、其他机器普通会话及公网握手随后通过；没有实际关闭112整机或重启NAS，不把restart策略配置冒作NAS重启恢复验收。",
+    "原有NAS容器只核id/name/PID/running/startedAt/imageId/restartPolicy/networkMode/readOnlyRootfs/user这10字段且保持；不声称读取完整Env或全部私有配置。DNS与广州其他配置本次不改，无新HTTPS入口。",
+    "sudo脚本流独审缺口在部署前修复；首prepare因NAS base64对末尾换行返回1而在image/container前失败，小样复现后去CR/LF、严格SHA核同再用；旧自有partial目录挪到同NAS的.prepare-failed-20261020-0931保留。诊断与问题摘要保留，不伪造缺失的初次完整原件。",
+    "桥接源码最后补充拒绝forcePTY与提权/脚本内容同时使用的guard，仅语法核对；不为该收尾重跑SSH。12项操作回执保原时点，最终源码及该验证边界分别记录。",
+    "原决定799944f8-2e27-4d85-9543-c255e318d250由rev2 implemented追加为rev3 superseded；新036aae1a-20e4-4467-9b3e-30d2a0c65f8e rev2 implemented、independentAcceptance=false；经验076bb44c-b8be-47a5-a8bf-43270f65bc6e rev1 inbox、verified=false，未发布Skill。原项目notes/environment完整保持。",
+    "供应商模型推理调用0，内部编排Token/金额及账单未知分列，费用只记录不设上限。"
+  ],
+  "verification": [
+    "公开前检与Docker前检通过；native prepare/start/status均留实际image/CID/sourceSHA，旧NAS容器规定10字段核同；NAS未拉外部image、私有配置未入image。",
+    "旧112组件before/disable/verify回执确认disabled/inactive/PID0及其他7服务PID保持；NAS本机容器随后持续运行。",
+    "101和116普通密码+PTY实际退出0、hostname/uid/原host key通过；日本和广州无凭据strict host key握手通过，none-auth退出255只解释为方法与身份校验。",
+    "最终汇总逐项绑定12项操作回执及3份最终源码；新平台决定changeOf旧ID、旧rev3 superseded/新rev2 implemented、经验inbox及短时session创建/精确撤销回读通过。"
+  ],
+  "pending": [
+    "用户本人使用验收仍待确认；普通密码技术验证已通过，不再沿用363“未代做普通密码”的当前结论。",
+    "NAS重启后的恢复与112物理关机均未实际测试；unless-stopped为已配置策略，不将这两个未做实验写为通过。"
+  ],
+  "lessons": [
+    "新增明确约束应通过关联决策和后继记录改变方案，保留先前已发生的实施事实；运行独立路径、停止旧组件和物理关机/重启实验应分别说明。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/nas120-independent-ssh/preflight-public.json",
+    "artifacts/nas120-independent-ssh/docker-preflight-public.json",
+    "artifacts/nas120-independent-ssh/prepare-diagnostic-public.json",
+    "artifacts/nas120-independent-ssh/base64-diagnostic-public.json",
+    "artifacts/nas120-independent-ssh/native-prepare-public.json",
+    "artifacts/nas120-independent-ssh/native-start-public.json",
+    "artifacts/nas120-independent-ssh/native-status-public.json",
+    "artifacts/nas120-independent-ssh/old112-before-public.json",
+    "artifacts/nas120-independent-ssh/old112-disable-public.json",
+    "artifacts/nas120-independent-ssh/old112-verify-public.json",
+    "artifacts/nas120-independent-ssh/other-machines-public.json",
+    "artifacts/nas120-independent-ssh/network-public.json",
+    "artifacts/nas120-independent-ssh/preparation-issues-public.json",
+    "artifacts/nas120-independent-ssh/final-validation.json",
+    "artifacts/nas120-independent-ssh/platform-sync-public.json",
+    "docs/112与116公网SSH连接说明.md",
+    "docs/贾维斯建设档案.md"
+  ]
+}

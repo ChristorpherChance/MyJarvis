@@ -1,0 +1,370 @@
+{
+  "schema": "jarvis-nas120-independent-ssh-platform-sync-prepared-v1",
+  "status": "prepared",
+  "platformBuild": "20261020-cc-switch-center-r56",
+  "applicationReleaseChanged": false,
+  "sourceSHA256": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b",
+  "bridgeSourceSHA256": "49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34",
+  "projectMatch": "exact name / personal / owner server-admin; 0 or >1 skips without guessing",
+  "session": "jarvis account; 120s in-memory token; finally delete only own hash",
+  "plannedActions": [
+    "GET old decision799944f8-2e27-4d85-9543-c255e318d250 current revision; POST /oldId/change with expectedVersion; selected actions empty; old history superseded but preserved; append new implementation CAS; independentAcceptance false",
+    "experience capture inbox and verified false",
+    "do not write project environment/notes; preserve full existing content without truncation or schema expansion"
+  ],
+  "idempotency": "fixed marker plus deterministic command IDs; GET existing marker before writes; no automatic retries",
+  "noModelCredentialReads": true,
+  "noProductCodeChanges": true,
+  "noDeployment": true,
+  "productionExecuted": false,
+  "refs": [
+    {
+      "reference": "artifacts/nas120-independent-ssh/native-prepare-public.json",
+      "sha256": "13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/native-start-public.json",
+      "sha256": "5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/native-status-public.json",
+      "sha256": "1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/old112-before-public.json",
+      "sha256": "71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/old112-disable-public.json",
+      "sha256": "b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/old112-verify-public.json",
+      "sha256": "8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/other-machines-public.json",
+      "sha256": "a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/network-public.json",
+      "sha256": "f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/preflight-public.json",
+      "sha256": "d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/docker-preflight-public.json",
+      "sha256": "f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69",
+      "kind": "observation"
+    },
+    {
+      "reference": "scripts/ssh-access/install-nas120-native.py",
+      "sha256": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b",
+      "kind": "source"
+    },
+    {
+      "reference": "scripts/ssh-access/nas_ssh_bridge.py",
+      "sha256": "49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34",
+      "kind": "source"
+    },
+    {
+      "reference": "scripts/ssh-access/nas-vault-bridge.mjs",
+      "sha256": "2d9c48d08f4a5a3c6bc0ded5c772cb3939fd1243b114df6701d9f3d2822a0852",
+      "kind": "source"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/final-validation.json",
+      "sha256": "c37f663c9dd55be809d2f59761c08fad8b1ebf9833fff901ef97101cd9d56989",
+      "kind": "observation"
+    }
+  ],
+  "oldDecisionId": "799944f8-2e27-4d85-9543-c255e318d250",
+  "decisionChangeTemplate": {
+    "commandId": "77f5e050-4af1-4b43-8b62-58b6a57b35a1",
+    "expectedVersion": 2,
+    "reason": "用户新增明确运行不依赖112的约束，替代原112桥接方案；记录实际更正与已发生上线，旧历史保留，不宣称事前决策或独立验收。",
+    "questionSummary": "[NAS120-INDEPENDENT-SSH-20261020] 按用户新增完全不依赖112的要求，将59527转发迁至NAS120本机容器",
+    "context": {
+      "observedAt": "2026-10-20T01:35:58.177Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b",
+      "sourceVersion": "NAS native installer SHA256 e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b / bridge 49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34 / no application release / existing platform 20261020-cc-switch-center-r56",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [
+        "NAS120-INDEPENDENT-FROM112",
+        "SSH-NUMBER-DOMAIN",
+        "PRESERVE-NAS-AND-AUTH"
+      ],
+      "constraints": [
+        "运行不能经过112；迁移后停用旧112同端口转发避免冲突",
+        "NAS原SSH、密码、collector授权及既有容器保持",
+        "密码技术登录、112旧桥接停用证明、NAS重启/112物理关机测试和本人验收分别记录"
+      ],
+      "situation": "[NAS120-INDEPENDENT-SSH-20261020] 用户追加明确要求：ssh-120.ikvein.com:59527运行必须完全不依赖112。此前112转发方案因新增约束被替代，旧决定与实施证据保留。\nNAS120本机容器已上线：target127.0.0.1:22→广州59527，host网络、只读rootfs、UID65532:65532、unless-stopped；既有容器保持。运行路径不经112。\n容器CID 6e233cce48b04ad3813aed37eafe754986060f7ef8307ce1f6917b8b67a6ba83，image sha256:d9fa4b38ce03346bbcfa768884dfd5ab0a8c268613a1c2005d282e45de385b1b；观察PID14788、running、restartCount0。112旧jarvis-nas120-ssh-tunnel.service已disabled/inactive/PID0，其他7项保护服务保持。\n101和116使用现有NAS密码实际SSH登录成功、PTY分配成功，hostname NAS9527与uid1000核对通过；不是仅none-auth或限制collector测试。未保存或回显密码；helper不读取NAS密码。\n日本和广州新增公网strict主机pin匹配通过：SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas；这两项为无认证核对，与101/116密码实登分别留证。\n没有进行NAS重启或112物理关机测试；停用旧112桥接后公网密码登录成功，证明当前NAS新路径不使用该桥接。用户本人使用验收仍pending。\n沿用原域名/59527和NAS原SSH、密码及collector授权；无新Jarvis应用发布，仍R56。决定通过旧项change端点+实时revision替代，再新项implementation补已发生实证，independentAcceptance=false。\n经验仅inbox未验证，不发布Skill；不修改项目notes/environment或截断旧资料。"
+    },
+    "options": [
+      {
+        "id": "NAS-native-container",
+        "title": "NAS120本机容器直接转发原SSH到广州59527",
+        "advantages": [
+          "运行不依赖112",
+          "host网络直达127.0.0.1:22",
+          "只读rootfs与非root UID限定运行",
+          "原SSH认证边界保持"
+        ],
+        "disadvantages": [
+          "新增NAS受控容器需后续维护",
+          "本轮未验证NAS重启后的恢复"
+        ],
+        "impact": "NAS120本机容器直接转发原SSH到广州59527",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "NAS120-INDEPENDENT-FROM112",
+          "SSH-NUMBER-DOMAIN",
+          "PRESERVE-NAS-AND-AUTH"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "112-independent-tunnel",
+        "title": "继续使用原112独立FRPC桥接",
+        "advantages": [
+          "原方案已上线并保留完整证据"
+        ],
+        "disadvantages": [
+          "运行依赖112，不能满足用户新增明确约束"
+        ],
+        "impact": "继续使用原112独立FRPC桥接",
+        "compliesWithGoals": "no",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "SSH-NUMBER-DOMAIN",
+          "PRESERVE-NAS-AND-AUTH"
+        ],
+        "operationalImpact": 0
+      }
+    ],
+    "chosenId": "NAS-native-container",
+    "decisionRationale": "用户明确追加NAS入口完全不依赖112。已改用NAS120本机容器直接转发，停用112旧桥接后101/116密码SSH与PTY实测通过。原112方案在先前要求下的历史与证据保留，本次使用change链明确其被新要求替代，不回写旧记录。尚未NAS重启或112物理关机，用户本人验收仍待确认。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/nas120-independent-ssh/native-prepare-public.json",
+        "sha256": "13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/native-start-public.json",
+        "sha256": "5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/native-status-public.json",
+        "sha256": "1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/old112-before-public.json",
+        "sha256": "71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/old112-disable-public.json",
+        "sha256": "b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/old112-verify-public.json",
+        "sha256": "8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/other-machines-public.json",
+        "sha256": "a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/network-public.json",
+        "sha256": "f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/preflight-public.json",
+        "sha256": "d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/docker-preflight-public.json",
+        "sha256": "f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69",
+        "kind": "observation"
+      },
+      {
+        "reference": "scripts/ssh-access/install-nas120-native.py",
+        "sha256": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b",
+        "kind": "source"
+      },
+      {
+        "reference": "scripts/ssh-access/nas_ssh_bridge.py",
+        "sha256": "49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34",
+        "kind": "source"
+      },
+      {
+        "reference": "scripts/ssh-access/nas-vault-bridge.mjs",
+        "sha256": "2d9c48d08f4a5a3c6bc0ded5c772cb3939fd1243b114df6701d9f3d2822a0852",
+        "kind": "source"
+      },
+      {
+        "reference": "artifacts/nas120-independent-ssh/final-validation.json",
+        "sha256": "c37f663c9dd55be809d2f59761c08fad8b1ebf9833fff901ef97101cd9d56989",
+        "kind": "observation"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "NAS120-INDEPENDENT-FROM112",
+      "SSH-NUMBER-DOMAIN",
+      "PRESERVE-NAS-AND-AUTH"
+    ],
+    "rollbackPlan": {
+      "plan": "如NAS新增容器影响现有服务或公网入口不可用，先按新有范围计划核对并停止仅此容器，保留NAS原SSH和既有collector/容器。若考虑恢复旧112桥接，须再次核对用户独立性要求及端口冲突并取得相应范围，不能自动启回旧路径。",
+      "triggers": [
+        "容器影响既有NAS服务",
+        "公网严格pin不匹配",
+        "入口不可用或用户要求撤销"
+      ],
+      "impact": "新增公网59527可能暂时不可用；NAS原LAN SSH、既有容器和历史证据保持。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [],
+    "status": "selected",
+    "origin": "ai"
+  },
+  "implementationTemplate": {
+    "commandId": "200ee4bb-d018-4e22-871a-0dd42b1fc62e",
+    "expectedVersion": 1,
+    "origin": "ai",
+    "reason": "依据已发生NAS本机容器运行、112旧bridge停用及101/116密码/PTY核验补实施；不提升为本人验收。",
+    "actions": [
+      {
+        "summary": "[NAS120-INDEPENDENT-SSH-20261020] NAS容器running/PID14788/restarts0，112旧bridge disabled/inactive/PID0；101和116普通密码SSH+PTY成功、NAS9527/uid1000核对。日本/广州strictpin通过；未做NAS重启/112物理关机，用户本人验收pending。",
+        "at": "2026-10-20T01:35:58.177Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/nas120-independent-ssh/native-prepare-public.json",
+            "sha256": "13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/native-start-public.json",
+            "sha256": "5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/native-status-public.json",
+            "sha256": "1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/old112-before-public.json",
+            "sha256": "71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/old112-disable-public.json",
+            "sha256": "b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/old112-verify-public.json",
+            "sha256": "8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/other-machines-public.json",
+            "sha256": "a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/network-public.json",
+            "sha256": "f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/preflight-public.json",
+            "sha256": "d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/docker-preflight-public.json",
+            "sha256": "f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69",
+            "kind": "observation"
+          },
+          {
+            "reference": "scripts/ssh-access/install-nas120-native.py",
+            "sha256": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b",
+            "kind": "source"
+          },
+          {
+            "reference": "scripts/ssh-access/nas_ssh_bridge.py",
+            "sha256": "49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34",
+            "kind": "source"
+          },
+          {
+            "reference": "scripts/ssh-access/nas-vault-bridge.mjs",
+            "sha256": "2d9c48d08f4a5a3c6bc0ded5c772cb3939fd1243b114df6701d9f3d2822a0852",
+            "kind": "source"
+          },
+          {
+            "reference": "artifacts/nas120-independent-ssh/final-validation.json",
+            "sha256": "c37f663c9dd55be809d2f59761c08fad8b1ebf9833fff901ef97101cd9d56989",
+            "kind": "observation"
+          }
+        ]
+      }
+    ]
+  },
+  "experienceTitle": "[NAS120-INDEPENDENT-SSH-20261020] 独立性要求变化时保留决策替代链并区分密码技术验证与本人验收",
+  "experienceTemplate": {
+    "commandId": "0733717d-c868-488b-8515-cb7cac30e628",
+    "expectedVersion": 0,
+    "scope": "personal",
+    "payload": {
+      "projectId": "00000000-0000-4000-8000-000000000000",
+      "kind": "lesson",
+      "title": "[NAS120-INDEPENDENT-SSH-20261020] 独立性要求变化时保留决策替代链并区分密码技术验证与本人验收",
+      "summary": "候选经验：依赖约束变化应以CAS change替代旧决定，停旧路径后验证新路径；密码技术实测与用户本人验收、重启和物理断电测试分开。未验证跨项目通用性。",
+      "conditions": "已明确获得NAS独立转发及技术密码登录授权，原SSH和容器保护域可核对；其他NAS/容器版本/网络环境须重验。",
+      "content": "[NAS120-INDEPENDENT-SSH-20261020] 用户追加明确要求：ssh-120.ikvein.com:59527运行必须完全不依赖112。此前112转发方案因新增约束被替代，旧决定与实施证据保留。\nNAS120本机容器已上线：target127.0.0.1:22→广州59527，host网络、只读rootfs、UID65532:65532、unless-stopped；既有容器保持。运行路径不经112。\n容器CID 6e233cce48b04ad3813aed37eafe754986060f7ef8307ce1f6917b8b67a6ba83，image sha256:d9fa4b38ce03346bbcfa768884dfd5ab0a8c268613a1c2005d282e45de385b1b；观察PID14788、running、restartCount0。112旧jarvis-nas120-ssh-tunnel.service已disabled/inactive/PID0，其他7项保护服务保持。\n101和116使用现有NAS密码实际SSH登录成功、PTY分配成功，hostname NAS9527与uid1000核对通过；不是仅none-auth或限制collector测试。未保存或回显密码；helper不读取NAS密码。\n日本和广州新增公网strict主机pin匹配通过：SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas；这两项为无认证核对，与101/116密码实登分别留证。\n没有进行NAS重启或112物理关机测试；停用旧112桥接后公网密码登录成功，证明当前NAS新路径不使用该桥接。用户本人使用验收仍pending。\n沿用原域名/59527和NAS原SSH、密码及collector授权；无新Jarvis应用发布，仍R56。决定通过旧项change端点+实时revision替代，再新项implementation补已发生实证，independentAcceptance=false。\n经验仅inbox未验证，不发布Skill；不修改项目notes/environment或截断旧资料。\n经验候选：保存旧方案为何曾被选及新约束为何替代，不把更正覆盖为从未出错；停用旧bridge并从独立客户端完成新公网密码/PTY核验可证明本轮路径，不能冒充NAS重启或112物理关机测试。新决定selected actions为空，实施证据单独追加，独立验收不因技术成功自动成立。",
+      "source": "artifacts/nas120-independent-ssh/native-prepare-public.json SHA256 13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c\nartifacts/nas120-independent-ssh/native-start-public.json SHA256 5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7\nartifacts/nas120-independent-ssh/native-status-public.json SHA256 1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e\nartifacts/nas120-independent-ssh/old112-before-public.json SHA256 71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03\nartifacts/nas120-independent-ssh/old112-disable-public.json SHA256 b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1\nartifacts/nas120-independent-ssh/old112-verify-public.json SHA256 8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c\nartifacts/nas120-independent-ssh/other-machines-public.json SHA256 a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09\nartifacts/nas120-independent-ssh/network-public.json SHA256 f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597\nartifacts/nas120-independent-ssh/preflight-public.json SHA256 d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3\nartifacts/nas120-independent-ssh/docker-preflight-public.json SHA256 f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69\nscripts/ssh-access/install-nas120-native.py SHA256 e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b\nscripts/ssh-access/nas_ssh_bridge.py SHA256 49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34\nscripts/ssh-access/nas-vault-bridge.mjs SHA256 2d9c48d08f4a5a3c6bc0ded5c772cb3939fd1243b114df6701d9f3d2822a0852\nartifacts/nas120-independent-ssh/final-validation.json SHA256 c37f663c9dd55be809d2f59761c08fad8b1ebf9833fff901ef97101cd9d56989",
+      "tags": [
+        "NAS",
+        "SSH",
+        "独立性",
+        "决策替代",
+        "候选经验"
+      ]
+    }
+  },
+  "summary": "[NAS120-INDEPENDENT-SSH-20261020] 用户追加明确要求：ssh-120.ikvein.com:59527运行必须完全不依赖112。此前112转发方案因新增约束被替代，旧决定与实施证据保留。\nNAS120本机容器已上线：target127.0.0.1:22→广州59527，host网络、只读rootfs、UID65532:65532、unless-stopped；既有容器保持。运行路径不经112。\n容器CID 6e233cce48b04ad3813aed37eafe754986060f7ef8307ce1f6917b8b67a6ba83，image sha256:d9fa4b38ce03346bbcfa768884dfd5ab0a8c268613a1c2005d282e45de385b1b；观察PID14788、running、restartCount0。112旧jarvis-nas120-ssh-tunnel.service已disabled/inactive/PID0，其他7项保护服务保持。\n101和116使用现有NAS密码实际SSH登录成功、PTY分配成功，hostname NAS9527与uid1000核对通过；不是仅none-auth或限制collector测试。未保存或回显密码；helper不读取NAS密码。\n日本和广州新增公网strict主机pin匹配通过：SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas；这两项为无认证核对，与101/116密码实登分别留证。\n没有进行NAS重启或112物理关机测试；停用旧112桥接后公网密码登录成功，证明当前NAS新路径不使用该桥接。用户本人使用验收仍pending。\n沿用原域名/59527和NAS原SSH、密码及collector授权；无新Jarvis应用发布，仍R56。决定通过旧项change端点+实时revision替代，再新项implementation补已发生实证，independentAcceptance=false。\n经验仅inbox未验证，不发布Skill；不修改项目notes/environment或截断旧资料。",
+  "projectEnvironmentWritePlanned": false
+}

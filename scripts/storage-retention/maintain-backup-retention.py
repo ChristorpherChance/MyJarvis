@@ -21,7 +21,7 @@ import types
 
 sys.dont_write_bytecode = True
 CONTROL = Path('/var/lib/jarvis-control')
-GUARD_SHA256 = '88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124'
+GUARD_SHA256 = '0aaf023aebd21707bb5569368864e6bfb70db2231d0b05582198b92696cf9510'
 STOP = None
 
 

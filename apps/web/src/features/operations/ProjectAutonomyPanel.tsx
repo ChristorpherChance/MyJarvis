@@ -9,6 +9,7 @@ import type {ProjectReportFixedReport} from './project-report-view';
 import {baselineSnapshot,hasBaseline,type BaselineList,type BaselineSnapshot} from './project-baseline-view';
 import {autonomyControls,currentAutonomyStage,stageDisplayStatus,stageExecution,stoppedExecutionText,type AutonomyRunView} from './project-autonomy-view';
 import './ProjectAutonomyPanel.css';
+import {Icon} from '../../icons';
 
 type Objective={id:string;title:string;required?:boolean;workPackage:string;acceptance:string[]};
 type WorkPackage={id:string;title:string;objectiveIds?:string[];dependsOn?:string[]};
@@ -176,7 +177,7 @@ export default function ProjectAutonomyPanel({projectId,navigate,machines=[]}:{p
   {planState&&<details className="project-autonomy-history"><summary>计划记录 · {planState.revision} 次修订</summary><p>{planState.mode==='acceptance'?'测试验收':'持续开发'} · 每次安排保留版本，执行结束后仍须独立验收。</p>{planState.steps.map(step=><p key={step.id}><strong>{step.title}</strong> · {planStepLabel(step.state)}{step.latestResult?.fixedReport&&` · 检查 ${step.latestResult.fixedReport.checks.filter(c=>c.executed&&c.status==='pass').length} 通过 / ${step.latestResult.fixedReport.checks.filter(c=>c.status==='fail').length} 失败 / ${step.latestResult.fixedReport.checks.filter(c=>!c.executed||c.status==='unknown').length} 待验`}</p>)}</details>}
   {acceptanceFirst&&baselines&&<details className="project-autonomy-history"><summary>检查详情 · 主线与历史候选</summary><ProjectBaselinePanel snapshot={baselines} navigate={navigate}/></details>}
   <details className={acceptanceFirst?'project-autonomy-history':'project-autonomy-unfolded'} open={acceptanceFirst?undefined:true}><summary hidden={!acceptanceFirst}>验收目标 · 费用与用量</summary>
-  <Panel title={acceptanceFirst?"独立验收与费用":"自治监督"} actions={<div className="project-autonomy-actions"><a href={guide} target="_blank" rel="noreferrer">交付总纲 ↗</a><Button kind="ghost" disabled={busy!==null||loading} onClick={()=>void load(administrator===null,true)}>刷新</Button>{state&&!acceptanceFirst&&<Tag tone={state.status==='blocked'?'failed':''}>{label(state.status)}</Tag>}</div>}>
+  <Panel title={acceptanceFirst?"独立验收与费用":"自治监督"} actions={<div className="project-autonomy-actions"><a href={guide} target="_blank" rel="noreferrer">交付总纲 <Icon name="external" size={14}/></a><Button kind="ghost" disabled={busy!==null||loading} onClick={()=>void load(administrator===null,true)}>刷新</Button>{state&&!acceptanceFirst&&<Tag tone={state.status==='blocked'?'failed':''}>{label(state.status)}</Tag>}</div>}>
    {(error||commandError)&&<p className="project-autonomy-error" role="alert">{commandError||error}</p>}{notice&&<p className="project-autonomy-caption" role="status">{notice}</p>}
    {!state?<>{loading?<p className="project-autonomy-caption" role="status">正在读取项目监督…</p>:!error&&<Empty title="尚未配置专项监督" detail="登记目标、执行环境和费用策略后，可在这里启动、暂停或停止。这里不使用模拟进度。"/>}</>:<>
     {!acceptanceFirst&&oldOverview}

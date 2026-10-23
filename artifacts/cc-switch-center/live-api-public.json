@@ -1,0 +1,49 @@
+{
+  "schema": "jarvis-cc-switch-live-validation-v1",
+  "startedAt": "2026-10-19T17:56:22.867Z",
+  "status": "passed",
+  "checks": [
+    "anonymous-401",
+    "fixed-three-machines-no-secret-fields",
+    "all-provider-snapshots-no-secret-fields",
+    "three-same-provider-mutations",
+    "three-readbacks-unchanged"
+  ],
+  "machines": [
+    {
+      "host": "101",
+      "providerCount": 6,
+      "currentProviderId": "a3f7ced5-5255-4afd-bc34-63833721463d",
+      "publicConfigurationSha256": "43347a003b8838f8e7ec105ba8dbb40dd7848f508cae8572b91d87a048011844",
+      "listPassed": true,
+      "sameProviderSwitchPassed": true,
+      "readbackUnchanged": true
+    },
+    {
+      "host": "112",
+      "providerCount": 6,
+      "currentProviderId": "1577f261-5554-48eb-800e-1e6f649e62fb",
+      "publicConfigurationSha256": "a3df2b04f27b66be0f9ef0d61597e908677ae48888d5002d1414e3e9a260c2cb",
+      "listPassed": true,
+      "sameProviderSwitchPassed": true,
+      "readbackUnchanged": true
+    },
+    {
+      "host": "116",
+      "providerCount": 6,
+      "currentProviderId": "a3f7ced5-5255-4afd-bc34-63833721463d",
+      "publicConfigurationSha256": "43347a003b8838f8e7ec105ba8dbb40dd7848f508cae8572b91d87a048011844",
+      "listPassed": true,
+      "sameProviderSwitchPassed": true,
+      "readbackUnchanged": true
+    }
+  ],
+  "sessionTtlSeconds": 120,
+  "sessionCreated": true,
+  "sessionRevoked": true,
+  "credentialsPersisted": false,
+  "modelRequests": 0,
+  "providerContentWrites": 0,
+  "selectionChanged": false,
+  "completedAt": "2026-10-19T17:56:27.886Z"
+}

@@ -7,5 +7,5 @@ test('R43 quota result carries partial usage without inventing zero and accumula
   JSON.stringify({type:'assistant',message:{id:'m1',model:'fixture-model',usage:{input_tokens:19,output_tokens:2}}}),
   JSON.stringify({type:'result',session_id:'fixture-session',is_error:true,errors:['Usage limit reached 429'],total_cost_usd:0.03,usage:{input_tokens:0,output_tokens:0}}),
  ]);
- assert.equal(parsed.failure?.kind,'quota');assert.equal(parsed.usage?.inputTokens,19);assert.equal(parsed.usage?.outputTokens,2);assert.equal(parsed.usage?.usageComplete,false);assert.equal(parsed.totalCost,undefined);assert.equal(parsed.nativePhases.length,1);
+ assert.equal(parsed.failure?.kind,'quota');assert.equal(parsed.usage?.inputTokens,19);assert.equal(parsed.usage?.outputTokens,2);assert.equal(parsed.usage?.usageComplete,false);assert.equal(parsed.totalCost,0.03);assert.equal(parsed.usage?.knownCostUSD,0.03);assert.equal(parsed.usage?.costUSD,undefined);assert.equal(parsed.usage?.costComplete,false);assert.equal(parsed.nativePhases.length,1);
 });

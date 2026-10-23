@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-20T01:35:58.178782+00:00",
+  "nasPasswordOrPrivateConfigIncluded": false,
+  "sudoReview": {
+    "initialIssue": "Sudo password and shell script must not share a stream that could interpret the password when auth is cached or NOPASSWD.",
+    "resolution": "Constant wrapper consumes password separately; private temporary script excludes NAS password; sudo gets only password pipe; root script stdin redirected to /dev/null.",
+    "qtsTimestampValidationAlternative": "sudo -v then -n was unsuitable on this QTS; no production deployment used that alternative.",
+    "finalReadonlySudoPreflight": "passed"
+  },
+  "binaryPreparation": {
+    "firstAttemptStatus": "failed before Docker image/container creation",
+    "diagnostic": "NAS base64 decoder returns1 with final newline and0 without newline; captured minimal public samples",
+    "resolution": "Remove CR/LF from encoded stream, then decode and require exact archive and executable SHA256 before use.",
+    "retainedOwnedPartialDirectory": "/share/CACHEDEV1_DATA/.jarvis-ssh-access.prepare-failed-20261020-0931",
+    "successfulPrepare": "native-prepare-public.json"
+  },
+  "ordinarySshPreflight": {
+    "initialPrivateHostKeyFileUnavailableToOperator": "Resolved by using the tracked original NAS public pin, without disabling verification.",
+    "paramikoNotInstalled": "Used system OpenSSH and private askpass socket; no global package installation."
+  }
+}

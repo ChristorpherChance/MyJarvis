@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-20T01:35:58.177998+00:00",
+  "status": "passed",
+  "endpoint": "ssh-120.ikvein.com:59527",
+  "username": "superopen",
+  "hostname": "NAS9527",
+  "target": "NAS local 127.0.0.1:22",
+  "runtimePath": [
+    "other SSH client",
+    "Guangzhou FRPS",
+    "NAS120 own FRPC container",
+    "NAS120 existing SSH"
+  ],
+  "runtimeDependsOn112": false,
+  "old112BridgeDisabled": true,
+  "old112BridgeInactive": true,
+  "nasContainer": {
+    "id": "6e233cce48b04ad3813aed37eafe754986060f7ef8307ce1f6917b8b67a6ba83",
+    "imageId": "sha256:d9fa4b38ce03346bbcfa768884dfd5ab0a8c268613a1c2005d282e45de385b1b",
+    "pid": 14788,
+    "restartCount": 0,
+    "restartPolicy": "unless-stopped",
+    "network": "host",
+    "readOnly": true,
+    "user": "65532:65532"
+  },
+  "ordinaryPasswordAndPtyVerifiedFromMachines": [
+    "101",
+    "116"
+  ],
+  "independentExternalHostKeyVerifiedFrom": [
+    "Japan",
+    "Guangzhou"
+  ],
+  "nasRebootActuallyTested": false,
+  "server112PhysicallyPoweredOff": false,
+  "independenceEvidence": "NAS local forwarder plus old112 component stopped; both other-machine ordinary sessions and independent public handshakes succeeded afterwards. Provisioning used112; SSH runtime does not.",
+  "existingNasContainerProtectedFields": [
+    "id",
+    "name",
+    "pid",
+    "running",
+    "startedAt",
+    "imageId",
+    "restartPolicy",
+    "networkMode",
+    "readOnlyRootfs",
+    "user"
+  ],
+  "existingNasContainerProtectedFieldsUnchanged": true,
+  "other112ServicesUnchanged": true,
+  "nasSshConfigurationModified": false,
+  "collectorKeyPermissionsExpanded": false,
+  "nasPasswordUsedInMemoryOnly": true,
+  "nasPasswordPersistedOnClientMachines": false,
+  "privateImageIncludesConfiguration": false,
+  "externalImagePulled": false,
+  "userAcceptance": "pending",
+  "applicationReleaseChanged": false,
+  "supplierModelCalls": 0,
+  "internalOrchestrationTokens": null,
+  "internalOrchestrationCost": null,
+  "source": [
+    {
+      "path": "scripts/ssh-access/install-nas120-native.py",
+      "sha256": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b"
+    },
+    {
+      "path": "scripts/ssh-access/nas_ssh_bridge.py",
+      "sha256": "49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34"
+    },
+    {
+      "path": "scripts/ssh-access/nas-vault-bridge.mjs",
+      "sha256": "2d9c48d08f4a5a3c6bc0ded5c772cb3939fd1243b114df6701d9f3d2822a0852"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "artifacts/nas120-independent-ssh/preflight-public.json",
+      "sha256": "d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/docker-preflight-public.json",
+      "sha256": "f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/prepare-diagnostic-public.json",
+      "sha256": "c16d49527f5a6ffabf401903fc3d8a92313ac3bf440cbb684276fb7861e895d7"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/base64-diagnostic-public.json",
+      "sha256": "3f76b3672f183b4f85fe4b77a2267abf86d84532c24b611ebe3ace387bd2c4a8"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/native-prepare-public.json",
+      "sha256": "13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/native-start-public.json",
+      "sha256": "5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/native-status-public.json",
+      "sha256": "1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/old112-before-public.json",
+      "sha256": "71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/old112-disable-public.json",
+      "sha256": "b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/old112-verify-public.json",
+      "sha256": "8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/other-machines-public.json",
+      "sha256": "a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09"
+    },
+    {
+      "path": "artifacts/nas120-independent-ssh/network-public.json",
+      "sha256": "f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597"
+    }
+  ]
+}

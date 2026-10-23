@@ -233,8 +233,19 @@ def metadata_capture(capture, control=CONTROL):
     good, failed = capture / 'activation.json', capture / 'activation-failed.json'
     require(good.exists() != failed.exists(), 'UNAMBIGUOUS_TERMINAL_REQUIRED')
     terminal_path = good if good.exists() else failed
+    operation_path = capture / 'operation.json'
+    # Managed captures without verifiable operation pins are legacy and held,
+    # never promoted to complete/deletable payloads by later captures.
+    require(operation_path.exists() and not operation_path.is_symlink(), 'LEGACY_UNBOUND_HELD')
     terminal, terminal_hash = _json(terminal_path)
     sidecar = 'activate-sidecar-' in capture.name
+    operation, _ = _json(operation_path)
+    pins = operation.get('pins')
+    require(isinstance(pins, dict) and pins.get('node') == '112' and pins.get('release') == manifest['release'], 'RECOVERY_PINS_INVALID')
+    recovery_path = real_path(pins.get('recoveryPath', ''), 0, False)
+    recovery_hash = terminal.get('recoverySHA256')
+    require(isinstance(recovery_hash, str) and SHA.fullmatch(recovery_hash), 'RECOVERY_HASH_MISSING')
+    require(digest(stable_bytes(recovery_path, 0, 16 * 1024 * 1024)) == recovery_hash, 'RECOVERY_SCRIPT_HASH_MISMATCH')
     if sidecar:
         require(terminal.get('node') == '112' and terminal.get('release') == manifest['release']
                 and terminal.get('liveDataRestored') is False

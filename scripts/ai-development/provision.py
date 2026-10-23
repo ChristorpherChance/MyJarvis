@@ -299,6 +299,104 @@ def tool_signature(path):
         return None
 
 
+STATUSLINE_STATUSES = frozenset(('match', 'missing', 'different', 'invalid', 'unreadable', 'unknown', 'not-applicable'))
+STATUSLINE_REASON_CODES = frozenset(
+    {'STATUSLINE_' + layer.upper() + '_' + status_name.upper()
+     for layer in ('script', 'global', 'common', 'current_provider') for status_name in STATUSLINE_STATUSES}
+    | {'STATUSLINE_PROVIDER_COUNT_ZERO', 'STATUSLINE_CURRENT_PROVIDER_NOT_APPLICABLE'}
+    | {'STATUSLINE_PROVIDER_COUNT_' + name.upper() for name in ('matched', 'missing', 'different', 'invalid', 'unknown')})
+
+
+def _setting_state(value, expected, valid=True):
+    if not valid:
+        return 'invalid'
+    if not isinstance(value, dict):
+        return 'missing' if value is None else 'invalid'
+    actual = value.get('statusLine')
+    if actual is None:
+        return 'missing'
+    if not isinstance(actual, dict):
+        return 'invalid'
+    return 'match' if actual == expected else 'different'
+
+
+def inspect_statusline(ctx, database_rows=None, common_value=None, database_error=False):
+    """Compare configured statusline layers without disclosing compared values."""
+    expected = status_setting(ctx)
+    script_state = 'unknown'
+    try:
+        installed, _ = ctx.read(ctx.share / 'terminal-statusline.py')
+        if installed is None:
+            script_state = 'missing'
+        else:
+            script_state = 'match' if installed == (HERE / 'terminal-statusline.py').read_bytes() else 'different'
+    except (OSError, Fault):
+        script_state = 'unreadable'
+
+    def read_layer(path):
+        try:
+            raw, _ = ctx.read(path)
+            if raw is None:
+                return 'missing'
+            try:
+                value = json.loads(raw)
+            except (ValueError, UnicodeError):
+                return 'invalid'
+            if not isinstance(value, dict):
+                return 'invalid'
+            return _setting_state(value, expected)
+        except (OSError, Fault):
+            return 'unreadable'
+
+    global_state = read_layer(ctx.settings)
+    rows = database_rows or []
+    counts = {'total': len(rows), 'matched': 0, 'missing': 0, 'different': 0, 'invalid': 0, 'unknown': 0}
+    per_provider = []
+    if database_error:
+        counts['unknown'] = counts['total']
+        common_state = 'unreadable'
+    else:
+        common_state = 'missing'
+        if common_value is not None:
+            try:
+                common_obj = json.loads(common_value)
+                common_state = _setting_state(common_obj, expected)
+            except (ValueError, UnicodeError, TypeError):
+                common_state = 'invalid'
+        for row in rows:
+            try:
+                value = json.loads(row[2])
+                state = _setting_state(value, expected)
+            except (ValueError, UnicodeError, TypeError):
+                state = 'invalid'
+            if state not in ('match', 'missing', 'different', 'invalid'):
+                state = 'unknown'
+            counts[{'match': 'matched'}.get(state, state)] += 1
+            per_provider.append((row, state))
+    current_rows = [pair for pair in per_provider if bool(pair[0][3])]
+    if database_error or len(current_rows) > 1:
+        current_state = 'unknown'
+    elif not current_rows:
+        current_state = 'not-applicable'
+    else:
+        current_state = current_rows[0][1]
+    layers = {'script': script_state, 'global': global_state, 'common': common_state,
+              'currentProvider': current_state}
+    reason_codes = ['STATUSLINE_' + layer.upper() + '_' + state.upper().replace('-', '_')
+                    for layer, state in (('script', script_state), ('global', global_state),
+                                         ('common', common_state), ('current_provider', current_state))]
+    for key in ('matched', 'missing', 'different', 'invalid', 'unknown'):
+        if counts[key]:
+            reason_codes.append('STATUSLINE_PROVIDER_COUNT_' + key.upper())
+    if counts['total'] == 0 and not database_error:
+        reason_codes.append('STATUSLINE_PROVIDER_COUNT_ZERO')
+    diagnostics = {'diagnosticsVersion': 1, 'layers': layers, 'providers': counts,
+                   'reasonCodes': list(dict.fromkeys(code for code in reason_codes if code in STATUSLINE_REASON_CODES))}
+    configured = (not database_error and script_state == 'match' and global_state == 'match' and common_state == 'match'
+                  and counts['total'] > 0 and counts['matched'] == counts['total'] and len(current_rows) == 1)
+    return diagnostics, configured
+
+
 def inventory(ctx, telemetry=False):
     if telemetry:
         try:
@@ -321,27 +419,20 @@ def inventory(ctx, telemetry=False):
     else:
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
             tools = list(executor.map(lambda name: version(ctx, name), TOOLS))
-    providers, all_provider_status = [], False
+    providers, rows, common_value = [], [], None
+    database_error = False
     try:
         connection = open_database(ctx, True)
         try:
             rows = connection.execute("SELECT id,name,settings_config,is_current FROM providers WHERE app_type='claude' ORDER BY id").fetchall()
             providers = [provider_public(row) for row in rows]
             common_row = connection.execute('SELECT value FROM settings WHERE key=?', ('common_config_claude',)).fetchone()
-            common = read_object(common_row[0], 'COMMON_JSON_INVALID') if common_row else {}
-            all_provider_status = all(read_object(row[2], 'PROVIDER_JSON_INVALID').get('statusLine') == status_setting(ctx) for row in rows)
+            common_value = common_row[0] if common_row else None
         finally:
             connection.close()
     except (OSError, sqlite3.Error, Fault):
-        common = {}
-    try:
-        raw, _ = ctx.read(ctx.settings)
-        global_settings = read_object(raw, 'CLAUDE_JSON_INVALID')
-        configured = (global_settings.get('statusLine') == status_setting(ctx) and common.get('statusLine') == status_setting(ctx) and all_provider_status)
-        installed, _ = ctx.read(ctx.share / 'terminal-statusline.py')
-        configured = configured and installed == (HERE / 'terminal-statusline.py').read_bytes()
-    except (OSError, Fault):
-        configured = False
+        database_error = True
+    statusline, configured = inspect_statusline(ctx, rows, common_value, database_error)
     current_auth = next((p['credentialConfigured'] for p in providers if p['current']), None)
     for tool in tools:
         if tool['name'] == 'claude':
@@ -349,7 +440,7 @@ def inventory(ctx, telemetry=False):
     session, resources = safe_session(ctx)
     return {'observedAt': stamp(), 'tools': tools, 'providers': providers,
             'statusline': {'configured': bool(configured), 'commandSHA256': digest(status_command(ctx).encode()) if configured else None,
-                           'scope': 'global-and-provider', 'resources': True},
+                           'scope': 'global-and-provider', 'resources': True, **statusline},
             'resources': resources, 'sessionSummary': session}
 
 

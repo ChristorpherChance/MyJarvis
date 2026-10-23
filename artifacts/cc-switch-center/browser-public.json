@@ -1,0 +1,39 @@
+{
+  "observedAt": "2026-10-19T18:12:41.611765+00:00",
+  "runtimeBuild": "20261020-cc-switch-center-r56",
+  "url": "https://cc-jarvis.ikvein.com/?mode=platform",
+  "path": "系统运维 → 运维费用 → 终端模型",
+  "status": "passed",
+  "checks": [
+    "all three machines visible",
+    "each machine selected and six real providers displayed",
+    "current provider matches machine snapshot",
+    "current provider deletion disabled",
+    "116 Kimi CCR edit form opened",
+    "API Key input empty and type password",
+    "edit cancelled without saving"
+  ],
+  "observedCurrentProviders": {
+    "101": "JP",
+    "112": "Kimi For Coding-CCR",
+    "116": "JP"
+  },
+  "currentProviderScope": "Observation only; 112 selection was changed outside this feature verification and was preserved.",
+  "apiKeyInput": {
+    "empty": true,
+    "type": "password",
+    "savedKeyRead": false
+  },
+  "browserProviderMutations": 0,
+  "humanUserAcceptance": "pending",
+  "screenshots": [
+    {
+      "path": "artifacts/cc-switch-center/cc-switch-edit-r56.png",
+      "sha256": "44049b9bd0c89cbef2ff687a515cbc1234ec197b7380a6a07d41d4a4466068f3"
+    },
+    {
+      "path": "artifacts/cc-switch-center/cc-switch-manager-r56.png",
+      "sha256": "ca2625cfd92561860df7ad2b3b6e76cd1e2b661f11c052470d0e56dfa4942467"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+ "pythonVersion":"3.14.4",
+ "isolatedEnvironment":".knowledge-venv in task copy; production environment unchanged",
+ "firstInstall":{"requirements":"PyMuPDF1.26.7, rapidocr-onnxruntime1.4.4","result":"failed","reason":"RapidOCR1.4.4 requires Python<3.13; current interpreter3.14"},
+ "successfulInstall":{"PyMuPDF":"1.26.7","scope":"isolated virtualenv only"},
+ "actualDocumentWorkerTests":["DOCX paragraphs/spaces/table text with no invented pages", "DOCX unsafe XML/path traversal/decompression limits", "static HTML body excludes script/navigation/form", "changed-hash/cancellation/worker-timeout boundaries"],
+ "notClaimed":["RapidOCR native scan accuracy", "physical user scanning equipment", "real NAS access or mounted directory", "user-provided document quality"],
+ "supplierModelCalls":0,
+ "productionPythonModified":false
+}

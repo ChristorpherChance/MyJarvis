@@ -1,0 +1,66 @@
+{
+  "id": "JARVIS-20261020-NAS120-SSH59527-ACCESS",
+  "kind": "change",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-20T01:15:21.552Z",
+  "title": "120 NAS域名SSH59527已映射并核通，复用现有通配DNS",
+  "objective": "让120 NAS沿ssh-编号.ikvein.com通过59527使用既有SSH账号认证，保持QTS和原服务策略，并明确SSH、DNS通配与HTTPS的区别。",
+  "changes": [
+    "112新增独立jarvis-nas120-ssh-tunnel.service，单个TCP proxy将广州公网59527转发到192.168.10.120:22；DynamicUser及LoadCredential承载root-only配置，NAS不安装新常驻服务。",
+    "广州仅新增59527/tcp LIMIT规则，FRPS配置和原FRPS/nginx/SSH服务不改；112原7项保护服务PID/状态及5个配置指纹保持。",
+    "权威NS核已有*.ikvein.com覆盖ssh-120及随机ssh-proof，沿用ssh-编号域名，不新增DNS记录、ssh-*前缀通配或HTTPS网站入口。",
+    "连接指南顶部增加四机准确端口表与120连接命令，旧全文和352-356错误更正历史保持；档案增加本轮事实与待验边界。"
+  ],
+  "decisions": [
+    "选择112独立单代理转发而不在NAS安装FRPC：复用已有Linux运行环境，保持QTS账号/SSH及持久化策略；明确代价是NAS公网SSH入口依赖112和新隧道运行。",
+    "沿用用户偏好的ssh-编号.ikvein.com及已有*.ikvein.com，不另改*.ssh命名；通配DNS只解决解析，新机器仍须独立端口、固定目标、可信主机指纹与隧道记录。",
+    "先修安装器并发失败路径可能误停同名服务和已加载unit未识别的问题，再实际execute；清理仅可操作本次创建且已尝试激活、文件身份/全文/FragmentPath仍一致的新unit。"
+  ],
+  "facts": [
+    "公开入口为ssh-120.ikvein.com:59527，账号superopen，目标192.168.10.120:22。原ED25519指纹SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas在局域网和多公网视点严格核同。",
+    "112新unit enabled/active，NASConfigurationModified=false，原账号密码/SSH及collector权限不变；新入口不等于取消112依赖。",
+    "权威dns23.hichina.com对*.ikvein.com、ssh-120.ikvein.com、ssh-proof-20261020.ikvein.com均返回8.163.127.192；DNS未写入。SSH使用自身加密及host key，不需HTTPS网站证书。",
+    "无认证凭据握手实际退出255，表示未提交认证；Windows正常客户端、日本及广州端口与指纹通过不能冒作密码实登。早期Windows keyscan sntrup实现失败与正常完整客户端成功分别保存。",
+    "新公网route以原受限身份执行固定snapshot退出0，superopen认证、原peer签名绑定、qnap/TS-453Dmini返回通过；没有扩大为普通shell、未发送密码、未转发到平台、原collector配置/公钥指纹及identity元数据保持。",
+    "历史NAS9527名仅为原接入资料；本轮受限snapshot不含hostname，未执行或宣称当前hostname核验。",
+    "本轮没有主应用发布、工厂派发或NAS配置写入；供应商模型推理调用0，内部编排Token/金额及账单未知分列，费用只记录不设上限。",
+    "本轮决定799944f8-2e27-4d85-9543-c255e318d250 revision2 implemented、independentAcceptance=false；经验fd274547-cf8d-477f-bde7-651b93b89af9 revision1 inbox、verified=false。项目原notes/environment保持，未发布Skill。"
+  ],
+  "verification": [
+    "安装器初次静审changes-required，P1并发失败误停及P2已加载unit/悬空链接缺口修复后，独立静态复审passed、sourceSHA绑定，再执行安装；静审不替代动态并发故障测试。",
+    "离线FRPC verify、目标banner、实际新unit enabled/active及原保护状态/配置逐项一致通过；广州原三服务PID/FRPS配置保持。",
+    "权威DNS三项查询、多视点strict none-auth与Windows正常客户端默认KEX通过；未用关闭host key校验替代身份确认。",
+    "从112走新公网59527 route的固定受限snapshot严格原pin、原签名peer绑定通过，exit0；原relay配置和identity元数据前后相同，权限未扩大。",
+    "线上CAS同步实际回读passed，selected→implemented两版与经验inbox分别留存，临时sessionCreated/sessionRevoked均true，项目原内容保留。"
+  ],
+  "pending": [
+    "用户本人用NAS既有密码实际登录待确认；普通交互SSH尚未代做验收，密码未读、未改、未代输。",
+    "NAS公网入口依赖112及独立隧道；后续新机器需要单独配置和验证，通配DNS不会自动接入。"
+  ],
+  "lessons": [
+    "DNS覆盖、TCP转发、SSH主机身份、受限账号认证与普通密码交互应分别留证，不能由其中一项通过推定全部完成。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/ssh-120-59527/prepare-public.json",
+    "artifacts/ssh-120-59527/public-review.json",
+    "artifacts/ssh-120-59527/public-review-final.json",
+    "artifacts/ssh-120-59527/install-public.json",
+    "artifacts/ssh-120-59527/gateway-public.json",
+    "artifacts/ssh-120-59527/dns-public.json",
+    "artifacts/ssh-120-59527/lan-target-public.json",
+    "artifacts/ssh-120-59527/network-public.json",
+    "artifacts/ssh-120-59527/windows-public.json",
+    "artifacts/ssh-120-59527/public-auth-snapshot.json",
+    "docs/112与116公网SSH连接说明.md",
+    "docs/贾维斯建设档案.md",
+    "artifacts/ssh-120-59527/final-validation.json",
+    "artifacts/ssh-120-59527/platform-sync-public.json"
+  ]
+}

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="在112贾维斯中管理101、112、116各自的Claude Code模型配置。">
-  <meta name="jarvis-source-sha256" content="f96abad2a9271d4bf192d9e3ce8ab63815c14b5e81487c8d8f70b1ccd3e74e49">
+  <meta name="jarvis-source-sha256" content="4c86409bd1ec1b1d3fe99f49484745d8c64939a2cd7ab1df4e6c2bfba6666041">
   <title>CC Switch 三机模型管理</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -30,7 +30,7 @@
 <body>
   <a class="skip" href="#main-content">跳至正文</a>
   <header class="topbar">
-    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">模型管理 1.0 · R56候选</span></div>
+    <div class="brand"><span class="logo" aria-hidden="true">J</span><span class="brand-name">贾维斯 · 设计文档</span><span class="version">模型管理 1.1 · R56已上线</span></div>
     <div class="tools">
       <button class="tool menu-toggle" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">目录</button>
       <a class="tool source-tool" href="CCSwitch%E4%B8%89%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%90%86.md">Markdown 源文档</a>
@@ -64,7 +64,7 @@
         <div class="stats"><div class="stat"><strong>3台</strong><span>分别管理</span></div><div class="stat"><strong>共用配置</strong><span>平台与本机终端</span></div><div class="stat"><strong>不回显</strong><span>访问密钥</span></div></div>
       </header>
       <article class="article">
-        <div class="intro"><p>三机模型管理已完成本轮实现与限定范围验证，计划随 <code>20261020-cc-switch-center-r56</code> 发布到112。受限控制器与三机连接已安装并实测；正式平台的新界面和API尚未上线，用户现场验收仍待进行。</p>
+        <div class="intro"><p>三机模型管理已随 <code>20261020-cc-switch-center-r56</code> 部署到112贾维斯。打开 <a href="https://cc-jarvis.ikvein.com/?mode=platform">贾维斯平台</a>，进入 <strong>系统运维 → 运维费用 → 终端模型</strong> 即可管理101、112、116；机器详情的 <strong>AI 开发环境</strong> 也保留入口。平台接口与浏览器页面已实际核对，用户本人使用验收仍待进行。</p>
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
         <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">进入模型管理</h2>
@@ -100,8 +100,11 @@ ai manage   # 本机CC Switch管理
 <section class="doc-section" data-section="7"><h2 id="section-7" tabindex="-1">验证与记录</h2>
 <p>本轮API及合并回归27项通过，原生CC Switch隔离适配18项通过；UI组件边界、最简新增配置的角色沿用、明确角色覆写、类型检查和API/网页构建通过。增强后的三机连接已实际核对读取、新增、编辑、删除、Kimi切换及恢复，临时项已清理，已有密钥未回传。</p>
 <p>API初次回归有4项失败，装配与合同生成修复后原断言保持、27项复验通过；初次结果继续保留。以上是本轮限定范围验证，不代替正式页面上线后的使用验收。</p>
-<p>正式发布还需固定源码提交、打包、保留既有静态资源、完整数据快照与隔离恢复，再核发布健康和新入口。供应商推理调用本阶段为0；内部编排Token、金额及账单未知分列，费用只记录不设上限。</p>
+<p>R56已按固定源码提交 <code>28a9e5d55ec73aa9fb48b447025a397452a736a5</code> 打包发布，沿用已恢复的R55/R54兼容资源。完整数据快照与隔离恢复均核同64个文件、59个目录和10个SQLite；平台与observer的版本、健康一致。</p>
+<p>正式HTTPS接口核对三机各6项配置、匿名401、选择各自已经启用的配置及写后读回；配置内容和选择保持。浏览器逐台看到真实列表，当前项删除被禁用，116编辑表单的Key为空且为密码类型，随后取消，未通过浏览器保存配置。验证时101/116为JP，112为Kimi For Coding-CCR；112核验时已选择Kimi CCR，本轮保留该选择；未核实变更主体或时间。</p>
+<p>本次功能验证和发布未发供应商推理请求；内部编排Token、金额及账单未知分列，费用只记录不设上限。</p>
 <p><a href="../artifacts/cc-switch-center/final-validation-public.json">最终实现验证</a> · <a href="../artifacts/cc-switch-center/bridge-verification-final-public.json">三机最终连接验证</a> · <a href="../artifacts/cc-switch-center/api-validation-public.json">API验证与初次失败</a>。</p>
+<p><a href="../artifacts/cc-switch-center/health-public.json">发布健康</a> · <a href="../artifacts/cc-switch-center/live-api-public.json">真实HTTPS接口验证</a> · <a href="../artifacts/cc-switch-center/browser-public.json">浏览器验证</a> · <a href="../artifacts/cc-switch-center/cc-switch-manager-r56.png">管理页面截图</a> · <a href="../artifacts/cc-switch-center/cc-switch-edit-r56.png">编辑表单截图</a>。</p>
 </section>
       </article>
       <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="CCSwitch%E4%B8%89%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%90%86.md">打开源文档</a></footer>

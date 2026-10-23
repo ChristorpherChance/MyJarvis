@@ -1,12 +1,12 @@
 const fs=require('node:fs'),file='docs/openapi-v1-planned.json',d=JSON.parse(fs.readFileSync(file,'utf8')),s=d.components.schemas;
 const str={type:'string'},bool={type:'boolean'},integer={type:'integer',minimum:0},ref=name=>({$ref:'#/components/schemas/'+name}),obj=(properties,required=Object.keys(properties))=>({type:'object',additionalProperties:false,properties,required});
-const names=['chat','family-chat','voice-intent','companion','knowledge','memory','research','development','background'];
+const {names}=require('./model-scenarios-contract.cjs');
 s.PiModelSelection=obj({provider:{type:'string',minLength:1,maxLength:100},model:{type:'string',minLength:1,maxLength:200}});
 s.PiModelPrice=obj(Object.fromEntries(['input','output','cacheRead','cacheWrite'].map(k=>[k,{type:'number',minimum:0,maximum:100000}])));
 s.PiGatewayDefinition=obj({id:{type:'string',pattern:'^(superopen|cc-gateway|gateway-[a-z0-9-]{1,60})$'},name:{type:'string',minLength:1,maxLength:80},baseUrl:{type:'string',format:'uri',maxLength:2000},api:{enum:['anthropic-messages','openai-completions']}});
 s.PiRoutes=obj(Object.fromEntries(names.map(n=>[n,ref('PiModelSelection')])),[]);
 s.PiScenario=obj({id:{enum:names},name:str,description:str,provider:str,model:str,inherited:bool,configured:bool,pricingKnown:bool,budgetReady:bool});
-s.PiModelSettings=obj({provider:str,model:str,configured:bool,providers:{type:'array',items:obj({id:str,name:str,credentialConfigured:bool,models:{type:'array',items:obj({id:str,name:str})}})},gateway:obj({provider:str,baseUrl:str,api:str,credentialConfigured:bool,pricing:str}),gateways:{type:'array',items:obj({...s.PiGatewayDefinition.properties,provider:str,credentialConfigured:bool,modelCount:integer,pricing:str})},routing:obj({revision:integer,routes:ref('PiRoutes'),prices:{type:'array',items:obj({...s.PiModelSelection.properties,price:ref('PiModelPrice')})},scenarios:{type:'array',minItems:9,maxItems:9,items:ref('PiScenario')}})});
+s.PiModelSettings=obj({provider:str,model:str,configured:bool,providers:{type:'array',items:obj({id:str,name:str,credentialConfigured:bool,models:{type:'array',items:obj({id:str,name:str})}})},gateway:obj({provider:str,baseUrl:str,api:str,credentialConfigured:bool,pricing:str}),gateways:{type:'array',items:obj({...s.PiGatewayDefinition.properties,provider:str,credentialConfigured:bool,modelCount:integer,pricing:str})},routing:obj({revision:integer,routes:ref('PiRoutes'),prices:{type:'array',items:obj({...s.PiModelSelection.properties,price:ref('PiModelPrice')})},scenarios:{type:'array',minItems:names.length,maxItems:names.length,items:ref('PiScenario')}})});
 s.GatewayDiscoverInput=obj({apiKey:{type:'string',minLength:1,maxLength:8192,writeOnly:true},provider:{type:'string',maxLength:100},definition:ref('PiGatewayDefinition')},[]);
 s.GatewayCatalog.properties.provider=str;s.GatewayCatalog.properties.baseUrl={type:'string',format:'uri'};s.GatewayCatalog.properties.api=s.PiGatewayDefinition.properties.api;
 s.PiGatewaySaveInput=obj({definition:ref('PiGatewayDefinition'),apiKey:{type:'string',minLength:1,maxLength:8192,writeOnly:true}},['definition']);
@@ -16,7 +16,7 @@ s.PiConnectionCheckInput=obj({scenario:{enum:names},selection:ref('PiModelSelect
 s.PiDefaultModelInput=obj({...s.PiModelSelection.properties,apiKey:{type:'string',minLength:1,maxLength:8192,writeOnly:true}},['provider','model']);
 s.PiDefaultModelResult=obj({...s.PiModelSettings.properties,ok:{const:true}});
 function operation(id,summary,result,input){return {operationId:id,summary,tags:['模型配置'],security:[{SessionCookie:[]}],'x-implementation-status':'implemented',...(input?{requestBody:{required:true,content:{'application/json':{schema:ref(input)}}}}:{}),responses:{200:{description:'服务器持久化配置；不返回任何密钥',content:{'application/json':{schema:ref(result)}}},400:{description:'模型、协议或参数无效'},401:{description:'管理员未认证'},409:{description:'活动会话或配置版本冲突'}}};}
-d.paths['/api/settings/pi']??={};d.paths['/api/settings/pi'].get=operation('getPiModelSettings','读取默认模型、网关目录与九类场景分配','PiModelSettings');
+d.paths['/api/settings/pi']??={};d.paths['/api/settings/pi'].get=operation('getPiModelSettings','读取默认模型、网关目录与各类场景分配','PiModelSettings');
 d.paths['/api/settings/pi'].put=operation('savePiDefaultModel','选择平台默认模型；显式场景覆盖保持独立','PiDefaultModelResult','PiDefaultModelInput');
 d.paths['/api/settings/pi/gateways']={post:operation('savePiGateway','读取认证模型目录并通过Pi原生登录保存网关；保留默认模型','PiModelSettings','PiGatewaySaveInput')};
 d.paths['/api/settings/pi/routing']={put:operation('savePiModelRoutes','带版本保存完整场景覆盖表，空表恢复沿用默认','PiModelSettings','PiRoutingInput')};

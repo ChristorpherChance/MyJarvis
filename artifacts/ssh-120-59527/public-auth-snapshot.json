@@ -1,0 +1,63 @@
+{
+  "schema": "ssh-120-59527-public-restricted-auth-v1",
+  "observedAt": "2026-10-20T01:12:16.085057+00:00",
+  "sourceHost": "112",
+  "endpoint": "ssh-120.ikvein.com:59527",
+  "status": "passed",
+  "sshExitCode": 0,
+  "fixedRemoteCommand": "snapshot",
+  "normalExistingCollectorPath": true,
+  "strictOriginalPin": true,
+  "hostKeyAlias": "192.168.10.120",
+  "expectedHostKeyFingerprint": "SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas",
+  "userPasswordSent": false,
+  "privateKeyMaterialReadOrTransferredByAgent": false,
+  "existingSshIdentityUsedByOpenSSH": true,
+  "rawEnvelopePersisted": false,
+  "ordinaryInteractiveLoginVerified": false,
+  "ordinaryPasswordLoginVerified": false,
+  "collectorPermissionsExpanded": false,
+  "nasConfigurationChanged": false,
+  "protectedBefore": {
+    "configurationSha256": {
+      "/etc/jarvis-cloud-relay/ssh_config": "1258734c3d10331cf0c277f95f35cfc9ae2dd7393e1625797cac3133724cacf2",
+      "/etc/jarvis-cloud-relay/known_hosts": "23efb2a1bbc39c49b0589b5cd26414c370fc04d166c853a95c6b41916c575563"
+    },
+    "privateIdentityMetadata": {
+      "path": "/var/lib/jarvis-cloud-relay/.ssh/id_ed25519_nas",
+      "dev": 2050,
+      "inode": 655689,
+      "size": 419,
+      "mtimeNs": 1791469648862268988,
+      "mode": "0o400",
+      "uid": 994,
+      "gid": 972
+    },
+    "publicIdentitySha256": "1dda83825b09b9c739bf7214838db37fe98d202af0db6ec64f5ca49508d0788d"
+  },
+  "authenticatedAccount": "superopen",
+  "signatureAndOriginalPeerBindingVerified": true,
+  "envelopeVersion": 1,
+  "storageKind": "qnap",
+  "storageModel": "TS-453Dmini",
+  "snapshotObservedAt": "2026-10-20T01:12:15Z",
+  "forwardedToPlatform": false,
+  "protectedAfter": {
+    "configurationSha256": {
+      "/etc/jarvis-cloud-relay/ssh_config": "1258734c3d10331cf0c277f95f35cfc9ae2dd7393e1625797cac3133724cacf2",
+      "/etc/jarvis-cloud-relay/known_hosts": "23efb2a1bbc39c49b0589b5cd26414c370fc04d166c853a95c6b41916c575563"
+    },
+    "privateIdentityMetadata": {
+      "path": "/var/lib/jarvis-cloud-relay/.ssh/id_ed25519_nas",
+      "dev": 2050,
+      "inode": 655689,
+      "size": 419,
+      "mtimeNs": 1791469648862268988,
+      "mode": "0o400",
+      "uid": 994,
+      "gid": 972
+    },
+    "publicIdentitySha256": "1dda83825b09b9c739bf7214838db37fe98d202af0db6ec64f5ca49508d0788d"
+  },
+  "originalConfigurationAndIdentityMetadataUnchanged": true
+}

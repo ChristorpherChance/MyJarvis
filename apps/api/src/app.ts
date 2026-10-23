@@ -19,6 +19,8 @@ import { IdentityRuntime, registerIdentityRoutes, runtimeOwnAuthRoute, RuntimeAc
 import { VoiceRuntime, registerVoiceRuntimeRoutes } from './runtime/voice.js';
 import { KnowledgeRuntime, registerKnowledgeRuntime } from './runtime/knowledge-runtime.js';
 import {registerFamilyKnowledgeRoutes} from './runtime/family-knowledge.js';
+import {registerKnowledgeDocumentRoutes} from './runtime/knowledge-document-routes.js';
+import {registerKnowledgeSourcePreviewRoutes} from './runtime/knowledge-source-preview.js';
 import {registerOfflineDraftSync} from './runtime/offline-draft-sync.js';
 import {registerEvidenceAssistantRoutes,evidenceAssistantOwnAuth} from './runtime/evidence-assistant.js';
 import { ExecutionRuntime } from './runtime/execution-runtime.js';
@@ -60,8 +62,11 @@ import {registerProjectSupervisorRoutes} from './runtime/project-supervisor-rout
 import {createProjectSupervisorModel} from './runtime/project-supervisor-model.js';
 import {registerExperienceSupervisorRoutes} from './runtime/experience-supervisor-routes.js';
 import {registerProjectAutonomyRoutes} from './runtime/project-autonomy-routes.js';
+import {registerServerPlanningRoutes} from './runtime/server-planning-routes.js';
 import {ProjectDecisionRuntime} from './runtime/project-decision-runtime.js';
 import {registerProjectDecisionRoutes} from './runtime/project-decision-routes.js';
+import {ProjectAcceptanceRuntime} from './runtime/project-acceptance-runtime.js';
+import {registerProjectAcceptanceRoutes} from './runtime/project-acceptance-routes.js';
 import {searchAuthorizedKnowledge,searchAuthorizedMemories} from './runtime/personal-retrieval.js';
 import {parseInboxDocument} from './runtime/inbox-document-parser.js';
 
@@ -91,7 +96,7 @@ const capabilities = [
   {id:'web',name:'联网资料',status:'ready',description:'真实搜索、公开网页与新闻源；按本人隐私策略查询'},
   {id:'connectors',name:'外部知识',status:'ready',description:'动态目录与HTTP知识源、真实同步及授权过滤'},
 ];
-export async function createApp(options: {dataDir: string; pi?: PiService; webDir?: string; pythonExecutable?:string; whisperModelDirectory?:string; weatherProvider?:WeatherProvider; allowedHosts?:string[]; tls?:{key:Buffer;cert:Buffer};healthInstanceId?:string;nodeConfiguration?:NodeConfiguration|null;remoteOperations?:{queue?:string;configPath?:string};aiDevelopment?:{queue?:string;configPath?:string;now?:()=>number};ccSwitch?:CcSwitchOptions}) {
+export async function createApp(options: {dataDir: string; pi?: PiService; webDir?: string; pythonExecutable?:string; whisperModelDirectory?:string; weatherProvider?:WeatherProvider; allowedHosts?:string[]; tls?:{key:Buffer;cert:Buffer};healthInstanceId?:string;nodeConfiguration?:NodeConfiguration|null;remoteOperations?:{queue?:string;configPath?:string};aiDevelopment?:{queue?:string;configPath?:string;now?:()=>number};ccSwitch?:CcSwitchOptions;fleetDocuments?:{planningPath?:string;refreshIntervalMs?:number;now?:()=>Date}}) {
   let shuttingDown=false;
   const startupCleanup:(()=>unknown|Promise<unknown>)[]=[];let startupApp:ReturnType<typeof Fastify>|undefined;
   try {
@@ -180,6 +185,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   let autonomy:ProjectAutonomyRuntime|undefined;
   const execution=new ExecutionRuntime(v1,{powerConfiguration:()=>power.configuration(),powerReading:(agent,raw)=>power.accept(agent,raw),directory:join(options.dataDir,'execution'),machine,stopped,actorId:ACTOR,runPi:development.run,piReady:()=>pi.health('development').configured,supervised:()=>executionPolicy()?.supervise===true,taskSupervised:taskId=>autonomy?.supervisesTask(taskId)??false,autoWake:()=>executionPolicy()?.autoWake===true,preflight:input=>governance.preflight(input),beforeExecution:input=>governance.reserveExecution(input),afterExecution:input=>governance.releaseExecution(input),onExternalUsage:input=>governance.importUsage(input),onUsage:input=>{if(input.usage.ledgerRecorded)return;if(input.usage.inputTokens===undefined||input.usage.outputTokens===undefined)return;governance.executionUsage({...input.usage,inputTokens:input.usage.inputTokens,outputTokens:input.usage.outputTokens,runId:'execution_'+input.runId,actorId:ACTOR,provider:input.usage.provider??input.agentId??'executor',model:input.usage.model??'cli-reported',projectId:input.projectId,taskId:input.taskId,machineId:input.machineId,executorId:input.executorId,usageId:`execution_${input.runId}`,measuredAt:input.at});}});
   startupCleanup.push(()=>execution.close());
+  const projectAcceptance=new ProjectAcceptanceRuntime(v1!,identity,execution);
   autonomy=new ProjectAutonomyRuntime(v1,execution,{directory:join(options.dataDir,'project-autonomy'),actorId:ACTOR,stopped});
   startupCleanup.push(()=>autonomy?.close());
   const supervisionPlans=new ProjectSupervisionPlanRuntime(v1,execution,{directory:join(options.dataDir,'project-supervision-plans'),autonomy:projectId=>autonomy?.get(projectId)});
@@ -230,7 +236,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
       if (origin.host !== host || !['http:','https:'].includes(origin.protocol)) throw new ApiError('ORIGIN_DENIED','请从贾维斯页面操作',403);
     }
     if (['/api/health','/api/auth/state','/api/auth/setup','/api/auth/login','/api/auth/logout'].includes(route)) return;
-    if(evidenceAssistantOwnAuth(req.method,req.url.split('?')[0])||runtimeOwnAuthRoute(route)||notificationOwnAuthRoute(route)||webOwnAuthRoute(route)||isExecutionProtocolPath(req.method,req.url.split('?')[0]))return;
+    if(route==='/api/runtime/server-planning/document'||evidenceAssistantOwnAuth(req.method,req.url.split('?')[0])||runtimeOwnAuthRoute(route)||notificationOwnAuthRoute(route)||webOwnAuthRoute(route)||isExecutionProtocolPath(req.method,req.url.split('?')[0]))return;
     if (!store.validateLogin(req.cookies[COOKIE] ?? '')) return reply.code(401).send(route.startsWith('/api/v1/')?{requestId:randomUUID(),code:'FORBIDDEN',message:'请先登录'}:{error:{code:'LOGIN_REQUIRED',message:'请先登录'}});
   });
   app.setErrorHandler((error, req, reply) => {
@@ -406,6 +412,8 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   v1=registerV1(app,store,pi,{repository:v1,stopped,inboxMaterials:{principal:req=>identity.requireAdmin(req),current:p=>identity.isPrincipalCurrent(p),stopped,document:(bytes,mime,sha256,signal)=>parseInboxDocument({bytes,mime,sha256,pythonExecutable,signal}),transcribe:(p,bytes,mime,input)=>voice.transcribeMaterial(p,bytes,mime,input),policy:()=>{const c=knowledge!.configuration();return {allowedHttpOrigins:c.allowedHttpOrigins,allowedDirectoryRoots:c.allowedDirectoryRoots,timeoutMs:c.timeoutMs,maxBytes:c.maxBytes,maxDocuments:c.maxDocuments};}},dispatchers:[platformRuntime,knowledge,execution],sanitizeRead:(domain,record,actor)=>domain==='machines'?execution.sanitizeMachine(record):knowledge!.sanitizeRead(domain,record,actor),ready:(agent,machineId)=>agent==='supervisor'?execution.capabilities().development:agent==='wol'?true:execution.ready(agent,machineId),capabilities:()=>({familyAuthentication:true,development:execution.capabilities().development,remoteAgents:execution.capabilities().remoteAgents,voice:!!voice.getConfig('asr')&&!!voice.getConfig('tts'),ocr:knowledge!.capabilities().ocr.configured,knowledge:knowledge!.capabilities(),nodes:execution.capabilities(),voiceEngines:{asr:!!voice.getConfig('asr'),tts:!!voice.getConfig('tts')},budget:governance.summary(),descriptions:{inbox:'签名节点按已授权字段提交收件，保留原话和人工归档',research:'真实Pi有限研究、预算和时限、取消与人工决策',tasks:'已实现受控节点执行、租约、日志、停止、预算与独立验收；执行器需先配置',memory:'按认证身份隔离，候选确认、自动整理与文字清理',personas:'真实成员认证、偏好与声音映射，房间配对独立',sources:'目录与HTTP连接器、授权过滤、真实同步与本地检索',books:'真实OCR多轮识别、页序和疑点复核、版本发布',machines:'Ed25519节点配对、真实遥测、WoL及受控休眠',services:'真实探测、固定审批绑定的发布和恢复执行',operations:'实际备份演练、节点用量及预算门禁',voice:'中央音频、ASR、Pi对话、TTS、播放回执与打断',settings:'运行引擎、身份配对、知识连接器及节点配置'}}),afterCommand:(domain,command,receipt)=>{if(domain==='voice'&&command==='interrupt'&&receipt.data.speech?.jobId)voice.cancel(receipt.data.speech.jobId,{actorId:ACTOR,profileId:'me',administrator:true});}});
   registerIdentityRoutes(app,identity,store,pi);registerVoiceRuntimeRoutes(app,voice);registerKnowledgeRuntime(app,knowledge,{authenticated:cookie=>store.validateLogin(cookie),authorizeReference:req=>identity.requireAdmin(req)});registerExecutionRoutes(app,execution,cookie=>store.validateLogin(cookie),identity);registerGovernanceRoutes(app,governance,identity);registerBillingRoutes(app,billing,identity);registerClusterRoutes(app,cluster,identity);memory.register(app);
   registerFamilyKnowledgeRoutes(app,v1,identity);
+  registerKnowledgeDocumentRoutes(app,v1,{actorId:ACTOR,authenticated:cookie=>store.validateLogin(cookie),authorize:req=>{identity.requireAdmin(req)}},{directory:join(options.dataDir,'inbox-materials')});
+  registerKnowledgeSourcePreviewRoutes(app,v1,identity,knowledge);
   registerEvidenceAssistantRoutes(app,v1,identity,pi,{stopped});
   const offlineDraftSync=registerOfflineDraftSync(app,identity,store.databasePath);
   startupCleanup.push(()=>offlineDraftSync.close());
@@ -415,6 +423,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   registerSoftwareFactoryRoutes(app,softwareFactory);
   registerProjectAutonomyRoutes(app,autonomy,identity,join(workspaceRoot,'docs','软件工厂无人值守交付总纲.html'));
   registerProjectDecisionRoutes(app,projectDecisions,identity);
+  registerProjectAcceptanceRoutes(app,projectAcceptance,identity);
   registerProjectSupervisionPlanRoutes(app,supervisionPlans,identity);
   registerSupervisionWorkRoutes(app,supervisionWork,identity);
   registerProjectSupervisorRoutes(app,projectSupervisor,identity);
@@ -424,6 +433,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
   registerAiDevelopment(app,aiDevelopment);
+  registerServerPlanningRoutes(app,identity,workspaceRoot);
   registerCcSwitchRoutes(app,identity,v1,options.ccSwitch);
   knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');
@@ -434,7 +444,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   // Stop SDK streams before Fastify waits for existing SSE connections to close.
   app.addHook('preClose',async()=>{shuttingDown=true;platformRuntime.close();remoteOps?.close();await applications!.close();await cluster.close();await companion!.close();await voiceIntents.close();supervisionWork.close();await notifications!.close();weather!.close();await Promise.all([memory.close(),knowledge!.close(),execution.close(),voice.close()]);await autonomy?.close();await pi.dispose();});
   app.addHook('onClose',async()=>{supervisionPlans.close();projectDecisions.close();web?.close();identity.close();billing.close();governance.close();store.close();});
-  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,aiDevelopment,softwareFactory,autonomy,projectSupervisor,projectWorkbench};
+  return {app,store,pi,v1,identity,voice,knowledge,execution,governance,billing,memory,voiceIntents,notifications,weather,web,companion,cluster,applications,remoteOps,aiDevelopment,softwareFactory,autonomy,projectSupervisor,projectWorkbench,projectAcceptance};
   }catch(error){
     try{await startupApp?.close();}catch{/* Preserve the initialization error. */}
     for(const close of startupCleanup.reverse())try{await close();}catch{/* Other handles must still be released. */}

@@ -1,0 +1,209 @@
+{
+  "schema": "jarvis-cc-switch-platform-sync-prepared-v1",
+  "status": "prepared",
+  "release": "20261020-cc-switch-center-r56",
+  "sourceCommit": "28a9e5d55ec73aa9fb48b447025a397452a736a5",
+  "projectMatch": "exact name / personal / owner server-admin; 0 or >1 skips without guessing",
+  "session": "jarvis account; 120s in-memory token; finally delete only own hash",
+  "plannedActions": [
+    "selected decision then CAS append implementation; independentAcceptance false",
+    "experience capture inbox and verified false",
+    "GET current project; append environment notes only within existing schema limits; preserve all previous content"
+  ],
+  "idempotency": "fixed marker plus deterministic command IDs; GET existing marker before writes; no automatic retries",
+  "noModelCredentialReads": true,
+  "noProductCodeChanges": true,
+  "noDeployment": true,
+  "productionExecuted": false,
+  "refs": [
+    {
+      "reference": "artifacts/cc-switch-center/live-api-public.json",
+      "sha256": "754a0ff477eabc0b426f7e774639b213e4be8b2f513c6cd9cd69b77012d155ab",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/browser-public.json",
+      "sha256": "e8fec3b0a6a2f73654647198306395d1f2fe2d5aaaaadb77c0bf815468f259ae",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/health-public.json",
+      "sha256": "474e00c14ee32def1075bd107061377bc41ec5de9a38f54e07b4a520eb770f0d",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/stage-public.json",
+      "sha256": "8926411d62dd949452609e2a5bc0959f361762c5257863dfe3b48b19b449b3e2",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/cc-switch-center/api-validation-public.json",
+      "sha256": "6959b59348658b46e4ba5a28eb4094392b487915ef74f164c123f250ef3aa04e",
+      "kind": "test-report"
+    }
+  ],
+  "decisionTemplate": {
+    "commandId": "55bfb631-3c69-40b0-8398-5753444f793e",
+    "expectedVersion": 0,
+    "changeOf": null,
+    "questionSummary": "[CCSWITCH-R56-20261020] 三机终端模型在贾维斯集中管理，并与各机本地入口共用配置",
+    "context": {
+      "observedAt": "2026-10-19T18:12:41.611Z",
+      "goalSpecHash": null,
+      "sourceFingerprint": null,
+      "sourceVersion": "R56 / release 28a9e5d55ec73aa9fb48b447025a397452a736a5 / canonical MyJarvis 60e4037 同tree核对",
+      "runId": null,
+      "taskId": null,
+      "machineId": null,
+      "objectives": [
+        "CCSWITCH-CENTER",
+        "PRESERVE-LOCAL-CONFIG",
+        "SECRET-BOUNDARY"
+      ],
+      "constraints": [
+        "保留每机本地管理和既有模型选择；不统一覆盖三机当前项",
+        "模型凭据不进入平台普通数据、审计、公开报告或已保存值回显",
+        "实际部署、技术核验、用户本人验收分别记录"
+      ],
+      "situation": "[CCSWITCH-R56-20261020] R56已上线：系统运维→运维费用→终端模型，管理101、112、116各机CC Switch。\n各机本地终端/系统入口保留，与平台共用各机实际配置；新增、编辑、删除及切换限定本人已登记节点，按revision拒绝并发覆盖。\n实证：三机各6项；HTTPS三机均对当前项作同项切换并读回一致；浏览器三机列表/116编辑框已核对，密钥输入为空，取消未保存。\n核验时112当前为Kimi For Coding-CCR，本轮保留；101/116为JP。未核实112变更主体或时间，此处只记录观测，不锁定后续选择。\n模型凭据仅送目标节点；页面、审计及公开报告不读取已保存密钥。116原CCR网关与广州Kimi入口保持。\ncanonical MyJarvis 60e4037与发布源码28a9e5d55ec73aa9fb48b447025a397452a736a5已核对同tree；本记录不改源码或部署。\n用户本人操作验收仍待完成；决策为AI事实回顾，independentAcceptance=false，经验仅inbox未验证，不发布Skill。"
+    },
+    "options": [
+      {
+        "id": "platform-and-local",
+        "title": "平台集中管理并保留每机本地入口",
+        "advantages": [
+          "三机同页操作",
+          "本地与平台共用目标机实际配置",
+          "有并发修订与失败恢复边界"
+        ],
+        "disadvantages": [
+          "需要私有受控worker和节点连接",
+          "已运行Claude进程仍需重开"
+        ],
+        "impact": "平台集中管理并保留每机本地入口",
+        "compliesWithGoals": "yes",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "CCSWITCH-CENTER",
+          "PRESERVE-LOCAL-CONFIG",
+          "SECRET-BOUNDARY"
+        ],
+        "operationalImpact": 1
+      },
+      {
+        "id": "local-only",
+        "title": "仅沿用每机终端菜单",
+        "advantages": [
+          "已有本地入口可继续使用"
+        ],
+        "disadvantages": [
+          "不能满足用户新增的平台集中管理目标"
+        ],
+        "impact": "仅沿用每机终端菜单",
+        "compliesWithGoals": "no",
+        "withinAuthority": "yes",
+        "environmentEvidence": "available",
+        "missingEvidence": [],
+        "reversibility": "bounded",
+        "coveredObjectives": [
+          "PRESERVE-LOCAL-CONFIG",
+          "SECRET-BOUNDARY"
+        ],
+        "operationalImpact": 0
+      }
+    ],
+    "chosenId": "platform-and-local",
+    "decisionRationale": "用户明确要求把三机切换及模型增改删纳入112贾维斯。已发布实现共用目标机CC Switch配置，减少三机管理步骤，同时保留本地入口、版本冲突保护和密钥边界。此为完成后的真实事实回顾，未冒充事前记录或用户验收。",
+    "basisRefs": [
+      {
+        "reference": "artifacts/cc-switch-center/live-api-public.json",
+        "sha256": "754a0ff477eabc0b426f7e774639b213e4be8b2f513c6cd9cd69b77012d155ab",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-switch-center/browser-public.json",
+        "sha256": "e8fec3b0a6a2f73654647198306395d1f2fe2d5aaaaadb77c0bf815468f259ae",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-switch-center/health-public.json",
+        "sha256": "474e00c14ee32def1075bd107061377bc41ec5de9a38f54e07b4a520eb770f0d",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-switch-center/stage-public.json",
+        "sha256": "8926411d62dd949452609e2a5bc0959f361762c5257863dfe3b48b19b449b3e2",
+        "kind": "observation"
+      },
+      {
+        "reference": "artifacts/cc-switch-center/api-validation-public.json",
+        "sha256": "6959b59348658b46e4ba5a28eb4094392b487915ef74f164c123f250ef3aa04e",
+        "kind": "test-report"
+      }
+    ],
+    "risk": "medium",
+    "affectedObjectives": [
+      "CCSWITCH-CENTER",
+      "PRESERVE-LOCAL-CONFIG",
+      "SECRET-BOUNDARY"
+    ],
+    "rollbackPlan": {
+      "plan": "出现权限、配置或可用性问题时，先停止平台新增模型管理操作并核对目标机实际配置，再依据已验证的备份/发布恢复点制定有范围的恢复。继续保留各机本地入口和既有CCR网关；不自动恢复模型选择或覆盖外部改动。",
+      "triggers": [
+        "出现跨机、跨所有者或只读节点写入",
+        "平台与本地实际配置不一致",
+        "配置应用失败且需要人工核对"
+      ],
+      "impact": "集中管理入口可能暂时停用，本机管理仍可使用；已发生动作和历史证据保留。",
+      "requiresNewExecutionPlan": true
+    },
+    "actions": [],
+    "status": "selected",
+    "origin": "ai"
+  },
+  "implementationTemplate": {
+    "commandId": "7476dc74-9a15-4184-8559-36f638b1c8e1",
+    "expectedVersion": 1,
+    "origin": "ai",
+    "reason": "依据R56已发生发布、HTTPS和浏览器公开证据追加实施；保留选择版本，独立/用户验收仍未完成。",
+    "actions": [
+      {
+        "summary": "[CCSWITCH-R56-20261020] 已在112发布三机集中管理；HTTPS三机各6项、同当前项mutation及读回通过；浏览器三机列表与编辑密钥空值/取消已核对。未保存编辑，112核验时的KimiCCR选择保持；未核实变更主体。",
+        "at": "2026-10-19T18:12:41.611Z",
+        "state": "performed",
+        "evidenceRefs": [
+          {
+            "reference": "artifacts/cc-switch-center/live-api-public.json",
+            "sha256": "754a0ff477eabc0b426f7e774639b213e4be8b2f513c6cd9cd69b77012d155ab",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-switch-center/browser-public.json",
+            "sha256": "e8fec3b0a6a2f73654647198306395d1f2fe2d5aaaaadb77c0bf815468f259ae",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-switch-center/health-public.json",
+            "sha256": "474e00c14ee32def1075bd107061377bc41ec5de9a38f54e07b4a520eb770f0d",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-switch-center/stage-public.json",
+            "sha256": "8926411d62dd949452609e2a5bc0959f361762c5257863dfe3b48b19b449b3e2",
+            "kind": "observation"
+          },
+          {
+            "reference": "artifacts/cc-switch-center/api-validation-public.json",
+            "sha256": "6959b59348658b46e4ba5a28eb4094392b487915ef74f164c123f250ef3aa04e",
+            "kind": "test-report"
+          }
+        ]
+      }
+    ]
+  },
+  "experienceTitle": "[CCSWITCH-R56-20261020] 多节点模型管理的配置权属、并发保护与回滚边界",
+  "environmentAppend": "[CCSWITCH-R56-20261020] R56已上线：系统运维→运维费用→终端模型，管理101、112、116各机CC Switch。\n各机本地终端/系统入口保留，与平台共用各机实际配置；新增、编辑、删除及切换限定本人已登记节点，按revision拒绝并发覆盖。\n实证：三机各6项；HTTPS三机均对当前项作同项切换并读回一致；浏览器三机列表/116编辑框已核对，密钥输入为空，取消未保存。\n核验时112当前为Kimi For Coding-CCR，本轮保留；101/116为JP。未核实112变更主体或时间，此处只记录观测，不锁定后续选择。\n模型凭据仅送目标节点；页面、审计及公开报告不读取已保存密钥。116原CCR网关与广州Kimi入口保持。\ncanonical MyJarvis 60e4037与发布源码28a9e5d55ec73aa9fb48b447025a397452a736a5已核对同tree；本记录不改源码或部署。\n用户本人操作验收仍待完成；决策为AI事实回顾，independentAcceptance=false，经验仅inbox未验证，不发布Skill。"
+}

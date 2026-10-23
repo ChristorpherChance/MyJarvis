@@ -1,0 +1,21 @@
+/* Keep navigation hierarchy consistent across the desktop sidebar and mobile drawer. */
+.demo-app .demo-sidebar .demo-nav-item{min-height:42px}
+.demo-sidebar svg[data-icon]{display:block}
+@media(max-width:700px){.demo-app.mobile-nav-open .demo-sidebar .demo-nav-item{min-height:46px}}
+.demo-app .demo-sidebar .nav-group-head{gap:11px;border:1px solid transparent;min-height:42px;padding:8px 12px;font-size:13px;text-align:left;white-space:nowrap}
+.demo-app .nav-group-head b{font-weight:500;letter-spacing:.05em}
+.demo-app .nav-group-head .nav-group-icon{display:grid;place-items:center;width:19px;flex-shrink:0;color:var(--accent);font-size:16px;opacity:.65}
+.demo-app .demo-sidebar .nav-group>.demo-nav-item{padding-left:24px}
+.demo-app.nav-collapsed .demo-sidebar .nav-group>.demo-nav-item{padding:8px 0}
+@media(min-width:701px) and (max-width:820px){
+ .demo-app:not(.mobile-nav-open) .demo-sidebar .nav-group-head{padding:8px 3px;justify-content:center}
+ .demo-app:not(.mobile-nav-open) .nav-group-head b,.demo-app:not(.mobile-nav-open) .nav-group-icon{display:none}
+ .demo-app:not(.mobile-nav-open) .demo-sidebar .nav-group>.demo-nav-item{padding:8px 0}
+}
+@media(max-width:820px){
+ .demo-app.mobile-nav-open .demo-sidebar .nav-group-head{font-size:13px}
+}
+@media(max-width:700px){
+ .demo-app.mobile-nav-open .demo-sidebar .nav-group-head{min-height:46px;padding:10px 14px;font-size:14px}
+ .demo-app.mobile-nav-open .demo-sidebar .nav-group>.demo-nav-item{padding:10px 26px;justify-content:flex-start}
+}

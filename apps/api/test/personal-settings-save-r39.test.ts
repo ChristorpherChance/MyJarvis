@@ -6,6 +6,7 @@ import {join,resolve,sep} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {createApp} from '../src/app.js';
 import type {PiService} from '../src/pi.js';
+import {validateCommand} from '../src/v1/contract.js';
 
 test('本人设置可关闭和重设安静时间，HTTP回执与读取一致，非法输入及旧版本不覆盖',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'jarvis-personal-settings-r39-'));
@@ -24,6 +25,9 @@ test('本人设置可关闭和重设安静时间，HTTP回执与读取一致，�
   const read=async()=>{const response=await app.inject({url:'/api/v1/personas',headers});assert.equal(response.statusCode,200,response.body);return response.json().data.items.find((r:any)=>r.kind==='persona'&&r.profileId==='me');};
   assert.equal((await read()).revision,saved.version);
   const voice=await app.inject({url:'/api/runtime/voice/state',headers});assert.equal(voice.statusCode,200,voice.body);assert.equal(voice.json().guard.quietHoursActive,false);
+  const full={commandId:randomUUID(),expectedVersion:saved.version,scope:'private',payload:persona};
+  assert.doesNotThrow(()=>validateCommand('/api/v1/personas/commands/save',full));
+  for(const payload of [{...persona,start:'',end:'06:45'},{...persona,start:'21:15',end:''},{...persona,start:'24:00',end:'06:45'}])assert.throws(()=>validateCommand('/api/v1/personas/commands/save',{...full,payload}));
   result=await command('quiet-hours',{profileId:'me',start:'21:15',end:'06:45',timezone:'Asia/Shanghai'},saved.version);assert.equal(result.statusCode,200,result.body);saved=result.json();
   result=await command('quiet-hours',{profileId:'me',start:'',end:'',timezone:'Asia/Shanghai'},saved.version);assert.equal(result.statusCode,200,result.body);saved=result.json();
   const stable=await read();assert.equal(stable.quietStart,'');assert.equal(stable.quietEnd,'');

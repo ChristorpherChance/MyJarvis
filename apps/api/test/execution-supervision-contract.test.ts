@@ -17,6 +17,8 @@ test('a complete supervised start receipt accepts the actual native execution me
  assert.doesNotThrow(()=>assertReceipt('/api/v1/tasks/commands/start',{requestId:'command',version:2,data:task,events:[]}));
  valid('Task',{...task,status:'validating',executionStatus:'succeeded',executionResult:result});
  valid('ExecutionResultInput',{runId:request.id,leaseToken:'lease',outcome:'success',exitCode:0,rounds:1,summary:'Verified',usage,validation:{exitCode:0},sessionId:'native-session',sessionBilling:result.sessionBilling,failureKind:'network'});
+ valid('ExecutionResult',{...result,executionMetadata:{agentBuild:'fixture-build',programSha256:'a'.repeat(64),invocationId:'invocation-1'}});
+ valid('ExecutionResultInput',{runId:request.id,leaseToken:'lease',outcome:'success',exitCode:0,rounds:1,summary:'Verified',usage,validation:{exitCode:0},sessionId:'native-session',sessionBilling:result.sessionBilling,executionMetadata:{agentBuild:'fixture-build',programSha256:'a'.repeat(64),invocationId:'invocation-1'}});
 });
 
 test('native metadata keeps strict bounds and rejects unsupported fields',()=>{
@@ -34,4 +36,6 @@ test('regenerating execution and usage contracts preserves native metadata and s
   for(const field of fields)assert.deepEqual(copy.components.schemas[name].properties[field],plannedContract.components.schemas[name].properties[field]);
  }
  assert.deepEqual(copy.components.schemas.CliSupervisionPolicy.dependencies,{inputUSDPerMillion:['outputUSDPerMillion'],outputUSDPerMillion:['inputUSDPerMillion']});
+ const conditional=copy.components.schemas.ExecutionResult.allOf.find((rule:any)=>rule.if?.properties?.notStarted);
+ assert.deepEqual(conditional.if.required,['notStarted']);
 });

@@ -1,0 +1,123 @@
+{
+  "schema": "jarvis-nas120-independent-ssh-platform-sync-v1",
+  "marker": "[NAS120-INDEPENDENT-SSH-20261020]",
+  "startedAt": "2026-10-20T01:37:02.626Z",
+  "status": "passed",
+  "platformBuild": "20261020-cc-switch-center-r56",
+  "applicationReleaseChanged": false,
+  "productAccepted": false,
+  "independentAcceptance": false,
+  "experienceVerified": false,
+  "modelCalls": 0,
+  "modelCredentialsRead": false,
+  "modelConfigurationWrites": 0,
+  "sessionCreated": true,
+  "sessionRevoked": true,
+  "businessWrites": [
+    "decision-change-selected",
+    "decision-implemented",
+    "experience-inbox"
+  ],
+  "environmentInfo": {
+    "status": "skipped",
+    "reason": "OUT_OF_SCOPE_PRESERVE_EXISTING_PROJECT_CONTENT"
+  },
+  "refs": [
+    {
+      "reference": "artifacts/nas120-independent-ssh/native-prepare-public.json",
+      "sha256": "13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/native-start-public.json",
+      "sha256": "5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/native-status-public.json",
+      "sha256": "1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/old112-before-public.json",
+      "sha256": "71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/old112-disable-public.json",
+      "sha256": "b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/old112-verify-public.json",
+      "sha256": "8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/other-machines-public.json",
+      "sha256": "a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/network-public.json",
+      "sha256": "f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/preflight-public.json",
+      "sha256": "d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3",
+      "kind": "observation"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/docker-preflight-public.json",
+      "sha256": "f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69",
+      "kind": "observation"
+    },
+    {
+      "reference": "scripts/ssh-access/install-nas120-native.py",
+      "sha256": "e7c2002af9f012ac68c1aee453dce3a79d1bc35b75edc92f18f060f039dcbb3b",
+      "kind": "source"
+    },
+    {
+      "reference": "scripts/ssh-access/nas_ssh_bridge.py",
+      "sha256": "49ccd11f5be081d4dc89335f31ee33a700a0fa453506b36f600ec42d82eecc34",
+      "kind": "source"
+    },
+    {
+      "reference": "scripts/ssh-access/nas-vault-bridge.mjs",
+      "sha256": "2d9c48d08f4a5a3c6bc0ded5c772cb3939fd1243b114df6701d9f3d2822a0852",
+      "kind": "source"
+    },
+    {
+      "reference": "artifacts/nas120-independent-ssh/final-validation.json",
+      "sha256": "c37f663c9dd55be809d2f59761c08fad8b1ebf9833fff901ef97101cd9d56989",
+      "kind": "observation"
+    }
+  ],
+  "projectId": "25dcc5cf-bdfe-43f8-bbff-e79e7190161f",
+  "previousDecisionBefore": {
+    "id": "799944f8-2e27-4d85-9543-c255e318d250",
+    "revision": 2,
+    "status": "implemented"
+  },
+  "decision": {
+    "id": "036aae1a-20e4-4467-9b3e-30d2a0c65f8e",
+    "revision": 2,
+    "status": "implemented",
+    "independentAcceptance": false
+  },
+  "previousDecision": {
+    "id": "799944f8-2e27-4d85-9543-c255e318d250",
+    "revision": 3,
+    "status": "superseded",
+    "supersededBy": "036aae1a-20e4-4467-9b3e-30d2a0c65f8e"
+  },
+  "experience": {
+    "id": "076bb44c-b8be-47a5-a8bf-43270f65bc6e",
+    "revision": 1,
+    "status": "inbox",
+    "verified": false
+  },
+  "projectContentPreserved": true,
+  "completedAt": "2026-10-20T01:37:03.478Z"
+}

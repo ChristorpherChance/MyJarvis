@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "batchId": "fleet-onboarding-20261023",
+  "source": "user-reported-unverified",
+  "newAssetsConfirmed": true,
+  "targetOS": "Ubuntu 24 desktop; exact release and installation to verify",
+  "defaults": {
+    "address": "",
+    "room": "",
+    "always": false,
+    "scope": "personal"
+  },
+  "machines": [
+    {
+      "key": "新增01",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a01",
+      "payload": {
+        "name": "待接入·新增01·E5-V3 2696",
+        "role": "用户申报、未实测；拟用大内存构建/测试、批处理与辅助GPU任务，尚未安装接入；准确CPU型号、单/双路、磁盘介质健康、功耗和GPU驱动待核。常驻计划未设。 内存DDR4（用户补充，待核）。",
+        "category": "server",
+        "cpu": "E5-V3 2696（用户原称，待核）",
+        "ram": 128,
+        "disk": "1TB（用户申报，介质及可用容量待核）",
+        "gpu": "RTX 2060 6GB（用户申报，待实测）",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增02",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a02",
+      "payload": {
+        "name": "待接入·新增02·E5-V3 2698",
+        "role": "用户申报、未实测；拟用CPU构建、测试与批处理辅助；原称RTX1070，GPU准确型号及显存未确认，暂不分配GPU任务。常驻计划未设，实际部署后更新同一资产。 内存DDR4（用户补充，待核）。",
+        "category": "server",
+        "cpu": "E5-V3 2698（用户原称，待核）",
+        "ram": 64,
+        "disk": "512GB（用户申报，介质及可用容量待核）",
+        "gpu": "RTX 1070（用户原称，型号及显存待核，不自动改为GTX）",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增03",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a03",
+      "payload": {
+        "name": "待接入·新增03·i7-10700 GPU工作站",
+        "role": "用户申报、未实测；拟优先单机GPU实验、文档/视觉处理与交互开发；原称4070Ti-16G，具体型号和显存待核，不承诺模型大小或吞吐。拟首批接入，尚未部署服务。 内存DDR4（用户补充，待核）。",
+        "category": "workstation",
+        "cpu": "i7-10700（用户申报，待核）",
+        "ram": 64,
+        "disk": "2TB（用户申报，介质及可用容量待核）",
+        "gpu": "RTX 4070Ti-16G（用户原称，具体型号及显存待核）",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增04",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a04",
+      "payload": {
+        "name": "待接入·新增04·ThinkPad E470",
+        "role": "用户申报、未实测；联想ThinkPad E470，拟作人工运维工作站、轻量开发和客户端兼容验证，不作为生产唯一依赖或重型推理节点。电池、休眠、散热和网络待核，常驻计划未设。 内存DDR4（用户补充，待核）。",
+        "category": "laptop",
+        "cpu": "i5-7200U（用户申报，待核）",
+        "ram": 16,
+        "disk": "1TB（用户申报，介质及可用容量待核）",
+        "gpu": "未提供，待实测",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增05",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a05",
+      "payload": {
+        "name": "待接入·新增05·联想AMD Ubuntu环境",
+        "role": "用户报告Ubuntu24环境已安装，尚未接入核验；Ubuntu分配32GB内存/60GB磁盘，物理联想笔记本64GB/512GB另记，不重复计入容量；裸机/虚拟化/分区关系和CPU原称Ryzen 7 PRO 475U待核。拟轻量兼容与接入演练，不放大模型缓存或生产唯一数据。 内存DDR4（用户补充，待核）。",
+        "category": "laptop",
+        "cpu": "AMD Ryzen 7 PRO 475U（用户原称，准确SKU待核）",
+        "ram": 32,
+        "disk": "Ubuntu分配60GB；宿主物理512GB（用户申报，分配关系及余量待核）",
+        "gpu": "Radeon Graphics 496MB（用户报告，不当独立显存容量）",
+        "os": "用户报告Ubuntu 24；实际版本、运行形态及接入未验证",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "physicalReported": {
+        "memoryGB": 64,
+        "diskGB": 512
+      },
+      "ubuntuAllocatedReported": {
+        "memoryGB": 32,
+        "diskGB": 60
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增06",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a06",
+      "payload": {
+        "name": "待接入·新增06·i3-6100T-A",
+        "role": "用户申报、未实测；三台i3之一，拟轻量测试或浏览器低并发辅助，首批标准接入候选；12GB内存/256GB磁盘，报告128MB显示内存不当独立GPU显存。需要实物贴新增06标签，地址未分配，未部署。 内存DDR4（用户补充，待核）。",
+        "category": "small",
+        "cpu": "i3-6100T（用户申报，待核）",
+        "ram": 12,
+        "disk": "256GB（用户申报，介质及可用容量待核）",
+        "gpu": "128MB显示内存（用户报告，集成/共享口径待核）",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增07",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a07",
+      "payload": {
+        "name": "待接入·新增07·i3-6100T-B",
+        "role": "用户申报、未实测；三台i3之一，拟采集/房间端或轻量服务候选，不替换既有网关；12GB内存/256GB磁盘，报告128MB显示内存不当独立GPU显存。需要实物贴新增07标签，地址未分配，未部署。 内存DDR4（用户补充，待核）。",
+        "category": "small",
+        "cpu": "i3-6100T（用户申报，待核）",
+        "ram": 12,
+        "disk": "256GB（用户申报，介质及可用容量待核）",
+        "gpu": "128MB显示内存（用户报告，集成/共享口径待核）",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增08",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a08",
+      "payload": {
+        "name": "待接入·新增08·i3-6100T-C",
+        "role": "用户申报、未实测；三台i3之一，拟隔离恢复/接入演练，不作为正式冷备接管节点；12GB内存/256GB磁盘，报告128MB显示内存不当独立GPU显存。需要实物贴新增08标签，地址未分配，未部署。 内存DDR4（用户补充，待核）。",
+        "category": "small",
+        "cpu": "i3-6100T（用户申报，待核）",
+        "ram": 12,
+        "disk": "256GB（用户申报，介质及可用容量待核）",
+        "gpu": "128MB显示内存（用户报告，集成/共享口径待核）",
+        "os": "计划Ubuntu 24桌面版，未验证安装",
+        "address": "",
+        "room": "",
+        "always": false
+      },
+      "reportedMemoryType": "DDR4"
+    },
+    {
+      "key": "新增09",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a09",
+      "scope": "company",
+      "reportedMemoryType": "DDR5",
+      "payload": {
+        "name": "公司只读·新增09·HP i7 240H",
+        "role": "公司设备，仅资产占位只读，不配置模型、不远程控制、不纳入家庭算力；用户申报HP i7 240H、64GB DDR5、1TB和128集显，准确CPU及显存单位待核，尚未验证接入。",
+        "category": "workstation",
+        "cpu": "HP i7 240H（用户原称，准确型号待核）",
+        "ram": 64,
+        "disk": "1TB（用户申报，待核）",
+        "gpu": "128集显（用户原称，单位及共享口径待核）",
+        "os": "Windows 10（用户申报，未现场验证）",
+        "address": "",
+        "room": "",
+        "always": false
+      }
+    },
+    {
+      "key": "新增10",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a10",
+      "scope": "personal",
+      "referenceMachineId": "ab2acde7-b833-4d26-a2ed-292397008b11",
+      "referenceObserved": "2026-10-23",
+      "payload": {
+        "name": "待接入·新增10·Win10个人设备（同116）",
+        "role": "个人设备，用户申报Win10且硬件同116，未实测；仅参照116台账i5-6400/4线程、约15.011GB系统可见内存、218GB磁盘、HD530，不能当本机采集，标称容量及内存代际待核；不复制116地址、身份或授权。拟Windows兼容/人工运维，尚未接入。",
+        "category": "workstation",
+        "cpu": "参照116：Intel Core i5-6400 2.70GHz / 4线程（本机待核）",
+        "ram": 15.011,
+        "disk": "参照116台账218GB（本机标称及可用容量待核）",
+        "gpu": "参照116：Intel HD Graphics 530（本机待核）",
+        "os": "Windows 10（用户申报；硬件同116，不复制Ubuntu系统）",
+        "address": "",
+        "room": "",
+        "always": false
+      }
+    },
+    {
+      "key": "新增11",
+      "commandId": "7735b612-6d9d-43b7-a4d8-df3b62456a11",
+      "scope": "personal",
+      "payload": {
+        "name": "待接入·新增11·MacBook Pro 2015",
+        "role": "用户申报2015款MacBook Pro、8GB内存、256GB硬盘，当前已安装macOS12，CPU/尺寸/具体型号与内存代际未给；拟macOS客户端兼容测试和备用管理终端，不作关键常驻或重型推理节点，尚未接入验证。",
+        "category": "laptop",
+        "cpu": "未提供，2015款具体CPU待核",
+        "ram": 8,
+        "disk": "256GB（用户申报，介质健康及可用容量待核）",
+        "gpu": "未提供，待核",
+        "os": "macOS 12（用户报告当前已安装，未现场验证；不推断官方最高支持版本）",
+        "address": "",
+        "room": "",
+        "always": false
+      }
+    }
+  ]
+}

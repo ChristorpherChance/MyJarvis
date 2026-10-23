@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。">
-  <meta name="jarvis-source-sha256" content="9f2b0d2f15c3f7bc767fa7ff84cb2e531a6c203fc34f89efa962e1e28af113f1">
+  <meta name="jarvis-source-sha256" content="3e2098d79305a90731aa10ffe7bcbed10bd6f970014cfabd20587180eb55bdd1">
   <title>贾维斯建设日志</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('jarvis-doc-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
   <style>
@@ -42,7 +42,7 @@
     <p class="sidebar-label">目录与查找</p>
     <label class="search-label" for="search">按关键词筛选章节</label>
     <input class="search" id="search" type="search" placeholder="机器、家人、Skill、监督…" autocomplete="off">
-    <div class="search-status" id="search-status" aria-live="polite">共 360 章 · Ctrl / ⌘ + K 查找</div>
+    <div class="search-status" id="search-status" aria-live="polite">共 382 章 · Ctrl / ⌘ + K 查找</div>
     <nav class="toc" aria-label="章节目录"><a class="toc-link level-2" href="#section-1" data-parent="1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</a>
 <a class="toc-link level-3" href="#section-1-1" data-parent="1">本次改变</a>
 <a class="toc-link level-3" href="#section-1-2" data-parent="1">决策与原因</a>
@@ -2865,8 +2865,170 @@
 <a class="toc-link level-3" href="#section-360-2" data-parent="360">事实与边界</a>
 <a class="toc-link level-3" href="#section-360-3" data-parent="360">验证结果</a>
 <a class="toc-link level-3" href="#section-360-4" data-parent="360">待办与未确认事项</a>
-<a class="toc-link level-3" href="#section-360-5" data-parent="360">证据与当时指纹</a></nav>
-    <div class="sidebar-foot">更新于 2026-10-19<br>需求与设计稿 · 可离线浏览</div>
+<a class="toc-link level-3" href="#section-360-5" data-parent="360">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-361" data-parent="361">JARVIS-20261020-CC-SWITCH-CENTER-R56-LIVE-VERIFICATION · R56三机模型管理已上线，正式HTTPS与浏览器读取表单核对通过</a>
+<a class="toc-link level-3" href="#section-361-1" data-parent="361">本次改变</a>
+<a class="toc-link level-3" href="#section-361-2" data-parent="361">决策与原因</a>
+<a class="toc-link level-3" href="#section-361-3" data-parent="361">事实与边界</a>
+<a class="toc-link level-3" href="#section-361-4" data-parent="361">验证结果</a>
+<a class="toc-link level-3" href="#section-361-5" data-parent="361">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-361-6" data-parent="361">经验候选</a>
+<a class="toc-link level-3" href="#section-361-7" data-parent="361">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-362" data-parent="362">JARVIS-20261020-CC-SWITCH-PLATFORM-SYNC-ATTRIBUTION-CORRECTION · 三机模型管理决定与经验已同步，追加更正112当前模型的主体归因</a>
+<a class="toc-link level-3" href="#section-362-1" data-parent="362">本次改变</a>
+<a class="toc-link level-3" href="#section-362-2" data-parent="362">决策与原因</a>
+<a class="toc-link level-3" href="#section-362-3" data-parent="362">事实与边界</a>
+<a class="toc-link level-3" href="#section-362-4" data-parent="362">验证结果</a>
+<a class="toc-link level-3" href="#section-362-5" data-parent="362">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-362-6" data-parent="362">经验候选</a>
+<a class="toc-link level-3" href="#section-362-7" data-parent="362">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-363" data-parent="363">JARVIS-20261020-NAS120-SSH59527-ACCESS · 120 NAS域名SSH59527已映射并核通，复用现有通配DNS</a>
+<a class="toc-link level-3" href="#section-363-1" data-parent="363">本次改变</a>
+<a class="toc-link level-3" href="#section-363-2" data-parent="363">决策与原因</a>
+<a class="toc-link level-3" href="#section-363-3" data-parent="363">事实与边界</a>
+<a class="toc-link level-3" href="#section-363-4" data-parent="363">验证结果</a>
+<a class="toc-link level-3" href="#section-363-5" data-parent="363">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-363-6" data-parent="363">经验候选</a>
+<a class="toc-link level-3" href="#section-363-7" data-parent="363">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-364" data-parent="364">JARVIS-20261020-NAS120-INDEPENDENT-SSH · 120已切NAS本机独立SSH，旧112转发停用后普通密码与PTY核验通过</a>
+<a class="toc-link level-3" href="#section-364-1" data-parent="364">本次改变</a>
+<a class="toc-link level-3" href="#section-364-2" data-parent="364">决策与原因</a>
+<a class="toc-link level-3" href="#section-364-3" data-parent="364">事实与边界</a>
+<a class="toc-link level-3" href="#section-364-4" data-parent="364">验证结果</a>
+<a class="toc-link level-3" href="#section-364-5" data-parent="364">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-364-6" data-parent="364">经验候选</a>
+<a class="toc-link level-3" href="#section-364-7" data-parent="364">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-365" data-parent="365">JARVIS-20261020-SIDEBAR-POLISH · 左侧菜单四字名称与层级样式调整，隔离验证通过，未上线</a>
+<a class="toc-link level-3" href="#section-365-1" data-parent="365">本次改变</a>
+<a class="toc-link level-3" href="#section-365-2" data-parent="365">决策与原因</a>
+<a class="toc-link level-3" href="#section-365-3" data-parent="365">事实与边界</a>
+<a class="toc-link level-3" href="#section-365-4" data-parent="365">验证结果</a>
+<a class="toc-link level-3" href="#section-365-5" data-parent="365">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-365-6" data-parent="365">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-366" data-parent="366">JARVIS-20261020-SIDEBAR-R57-ROLLBACK · R57首次隔离恢复触及180秒限时，安全回退R56且数据保留</a>
+<a class="toc-link level-3" href="#section-366-1" data-parent="366">本次改变</a>
+<a class="toc-link level-3" href="#section-366-2" data-parent="366">事实与边界</a>
+<a class="toc-link level-3" href="#section-366-3" data-parent="366">验证结果</a>
+<a class="toc-link level-3" href="#section-366-4" data-parent="366">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-366-5" data-parent="366">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-367" data-parent="367">JARVIS-20261020-SIDEBAR-R57-LIVE · R57左侧四字菜单与统一层级正式上线，公网桌面手机检查通过</a>
+<a class="toc-link level-3" href="#section-367-1" data-parent="367">本次改变</a>
+<a class="toc-link level-3" href="#section-367-2" data-parent="367">决策与原因</a>
+<a class="toc-link level-3" href="#section-367-3" data-parent="367">事实与边界</a>
+<a class="toc-link level-3" href="#section-367-4" data-parent="367">验证结果</a>
+<a class="toc-link level-3" href="#section-367-5" data-parent="367">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-367-6" data-parent="367">经验候选</a>
+<a class="toc-link level-3" href="#section-367-7" data-parent="367">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-368" data-parent="368">JARVIS-20261020-PLATFORM-ICONS · 全平台功能图标统一为语义SVG，隔离验证通过，未发布</a>
+<a class="toc-link level-3" href="#section-368-1" data-parent="368">本次改变</a>
+<a class="toc-link level-3" href="#section-368-2" data-parent="368">决策与原因</a>
+<a class="toc-link level-3" href="#section-368-3" data-parent="368">事实与边界</a>
+<a class="toc-link level-3" href="#section-368-4" data-parent="368">验证结果</a>
+<a class="toc-link level-3" href="#section-368-5" data-parent="368">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-368-6" data-parent="368">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-369" data-parent="369">JARVIS-20261020-PLATFORM-ICONS-R58-LIVE · R58全平台语义图标正式上线，公网23项检查及健康通过，手机行高2px差异留待微调</a>
+<a class="toc-link level-3" href="#section-369-1" data-parent="369">本次改变</a>
+<a class="toc-link level-3" href="#section-369-2" data-parent="369">事实与边界</a>
+<a class="toc-link level-3" href="#section-369-3" data-parent="369">验证结果</a>
+<a class="toc-link level-3" href="#section-369-4" data-parent="369">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-369-5" data-parent="369">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-370" data-parent="370">JARVIS-20261020-R58-CODE-REVIEW · R58当前代码定向全面审查与903项API回归完成，确认四项缺口未修复</a>
+<a class="toc-link level-3" href="#section-370-1" data-parent="370">本次改变</a>
+<a class="toc-link level-3" href="#section-370-2" data-parent="370">事实与边界</a>
+<a class="toc-link level-3" href="#section-370-3" data-parent="370">验证结果</a>
+<a class="toc-link level-3" href="#section-370-4" data-parent="370">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-370-5" data-parent="370">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-371" data-parent="371">JARVIS-20261021-R58-REVIEW-FIXES · R58审查缺陷及失败回归已修复验证，908项API零失败，未提交未上线</a>
+<a class="toc-link level-3" href="#section-371-1" data-parent="371">本次改变</a>
+<a class="toc-link level-3" href="#section-371-2" data-parent="371">决策与原因</a>
+<a class="toc-link level-3" href="#section-371-3" data-parent="371">事实与边界</a>
+<a class="toc-link level-3" href="#section-371-4" data-parent="371">验证结果</a>
+<a class="toc-link level-3" href="#section-371-5" data-parent="371">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-371-6" data-parent="371">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-372" data-parent="372">JARVIS-20261021-TERMINAL-CONTEXT-GUARD · 112终端892k附近400调查及提前压缩保护</a>
+<a class="toc-link level-3" href="#section-372-1" data-parent="372">本次改变</a>
+<a class="toc-link level-3" href="#section-372-2" data-parent="372">决策与原因</a>
+<a class="toc-link level-3" href="#section-372-3" data-parent="372">事实与边界</a>
+<a class="toc-link level-3" href="#section-372-4" data-parent="372">验证结果</a>
+<a class="toc-link level-3" href="#section-372-5" data-parent="372">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-372-6" data-parent="372">经验候选</a>
+<a class="toc-link level-3" href="#section-372-7" data-parent="372">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-373" data-parent="373">JARVIS-20261021-KNOWLEDGE-INGESTION-RESUME · 接续知识资料入库候选，核同31件源码并通过类型、构建及11项定向复验，尚未上线</a>
+<a class="toc-link level-3" href="#section-373-1" data-parent="373">本次改变</a>
+<a class="toc-link level-3" href="#section-373-2" data-parent="373">决策与原因</a>
+<a class="toc-link level-3" href="#section-373-3" data-parent="373">事实与边界</a>
+<a class="toc-link level-3" href="#section-373-4" data-parent="373">验证结果</a>
+<a class="toc-link level-3" href="#section-373-5" data-parent="373">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-373-6" data-parent="373">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-374" data-parent="374">JARVIS-20261021-KNOWLEDGE-INGESTION-FOLLOWUP · 知识入库多段原件定位修复及真实会话权限复验完成，五件任务文件同步，未上线</a>
+<a class="toc-link level-3" href="#section-374-1" data-parent="374">本次改变</a>
+<a class="toc-link level-3" href="#section-374-2" data-parent="374">决策与原因</a>
+<a class="toc-link level-3" href="#section-374-3" data-parent="374">事实与边界</a>
+<a class="toc-link level-3" href="#section-374-4" data-parent="374">验证结果</a>
+<a class="toc-link level-3" href="#section-374-5" data-parent="374">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-374-6" data-parent="374">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-375" data-parent="375">JARVIS-20261021-CLAUDE-CODE-UPDATES-PARTIAL · 101 Claude Code平台更新候选部分实现；维护锁失败与握手缺口保留，未开放真实升级</a>
+<a class="toc-link level-3" href="#section-375-1" data-parent="375">本次改变</a>
+<a class="toc-link level-3" href="#section-375-2" data-parent="375">决策与原因</a>
+<a class="toc-link level-3" href="#section-375-3" data-parent="375">事实与边界</a>
+<a class="toc-link level-3" href="#section-375-4" data-parent="375">验证结果</a>
+<a class="toc-link level-3" href="#section-375-5" data-parent="375">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-375-6" data-parent="375">经验候选</a>
+<a class="toc-link level-3" href="#section-375-7" data-parent="375">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-376" data-parent="376">JARVIS-20261023-AI-CONFIG-UNIFICATION-AUDIT · 跨服务器AI配置只读核查：三机单独管理已有，状态栏一致性与新机快速配置未完成</a>
+<a class="toc-link level-3" href="#section-376-1" data-parent="376">本次改变</a>
+<a class="toc-link level-3" href="#section-376-2" data-parent="376">决策与原因</a>
+<a class="toc-link level-3" href="#section-376-3" data-parent="376">事实与边界</a>
+<a class="toc-link level-3" href="#section-376-4" data-parent="376">验证结果</a>
+<a class="toc-link level-3" href="#section-376-5" data-parent="376">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-376-6" data-parent="376">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-377" data-parent="377">JARVIS-20261023-FLEET-ELEVEN-PLACEHOLDERS-STATUSLINE-DIAGNOSTICS · 11台新增设备已正式占位并回读；只读状态栏分层诊断开发复验通过未发布</a>
+<a class="toc-link level-3" href="#section-377-1" data-parent="377">本次改变</a>
+<a class="toc-link level-3" href="#section-377-2" data-parent="377">决策与原因</a>
+<a class="toc-link level-3" href="#section-377-3" data-parent="377">事实与边界</a>
+<a class="toc-link level-3" href="#section-377-4" data-parent="377">验证结果</a>
+<a class="toc-link level-3" href="#section-377-5" data-parent="377">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-377-6" data-parent="377">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-378" data-parent="378">JARVIS-20261023-AI-CONFIG-READONLY-PREVIEW-378 · 接续跨机配置建设：只读模板差异预览开发与隔离验收，未发布应用</a>
+<a class="toc-link level-3" href="#section-378-1" data-parent="378">本次改变</a>
+<a class="toc-link level-3" href="#section-378-2" data-parent="378">决策与原因</a>
+<a class="toc-link level-3" href="#section-378-3" data-parent="378">事实与边界</a>
+<a class="toc-link level-3" href="#section-378-4" data-parent="378">验证结果</a>
+<a class="toc-link level-3" href="#section-378-5" data-parent="378">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-378-6" data-parent="378">经验候选</a>
+<a class="toc-link level-3" href="#section-378-7" data-parent="378">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-379" data-parent="379">JARVIS-20261023-SERVER-PLANNING-ONLINE-CANDIDATE-379 · 服务器规划文档固定管理员在线入口已实现验证，正式恢复门执行中</a>
+<a class="toc-link level-3" href="#section-379-1" data-parent="379">本次改变</a>
+<a class="toc-link level-3" href="#section-379-2" data-parent="379">决策与原因</a>
+<a class="toc-link level-3" href="#section-379-3" data-parent="379">事实与边界</a>
+<a class="toc-link level-3" href="#section-379-4" data-parent="379">验证结果</a>
+<a class="toc-link level-3" href="#section-379-5" data-parent="379">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-379-6" data-parent="379">经验候选</a>
+<a class="toc-link level-3" href="#section-379-7" data-parent="379">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-380" data-parent="380">JARVIS-20261023-SERVER-PLANNING-R59-LIVE-380 · R59服务器规划文档已上线，正式设备页入口及认证HTTPS阅读通过</a>
+<a class="toc-link level-3" href="#section-380-1" data-parent="380">本次改变</a>
+<a class="toc-link level-3" href="#section-380-2" data-parent="380">决策与原因</a>
+<a class="toc-link level-3" href="#section-380-3" data-parent="380">事实与边界</a>
+<a class="toc-link level-3" href="#section-380-4" data-parent="380">验证结果</a>
+<a class="toc-link level-3" href="#section-380-5" data-parent="380">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-380-6" data-parent="380">经验候选</a>
+<a class="toc-link level-3" href="#section-380-7" data-parent="380">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-381" data-parent="381">JARVIS-20261023-TERMINAL-400-592K-DIAGNOSIS-381 · 核实终端592k后六次400，旧850k保护仍在但根因取证受网关入口阻塞</a>
+<a class="toc-link level-3" href="#section-381-1" data-parent="381">本次改变</a>
+<a class="toc-link level-3" href="#section-381-2" data-parent="381">决策与原因</a>
+<a class="toc-link level-3" href="#section-381-3" data-parent="381">事实与边界</a>
+<a class="toc-link level-3" href="#section-381-4" data-parent="381">验证结果</a>
+<a class="toc-link level-3" href="#section-381-5" data-parent="381">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-381-6" data-parent="381">经验候选</a>
+<a class="toc-link level-3" href="#section-381-7" data-parent="381">证据与当时指纹</a>
+<a class="toc-link level-2" href="#section-382" data-parent="382">JARVIS-20261023-GITHUB-LATEST-INTEGRATION-382 · 最新源码独立整合验证通过，准备提交并合并GitHub主线</a>
+<a class="toc-link level-3" href="#section-382-1" data-parent="382">本次改变</a>
+<a class="toc-link level-3" href="#section-382-2" data-parent="382">决策与原因</a>
+<a class="toc-link level-3" href="#section-382-3" data-parent="382">事实与边界</a>
+<a class="toc-link level-3" href="#section-382-4" data-parent="382">验证结果</a>
+<a class="toc-link level-3" href="#section-382-5" data-parent="382">待办与未确认事项</a>
+<a class="toc-link level-3" href="#section-382-6" data-parent="382">证据与当时指纹</a></nav>
+    <div class="sidebar-foot">更新于 2026-10-23<br>需求与设计稿 · 可离线浏览</div>
   </aside>
   <button class="overlay" id="overlay" aria-label="关闭目录" tabindex="-1"></button>
   <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
@@ -2876,12 +3038,12 @@
         <p class="eyebrow">建设过程 / 验证证据 / 经验沉淀</p>
         <h1 id="document-title">贾维斯建设日志</h1>
         <p class="subtitle">保留每一阶段的改变、原因、验证、遗留问题与经验；历史回顾和当时记录分别标明。</p>
-        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-19</span><span>与 Markdown 同源生成</span></div>
-        <div class="stats"><div class="stat"><strong>360 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
+        <div class="meta"><span><i class="dot" aria-hidden="true"></i>需求与设计稿</span><span>2026-10-23</span><span>与 Markdown 同源生成</span></div>
+        <div class="stats"><div class="stat"><strong>382 条</strong><span>已归档记录</span></div><div class="stat"><strong>追加保存</strong><span>旧记录保留原文</span></div><div class="stat"><strong>事实分层</strong><span>实现 · 验证 · 上线 · 验收</span></div></div>
       </header>
       <article class="article">
         <div class="intro"><p>本页由 <a href="%E5%BB%BA%E8%AE%BE%E8%AE%B0%E5%BD%95/events.jsonl">建设记录原始账本</a> 生成。详细维护方式见 <a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">建设档案</a>。历史回顾以现有文档为依据，不补写缺失的决定动机或现场验收。日期时间为 ISO 格式，Z 表示 UTC；中国时间加八小时。证据指纹记录当时文件内容，后续文件可能另有更新。</p>
-<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：3ea9112736f4c5782dec96a12eef003cb7c4bdece77b506dc71f7b172d8c64be。</p>
+<p>历史记录保持原文；更正以新记录说明，不能覆盖先前结果。 当前末条指纹：6b9d1bde22d0011e383c3a13da39e761da8b0c462ceeee660b64d72e143a4e26。</p>
 </div>
         <div class="no-results" id="no-results" hidden>未找到匹配章节。请更换关键词或清空搜索。</div>
         <section class="doc-section" data-section="1"><h2 id="section-1" tabindex="-1">JARVIS-RETRO-20261002-01 · V4：家庭管家与设备规划基线</h2>
@@ -20713,6 +20875,1025 @@
 <li><a href="../artifacts/ai-development-ops/r56-activation-public.json">artifacts/ai-development-ops/r56-activation-public.json</a> · SHA-256：a87f1962225655d41968fab2415045f0eb0bd8a5f1f8b27202baefa98a2f81be</li>
 </ul>
 <p>记录指纹：3ea9112736f4c5782dec96a12eef003cb7c4bdece77b506dc71f7b172d8c64be；前一条：e8e6cae66686602b9983fb1a4c7dd78e4963553984b9c21d4d7cc8ca03b4b979。</p>
+</section>
+<section class="doc-section" data-section="361"><h2 id="section-361" tabindex="-1">JARVIS-20261020-CC-SWITCH-CENTER-R56-LIVE-VERIFICATION · R56三机模型管理已上线，正式HTTPS与浏览器读取表单核对通过</h2>
+<p>发生时间：2026-10-19T18:12:41.611765Z；记录时间：2026-10-19T18:13:54.429Z；项目：贾维斯；类型：release。</p>
+<p>目标：将三机CC Switch集中管理正式交付到112贾维斯，并在真实API与浏览器中核对入口、数据和密钥表单边界。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-361-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>将固定源28a9e5d55ec73aa9fb48b447025a397452a736a5发布为20261020-cc-switch-center-r56；后续canonical60e4037与其内容树一致。入口为系统运维→运维费用→终端模型及机器详情→AI开发环境。</li>
+<li>沿既有stage/install/inspect/activate/health流程完成112发布，保留R55/R54兼容资产、完整快照与隔离恢复，平台/observer版本及健康一致。</li>
+<li>使用说明更新已上线状态、实际入口、正式API及浏览器检查范围；359实施与360合并版本上线/监控验证历史保留。</li>
+</ul>
+<h3 id="section-361-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>正式验证选择三机各自已经启用的配置，避免为核验而改变用户选择；112被其他用户切为Kimi CCR，保留该实际状态。</li>
+<li>浏览器打开116编辑表单验证Key空白/密码输入类型后取消，不通过页面保存任何配置；先前真实CRUD与Kimi切换恢复仍按359桥接回执解释。</li>
+<li>上线、代理浏览器有限验证和用户本人验收分别记录，状态仍为用户验收待进行。</li>
+</ul>
+<h3 id="section-361-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>发布包SHA256为88cbb5ee1eb365df974a5ba091a0fd795ffb38c2ffb8dc280da1c6ec48ca0bd6，manifest SHA256为1c3ffcecb1c5848b5efafb72d92a219fa1911a6331533811d88c682924f1882c，stage逐项核2422个payload。</li>
+<li>激活实核发布锁；64文件、59目录、5,021,284,854字节与10个SQLite完整快照/隔离恢复通过。未将快照回写生产数据，factoryResumed=false。</li>
+<li>正式HTTPS使用单个120秒仅hash落库的临时session完成三机检查后精确撤销；未存密码/明文登录凭据，未改供应商配置内容或选择，未发模型推理请求。</li>
+<li>浏览器观察时三机各6配置，101与116当前为JP，112当前为Kimi For Coding-CCR；112选择来源于本功能验证之外的用户动作，本轮保持。</li>
+<li>本轮不新增供应商模型推理调用；内部编排Token、金额及账单未知分列，费用只记录不设上限。</li>
+</ul>
+<h3 id="section-361-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>实际stage/install/inspect/activate/health回执通过；112为primary，current、配置、API与observer均为R56，healthStatus=ok，业务健康。</li>
+<li>真实HTTPS匿名401、固定三机器清单与配置快照白名单、三次同当前配置选择、三次写后读回保持全部通过，临时sessionCreated/sessionRevoked均true。</li>
+<li>真实浏览器选择101/112/116均显示6项，当前项与机器快照一致，当前配置删除禁用；打开116 Kimi CCR编辑，Key type=password且空白，取消后无浏览器写入。</li>
+<li>两张公开页面截图已逐文件SHA核同，引用管理页面与编辑表单；未读取已保存Key，不把表单检查冒作浏览器完成全部CRUD。</li>
+</ul>
+<h3 id="section-361-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人实际使用验收待确认；当前代理验证不代表供应商全部账户、额度或真实推理调用已验。</li>
+<li>平台资料、重要决定和经验候选按版本保护接口另同步并保留旧notes/actions；该同步回执及文档Git提交另记，不为补档再部署或重跑模型。</li>
+</ul>
+<h3 id="section-361-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>集中运维的现场验收应保留用户实际选择，用同当前项请求验证控制链，并分开记录桥接CRUD、浏览器只读表单和用户本人验收。</li>
+</ul>
+<h3 id="section-361-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/cc-switch-center/stage-public.json">artifacts/cc-switch-center/stage-public.json</a> · SHA-256：8926411d62dd949452609e2a5bc0959f361762c5257863dfe3b48b19b449b3e2</li>
+<li><a href="../artifacts/cc-switch-center/install-public.json">artifacts/cc-switch-center/install-public.json</a> · SHA-256：85010fe0435727b49cafa73555d265ac2edaac71262e1d9ff61bdb06cdf87543</li>
+<li><a href="../artifacts/cc-switch-center/inspect-public.json">artifacts/cc-switch-center/inspect-public.json</a> · SHA-256：939bf9a9f106e70b5a125138a752c49236584174bfc99fd812b7dfbb5da94e52</li>
+<li><a href="../artifacts/cc-switch-center/activate-public.json">artifacts/cc-switch-center/activate-public.json</a> · SHA-256：0f5495d46e3cf45f8e16988d99d8229a3d1fa04ea67d879a3ae142b0d61d687f</li>
+<li><a href="../artifacts/cc-switch-center/health-public.json">artifacts/cc-switch-center/health-public.json</a> · SHA-256：474e00c14ee32def1075bd107061377bc41ec5de9a38f54e07b4a520eb770f0d</li>
+<li><a href="../artifacts/cc-switch-center/live-api-public.json">artifacts/cc-switch-center/live-api-public.json</a> · SHA-256：754a0ff477eabc0b426f7e774639b213e4be8b2f513c6cd9cd69b77012d155ab</li>
+<li><a href="../artifacts/cc-switch-center/browser-public.json">artifacts/cc-switch-center/browser-public.json</a> · SHA-256：e8fec3b0a6a2f73654647198306395d1f2fe2d5aaaaadb77c0bf815468f259ae</li>
+<li><a href="../artifacts/cc-switch-center/cc-switch-edit-r56.png">artifacts/cc-switch-center/cc-switch-edit-r56.png</a> · SHA-256：44049b9bd0c89cbef2ff687a515cbc1234ec197b7380a6a07d41d4a4466068f3</li>
+<li><a href="../artifacts/cc-switch-center/cc-switch-manager-r56.png">artifacts/cc-switch-center/cc-switch-manager-r56.png</a> · SHA-256：ca2625cfd92561860df7ad2b3b6e76cd1e2b661f11c052470d0e56dfa4942467</li>
+<li><a href="../docs/CCSwitch%E4%B8%89%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%90%86.md">docs/CCSwitch三机模型管理.md</a> · SHA-256：e480d6e73f78e4e73ff86f79b2c941d3579882d0f8b9f2bba1f5067809268ac4</li>
+<li><a href="../docs/%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">docs/贾维斯建设档案.md</a> · SHA-256：3cea66c1a0a22c619c261c5cdd3dc8ab958d577d28fcc649d74b0d15bc775c39</li>
+</ul>
+<p>记录指纹：0ee2154f5ce054259ba61c2d467c27ab5f4582473bc4dd99bc83793a4364b14d；前一条：3ea9112736f4c5782dec96a12eef003cb7c4bdece77b506dc71f7b172d8c64be。</p>
+</section>
+<section class="doc-section" data-section="362"><h2 id="section-362" tabindex="-1">JARVIS-20261020-CC-SWITCH-PLATFORM-SYNC-ATTRIBUTION-CORRECTION · 三机模型管理决定与经验已同步，追加更正112当前模型的主体归因</h2>
+<p>发生时间：2026-10-19T18:16:53.938Z；记录时间：2026-10-19T18:17:49.372Z；项目：贾维斯；类型：change。</p>
+<p>目标：收尾本轮平台版本保护资料同步，并纠正对112既有Kimi选择的证据不足归因，保留历史记录。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-362-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>建设项目25dcc5cf-bdfe-43f8-bbff-e79e7190161f通过版本保护接口新增决定selected→implemented及经验inbox，实际回读一致。</li>
+<li>使用说明与档案当前补充改为：112核验时已选择Kimi CCR，本轮保留该选择，未核实变更主体或时间；361原文和指纹保持。</li>
+</ul>
+<h3 id="section-362-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>环境资料追加会超出既有schema长度上限时跳过该项，不截断原notes或替换其他环境字段。</li>
+<li>仅从核验时配置状态不能推断由哪个人、进程或会话修改；后继更正以追加记录保留旧事实与边界。</li>
+</ul>
+<h3 id="section-362-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>决定98642d2a-7534-4918-90f4-5b27d926f7c4 revision2 implemented，independentAcceptance=false；经验b83da04a-2a34-447d-b39a-4360ceb361df revision1 inbox、verified=false，未发布Skill。</li>
+<li>environmentInfo notes原19,805字，追加将成20,299字，超过20,000上限，因此status skipped、reason EXISTING_CONTENT_WOULD_EXCEED_SCHEMA_LIMIT；原环境四字段保留，不能称该项已经更新。</li>
+<li>更正361记录JARVIS-20261020-CC-SWITCH-CENTER-R56-LIVE-VERIFICATION及当时说明中的“其他用户动作”归因：证据只确认112核验时已选择Kimi CCR、本轮保留；未核实主体或变更时间。其他发布、API与页面验证事实不变。</li>
+<li>本次sessionCreated/sessionRevoked均true，modelCalls=0、modelCredentialsRead=false、modelConfigurationWrites=0；没有为资料同步重跑测试、部署或模型。内部编排Token/金额及账单未知分列，费用只记录不设上限。</li>
+</ul>
+<h3 id="section-362-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>实际同步公开回执status passed，准确项目ID、决定/经验ID与版本、实施/未验收标记均回读保存；环境追加超限跳过明确单列。</li>
+<li>本次只更新本功能文档当前表述并通过原construction工具追加记录；361历史不回写，原记录指纹保留。</li>
+</ul>
+<h3 id="section-362-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人产品验收仍待确认；经验仍未验证，不由本次资料同步变为已验证Skill。</li>
+<li>环境notes保持原文未更新；本次不扩展资料工作或修改长度限制。</li>
+</ul>
+<h3 id="section-362-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>状态快照能证明当前选择，不能单独证明修改者；资料摘要必须区分已写入的决定/经验与因容量限制跳过的环境字段。</li>
+</ul>
+<h3 id="section-362-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/cc-switch-center/platform-sync-public.json">artifacts/cc-switch-center/platform-sync-public.json</a> · SHA-256：3ba4433edacd02a5d656efed01f7a82dc6768201b56578735b22a442adc5b0d5</li>
+<li><a href="../artifacts/cc-switch-center/live-api-public.json">artifacts/cc-switch-center/live-api-public.json</a> · SHA-256：754a0ff477eabc0b426f7e774639b213e4be8b2f513c6cd9cd69b77012d155ab</li>
+<li><a href="../artifacts/cc-switch-center/browser-public.json">artifacts/cc-switch-center/browser-public.json</a> · SHA-256：e8fec3b0a6a2f73654647198306395d1f2fe2d5aaaaadb77c0bf815468f259ae</li>
+<li><a href="../docs/CCSwitch%E4%B8%89%E6%9C%BA%E6%A8%A1%E5%9E%8B%E7%AE%A1%E7%90%86.md">docs/CCSwitch三机模型管理.md</a> · SHA-256：4c86409bd1ec1b1d3fe99f49484745d8c64939a2cd7ab1df4e6c2bfba6666041</li>
+<li><a href="../docs/%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">docs/贾维斯建设档案.md</a> · SHA-256：34a789b67eda27e1d6d6cfe3a039723ca1df56f57fe54d4e87a25758b217f0a3</li>
+</ul>
+<p>记录指纹：bc58f609e0cd903f381454a4ce24ad70da66f06066839a2bbfb900dd66ac6457；前一条：0ee2154f5ce054259ba61c2d467c27ab5f4582473bc4dd99bc83793a4364b14d。</p>
+</section>
+<section class="doc-section" data-section="363"><h2 id="section-363" tabindex="-1">JARVIS-20261020-NAS120-SSH59527-ACCESS · 120 NAS域名SSH59527已映射并核通，复用现有通配DNS</h2>
+<p>发生时间：2026-10-20T01:15:21.552Z；记录时间：2026-10-20T01:15:59.357Z；项目：贾维斯；类型：change。</p>
+<p>目标：让120 NAS沿ssh-编号.ikvein.com通过59527使用既有SSH账号认证，保持QTS和原服务策略，并明确SSH、DNS通配与HTTPS的区别。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-363-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>112新增独立jarvis-nas120-ssh-tunnel.service，单个TCP proxy将广州公网59527转发到192.168.10.120:22；DynamicUser及LoadCredential承载root-only配置，NAS不安装新常驻服务。</li>
+<li>广州仅新增59527/tcp LIMIT规则，FRPS配置和原FRPS/nginx/SSH服务不改；112原7项保护服务PID/状态及5个配置指纹保持。</li>
+<li>权威NS核已有*.ikvein.com覆盖ssh-120及随机ssh-proof，沿用ssh-编号域名，不新增DNS记录、ssh-*前缀通配或HTTPS网站入口。</li>
+<li>连接指南顶部增加四机准确端口表与120连接命令，旧全文和352-356错误更正历史保持；档案增加本轮事实与待验边界。</li>
+</ul>
+<h3 id="section-363-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>选择112独立单代理转发而不在NAS安装FRPC：复用已有Linux运行环境，保持QTS账号/SSH及持久化策略；明确代价是NAS公网SSH入口依赖112和新隧道运行。</li>
+<li>沿用用户偏好的ssh-编号.ikvein.com及已有*.ikvein.com，不另改*.ssh命名；通配DNS只解决解析，新机器仍须独立端口、固定目标、可信主机指纹与隧道记录。</li>
+<li>先修安装器并发失败路径可能误停同名服务和已加载unit未识别的问题，再实际execute；清理仅可操作本次创建且已尝试激活、文件身份/全文/FragmentPath仍一致的新unit。</li>
+</ul>
+<h3 id="section-363-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>公开入口为ssh-120.ikvein.com:59527，账号superopen，目标192.168.10.120:22。原ED25519指纹SHA256:6R7RvgtD74nLDuSTqXz4yZC5NcX8tyd0O2sVybmDYas在局域网和多公网视点严格核同。</li>
+<li>112新unit enabled/active，NASConfigurationModified=false，原账号密码/SSH及collector权限不变；新入口不等于取消112依赖。</li>
+<li>权威dns23.hichina.com对*.ikvein.com、ssh-120.ikvein.com、ssh-proof-20261020.ikvein.com均返回8.163.127.192；DNS未写入。SSH使用自身加密及host key，不需HTTPS网站证书。</li>
+<li>无认证凭据握手实际退出255，表示未提交认证；Windows正常客户端、日本及广州端口与指纹通过不能冒作密码实登。早期Windows keyscan sntrup实现失败与正常完整客户端成功分别保存。</li>
+<li>新公网route以原受限身份执行固定snapshot退出0，superopen认证、原peer签名绑定、qnap/TS-453Dmini返回通过；没有扩大为普通shell、未发送密码、未转发到平台、原collector配置/公钥指纹及identity元数据保持。</li>
+<li>历史NAS9527名仅为原接入资料；本轮受限snapshot不含hostname，未执行或宣称当前hostname核验。</li>
+<li>本轮没有主应用发布、工厂派发或NAS配置写入；供应商模型推理调用0，内部编排Token/金额及账单未知分列，费用只记录不设上限。</li>
+<li>本轮决定799944f8-2e27-4d85-9543-c255e318d250 revision2 implemented、independentAcceptance=false；经验fd274547-cf8d-477f-bde7-651b93b89af9 revision1 inbox、verified=false。项目原notes/environment保持，未发布Skill。</li>
+</ul>
+<h3 id="section-363-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>安装器初次静审changes-required，P1并发失败误停及P2已加载unit/悬空链接缺口修复后，独立静态复审passed、sourceSHA绑定，再执行安装；静审不替代动态并发故障测试。</li>
+<li>离线FRPC verify、目标banner、实际新unit enabled/active及原保护状态/配置逐项一致通过；广州原三服务PID/FRPS配置保持。</li>
+<li>权威DNS三项查询、多视点strict none-auth与Windows正常客户端默认KEX通过；未用关闭host key校验替代身份确认。</li>
+<li>从112走新公网59527 route的固定受限snapshot严格原pin、原签名peer绑定通过，exit0；原relay配置和identity元数据前后相同，权限未扩大。</li>
+<li>线上CAS同步实际回读passed，selected→implemented两版与经验inbox分别留存，临时sessionCreated/sessionRevoked均true，项目原内容保留。</li>
+</ul>
+<h3 id="section-363-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人用NAS既有密码实际登录待确认；普通交互SSH尚未代做验收，密码未读、未改、未代输。</li>
+<li>NAS公网入口依赖112及独立隧道；后续新机器需要单独配置和验证，通配DNS不会自动接入。</li>
+</ul>
+<h3 id="section-363-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>DNS覆盖、TCP转发、SSH主机身份、受限账号认证与普通密码交互应分别留证，不能由其中一项通过推定全部完成。</li>
+</ul>
+<h3 id="section-363-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/ssh-120-59527/prepare-public.json">artifacts/ssh-120-59527/prepare-public.json</a> · SHA-256：d9198101d171e161ac43507940b2512ae3a15e3ed27bc670a9a08a52ab481929</li>
+<li><a href="../artifacts/ssh-120-59527/public-review.json">artifacts/ssh-120-59527/public-review.json</a> · SHA-256：9d1ad2eb6c12641e10faab95fc4244977fb03f9937072f05d4bd5864171f04e3</li>
+<li><a href="../artifacts/ssh-120-59527/public-review-final.json">artifacts/ssh-120-59527/public-review-final.json</a> · SHA-256：98dd25f8691098489dd29f51d75fee9c4f406c814309403ab356904c33247014</li>
+<li><a href="../artifacts/ssh-120-59527/install-public.json">artifacts/ssh-120-59527/install-public.json</a> · SHA-256：1fe182d20a5cd3c5bad2e0ffb363c1261aa2862a2d5acad61044947daef0f410</li>
+<li><a href="../artifacts/ssh-120-59527/gateway-public.json">artifacts/ssh-120-59527/gateway-public.json</a> · SHA-256：046cccb35944bd929808d07e3af2b0ea9b30c9971cc56d156642421a94866855</li>
+<li><a href="../artifacts/ssh-120-59527/dns-public.json">artifacts/ssh-120-59527/dns-public.json</a> · SHA-256：c7a974adac581bc54831c0140bb2a7bba448691465e50cd06e911ad975d8a2e5</li>
+<li><a href="../artifacts/ssh-120-59527/lan-target-public.json">artifacts/ssh-120-59527/lan-target-public.json</a> · SHA-256：2d2a0503d47bc9896d955f37a2a86ed94711b45c3d308ec9de5bbf802e5c112d</li>
+<li><a href="../artifacts/ssh-120-59527/network-public.json">artifacts/ssh-120-59527/network-public.json</a> · SHA-256：fce1ae478fb89db2f428a9fc0b56521b77e05447a246b2c54768b119b8adf2ba</li>
+<li><a href="../artifacts/ssh-120-59527/windows-public.json">artifacts/ssh-120-59527/windows-public.json</a> · SHA-256：74054623bb9cf15aa571958ec8c03803b7e99cf87aabd954d40c5e9c64f9f2b1</li>
+<li><a href="../artifacts/ssh-120-59527/public-auth-snapshot.json">artifacts/ssh-120-59527/public-auth-snapshot.json</a> · SHA-256：d45cceadc40b6f5fe156f2f1cf77c204a407ef88182819627896ef7ec2083450</li>
+<li><a href="../docs/112%E4%B8%8E116%E5%85%AC%E7%BD%91SSH%E8%BF%9E%E6%8E%A5%E8%AF%B4%E6%98%8E.md">docs/112与116公网SSH连接说明.md</a> · SHA-256：11e534fc95f64f65a45684c7917af1986b324df559a1ea5d756f756cdf3c63d4</li>
+<li><a href="../docs/%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">docs/贾维斯建设档案.md</a> · SHA-256：11d80e86969bcab531cf538f26614825881c364c60aa59ac88c2317349626a10</li>
+<li><a href="../artifacts/ssh-120-59527/final-validation.json">artifacts/ssh-120-59527/final-validation.json</a> · SHA-256：668a2d32648cb184d09ecd38e8eeefca2fee8cec0d095c71a3e9a0ed24735d8c</li>
+<li><a href="../artifacts/ssh-120-59527/platform-sync-public.json">artifacts/ssh-120-59527/platform-sync-public.json</a> · SHA-256：2c8154944a550b52c7c8e1e22cf963e737246c9e1f23b2ae0dbccbad18aa6d5a</li>
+</ul>
+<p>记录指纹：2e2363d507cca87a37c74030e4cb937409ea022a14c4c2435c7c446f017e54dc；前一条：bc58f609e0cd903f381454a4ce24ad70da66f06066839a2bbfb900dd66ac6457。</p>
+</section>
+<section class="doc-section" data-section="364"><h2 id="section-364" tabindex="-1">JARVIS-20261020-NAS120-INDEPENDENT-SSH · 120已切NAS本机独立SSH，旧112转发停用后普通密码与PTY核验通过</h2>
+<p>发生时间：2026-10-20T01:37:03.478Z；记录时间：2026-10-20T01:38:00.331Z；项目：贾维斯；类型：change。</p>
+<p>目标：满足用户在363后新增明确的120入口完全不依赖112要求，沿用域名59527、NAS原账号密码及QTS SSH策略，保留前一阶段历史。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-364-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>NAS已有Container Station上新增jarvis-nas120-ssh容器，本地固定静态FRPC构建scratch镜像，NAS自己连接广州FRPS，把59527流量转到本机127.0.0.1:22；不拉外部镜像，私有配置不进入镜像。</li>
+<li>完成NAS本机准备后，仅停用112旧jarvis-nas120-ssh-tunnel.service；旧unit与配置保留，disabled/inactive、PID0，其他7项保护服务PID保持。</li>
+<li>新连接说明置顶NAS独立路径和普通密码技术验证，原363指南全文及建设账本保持历史；平台原R56应用未发布新版本。</li>
+</ul>
+<h3 id="section-364-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>这是用户随后追加的“不依赖112”明确要求。前一阶段363已实施112中转是当时事实，本轮通过旧799944f8决定的CAS change入口选NAS本机容器，不倒填或改写旧约束。</li>
+<li>在已核NAS普通密码/管理员及Docker环境后选择NAS本机容器；保留112中转不能满足新要求。依赖改为NAS的Container Station/Docker及广州网关，运行路径不再经过112。</li>
+<li>sudo口令与脚本流分离后再部署；NAS base64解码异常先保留失败部分目录，不带失败状态继续创建image/container；修换行处理并严格核SHA后进行第二prepare。</li>
+</ul>
+<h3 id="section-364-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>前检真实普通密码SSH核hostname NAS9527、superopen uid1000管理员组与sudo能力；原QTS SSH、账号、host key及受限collector权限不变。NAS密码仅由既有加密vault经私有内存pipe/askpass使用，未显示或新保存到客户端。</li>
+<li>容器CID6e233cce48b04ad3813aed37eafe754986060f7ef8307ce1f6917b8b67a6ba83，NAS PID14788；非root65532、只读rootfs/配置、capdrop ALL、host网络及unless-stopped策略已配置。启动至状态回读约65秒仍running/restart0。</li>
+<li>旧112组件已关闭后，101和116经同一公网域名59527真实普通密码SSH分配PTY、命令退出0，hostname与uid核同，无跳板、无collector公钥；日本及广州另做strict none-auth指纹核验。</li>
+<li>独立性证据为NAS本机运行转发、旧112转发停用、其他机器普通会话及公网握手随后通过；没有实际关闭112整机或重启NAS，不把restart策略配置冒作NAS重启恢复验收。</li>
+<li>原有NAS容器只核id/name/PID/running/startedAt/imageId/restartPolicy/networkMode/readOnlyRootfs/user这10字段且保持；不声称读取完整Env或全部私有配置。DNS与广州其他配置本次不改，无新HTTPS入口。</li>
+<li>sudo脚本流独审缺口在部署前修复；首prepare因NAS base64对末尾换行返回1而在image/container前失败，小样复现后去CR/LF、严格SHA核同再用；旧自有partial目录挪到同NAS的.prepare-failed-20261020-0931保留。诊断与问题摘要保留，不伪造缺失的初次完整原件。</li>
+<li>桥接源码最后补充拒绝forcePTY与提权/脚本内容同时使用的guard，仅语法核对；不为该收尾重跑SSH。12项操作回执保原时点，最终源码及该验证边界分别记录。</li>
+<li>原决定799944f8-2e27-4d85-9543-c255e318d250由rev2 implemented追加为rev3 superseded；新036aae1a-20e4-4467-9b3e-30d2a0c65f8e rev2 implemented、independentAcceptance=false；经验076bb44c-b8be-47a5-a8bf-43270f65bc6e rev1 inbox、verified=false，未发布Skill。原项目notes/environment完整保持。</li>
+<li>供应商模型推理调用0，内部编排Token/金额及账单未知分列，费用只记录不设上限。</li>
+</ul>
+<h3 id="section-364-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>公开前检与Docker前检通过；native prepare/start/status均留实际image/CID/sourceSHA，旧NAS容器规定10字段核同；NAS未拉外部image、私有配置未入image。</li>
+<li>旧112组件before/disable/verify回执确认disabled/inactive/PID0及其他7服务PID保持；NAS本机容器随后持续运行。</li>
+<li>101和116普通密码+PTY实际退出0、hostname/uid/原host key通过；日本和广州无凭据strict host key握手通过，none-auth退出255只解释为方法与身份校验。</li>
+<li>最终汇总逐项绑定12项操作回执及3份最终源码；新平台决定changeOf旧ID、旧rev3 superseded/新rev2 implemented、经验inbox及短时session创建/精确撤销回读通过。</li>
+</ul>
+<h3 id="section-364-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人使用验收仍待确认；普通密码技术验证已通过，不再沿用363“未代做普通密码”的当前结论。</li>
+<li>NAS重启后的恢复与112物理关机均未实际测试；unless-stopped为已配置策略，不将这两个未做实验写为通过。</li>
+</ul>
+<h3 id="section-364-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>新增明确约束应通过关联决策和后继记录改变方案，保留先前已发生的实施事实；运行独立路径、停止旧组件和物理关机/重启实验应分别说明。</li>
+</ul>
+<h3 id="section-364-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/nas120-independent-ssh/preflight-public.json">artifacts/nas120-independent-ssh/preflight-public.json</a> · SHA-256：d53f14e279780bfa7cddfafe80e89a6690ad0a289dbbebdf3de2727125bc60b3</li>
+<li><a href="../artifacts/nas120-independent-ssh/docker-preflight-public.json">artifacts/nas120-independent-ssh/docker-preflight-public.json</a> · SHA-256：f0eb451ff25a1243bf84cc879b929a011587748723b02934af81e0f14f733f69</li>
+<li><a href="../artifacts/nas120-independent-ssh/prepare-diagnostic-public.json">artifacts/nas120-independent-ssh/prepare-diagnostic-public.json</a> · SHA-256：c16d49527f5a6ffabf401903fc3d8a92313ac3bf440cbb684276fb7861e895d7</li>
+<li><a href="../artifacts/nas120-independent-ssh/base64-diagnostic-public.json">artifacts/nas120-independent-ssh/base64-diagnostic-public.json</a> · SHA-256：3f76b3672f183b4f85fe4b77a2267abf86d84532c24b611ebe3ace387bd2c4a8</li>
+<li><a href="../artifacts/nas120-independent-ssh/native-prepare-public.json">artifacts/nas120-independent-ssh/native-prepare-public.json</a> · SHA-256：13194bbf74f54268eb5b4a239788d7e06c844815ab3e04cf96398b3f620e6f8c</li>
+<li><a href="../artifacts/nas120-independent-ssh/native-start-public.json">artifacts/nas120-independent-ssh/native-start-public.json</a> · SHA-256：5708c89a3c52648b6629741f08614399e6f519b7da45a057322595cb6d269ad7</li>
+<li><a href="../artifacts/nas120-independent-ssh/native-status-public.json">artifacts/nas120-independent-ssh/native-status-public.json</a> · SHA-256：1c5ede663b6e06c739b9065775372a1646290b9d7bd7cdc1df7bdb4a8d30741e</li>
+<li><a href="../artifacts/nas120-independent-ssh/old112-before-public.json">artifacts/nas120-independent-ssh/old112-before-public.json</a> · SHA-256：71808db5c366a3052a167efc3c740bcb46c52fba1f13d245c45c6b165e521a03</li>
+<li><a href="../artifacts/nas120-independent-ssh/old112-disable-public.json">artifacts/nas120-independent-ssh/old112-disable-public.json</a> · SHA-256：b966b676add63b6d59d5536e9d773512ee7b2de219cff63dc71e2e9d7e5068b1</li>
+<li><a href="../artifacts/nas120-independent-ssh/old112-verify-public.json">artifacts/nas120-independent-ssh/old112-verify-public.json</a> · SHA-256：8c32472cca051c2503ef1f9361ebb61fbd89442c549536a0ca3a66b834ed8e5c</li>
+<li><a href="../artifacts/nas120-independent-ssh/other-machines-public.json">artifacts/nas120-independent-ssh/other-machines-public.json</a> · SHA-256：a1c8d9daeddbebb5f6536aff9ee3ccf27a9aa543e84ed5f64ad9dad4b4f70d09</li>
+<li><a href="../artifacts/nas120-independent-ssh/network-public.json">artifacts/nas120-independent-ssh/network-public.json</a> · SHA-256：f893f8c8213aa892281103d7ae02cc996bb05e564606c0a0c6ad1ae1fe60a597</li>
+<li><a href="../artifacts/nas120-independent-ssh/preparation-issues-public.json">artifacts/nas120-independent-ssh/preparation-issues-public.json</a> · SHA-256：a449de38804ff2e1185a5a25ded2131cae98b9675a23073db3edb831e196d754</li>
+<li><a href="../artifacts/nas120-independent-ssh/final-validation.json">artifacts/nas120-independent-ssh/final-validation.json</a> · SHA-256：c37f663c9dd55be809d2f59761c08fad8b1ebf9833fff901ef97101cd9d56989</li>
+<li><a href="../artifacts/nas120-independent-ssh/platform-sync-public.json">artifacts/nas120-independent-ssh/platform-sync-public.json</a> · SHA-256：f04bb75f582651eb2391b29c4245f994ea10df303a20d23d656220286f080d4f</li>
+<li><a href="../docs/112%E4%B8%8E116%E5%85%AC%E7%BD%91SSH%E8%BF%9E%E6%8E%A5%E8%AF%B4%E6%98%8E.md">docs/112与116公网SSH连接说明.md</a> · SHA-256：bd68a56d12074de96d8ac01c14d73980db353bb5cdb7bf1d315eeb39757b4352</li>
+<li><a href="../docs/%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%A1%A3%E6%A1%88.md">docs/贾维斯建设档案.md</a> · SHA-256：d93c809b7868f6be975d1ca54ef8dea17362ca60e3c333f7013a55fbb3e0829e</li>
+</ul>
+<p>记录指纹：b8fea260f8f08d8def0101cfdc203dd4042aad7346f588e5685abb7f94816c2e；前一条：2e2363d507cca87a37c74030e4cb937409ea022a14c4c2435c7c446f017e54dc。</p>
+</section>
+<section class="doc-section" data-section="365"><h2 id="section-365" tabindex="-1">JARVIS-20261020-SIDEBAR-POLISH · 左侧菜单四字名称与层级样式调整，隔离验证通过，未上线</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-20T08:22:09.951Z；项目：贾维斯；类型：change。</p>
+<p>目标：统一左侧菜单四字名称，让工作创作等一级菜单与上方菜单字号一致，二级略微缩进。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-365-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>项目改为项目管理，其余左侧页面及分组名称已为四字。</li>
+<li>一级分组增加同尺度图标，字号、字重与常用菜单保持一致；二级缩进12px，手机抽屉同步。</li>
+<li>保留原路由、权限、分组展开和图标收起行为，增加分组展开状态辅助属性。</li>
+</ul>
+<h3 id="section-365-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>基于98748c9在独立副本sidebar-polish-20261020实现，使用单独导航样式文件避免修改其他页面。</li>
+</ul>
+<h3 id="section-365-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>开发改动已同步常规目录，未提交、未发布、未重启正式平台，未修改业务数据。</li>
+<li>费用只记录不设上限；无额外供应商推理请求，当前助手费用与Token未知，不按零记账。</li>
+</ul>
+<h3 id="section-365-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>独立副本类型检查及前后端构建通过；最终网页重新构建通过。</li>
+<li>实际Chromium隔离前端五组检查通过：四字标签、桌面字号行高与12px缩进、分组及路由、手机字号行高与缩进、图标收起。使用演示数据，不代表生产页面验收。</li>
+<li>初验发现桌面及手机父项行高差异，补齐行高及透明边框后原断言通过；收起检查遇到CSS过渡读取，等待目标项过渡完成后通过。</li>
+</ul>
+<h3 id="section-365-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>尚未正式发布，用户本人视觉验收待进行。</li>
+</ul>
+<h3 id="section-365-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/sidebar-polish/validation.json">artifacts/sidebar-polish/validation.json</a> · SHA-256：679510daceff9aa00790ec69fbd465b0ffbf4050fc7784acd0f1de96988cc017</li>
+<li><a href="../artifacts/sidebar-polish/qa-sidebar-polish.mjs">artifacts/sidebar-polish/qa-sidebar-polish.mjs</a> · SHA-256：58d920e6259901af35f6c861497ec279a280d36a1d220f3103c50babcd26b4cc</li>
+</ul>
+<p>记录指纹：ccef54dd1d45c521bb1e750785cd11c9af82dc411f01b33b3faac0d75197e3e3；前一条：b8fea260f8f08d8def0101cfdc203dd4042aad7346f588e5685abb7f94816c2e。</p>
+</section>
+<section class="doc-section" data-section="366"><h2 id="section-366" tabindex="-1">JARVIS-20261020-SIDEBAR-R57-ROLLBACK · R57首次隔离恢复触及180秒限时，安全回退R56且数据保留</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-20T09:06:53.284Z；项目：贾维斯；类型：incident。</p>
+<p>目标：按既有恢复门禁发布菜单调整并保留失败事实。</p>
+<h3 id="section-366-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>真实提交6bccd7ad89d074c36eebbf4a7c3ab329682b427d绑定R57包，完成stage/install/inspect及旧156项静态资产兼容核验。</li>
+<li>首次激活隔离恢复未在180秒内完成，发布器自动回退R56；平台与observer健康正常。</li>
+</ul>
+<h3 id="section-366-2" tabindex="-1">事实与边界</h3>
+<ul>
+<li>完整快照64文件、59目录、5354932726字节、10 SQLite；失败及回退回执原样保留。</li>
+<li>后续离线复核保留隔离树全量内容与manifest一致、10 SQLite通过，不将该诊断冒作首次restore成功。</li>
+<li>首次提交因独立克隆缺少身份失败，显式沿用原仓库身份后成功；未改全局Git身份。</li>
+</ul>
+<h3 id="section-366-3" tabindex="-1">验证结果</h3>
+<ul>
+<li>自动回退回执及公网R56健康核对通过；隔离副本内容与SQLite复核通过。</li>
+</ul>
+<h3 id="section-366-4" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>后继attempt2记录单独登记，不覆盖本条失败。</li>
+</ul>
+<h3 id="section-366-5" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/sidebar-polish/activate-public.json">artifacts/sidebar-polish/activate-public.json</a> · SHA-256：b7fedfd9030ba9cbe87a2fe409c6d93ee95dc0bb29ecc0140c4d3b16ed3b1967</li>
+<li><a href="../artifacts/sidebar-polish/rollback-public.json">artifacts/sidebar-polish/rollback-public.json</a> · SHA-256：97326fec402265ca5223fbaf9b2885571eadcc023bb5e8da6d1e0dbdb0a6ebc2</li>
+<li><a href="../artifacts/sidebar-polish/first-snapshot-public.json">artifacts/sidebar-polish/first-snapshot-public.json</a> · SHA-256：4215d0c05e037133374089c608124eb6abe118f337147f289bd582407841b921</li>
+<li><a href="../artifacts/sidebar-polish/failed-restore-diagnostic-public.json">artifacts/sidebar-polish/failed-restore-diagnostic-public.json</a> · SHA-256：ce16682b400159ee58294185e3d492aba59c65ce49a60ff2a3e1d02184c3b485</li>
+</ul>
+<p>记录指纹：9d272a8f5653b9386db2968ec0bfbb2f8a77399fdafc7b10a075b4aff0cde5df；前一条：ccef54dd1d45c521bb1e750785cd11c9af82dc411f01b33b3faac0d75197e3e3。</p>
+</section>
+<section class="doc-section" data-section="367"><h2 id="section-367" tabindex="-1">JARVIS-20261020-SIDEBAR-R57-LIVE · R57左侧四字菜单与统一层级正式上线，公网桌面手机检查通过</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-20T09:06:53.284Z；项目：贾维斯；类型：release。</p>
+<p>目标：按用户确认的本地提交与发布要求上线菜单调整，不推送远端。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-367-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>112正式版本切为20261020-sidebar-polish-r57：项目管理四字标签、一级分组统一字号字重图标、二级12px缩进及手机同步。</li>
+<li>第二次激活使用新capture-upgrade-20261020-sidebar-polish-r57-attempt2-112目录，保留原失败材料；仅把restore子进程限时180改360秒，其余门禁和全局锁保持。</li>
+<li>常规目录发布分支已合并真实源码提交，记录工具继续追加同源MD/HTML。</li>
+</ul>
+<h3 id="section-367-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>首次隔离副本全树和10 SQLite核同、发生在restore限时时点，因此选择有界延长并全新snapshot/restore，不跳过验证或复用半成品。</li>
+<li>同机传输适配只取代SSH，仍运行既有managed服务端程序和sudo；精确匹配替换并经独立只读复核。</li>
+</ul>
+<h3 id="section-367-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>源提交6bccd7ad89d074c36eebbf4a7c3ab329682b427d，包SHA f5c0badbacc6bde308a2634842e9dd52c952c835130e323b22016a6a92aa1066，2441文件，继承R56累计静态资源。</li>
+<li>全新快照与隔离恢复均64文件、59目录、5356124662字节、10 SQLite一致。生产数据未回写快照，101冷备未启动，工厂未恢复，三机模型配置未改。</li>
+<li>费用只记录不设上限；无额外供应商模型推理，助手Token与金额未知分列。</li>
+</ul>
+<h3 id="section-367-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>本轮类型与前后端构建通过，stage/install/inspect通过，实际旧156静态资产兼容门通过。</li>
+<li>激活回执确认同一全局锁、完整快照/隔离恢复及API/observer R57 active且health ok；独立health回读和公网HTTPS检查通过。</li>
+<li>公网真实部署前端以演示模式验证共用导航五组：版本健康、桌面字号行高与12px缩进、四字标签、分组及路由、手机抽屉；无管理员会话或生产业务写入，不冒登录后完整业务验收。</li>
+</ul>
+<h3 id="section-367-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人视觉验收待进行。</li>
+<li>独审发现既有保留维护可能要求managed发布器未生成的operation.json/recoverySHA256；本轮未改变维护规则或删除旧材料，不声称本版已验证严格仅留两份。需另行核对兼容性。</li>
+<li>平台项目资料CAS接口同步本轮未做；本地建设记录和公开证据已保存。</li>
+</ul>
+<h3 id="section-367-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>恢复耗时上限失败应保留原失败、先核验隔离副本，再以新尝试目录进行有界重试；不能用既有副本存在替代成功回执。</li>
+</ul>
+<h3 id="section-367-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/sidebar-polish/packaging-public.json">artifacts/sidebar-polish/packaging-public.json</a> · SHA-256：5042829bd9305959d92c08beb5d84c80882d8c8194a91af1b8f791db676be191</li>
+<li><a href="../artifacts/sidebar-polish/release-build-public.json">artifacts/sidebar-polish/release-build-public.json</a> · SHA-256：6e71ecbfa3e4d635b38d129c5301588c00b4111942fb2e22e1228ae10fa8d5c3</li>
+<li><a href="../artifacts/sidebar-polish/inspect-public.json">artifacts/sidebar-polish/inspect-public.json</a> · SHA-256：6ba0a64ec24565b266204b092a008cd30c77483168bb0cc1e4e4bedb079eb7f6</li>
+<li><a href="../artifacts/sidebar-polish/web-compatibility-public.json">artifacts/sidebar-polish/web-compatibility-public.json</a> · SHA-256：f2c3735ba6247f089be49e5134eb24d2236ed5cdc56ee13903bff729af990399</li>
+<li><a href="../artifacts/sidebar-polish/retry-review-public.json">artifacts/sidebar-polish/retry-review-public.json</a> · SHA-256：3175ee0c9ff0823df965e731e547c3aa8c2fc88f08d001a421b2b35a9a301377</li>
+<li><a href="../artifacts/sidebar-polish/activate-attempt2-public.json">artifacts/sidebar-polish/activate-attempt2-public.json</a> · SHA-256：efc0e56295b4e1f2207696ff18cec51380254e01d8968d0cbd521e87bd93b0c3</li>
+<li><a href="../artifacts/sidebar-polish/health-public.json">artifacts/sidebar-polish/health-public.json</a> · SHA-256：8426ad00f39d848e0ec83f638fdaecf7b7e6d0a87c5bcf9a93ec4c60618fa5d0</li>
+<li><a href="../artifacts/sidebar-polish/online-validation-public.json">artifacts/sidebar-polish/online-validation-public.json</a> · SHA-256：6dcc5e5d56fef17b7acc63ff9d612165bee55c3cefa5cd6ee8c2427142dffde2</li>
+</ul>
+<p>记录指纹：eddcb645b5ad05331d7e7c78e3447d713b0cf79999a1ee0b5f11bb5484f5bd3e；前一条：9d272a8f5653b9386db2968ec0bfbb2f8a77399fdafc7b10a075b4aff0cde5df。</p>
+</section>
+<section class="doc-section" data-section="368"><h2 id="section-368" tabindex="-1">JARVIS-20261020-PLATFORM-ICONS · 全平台功能图标统一为语义SVG，隔离验证通过，未发布</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-20T10:56:32.231Z；项目：贾维斯；类型：change。</p>
+<p>目标：按用户明确范围统一整个平台导航、页面卡片、按钮及提醒功能图标，使语义更贴切且视觉一致。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-368-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>新增零依赖68图标共享SVG注册表、严格IconName及19路由统一映射，替换App、ApiWorkbench、family三套私有渲染器的重复实现。</li>
+<li>导航19路由、4组、手机、顶部、目录及共用关闭统一；保留四字菜单和12px缩进，补齐SVG迁移后行高差异。</li>
+<li>总览/大屏外围、通知、设置、项目及运维指标、知识来源/空态/卡片、家庭播放/聊天/天气/新增删除与外链功能图标迁移。指标由调用处指定语义，不再按数组索引循环选抽象字符。</li>
+<li>常规目录已同步35件源码及测试；图表本体、主题艺术、流程正文、数学乘号、用户记录与业务判定保持。</li>
+</ul>
+<h3 id="section-368-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>复用既有24x24 currentColor/1.5圆角描边规范，不新增依赖、外网字体或图标服务；旧devices/experiences仅通过类型安全别名映射统一语义。</li>
+<li>独立副本platform-icons-20261020基于e58bc39实现；只修改功能图标节点，不全局替换字符。</li>
+</ul>
+<h3 id="section-368-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>实现未提交、未上线，生产仍R57；不改三机模型配置、生产家庭数据或工厂状态。</li>
+<li>费用只记录不设上限；无新增供应商推理请求，助手Token与金额未知，不按零填报。</li>
+<li>独立真实API使用jarvis-dev-112空开发数据首次初始化账号；维护会话仅内存使用并退出，未把凭据写入公开证据。</li>
+</ul>
+<h3 id="section-368-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>全工作区类型检查、API及网页stage构建通过；最终网页再次构建通过，图标注册与保护正文2项测试通过。</li>
+<li>演示浏览器35检查覆盖19路由、目录、10主题及5视口；独立真实HTTP/SQLite空数据19页面通过；成员权限、收起态、目录搜索、手机导航与7大屏共12检查通过。</li>
+<li>初次错误保留摘要：测试相对入口/工作目录、严格图标名约束、家庭重复导入导致500、菜单行高变化、目录增加尾箭头造成图标总数断言、live测试store编译入口缺失；分别修复复验通过。</li>
+</ul>
+<h3 id="section-368-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户整体视觉确认和本轮提交/发布仍待授权，未沿用R57发布授权。</li>
+<li>测试为路由级与关键交互，未逐个生产数据弹窗、实体房间、TTS或模型运行验收；十主题只检查图标存在和颜色继承，不冒综合对比度审计。</li>
+<li>平台项目CAS资料同步本轮未做；本地建设档案与证据已保存。</li>
+</ul>
+<h3 id="section-368-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/platform-icons/validation-public.json">artifacts/platform-icons/validation-public.json</a> · SHA-256：4a0fe7cf152438f29cd94983b40d141431121fb43b3c5c478168729061aec939</li>
+<li><a href="../artifacts/platform-icons/browser-public.json">artifacts/platform-icons/browser-public.json</a> · SHA-256：9649227e1e89f52e505cfeb33c4fc3fcfeaf4ac4cdaf579a8a7982debe314239</li>
+<li><a href="../artifacts/platform-icons/isolated-live-public.json">artifacts/platform-icons/isolated-live-public.json</a> · SHA-256：2fa70c459e516a9920d10a5481b9bb79af595997a2671572a1b547c520d3f5f7</li>
+<li><a href="../artifacts/platform-icons/navigation-states-public.json">artifacts/platform-icons/navigation-states-public.json</a> · SHA-256：f7a1c94fd50355c9d7b1717f027430e0035349f6f005946d50ee99e70d414c0f</li>
+<li><a href="../artifacts/platform-icons/coverage.md">artifacts/platform-icons/coverage.md</a> · SHA-256：c5af12f40ed235caf078480183804e6f0b9cba724c5dde290013d051f344667f</li>
+<li><a href="../artifacts/platform-icons/icon-sheet.png">artifacts/platform-icons/icon-sheet.png</a> · SHA-256：ffb4c7c26cf223be6e8f764311226ea3bfc544dd95090587315307a97e992197</li>
+<li><a href="../artifacts/platform-icons/desktop-sidebar.png">artifacts/platform-icons/desktop-sidebar.png</a> · SHA-256：e1c3b9c7c3899eef842cdf372010bdd7f59e3f518c5de2c9da10a5fcc145878c</li>
+<li><a href="../artifacts/platform-icons/mobile-sidebar.png">artifacts/platform-icons/mobile-sidebar.png</a> · SHA-256：5f514ddc0ce7a4a6b70cf7a2ae661ec6e721c48af99bf0045be0e01f52459543</li>
+</ul>
+<p>记录指纹：d3815acf484c07fe190816e63467c7dbbf3bc37fe5b2885542ae274b6e6c5095；前一条：eddcb645b5ad05331d7e7c78e3447d713b0cf79999a1ee0b5f11bb5484f5bd3e。</p>
+</section>
+<section class="doc-section" data-section="369"><h2 id="section-369" tabindex="-1">JARVIS-20261020-PLATFORM-ICONS-R58-LIVE · R58全平台语义图标正式上线，公网23项检查及健康通过，手机行高2px差异留待微调</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-20T11:29:57.602Z；项目：贾维斯；类型：release。</p>
+<p>目标：按用户明确本地提交与发布确认将全平台功能图标调整上线。</p>
+<p>状态：实现：已完成 · 验证：部分完成 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-369-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>112正式版本切换20261020-platform-icons-r58，固定源码33fd8ad8262a3eb468ec808cd84bab6c01eb4a58，2457文件发布载荷，继承R57累计静态资源。</li>
+<li>同机sudo适配沿用安全发布器，仅将restore子进程180秒延为360秒；snapshot180及全局900/外层920秒保持，不绕过锁、活动任务、完整快照和隔离恢复。</li>
+<li>本地发布分支合并真实源码并保留建设记录，不推送远端。</li>
+</ul>
+<h3 id="section-369-2" tabindex="-1">事实与边界</h3>
+<ul>
+<li>完整恢复点及全新隔离恢复均64文件、59目录、5406587382字节、10 SQLite核同；manifest 1b47848a5d4175a804e9b8d1d7d53e673cdf61337afa1409d1b55eeacec3f564。生产未回写快照，未恢复工厂或启动101冷备，三机模型配置未改。</li>
+<li>包SHA256为2c3ee02c9b9f3a86b849fd06b7eb7a753160aeffcb62b100a16ff9a7f1e32929。</li>
+<li>费用仅记录不设限；无新增供应商推理请求，助手Token和金额未知分列。</li>
+</ul>
+<h3 id="section-369-3" tabindex="-1">验证结果</h3>
+<ul>
+<li>本轮类型检查、前后端stage构建及图标2项测试通过；stage/install/inspect与实际前版静态兼容门通过。</li>
+<li>激活回执和独立health均确认API/observer/current R58 active、health ok；公网HTTPS浏览器23项通过，覆盖19主路由共用组件、19目录图标、桌面字号行高缩进与手机字号/12px缩进。</li>
+<li>公网首次脚本因遍历后工作创作组关闭而找不到子项，按真实展开状态修正；随后发现手机普通46px/组44px，改为公开记录实际差异，不把行高一致写为通过。图标与路由及其他检查通过，不修改业务源码或为留证重发。</li>
+</ul>
+<h3 id="section-369-4" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>手机分组行高44px与普通菜单46px存在2px差异，需后续微调；字号及12px缩进已核同。</li>
+<li>用户本人视觉验收待进行；公网检查使用真实部署前端演示模式，不代替登录后所有生产数据弹窗验收。</li>
+<li>既有保留维护元数据兼容待办延续，不在本次改规则或删证据；平台项目CAS资料同步本轮未做。</li>
+</ul>
+<h3 id="section-369-5" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/platform-icons/packaging-r58-public.json">artifacts/platform-icons/packaging-r58-public.json</a> · SHA-256：32d839b70895478a0ac3cc9afd85abcbfa9a0bfa76422af958090fb918f61677</li>
+<li><a href="../artifacts/platform-icons/inspect-r58-public.json">artifacts/platform-icons/inspect-r58-public.json</a> · SHA-256：b61fbea4bc519aaeb084d79107806ac4b269244138ecb213f995d3f8dc38ce15</li>
+<li><a href="../artifacts/platform-icons/web-compatibility-r58-public.json">artifacts/platform-icons/web-compatibility-r58-public.json</a> · SHA-256：c5b2f65614d3257a4416ca34098d9e543d4ce0cf64a49e42837b6430076183fd</li>
+<li><a href="../artifacts/platform-icons/release-review-r58-public.json">artifacts/platform-icons/release-review-r58-public.json</a> · SHA-256：6084740bf1eb876984302a3a4118b12bac11e7136b7aad1b34e6d2a13349e426</li>
+<li><a href="../artifacts/platform-icons/activate-r58-public.json">artifacts/platform-icons/activate-r58-public.json</a> · SHA-256：74ae84205aba42732091400e74c3ef5f4b7f72e87c035783be4f1de4a1131ef4</li>
+<li><a href="../artifacts/platform-icons/health-r58-public.json">artifacts/platform-icons/health-r58-public.json</a> · SHA-256：1e9cc5490058964b8ce67baa2cf5ef9b77ef617e32e451d2f8f354b60a065cad</li>
+<li><a href="../artifacts/platform-icons/online-r58-public.json">artifacts/platform-icons/online-r58-public.json</a> · SHA-256：899fc24ad419f625b8e5abe7c26179587b288ddb6510daf0eafc3507bf0d613f</li>
+<li><a href="../artifacts/platform-icons/source-r58-sync-public.json">artifacts/platform-icons/source-r58-sync-public.json</a> · SHA-256：184e8aa52d37ca85e8bef90b6cbb348158328486f2213519c1f962fcfc90b352</li>
+</ul>
+<p>记录指纹：ef94c1edc8b312303d698333eef30df18f51053fb17e416806e3b1175b1b91ac；前一条：d3815acf484c07fe190816e63467c7dbbf3bc37fe5b2885542ae274b6e6c5095。</p>
+</section>
+<section class="doc-section" data-section="370"><h2 id="section-370" tabindex="-1">JARVIS-20261020-R58-CODE-REVIEW · R58当前代码定向全面审查与903项API回归完成，确认四项缺口未修复</h2>
+<p>发生时间：2026-10-20；记录时间：2026-10-20T12:06:25.927Z；项目：贾维斯；类型：validation。</p>
+<p>目标：检查当前代码真实问题，不仅审查图标差异，不进行生产修复或部署。</p>
+<p>状态：实现：不适用 · 验证：部分完成 · 上线：不适用 · 验收：待验收</p>
+<h3 id="section-370-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>未修改应用源码；形成公开审查报告及回归统计。</li>
+</ul>
+<h3 id="section-370-2" tabindex="-1">事实与边界</h3>
+<ul>
+<li>基线38190ce；R58图标差异复核未发现新增高置信运行缺陷，不能推断整个项目无问题。</li>
+<li>确认个人设置空安静时间被HTTP Schema拒绝、项目验收路由未装配；确认发布SIGALRM可绕回退及保留工具缺少managed恢复绑定，其中后两项为既有待办。</li>
+<li>权限/记忆/知识/密钥返回定向审查未确认越权或明文密钥泄露；不是全路径安全保证。</li>
+<li>费用只记录不设限，助手Token与金额未知；无实际模型或生产运维请求。</li>
+</ul>
+<h3 id="section-370-3" tabindex="-1">验证结果</h3>
+<ul>
+<li>类型检查、图标2项及演示领域25项通过；API903项870通过22失败11跳过。</li>
+<li>个人设置与决策15项隔离复验13通过2失败；其中空时间400为功能缺陷，决策隐私拒绝文案不匹配为测试问题，不冒作泄露。</li>
+<li>验收路由独立复验仍失败，GET只落到静态fallback；计费与执行恢复若干失败已分出陈旧fixture和待诊断项，不把22失败当22产品bug。</li>
+</ul>
+<h3 id="section-370-4" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>本轮未修复、未提交、未部署；建议优先修个人设置Schema和验收路由装配，随后修发布超时回退与恢复绑定，另清理失败测试基线。</li>
+<li>流式用量和quota恢复失败仍需最小fixture进一步定位，不能归咎Linux或直接放松计费门禁。</li>
+<li>平台CAS资料同步未做。</li>
+</ul>
+<h3 id="section-370-5" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/code-review-20261020/review-public.json">artifacts/code-review-20261020/review-public.json</a> · SHA-256：e2481d0d3c3e64d0f639ccd15060ac9044b0c2f1f73f5aab2abdba2fedc755ca</li>
+</ul>
+<p>记录指纹：8ee1d0bea9a39800485638b70e2f6309f924f5dbe36ea5c6587d3e64ea731e26；前一条：ef94c1edc8b312303d698333eef30df18f51053fb17e416806e3b1175b1b91ac。</p>
+</section>
+<section class="doc-section" data-section="371"><h2 id="section-371" tabindex="-1">JARVIS-20261021-R58-REVIEW-FIXES · R58审查缺陷及失败回归已修复验证，908项API零失败，未提交未上线</h2>
+<p>发生时间：2026-10-21；记录时间：2026-10-20T18:02:19.281Z；项目：贾维斯；类型：change。</p>
+<p>目标：修复前轮四项明确问题，定位22项失败及关联实际缺陷，不放松权限、未知费用或恢复校验。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-371-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>修persona save双空时间窄Schema及生成源；保留非法/单空/null/时区/CAS拒绝，模型场景Schema与实际十场景对齐。</li>
+<li>createApp装配验收运行器及六路由，项目工作台挂载验收缺陷和已有发布记录面板；不自动派发或将缺陷关闭作项目交付。</li>
+<li>发布器以有界子进程与独立前向/回退预算代替默认alarm终止；保留全局锁，原子恢复配置与权限，未回收child明确人工处理且不谎报回退；健康整段HTTP含滴流受6秒child限时。</li>
+<li>新managed恢复点登记真实operation pin及terminal recoverySHA256；缺历史绑定持续held，即使后续有两新点也不进入自动删除候选，同步维护guard pin。</li>
+<li>执行spawn标识与proof统一，严格未启动签名回执可递送且未知用量不冒零；恢复普通模板hash漂移拒绝，保持canonical fixed no-model保护。</li>
+<li>修复SQLite UTC恢复时间漏Z跨午夜统计、报告超限尾段误采及supervisor退出前未排空导致随机截断；手机行高统一46px。</li>
+<li>费用/容量/诊断/路径陈旧测试对齐当前明确协议，完整金额/部分下界/未知与配额fail-closed分开；原先22失败逐项保留处置证据。</li>
+</ul>
+<h3 id="section-371-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>依据批准方案在独立r58-review-fixes-20261021基于38190ce实现，不覆盖常规目录既有审查记录；最终47件源码/测试同步。</li>
+<li>不以删断言或弱化零用量/冻结hash/回退pin凑全绿；缺pin历史不补造当时证明，生产兼容迁移和清理需另行授权与实测。</li>
+</ul>
+<h3 id="section-371-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>本轮不提交或推送，不部署、不重启生产、不安装或执行生产清理，不改三机模型、家庭数据或工厂状态；平台资料CAS同步未做。</li>
+<li>费用只记录不设限，额外供应商推理0；助手Token与金额未知单列。</li>
+<li>恢复协议root测试仅/root临时合成树，已清理；无生产路径删除。</li>
+</ul>
+<h3 id="section-371-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>最终全API908项897通过0失败11跳过；基线903项870通过22失败11跳过，增加5项合同、装配、正常签名及漂移保护测试；不是删除旧测试绿化。</li>
+<li>全工作区类型与stage前后端构建通过，图标2项及演示领域25项通过。</li>
+<li>实际隔离浏览器验收缺陷7组和设置/手机4组通过，真实HTTP/SQLite、外网阻断fake Pi；不冒生产数据或实体设备验收。</li>
+<li>生产common及实际activate block受控故障10项、root私有临时新旧pin/held3项、原完整恢复5项和静态兼容5项通过；独审两项HTTP滴流与未回收虚假回退缺口均修复后源码核实。</li>
+<li>中间905项20失败、908项17失败、908项2失败原结果保留；合同条件漏required、parser下界、未排空、fixture路径及生成窄范围问题逐一复验，最终0失败。</li>
+</ul>
+<h3 id="section-371-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人验收、Git提交及正式发布尚未进行；线上R58和已安装旧维护器不会因源码修复自动更新。</li>
+<li>11skip仍为root启动marker、节点包、Python/OCR、Windows SAPI等原生前置缺失；未伪报完成，见skip公开摘要。</li>
+<li>历史恢复点事后资格核验与生产保留工具更新/清理本轮未做，旧证据保持。</li>
+<li>平台项目/决定/经验CAS同步本轮未做，公开文件与本地同源档案已保留。</li>
+</ul>
+<h3 id="section-371-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/r58-review-fixes/validation-public.json">artifacts/r58-review-fixes/validation-public.json</a> · SHA-256：e91beea1b8f46402ec7a9dc4711b95bc16645bf8558cb8f2eb8decff9ab705a4</li>
+<li><a href="../artifacts/r58-review-fixes/api-final-results-public.json">artifacts/r58-review-fixes/api-final-results-public.json</a> · SHA-256：7fe8af4f98dd639fd8d33e946744fe608a9bc854e605e7ce9eced6deea3fde24</li>
+<li><a href="../artifacts/r58-review-fixes/failure-matrix.json">artifacts/r58-review-fixes/failure-matrix.json</a> · SHA-256：ce037c30b1748d5314cb5c40d30f6a06e39eedf14b807d7b43a2b291725c3cea</li>
+<li><a href="../artifacts/r58-review-fixes/intermediate-test-results.json">artifacts/r58-review-fixes/intermediate-test-results.json</a> · SHA-256：2ca3049e5c0cad422597d5c80a1847c9f37f3c53e9570ca8144478668c08cf6b</li>
+<li><a href="../artifacts/r58-review-fixes/release-tests-public.json">artifacts/r58-review-fixes/release-tests-public.json</a> · SHA-256：e30b14b99c5a1d58be7c33d34932fd3fb8d4e5f8a7d2ae14a21372f7a3eab460</li>
+<li><a href="../artifacts/r58-review-fixes/settings-browser-public.json">artifacts/r58-review-fixes/settings-browser-public.json</a> · SHA-256：f984ab9967a2ad6b83739b2f42cbd3c661e32f1a7dc0ec48b73bb0ed873b133b</li>
+<li><a href="../artifacts/r58-review-fixes/source-sync-public.json">artifacts/r58-review-fixes/source-sync-public.json</a> · SHA-256：e5825deb6c943500b11c8ed038d6455a1d6e9f9e3f47146b238277e8216accda</li>
+</ul>
+<p>记录指纹：fbc98a03ca579d7c17e3ee7d32203c3591658be03c8b474bff389b20e5bc3267；前一条：8ee1d0bea9a39800485638b70e2f6309f924f5dbe36ea5c6587d3e64ea731e26。</p>
+</section>
+<section class="doc-section" data-section="372"><h2 id="section-372" tabindex="-1">JARVIS-20261021-TERMINAL-CONTEXT-GUARD · 112终端892k附近400调查及提前压缩保护</h2>
+<p>发生时间：2026-10-21T04:03:29.954Z；记录时间：2026-10-21T04:03:29.954Z；项目：贾维斯；类型：incident。</p>
+<p>目标：分析本机终端未到1M便400的问题并最小调整cc-switch配置。</p>
+<p>状态：实现：已完成 · 验证：部分完成 · 上线：不适用 · 验收：待验收</p>
+<h3 id="section-372-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>仅为当前JP-CCR通道模板与生效终端配置增加850000自动压缩窗口；其他通道、模型映射和凭据保持。</li>
+<li>创建账号内私密备份；公开报告不含配置载荷及聊天。</li>
+</ul>
+<h3 id="section-372-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>不把客户端1M声明当作上游容量证据，不以通用400确认超限；先保守提前压缩，后以网关具体错误确认根因。</li>
+</ul>
+<h3 id="section-372-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>最后成功输入合计892642，随后四次HTTP400仅返回All target providers failed；失败请求真实用量未知。</li>
+<li>终端状态栏取上一成功请求输入用量，不包含下一请求新增内容及输出预算。</li>
+<li>未新增专项长上下文模型回放；本轮交互及调查子代理用量未核算，账单金额未知，不填零费用。</li>
+</ul>
+<h3 id="section-372-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>cc-switch数据库校验通过；生效JSON有效；与私密备份逐项比较，生效设置和单一目标模板分别仅增加同一环境变量。</li>
+<li>CLI 2.1.292本地阈值公式已核对：850k减至多20k输出预留再减13k，输出预算至少20k时约817k；预计算可更早。</li>
+<li>私密备份目录0700、文件0600。</li>
+</ul>
+<h3 id="section-372-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>重启终端客户端后观察真实长会话自动压缩。</li>
+<li>需网关上游错误确认具体根因；未检查网关服务日志，未做百万token回放。</li>
+<li>生产服务未改动或重启；平台CAS同步未做。</li>
+</ul>
+<h3 id="section-372-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>代理通道的上下文声明、界面上一次usage和上游请求上限须分开验证。</li>
+</ul>
+<h3 id="section-372-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/terminal-context-guard-20261021/report-public.json">artifacts/terminal-context-guard-20261021/report-public.json</a> · SHA-256：04f00b381b22e528ea7d12acea9a18e4ada84fc23563f9f1eaf2016d5bc48ab0</li>
+</ul>
+<p>记录指纹：2accc541749fab05cf6c5ea0b9254ab5aff5730ab4a22af68d27ca8c016ee586；前一条：fbc98a03ca579d7c17e3ee7d32203c3591658be03c8b474bff389b20e5bc3267。</p>
+</section>
+<section class="doc-section" data-section="373"><h2 id="section-373" tabindex="-1">JARVIS-20261021-KNOWLEDGE-INGESTION-RESUME · 接续知识资料入库候选，核同31件源码并通过类型、构建及11项定向复验，尚未上线</h2>
+<p>发生时间：2026-10-21；记录时间：2026-10-21T04:55:16.005Z；项目：贾维斯；类型：validation。</p>
+<p>目标：熟悉当前项目并接续此前中断的知识资料入库工作，补齐真实状态与建设交接，不将开发验证写成生产交付。</p>
+<p>状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-373-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>补记既有知识入库候选：通用文档原件、人工核对与独立发布、精确段落检索与原件绑定引用；扫描书籍维持逐页精校。</li>
+<li>建设档案更新当前知识入库状态、既有报告、本次复验和待办；未修改应用源码。</li>
+</ul>
+<h3 id="section-373-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>知识入库候选已有真实独立副本与31件文件指纹，先核对并定向复验，不重做已完成实现、不混入另一批R58审查修复的发布结论。</li>
+<li>无需为补日志重复全量API或浏览器验收；当前源码指纹一致，已有报告按原范围保留。</li>
+</ul>
+<h3 id="section-373-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>31件任务文件SHA全部与task-delta-public.json一致；基线HEAD仍38190ce，工作树包含两批未提交改动。</li>
+<li>既有独立副本为账号私有开发目录knowledge-ingestion-20261021，生产路径和完整原件未改。</li>
+<li>不提交、不推送、不部署、不重启或清理生产，不改模型配置、家庭数据或工厂状态；平台CAS资料同步未做。</li>
+<li>费用只记录不设消费上限；本次无额外供应商推理请求，助手与调查代理Token及账单金额未知，未填零费用。</li>
+</ul>
+<h3 id="section-373-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>当前整合源码npm run typecheck、npm run build:stage均退出0；stage产物未激活。</li>
+<li>知识文档运行、入库边界、合约、集成、目录预览五个测试文件共11项全部通过，零跳过。</li>
+<li>此前API报告919项912通过0失败7跳过；此前浏览器报告6项通过，覆盖合成Markdown上传、人工核对发布、检索引用与手机布局，本次未重复运行。</li>
+<li>建设账本追加前372条完整性通过。</li>
+<li>首次定向测试命令误用相对路径退出127、没有执行测试；更正仓库根目录命令后11项通过。git diff --check仍报告既有CRLF新增行空白问题，未批量改写。</li>
+</ul>
+<h3 id="section-373-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>真实NAS路径、原生扫描OCR及用户资料质量未验收；Python3.14与现有RapidOCR版本不兼容，不能以fixture代替。</li>
+<li>用户本人验收、Git提交、正式发布以及生产保留工具更新未执行。</li>
+<li>平台项目、决定及经验CAS同步未执行；本地公开证据和同源档案已补齐。</li>
+</ul>
+<h3 id="section-373-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/knowledge-ingestion/task-delta-public.json">artifacts/knowledge-ingestion/task-delta-public.json</a> · SHA-256：b26fe3508c7be46eca5db818d169f846d0bd6b7b67d68970ac9dcdfe107b0b58</li>
+<li><a href="../artifacts/knowledge-ingestion/api-final-public.json">artifacts/knowledge-ingestion/api-final-public.json</a> · SHA-256：4525fdbbab243e645d5f02dda327901d4b657bf70a37f2c390db48d1c20a3484</li>
+<li><a href="../artifacts/knowledge-ingestion/browser-public.json">artifacts/knowledge-ingestion/browser-public.json</a> · SHA-256：db03e7e81394a741ca13a2c9428b7de966cb26c31421814d1749e6b0590cdda4</li>
+<li><a href="../artifacts/knowledge-ingestion/environment-public.json">artifacts/knowledge-ingestion/environment-public.json</a> · SHA-256：8bd39ac3e4d87ac98787494c3777806996297c27c87374b0d440b32b8e32391a</li>
+<li><a href="../artifacts/knowledge-ingestion/resume-validation-public.json">artifacts/knowledge-ingestion/resume-validation-public.json</a> · SHA-256：48b1683444a8ef88842483a4a343f93a6f5fed91ec6a4d59c4432137f099bb55</li>
+<li><a href="../docs/%E7%9F%A5%E8%AF%86%E8%B5%84%E6%96%99%E5%85%A5%E5%BA%93%E9%97%AD%E7%8E%AF.md">docs/知识资料入库闭环.md</a> · SHA-256：3ab72e71cfa56f4b34accedc70ac7aecefd23a59aeaf04be708ee0bb39d2374b</li>
+</ul>
+<p>记录指纹：d0c0a563cc65646a3488d3a4228edb4471cd0cbbb2341c062b0ff31aeaa03895；前一条：2accc541749fab05cf6c5ea0b9254ab5aff5730ab4a22af68d27ca8c016ee586。</p>
+</section>
+<section class="doc-section" data-section="374"><h2 id="section-374" tabindex="-1">JARVIS-20261021-KNOWLEDGE-INGESTION-FOLLOWUP · 知识入库多段原件定位修复及真实会话权限复验完成，五件任务文件同步，未上线</h2>
+<p>发生时间：2026-10-21；记录时间：2026-10-21T07:22:53.381Z；项目：贾维斯；类型：change。</p>
+<p>目标：接续记录373发现的知识入库保真与测试可移植性缺口，补齐原件定位、失效及真实会话授权回归，不扩大生产范围。</p>
+<p>状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-374-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>makeSegments严格兼容无分隔与双换行两种正文协议，空段参与匹配，分隔符并入前段后再按1200字符切块并重算SHA；不匹配安全回退，人工改写文字不伪造原件位置。</li>
+<li>家庭和管理员引用响应补已验证的原件段落位置，保留稳定文档URI。</li>
+<li>DOCX/HTML测试去私有Python路径、3.14和fitz前置，标准库隔离探测与生成，真实多段闭环命中第二段；补引用失效与七个管理入口的真实会话矩阵。</li>
+<li>最终五件任务源码与测试及公开报告按SHA同步常规目录，原app.ts与继承R58修复保持。</li>
+</ul>
+<h3 id="section-374-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>仅在已有独立knowledge-ingestion-20261021副本实现，基线38190ce；同步前核对原31件任务指纹一致，防止覆盖并行变更。</li>
+<li>最终复核删除重复不可达重建分支，撤回扩大到全局语音Python选择的改动；以fixture显式传Python满足测试环境，不扩大运行环境影响。</li>
+<li>拒绝将模拟valid-admin或expired Cookie当作真实会话验收，追加实际createApp登录、成员登录及管理员登出后的管理接口拒绝测试。</li>
+</ul>
+<h3 id="section-374-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>源码未提交、未推送、未部署；未重启、清理或改动生产数据、三机模型及工厂状态，平台CAS同步未做。</li>
+<li>无额外产品供应商推理或付费服务请求；助手与代理Token、金额未知，费用只记录不设消费上限。</li>
+<li>没有安装OCR依赖或用fixture冒作真实NAS、扫描质量、用户本人验收。</li>
+</ul>
+<h3 id="section-374-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>先以回归复现多段正文丢失原件定位，再修复；覆盖空段、空白、1201字符切片、全文准确重建和人工修正文无伪造位置。</li>
+<li>独立副本最终15项定向测试通过；同步到常规目录后再次15项全部通过，零跳过。</li>
+<li>真实DOCX/HTML原件保留、提取、人工审核发布及第二段检索引用通过；管理员与家庭引用位置和SHA核对通过。</li>
+<li>原件回收后旧引用拒绝、结构引用阻止永久删除、文字复核变化/重审发布、来源范围/资产修订/SHA失效回归通过；真实会话七接口权限矩阵拒绝且不泄露正文，合法管理员正例通过。</li>
+<li>独立副本中途全API922项911通过0失败11跳过；最终调整后未重跑全量，准确边界见报告。扩展解析/生命周期22项20通过2项OCR依赖跳过。</li>
+<li>最终同步后npm run build:stage及npm run typecheck通过；stage未激活。未改前端交互，本轮未重复浏览器验收。</li>
+</ul>
+<h3 id="section-374-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>实际NAS、原生扫描OCR、用户资料质量和用户本人验收未完成。</li>
+<li>Git提交与生产发布未执行；生产维护器更新及历史恢复点迁移不属本轮。</li>
+<li>全树既有CRLF新增行空白检查问题仍保留，不将任务文件检查通过写作全树无问题。</li>
+<li>平台项目、决策及经验CAS同步未执行，本地建设档案与同源日志保留。</li>
+</ul>
+<h3 id="section-374-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/knowledge-ingestion/followup-validation-public.json">artifacts/knowledge-ingestion/followup-validation-public.json</a> · SHA-256：1be0f9c09ae568dbe327531460b694804380dfacab58bda0660ed8a35a8fa8b4</li>
+<li><a href="../artifacts/knowledge-ingestion/followup-sync-public.json">artifacts/knowledge-ingestion/followup-sync-public.json</a> · SHA-256：7a8744f4b8b3ff28415cef4cdba0fff279d013655819478538f82e9e1c2819e8</li>
+</ul>
+<p>记录指纹：b45f36d474c4b2b9b795d039bd13e3b62568dba9da4251bf76b7554743614f32；前一条：d0c0a563cc65646a3488d3a4228edb4471cd0cbbb2341c062b0ff31aeaa03895。</p>
+</section>
+<section class="doc-section" data-section="375"><h2 id="section-375" tabindex="-1">JARVIS-20261021-CLAUDE-CODE-UPDATES-PARTIAL · 101 Claude Code平台更新候选部分实现；维护锁失败与握手缺口保留，未开放真实升级</h2>
+<p>发生时间：2026-10-21；记录时间：2026-10-21T09:20:07.904Z；项目：贾维斯；类型：change。</p>
+<p>目标：通过平台重复检查并确认升级101的Claude Code，保持工厂任务、冷备与模型配置边界。</p>
+<p>状态：实现：部分完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-375-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>独立普通目录claude-code-updates-20261021保留基线38190ce与原dirty，新增专用API、冻结预览、单次派发、持久回执与独立更新面板。</li>
+<li>固定npm官方元数据解析主包和Linux平台包闭包，SHA-256绑定描述符，文件按SHA-512 SRI校验，不运行npm生命周期。</li>
+<li>普通账号合成包候选准备、目录原子交换、旧树保留及配置私域逻辑指纹已形成候选；完整节点事务与恢复尚未验收。</li>
+<li>活动项目仅复制真实公开报告、部分状态指南并更新建设档案；未同步未验源码。</li>
+</ul>
+<h3 id="section-375-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>不将旧2.1.292环境配置当作101升级，也不把监控或模型桥接权限扩大为软件安装。</li>
+<li>维护锁测试失败且缺少真实runner采纳证明，真实节点激活保持GUARD_NOT_INSTALLED与guardReady=false，不以已安装helper冒安全握手。</li>
+<li>不为展示功能终止工厂任务、停止服务或启动冷备；代码候选、隔离验收与生产交付分别记录。</li>
+</ul>
+<h3 id="section-375-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>101历史明确版本2.1.296不是本轮实时检测；本轮未连接101。</li>
+<li>官方npm只读查询时stable2.1.304、latest2.1.306，未下载或执行真实Linux大制品。</li>
+<li>助手与子代理Token、金额未知；产品fixture不调用模型，不据此冒整体零费用。</li>
+</ul>
+<h3 id="section-375-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>API及隔离helper4项、来源与新旧controller13项、本地合成包与边界18项、配置指纹3项、中央安装策略2项通过；各分母分别保留。</li>
+<li>既有AI环境/远程运维/监督/递送31项相关回归通过，只代表其运行时点，非最终全树回归。</li>
+<li>真实Chromium隔离HTTP/SQLite合成worker10检查通过，含预览不派发、单次执行、轮询/刷新不重放、坏hash未知、未接入阻断及390px布局。</li>
+<li>整合类型检查和stage构建通过；中途类型、控制器时间、API预览与import路径、UI轮询及fixture权限失败修复保留。</li>
+<li>维护guard普通账号专项一项通过、另一项失败后超时；root尝试也挂起未通过，错误目录通过数字排除。自有测试进程精确清理后末次检查无残留。</li>
+</ul>
+<h3 id="section-375-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>修复真实OS锁测试，补齐运行中runner共享锁采纳证明、后代生命周期与未知状态恢复。</li>
+<li>完整dispatcher、root后台worker、普通用户、维护锁、配置保护、激活/回退端到端未通过；专用节点安装器尚未现场验证。</li>
+<li>未同步候选源码、未提交推送、未安装节点组件、未发布生产或真实升级101。</li>
+<li>平台项目、决策与经验CAS同步未执行；完整产品及用户验收未完成。</li>
+</ul>
+<h3 id="section-375-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>类型构建与合成界面通过不证明节点维护安全；共享锁脚本存在与真实runner采用协议必须分开核验。</li>
+<li>单次空闲检查后stop服务存在claim竞态，不能以KillMode控制组终止新任务来完成软件更新。</li>
+</ul>
+<h3 id="section-375-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/claude-code-updates/validation-public.json">artifacts/claude-code-updates/validation-public.json</a> · SHA-256：f8a4784d664d9b68ea236a9d2687ef25d1141a49f92682670a63ba7e47d8a257</li>
+<li><a href="../artifacts/claude-code-updates/browser-public.json">artifacts/claude-code-updates/browser-public.json</a> · SHA-256：2510f7749282b618ff4297d97c889ed5c2f62471ced5b57f285898ec720ca9f0</li>
+<li><a href="../artifacts/claude-code-updates/source-review-public.json">artifacts/claude-code-updates/source-review-public.json</a> · SHA-256：b2c8fa3b9b3e0304729e6883b4f09c454bfacead1e36f0284df1ee94fdd14d9c</li>
+<li><a href="../docs/101-Claude-Code%E5%B9%B3%E5%8F%B0%E5%86%85%E6%9B%B4%E6%96%B0.md">docs/101-Claude-Code平台内更新.md</a> · SHA-256：e212e774d24b768dad39f73a70e494f6ede3e4aa392bf55f17b560338309e52e</li>
+</ul>
+<p>记录指纹：75989d4bfc5240b995b74e99b21730e0e747581e8bd970302049c0d61e4986e9；前一条：b45f36d474c4b2b9b795d039bd13e3b62568dba9da4251bf76b7554743614f32。</p>
+</section>
+<section class="doc-section" data-section="376"><h2 id="section-376" tabindex="-1">JARVIS-20261023-AI-CONFIG-UNIFICATION-AUDIT · 跨服务器AI配置只读核查：三机单独管理已有，状态栏一致性与新机快速配置未完成</h2>
+<p>发生时间：2026-10-23；记录时间：2026-10-23T02:32:17.101Z；项目：贾维斯；类型：validation。</p>
+<p>目标：核查每台服务器的CC Switch、模型调整与切换、状态栏是否统一管理，并判断新机器能否快速通过贾维斯完成配置。</p>
+<p>状态：实现：不适用 · 验证：部分完成 · 上线：不适用 · 验收：待验收</p>
+<h3 id="section-376-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>仅新增公开核查报告和建设档案摘要，不修改应用源码或服务器配置。</li>
+</ul>
+<h3 id="section-376-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>区分集中入口逐机管理与中央期望配置自动收敛，不把已有三机功能冒作通用新机接入。</li>
+<li>优先建议安全差异诊断与版本化配置预览，保留认证和安全设置；本轮不执行配置应用。</li>
+</ul>
+<h3 id="section-376-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>CC Switch有101/112/116逐机CRUD和切换历史上线证据，今天桥接控制器active；三机白名单仍硬编码。</li>
+<li>已安装AI开发环境策略仅112，固定模板修订1，公开profile通道11项；既有周期观察6项且状态栏configured=false，原因未进一步读取私密配置定位。</li>
+<li>该false是全局/common/provider/脚本一致性未确认，不等于原生终端完全没有状态栏。</li>
+<li>未远程核101/116今天实际配置，未调用模型或读取私密settings/vault值；助手与子代理Token及金额未知。</li>
+</ul>
+<h3 id="section-376-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>正式current为R58，平台与AI环境/CC Switch控制器active；五件相关源码与正式载荷SHA相同。</li>
+<li>既有112周期观察2026-10-23T02:27:09.052Z：核心工具存在，statusline configured=false、commandSHA256=null。</li>
+<li>源码确认现有配置流程补缺保留已有通道，不做模板内容收敛；状态栏布局非网页可编辑，自动压缩未纳入完整模板白名单。</li>
+<li>两次未认证本地health GET均curl52空响应，未验证HTTP健康或认证API；未重跑产品测试。</li>
+</ul>
+<h3 id="section-376-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>补全状态栏分层差异与通道冲突诊断，定位112当前不一致。</li>
+<li>新增版本化可移植模型/状态栏/压缩配置及明确补缺和收敛模式；解除固定三机限制，建设分阶段新机接入。</li>
+<li>第二台真实配置和干净新机完整验收、真实升级、平台资料CAS同步均未做。</li>
+</ul>
+<h3 id="section-376-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/ai-config-audit-20261023/report-public.json">artifacts/ai-config-audit-20261023/report-public.json</a> · SHA-256：a41899360fd60ee4c513a09c6b60de0bdf40091ca3842a63c3f567c35c23cba5</li>
+</ul>
+<p>记录指纹：3413a2dddbda3f325a21f6f6883dd10f6b80af4d427233627a29d6d1848bb1d6；前一条：75989d4bfc5240b995b74e99b21730e0e747581e8bd970302049c0d61e4986e9。</p>
+</section>
+<section class="doc-section" data-section="377"><h2 id="section-377" tabindex="-1">JARVIS-20261023-FLEET-ELEVEN-PLACEHOLDERS-STATUSLINE-DIAGNOSTICS · 11台新增设备已正式占位并回读；只读状态栏分层诊断开发复验通过未发布</h2>
+<p>发生时间：2026-10-23；记录时间：2026-10-23T03:22:17.687Z；项目：贾维斯；类型：change。</p>
+<p>目标：先占位管理用户新设备，保留原规格和待核项，规划机器分工，并启动统一AI配置的只读诊断阶段。</p>
+<p>状态：实现：已完成 · 验证：部分完成 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-377-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>原8台全部新增确认后正式登记，补充DDR4使用原UUID CAS更新；另登记公司HP Win10只读、个人Win10同116参照及MacBookPro2015，共11台。</li>
+<li>新增逐机规划、接入清单、稳定登记命令及回读证据；AMD实例按32GB/60GB记录，宿主资源另记不叠加。</li>
+<li>独立副本完成状态栏脚本、全局、common、当前通道分层诊断及provider计数，node/controller/API/UI白名单全链兼容。</li>
+<li>14件任务文件核对并发原指纹后同步常规目录，保留已有R58和知识入库改动。</li>
+</ul>
+<h3 id="section-377-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>复用现有机器API，不为占位扩大schema或授予执行权限；公司资产只读，不纳入家庭算力。</li>
+<li>硬件原称保留待核，不编IP或模型容量；Linux/Windows/macOS分别规划，不将Linux固定模板冒跨平台能力。</li>
+<li>统一配置分阶段：只读诊断之后再做动态受信节点与模板预览应用，不夹带前轮CLI升级维护guard。</li>
+</ul>
+<h3 id="section-377-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>11条正式资产逐条读回，原8条修订2、新增3条修订1；全为unknown/not-configured/unverified_external且地址空，公司新增09 readOnly=true。</li>
+<li>维护会话复用现有Store createLogin/deleteLogin，令牌仅内存且finally撤销；业务资产仅经认证HTTP API写入。</li>
+<li>生产R58严格CA HTTPS健康通过、匿名machines401；此前curl52因HTTP访问HTTPS端口，不是服务故障已修复。</li>
+<li>没有安装新机OS、接Agent、配置模型或状态栏、启动冷备或恢复工厂；无付费产品推理，助手/代理Token与金额未知。</li>
+</ul>
+<h3 id="section-377-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>登记helper4项、controller6项、provision12项、dispatcher11项、AI环境/CCSwitch/基础设施API25项通过。</li>
+<li>真实隔离createApp核11条重复登记幂等、同ID全量更新与陈旧CAS409、公司只读；未冒生产验收。</li>
+<li>真实Chromium隔离HTTP/SQLite5检查通过：分层差异、不可读、未知、旧协议不造匹配、390px无横溢，浏览器无POST/外网/模型/SSH。</li>
+<li>独立副本全类型及stage前后端构建通过，常规目录同步后登记/controller10项、Python23项及全类型再次通过。</li>
+<li>reason not-applicable码与数据库异常unknown计数修正后复验，旧指令响应status与assetStatus字段分离并独立回读原8条零POST。</li>
+</ul>
+<h3 id="section-377-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>诊断代码及节点模块未正式发布，112真实状态栏差异根因未用新版探测确认。</li>
+<li>动态受信节点、版本化模板preview/apply、第二台真实节点及干净机器配置验收尚未实施。</li>
+<li>硬件准确型号、内存/磁盘口径、系统版本、功耗及网络待实装采集。</li>
+<li>源码未提交推送，平台项目/决策/经验CAS同步未做。</li>
+</ul>
+<h3 id="section-377-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/fleet-onboarding/registration-public.json">artifacts/fleet-onboarding/registration-public.json</a> · SHA-256：8087e4792c239f6c85ebd83e7b85054f274ce626b05601587b36ec2eab4fae87</li>
+<li><a href="../artifacts/fleet-onboarding/validation-public.json">artifacts/fleet-onboarding/validation-public.json</a> · SHA-256：a447318de1953481cb999cb46f0c49f1f1d56f12545074fe0aebf98777948d2e</li>
+<li><a href="../artifacts/fleet-onboarding/source-sync-public.json">artifacts/fleet-onboarding/source-sync-public.json</a> · SHA-256：30922fc94f0b721fba603fb38780c0e4b12d3a92ef29d0ce8eb818b41bd058bf</li>
+<li><a href="../artifacts/fleet-onboarding/diagnostics-browser-public.json">artifacts/fleet-onboarding/diagnostics-browser-public.json</a> · SHA-256：d3dbc71d73a79e1e6c509b15e6cdd6aaf58673d472e34552f60df79c8b14700e</li>
+<li><a href="../docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%A9%E5%AE%B9%E4%B8%8EAI%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%92.md">docs/服务器扩容与AI节点规划.md</a> · SHA-256：5271ced61543f141cf2d98cda8040b3096e8195dcf89f53fd09da6762916eb8d</li>
+</ul>
+<p>记录指纹：f056b93e1a2a8a1676fdd4ffc30068592660f901435bff2d8742ef5cd5d8efb2；前一条：3413a2dddbda3f325a21f6f6883dd10f6b80af4d427233627a29d6d1848bb1d6。</p>
+</section>
+<section class="doc-section" data-section="378"><h2 id="section-378" tabindex="-1">JARVIS-20261023-AI-CONFIG-READONLY-PREVIEW-378 · 接续跨机配置建设：只读模板差异预览开发与隔离验收，未发布应用</h2>
+<p>发生时间：2026-10-23；记录时间：2026-10-23T07:02:55.393Z；项目：贾维斯；类型：change。</p>
+<p>目标：接续11台新增设备占位与状态栏分层诊断成果，先交付已有公开模板与安全观察的只读比较，保留公司只读、可信绑定及独立开发边界。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：未上线 · 验收：待验收</p>
+<h3 id="section-378-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>独立普通副本ai-config-preview-20261023基于38190ce及当前dirty指纹新增纯比较器、专用GET、窄OpenAPI updater和合同测试。模板id/revision/hash与当前机器/策略绑定，成功回执重验授权；旧周期观测缺机器修订仅reference-only。</li>
+<li>前端增加独立预览模式，卸载详情/jobs/CC Switch管理轮询；补缺与收敛仅展示意图，无应用动作。保留未知/不可读/旧协议/歧义，不把provider空数组或未出现判缺失。</li>
+<li>14件任务文件逐件核原指纹后同步常规目录，保留既有R58、知识及诊断改动；生成使用说明和节点规划同源HTML。</li>
+</ul>
+<h3 id="section-378-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>先做有限只读预览而不是完整dry-run/apply：现有观察不覆盖角色模型、压缩策略和配置完整性，避免虚构执行计划与放宽信任。</li>
+<li>专用预览不复用details/jobs读取链，因为原链会reconcile写任务；复用管理员/所有者/只读检查及公开hash和安全读取，不扩展controller/dispatcher/provision动作白名单。</li>
+<li>周期观测未携带machineRevision，只能历史参考；当前成功任务证据优先，预览摘要不作执行授权或未来apply CAS。</li>
+</ul>
+<h3 id="section-378-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>仅开发与隔离验证；没有生产发布、重启、真实SSH配置写入、模型切换、付费推理、可信新节点接入或101升级放行。</li>
+<li>没有提交或推送；平台项目、决定及经验CAS同步未做，未发布Skill。供应商推理请求0，助手/子代理Token和费用账单未知单列，费用只记录不设限。</li>
+<li>原前端代理在常规目录跑的类型通过不计入独立副本验证；主会话发现并修复实际副本缺导入/重复键后独立复验。浏览器错误入口、文本定位及fixture自身mtime变化均保留修正说明。</li>
+</ul>
+<h3 id="section-378-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>独立副本全API933项：922通过、0失败、11项因root控制fixture、节点包、Python/OCR或Windows环境前置跳过；其后测试断言补充仅在最终定向复验，不冒末次全树运行。</li>
+<li>相关API最终34项全部通过，controller6/provision12/dispatcher11项回归通过；同步常规后34项、全工作区类型检查和stage构建再次通过。</li>
+<li>真实隔离HTTP/SQLite/Chromium8组通过：旧周期参考、超过旧轮询周期无管理请求、仅GET、390px无横溢、无外网/页面异常、数据库和队列不变、模式晚响应丢弃、无观察不派发。手机截图已实际查看。</li>
+<li>首轮全API932项920通过/1失败/11跳过：备份脚本依赖apps/api/dist未生成；补API构建后该项复验通过，完整重跑0失败。</li>
+</ul>
+<h3 id="section-378-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>正式发布、节点模块安装、用户本人视觉验收与真实112配置根因复核未做。</li>
+<li>动态可信节点、模板编辑/历史、角色与压缩完整观察合同、受保护apply及恢复、第二台真实与干净节点验收后继单独推进。</li>
+<li>浏览器本轮未覆盖切机器/模板的全部竞态及真实用户数据，Windows/macOS支持和101升级维护保护仍为独立事项。</li>
+</ul>
+<h3 id="section-378-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>严格只读页面应隔离会间接归并任务的旧轮询，不以浏览器零POST独自证明服务端零写入。</li>
+<li>验证必须显式绑定实际副本路径；代理自报通过不能替代主会话对最终文件的复验。</li>
+</ul>
+<h3 id="section-378-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/ai-config-preview/validation-public.json">artifacts/ai-config-preview/validation-public.json</a> · SHA-256：b5b8c3a784d180ebb7fdedf0403642216e03370294ed1b405b4df070bf6138f2</li>
+<li><a href="../artifacts/ai-config-preview/browser-public.json">artifacts/ai-config-preview/browser-public.json</a> · SHA-256：577030b6021d5b88dd6c760f8eb7f313b1c30a56f563e1591783ffd37451ddb2</li>
+<li><a href="../artifacts/ai-config-preview/source-sync-public.json">artifacts/ai-config-preview/source-sync-public.json</a> · SHA-256：5244c62048f76dfb56a7aa1cb1fc006f2e1d94e02bf07fa351eb094213b7b78e</li>
+<li><a href="../artifacts/ai-config-preview/backend-sources-public.json">artifacts/ai-config-preview/backend-sources-public.json</a> · SHA-256：f13f764c9d760da36a92dd06f0dcd71ac5331baaeef9c1c13ac39a8383276f05</li>
+<li><a href="../artifacts/ai-config-preview/preview-mobile.png">artifacts/ai-config-preview/preview-mobile.png</a> · SHA-256：0b2d8d31dd813081088743eaa2f16b4bcb473257297c2b8aa0781de6e7b4b7b5</li>
+<li><a href="../docs/AI%E9%85%8D%E7%BD%AE%E5%8F%AA%E8%AF%BB%E5%B7%AE%E5%BC%82%E9%A2%84%E8%A7%88.md">docs/AI配置只读差异预览.md</a> · SHA-256：ee5c0afb669bdad16fda91ab9bbb6086cc8063e39d3fca61e395d5e1e4aa1a71</li>
+</ul>
+<p>记录指纹：52355871751b60c953321222cab4e437de52eb78d08d03213670a4b6fd5e0c0a；前一条：f056b93e1a2a8a1676fdd4ffc30068592660f901435bff2d8742ef5cd5d8efb2。</p>
+</section>
+<section class="doc-section" data-section="379"><h2 id="section-379" tabindex="-1">JARVIS-20261023-SERVER-PLANNING-ONLINE-CANDIDATE-379 · 服务器规划文档固定管理员在线入口已实现验证，正式恢复门执行中</h2>
+<p>发生时间：2026-10-23；记录时间：2026-10-23T07:46:12.938Z；项目：贾维斯；类型：change。</p>
+<p>目标：按用户要求把既有服务器扩容与AI节点规划HTML挂设备管理，实现随时在线查看；不夹带其他开发候选。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已预置 · 验收：待验收</p>
+<h3 id="section-379-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>从正式R58实际来源33fd8ad建立独立普通副本server-planning-online-20261023和任务分支，新增固定HTML路由、设备页顶部链接、三件显式附件；正文以现有MD同源生成并标2026-10-23及规划非实测边界。</li>
+<li>仅读固定清单，不开放docs/artifacts目录；成员优先管理员鉴权、异步后会话重验、防软硬链接稳定读取及no-store/nosniff/CSP。在线版本移除原HTML脚本和交互按钮，保留目录锚点，避免脚本权限扩大。</li>
+<li>任务提交d91bc4941370915f8c63bbabff5779a1c17712f3未推送；R59包2473件，真实commit绑定及上版静态继承通过，已stage/install/inspect，无业务服务变更；随后激活正在完整快照/隔离恢复门。</li>
+</ul>
+<h3 id="section-379-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>旧fleet-documents副本是动态查询资产并定时写快照的另一候选，不整包复用；本轮仅指定HTML、三附件及一个入口。</li>
+<li>使用既有managed release工具的同机sudo transport适配，锁定外部维护器SHA6c1a78752fc69d6cdeafd403ff29d3705de9b93376a363f92c3ef6ee13f87466；所有发布锁、drain、兼容、快照与restore360及有界回退保持，不把维护器dirty夹带业务发布。</li>
+</ul>
+<h3 id="section-379-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>R59候选基线与正式R58逐核，常规R58修复/知识/AI预览仍为另外dirty；本轮接线逐块同步，未整树覆盖。</li>
+<li>首次提交因独立clone无作者配置失败，沿用源仓既有署名以command-local config重试，不改全局配置；审查曾混淆Git blob与SHA及历史根manifest与新输出，主会话独立核实后更正。</li>
+<li>费用只记录不设上限；供应商推理请求0，助手子代理Token及账单未知；尚未把隔离浏览器通过当生产验收。</li>
+</ul>
+<h3 id="section-379-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>独立副本类型、stage构建通过；固定文档与原工厂指南15项测试通过，新增真实Cookie成员/混合/管理员登出矩阵。</li>
+<li>真实隔离HTTP/SQLite/Chromium7检查通过，设备页点开、11机标签、刷新HTML与no-store、三附件、390px无横溢、匿名提示/撤销失效及无外网/页面错误；手机截图实际查看。</li>
+<li>常规目录同步后类型与15项相关测试再次通过；独立发布包archive/runtime/sourceCommit及全部tracked byte一致门通过。</li>
+</ul>
+<h3 id="section-379-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>正式激活完整恢复门尚在运行，健康切换及公网登录文档现场验收未完成；用户本人使用确认待进行。</li>
+<li>本轮没有真实节点接入/配置应用，不启101冷备或恢复工厂；平台项目/决定/经验CAS同步未做。</li>
+</ul>
+<h3 id="section-379-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>文档文件完成、入口实现、正式发布和登录后真正正文可读必须分别验证；SPA200不能替代文档验收。</li>
+</ul>
+<h3 id="section-379-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/server-planning-online/pre-release-public.json">artifacts/server-planning-online/pre-release-public.json</a> · SHA-256：ed1ca0d6c1addc77c64d904807e8975dd74e85cb9d762e05a00f35aceeda808a</li>
+<li><a href="../artifacts/server-planning-online/browser-public.json">artifacts/server-planning-online/browser-public.json</a> · SHA-256：644918c765c25b4702dc41839678eb488fed79990860cecf7bb8d000a02ddb2f</li>
+<li><a href="../artifacts/server-planning-online/source-sync-public.json">artifacts/server-planning-online/source-sync-public.json</a> · SHA-256：9fb16a64b2298efd4219c6dacc642c74fd590f59e6569ba4c00ba8bcc39c3542</li>
+<li><a href="../docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%A9%E5%AE%B9%E4%B8%8EAI%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%92.md">docs/服务器扩容与AI节点规划.md</a> · SHA-256：a64ee026c7fbc3aa21c85af2f83dfc80b9a0d4f034bc4061d17b6278148c13ed</li>
+</ul>
+<p>记录指纹：b476c140354c34e5d5d2c0e81ee65399e22d887ac74d8f8ad5bc86aef18d2dcc；前一条：52355871751b60c953321222cab4e437de52eb78d08d03213670a4b6fd5e0c0a。</p>
+</section>
+<section class="doc-section" data-section="380"><h2 id="section-380" tabindex="-1">JARVIS-20261023-SERVER-PLANNING-R59-LIVE-380 · R59服务器规划文档已上线，正式设备页入口及认证HTTPS阅读通过</h2>
+<p>发生时间：2026-10-23T07:45:49.704Z；记录时间：2026-10-23T07:47:38.627Z；项目：贾维斯；类型：release。</p>
+<p>目标：完成用户随时在贾维斯平台在线查看服务器规划HTML的要求，不止本地文件或开发候选。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：已上线 · 验收：待验收</p>
+<h3 id="section-380-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>112正式current已切20261023-server-planning-r59，源提交d91bc4941370915f8c63bbabff5779a1c17712f3；入口系统运维→设备管理→服务器配置与扩容规划，固定地址<a href="https://cc%5C-jarvis%5C.ikvein%5C.com/api/runtime/server%5C-planning/document%E3%80%82">https://cc\-jarvis\.ikvein\.com/api/runtime/server\-planning/document。</a></li>
+<li>全局发布锁、实际旧静态兼容、模型/语音drain和完整恢复门均通过；快照与隔离恢复核同65文件、60目录、6483086672字节及10SQLite，未覆盖实时数据或恢复工厂。</li>
+</ul>
+<h3 id="section-380-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>仅发布R58基线的指定HTML/明确附件/设备页按钮，不包含动态fleet台账、R58未发布应用修复、知识入库或AI预览；外部维护工具指纹单独保留。</li>
+</ul>
+<h3 id="section-380-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>正式primary API、observer/current及公网健康均为R59正常；本轮实际发布会改变服务PID，不声称原PID不变。</li>
+<li>维护session经Store原生API创建，仅内存传递给浏览器，finally精确撤销且原context读文档401；默认8小时有效期未改，不伪称分钟TTL。</li>
+<li>未推送远端，常规分支既有dirty保留；未接入新机、修改各节点模型/认证、启动101冷备或恢复工厂。供应商推理请求0，助手/子代理费用和Token未知单列，费用只记录不设上限。</li>
+</ul>
+<h3 id="section-380-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>实际managed activate回执active=true，snapshot和isolatedRestore均passed、sqliteIntegrity=ok、completeTreeVerified=true，productionDataRestored=false。</li>
+<li>正式HTTPS7组检查通过：R59健康；匿名401登录提示无正文；真实登录设备页按钮打开；11机标签及text/html/no-store/CSP去脚本；源MD SHA与批准文件一致、三附件200；390px无横溢及刷新；精确撤销维护登录后401。</li>
+<li>原登记台账内容没有在网页验收中写入；浏览器拦非GET/HEAD和外网，无被触发拦截或页面异常。隔离15项及7组浏览器结果见379记录，正式检查不扩大全业务验收。</li>
+</ul>
+<h3 id="section-380-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>用户本人打开和视觉确认待进行；在线页为版本化规划，不是所有服务器实时参数/实测，也不代表新增设备已安装或可信接入。</li>
+<li>动态受信节点、模板apply及恢复、完整角色/压缩观察、第二台和干净新机仍为独立后继；平台项目/决定/经验CAS同步未做。</li>
+</ul>
+<h3 id="section-380-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>真实在线交付应同时核菜单入口、鉴权正文、源指纹、附件与刷新，未授权的SPA200不得冒文档成功。</li>
+</ul>
+<h3 id="section-380-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/server-planning-online/activate-public.json">artifacts/server-planning-online/activate-public.json</a> · SHA-256：ae73b85de587015db3e0801b8a476154b5cbbed46aa55408f7a6b3b0aec2dfed</li>
+<li><a href="../artifacts/server-planning-online/online-public.json">artifacts/server-planning-online/online-public.json</a> · SHA-256：aad15e9c7e05e019319fb68a3d2ca6a70fdb84d258e4fd208b475e8542c719f9</li>
+<li><a href="../artifacts/server-planning-online/source-sync-public.json">artifacts/server-planning-online/source-sync-public.json</a> · SHA-256：9fb16a64b2298efd4219c6dacc642c74fd590f59e6569ba4c00ba8bcc39c3542</li>
+<li><a href="../artifacts/server-planning-online/pre-release-public.json">artifacts/server-planning-online/pre-release-public.json</a> · SHA-256：ed1ca0d6c1addc77c64d904807e8975dd74e85cb9d762e05a00f35aceeda808a</li>
+</ul>
+<p>记录指纹：24253075e4ef3400b9455dd7a4736877842af9048dce16861fdb23401a75ca6f；前一条：b476c140354c34e5d5d2c0e81ee65399e22d887ac74d8f8ad5bc86aef18d2dcc。</p>
+</section>
+<section class="doc-section" data-section="381"><h2 id="section-381" tabindex="-1">JARVIS-20261023-TERMINAL-400-592K-DIAGNOSIS-381 · 核实终端592k后六次400，旧850k保护仍在但根因取证受网关入口阻塞</h2>
+<p>发生时间：2026-10-23；记录时间：2026-10-23T08:29:55.174Z；项目：贾维斯；类型：incident。</p>
+<p>目标：响应用户多服务器长会话400、手动压缩失败仅clear恢复的报告，追查能否根治而非再次盲降阈值。</p>
+<p>状态：实现：不适用 · 验证：部分完成 · 上线：不适用 · 验收：待验收</p>
+<h3 id="section-381-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>仅程序化白名单投影本机三份会话的时间、真实响应模型、usage及固定400错误；独立核对实际CLI和当前live/CC Switch安全配置字段，未输出原始聊天、工具内容或凭据。</li>
+<li>定位公开网关职责与维护路径，核对当前DNS；112用户SSH仅github，无已确认可用日本直连配置，公开历史路径均缺，未借collector扩大权限。</li>
+</ul>
+<h3 id="section-381-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>优先查网关每target上游错误而非改压缩阈值/升级/换模型；成功样本790374反对统一590k硬限，不能排除异构路由或请求形态边界。</li>
+<li>当前通道为第三方gpt映射，不将[1M]当真实容量，不套Anthropic官方模型协议限制；manual compact可能涉及同样历史拒绝条件，但本次具体阶段未独立证实。</li>
+<li>现有采集只有telemetry/service-status，不扩大到日志或任意shell；无已授权连接入口则明确阻塞，要求确认现有管理入口或由有权维护方给字段投影。</li>
+</ul>
+<h3 id="section-381-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>2026-10-23T06:01:49.798Z最近成功输入592715、输出46，随后06:02:19.841至06:18:08.952Z六次400，只有All target providers failed；失败请求实际大小、上游错误和request-id未知，无成功compact边界。</li>
+<li>旧10月21日892642后四次400与报告一致；另会话10月23日08:26:15成功790374。当前CLI2.1.292，live及当前JP-CCR模板AUTO_COMPACT_WINDOW850000一致，但不证明失败进程加载，也不足覆盖此次更早失败。</li>
+<li>手动compact400及clear恢复为用户现场报告；本轮不读用户命令正文，未把未见成功边界错误解释为未尝试压缩。</li>
+<li>未改settings、模板、节点/网关/平台配置，未远程SSH、升级、重启、提交或推送；没有模型推理请求，助手/代理Token与账单未知，不填零。</li>
+</ul>
+<h3 id="section-381-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>本机CLI --version与两处安全字段独立读取一致；三样本真实成功usage排除synthetic零值，400次数与固定文本匹配。</li>
+<li>公开项目导入脚本关联日本ccr.service至gw.superopen.top，DNS当前8.209.253.19；未从历史登记反推当前完整请求链路已核。</li>
+<li>已检查公开维护路径、112用户SSH别名及MyOperation公开接入机制，未取得符合既有授权的日本网关日志通道。</li>
+</ul>
+<h3 id="section-381-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>根因尚未确认、未实施根治。需现有网关管理入口/维护方提供05:59—06:20Z失败窗与08:13—08:28Z成功对照的上游状态、安全错误码、路由及预算元数据。</li>
+<li>其他服务器历史故障未独立核查；新安全日志策略及生产修复须在根因/实现范围明确后单独批准，不自动全量HTTP记录或长请求重放。</li>
+<li>平台项目/决定/经验CAS同步未做，未发布Skill。</li>
+</ul>
+<h3 id="section-381-6" tabindex="-1">经验候选</h3>
+<ul>
+<li>ctx上一成功用量、失败请求真实大小和实际路由窗口必须分开；降低阈值不能替代隐藏上游错误的根因定位。</li>
+</ul>
+<h3 id="section-381-7" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/terminal-400-20261023/diagnosis-public.json">artifacts/terminal-400-20261023/diagnosis-public.json</a> · SHA-256：a3833f11617b1f8e1f41802c446a9d01ce5850bf5f42fb1c8eb48a594c93d7fe</li>
+<li><a href="../artifacts/terminal-context-guard-20261021/report-public.json">artifacts/terminal-context-guard-20261021/report-public.json</a> · SHA-256：04f00b381b22e528ea7d12acea9a18e4ada84fc23563f9f1eaf2016d5bc48ab0</li>
+</ul>
+<p>记录指纹：2f04ce06c5426c1d17671ab9fb0fcc9c952b1c53e5b9b2ba57b98e9f33dbbc33；前一条：24253075e4ef3400b9455dd7a4736877842af9048dce16861fdb23401a75ca6f。</p>
+</section>
+<section class="doc-section" data-section="382"><h2 id="section-382" tabindex="-1">JARVIS-20261023-GITHUB-LATEST-INTEGRATION-382 · 最新源码独立整合验证通过，准备提交并合并GitHub主线</h2>
+<p>发生时间：2026-10-23；记录时间：2026-10-23T14:38:20.425Z；项目：贾维斯；类型：validation。</p>
+<p>目标：响应用户将最新代码提交合并到GitHub，保留已发布历史与未上线候选的真实边界。</p>
+<p>状态：实现：已完成 · 验证：已通过 · 上线：不适用 · 验收：待验收</p>
+<h3 id="section-382-1" tabindex="-1">本次改变</h3>
+<ul>
+<li>在独立普通Git副本保留本地R57/R58与R59文档正式源码提交历史，捕获常规目录113件源码及文档增量；原主树dirty保持，不清理或覆盖。</li>
+<li>整合R58修复、知识入库、设备状态栏诊断、AI配置只读预览与最新建设档案，按显式35件公开证据清单补入；未把guard失败的101升级执行器从其他副本带入。</li>
+</ul>
+<h3 id="section-382-2" tabindex="-1">决策与原因</h3>
+<ul>
+<li>GitHub主线当时为72604a6，本地历史包含待推送内容；采用保留历史合并与非强制push，不重写上游。</li>
+<li>目标仓库公开，源码与新增公开报告经过限定隐私/凭据核查；不递归加入artifacts、发布ZIP、原始日志、运行数据或私人配置。gh未登录，不读取凭据，使用已有Git SSH权限。</li>
+</ul>
+<h3 id="section-382-3" tabindex="-1">事实与边界</h3>
+<ul>
+<li>本事件记录提交前整合验证；推送结果待实际远端核对，不能把本地提交冒作已合并GitHub。</li>
+<li>不部署或重启平台、不升级服务器、不修改模型/认证/状态栏配置、不恢复工厂、不调用产品模型推理；助手及代理Token与金额未知分列，费用只记录不设消费上限。</li>
+</ul>
+<h3 id="section-382-4" tabindex="-1">验证结果</h3>
+<ul>
+<li>类型检查、前后端stage构建、API dist构建通过，CRLF兼容空白检查与381条建设账本完整性通过。</li>
+<li>本次整合全API937项：926通过、0失败、11跳过；前端演示25项及80个运维断言通过。</li>
+<li>六组维护/节点/登记脚本46项：43通过、0失败、3项因非root环境跳过。</li>
+</ul>
+<h3 id="section-382-5" tabindex="-1">待办与未确认事项</h3>
+<ul>
+<li>实际GitHub推送及main合并需要后续执行并远端确认。</li>
+<li>部分既有浏览器QA依赖邻仓Playwright，本轮未重跑浏览器或宣称干净clone浏览器环境已验；root协议前置及其他既有跳过项保持。</li>
+<li>400根因、真实NAS/OCR/本人验收、Claude Code升级guard与恢复未完成，平台CAS资料同步未做；代码合并不改变任何生产交付状态。</li>
+</ul>
+<h3 id="section-382-6" tabindex="-1">证据与当时指纹</h3>
+<ul>
+<li><a href="../artifacts/github-integration-20261023/source-snapshot-public.json">artifacts/github-integration-20261023/source-snapshot-public.json</a> · SHA-256：bd27f4d47c0044b22bf3c57cda0a5a4b40a81a536dd88c9c53a78721f58d59b7</li>
+<li><a href="../artifacts/github-integration-20261023/evidence-allowlist-public.json">artifacts/github-integration-20261023/evidence-allowlist-public.json</a> · SHA-256：80e8a0fce64f1ec8d10d653d42bbe516a31ec6c649e22fa6fb676777b2c7428d</li>
+<li><a href="../artifacts/github-integration-20261023/validation-public.json">artifacts/github-integration-20261023/validation-public.json</a> · SHA-256：83ab1c8a91fcfe22460affb300f3ee004a25f7811865a6982bc19491729e5a5b</li>
+<li><a href="../artifacts/github-integration-20261023/api-tests-public.json">artifacts/github-integration-20261023/api-tests-public.json</a> · SHA-256：b61d7514bba70c6e587cda6d4edc447c46d56f2637d07fecac5e074f257c23dd</li>
+<li><a href="../artifacts/github-integration-20261023/script-tests-public.json">artifacts/github-integration-20261023/script-tests-public.json</a> · SHA-256：ed07a65f0614e63053be44b2db4b8c9a91b1535e72446786a1de9d7ab384a285</li>
+</ul>
+<p>记录指纹：6b9d1bde22d0011e383c3a13da39e761da8b0c462ceeee660b64d72e143a4e26；前一条：2f04ce06c5426c1d17671ab9fb0fcc9c952b1c53e5b9b2ba57b98e9f33dbbc33。</p>
 </section>
       </article>
       <footer class="footer"><span>Markdown 为内容源 · HTML 为浏览版本</span><a href="%E8%B4%BE%E7%BB%B4%E6%96%AF%E5%BB%BA%E8%AE%BE%E6%97%A5%E5%BF%97.md">打开源文档</a></footer>

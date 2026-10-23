@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checks": [
+    "periodic observation renders reference-only with machine revision unverified",
+    "only GET preview request; machine details/jobs/CC Switch are not polled after entering preview",
+    "preserved credentials and permissions explained",
+    "390px viewport has no horizontal overflow",
+    "no external request or browser exception",
+    "repeat preview leaves every SQLite table and data/queue file unchanged",
+    "mode change clears old result and late response is discarded without a stuck loading state",
+    "removed observation displays unavailable without dispatch"
+  ],
+  "checksPassed": 8,
+  "fixture": "Synthetic owned machine and legacy periodic observation; not a real node diagnosis",
+  "modelRequests": 0,
+  "remoteActions": 0,
+  "productionChanges": false
+}

@@ -1,0 +1,15 @@
+{
+ "baseline":"38190ce",
+ "scope":"R58 delta review plus targeted current-tree API authorization, CC Switch, release/recovery/retention and actual test regression; not exhaustive proof of all repository paths",
+ "tests":{"typecheck":"passed","icons":{"passed":2,"failed":0},"demoDomains":{"passed":25,"failed":0},"api":{"total":903,"passed":870,"failed":22,"skipped":11},"isolatedSettingsAndDecision":{"total":15,"passed":13,"failed":2}},
+ "confirmed":[
+ {"id":"quiet-hours-contract","file":"scripts/extend-family-contract.cjs","line":13,"severity":"P1","summary":"Persona save contract rejects empty quiet hours even though UI and domain implement disabling them.","verification":"personal-settings-save-r39.test.ts independent HTTP fixture returns400 for start/end empty; test expected200; domain family-domains.ts124-126 explicitly permits both empty."},
+ {"id":"acceptance-not-wired","file":"apps/api/src/app.ts","line":416,"severity":"P1","summary":"Project acceptance routes are defined but not registered by createApp.","verification":"runtime-route-contract.test.ts independent fixture fails GET /api/v1/projects/{id}/acceptance resolves to static frontend fallback; registerProjectAcceptanceRoutes has only definition, no production invocation."},
+ {"id":"activation-alarm","file":"scripts/capture-managed-release.py","line":30,"severity":"P1","summary":"Default SIGALRM termination can skip exception-based service/config/code rollback after stopping services.","verification":"alarm900 has no handler; rollback exists only in except Exception161-175; signal default terminates process, no exception; source-path finding, not observed R58 incident."},
+ {"id":"retention-metadata","file":"scripts/storage-retention/jarvis-backup-retention.py","line":314,"severity":"P2","summary":"Managed activation writes no operation.json or recoverySHA256 required by retention pinned_recovery.","verification":"managed control131-159 writes node-before,previous-release,snapshot,activation only; maintenance241-245/272-276 calls verify_retained then pinned_recovery312-320. Selected managed snapshot therefore prevents cleanup fail-closed. Previously documented pending issue, not newly introduced by icons."}
+ ],
+ "testFailureClassification":["Decision privacy guard test expects private wording /私有|凭据/ while implementation correctly rejects with 私人路径; not a confirmed privacy bypass.","Workbench SSR test uses relative entry path under API workspace and fails esbuild entry resolution; not demonstrated page runtime failure.","Several cumulative cost tests omit required native version/checkpoint or expect prior charging semantics; tests need alignment, not arbitrary relaxation of fee guards.","Partial usage and quota recovery failures remain unresolved until minimum fixtures identify actual refusal reasons."],
+ "productionActions":0,
+ "sourceFixes":0,
+ "credentialsOrPrivateConversationsRead":false
+}

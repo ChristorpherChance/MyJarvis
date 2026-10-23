@@ -1,0 +1,133 @@
+{
+  "baselineApi": {
+    "tests": 903,
+    "pass": 870,
+    "fail": 22,
+    "skip": 11
+  },
+  "groups": [
+    {
+      "name": "persona-save",
+      "baselineFailures": 1,
+      "kind": "product",
+      "repair": "allow paired empty quiet hours in save schema; keep strict invalid/null/CAS rejection",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "acceptance-wiring",
+      "baselineFailures": 1,
+      "kind": "product",
+      "repair": "construct/register6 operations in createApp and mount existing frontend panels",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "model-settings10-scenarios",
+      "baselineFailures": 1,
+      "kind": "product-contract",
+      "repair": "narrow id/count/routing input contract alignment with current10 runtime scenarios",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "supervisor-diagnostic-observation",
+      "baselineFailures": 1,
+      "kind": "test-selection",
+      "repair": "select failed diagnostic observation rather than first input-projection diagnostic; retain all privacy/binding assertions",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "current-prompt-budget",
+      "baselineFailures": 2,
+      "kind": "stale-test",
+      "repair": "derive UTF8 boundaries from128KiB shared constant with over-limit/no-call/other-purpose tests",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "workspace-independent-test-path",
+      "baselineFailures": 2,
+      "kind": "test-path",
+      "repair": "resolve SSR/receipt paths from import.meta.url not API workspace cwd",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "decision-privacy-error",
+      "baselineFailures": 1,
+      "kind": "test-message",
+      "repair": "assert stable DECISION_PRIVATE_CONTENT and no persisted records instead of Chinese wording",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "cli-cumulative-version-checkpoint",
+      "baselineFailures": 4,
+      "kind": "fixture-contract",
+      "repair": "supply reliable native init/version/usage/checkpoint for positive cases; keep unknown/regression negative cases",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "partial-and-failed-cost",
+      "baselineFailures": 4,
+      "kind": "fixture-contract",
+      "repair": "retain observed lower bounds and incomplete status; positive final totals must not regress",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "quota-recovery",
+      "baselineFailures": 3,
+      "kind": "under-verification",
+      "repair": "unknown token/cost remains fail-closed; align positive fixtures to authorized known-use policy without allowing arbitrary knownCost lower-bound recovery",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "exact-root-receipts",
+      "baselineFailures": 2,
+      "kind": "product",
+      "repair": "spawn-scoped invocation binding; narrowly verified signed not-started rejection receipt accepted without weakening frozen hash or canonical no-model usage",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "UTC-restart-fee-day",
+      "kind": "product",
+      "repair": "write explicit ISO UTC timezone on SQLite-generated unreported timestamps; cross-midnight day accounting stays accurate",
+      "status": "passed in final full API suite"
+    },
+    {
+      "name": "raw-report-tail-and-drain",
+      "kind": "product",
+      "repair": "never capture discarded overflow tail as complete report; supervisor drains forwarded stdout/stderr before normal exit",
+      "status": "passed in final full API suite"
+    }
+  ],
+  "additionalConfirmed": [
+    "activation timeout control and rollback budget",
+    "new managed recovery binding and legacy-unbound retention protection",
+    "mobile menu2px row height"
+  ],
+  "intermediateRuns": [
+    {
+      "total": 905,
+      "pass": 874,
+      "fail": 20,
+      "skip": 11,
+      "note": "in-progress schemas/source; retained genuine failure results"
+    },
+    {
+      "total": 908,
+      "pass": 880,
+      "fail": 17,
+      "skip": 11,
+      "note": "conditional notStarted missing required caused normal DTO regressions; fixed with explicit presence and positive tests"
+    },
+    {
+      "total": 908,
+      "pass": 895,
+      "fail": 2,
+      "skip": 11,
+      "note": "old completeness assertion and nondeterministic stdout truncation diagnosed; corrected and final rerun pending"
+    }
+  ],
+  "finalApi": {
+    "tests": 908,
+    "pass": 897,
+    "fail": 0,
+    "skip": 11
+  }
+}

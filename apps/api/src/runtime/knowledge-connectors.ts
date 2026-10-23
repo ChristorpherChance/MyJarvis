@@ -38,17 +38,39 @@ export function parseKnowledgeDocuments(bytes:Buffer,type:string,location:string
   return {id:hash(location+'#'+index),title,text,location:location+'#'+(index+1),sha256:hash(text),metadata:{format:/json/i.test(type)?'json':'text',sourceDocumentIndex:index+1}};});
 }
 export async function readKnowledgeDirectory(endpoint:string,policy:KnowledgeNetworkPolicy,signal:AbortSignal):Promise<KnowledgeDocument[]> {
+ return (await readKnowledgeDirectoryPreview(endpoint,policy,signal)).documents;
+}
+
+export interface KnowledgeDirectoryChange { path:string; id:string; title:string; sha256:string }
+export interface KnowledgeDirectoryPreview {
+ snapshotFingerprint:string;
+ documents:KnowledgeDocument[];
+ changes:{added:KnowledgeDirectoryChange[];changed:KnowledgeDirectoryChange[];unchanged:KnowledgeDirectoryChange[];deleted:KnowledgeDirectoryChange[]};
+ unsupported:string[];
+ skipped:string[];
+}
+
+/** Inspect only authorized, real UTF-8 text files; binary/office formats are classified by path, never read. */
+export async function readKnowledgeDirectoryPreview(endpoint:string,policy:KnowledgeNetworkPolicy,signal:AbortSignal,previousDocuments:KnowledgeDocument[]=[]):Promise<KnowledgeDirectoryPreview> {
  let configured=endpoint;if(endpoint.startsWith('file:'))configured=new URL(endpoint).pathname.replace(/^\/([A-Za-z]:)/,'$1');
  const target=await realpath(resolve(decodeURIComponent(configured))),roots=await Promise.all(policy.allowedDirectoryRoots.map(async root=>realpath(resolve(root))));
  if(!roots.some(root=>within(root,target)))reject('目录不在管理员明确授权的知识目录中',403);
  if(!(await stat(target)).isDirectory())reject('目录连接器需要一个真实目录');
- const documents:KnowledgeDocument[]=[];let bytesRead=0;
+ const documents:KnowledgeDocument[]=[],unsupported:string[]=[],skipped:string[]=[];let bytesRead=0;
+ const supported=/\.(txt|md|json|html?)$/i,knownUnsupported=/\.(pdf|docx?|odt|rtf|xlsx?|pptx?|png|jpe?g|gif|webp|bmp|tiff?|heic|mp3|wav|mp4|mov|zip)$/i;
  async function visit(directory:string,depth:number){if(signal.aborted)throw signal.reason;if(depth>4)reject('知识目录超过 4 层扫描上限');const actualDirectory=await realpath(directory);if(!within(target,actualDirectory))reject('来源子目录越出已授权目录',403);
-  const entries=await readdir(actualDirectory,{withFileTypes:true});if(entries.length>10000)reject('知识目录的单层文件数量超过扫描上限',413);for(const entry of entries.sort((a,b)=>a.name.localeCompare(b.name))){if(signal.aborted)throw signal.reason;if(entry.isSymbolicLink())continue;const path=resolve(actualDirectory,entry.name);if(entry.isDirectory()){await visit(path,depth+1);continue;}if(!entry.isFile()||! /\.(txt|md|json|html?)$/i.test(entry.name))continue;
-   const actual=await realpath(path);if(!within(target,actual))reject('来源文件越出已授权目录',403);const info=await stat(actual);bytesRead+=info.size;if(bytesRead>policy.maxBytes)reject('目录同步字节数超过上限',413);const bytes=await readFile(actual);bytesRead+=bytes.length-info.size;if(bytesRead>policy.maxBytes)reject('目录同步时文件增长超过上限',413);const parsed=parseKnowledgeDocuments(bytes,/\.json$/i.test(entry.name)?'application/json':/\.html?$/i.test(entry.name)?'text/html':'text/plain',actual,policy.maxDocuments-documents.length);documents.push(...parsed);if(documents.length>policy.maxDocuments)reject('知识目录文档数量超过同步上限',413);
+  const entries=await readdir(actualDirectory,{withFileTypes:true});if(entries.length>10000)reject('知识目录的单层文件数量超过扫描上限',413);for(const entry of entries.sort((a,b)=>a.name.localeCompare(b.name))){if(signal.aborted)throw signal.reason;const path=resolve(actualDirectory,entry.name),relativePath=relative(target,path).split(sep).join('/');if(entry.isSymbolicLink()){skipped.push(relativePath);continue;}if(entry.isDirectory()){await visit(path,depth+1);continue;}if(!entry.isFile()){skipped.push(relativePath);continue;}if(knownUnsupported.test(entry.name)){unsupported.push(relativePath);continue;}if(!supported.test(entry.name)){skipped.push(relativePath);continue;}
+   const actual=await realpath(path);if(!within(target,actual))reject('来源文件越出已授权目录',403);const info=await stat(actual);bytesRead+=info.size;if(bytesRead>policy.maxBytes)reject('目录同步字节数超过上限',413);const bytes=await readFile(actual);bytesRead+=bytes.length-info.size;if(bytesRead>policy.maxBytes)reject('目录同步时文件增长超过上限',413);const location=relativePath,parsed=parseKnowledgeDocuments(bytes,/\.json$/i.test(entry.name)?'application/json':/\.html?$/i.test(entry.name)?'text/html':'text/plain',location,policy.maxDocuments-documents.length);documents.push(...parsed);if(documents.length>policy.maxDocuments)reject('知识目录文档数量超过同步上限',413);
   }
  }
- await visit(target,0);return documents;
+ await visit(target,0);
+ const byId=new Map(documents.map(d=>[d.id,d])),previous=new Map(previousDocuments.map(d=>[d.id,d]));
+ const describe=(d:KnowledgeDocument):KnowledgeDirectoryChange=>({path:d.location.split('#')[0],id:d.id,title:d.title,sha256:d.sha256});
+ const changes={added:[] as KnowledgeDirectoryChange[],changed:[] as KnowledgeDirectoryChange[],unchanged:[] as KnowledgeDirectoryChange[],deleted:[] as KnowledgeDirectoryChange[]};
+ for(const document of documents){const old=previous.get(document.id),entry=describe(document);if(!old)changes.added.push(entry);else if(old.sha256!==document.sha256)changes.changed.push(entry);else changes.unchanged.push(entry);}
+ for(const document of previousDocuments)if(!byId.has(document.id))changes.deleted.push(describe(document));
+ const snapshotFingerprint=hash(JSON.stringify({documents:documents.map(d=>({id:d.id,sha256:d.sha256})).sort((a,b)=>a.id.localeCompare(b.id)),unsupported:[...unsupported].sort(),skipped:[...skipped].sort()}));
+ return {snapshotFingerprint,documents,changes,unsupported:unsupported.sort(),skipped:skipped.sort()};
 }
 export async function synchronizeKnowledgeSource(source:Record<string,any>,policy:KnowledgeNetworkPolicy,signal:AbortSignal):Promise<KnowledgeDocument[]> {
  if(!source.active||!source.authorized)throw new BusinessError('FORBIDDEN','来源已经停用或撤销授权',403);

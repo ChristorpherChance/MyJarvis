@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-20T01:32:52.339303+00:00",
+  "status": "passed",
+  "phase": "verify",
+  "state": {
+    "unit": {
+      "ActiveState": "inactive",
+      "FragmentPath": "/etc/systemd/system/jarvis-nas120-ssh-tunnel.service",
+      "UnitFileState": "disabled",
+      "MainPID": "0"
+    },
+    "unitSHA256": "559cef95e5b6a47d9fd32dea09baed8fce29f1c288e4c7eb9d4c3b513c18add0",
+    "configSHA256": "229222851e704938e7ad005397d64880d122722a5ed5db9c0741cac836ce1fba",
+    "protectedUnits": {
+      "jarvis-platform.service": "ActiveState=active\nMainPID=1359242",
+      "jarvis-observer.service": "ActiveState=active\nMainPID=1359244",
+      "ssh.service": "ActiveState=active\nMainPID=4082721",
+      "jarvis-ssh-public.service": "ActiveState=active\nMainPID=659720",
+      "jarvis-ssh-tunnel.service": "ActiveState=active\nMainPID=785997",
+      "jarvis-frpc.service": "ActiveState=active\nMainPID=2045",
+      "myoperation-frpc.service": "ActiveState=active\nMainPID=3844904"
+    }
+  },
+  "protectedOtherUnitsUnchanged": true,
+  "onlyOwnedBridgeControlled": true
+}

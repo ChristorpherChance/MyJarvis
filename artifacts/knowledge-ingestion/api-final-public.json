@@ -1,0 +1,15 @@
+{
+  "tests": 919,
+  "pass": 912,
+  "fail": 0,
+  "skipped": 7,
+  "skipReasons": [
+    "﹣ startup rejects standby, mismatched data/release and retired production data before business initialization (9.39113ms) # Root-owned control file validation requires a root fixture",
+    "﹣ standalone node package pairs, edits actual isolated files and returns a signed result (1.25488ms) # SKIP",
+    "﹣ actual embedded PDF and image-only PDF/PNG use the existing local OCR with original page locations (128.658918ms) # Local OCR dependencies unavailable; no actual scan extraction claimed",
+    "﹣ scan runner preserves real PDF/image extraction and settles timeout or cancellation before scratch cleanup (125.408398ms) # Local OCR unavailable; updated scan runner not verified",
+    "﹣ 真实本地 CPU RapidOCR：中英 PNG/JPEG、文字 PDF 和扫描 PDF 两轮候选证据 (140.01765ms) # 本地 OCR 隔离依赖未安装；HTTP适配器测试另行实际执行",
+    "﹣ 真实空白PDF由本地OCR进入待审，必须明确非文字页分类和独立指纹审核才能发布 (148.237423ms) # 本地OCR依赖未安装，不能宣称真实空白页已验收",
+    "﹣ Windows SAPI默认引擎真实生成临时WAV，不实际播放或调用付费模型 (0.169637ms) # SKIP"
+  ]
+}

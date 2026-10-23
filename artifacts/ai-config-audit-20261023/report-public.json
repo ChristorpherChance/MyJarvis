@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "scope": "Read-only configuration control-plane audit; source, installed public policy, existing periodic observations and historical public receipts",
+  "conclusion": "Partial central management: three-machine per-node CC Switch CRUD exists, but fleet desired-state configuration and rapid new-machine onboarding are incomplete.",
+  "liveLocalObservations": {
+    "currentRelease": "20261020-platform-icons-r58",
+    "platformService": "active",
+    "aiDevelopmentController": "active",
+    "ccSwitchController": "active",
+    "ccSwitchConfiguredAliases": ["cc-switch-101", "cc-switch-112", "cc-switch-116"],
+    "aiDevelopmentPolicyNodes": ["112"],
+    "profile": {"id":"linux-ai-dev-v1","revision":1,"claude":"2.1.292","ccSwitch":"5.11.2","node":"24.15.0","providerCount":11},
+    "periodicObservation": {
+      "nodeId": "112",
+      "at": "2026-10-23T02:27:09.052Z",
+      "providerCount": 6,
+      "statuslineConfigured": false,
+      "statuslineCommandSHA256": null,
+      "scope": "global-and-provider",
+      "resourcesCapability": true,
+      "interpretation": "Full global/common/all-provider/script agreement not confirmed. This is not proof that no terminal displays a status line. Provider count difference is not proof of incorrect credentials or models."
+    },
+    "sourceMatchesCurrentRelease": ["apps/api/src/runtime/cc-switch.ts","apps/api/src/runtime/ai-development.ts","scripts/ai-development/profile-manifest.json","scripts/ai-development/provision.py","scripts/cc-switch/node.py"],
+    "healthHttp": "Two unauthenticated loopback GET attempts returned curl 52 Empty reply; HTTP health and authenticated product API were not verified. Service active is not a substitute for HTTP health."
+  },
+  "existingCapabilities": [
+    "CC Switch read/create/update/switch/delete for individually selected 101,112,116, sharing each target user's database; historical R56 deployment and three-node bridge/live API receipts exist.",
+    "Fixed AI development profile can supplement missing providers and merge a fixed statusLine into global/common/provider settings on an authorized node.",
+    "Configuration backup and guarded local restoration exist, but no public rollback action; tool installation and root installers are not covered by the complete configuration rollback transaction."
+  ],
+  "gaps": [
+    "CC Switch API/controller installer/UI hardcode three hosts; fourth machine cannot be added through policy-only onboarding.",
+    "No central editable provider/profile desired-state template, batch application, fleet comparison or drift reconciliation.",
+    "Terminal-model CRUD cannot edit statusLine, layout or compression policy.",
+    "AI development profile currently authorizes only112; second-machine and fresh-machine end-to-end acceptance absent.",
+    "Provisioning supplements absent provider IDs/names but skips existing conflicts; repeated idempotent execution does not imply fleet convergence.",
+    "Model/effort/output-token portable-field allowlists differ between provisioner and controller installer.",
+    "Context and auto-compaction settings are not a complete managed template contract; recent112 single-channel mitigation was not a fleet rollout.",
+    "No complete new-machine trust/bootstrap/configure/verify/recover wizard.",
+    "CLI version upgrade is separate and still partial; previous101 candidate not released."
+  ],
+  "recommendedSequence": [
+    "Add safe per-layer statusLine and template difference diagnostics; diagnose112 current mismatch without resetting configuration.",
+    "Define versioned portable managed settings with preview and explicit supplement versus reconcile modes; preserve credentials and security settings.",
+    "Replace host hardcodes with trusted policy-driven node registration and staged onboarding.",
+    "Verify a second actual node and a clean new node before claiming fleet-wide rapid setup."
+  ],
+  "historicalEvidence": ["artifacts/cc-switch-center/bridge-verification-final-public.json","artifacts/cc-switch-center/live-api-public.json","artifacts/cc-switch-center/browser-public.json","artifacts/ai-development-ops/live-api-validation-public.json","artifacts/ai-development-ops/native-terminal-observation-public.json"],
+  "boundaries": {"configurationChanged":false,"remoteNodeCommands":false,"providerSwitches":false,"modelInferenceRequests":false,"productionRestartOrDeployment":false,"privateSettingsOrVaultValuesRead":false,"authenticatedApiVerifiedToday":false,"allServerStateVerifiedToday":false},
+  "cost": {"assistantAndSubagentTokensAndAmount":"unknown","productInferenceRequests":0}
+}

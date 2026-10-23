@@ -1,0 +1,58 @@
+{
+  "id": "JARVIS-20261020-CC-SWITCH-CENTER-R56-LIVE-VERIFICATION",
+  "kind": "release",
+  "project": "jarvis",
+  "retrospective": false,
+  "occurredAt": "2026-10-19T18:12:41.611765Z",
+  "title": "R56三机模型管理已上线，正式HTTPS与浏览器读取表单核对通过",
+  "objective": "将三机CC Switch集中管理正式交付到112贾维斯，并在真实API与浏览器中核对入口、数据和密钥表单边界。",
+  "changes": [
+    "将固定源28a9e5d55ec73aa9fb48b447025a397452a736a5发布为20261020-cc-switch-center-r56；后续canonical60e4037与其内容树一致。入口为系统运维→运维费用→终端模型及机器详情→AI开发环境。",
+    "沿既有stage/install/inspect/activate/health流程完成112发布，保留R55/R54兼容资产、完整快照与隔离恢复，平台/observer版本及健康一致。",
+    "使用说明更新已上线状态、实际入口、正式API及浏览器检查范围；359实施与360合并版本上线/监控验证历史保留。"
+  ],
+  "decisions": [
+    "正式验证选择三机各自已经启用的配置，避免为核验而改变用户选择；112被其他用户切为Kimi CCR，保留该实际状态。",
+    "浏览器打开116编辑表单验证Key空白/密码输入类型后取消，不通过页面保存任何配置；先前真实CRUD与Kimi切换恢复仍按359桥接回执解释。",
+    "上线、代理浏览器有限验证和用户本人验收分别记录，状态仍为用户验收待进行。"
+  ],
+  "facts": [
+    "发布包SHA256为88cbb5ee1eb365df974a5ba091a0fd795ffb38c2ffb8dc280da1c6ec48ca0bd6，manifest SHA256为1c3ffcecb1c5848b5efafb72d92a219fa1911a6331533811d88c682924f1882c，stage逐项核2422个payload。",
+    "激活实核发布锁；64文件、59目录、5,021,284,854字节与10个SQLite完整快照/隔离恢复通过。未将快照回写生产数据，factoryResumed=false。",
+    "正式HTTPS使用单个120秒仅hash落库的临时session完成三机检查后精确撤销；未存密码/明文登录凭据，未改供应商配置内容或选择，未发模型推理请求。",
+    "浏览器观察时三机各6配置，101与116当前为JP，112当前为Kimi For Coding-CCR；112选择来源于本功能验证之外的用户动作，本轮保持。",
+    "本轮不新增供应商模型推理调用；内部编排Token、金额及账单未知分列，费用只记录不设上限。"
+  ],
+  "verification": [
+    "实际stage/install/inspect/activate/health回执通过；112为primary，current、配置、API与observer均为R56，healthStatus=ok，业务健康。",
+    "真实HTTPS匿名401、固定三机器清单与配置快照白名单、三次同当前配置选择、三次写后读回保持全部通过，临时sessionCreated/sessionRevoked均true。",
+    "真实浏览器选择101/112/116均显示6项，当前项与机器快照一致，当前配置删除禁用；打开116 Kimi CCR编辑，Key type=password且空白，取消后无浏览器写入。",
+    "两张公开页面截图已逐文件SHA核同，引用管理页面与编辑表单；未读取已保存Key，不把表单检查冒作浏览器完成全部CRUD。"
+  ],
+  "pending": [
+    "用户本人实际使用验收待确认；当前代理验证不代表供应商全部账户、额度或真实推理调用已验。",
+    "平台资料、重要决定和经验候选按版本保护接口另同步并保留旧notes/actions；该同步回执及文档Git提交另记，不为补档再部署或重跑模型。"
+  ],
+  "lessons": [
+    "集中运维的现场验收应保留用户实际选择，用同当前项请求验证控制链，并分开记录桥接CRUD、浏览器只读表单和用户本人验收。"
+  ],
+  "state": {
+    "implementation": "complete",
+    "verification": "passed",
+    "deployment": "live",
+    "acceptance": "pending"
+  },
+  "evidence": [
+    "artifacts/cc-switch-center/stage-public.json",
+    "artifacts/cc-switch-center/install-public.json",
+    "artifacts/cc-switch-center/inspect-public.json",
+    "artifacts/cc-switch-center/activate-public.json",
+    "artifacts/cc-switch-center/health-public.json",
+    "artifacts/cc-switch-center/live-api-public.json",
+    "artifacts/cc-switch-center/browser-public.json",
+    "artifacts/cc-switch-center/cc-switch-edit-r56.png",
+    "artifacts/cc-switch-center/cc-switch-manager-r56.png",
+    "docs/CCSwitch三机模型管理.md",
+    "docs/贾维斯建设档案.md"
+  ]
+}

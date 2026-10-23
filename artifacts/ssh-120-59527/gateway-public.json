@@ -1,0 +1,24 @@
+{
+  "phase": "gateway-firewall",
+  "at": "2026-10-20T01:09:38.478136+00:00",
+  "status": "applied",
+  "rule": "LIMIT IN 59527/tcp",
+  "publicPort": 59527,
+  "rules": [
+    "[13] 59527/tcp                  LIMIT IN    Anywhere                   # jarvis-nas120-ssh-direct",
+    "[26] 59527/tcp (v6)             LIMIT IN    Anywhere (v6)              # jarvis-nas120-ssh-direct"
+  ],
+  "protectedServicesBefore": {
+    "frps.service": "161084",
+    "nginx.service": "863337",
+    "ssh.service": "407844"
+  },
+  "protectedServicesAfter": {
+    "frps.service": "161084",
+    "nginx.service": "863337",
+    "ssh.service": "407844"
+  },
+  "frpsConfigSHA256": "519781831e79ba1ac9229616c758e14f6e67162ca20f86bab01c425e44ff5047",
+  "frpsConfigurationModified": false,
+  "existingServicesRestarted": false
+}

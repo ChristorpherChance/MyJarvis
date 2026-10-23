@@ -1,0 +1,37 @@
+{
+  "schema": "ssh-120-59527-installer-static-review-v1",
+  "observedAt": "2026-10-20T01:08:59.056889+00:00",
+  "reviewedSource": "/home/superopen/.local/share/jarvis-development/ssh-120-59527-20261020/scripts/ssh-access/install-nas120-tunnel.py",
+  "sourceSha256": "dff3ebf0085e3930a34a26e3a80033e93117c6cfdf7e90863041465b878ced47",
+  "reviewType": "independent static source review only",
+  "status": "changes-required",
+  "findings": [
+    {
+      "priority": "P1",
+      "line": 131,
+      "title": "Failure handler can stop a concurrently created or pre-existing same-name service",
+      "trigger": "The execute try block includes TARGET_APPEARED_CONCURRENTLY and exclusive-create operations. Any of those can fail before this invocation owns or activates the service, but except still disables/stops the name.",
+      "requiredChange": "Track successful exclusive unit creation and activation attempt. Only stop when this invocation owns the same current unit file/inode/hash and its activation was attempted. Protect the execution window with a per-target exclusive lock.",
+      "existingServicesChangedByReview": false
+    },
+    {
+      "priority": "P2",
+      "line": 52,
+      "title": "Filesystem absence does not establish the systemd unit name is unused",
+      "trigger": "A loaded transient unit or a unit under another load path can exist even if the fixed /etc unit path is absent. Dangling target symlinks also escape Path.exists.",
+      "requiredChange": "Before persistent writes, reject any loaded/existing/transient unit of this name and any target symlink; repeat guarded checks while holding the execution lock."
+    }
+  ],
+  "passedStaticChecks": [
+    "Default invocation does not enable/start/stop services or write persistent target configuration.",
+    "FRPC token is handled in memory/root-only configuration; subprocess stdout/stderr is captured and errors are sanitized rather than printing configuration.",
+    "The generated configuration contains exactly one TCP proxy for 192.168.10.120:22 to 59527 with a distinct FRPC user/proxy name.",
+    "DynamicUser and systemd LoadCredential deliver the root-only FRPC configuration without making its secret an argv value.",
+    "Protected existing unit MainPID/ActiveState/UnitFileState and protected configuration SHA256 values are compared before/after preparation and activation.",
+    "New unit active state does not prove the public mapping works; the independent external handshake remains required."
+  ],
+  "productionExecuted": false,
+  "sourceModified": false,
+  "credentialsReadOrExported": false,
+  "servicesStartedStoppedOrRestarted": false
+}

@@ -1,8 +1,8 @@
 # CC Switch 三机模型管理
 
-<!-- jarvis-doc-meta {"version":"模型管理 1.0 · R56候选","date":"2026-10-20","eyebrow":"终端模型 / 三机管理 / CC Switch","subtitle":"在112贾维斯中管理101、112、116各自的Claude Code模型配置。","stats":[{"value":"3台","label":"分别管理"},{"value":"共用配置","label":"平台与本机终端"},{"value":"不回显","label":"访问密钥"}]} -->
+<!-- jarvis-doc-meta {"version":"模型管理 1.1 · R56已上线","date":"2026-10-20","eyebrow":"终端模型 / 三机管理 / CC Switch","subtitle":"在112贾维斯中管理101、112、116各自的Claude Code模型配置。","stats":[{"value":"3台","label":"分别管理"},{"value":"共用配置","label":"平台与本机终端"},{"value":"不回显","label":"访问密钥"}]} -->
 
-三机模型管理已完成本轮实现与限定范围验证，计划随 `20261020-cc-switch-center-r56` 发布到112。受限控制器与三机连接已安装并实测；正式平台的新界面和API尚未上线，用户现场验收仍待进行。
+三机模型管理已随 `20261020-cc-switch-center-r56` 部署到112贾维斯。打开 [贾维斯平台](https://cc-jarvis.ikvein.com/?mode=platform)，进入 **系统运维 → 运维费用 → 终端模型** 即可管理101、112、116；机器详情的 **AI 开发环境** 也保留入口。平台接口与浏览器页面已实际核对，用户本人使用验收仍待进行。
 
 ## 进入模型管理
 
@@ -57,6 +57,12 @@ ai manage   # 本机CC Switch管理
 
 API初次回归有4项失败，装配与合同生成修复后原断言保持、27项复验通过；初次结果继续保留。以上是本轮限定范围验证，不代替正式页面上线后的使用验收。
 
-正式发布还需固定源码提交、打包、保留既有静态资源、完整数据快照与隔离恢复，再核发布健康和新入口。供应商推理调用本阶段为0；内部编排Token、金额及账单未知分列，费用只记录不设上限。
+R56已按固定源码提交 `28a9e5d55ec73aa9fb48b447025a397452a736a5` 打包发布，沿用已恢复的R55/R54兼容资源。完整数据快照与隔离恢复均核同64个文件、59个目录和10个SQLite；平台与observer的版本、健康一致。
+
+正式HTTPS接口核对三机各6项配置、匿名401、选择各自已经启用的配置及写后读回；配置内容和选择保持。浏览器逐台看到真实列表，当前项删除被禁用，116编辑表单的Key为空且为密码类型，随后取消，未通过浏览器保存配置。验证时101/116为JP，112为Kimi For Coding-CCR；112核验时已选择Kimi CCR，本轮保留该选择；未核实变更主体或时间。
+
+本次功能验证和发布未发供应商推理请求；内部编排Token、金额及账单未知分列，费用只记录不设上限。
 
 [最终实现验证](../artifacts/cc-switch-center/final-validation-public.json) · [三机最终连接验证](../artifacts/cc-switch-center/bridge-verification-final-public.json) · [API验证与初次失败](../artifacts/cc-switch-center/api-validation-public.json)。
+
+[发布健康](../artifacts/cc-switch-center/health-public.json) · [真实HTTPS接口验证](../artifacts/cc-switch-center/live-api-public.json) · [浏览器验证](../artifacts/cc-switch-center/browser-public.json) · [管理页面截图](../artifacts/cc-switch-center/cc-switch-manager-r56.png) · [编辑表单截图](../artifacts/cc-switch-center/cc-switch-edit-r56.png)。

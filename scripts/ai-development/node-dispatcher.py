@@ -139,6 +139,21 @@ def public_receipt(state):
 def initial_receipt(r):
     return {'schemaVersion':1,**{k:r[k] for k in ['id','machineId','bindingHash','profileId','profileRevision','profileHash']},'status':'running','at':datetime.now(timezone.utc).isoformat(),'summary':'Fixed operation accepted; not yet verified'}
 
+STATUSLINE_STATES={'match','missing','different','invalid','unreadable','unknown','not-applicable'}
+STATUSLINE_LAYERS={'SCRIPT','GLOBAL','COMMON','CURRENT_PROVIDER'}
+STATUSLINE_REASONS={f'STATUSLINE_{layer}_{state.replace("-","_").upper()}' for layer in STATUSLINE_LAYERS for state in STATUSLINE_STATES}
+STATUSLINE_REASONS.update(f'STATUSLINE_PROVIDER_COUNT_{state}' for state in ('ZERO','MATCHED','MISSING','DIFFERENT','INVALID','UNKNOWN'))
+STATUSLINE_COUNTS=('total','matched','missing','different','invalid','unknown')
+
+def sanitize_statusline_diagnostics(value):
+    if not isinstance(value,dict) or 'diagnosticsVersion' not in value or value.get('diagnosticsVersion')!=1:return None
+    layers=value.get('layers');providers=value.get('providers');codes=value.get('reasonCodes')
+    if not isinstance(layers,dict) or set(layers)!={'script','global','common','currentProvider'} or any(v not in STATUSLINE_STATES for v in layers.values()):return None
+    if not isinstance(providers,dict) or set(providers)!=set(STATUSLINE_COUNTS) or any(type(providers.get(k)) is not int or providers[k]<0 or providers[k]>9007199254740991 for k in STATUSLINE_COUNTS):return None
+    if providers['total']!=sum(providers[k] for k in STATUSLINE_COUNTS[1:]):return None
+    if not isinstance(codes,list) or len(codes)>34 or any(code not in STATUSLINE_REASONS for code in codes):return None
+    return {'diagnosticsVersion':1,'layers':{k:layers[k] for k in ('script','global','common','currentProvider')},'providers':{k:providers[k] for k in STATUSLINE_COUNTS},'reasonCodes':list(dict.fromkeys(codes))}
+
 def sanitize_inventory(value):
     require(isinstance(value,dict) and isinstance(value.get('tools'),list) and len(value['tools'])<=20 and isinstance(value.get('providers'),list) and len(value['providers'])<=32,'INVALID_INVENTORY')
     nullable=lambda v,maximum=300:None if v is None else safe_text(v,maximum)
@@ -153,6 +168,8 @@ def sanitize_inventory(value):
     if isinstance(value.get('statusline'),dict):
         s=value['statusline'];sha=s.get('commandSHA256')
         out['statusline']={'configured':s.get('configured') is True,'commandSHA256':sha if isinstance(sha,str) and SHA.fullmatch(sha) else None,'scope':'global-and-provider','resources':s.get('resources') is True}
+        diagnostics=sanitize_statusline_diagnostics(s)
+        if diagnostics:out['statusline'].update(diagnostics)
     def numbers(v,keys):
         return {k:v[k] for k in keys if isinstance(v,dict) and k in v and (v[k] is None or type(v[k]) in (int,float) and math.isfinite(v[k]) and 0<=v[k]<=9007199254740991)}
     out['resources']=None if value.get('resources') is None else numbers(value['resources'],['cpuPercent','ramUsedBytes','ramTotalBytes','diskFreeBytes','diskTotalBytes','load1m'])

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "release": "20261023-server-planning-r59",
+  "previousRelease": "20261020-platform-icons-r58",
+  "baselineSourceCommit": "33fd8ad8262a3eb468ec808cd84bab6c01eb4a58",
+  "sourceCommit": "d91bc4941370915f8c63bbabff5779a1c17712f3",
+  "packageSHA256": "5d39212d0a230f4c2db72cb6a91cc864de66fb5fa32bfc5072e7d3053cc57286",
+  "manifestSHA256": "a1ec80461d801293062ec5390f6aac11b01bd84cdb25785ebb33c02aabcc3a63",
+  "payloadFiles": 2473,
+  "externalManagedReleaseHelperSHA256": "6c1a78752fc69d6cdeafd403ff29d3705de9b93376a363f92c3ef6ee13f87466",
+  "verification": {"typecheck": "passed", "stageBuild": "passed", "documentAndExistingGuideTests": {"passed":15,"failed":0}, "isolatedBrowserChecks":7, "packaging":"passed", "stage":"passed", "install":"passed", "inspect":"passed"},
+  "scope": "Fixed administrator HTML route, three explicit supporting resources and one device-management link; no dynamic fleet runtime, template preview feature or other dirty business changes",
+  "localCommit": true,
+  "pushed": false,
+  "activation": "in-progress-not-yet-claimed",
+  "failuresAndCorrections": [
+    "Initial isolated commit failed because clone lacked author configuration. Retried with command-local identity copied from source repository; no global settings changed.",
+    "Route agent initially supplied stub identity tests; main added real administrator/member mixed-cookie and logout test. Fixed script-removal regex assertions to match word boundaries.",
+    "Release review initially compared Git blob hash to file SHA and historical root manifest to not-yet-generated output; actual SHA and generated R59 manifest independently verified, no maintenance helper changes bundled."
+  ],
+  "cost": {"policy":"record-only-no-amount-cap","assistantAndSubagentTokens":"unknown","amountAndInvoice":"unknown","productInferenceRequests":0}
+}

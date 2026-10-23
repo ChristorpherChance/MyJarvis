@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {z} from 'zod';
 import type {V1Repository} from '../v1/repository.js';
 import {BusinessError} from '../v1/types.js';
+import {resolvePublishedKnowledgeDocument} from './knowledge-documents.js';
 
 export const knowledgeReferenceInput=z.object({queryId:z.string().min(1).max(200),source:z.string().min(1).max(200),location:z.string().min(1).max(4500),sha256:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
 const hash=(text:string)=>createHash('sha256').update(text).digest('hex');
@@ -18,8 +19,13 @@ export function resolveKnowledgeReference(repository:V1Repository,actorId:string
  requireReference(source?.kind==='source'&&source.active&&source.authorized&&source.scope===query.scope,'这个来源已停用、撤权或不在当前范围，无法打开原文',403);
  const quote=typeof result.text==='string'?result.text:'',offset=result.offset;
  requireReference(quote.length>0&&quote.length<=2000&&Number.isSafeInteger(offset)&&offset>=0,'引用缺少可信摘录或位置，请重新检索');
- let text:string,kind:'book-page'|'stored-document'|'query-excerpt',bookId:string|undefined,page:number|undefined,version:number|string|undefined,verifiedSourceText=true;
- if(result.book){
+ let text:string,kind:'book-page'|'stored-document'|'query-excerpt'|'reviewed-document',bookId:string|undefined,page:number|undefined,version:number|string|undefined,originalLocation:string|undefined,verifiedSourceText=true;
+ if(result.documentId){
+  const resolved=resolvePublishedKnowledgeDocument(repository,actorId,result.documentId,result.version,result.segment,input.sha256,source.scope);
+  requireReference(resolved&&resolved.document.sourceId===source.id,'文档版本、人工审核或原件绑定已失效，请重新核对后检索');
+  requireReference(input.location===`document://${encodeURIComponent(resolved.document.id)}/${resolved.document.version}/segment/${resolved.segment.index}`,'文档引用位置不一致');
+  text=resolved.segment.text;kind='reviewed-document';version=resolved.document.version;originalLocation=resolved.segment.location??undefined;
+ }else if(result.book){
   const book=repository.read('books',result.book,actorId);
   requireReference(book?.kind==='book'&&book.source===source.id&&book.scope===source.scope&&book.status==='published','原文已撤下或离开当前授权范围，请重新检索',403);
   requireReference(book.version===result.version,'原文版本已更新，请重新检索后打开当前出处');
@@ -43,5 +49,5 @@ export function resolveKnowledgeReference(repository:V1Repository,actorId:string
  if(contextStart>0&&/[\uDC00-\uDFFF]/.test(text[contextStart]))contextStart--;
  if(end<text.length&&/[\uD800-\uDBFF]/.test(text[end-1]))end++;
  const url=externalLink(input.location);
- return {sourceId:source.id,sourceName:source.name??'知识来源',sourceRevision:source.revision,title:result.title,kind,location:input.location,sha256:input.sha256,...(bookId?{bookId,page,version}:{version}),text:text.slice(contextStart,end),contextStart,quote,quoteOffset:offset,quoteStart:verifiedSourceText?offset-contextStart:0,hasEarlierText:contextStart>0,hasLaterText:end<text.length,verifiedSourceText,resolvedAt:new Date().toISOString(),notice:verifiedSourceText?'已按当前授权、原文版本和完整正文指纹核对。高亮范围为检索摘录，不一定是查询词的位置。':'只保留当时检索摘录，未保存或重新读取实时全文。来源仍获授权；查看最新正文请明确打开来源网站。',...(url?{externalUrl:url}:{})};
+ return {sourceId:source.id,sourceName:source.name??'知识来源',sourceRevision:source.revision,title:result.title,kind,location:input.location,...(originalLocation?{originalLocation}:{}),sha256:input.sha256,...(bookId?{bookId,page,version}:{version}),...(result.documentId?{documentId:result.documentId,segment:result.segment,originalUrl:`/api/v1/knowledge/documents/${encodeURIComponent(result.documentId)}/original`}:{}),text:text.slice(contextStart,end),contextStart,quote,quoteOffset:offset,quoteStart:verifiedSourceText?offset-contextStart:0,hasEarlierText:contextStart>0,hasLaterText:end<text.length,verifiedSourceText,resolvedAt:new Date().toISOString(),notice:verifiedSourceText?'已按当前授权、原文版本和完整正文指纹核对。高亮范围为检索摘录，不一定是查询词的位置。':'只保留当时检索摘录，未保存或重新读取实时全文。来源仍获授权；查看最新正文请明确打开来源网站。',...(url?{externalUrl:url}:{})};
 }

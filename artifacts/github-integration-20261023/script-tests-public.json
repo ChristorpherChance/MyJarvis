@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "scope": "local-isolated-tests-only",
+  "commands": [
+    {
+      "command": "python3 -I scripts/test-capture-managed-release-helpers.py",
+      "exitCode": 0,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -I scripts/test-managed-retention-protocol.py",
+      "exitCode": 0,
+      "tests": 3,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 3
+    },
+    {
+      "command": "node --test scripts/ai-development/test-controller.mjs",
+      "exitCode": 0,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -I scripts/ai-development/test-provision.py",
+      "exitCode": 0,
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -I scripts/ai-development/test_node_dispatcher.py",
+      "exitCode": 0,
+      "tests": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test scripts/test-register-planned-machines.mjs",
+      "exitCode": 0,
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "totals": {
+    "commands": 6,
+    "exitCodeNonzero": 0,
+    "tests": 46,
+    "passed": 43,
+    "failed": 0,
+    "skipped": 3
+  }
+}

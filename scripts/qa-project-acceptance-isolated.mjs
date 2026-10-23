@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {randomUUID} from 'node:crypto';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 if(!process.argv.includes('--isolated-child')){
- const {chromium}=await import('@playwright/test');await access(join(root,'apps/web/dist/index.html'));await access(chromium.executablePath());
+ const {chromium}=await import('/home/superopen/All-Projects/MyOperation/node_modules/playwright/index.mjs');await access(join(root,'apps/web/.dist-next/index.html'));await access(chromium.executablePath());
  const home=await mkdtemp(join(tmpdir(),'project-acceptance-home-')),env={HOME:home,USERPROFILE:home,PATH:process.env.PATH,LANG:'C.UTF-8',PROJECT_TEST_CHROMIUM:chromium.executablePath()};
  const child=spawn(process.execPath,['--import','tsx',fileURLToPath(import.meta.url),'--isolated-child'],{cwd:root,env,stdio:'inherit',shell:false,detached:process.platform!=='win32'});let escalation,timedOut=false;
  const kill=signal=>{try{if(child.pid)process.kill(process.platform==='win32'?child.pid:-child.pid,signal);}catch(e){if(e.code!=='ESRCH')throw e;}};
@@ -16,12 +16,12 @@ if(!process.argv.includes('--isolated-child')){
  const finish=async code=>{clearTimeout(timer);clearTimeout(escalation);process.exitCode=timedOut?1:code??1;await rm(home,{recursive:true,force:true});};
  child.once('error',()=>void finish(1));child.once('exit',code=>void finish(code));
 }else{
- const {chromium}=await import('@playwright/test');const {startIsolatedProjectApp}=await import('../apps/api/test/helpers/isolated-project-app.ts');
+ const {chromium}=await import('/home/superopen/All-Projects/MyOperation/node_modules/playwright/index.mjs');const {startIsolatedProjectApp}=await import('../apps/api/test/helpers/isolated-project-app.ts');
  const attempt=randomUUID(),out=join(root,'artifacts/project-acceptance',attempt);await mkdir(out,{recursive:true});const results=[],errors=[],blocked=[],cleanupErrors=[];
  let fixture,browser,context,page,base='',active='setup';const originalFetch=globalThis.fetch,hash='a'.repeat(64),commit='b'.repeat(40);
  const check=async(name,fn)=>{active=name;await fn();results.push({name,status:'passed'});console.log('PASS '+name);};
  try{
-  fixture=await startIsolatedProjectApp({webDir:join(root,'apps/web/dist')});base=fixture.baseUrl;globalThis.fetch=(input,opts)=>{const url=new URL(typeof input==='string'?input:input instanceof URL?input.href:input.url);assert.equal(url.origin,base,'fixture fetch origin');return originalFetch(input,opts);};
+  fixture=await startIsolatedProjectApp({webDir:join(root,'apps/web/.dist-next')});base=fixture.baseUrl;globalThis.fetch=(input,opts)=>{const url=new URL(typeof input==='string'?input:input instanceof URL?input.href:input.url);assert.equal(url.origin,base,'fixture fetch origin');return originalFetch(input,opts);};
   assert.equal((await(await fetch(base+'/api/health')).json()).instanceId,fixture.instanceId);
   browser=await chromium.launch({headless:true,executablePath:process.env.PROJECT_TEST_CHROMIUM});context=await browser.newContext({viewport:{width:1440,height:1000},serviceWorkers:'block'});await context.route('**/*',route=>{if(new URL(route.request().url()).origin===base)return route.continue();blocked.push(route.request().url());return route.abort();});page=await context.newPage();page.setDefaultTimeout(12000);page.on('pageerror',e=>errors.push(e.message));
   const api=async(path,data)=>{const r=await context.request.fetch(base+path,{method:data===undefined?'GET':'POST',...(data===undefined?{}:{data})});assert(r.ok(),path+':'+r.status());return r.json();};
@@ -54,7 +54,7 @@ if(!process.argv.includes('--isolated-child')){
    await dialog().getByRole('button',{name:'保存记录',exact:true}).click();await dialog().getByRole('alert').filter({hasText:/版本|更新|刷新/}).waitFor();assert.equal(await dialog().getByLabel('缺陷标题',{exact:true}).inputValue(),'冲突草稿不应覆盖');await dialog().getByRole('button',{name:'取消',exact:true}).click();
    const panel=page.getByRole('region',{name:'验收缺陷',exact:true}),pattern=`**/api/v1/projects/${projectId}/acceptance`;await page.route(pattern,route=>route.abort());await panel.getByRole('button',{name:'刷新',exact:true}).click();await panel.getByRole('alert').waitFor();assert.equal(await panel.getByRole('button',{name:'新增缺陷',exact:true}).isDisabled(),true);await page.unroute(pattern);await panel.getByRole('button',{name:'刷新',exact:true}).click();await page.waitForFunction(()=>!Array.from(document.querySelectorAll('button')).find(button=>button.textContent==='新增缺陷')?.disabled);
   });
-  await check('mobile-defect-detail-and-releases-empty-state',async()=>{await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:join(out,'defect-mobile.png'),fullPage:true});await page.getByRole('navigation',{name:'项目资料详情'}).getByRole('button',{name:'交付版本',exact:true}).click();await page.getByRole('region',{name:'项目发布包',exact:true}).waitFor();assert.equal((await api(`/api/v1/projects/${projectId}/releases`)).data.total,0);});
+  await check('mobile-defect-detail-and-releases-empty-state',async()=>{await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:join(out,'defect-mobile.png'),fullPage:true});await page.getByRole('navigation',{name:'项目资料详情'}).getByRole('button',{name:'发布记录',exact:true}).click();await page.getByRole('region',{name:'项目发布包',exact:true}).waitFor();assert.equal((await api(`/api/v1/projects/${projectId}/releases`)).data.total,0);});
   await check('project-release-pagination-is-scoped-and-renders-existing-records',async()=>{
    const repo=fixture.runtime.v1,actor='server-admin',other=randomUUID();
    const seed=(project,version)=>repo.execute({domain:'releases',commands:['fixture'],execute:(_command,_body,ctx)=>ctx.create('releases',{projectId:project,taskId:randomUUID(),version,artifactIds:['reports/synthetic-delivery.txt'],acceptance:{outcome:'pass',evidence:'synthetic human declaration',tests:'fixture only',artifacts:['reports/synthetic-delivery.txt'],reviewerId:actor,at:new Date().toISOString()},createdAt:ctx.now})},'fixture',{commandId:randomUUID(),expectedVersion:0,scope:'personal',payload:{}},actor,()=>undefined);

@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-21T09:17:59.349713+00:00",
+  "baselineHead": "38190ce09fa649f05db2fe2ee0026b4fa9deab4d",
+  "implementation": "partial",
+  "verification": "partial",
+  "deployment": "not-deployed",
+  "acceptance": "pending",
+  "workspace": "Independent ordinary-directory task copy; no git worktree; active source changes not synchronized",
+  "validated": [
+    {
+      "scope": "API createApp and isolated helper",
+      "tests": 4,
+      "passed": 4
+    },
+    {
+      "scope": "Catalog, update controller, existing controller",
+      "tests": 13,
+      "passed": 13
+    },
+    {
+      "scope": "Offline npm closure / atomic exchange / reject fixtures",
+      "tests": 18,
+      "passed": 18,
+      "limitation": "Local inert tar fixtures, some inherited request cases repeated; not full dispatcher/guard chain"
+    },
+    {
+      "scope": "Local-only protected fingerprints",
+      "tests": 3,
+      "passed": 3
+    },
+    {
+      "scope": "Central installer fixed policy",
+      "tests": 2,
+      "passed": 2
+    },
+    {
+      "scope": "Existing AI environment, remote ops, CLI supervision and delivery journal regressions",
+      "tests": 31,
+      "passed": 31,
+      "limitation": "Run before final guard edits; not a final whole-tree regression"
+    },
+    {
+      "scope": "Isolated real Chromium HTTP/SQLite synthetic worker",
+      "checks": 10,
+      "passed": 10,
+      "evidence": "artifacts/claude-code-updates/browser-public.json"
+    },
+    {
+      "scope": "Workspace typecheck",
+      "result": "passed"
+    },
+    {
+      "scope": "Frontend and API stage build",
+      "result": "passed",
+      "limitation": "Latest TypeScript candidate passed; subsequent Python changes not an end-to-end install verification"
+    }
+  ],
+  "failuresRetained": [
+    "Initial integrated stage failed maintenance-guard.ts buffer/string type mismatch; later typecheck/stage passed.",
+    "Controller late-receipt test failed from non-injected Date.now; corrected and reverified.",
+    "API preview/request/UI integration defects and wrong runtime import path corrected; real API/browser passed after fixes.",
+    "Protected fingerprint fixture initially used group-writable settings and was correctly rejected; fixture set private mode, three tests passed.",
+    "Maintenance guard ordinary-user run: one test passed, second failed, remaining run timed out at 45 seconds. Exact three coordinator-owned leftover test processes were identity-checked and stopped. Guard agent cleanup/result recorded separately if available."
+  ],
+  "blockers": [
+    "Live factory runner adoption of maintenance guard is not verifiable yet. Node validate_runner_guard deliberately rejects activation and inspection returns guardReady=false.",
+    "Full durable dispatcher -> root worker -> ordinary-user updater -> actual guard -> protected fingerprint -> activation/recovery integration is not verified.",
+    "Crash reconciliation is conservative unknown/no replay; complete automated recovery and release of unresolved hold are not delivered.",
+    "101 current version/layout have not been queried; existing npm dependency placement may be unsupported.",
+    "Node installer, platform/controller activation and real 101 upgrade were not performed."
+  ],
+  "noProductionChanges": true,
+  "no101Connection": true,
+  "sourceSynchronization": "Candidate kept only in independent copy; public reports/docs alone copied to regular project for construction record",
+  "cost": {
+    "productModelRequests": 0,
+    "assistantSubagentTokensAndAmount": "unknown",
+    "policy": "record-only-no-amount-cap"
+  },
+  "files": [
+    {
+      "path": "scripts/test-claude-code-updates-ui.mjs",
+      "sha256": "c19ded7a7f7cf51ba5c1c278a2c5ff9bc89d0c940a4c70f278864640dc675619",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/build-development-node-package.mjs",
+      "sha256": "8b85ee8c811e25bfee543a3514c64a040b9f10237531644970c304f0fb48dc6e",
+      "baselineSHA256": "189b49a029bd7f410944398bda56e81c625dec509a48a358465fcc32918eae60"
+    },
+    {
+      "path": "scripts/qa-claude-code-updates-isolated.mjs",
+      "sha256": "eafc07927dcb2acc254657ee23e6288342253dc79cf5fdfc16491daadb85acd9",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/remote-ops-dispatcher.py",
+      "sha256": "7b3c1fe2298a6f89a2e0158f42a91d6805b8249fca95ad463b0a9ad254d5a673",
+      "baselineSHA256": "f177e46c3d0a8dea1ea811f891c5ed32c5f637889fff4832d82de73c12cbcdba"
+    },
+    {
+      "path": "docs/101-Claude-Code平台内更新.md",
+      "sha256": "e212e774d24b768dad39f73a70e494f6ede3e4aa392bf55f17b560338309e52e",
+      "baselineSHA256": null
+    },
+    {
+      "path": "apps/api/src/app.ts",
+      "sha256": "47dca3ca6b622a6bd50229a52dbe9791f85e28e8fc804bfa0ab71cf0fc3f8cbc",
+      "baselineSHA256": "1d270978c72363c3277d767dec872d3e911562a6a33409f85fa09411406e0ef5"
+    },
+    {
+      "path": "apps/api/test/claude-code-updates.test.ts",
+      "sha256": "3621dd9172294f17442c3d7d80bdc1617e110075b3521b8c86f2272868cd4af9",
+      "baselineSHA256": null
+    },
+    {
+      "path": "apps/api/test/maintenance-guard.test.ts",
+      "sha256": "f76e185b5558c40625ce2d3c88de2cde625702273f53fc660167cf632d2ab6c1",
+      "baselineSHA256": null
+    },
+    {
+      "path": "apps/api/test/helpers/isolated-project-app.test.ts",
+      "sha256": "49d43ad2ef4d0350ae2297b82175b1103ad454809bb8ea1a9fd799476b81e268",
+      "baselineSHA256": "c06dd5d54e9e74291948ef8b950170651c6f6d11b090f41ec069901b480d2fab"
+    },
+    {
+      "path": "apps/api/test/helpers/isolated-project-app.ts",
+      "sha256": "4041be1d752b48210899ceedf63fc2c93b6d7e9089460ecfbb7b992d8f993db0",
+      "baselineSHA256": "8f4f48c16b17c614f7e2df632c0bb15b69c13d2812992dda81ba0b337581958e"
+    },
+    {
+      "path": "apps/api/src/runtime/maintenance-guard.ts",
+      "sha256": "970cd2a7db0c25ae93e5675ed75b15cff59ead92570ba61820c258cd674b0224",
+      "baselineSHA256": null
+    },
+    {
+      "path": "apps/api/src/runtime/agent-runner.ts",
+      "sha256": "2b70f0fa886f1a8f21f727fb0a41a95356c86fe05faa8494eff909e9d92b0a96",
+      "baselineSHA256": "1f26c8cec51ad6e701f1fb4a9f836080653401dc3c291049e11c09f12975c874"
+    },
+    {
+      "path": "apps/api/src/runtime/claude-code-updates.ts",
+      "sha256": "f8525e9469ec7871077407b615506c0db0c28b20a2d6ef81ecbf0a3301c8c8df",
+      "baselineSHA256": null
+    },
+    {
+      "path": "apps/api/src/runtime/execution-types.ts",
+      "sha256": "96debab773cc56796bddf39c2ffdd0713cf0d442ac703e88f8320b7fb50f4cdd",
+      "baselineSHA256": "cd68ca9bc30b251c3174722ec59a145879da9397289507609cde6afa95e5ea4b"
+    },
+    {
+      "path": "apps/web/src/features/operations/claude-code-updates-client.ts",
+      "sha256": "c2e87b75adc28a8e33799e69693b8175b40e1c47c0fd480e333dadd120b9913b",
+      "baselineSHA256": null
+    },
+    {
+      "path": "apps/web/src/features/operations/AiDevelopmentPanel.tsx",
+      "sha256": "0d3780b1478f5cf4f0bbbaa2c1e4db4eb68a8f697c1608204c9db3b0887b9b22",
+      "baselineSHA256": "d0ff7d4f207f63668518361e6038cbc5e20617e9480eb33e72b4d7ed6ba5cdc4"
+    },
+    {
+      "path": "apps/web/src/features/operations/ClaudeCodeUpdatePanel.tsx",
+      "sha256": "3b4883d348802a05dcfec05b6205adec9aad41c756fe4058a163da232137cc66",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/agent-bundle/maintenance_guard.py",
+      "sha256": "f5ddff2e96481a9c315da3fe754e37ff2bbeae36638f405ae31c8bbcc01c9284",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/claude-code-catalog.mjs",
+      "sha256": "dd1059f1be4a1f999f88e7edcc71a8f31d7cad8f2881ed2bcc50cab4b46c8a26",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/test-claude-code-update.py",
+      "sha256": "bfaaf8428c3589e709637a08ab21730df5b43efccab00ce60acf5217c830fbfd",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/test-claude-code-catalog.mjs",
+      "sha256": "923b1dcb2f5b5130ef376b2243cf9ce420e24900f8382ac94969ec58bd3f0c15",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/controller.mjs",
+      "sha256": "4168ad4051f9a530a7e4775db020d017122a648a83dd1a22f92eb4cb602927c4",
+      "baselineSHA256": "55e3d0f5fccd3510b4d56ad516b39e7937f35034e9888fd3ce71f19228e42978"
+    },
+    {
+      "path": "scripts/ai-development/install-claude-code-update-node.py",
+      "sha256": "03bd244e8f9ea2766031556790f252180a8d92e11bd57c38473b0c8076f3ff98",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/test-claude-code-update-controller.mjs",
+      "sha256": "01f70cfa0e3907da2fb83ff30f243cba0fd49cdb24a5f245586809dc66bd8174",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/test-claude-code-protected-fingerprints.py",
+      "sha256": "510681330349c79cb4072498ce22df3f5a53f3d808db737e6198f1365984a615",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/claude-code-update.py",
+      "sha256": "45ffff12c239ecf0b6067d0322f3123555c396eb583bc8b5b966922baa7aed56",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/install-claude-code-update-controller.py",
+      "sha256": "2894ae61ab7f8f102f69934dc85dea79dd63a0efca9a8d49efdb1366f17199c8",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/claude-code-protected-fingerprints.py",
+      "sha256": "40a427ca0eaa1d9b872c899f56c5c70ccdf0ea4a01aabd240c6c22922f911f66",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/claude-code-update-controller.mjs",
+      "sha256": "b09014d361974bf8c8dc155337ff953f93d37760881ef2a835e0d026ddedc073",
+      "baselineSHA256": null
+    },
+    {
+      "path": "scripts/ai-development/test-install-claude-code-update-controller.py",
+      "sha256": "73e52590145b594fdc4ca1714864a9e223a78c18c461772a2f5ba07fe2edde39",
+      "baselineSHA256": null
+    }
+  ],
+  "guardFinalOutcome": {
+    "implementation": "partial",
+    "liveRunnerAttestation": "not-implemented",
+    "ordinaryTest": "legacy case passed; shared-lock case failed; suite hung and was stopped",
+    "rootTest": "started but hung; stopped without a passing result",
+    "wrongDirectoryRun": "Earlier unrelated three-pass result excluded from acceptance",
+    "cleanup": "Coordinator and guard-agent identity-scoped test process cleanup completed; final ps showed no matching test/holder/task processes",
+    "guardReady": false,
+    "realActivation": "blocked"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "phase": "install",
+  "at": "2026-10-20T01:10:13.169902+00:00",
+  "node": "112",
+  "target": "192.168.10.120:22",
+  "remotePort": 59527,
+  "domain": "ssh-120.ikvein.com",
+  "unit": "jarvis-nas120-ssh-tunnel.service",
+  "runtimeUser": "DynamicUser",
+  "credentialDelivery": "systemd LoadCredential; source/new config root-only",
+  "targetBanner": "SSH-2.0-OpenSSH_10.0",
+  "binarySHA256": "142f447f43fef286acc8da8a6852dda80631db631d604b2e63634b2db4d6848c",
+  "sourceConfigSHA256": "b55f6144a6d462c165a585dadd96bb13bdcc1db3e75c2db308904141411888d4",
+  "protectedBefore": {
+    "units": {
+      "jarvis-platform.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "1359242"
+      },
+      "jarvis-observer.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "1359244"
+      },
+      "ssh.service": {
+        "ActiveState": "active",
+        "UnitFileState": "disabled",
+        "MainPID": "4082721"
+      },
+      "jarvis-ssh-public.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "659720"
+      },
+      "jarvis-ssh-tunnel.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "785997"
+      },
+      "jarvis-frpc.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "2045"
+      },
+      "myoperation-frpc.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "3844904"
+      }
+    },
+    "files": {
+      "/etc/jarvis-ssh-access/frpc.toml": "b55f6144a6d462c165a585dadd96bb13bdcc1db3e75c2db308904141411888d4",
+      "/etc/jarvis-ssh-access/sshd_config": "fa44dd6ba22324b3d3fa7a60394f7f28648c70bcbc453d5f41703d9961caabf1",
+      "/etc/ssh/sshd_config": "f5f0b40412fd9a84b787d967efbcb576728d398e8d40d0d32c825004a04a4999",
+      "/etc/jarvis-frpc/frpc.toml": "5bace3dae4f7b5dbdf4cd5021c5078b7b1ae1a2cc5a0715ea13c73d162b8c4ff",
+      "/etc/myoperation-frpc/frpc.toml": "078fb3f96767d838ee6d6119c865a0f7afa19505345d955e956e7ffd0b46968f"
+    }
+  },
+  "existingConfigurationsModified": false,
+  "nasConfigurationModified": false,
+  "privateConfigReturned": false,
+  "offlineConfigValidation": "passed",
+  "status": "activated",
+  "enabled": "enabled",
+  "active": true,
+  "protectedAfter": {
+    "units": {
+      "jarvis-platform.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "1359242"
+      },
+      "jarvis-observer.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "1359244"
+      },
+      "ssh.service": {
+        "ActiveState": "active",
+        "UnitFileState": "disabled",
+        "MainPID": "4082721"
+      },
+      "jarvis-ssh-public.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "659720"
+      },
+      "jarvis-ssh-tunnel.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "785997"
+      },
+      "jarvis-frpc.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "2045"
+      },
+      "myoperation-frpc.service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "3844904"
+      }
+    },
+    "files": {
+      "/etc/jarvis-ssh-access/frpc.toml": "b55f6144a6d462c165a585dadd96bb13bdcc1db3e75c2db308904141411888d4",
+      "/etc/jarvis-ssh-access/sshd_config": "fa44dd6ba22324b3d3fa7a60394f7f28648c70bcbc453d5f41703d9961caabf1",
+      "/etc/ssh/sshd_config": "f5f0b40412fd9a84b787d967efbcb576728d398e8d40d0d32c825004a04a4999",
+      "/etc/jarvis-frpc/frpc.toml": "5bace3dae4f7b5dbdf4cd5021c5078b7b1ae1a2cc5a0715ea13c73d162b8c4ff",
+      "/etc/myoperation-frpc/frpc.toml": "078fb3f96767d838ee6d6119c865a0f7afa19505345d955e956e7ffd0b46968f"
+    }
+  },
+  "protectedStateUnchanged": true,
+  "unitSHA256": "559cef95e5b6a47d9fd32dea09baed8fce29f1c288e4c7eb9d4c3b513c18add0",
+  "privateConfigMode": "0o600"
+}

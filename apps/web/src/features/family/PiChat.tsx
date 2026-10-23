@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type {IconName} from '../../icons';
 import { api, post, streamChat } from '../../api';
 import type { Bootstrap, ChatMessage, Conversation, PiSettings } from '../../types';
 import ThemeStage from '../../ThemeStage';
@@ -16,7 +17,7 @@ export interface PiChatProps {
 }
 type UnsavedAnswer = { id: string; conversationId: string; text: string; reason: string };
 type Run = { token: number; conversationId: string; stopping: boolean };
-const prompts = [
+const prompts: {id:string;label:string;icon:IconName;text:string}[] = [
   { id: 'general', label: '聊聊今天', icon: 'chat', text: '今天有点累，陪我聊一会儿。' },
   { id: 'english', label: '语言陪练', icon: 'language', text: '陪我练习英语，先从今天发生的一件小事开始，逐步纠正我的表达。' },
   { id: 'story', label: '故事学习', icon: 'book', text: '讲一个有出处的历史人物故事，区分史料与解读，最后给我一个可以继续追问的问题。' },
@@ -251,7 +252,7 @@ export function PiChat({ theme = 'stark', profile = 'me', navigate, initialPromp
         <div className="fa-scene-identity"><span>{ownerName}的贾维斯</span><h2>{title.title}</h2><p>{runStatus || title.detail}</p><div className={`fa-wave ${['listening', 'thinking', 'speaking'].includes(phase) ? 'active' : ''}`} aria-hidden="true">{Array.from({ length: 55 }, (_, i) => <i key={i} style={{ height: `${8 + Math.abs(Math.sin(i * .55)) * 22}px`, animationDelay: `${i * .035}s` }}/>)}</div></div>
         <div className="fa-live-caption"><small>{micActive ? '识别文字 · 待发送' : partial ? '正在回答' : '此刻的话'}</small><p>{caption.slice(-420)}</p></div><div className="fa-scene-bottom"><span>{chatSettings?.provider || 'Pi'} · {chatSettings?.model || '等待配置'}</span><span>{micActive ? '录音由浏览器处理' : '查询工具只读 · 操作由你确认'}</span></div></div>
       <aside className="fa-chat-controls"><header><div><small className="eyebrow">CONVERSATION</small><h2>此刻的对话</h2></div><button className="icon-button" aria-label={immersive ? '退出沉浸全屏' : '进入沉浸全屏'} onClick={() => setImmersive(!immersive)}><Icon name="expand"/></button></header>
-        <div className="pi-session-picker"><label>我的会话<select aria-label="选择真实会话" value={conversationId} disabled={busy || creating || loading} onChange={event => { stopVoice(); setError(''); setCopyStatus(''); currentId.current = event.target.value; setConversationId(event.target.value); }}><option value="">新会话</option>{conversations.map(session => <option key={session.id} value={session.id}>{session.title || '未命名会话'}</option>)}</select></label><button className="pi-small-button" onClick={() => void createSession()} disabled={busy || creating || loading}>{creating ? '创建中' : '＋'}</button></div>
+        <div className="pi-session-picker"><label>我的会话<select aria-label="选择真实会话" value={conversationId} disabled={busy || creating || loading} onChange={event => { stopVoice(); setError(''); setCopyStatus(''); currentId.current = event.target.value; setConversationId(event.target.value); }}><option value="">新会话</option>{conversations.map(session => <option key={session.id} value={session.id}>{session.title || '未命名会话'}</option>)}</select></label><button className="pi-small-button" onClick={() => void createSession()} disabled={busy || creating || loading}>{creating ? '创建中' : <Icon name="plus" size={18}/>}</button></div>
         <div className="fa-chat-modes" aria-label="选择讨论场景">{prompts.map(item => <button key={item.id} disabled={busy || micActive} className={mode === item.id ? 'selected' : ''} onClick={() => { stopVoice(); setMode(item.id); setDraft(item.text); setPromptNotice('问题已填入，由你决定发送。'); }}><Icon name={item.icon} size={14}/>{item.label}</button>)}</div>
         {!chatSettings?.configured && !loading && <div className="pi-setup"><strong>先配置对话模型</strong><p>不会用示例答案代替模型回答。</p><Button onClick={() => setModal('model')}>配置 Pi 模型</Button></div>}
         <div className="fa-conversation" ref={conversationBox} role="log" aria-label="真实会话记录" aria-live="polite">

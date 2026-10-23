@@ -1,0 +1,31 @@
+/** Real isolated HTTP/SQLite browser check; no remote node or configuration mutation. */
+import {spawn} from 'node:child_process';
+import {mkdtemp,mkdir,writeFile,rm,readFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';import {join,dirname,resolve} from 'node:path';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';import {randomUUID,createHash} from 'node:crypto';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+if(!process.argv.includes('--child')){
+ const home=await mkdtemp(join(tmpdir(),'fleet-browser-home-'));
+ const child=spawn(process.execPath,['--import','tsx',fileURLToPath(import.meta.url),'--child'],{cwd:root,env:{HOME:home,USERPROFILE:home,PATH:process.env.PATH,LANG:'C.UTF-8',TZ:'UTC'},stdio:'inherit',detached:true});
+ const timer=setTimeout(()=>{try{process.kill(-child.pid,'SIGTERM')}catch{}},90000);
+ child.on('exit',async code=>{clearTimeout(timer);await rm(home,{recursive:true,force:true});process.exitCode=code??1;});
+}else{
+ const {chromium}=await import('/home/superopen/All-Projects/MyOperation/node_modules/playwright/index.mjs');
+ const {startIsolatedProjectApp}=await import(new URL('../apps/api/test/helpers/isolated-project-app.ts',import.meta.url));
+ const fixture=await startIsolatedProjectApp({webDir:join(root,'apps/web/.dist-next')});let browser;
+ const canonical=v=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(canonical).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';const hash=v=>createHash('sha256').update(canonical(v)).digest('hex');
+ try{
+  fixture.runtime.store.setPassword('isolated-fleet-browser-password');const token=fixture.runtime.store.createLogin();
+  const api=async(path,body)=>{const r=await fetch(fixture.baseUrl+path,{method:body?'POST':'GET',headers:{cookie:'jarvis_session='+token,'content-type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});assert.equal(r.status,200);return r.json();};
+  const machine=(await api('/api/v1/machines/commands/register',{commandId:randomUUID(),scope:'personal',expectedVersion:0,payload:{name:'合成节点·状态栏诊断',role:'仅隔离浏览器fixture',category:'server',ram:16,always:false,address:'192.0.2.123'}})).data;
+  const queue=join(fixture.dataDir,'ai-development/queue');await mkdir(join(queue,'requests'),{recursive:true});await mkdir(join(queue,'results/observations'),{recursive:true});
+  const profile={id:'linux-ai-dev-v1',revision:1,name:'合成模板',tools:[],providers:[],statuslineVersion:'1'};const policy={version:1,profiles:[profile],nodes:[{machineId:machine.id,nodeId:'fixture',address:machine.address,targetUser:'fixture',profileIds:[profile.id]}]};await writeFile(join(fixture.dataDir,'ai-development/config.json'),JSON.stringify(policy));await writeFile(join(queue,'results/_status.json'),JSON.stringify({online:true,at:new Date().toISOString()}));
+  const observation={schemaVersion:1,machineId:machine.id,nodeId:'fixture',address:machine.address,targetUser:'fixture',profileId:profile.id,profileRevision:1,profileHash:hash(profile),policyHash:hash(policy),at:new Date().toISOString(),source:'fixed-ssh-ai-development-telemetry',inventory:{schemaVersion:1,tools:[],providers:[],statusline:{configured:false,scope:'global-and-provider',resources:true,diagnosticsVersion:1,layers:{script:'match',global:'different',common:'unreadable',currentProvider:'unknown'},providers:{total:2,matched:1,missing:0,different:0,invalid:0,unknown:1},reasonCodes:['STATUSLINE_SCRIPT_MATCH','STATUSLINE_GLOBAL_DIFFERENT','STATUSLINE_COMMON_UNREADABLE','STATUSLINE_CURRENT_PROVIDER_UNKNOWN','STATUSLINE_PROVIDER_COUNT_UNKNOWN']}}};
+  const observationPath=join(queue,'results/observations',machine.id+'.json');await writeFile(observationPath,JSON.stringify(observation));
+  browser=await chromium.launch({headless:true,executablePath:'/home/superopen/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome'});const context=await browser.newContext({viewport:{width:1440,height:1000},serviceWorkers:'block'});await context.addCookies([{name:'jarvis_session',value:token,url:fixture.baseUrl}]);const external=[],errors=[],posts=[];await context.route('**/*',r=>{if(new URL(r.request().url()).origin!==new URL(fixture.baseUrl).origin){external.push(r.request().url());return r.abort();}if(r.request().method()==='POST')posts.push(new URL(r.request().url()).pathname);return r.continue();});const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(fixture.baseUrl+'/?mode=platform#view=operations/ai-development');await page.getByLabel('AI开发环境目标机器').selectOption(machine.id);await page.getByLabel('状态栏配置分层核对').waitFor();const region=page.getByLabel('状态栏配置分层核对');assert.match(await region.innerText(),/与模板不同/);assert.match(await region.innerText(),/无法读取/);assert.match(await region.innerText(),/不能证明当前终端/);
+  await page.setViewportSize({width:390,height:844});await page.screenshot({path:join(root,'artifacts/fleet-onboarding/diagnostics-mobile.png'),fullPage:true});const width=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));assert(width.scroll<=width.client);
+  delete observation.inventory.statusline.diagnosticsVersion;delete observation.inventory.statusline.layers;delete observation.inventory.statusline.providers;delete observation.inventory.statusline.reasonCodes;await writeFile(observationPath,JSON.stringify(observation));await page.reload();await page.getByLabel('AI开发环境目标机器').selectOption(machine.id);await page.getByText('旧版回执未提供分层观察，状态为未观测；不据此推断配置一致。').waitFor();
+  assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.deepEqual(posts,[]);
+  const report={schemaVersion:1,passed:5,checks:['分层不一致/不可读/未知真实HTTP回执显示','配置不等于终端渲染说明','390px无横向溢出','旧协议未观测不造匹配','浏览器无POST、模型、SSH、外网或页面错误'],fixture:'Synthetic node and observation; not real112 configuration diagnosis',sourceSHA256:createHash('sha256').update(await readFile(join(root,'apps/web/src/features/operations/AiDevelopmentPanel.tsx'))).digest('hex'),productionChanges:false};await writeFile(join(root,'artifacts/fleet-onboarding/diagnostics-browser-public.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+ }finally{await browser?.close();await fixture.close();}
+}

@@ -27,9 +27,9 @@ test('explicit owner prices estimate complete gateway receipts and count cached 
 
 test('resumed receipts without a reliable cost baseline use only this complete round owner estimate',()=>{
   const priced={...policy,inputUSDPerMillion:2,outputUSDPerMillion:4};
-  const noBaseline=roundCliUsage('claude',usage,'session',50,undefined,priced,'session');assert.equal(noBaseline.usage?.costUSD,.00012);assert.equal(noBaseline.checkpoint?.costUSD,50);
-  const negativeDelta=roundCliUsage('claude',usage,'session',40,{engine:'claude',sessionId:'session',costUSD:50},priced,'session');assert.equal(negativeDelta.usage?.costUSD,.00012);assert.equal(negativeDelta.checkpoint?.costUSD,50);
-  const reliableDelta=roundCliUsage('claude',usage,'session',52,{engine:'claude',sessionId:'session',costUSD:50},priced,'session');assert.equal(reliableDelta.usage?.costUSD,2);assert.equal(reliableDelta.checkpoint?.costUSD,52);
+  const noBaseline=roundCliUsage('claude',usage,'session',50,undefined,priced,'session','2.1.277');assert.equal(noBaseline.usage?.costUSD,.00012);assert.equal(noBaseline.checkpoint?.costUSD,50);
+  const negativeDelta=roundCliUsage('claude',usage,'session',40,{engine:'claude',sessionId:'session',costUSD:50,nativeCliVersion:'2.1.277',costScope:'session-cumulative'},priced,'session','2.1.277');assert.equal(negativeDelta.usage?.costUSD,.00012);assert.equal(negativeDelta.checkpoint?.costUSD,50);
+  const reliableDelta=roundCliUsage('claude',usage,'session',52,{engine:'claude',sessionId:'session',costUSD:50,nativeCliVersion:'2.1.277',costScope:'session-cumulative'},priced,'session','2.1.277');assert.equal(reliableDelta.usage?.costUSD,2);assert.equal(reliableDelta.checkpoint?.costUSD,52);
   assert.equal(roundCliUsage('claude',usage,'session',50,undefined,policy,'session').usage?.costUSD,undefined);
 });
 

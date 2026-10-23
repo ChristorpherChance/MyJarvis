@@ -1,0 +1,19 @@
+{
+  "tests": 908,
+  "pass": 897,
+  "fail": 0,
+  "skipped": 11,
+  "skipReasons": [
+    "﹣ startup rejects standby, mismatched data/release and retired production data before business initialization (11.786187ms) # Root-owned control file validation requires a root fixture",
+    "﹣ standalone node package pairs, edits actual isolated files and returns a signed result (1.904759ms) # SKIP",
+    "﹣ actual DOCX body preserves paragraphs, spaces, table text and original fingerprints without invented pages (5.27214ms) # Local Python is unavailable; no document extraction was verified",
+    "﹣ actual embedded PDF and image-only PDF/PNG use the existing local OCR with original page locations (2.457847ms) # Local OCR dependencies unavailable; no actual scan extraction claimed",
+    "﹣ DOCX unsafe XML, path traversal, decompression and paragraph limits reject while keeping originals (1.882814ms) # Local Python unavailable; document protection cases not executed",
+    "﹣ actual static HTML selects article text, decodes entities and excludes active/navigation/form content (1.706568ms) # Local Python unavailable; HTML extraction not executed",
+    "﹣ parser refuses changed hashes, missing environment, cancellation and actual worker timeout without scratch residue (1.581819ms) # Local Python unavailable; worker boundary checks not executed",
+    "﹣ scan runner preserves real PDF/image extraction and settles timeout or cancellation before scratch cleanup (1.688587ms) # Local OCR unavailable; updated scan runner not verified",
+    "﹣ 真实本地 CPU RapidOCR：中英 PNG/JPEG、文字 PDF 和扫描 PDF 两轮候选证据 (5.734669ms) # 本地 OCR 隔离依赖未安装；HTTP适配器测试另行实际执行",
+    "﹣ 真实空白PDF由本地OCR进入待审，必须明确非文字页分类和独立指纹审核才能发布 (5.845993ms) # 本地OCR依赖未安装，不能宣称真实空白页已验收",
+    "﹣ Windows SAPI默认引擎真实生成临时WAV，不实际播放或调用付费模型 (0.156066ms) # SKIP"
+  ]
+}

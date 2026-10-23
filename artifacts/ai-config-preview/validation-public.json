@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "baselineHead": "38190ce09fa649f05db2fe2ee0026b4fa9deab4d",
+  "scope": "Version-bound public-template read-only comparison; no apply or dynamic trust enrollment",
+  "implementation": "complete-local-candidate",
+  "verification": {
+    "targetedApi": {
+      "total": 34,
+      "passed": 34,
+      "failed": 0
+    },
+    "finalFullApi": {
+      "total": 933,
+      "passed": 922,
+      "failed": 0,
+      "skipped": 11,
+      "durationMs": 183300.232224
+    },
+    "nodeProtocolRegression": {
+      "controller": 6,
+      "provision": 12,
+      "dispatcher": 11,
+      "failed": 0
+    },
+    "browser": {
+      "checksPassed": 8,
+      "report": "artifacts/ai-config-preview/browser-public.json"
+    },
+    "integratedTypecheckAndStageBuild": "passed-in-independent-copy",
+    "regularDirectoryAfterSync": {
+      "typecheck": "passed",
+      "stageBuild": "passed",
+      "targetedApiPassed": 34
+    },
+    "fullApiScope": "Full API suite ran in independent copy before final test-assertion-only additions; final test source subsequently passed in 34-test targeted suite and after sync. Not a repeated final full-tree run."
+  },
+  "skippedPrerequisites": [
+    "root-owned startup control fixture",
+    "standalone native node package",
+    "local Python document extraction and protection",
+    "local OCR and scan lifecycle dependencies",
+    "Windows SAPI"
+  ],
+  "failuresAndCorrections": [
+    "First stage build and intermediate typecheck failed with missing preview import and duplicate reason-map keys; actual independent-copy fixes and final typecheck/stage build subsequently passed.",
+    "Initial full API: 932 total, 920 pass, 1 fail, 11 skipped; backup test required apps/api/dist/store.js absent in the new ordinary source copy. Built API without changing tests, backup test passed, then reran full suite successfully.",
+    "Initial preview fixture needed an explicitly accepted persisted succeeded job; adjusted setup through existing job receipt reconciliation before read-only preview, not by weakening assertions.",
+    "Actual tool inventory returns both cc-switch and ccswitch: equal alias observations may compare, conflicting aliases and duplicate template identities remain unknown.",
+    "Frontend agent typecheck ran in regular directory, not final independent copy; excluded that claimed result. Main fixed actual missing import/duplicate reason and reran independent typecheck and stage build successfully.",
+    "Browser initial wrong mode/hash entry and exact-text assertion failed; corrected actual platform route and literal reason-code suffix. Extended fixture deletion/restoration changed observation mtime; no-write assertions now run before deliberate fixture mutation and content equality is checked after restoration."
+  ],
+  "boundaries": {
+    "productionActivated": false,
+    "realNodeConfigurationsChanged": false,
+    "trustedNodesAdded": false,
+    "applyImplemented": false,
+    "modelInferenceRequests": 0,
+    "gitCommitOrPush": false,
+    "platformProjectDecisionExperienceCAS": "not-performed",
+    "periodicObservation": "reference-only because legacy protocol does not bind machine revision",
+    "comparisonDigest": "public evidence identity, not an apply token or complete configuration CAS"
+  },
+  "cost": {
+    "policy": "record-only-no-amount-cap",
+    "assistantAndSubagentTokens": "unknown",
+    "amountAndInvoice": "unknown",
+    "productInferenceRequests": 0
+  }
+}

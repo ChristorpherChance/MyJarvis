@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
+import {fileURLToPath} from 'node:url';
 import {join,resolve,sep} from 'node:path';
 import {createHash,generateKeyPairSync,randomUUID} from 'node:crypto';
 import {Store} from '../src/store.js';
@@ -36,7 +37,7 @@ test('durable and node run scope require this project/source and actual zero bud
 });
 
 test('original no-model receipt is normalized to the identical central/restart zero usage and any nonzero or unknown attribution is rejected',async()=>{
- const {readFile}=await import('node:fs/promises'),body=await readFile(resolve('scripts/factory-no-model-receipt-r26.mjs'),'utf8');
+ const {readFile}=await import('node:fs/promises'),body=await readFile(fileURLToPath(new URL('../../../scripts/factory-no-model-receipt-r26.mjs',import.meta.url)),'utf8');
  const {runInNewContext}=await import('node:vm');let stdout='';runInNewContext(body,{process:{stdout:{write:(s:string)=>{stdout+=s;}}}});
  const parsed=parseAgentOutput('fixed',stdout.trim().split('\n'));assert.deepEqual(candidateValidationReceiptUsage(parsed.usage),fixedValidationUsage());assert.deepEqual(candidateValidationReceiptUsage(fixedValidationUsage()),fixedValidationUsage());
  for(const patch of [{inputTokens:1},{outputTokens:1},{cacheReadTokens:1},{cacheWriteTokens:1},{totalTokens:1},{costUSD:.01},{knownCostUSD:.01},{usageComplete:false},{costComplete:false},{provider:'paid-model'},{model:'gpt-6.1-sol[1m]'},{ledgerRecorded:true}])assert.throws(()=>candidateValidationReceiptUsage({...parsed.usage,...patch}),/NONZERO_OR_INVALID/);

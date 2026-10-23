@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-23T07:45:49.704Z",
+  "status": "passed",
+  "release": "20261023-server-planning-r59",
+  "checks": [
+    "public HTTPS R59 health",
+    "anonymous401 safe login hint",
+    "authenticated device-management button opens document",
+    "actual HTML all11 labels protected headers no scripts",
+    "source SHA matches approved Markdown and three resources200",
+    "390px and refresh",
+    "exact maintenance session revoked and401"
+  ],
+  "sourceSHA256": "a64ee026c7fbc3aa21c85af2f83dfc80b9a0d4f034bc4061d17b6278148c13ed",
+  "servedHTMLSHA256": "49e8375d90f6d23f13936cc62821a26e219dbf989bb77e762c841ba2c17b2659",
+  "maintenanceSessionRevoked": true,
+  "scope": "Actual authenticated production HTTPS document and navigation; not complete business or real node acceptance",
+  "businessMutations": 0,
+  "modelInferenceRequests": 0
+}

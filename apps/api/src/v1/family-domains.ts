@@ -121,9 +121,10 @@ function personaPatch(command: string, p: Values): Values {
     if (p.autoSpeak !== undefined) { ensure(typeof p.autoSpeak === 'boolean', '自动朗读选项无效'); patch.autoSpeak = p.autoSpeak; }
   }
   if (['quiet-hours', 'save'].includes(command)) {
-    ensure(typeof p.start === 'string' && typeof p.end === 'string', '安静时间须填写开始与结束，或同时留空');
-    patch.quietStart = p.start; patch.quietEnd = p.end;
-    ensure((p.start === '' && p.end === '') || (/^([01]\d|2[0-3]):[0-5]\d$/.test(p.start) && /^([01]\d|2[0-3]):[0-5]\d$/.test(p.end)), '安静时间须完整有效，或同时留空关闭');
+    const emptyStart=p.start===undefined||p.start===null||p.start==='';
+    const emptyEnd=p.end===undefined||p.end===null||p.end==='';
+    ensure((emptyStart&&emptyEnd)||(typeof p.start==='string'&&typeof p.end==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(p.start)&&/^([01]\d|2[0-3]):[0-5]\d$/.test(p.end)), '安静时间须完整有效，或同时留空关闭');
+    patch.quietStart = emptyStart?'':p.start; patch.quietEnd = emptyEnd?'':p.end;
     patch.timezone = text(p.timezone, '时区', 100); try { new Intl.DateTimeFormat('en', { timeZone: patch.timezone }); } catch { throw new BusinessError('VALIDATION', '时区无效'); }
   }
   return patch;

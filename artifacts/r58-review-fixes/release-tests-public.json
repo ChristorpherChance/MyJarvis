@@ -1,0 +1,12 @@
+{
+ "status":"passed",
+ "managedProductionCommonAndActivateFixtures":{"tests":10,"passed":10,"scope":["separate forward/rollback budgets", "real owned child TERM/KILL/reap", "real dripping HTTP exchange bounded as whole child", "actual activate block with fake services: partial-stop failure", "restore timeout then old-code/config recovery", "rollback failure preserves first error", "unreaped child records manual recovery without parallel rollback", "atomic configuration restoration bytes/uid/gid/mode"]},
+ "retentionRootFixtures":{"tests":3,"passed":3,"skipped":0,"scope":"actual root-owned private temporary /root/managed-retention-fixture trees; new managed pin accepted, old unbound held even with two newer captures, tampered hash rejected; no production path or deletion"},
+ "originalRecoveryTests":{"tests":5,"passed":5},
+ "originalWebCompatibilityTests":{"tests":5,"passed":5},
+ "independentReadOnlyReview":"identified and closed unreaped-child false rollback/receipt omission and unbounded drip-response body read; final source rechecked",
+ "productionServicesChanged":false,
+ "productionCleanupPerformed":false,
+ "historicalReceiptsRewritten":false,
+ "limits":"fixture and real local subprocess/HTTP tests, not production fault injection; SIGKILL, power failure and kernel-stuck processes require explicit manual recovery"
+}

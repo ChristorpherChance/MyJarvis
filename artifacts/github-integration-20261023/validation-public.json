@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "typecheck": {
+    "exitCode": 0
+  },
+  "stageBuild": {
+    "exitCode": 0
+  },
+  "apiDistBuild": {
+    "exitCode": 0
+  },
+  "demo": {
+    "exitCode": 0,
+    "tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "operationsAssertions": 80
+  },
+  "diffWhitespaceCheck": {
+    "exitCode": 0,
+    "crAtEolAllowed": true
+  },
+  "ledger": {
+    "records": 381,
+    "integrity": "passed"
+  },
+  "validationScope": "Isolated source integration; no production restart, deployment, real server upgrade or model inference",
+  "qaReproductionLimit": "Some existing isolated browser helpers reference a neighboring Playwright installation; browser suites not rerun during this Git-only integration",
+  "cost": {
+    "policy": "record-only-no-amount-cap",
+    "assistantAndAgentTokens": "unknown",
+    "amount": "unknown",
+    "productModelInferenceRequests": 0
+  }
+}

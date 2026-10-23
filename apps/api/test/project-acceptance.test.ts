@@ -6,8 +6,6 @@ import {join} from 'node:path';
 import {createRequire} from 'node:module';
 import {copyFileSync} from 'node:fs';
 import {test} from 'node:test';
-import Fastify from 'fastify';
-import cookie from '@fastify/cookie';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import {createApp} from '../src/app.js';
@@ -16,7 +14,7 @@ import {Store} from '../src/store.js';
 import {V1Repository} from '../src/v1/repository.js';
 import {IdentityRuntime} from '../src/runtime/identity.js';
 import {ProjectAcceptanceRuntime} from '../src/runtime/project-acceptance-runtime.js';
-import {registerProjectAcceptanceRoutes} from '../src/runtime/project-acceptance-routes.js';
+import {workHandlers} from '../src/v1/work-domains.js';
 import {BusinessError} from '../src/v1/types.js';
 
 const contractRequire=createRequire(import.meta.url);
@@ -60,25 +58,27 @@ test('project acceptance schemas, immutable revisions, command replay and defect
  }finally{f.close()}
 });
 
-test('real shared identity HTTP routes enforce auth, owner, project, CAS and exact replay',async()=>{
- const f=fixture(),app=Fastify();try{
-  f.store.setPassword('HTTP-fixture-password-long');await app.register(cookie);
-  const isCurrent=IdentityRuntime.prototype.isPrincipalCurrent.bind(f.identity);f.identity.isPrincipalCurrent=isCurrent;
-  registerProjectAcceptanceRoutes(app,f.runtime,f.identity);await app.ready();
-  assert.equal((await app.inject({url:'/api/v1/projects/project-1/acceptance'})).statusCode,401);
-  // Runtime route registration is exercised with a valid current admin cookie issued by the shared identity store.
-  const token=f.store.createLogin();const headers={cookie:`jarvis_session=${token}`};
-  const body={commandId:randomUUID(),expectedVersion:0,title:'HTTP defect',severity:'P2',reproduction:'Open page and save',expected:'Saved once',actual:'Not saved',criterion:'Visible persisted result',environment:'local fixture',sourceVersion:'fixture-v1'};
-  const created=await app.inject({method:'POST',url:'/api/v1/projects/project-1/defects',headers,payload:body});assert.equal(created.statusCode,200,created.body);const defect=created.json().data;
-  assert.equal((await app.inject({method:'POST',url:'/api/v1/projects/project-1/defects',headers,payload:body})).json().data.id,defect.id);
-  const changed=await app.inject({method:'POST',url:`/api/v1/projects/project-1/defects/${defect.id}/commands`,headers,payload:{action:'start_fix',commandId:randomUUID(),expectedVersion:1,reason:'Begin local fix'}});assert.equal(changed.statusCode,200,changed.body);
-  const stale=await app.inject({method:'POST',url:`/api/v1/projects/project-1/defects/${defect.id}/commands`,headers,payload:{action:'start_fix',commandId:randomUUID(),expectedVersion:1,reason:'Stale request'}});assert.equal(stale.statusCode,409);
-  assert.equal((await app.inject({url:`/api/v1/projects/project-2/defects/${defect.id}`,headers})).statusCode,404);
-  assert.equal((await app.inject({url:'/api/v1/projects/project-1/acceptance',headers})).json().data.classification.tasks.total,1);
-  assert.equal((await app.inject({url:'/api/v1/projects/project-1/defects?offset=0&limit=10',headers})).json().data.items.length,1);
-  assert.equal((await app.inject({url:'/api/v1/projects/project-1/releases',headers})).json().data.items[0].version,'1.0.0');
+test('createApp assembles authenticated acceptance routes with real identity and repository',async()=>{
+ const dir=mkdtempSync(join(tmpdir(),'acceptance-app-integration-'));
+ const pi={initialize:async()=>{},health:()=>({configured:false}),dispose:async()=>{}} as unknown as PiService;
+ const runtime=await createApp({dataDir:dir,pi,webDir:join(dir,'no-web')});
+ try{
+  const setup=await runtime.app.inject({method:'POST',url:'/api/auth/setup',payload:{password:'isolated-acceptance-fixture-password'}});assert.equal(setup.statusCode,200,setup.body);
+  const cookieHeader=String(setup.headers['set-cookie']).split(';')[0],headers={cookie:cookieHeader};
+  const register=async(command:string,payload:Record<string,unknown>)=>runtime.app.inject({method:'POST',url:`/api/v1/projects/commands/${command}`,headers,payload:{commandId:randomUUID(),expectedVersion:0,scope:'personal',payload}});
+  const projectResult=await register('register',{name:'Integration Project',description:'isolated test',goal:'Exercise createApp acceptance route wiring',repo:'fixture://acceptance'});assert.equal(projectResult.statusCode,200,projectResult.body);const projectId=projectResult.json().data.id;
+  const body={commandId:randomUUID(),expectedVersion:0,title:'HTTP integration defect',severity:'P2',reproduction:'Open page and save',expected:'Saved once',actual:'Not saved',criterion:'Visible persisted result',environment:'isolated app fixture',sourceVersion:'fixture-v1'};
+  const unauth=await runtime.app.inject({method:'POST',url:`/api/v1/projects/${projectId}/defects`,payload:body});assert.equal(unauth.statusCode,401);
+  const created=await runtime.app.inject({method:'POST',url:`/api/v1/projects/${projectId}/defects`,headers,payload:body});assert.equal(created.statusCode,200,created.body);const defect=created.json().data;
+  assert.equal((await runtime.app.inject({method:'POST',url:`/api/v1/projects/${projectId}/defects`,headers,payload:body})).json().data.id,defect.id);
+  const changed=await runtime.app.inject({method:'POST',url:`/api/v1/projects/${projectId}/defects/${defect.id}/commands`,headers,payload:{action:'start_fix',commandId:randomUUID(),expectedVersion:1,reason:'Begin local fix'}});assert.equal(changed.statusCode,200,changed.body);
+  const stale=await runtime.app.inject({method:'POST',url:`/api/v1/projects/${projectId}/defects/${defect.id}/commands`,headers,payload:{action:'start_fix',commandId:randomUUID(),expectedVersion:1,reason:'Stale request'}});assert.equal(stale.statusCode,409);
+  assert.equal((await runtime.app.inject({url:`/api/v1/projects/not-owned/defects/${defect.id}`,headers})).statusCode,404);
+  assert.equal((await runtime.app.inject({url:`/api/v1/projects/${projectId}/acceptance`,headers})).json().data.classification.tasks.total,0);
+  assert.equal((await runtime.app.inject({url:`/api/v1/projects/${projectId}/defects?offset=0&limit=10`,headers})).json().data.items.length,1);
+  assert.equal((await runtime.app.inject({url:`/api/v1/projects/${projectId}/releases`,headers})).json().data.items.length,0);
   assert.equal(validateContract('ProjectDefectSnapshot',defect),true);
- }finally{await app.close();f.close()}
+ }finally{await runtime.app.close();rmSync(dir,{recursive:true,force:true})}
 });
 
 function validateContract(name:string,value:any){const doc=acceptanceDocument(),ajv=new Ajv({strict:false});addFormats(ajv);ajv.addSchema({$id:'https://jarvis.test/acceptance',components:doc.components});const valid=ajv.compile({$ref:`https://jarvis.test/acceptance#/components/schemas/${name}`});assert.equal(valid(value),true,JSON.stringify(valid.errors));return true}

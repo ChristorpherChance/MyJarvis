@@ -4,7 +4,10 @@ import {createHash} from 'node:crypto';
 import {mkdtempSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
-import {pathToFileURL} from 'node:url';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+import {createRequire} from 'node:module';
+const root=fileURLToPath(new URL('../../../',import.meta.url));
+const require=createRequire(import.meta.url);
 import {ProjectWorkbenchRuntime} from '../src/runtime/project-workbench-runtime.js';
 import {workbenchLoopView} from '../../web/src/features/operations/project-plan-workbench-view.js';
 import {subscribeWorkbenchSupervisor} from '../../web/src/supervisor-workbench-stream.js';
@@ -47,10 +50,10 @@ test('bound review automatically yields only a round brief; stale goal/foreign r
 });
 
 test('production workbench SSR shows automatic report/current technical block, with legacy item in history',async()=>{
- const f=fixture('blocked');mkdirSync(resolve('.r43-tools'),{recursive:true});const dir=mkdtempSync(resolve('.r43-tools/r53-loop-render-'));
+ const f=fixture('blocked');mkdirSync(join(root,'.r43-tools'),{recursive:true});const dir=mkdtempSync(join(root,'.r43-tools/r53-loop-render-'));
  try{const {build}=await import('esbuild'),React=(await import('react')).default,{renderToStaticMarkup}=await import('react-dom/server');const shim=join(dir,'hooks.mjs'),out=join(dir,'page.mjs');
-  writeFileSync(shim,`export * from ${JSON.stringify(resolve('node_modules/react/index.js'))};import R from ${JSON.stringify(resolve('node_modules/react/index.js'))};export default R;export const useState=v=>[globalThis.__r53States.length?globalThis.__r53States.shift():typeof v==='function'?v():v,()=>{}];export const useRef=v=>({current:v});export const useEffect=()=>{};`);
-  await build({entryPoints:['apps/web/src/features/operations/ProjectWorkbenchPage.tsx'],outfile:out,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',loader:{'.css':'empty'},plugins:[{name:'isolated-read-hooks',setup(b:any){b.onResolve({filter:/^react$/},()=>({path:shim}));}}],logLevel:'silent'});
+  writeFileSync(shim,`export * from ${JSON.stringify(require.resolve('react'))};import R from ${JSON.stringify(require.resolve('react'))};export default R;export const useState=v=>[globalThis.__r53States.length?globalThis.__r53States.shift():typeof v==='function'?v():v,()=>{}];export const useRef=v=>({current:v});export const useEffect=()=>{};`);
+  await build({absWorkingDir:root,entryPoints:[join(root,'apps/web/src/features/operations/ProjectWorkbenchPage.tsx')],outfile:out,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',loader:{'.css':'empty'},plugins:[{name:'isolated-read-hooks',setup(b:any){b.onResolve({filter:/^react$/},()=>({path:shim}));}}],logLevel:'silent'});
   const Page=(await import(pathToFileURL(out).href)).EntityWorkbench;(globalThis as any).__r53States=[f.context(),null,'2026-10-18T00:00:00Z','live'];
   const html=renderToStaticMarkup(React.createElement(Page,{projectId:'project',projectName:'Synthetic project',params:new URLSearchParams(),data:{projects:[{id:'project',name:'Synthetic project'}],machines:[],tasks:[]},navigate:()=>{throw Error('SSR cannot navigate');}}));
   const first=html.slice(0,html.indexOf('workbench-plan-details'));assert.ok(first.includes('最近执行回报'));assert.ok(first.includes('报告资料超过本轮审阅容量'));assert.ok(!first.includes('等待本人'));assert.ok(!first.includes('历史旧阻塞'));assert.ok(html.includes('历史登记事项'));assert.ok(first.includes('独立验收另列'));assert.ok(first.includes('最近互动'));assert.ok(first.includes('项目任务清单'));assert.ok(!first.includes('class="workbench-loop"'));f.unchanged();

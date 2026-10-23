@@ -59,8 +59,15 @@ async function uploadBook(p:Values,records:Records):Promise<unknown>{
  let intent=uploadIntents.get(file);if(!intent){intent=crypto.randomUUID();uploadIntents.set(file,intent);}
  const key=stable({...fields(p,['source','title','edition','author','pages','rights','layout','bookId','doubtId','note','expectedVersion','materialId']),file:{intent,name:file.name,size:file.size,lastModified:file.lastModified}});let entry=uploads.get(key);if(entry?.promise)return entry.promise;if(entry?.book)return entry.book;if(!entry){entry={};uploads.set(key,entry);}const current=entry;
  const promise=(async()=>{
+  if(current.ticket&&current.ticket.status==='awaiting-file'&&Date.parse(String(current.ticket.expiresAt))<=Date.now()){
+    current.ticket=undefined;
+    throw new V1Error('上次上传票据已过期；原件未登记，已清除过期票据。请再次提交申请新的票据。',422,'UPLOAD_EXPIRED');
+  }
+  if(typeof p.onUploadStage==='function')p.onUploadStage('ticket');
   if(!current.ticket){const result=await submit({domain:'books',command:'create-upload',body:{sourceId:source.id,filename:file.name,size:file.size,mime:file.type||(/\.pdf$/i.test(file.name)?'application/pdf':/\.png$/i.test(file.name)?'image/png':/\.webp$/i.test(file.name)?'image/webp':'image/jpeg')},scope:source.scope,version:0},key) as {data:V1Record};current.ticket=result.data;}
+  if(typeof p.onUploadStage==='function')p.onUploadStage('upload');
   const response=await fetch(`/api/v1/book-uploads/${encodeURIComponent(current.ticket.id)}/file`,{method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/octet-stream'},body:file});const receipt=await response.json().catch(()=>null);if(!response.ok)throw new V1Error(receipt?.error?.message??receipt?.message??'扫描文件未入库，请重试。',response.status,receipt?.error?.code??'UPLOAD_FAILED');
+  if(typeof p.onUploadStage==='function')p.onUploadStage('register');
   const result=await submit(target?{domain:'books',command:'rescan',body:{uploadId:current.ticket.id,bookId:target.id,doubtId:p.doubtId,note:p.note},scope:target.scope,version:p.expectedVersion??target.revision}:{domain:'books',command:'create',body:{uploadId:current.ticket.id,...fields(p,['title','edition','author','pages','rights','layout','materialId'])},scope:source.scope,version:0});current.book=result;return result;
  })().finally(()=>{current.promise=undefined;});current.promise=promise;return promise;
 }

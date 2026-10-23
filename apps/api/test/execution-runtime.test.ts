@@ -14,8 +14,8 @@ test('standalone node package pairs, edits actual isolated files and returns a s
 const nativeRecoveryPolicy={billing:'subscription' as const,maxTokens:10000,maxRecoveryAttempts:2,retryDelaySec:60,repairValidation:true,fallbackExecutorIds:['native-claude']};
 async function nativeRecoveryFixture(){
  const f=await fixture();const codexScript=join(f.tools,'quota-codex.cjs'),claudeScript=join(f.tools,'quota-claude.cjs');
- await writeFile(codexScript,`console.log(JSON.stringify({type:'thread.started',thread_id:'codex-original-session'}));console.log(JSON.stringify({type:'error',message:'Usage limit reached 429'}));process.exit(1)`);
- await writeFile(claudeScript,`console.log(JSON.stringify({type:'result',session_id:'claude-specific-session',is_error:true,errors:['Rate limit reached 429'],total_cost_usd:0,usage:{input_tokens:0,output_tokens:0}}));`);
+ await writeFile(codexScript,`console.log(JSON.stringify({type:'thread.started',thread_id:'codex-original-session'}));console.log(JSON.stringify({type:'turn.completed',turn_id:'quota-turn',usage:{input_tokens:37,output_tokens:5,cached_input_tokens:0}}));console.log(JSON.stringify({type:'error',message:'Usage limit reached 429'}));process.exit(1)`);
+ await writeFile(claudeScript,`console.log(JSON.stringify({type:'system',subtype:'init',session_id:'claude-specific-session',claude_code_version:'2.1.277'}));console.log(JSON.stringify({type:'result',session_id:'claude-specific-session',is_error:true,errors:['Rate limit reached 429'],total_cost_usd:0,usage:{input_tokens:0,output_tokens:0}}));`);
  const codex:ExecutionTemplate={...f.template,id:'native-codex',engine:'codex',args:[codexScript,'exec','--json','--sandbox','workspace-write','{prompt}'],supervision:nativeRecoveryPolicy},claude:ExecutionTemplate={...f.template,id:'native-claude',engine:'claude',args:[claudeScript,'--print','{prompt}','--output-format','stream-json','--max-budget-usd','{maxBudgetUSD}'],supervision:{...nativeRecoveryPolicy,fallbackExecutorIds:['native-codex']}};
  f.runtime.configure({templates:[codex,claude]});const update:DomainHandler={domain:'tasks',commands:['fixture-native'],execute:(_c,p,ctx)=>ctx.update('tasks',f.taskId,p)};
  const patch=(p:any)=>{const task=f.repo.read('tasks',f.taskId,'server-admin')!;return f.repo.execute(update,'fixture-native',{commandId:randomUUID(),expectedVersion:task.revision,scope:'personal',payload:p},'server-admin',f.runtime.options.machine).data};patch({agent:codex.id});
@@ -49,7 +49,7 @@ test('API-priced unreported quota consumption cannot automatically retry and a n
  const f=await nativeRecoveryFixture();try{
   const priced={...f.codex,supervision:{...nativeRecoveryPolicy,billing:'priced' as const}};f.runtime.configure({templates:[priced,f.claude]});f.nativeAgent.config.templates[0]=priced;await (f.runtime as any).scheduleManaged();await f.nativeAgent.runOnce();const task=f.repo.read('tasks',f.taskId,'server-admin')!;assert.equal(task.executionResult.recovery.automatic,false);assert.equal(task.status,'failed');assert.equal(f.runtime.listRuns().length,1);
  }finally{await f.close()}
- const g=await nativeRecoveryFixture();try{await (g.runtime as any).scheduleManaged();const claim=await g.nativeAgent.claim();g.nativeAgent.config.templates[0]={...g.codex,maxRounds:4};const result=await g.nativeAgent.execute(claim!);assert.equal(result.status,'failed');assert.equal(g.repo.read('tasks',g.taskId,'server-admin')!.status,'waitingUser')}finally{await g.close()}
+ const g=await nativeRecoveryFixture();try{await (g.runtime as any).scheduleManaged();const claim=await g.nativeAgent.claim();g.nativeAgent.config.templates[0]={...g.codex,maxRounds:4};await assert.rejects(()=>g.nativeAgent.execute(claim!),/AGENT_TEMPLATE_MISMATCH/);assert.equal(g.runtime.getRun(claim!.id)!.status,'running');assert.equal(g.repo.read('tasks',g.taskId,'server-admin')!.acceptance,null)}finally{await g.close()}
 });
 import assert from 'node:assert/strict';
 import Fastify from 'fastify';

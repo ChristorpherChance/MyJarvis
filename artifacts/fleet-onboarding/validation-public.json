@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-23T03:19:20.622116+00:00",
+  "baselineHead": "38190ce09fa649f05db2fe2ee0026b4fa9deab4d",
+  "assetRegistration": {
+    "registeredAndReadBack": 11,
+    "originalEightIdsRetained": true,
+    "companyReadOnly": [
+      "新增09"
+    ],
+    "personalConfirmed": [
+      "新增10"
+    ],
+    "unknownAndNotConfigured": 11,
+    "addressInvented": false,
+    "source": "Authenticated production R58 HTTPS API; stable command IDs and per-record GET; session memory only and revoked"
+  },
+  "diagnostics": {
+    "implementation": "complete-local-candidate",
+    "deployed": false,
+    "real112RootCauseIdentified": false,
+    "transportAndOldProtocol": "tested",
+    "newActions": false,
+    "configurationWrites": false
+  },
+  "tests": [
+    {
+      "scope": "Planned registration helper",
+      "passed": 4
+    },
+    {
+      "scope": "True isolated createApp eleven assets",
+      "assets": 11,
+      "idempotentRegister": true,
+      "sameIdUpdateCAS": true,
+      "companyReadOnly": true
+    },
+    {
+      "scope": "provision Python",
+      "passed": 12
+    },
+    {
+      "scope": "node dispatcher Python",
+      "passed": 11
+    },
+    {
+      "scope": "controller JS",
+      "passed": 6
+    },
+    {
+      "scope": "AI-development, CC Switch and infrastructure API",
+      "passed": 25
+    },
+    {
+      "scope": "real isolated Chromium HTTP/SQLite diagnostics",
+      "passed": 5,
+      "evidence": "artifacts/fleet-onboarding/diagnostics-browser-public.json"
+    },
+    {
+      "scope": "workspace typecheck",
+      "result": "passed"
+    },
+    {
+      "scope": "stage frontend and API build",
+      "result": "passed"
+    }
+  ],
+  "limits": [
+    "No new machine OS installation or trusted enrollment.",
+    "No production application/controller/module activation; originalR58 remains.",
+    "No model inference requests or configuration/provider/statusline changes.",
+    "No GPU benchmarking or pooling; hardware remains user-reported.",
+    "Windows/macOS environments are not supported by the current fixed Linux provisioning template; separate adapters required.",
+    "Dynamic trusted nodes, versioned template preview/apply and real second-node acceptance are subsequent stages.",
+    "No git commit/push; platform project/decision/experience CAS sync not performed."
+  ],
+  "failuresAndCorrections": [
+    "Previous HTTP loopback curl52 diagnosed as scheme mismatch: production HTTPS health validated using CA, anonymous machines401; no service restart.",
+    "First eight asset receipt helper used status for both operation result and asset state; separated assetStatus and independently re-read eight IDs with zero additional POST.",
+    "Mid-turn user addedDDR4 and three devices; existing eight CAS-updated rather than duplicated, company and personal scope explicitly confirmed.",
+    "Statusline NOT_APPLICABLE reason enum and DB-read-error provider unknown counts aligned and tests rerun."
+  ],
+  "cost": {
+    "productModelRequests": 0,
+    "assistantSubagentTokensAndAmount": "unknown",
+    "policy": "record-only-no-amount-cap"
+  },
+  "synchronization": "14 exact task files merged into regular working tree after matching baseline fingerprints; prior R58/knowledge edits preserved"
+}

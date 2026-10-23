@@ -1,0 +1,202 @@
+{
+  "schema": "jarvis.knowledge-ingestion.followup-validation.v1",
+  "date": "2026-10-21",
+  "workspace": {
+    "path": "/home/superopen/.local/share/jarvis-development/knowledge-ingestion-20261021",
+    "head": "38190ce09fa649f05db2fe2ee0026b4fa9deab4d",
+    "manifestComparison": {
+      "baselineManifest": "artifacts/knowledge-ingestion/inherited-baseline.json",
+      "entries": 52,
+      "sameShaAsManifest": 50,
+      "taskCopyAndRegularCopyEqual": 46,
+      "inheritedDivergencesBeforeThisFollowup": [
+        "apps/api/src/app.ts",
+        "docs/建设记录/events.jsonl",
+        "docs/贾维斯建设日志.html",
+        "docs/贾维斯建设日志.md",
+        "docs/贾维斯建设档案.html",
+        "docs/贾维斯建设档案.md"
+      ],
+      "note": "The inherited baseline SHA matched 50/52 listed files; 46/52 were byte-equal between this task copy and the regular copy at comparison time. Six pre-existing differences are explicitly retained; docs/build records were not edited in this follow-up."
+    },
+    "regularCopyModified": false
+  },
+  "changedFiles": [
+    {
+      "path": "apps/api/src/runtime/knowledge-documents.ts",
+      "sha256": "d76767c3c9dd060d4718f52a4e9f59ee1db1670edc0e31cd9ae4ce0bae0bde9b",
+      "scope": "paragraph-preserving segment reconstruction"
+    },
+    {
+      "path": "apps/api/src/runtime/family-knowledge.ts",
+      "sha256": "9ff09588a5e9deecb9c4e2dd161081f106e3d7feccc414bf98735673e003ac50",
+      "scope": "family reference segment and original-location output"
+    },
+    {
+      "path": "apps/api/src/runtime/knowledge-reference.ts",
+      "sha256": "6a2057bd5ff2f31e4dfe248e9507224b04a83da85610d2a7d5a3cb026bfb1aab",
+      "scope": "administrator reference includes verified original paragraph location"
+    },
+    {
+      "path": "apps/api/test/knowledge-documents-runtime.test.ts",
+      "sha256": "ac278024067ffacb2d760e8b71fa69e391726846be6b77c10118e52ffcdabe33",
+      "scope": "segment, invalidation and management authorization regressions"
+    },
+    {
+      "path": "apps/api/test/knowledge-ingestion-boundaries.test.ts",
+      "sha256": "f7e0fac8da7375c12448767b879a4b55bbdf3fb9baaa989af47e75e1c4e95093",
+      "scope": "stdlib Python selection and actual multi-paragraph HTML/DOCX close loop"
+    }
+  ],
+  "repairSummary": [
+    {
+      "failure": "Regression initially confirmed two paragraphs joined with double newlines fell back to one location-less segment.",
+      "repair": "Recognize raw.join('') and raw.join('\\n\\n') exactly; for double-newline mode attach separator to preceding segment before 1200-character splitting; recompute per-chunk SHA-256.",
+      "verified": "Exact reconstructed full text, per-segment SHA, original paragraph location, 1201-character split, whitespace preservation, and no fabricated location for edited text."
+    },
+    {
+      "failure": "An initial implementation dropped empty raw segments and missed paragraph locations when a parser omitted separator-owning empty paragraphs.",
+      "repair": "Retain empty paragraphs during exact raw.join('') or raw.join('\\n\\n') protocol matching; do not trim, normalize, or guess locations.",
+      "verified": "Empty/multi-newline and whitespace fixtures pass with exact text reconstruction and retained raw paragraph locations."
+    },
+    {
+      "failure": "Integration tests contained a task-private Python path, PyMuPDF requirement, and Python 3.14 assertion.",
+      "repair": "Use the existing JARVIS_PYTHON override or python3 fallback in tests; pass an explicit Python executable to the test app fixture. Probe required document libraries with isolated stdlib-only imports; no global runtime interpreter-selection change.",
+      "verified": "Real DOCX and HTML worker integration passed with system Python 3.14.4; no fitz/PyMuPDF prerequisite or 3.14-specific assertion."
+    },
+    {
+      "failure": "Family reference resolver response omitted the matched segment index and source paragraph location; administrator resolver also omitted source paragraph location.",
+      "repair": "Return verified segment index/document location and originalLocation separately; location remains the stable document URI used by the resolver.",
+      "verified": "Second paragraph references resolve with matching content SHA and original paragraph/2 location through both family and administrator routes."
+    },
+    {
+      "failure": "Authorization and citation invalidation coverage was incomplete for management routes and stale references.",
+      "repair": "Added table-driven anonymous/member/mixed-cookie/invalid-admin/terminal credential denials for management endpoints, plus source scope, asset revision, wrong hash, text-review mutation, old-reference failure, re-review/re-publish, and deletion-blocking assertions using existing fixtures/helpers.",
+      "verified": "No confirmed authorization bypass found. A real createApp session matrix covers anonymous, member-only, mixed admin+member cookies, a real admin session invalidated by logout, and terminal credentials across all seven management endpoints; valid admin requests succeed and denials disclose no body. Stale source/asset/document citations fail closed."
+    }
+  ],
+  "authorizationAndInvalidation": {
+    "adminManagementEndpoints": [
+      "list",
+      "detail",
+      "create",
+      "review",
+      "publish",
+      "revise",
+      "original download"
+    ],
+    "testedIdentities": [
+      "anonymous",
+      "member-only authenticated session",
+      "admin plus member cookie",
+      "real administrator session invalidated by /api/auth/logout",
+      "terminal authorization header",
+      "terminal identity header",
+      "valid administrator positive cases"
+    ],
+    "citationInvalidation": [
+      "source authorization revoke",
+      "source scope/revision change",
+      "asset revision change",
+      "manual text review change",
+      "unknown/wrong segment hash",
+      "old published version after re-review and republication"
+    ],
+    "visibilityAndDeletion": [
+      "stale document omitted from fresh search",
+      "invalid reference response has no source body",
+      "permanent delete blocked while published record structurally references original"
+    ],
+    "citationRoutes": [
+      "family member resolve",
+      "administrator resolve"
+    ]
+  },
+  "verification": {
+    "targetedKnowledgeTests": {
+      "tests": 15,
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "command": "npx tsx --test apps/api/test/knowledge-documents-runtime.test.ts apps/api/test/knowledge-ingestion-boundaries.test.ts apps/api/test/knowledge-ingestion-integration.test.ts apps/api/test/knowledge-ingestion-contract.test.ts apps/api/test/knowledge-source-preview.test.ts"
+    },
+    "extendedParserAndLifecycleTests": {
+      "tests": 22,
+      "passed": 20,
+      "failed": 0,
+      "skipped": 2,
+      "command": "JARVIS_PYTHON=python3 npx tsx --test apps/api/test/inbox-document-parser.test.ts apps/api/test/inbox-material-processing.test.ts apps/api/test/inbox-material-lifecycle.test.ts",
+      "skippedReasons": [
+        "2 actual PDF/image OCR tests: RapidOCR isolation dependencies unavailable"
+      ]
+    },
+    "typecheck": {
+      "status": "passed after final coordinator-requested changes",
+      "command": "npm run typecheck"
+    },
+    "stageBuild": {
+      "status": "passed",
+      "command": "npm run build:stage",
+      "outputs": [
+        "apps/web/.dist-next",
+        "apps/api/.dist-next"
+      ]
+    },
+    "fullApiSuite": {
+      "tests": 922,
+      "passed": 911,
+      "failed": 0,
+      "skipped": 11,
+      "command": "npm test (completed before final coordinator-requested adjustments; not rerun afterward)",
+      "skippedReasons": [
+        "actual local OCR/PDF scan checks unavailable in the full suite environment",
+        "root-owned control fixture unavailable",
+        "standalone node package test explicitly skipped",
+        "Windows SAPI test explicitly skipped"
+      ]
+    },
+    "devEntryCheck": {
+      "status": "passed",
+      "api": "127.0.0.1:43140",
+      "web": "127.0.0.1:45173",
+      "portsAvailable": true,
+      "productionServicesChanged": false
+    },
+    "diffCheck": {
+      "status": "passed",
+      "scope": "six task implementation/test files"
+    }
+  },
+  "notAcceptedOrNotVerified": [
+    "Real NAS or mounted directory access",
+    "Physical scans and RapidOCR accuracy; OCR-dependent tests were skipped because isolation dependencies are unavailable on Python 3.14",
+    "User-supplied document quality and user acceptance",
+    "Browser retest for this follow-up (no frontend interaction changed); prior browser-public.json covers synthetic Markdown only",
+    "Production, deployment, restart, external model, and billing statement"
+  ],
+  "cost": {
+    "productVerificationSupplierModelRequests": 0,
+    "productVerificationSupplierModelTokens": 0,
+    "productVerificationKnownMonetaryCost": 0,
+    "externalServiceRequests": 0,
+    "assistantAndAgentUsage": "Unknown/not measured; this report does not include assistant or agent tokens and makes no claim about their monetary cost.",
+    "unknownExternalBilling": "No external bill was queried; any billed amount remains unknown/not measured."
+  },
+  "operations": {
+    "productionAccess": false,
+    "productionChanged": false,
+    "dependenciesInstalled": false,
+    "gitCommit": false,
+    "gitPush": false,
+    "constructionLedgerChanged": false,
+    "taskDeltaReportChanged": false
+  },
+  "syncRequiredFiles": [
+    "apps/api/src/runtime/knowledge-documents.ts",
+    "apps/api/src/runtime/family-knowledge.ts",
+    "apps/api/src/runtime/knowledge-reference.ts",
+    "apps/api/test/knowledge-documents-runtime.test.ts",
+    "apps/api/test/knowledge-ingestion-boundaries.test.ts",
+    "artifacts/knowledge-ingestion/followup-validation-public.json"
+  ]
+}

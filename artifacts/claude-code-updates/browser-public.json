@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "recordedAt": "2026-10-21",
+  "acceptance": {
+    "browser": "Chromium",
+    "viewportWidths": [
+      1440,
+      390
+    ],
+    "checksPassed": 10,
+    "checks": [
+      "Synthetic policy, fixed catalog, isolated queue, and controller status exposed over real loopback HTTP.",
+      "Version check wrote exactly one immutable request; fixed worker receipt bound by SHA-256 of canonical full request; installed version and install hash verified.",
+      "Preview froze source/version/install identity and did not enqueue an update request.",
+      "One explicit confirmation produced one execute request; running/poll period did not replay it; nested receipt verified target version, protected configuration, and recovery status.",
+      "Reload restored the durable SQLite execution job and receipt without replay.",
+      "Standalone selector defaulted to the first manageable machine in inventory; selecting the synthetic 101-bound machine showed the dedicated updater despite missing legacy AI-development profile/policy.",
+      "Machine-detail view rendered the shared updater in fixed-target mode without a duplicate target selector.",
+      "390px mobile viewport had no horizontal overflow.",
+      "A synthetic mismatched requestHash receipt stayed unknown and was not presented as success.",
+      "An unattached synthetic machine was blocked and created no queue request."
+    ],
+    "queue": {
+      "requestCount": 3,
+      "inspectRequestCount": 2,
+      "executeRequestCount": 1,
+      "allReceiptRequestHashesMatchedCanonicalRequest": true,
+      "replayObserved": false
+    },
+    "browserErrors": [],
+    "blockedExternalOrigins": []
+  },
+  "fixtureBoundary": {
+    "nodeId": "101 (synthetic fixture binding only)",
+    "catalogVersion": "2.1.0 (synthetic fixture metadata)",
+    "usesReal101": false,
+    "representsRealUpgrade": false,
+    "worker": "local fixed synthetic receipt writer; no package download or install",
+    "publicNetwork": false,
+    "modelRequests": 0,
+    "ssh": false,
+    "productionDataOrPorts": false,
+    "credentialsOrRawQueueAuthorizationIncluded": false
+  },
+  "stageAndSourceIdentity": {
+    "webStageIndexHtmlSha256": "ffdf2ece76fb608481750ba2f1b6f60962f706f8a0d8dd24b4f9c5e7caab7ddf",
+    "apiRuntimeClaudeCodeUpdatesTsSha256": "f8525e9469ec7871077407b615506c0db0c28b20a2d6ef81ecbf0a3301c8c8df",
+    "webClaudeCodeUpdatePanelTsxSha256": "3b4883d348802a05dcfec05b6205adec9aad41c756fe4058a163da232137cc66",
+    "webAiDevelopmentPanelTsxSha256": "0d3780b1478f5cf4f0bbbaa2c1e4db4eb68a8f697c1608204c9db3b0887b9b22",
+    "qaScriptSha256": "eafc07927dcb2acc254657ee23e6288342253dc79cf5fdfc16491daadb85acd9"
+  },
+  "screenshots": {
+    "captured": true,
+    "published": false,
+    "disposition": "Screenshots and temporary browser data were removed by the harness cleanup before the request to preserve them. No screenshots were reconstructed or fabricated."
+  },
+  "limitations": [
+    "This validates browser behavior, loopback HTTP routes, SQLite persistence, and synthetic queue/receipt handling only.",
+    "It does not verify a real 101 host, real installed Claude Code bytes, real release metadata/download, real SSH, or a real update."
+  ]
+}

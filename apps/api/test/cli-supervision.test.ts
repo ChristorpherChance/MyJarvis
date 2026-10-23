@@ -21,10 +21,19 @@ test('exact native session resume preserves flags without selecting another proj
 });
 
 test('Claude cumulative costs are charged once; missing or regressed baselines remain unpriced',()=>{
- const u={inputTokens:10,outputTokens:20};const a=roundCliUsage('claude',u,'s',1.5,undefined,policy);const b=roundCliUsage('claude',u,'s',2.5,a.checkpoint,policy,'s');assert.equal(a.usage!.costUSD!+b.usage!.costUSD!,2.5);
+ const u={inputTokens:10,outputTokens:20,usageComplete:true},a=roundCliUsage('claude',u,'s',1.5,undefined,policy,undefined,'2.1.277');const b=roundCliUsage('claude',u,'s',2.5,a.checkpoint,policy,'s','2.1.277');assert.equal(a.usage!.costUSD!+b.usage!.costUSD!,2.5);
  assert.equal(roundCliUsage('claude',u,'s',2.5,undefined,policy,'s').usage!.costUSD,undefined);
- const regressed=roundCliUsage('claude',u,'s',1,a.checkpoint,policy,'s');assert.equal(regressed.usage!.costUSD,undefined);assert.equal(regressed.checkpoint!.costUSD,1.5);
+ const regressed=roundCliUsage('claude',u,'s',1,a.checkpoint,policy,'s','2.1.277');assert.equal(regressed.usage!.costUSD,undefined);assert.equal(regressed.checkpoint!.costUSD,1.5);
  const codex=roundCliUsage('codex',u,'s',undefined,undefined,{...policy,inputUSDPerMillion:2,outputUSDPerMillion:4});assert.equal(codex.usage!.costUSD,.0001);
+});
+
+test('native partial final keeps usage incomplete while retaining final known cost',()=>{
+ const parsed=parseAgentOutput('claude',[
+  JSON.stringify({type:'system',subtype:'init',session_id:'partial-session',claude_code_version:'2.1.277'}),
+  JSON.stringify({type:'assistant',uuid:'activity',message:{id:'partial-message',model:'claude-fixture',usage:{input_tokens:7,output_tokens:2}}}),
+  JSON.stringify({type:'result',session_id:'partial-session',result:'partial final',usage:{input_tokens:3,output_tokens:1},total_cost_usd:0.04}),
+ ]);
+ assert.equal(parsed.usage?.usageComplete,false);assert.equal(parsed.usage?.inputTokens,7);assert.equal(parsed.usage?.outputTokens,2);assert.equal(parsed.usage?.knownCostUSD,0.04);assert.equal(parsed.usage?.costUSD,undefined);assert.equal(parsed.totalCost,0.04);assert.equal(parsed.nativeCliVersion,'2.1.277');
 });
 
 test('native errors and cache tokens are observed even when the process exits zero',()=>{
@@ -41,7 +50,7 @@ test('Linux controller validates Windows project directories without resolving t
 async function withCli(fn:(root:string,run:ClaimedRun)=>Promise<void>){const dir=await mkdtemp(join(tmpdir(),'jarvis-cli-supervision-')),workspace=join(dir,'project');await mkdir(workspace);const run:ClaimedRun={id:'run',kind:'development',machineId:'node',executorId:'claude',workspace,goal:'implement and verify',criteria:'fixed tests and independent acceptance',maxRounds:3,timeoutSec:10,budgetUSD:10,remainingTokens:1000,leaseToken:'fixture',leaseExpiresAt:new Date(Date.now()+60000).toISOString()};try{await fn(dir,run)}finally{assert.ok(resolve(dir).startsWith(resolve(tmpdir())+sep));await rm(dir,{recursive:true,force:true})}}
 
 test('real isolated native-format process resumes, repairs failed fixed tests and charges cumulative spend correctly',async()=>withCli(async(root,run)=>{
- const cli=join(root,'cli.cjs'),check=join(root,'check.cjs');await writeFile(cli,`const fs=require('node:fs');const n=fs.existsSync('round.txt')?Number(fs.readFileSync('round.txt'))+1:1;fs.writeFileSync('round.txt',String(n));const args=process.argv.slice(2),resume=args.indexOf('--resume');if(n===1&&resume>=0||n>1&&args[resume+1]!=='native-session')process.exit(42);console.log(JSON.stringify({type:'result',session_id:'native-session',usage:{input_tokens:10,output_tokens:5},total_cost_usd:n*.4,result:JSON.stringify({summary:'round '+n,needs_more_work:false,artifacts:['round.txt']})}));`);await writeFile(check,`const fs=require('node:fs');if(Number(fs.readFileSync('round.txt'))<2){console.log('Expected second implementation; first test failed');process.exit(1)}`);
+ const cli=join(root,'cli.cjs'),check=join(root,'check.cjs');await writeFile(cli,`const fs=require('node:fs');const n=fs.existsSync('round.txt')?Number(fs.readFileSync('round.txt'))+1:1;fs.writeFileSync('round.txt',String(n));const args=process.argv.slice(2),resume=args.indexOf('--resume');if(n===1&&resume>=0||n>1&&args[resume+1]!=='native-session')process.exit(42);console.log(JSON.stringify({type:'system',subtype:'init',session_id:'native-session',claude_code_version:'2.1.277'}));console.log(JSON.stringify({type:'result',session_id:'native-session',usage:{input_tokens:10,output_tokens:5},total_cost_usd:n*.4,result:JSON.stringify({summary:'round '+n,needs_more_work:false,artifacts:['round.txt']})}));`);await writeFile(check,`const fs=require('node:fs');if(Number(fs.readFileSync('round.txt'))<2){console.log('Expected second implementation; first test failed');process.exit(1)}`);
  const template={...native('claude'),args:[cli,...native('claude').args!],validation:{program:process.execPath,args:[check],timeoutSec:10}},logs:string[]=[];
  const result=await executeAgentRounds(template,run,run.workspace,new AbortController().signal,(_c,m)=>logs.push(m),async()=>true);
  assert.equal(result.outcome,'success');assert.equal(result.rounds,2);assert.equal(result.sessionId,'native-session');assert.equal(result.usage!.costUSD,.8);assert.equal(result.validation.exitCode,0);assert.equal(await readFile(join(run.workspace,'round.txt'),'utf8'),'2');assert.ok(logs.some(x=>x.includes('继续修复')));

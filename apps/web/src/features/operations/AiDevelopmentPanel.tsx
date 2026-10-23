@@ -3,13 +3,16 @@ import {Button,Empty,KV,Note,Panel,Tag,type RecordItem} from './common';
 import {dateTime,number} from './infrastructure-widgets';
 import {usePrivateRuntime} from './usePrivateRuntime';
 import CcSwitchPanel from './CcSwitchPanel';
+import AiDevelopmentPreviewPanel from './AiDevelopmentPreviewPanel';
 import './ai-development.css';
 
-type Profile={id:string;revision:number;name:string;tools:{name:string;version:string}[];providers:{id:string;name:string;model:string|null;credentialConfigured:boolean}[];statuslineVersion:string};
-type Inventory={tools:{name:string;version:string|null;installed:boolean;path?:string|null;matchesPinned?:boolean}[];providers:{id:string;name:string;model:string|null;credentialConfigured:boolean;current?:boolean}[];statusline?:{configured:boolean;resources?:boolean;version?:string|null};resources?:{cpuPercent?:number|null;ramUsedBytes?:number|null;ramTotalBytes?:number|null;diskFreeBytes?:number|null;diskTotalBytes?:number|null;load1m?:number|null;memoryPercent?:number|null;memoryTotalGB?:number|null;memoryUsedGB?:number|null;diskFreeGB?:number|null;diskPercent?:number|null}|null;terminalTelemetry?:{observedAt?:string;provider?:string|null;model?:string|null;contextTokens?:number|null;contextWindow?:number|null;currentInputTokens?:number|null;currentOutputTokens?:number|null;sessionCostUSD?:number|null;billingStatus?:'estimated'|'unknown';rateLimitFiveHourPercent?:number|null;rateLimitSevenDayPercent?:number|null}};
+type Profile={id:string;revision:number;profileHash:string;name:string;tools:{name:string;version:string}[];providers:{id:string;name:string;model:string|null;credentialConfigured:boolean}[];statuslineVersion:string};
+type StatuslineLayerStatus='match'|'missing'|'different'|'invalid'|'unreadable'|'unknown'|'not-applicable';
+type StatuslineDiagnostics={diagnosticsVersion:1;layers:{script:StatuslineLayerStatus;global:StatuslineLayerStatus;common:StatuslineLayerStatus;currentProvider:StatuslineLayerStatus};providers:{total:number;matched:number;missing:number;different:number;invalid:number;unknown:number};reasonCodes:string[]};
+type Inventory={tools:{name:string;version:string|null;installed:boolean;path?:string|null;matchesPinned?:boolean}[];providers:{id:string;name:string;model:string|null;credentialConfigured:boolean;current?:boolean}[];statusline?:{configured:boolean;resources?:boolean;version?:string|null;diagnosticsVersion?:1;layers?:StatuslineDiagnostics['layers'];providers?:StatuslineDiagnostics['providers'];reasonCodes?:string[]};resources?:{cpuPercent?:number|null;ramUsedBytes?:number|null;ramTotalBytes?:number|null;diskFreeBytes?:number|null;diskTotalBytes?:number|null;load1m?:number|null;memoryPercent?:number|null;memoryTotalGB?:number|null;memoryUsedGB?:number|null;diskFreeGB?:number|null;diskPercent?:number|null}|null;terminalTelemetry?:{observedAt?:string;provider?:string|null;model?:string|null;contextTokens?:number|null;contextWindow?:number|null;currentInputTokens?:number|null;currentOutputTokens?:number|null;sessionCostUSD?:number|null;billingStatus?:'estimated'|'unknown';rateLimitFiveHourPercent?:number|null;rateLimitSevenDayPercent?:number|null}};
 type Job={id:string;action:string;profileId:string;createdAt:string;expiresAt:string;status:string;reason:string|null;result?:{at:string;summary:string;inventory?:Inventory}|null};
 type Snapshot={machineId:string;machineRevision:number;name:string;address:string;readOnly:boolean;profiles:Profile[];blocked:boolean;reason:string|null;observation:{at:string;source:string;stale:boolean;inventory:Inventory}|null;resources:Record<string,unknown>|null;resourcesObservedAt:string|null;resourcesStale:boolean;jobs:Job[];usage:{url:string;summaryUrl:string;terminalSessionBilling:string;note:string}};
-type Capabilities={configured:boolean;controllerOnline:boolean;controllerObservedAt:string|null;storageReady:boolean;blocked:boolean;reason:string|null;profiles:Profile[];nodes:{machineId:string}[]};
+type Capabilities={configured:boolean;controllerOnline:boolean;controllerObservedAt:string|null;storageReady:boolean;blocked:boolean;reason:string|null;profiles:Profile[];nodes:{machineId:string;profileIds?:string[]}[]};
 const base='/api/runtime/ai-development';
 const actions:Record<string,string>={probe:'检查环境',configure:'配置开发环境',telemetry:'采集终端状态'};
 const reasons:Record<string,string>={AI_DEVELOPMENT_NOT_CONFIGURED:'尚未为这台机器绑定可信节点和环境模板',AI_DEVELOPMENT_QUEUE_UNAVAILABLE:'环境任务队列暂不可用',AI_DEVELOPMENT_WORKER_OFFLINE:'环境配置执行器尚未连接',AI_DEVELOPMENT_PAUSED:'环境配置已暂停',AI_DEVELOPMENT_MACHINE_OFFLINE:'目标机器当前离线',AI_DEVELOPMENT_READ_ONLY:'这台机器为只读设备',AI_DEVELOPMENT_TARGET_CHANGED:'机器或模板已改变，请刷新后重新检查',AI_DEVELOPMENT_AUTHORIZATION_CHANGED:'此任务的认证上下文已改变，结果需重新核实',AI_DEVELOPMENT_EXPIRED:'任务已超时，结果需重新核实'};
@@ -18,13 +21,15 @@ const quota=(n:unknown)=>present(n)?`${number(n)}%`:'供应商未提供';
 const states:Record<string,string>={blocked:'未派发',queued:'等待节点',running:'执行中',succeeded:'节点核验通过',failed:'执行未通过',unknown:'结果待核实'};
 const present=(n:unknown):n is number=>typeof n==='number'&&Number.isFinite(n);
 const pct=(n:unknown)=>present(n)?`${number(n)}%`:'未采样';
+const statuslineLabels:Record<StatuslineLayerStatus,string>={match:'与模板一致',missing:'未找到',different:'与模板不同',invalid:'格式无效',unreadable:'无法读取',unknown:'未观测 / 未核实','not-applicable':'不适用'};
+const statuslineLayers:[keyof StatuslineDiagnostics['layers'],string][]=[['script','状态栏脚本'],['global','全局配置'],['common','通用配置'],['currentProvider','当前通道配置']];
 const tokens=(n:unknown)=>present(n)?n.toLocaleString():'未提供';
 const gib=(bytes:unknown,gb?:unknown)=>present(bytes)?`${number(bytes/1024**3)} GiB`:present(gb)?`${number(gb)} GiB`:'未采样';
 const aborted=(e:unknown)=>e instanceof DOMException&&e.name==='AbortError';
 
 /** One shared console in operations, also embedded in the existing machine detail. */
 export default function AiDevelopmentPanel({machines,machineId,navigate}:{machines:RecordItem[];machineId?:string;navigate:(route:string)=>void}){
- const [cap,setCap]=useState<Capabilities|null>(null),[error,setError]=useState(''),[selected,setSelected]=useState(machineId??'');
+ const [cap,setCap]=useState<Capabilities|null>(null),[error,setError]=useState(''),[selected,setSelected]=useState(machineId??''),[view,setView]=useState<'manage'|'preview'>('manage');
  const request=usePrivateRuntime(()=>{setCap(null);setError('');setSelected('')});
  useEffect(()=>{let alive=true;const load=async()=>{try{const value=await request<Capabilities>(base+'/capabilities');if(alive){setCap(value);setError('')}}catch(e){if(alive&&!aborted(e))setError(e instanceof Error?e.message:'环境能力读取失败')}};void load();const timer=setInterval(()=>void load(),10000);return()=>{alive=false;clearInterval(timer)}},[]);
  useEffect(()=>{if(machineId)setSelected(machineId);else if(!selected){const known=machines.find(m=>!m.readOnly&&cap?.nodes.some(n=>n.machineId===m.id)&&m.revision);if(known)setSelected(known.id)}},[machineId,cap?.configured,machines.length]);
@@ -33,8 +38,10 @@ export default function AiDevelopmentPanel({machines,machineId,navigate}:{machin
   <div className="ai-development-title"><div><h3>AI 开发环境</h3><p>把终端工具、模型通道和机器状态接入日常运维。</p></div><Tag tone={cap?.controllerOnline?'complete':''}>{cap?.controllerOnline?'配置节点已连接':'等待配置节点'}</Tag></div>
   {error&&<p role="alert" className="ai-development-error">{error}</p>}
   {!machineId&&<label className="ai-development-selector">目标机器<select aria-label="AI开发环境目标机器" value={selected} onChange={e=>setSelected(e.target.value)}><option value="">选择机器</option>{machines.map(m=><option key={m.id} value={m.id}>{m.name}{m.readOnly?' · 只读':''}</option>)}</select></label>}
-  {cap?.reason&&<Note>{reasonText(cap.reason)}</Note>}
-  {id?<AiMachineEnvironment key={id} machineId={id} capabilities={cap} navigate={navigate}/>:<Empty title="选择一台机器查看开发环境" detail="已接入运维的机器可以使用固定模板配置，尚未连接的机器会显示所缺条件。"/>}
+  {cap?.reason&&view==='manage'&&<Note>{reasonText(cap.reason)}</Note>}
+  {id&&<div className="ai-development-mode" role="group" aria-label="AI环境视图"><Button kind={view==='manage'?'primary':'ghost'} aria-pressed={view==='manage'} onClick={()=>setView('manage')}>管理环境</Button><Button kind={view==='preview'?'primary':'ghost'} aria-pressed={view==='preview'} onClick={()=>setView('preview')}>只读差异预览</Button></div>}
+  {view==='preview'&&<Note>已切换为只读预览；切换前的管理视图可能已运行环境、任务与 CC Switch 轮询。当前预览仅执行 GET，不表示此前页面会话从未产生写入。</Note>}
+  {id&&view==='preview'?<AiDevelopmentPreviewPanel key={`${id}:preview`} machine={machines.find(m=>m.id===id)} profiles={cap?.profiles.filter(p=>cap.nodes.find(n=>n.machineId===id)?.profileIds?.includes(p.id))??[]} machineId={id}/>:id?<AiMachineEnvironment key={id} machineId={id} capabilities={cap} navigate={navigate}/>:<Empty title="选择一台机器查看开发环境" detail="已接入运维的机器可以使用固定模板配置，尚未连接的机器会显示所缺条件。"/>}
  </section>;
 }
 
@@ -70,7 +77,8 @@ function AiMachineEnvironment({machineId,capabilities,navigate}:{machineId:strin
   <Panel title="已观察的开发环境" actions={<Tag tone={fresh?'complete':''}>{observation?fresh?'近期节点观察':'观察已过期':'尚未采集'}</Tag>}>
    {observation&&<p className="ai-development-stamp">采集时间：{dateTime(observation.at)}</p>}
    {inventory?<><div className="op-table-wrap"><table className="op-table"><thead><tr><th>工具</th><th>实际版本</th><th>模板核对</th></tr></thead><tbody>{inventory.tools.map(t=><tr key={t.name}><td>{t.name}</td><td>{t.installed?t.version??'版本未提供':'未安装'}</td><td>{!profile?.tools.some(pin=>pin.name===(t.name==='ccswitch'?'cc-switch':t.name))?'模板未指定':t.matchesPinned===true?'符合':t.matchesPinned===false?'需要调整':'未核对'}</td></tr>)}</tbody></table></div>
-    <KV items={[["对话状态栏",inventory.statusline?.configured?'已配置':'尚未配置'],['机器资源显示',inventory.statusline?.configured&&inventory.statusline.resources?'已启用':'未核实']]}/>
+    <KV items={[["对话状态栏",inventory.statusline?.configured?'整体配置核对通过':'整体配置未核实'],['机器资源显示',inventory.statusline?.resources?'已启用':'未核实']]}/>
+    {inventory.statusline?.diagnosticsVersion===1&&inventory.statusline.layers&&inventory.statusline.providers?<div className="ai-statusline-diagnostics" aria-label="状态栏配置分层核对"><strong>配置分层观察</strong><ul>{statuslineLayers.map(([key,title])=><li key={key}><span>{title}</span><span>{statuslineLabels[inventory.statusline!.layers![key]]}</span></li>)}</ul><small>通道统计：共 {inventory.statusline.providers.total} 项；一致 {inventory.statusline.providers.matched}，缺失 {inventory.statusline.providers.missing}，不同 {inventory.statusline.providers.different}，无效 {inventory.statusline.providers.invalid}，未知 {inventory.statusline.providers.unknown}。</small><p>此配置观察不能证明当前终端实际渲染状态栏。</p></div>:<small>旧版回执未提供分层观察，状态为未观测；不据此推断配置一致。</small>}
    </>:<Empty title="还没有工具盘点回执" detail="点击检查环境后，版本、模型通道与状态栏配置会保存到本机运维记录。"/>}
   </Panel>
   <CcSwitchPanel machineId={machineId}/>

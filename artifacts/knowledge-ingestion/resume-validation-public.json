@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-21",
+  "sourceHead": "38190ce09fa649f05db2fe2ee0026b4fa9deab4d",
+  "scope": "Resume verification of existing uncommitted knowledge-ingestion candidate; no production access or deployment",
+  "sourceIntegrity": {"manifest": "artifacts/knowledge-ingestion/task-delta-public.json", "files": 31, "sha256Matches": 31, "mismatches": 0},
+  "currentVerification": {
+    "typecheck": {"command": "npm run typecheck", "exitCode": 0},
+    "stageBuild": {"command": "npm run build:stage", "exitCode": 0, "output": "apps/web/.dist-next and apps/api/.dist-next; not activated"},
+    "targetedTests": {"files": ["knowledge-documents-runtime.test.ts", "knowledge-ingestion-boundaries.test.ts", "knowledge-ingestion-contract.test.ts", "knowledge-ingestion-integration.test.ts", "knowledge-source-preview.test.ts"], "tests": 11, "pass": 11, "fail": 0, "skipped": 0},
+    "ledgerBeforeAppend": {"records": 372, "integrity": "passed"},
+    "diffCheck": {"result": "failed", "reason": "Existing CRLF additions in apps/web/src/demo/live-knowledge-commands.ts are reported as trailing whitespace; no formatting rewrite performed"}
+  },
+  "executionNote": "Initial test command incorrectly used an apps/api-relative binary path while working at repository root and exited 127 before running tests. Corrected repository-root invocation passed all 11 tests.",
+  "priorReports": {"api": "artifacts/knowledge-ingestion/api-final-public.json", "browser": "artifacts/knowledge-ingestion/browser-public.json", "environment": "artifacts/knowledge-ingestion/environment-public.json"},
+  "notRepeated": ["Prior full 919-test API run", "Prior browser acceptance"],
+  "boundaries": ["No Git commit or push", "No production restart, deployment, cleanup or data access", "No real NAS or native OCR acceptance", "No platform CAS synchronization"],
+  "cost": {"additionalSupplierInferenceRequests": 0, "assistantTokens": "unknown", "billedAmount": "unknown", "policy": "record only; no spending cap"}
+}

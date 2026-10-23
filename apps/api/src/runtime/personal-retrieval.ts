@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import type {V1Repository} from '../v1/repository.js';
+import {publishedKnowledgeDocumentEntries} from './knowledge-documents.js';
 import {searchKnowledgeDocuments, type KnowledgeDocument} from './knowledge-connectors.js';
 
 const hash=(text:string)=>createHash('sha256').update(text).digest('hex');
@@ -29,6 +30,10 @@ export function searchAuthorizedKnowledge(repository:V1Repository,actorId:string
     for(const [field,text] of fields){if(!text.trim())continue;
       documents.push({id:`${story.id}-${field}`,title:story.title,text,location:`story://${segment(story.id)}/revision/${story.revision}/${field}`,sha256:hash(text),metadata:{id:story.id,kind:'story',source:book.source,book:book.id,page:story.page,version:story.version,revision:story.revision,matchedField:field,quoteKind:field==='quote'?'published-original':'reviewed-interpretation',originalQuote,originalLocation:bookLocation(book,story.page),originalOffset:string(page.text).indexOf(originalQuote),originalSha256:hash(string(page.text))}});
     }
+  }
+  for(const doc of publishedKnowledgeDocumentEntries(repository,actorId,familyOnly?'family':undefined))for(const part of doc.segments){
+    if(!sources.some(s=>s.id===doc.sourceId&&s.scope===doc.scope))continue;
+    documents.push({id:`${doc.id}-segment-${part.index}`,title:doc.title,text:part.text,location:`document://${segment(doc.id)}/${doc.version}/segment/${part.index}`,sha256:part.sha256,metadata:{id:doc.id,kind:'knowledge-document',documentId:doc.id,segment:part.index,source:doc.sourceId,sourceRevision:doc.sourceRevision,revision:doc.revision,version:doc.version,quoteKind:'reviewed-document'}});
   }
   for(const source of sources)for(const document of source.documents??[]){
     const text=string(document.text);if(!text.trim())continue;

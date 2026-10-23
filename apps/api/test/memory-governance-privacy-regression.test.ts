@@ -192,6 +192,7 @@ test('process recovery preserves unknown fees for interrupted chat and SDK work 
     ledger.recordUsage(usage); ledger.close(); ledger = new GovernanceRuntime(store);
     assert.equal(ledger.summary().active, 0); assert.equal(ledger.summary().reservedUSD, 0);
     assert.equal(ledger.summary().unreportedRuns, 2); assert.equal(ledger.summary().unpricedCalls, 2);
+    for(const row of ledger.unreported())assert.match(String(row.created_at), /T.*Z$/, 'SQLite UTC recovery stamps must retain their timezone across local midnight');
     assert.deepEqual(ledger.unreported().map(r => r.run_id).sort(), [chat.runId, sdk.runId].sort());
     assert.equal(ledger.summary().estimatedUSD, 0.03); assert.equal(ledger.summary().totalTokens, 6);
     const late: PiUsageRecord = { ...usage, ...chat, usageId: 'interrupted_chat_0', costUSD: 0.01 };

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "scope": "Read-only terminal metadata diagnosis; no transcript bodies, credentials or model replay",
+  "incident": {
+    "lastSuccessfulAt": "2026-10-23T06:01:49.798Z",
+    "lastSuccessfulInputTokens": 592715,
+    "inputBreakdown": {"nonCached": 331, "cacheRead": 592384, "cacheCreation": 0},
+    "lastSuccessfulOutputTokens": 46,
+    "responseModelId": "gpt-6.1-sol",
+    "cliVersion": "2.1.292",
+    "errorAt": ["2026-10-23T06:02:19.841Z", "2026-10-23T06:06:34.066Z", "2026-10-23T06:08:08.841Z", "2026-10-23T06:08:35.505Z", "2026-10-23T06:08:47.563Z", "2026-10-23T06:18:08.952Z"],
+    "httpStatus": 400,
+    "visibleError": "All target providers failed.",
+    "successfulCompactionBoundaryObserved": false,
+    "failedRequestTokens": "unknown",
+    "upstreamErrorCodeAndRequestId": "not-observed"
+  },
+  "comparisons": {
+    "previousIncident": {"date": "2026-10-21", "lastSuccessfulInputTokens": 892642, "subsequent400": 4},
+    "recentLargerSuccess": {"at": "2026-10-23T08:26:15.733Z", "inputTokens": 790374, "responseModelId": "gpt-6.1-sol", "observed400InSample": 0},
+    "interpretation": "These local samples do not establish a uniform 590k hard limit; successful usage is not failed-request measurement, and routes at those times are not proven identical."
+  },
+  "currentConfigurationSafeProjection": {
+    "providerName": "JP-CCR (Codex订阅)",
+    "gatewayHostname": "gw.superopen.top",
+    "mainModelAlias": "gpt-6.1-sol[1M]",
+    "sonnetAlias": "gpt-6-luna[1M]",
+    "haikuAlias": "gpt-6-luna",
+    "autoCompactWindow": 850000,
+    "liveAndCurrentProviderTemplateMatch": true,
+    "failedProcessEffectiveConfiguration": "unknown",
+    "meaning": "The 1M alias is not verified upstream capacity. Existing 850k mitigation remains configured but cannot protect failures below its trigger and is not a root-cause fix."
+  },
+  "compactionAndClear": {
+    "manualCompaction400": "user-reported; request-stage metadata unavailable",
+    "clearRecovery": "user-reported; supports history/size/state relevance, not a specific root cause",
+    "installedClientNarrowInspection": "summarization groups and reactive compact retry markers found; not proof of exact failed compact request construction",
+    "gatewayObservability": "Generic error does not expose recognizable prompt-too-long details or per-target rejection reasons."
+  },
+  "gatewayAccess": {
+    "historicalServiceAssociation": "Public managed-project importer maps JP ccr.service to gw.superopen.top",
+    "currentDNS": ["8.209.253.19"],
+    "historicalMaintenance": "Original Windows management host; not proof of an available current112 credential path",
+    "current112DirectMaintenanceEntry": "not-found-in-checked-approved-paths",
+    "collectorBoundary": "telemetry/service-status only; not expanded",
+    "otherServerFailures": "user-reported; not independently examined",
+    "blocker": "Need owner-confirmed existing gateway administration entry or field-allowlisted diagnostic projection from an authorized maintainer."
+  },
+  "nextEvidence": {
+    "failureWindowUTC": "2026-10-23T05:59:00Z/2026-10-23T06:20:00Z",
+    "successWindowUTC": "2026-10-23T08:13:00Z/2026-10-23T08:28:00Z",
+    "allowed": ["timestamp", "correlation-id", "anonymous-route-id", "resolved-model", "upstream-attempt-status", "safe-error-type/code", "failure-layer", "existing-byte/token-budget-counts"],
+    "excluded": ["request/response body", "messages", "tool inputs/results", "authorization headers", "cookies", "keys", "raw logs and unfiltered error messages"],
+    "repair": "Choose targeted gateway capacity/routing/protocol or client behavior repair only after evidence. New structured gateway telemetry or deployment requires separate explicit implementation scope."
+  },
+  "conclusion": {"incidentConfirmed": true, "rootCauseConfirmed": false, "rootFixImplemented": false},
+  "boundaries": {"modelInferenceRequests": 0, "settingsOrTemplatesChanged": false, "remoteSSHExecuted": false, "gatewayOrPlatformRestarted": false, "gitCommitOrPush": false, "platformProjectDecisionExperienceCAS": "not-performed"},
+  "cost": {"policy": "record-only-no-amount-cap", "assistantAndSubagentTokens": "unknown", "amountAndInvoice": "unknown"}
+}

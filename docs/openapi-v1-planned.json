@@ -31642,6 +31642,480 @@
           }
         }
       }
+    },
+    "/api/v1/knowledge/documents": {
+      "get": {
+        "operationId": "knowledgeDocumentList",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型"
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      },
+      "post": {
+        "operationId": "knowledgeDocumentCreate",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeDocumentCreateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeDocumentReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/documents/{id}": {
+      "get": {
+        "operationId": "knowledgeDocumentRead",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeDocumentReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/documents/{id}/review": {
+      "post": {
+        "operationId": "knowledgeDocument_review",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeDocumentReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeDocumentReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/documents/{id}/publish": {
+      "post": {
+        "operationId": "knowledgeDocument_publish",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeDocumentPublishInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeDocumentReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/documents/{id}/revise": {
+      "post": {
+        "operationId": "knowledgeDocument_revise",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeDocumentReviseInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeDocumentReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/documents/{id}/original": {
+      "get": {
+        "operationId": "knowledgeDocumentOriginal",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型"
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/sources/{id}/preview": {
+      "get": {
+        "operationId": "knowledgeDirectoryPreview",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型"
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/sources/{id}/confirm-sync": {
+      "post": {
+        "operationId": "knowledgeDirectoryConfirm",
+        "tags": [
+          "知识入库"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeDirectoryConfirmInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "当前身份范围内的真实记录；不自动审核或调用模型"
+          },
+          "400": {
+            "description": "严格输入校验失败"
+          },
+          "401": {
+            "description": "管理员未登录"
+          },
+          "403": {
+            "description": "身份或来源授权拒绝"
+          },
+          "409": {
+            "description": "版本或原件绑定变化"
+          }
+        }
+      }
+    },
+    "/api/runtime/ai-development/machines/{id}/preview": {
+      "get": {
+        "operationId": "aiDevelopmentPreview",
+        "tags": [
+          "AI开发环境"
+        ],
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "x-implementation-status": "implemented",
+        "description": "仅比较已有公开观测，不执行探测、配置、SSH或任务状态归并。120秒后为历史参考；缺少机器修订绑定的周期观测仅为reference-only。不是configure执行计划或apply凭证。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            }
+          },
+          {
+            "name": "profileId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,99}$"
+            }
+          },
+          {
+            "name": "expectedMachineVersion",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "expectedProfileRevision",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "expectedProfileHash",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "supplement",
+                "reconcile"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "只读比较结果与明确的证据边界",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store"
+                },
+                "description": "不缓存管理员配置观察"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiDevelopmentPreview"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "严格查询参数无效"
+          },
+          "401": {
+            "description": "未登录或会话失效"
+          },
+          "403": {
+            "description": "非管理员、公司或只读目标"
+          },
+          "404": {
+            "description": "目标不存在或不属于当前管理者"
+          },
+          "409": {
+            "description": "目标或模板版本/指纹已变化"
+          },
+          "503": {
+            "description": "未绑定可信节点或公开策略不可用"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -52007,12 +52481,28 @@
             "type": "boolean"
           },
           "start": {
-            "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              },
+              {
+                "type": "string",
+                "const": ""
+              }
+            ]
           },
           "end": {
-            "type": "string",
-            "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+              },
+              {
+                "type": "string",
+                "const": ""
+              }
+            ]
           },
           "timezone": {
             "type": "string",
@@ -52037,6 +52527,48 @@
           "start",
           "end",
           "timezone"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "start": {
+                  "const": ""
+                }
+              },
+              "required": [
+                "start"
+              ]
+            },
+            "then": {
+              "properties": {
+                "end": {
+                  "const": ""
+                }
+              }
+            },
+            "x-persona-time-pair": true
+          },
+          {
+            "if": {
+              "properties": {
+                "end": {
+                  "const": ""
+                }
+              },
+              "required": [
+                "end"
+              ]
+            },
+            "then": {
+              "properties": {
+                "start": {
+                  "const": ""
+                }
+              }
+            },
+            "x-persona-time-pair": true
+          }
         ]
       },
       "PersonasSaveCommand": {
@@ -54406,6 +54938,9 @@
           },
           "stopReason": {
             "$ref": "#/components/schemas/ExecutionNodeStopReason"
+          },
+          "notStarted": {
+            "$ref": "#/components/schemas/ExecutionNotStarted"
           }
         },
         "required": [
@@ -54419,6 +54954,69 @@
           "source",
           "verification",
           "at"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "notStarted": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "notStarted"
+              ]
+            },
+            "then": {
+              "properties": {
+                "outcome": {
+                  "const": "failed"
+                },
+                "rounds": {
+                  "const": 1
+                },
+                "failureKind": {
+                  "const": "permission"
+                },
+                "artifacts": {
+                  "maxItems": 0
+                },
+                "usage": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "measurementStatus": {
+                      "const": "unknown"
+                    },
+                    "ledgerRecorded": {
+                      "const": false
+                    },
+                    "usageComplete": {
+                      "const": false
+                    },
+                    "costComplete": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "measurementStatus",
+                    "ledgerRecorded",
+                    "usageComplete",
+                    "costComplete"
+                  ]
+                },
+                "sessionBilling": false,
+                "recovery": false,
+                "executionMetadata": false,
+                "nativePhases": false,
+                "sessionId": false,
+                "evidenceReceipts": false,
+                "validation": false,
+                "terminationProof": false,
+                "stopConfirmation": false
+              }
+            }
+          }
         ]
       },
       "ExecutionNetworkHealthObservation": {
@@ -55094,6 +55692,19 @@
           },
           "terminationProof": {
             "$ref": "#/components/schemas/ExecutionTerminationProof"
+          },
+          "notStarted": {
+            "$ref": "#/components/schemas/ExecutionNotStarted"
+          },
+          "executionMetadata": {
+            "$ref": "#/components/schemas/ExecutionMetadata"
+          },
+          "nativePhases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExecutionNativePhase"
+            },
+            "maxItems": 50
           }
         },
         "required": [
@@ -63301,6 +63912,9 @@
           },
           "background": {
             "$ref": "#/components/schemas/PiModelSelection"
+          },
+          "project-supervisor": {
+            "$ref": "#/components/schemas/PiModelSelection"
           }
         },
         "required": []
@@ -63319,7 +63933,8 @@
               "memory",
               "research",
               "development",
-              "background"
+              "background",
+              "project-supervisor"
             ]
           },
           "name": {
@@ -63535,8 +64150,8 @@
               },
               "scenarios": {
                 "type": "array",
-                "minItems": 9,
-                "maxItems": 9,
+                "minItems": 10,
+                "maxItems": 10,
                 "items": {
                   "$ref": "#/components/schemas/PiScenario"
                 }
@@ -63649,7 +64264,8 @@
               "memory",
               "research",
               "development",
-              "background"
+              "background",
+              "project-supervisor"
             ]
           },
           "selection": {
@@ -63860,8 +64476,8 @@
               },
               "scenarios": {
                 "type": "array",
-                "minItems": 9,
-                "maxItems": 9,
+                "minItems": 10,
+                "maxItems": 10,
                 "items": {
                   "$ref": "#/components/schemas/PiScenario"
                 }
@@ -73363,7 +73979,8 @@
             "enum": [
               "book-page",
               "stored-document",
-              "query-excerpt"
+              "query-excerpt",
+              "reviewed-document"
             ]
           },
           "location": {
@@ -73426,6 +74043,17 @@
           "externalUrl": {
             "type": "string",
             "format": "uri"
+          },
+          "documentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "segment": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "originalUrl": {
+            "type": "string"
           }
         },
         "required": [
@@ -74429,7 +75057,8 @@
           "kind": {
             "enum": [
               "book",
-              "external-document"
+              "external-document",
+              "knowledge-document"
             ]
           },
           "title": {
@@ -74455,11 +75084,16 @@
           "quoteKind": {
             "enum": [
               "published-original",
-              "external-source-unreviewed"
+              "external-source-unreviewed",
+              "reviewed-document"
             ]
           },
           "notice": {
             "type": "string"
+          },
+          "segment": {
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": [
@@ -74556,7 +75190,8 @@
           "kind": {
             "enum": [
               "book-page",
-              "stored-document"
+              "stored-document",
+              "reviewed-document"
             ]
           },
           "title": {
@@ -74611,7 +75246,8 @@
           "quoteKind": {
             "enum": [
               "published-original",
-              "external-source-unreviewed"
+              "external-source-unreviewed",
+              "reviewed-document"
             ]
           },
           "resolvedAt": {
@@ -74620,6 +75256,10 @@
           },
           "notice": {
             "type": "string"
+          },
+          "segment": {
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": [
@@ -76118,6 +76758,542 @@
           "classification",
           "readOnly",
           "doesNotExecute"
+        ]
+      },
+      "ExecutionNotStarted": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "type": "string",
+            "enum": [
+              "template-hash-missing",
+              "template-hash-mismatch"
+            ]
+          },
+          "expectedTemplateHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "receivedTemplateHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "reason",
+          "expectedTemplateHash"
+        ]
+      },
+      "KnowledgeDocumentCreateInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "const": 0
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "personal",
+              "private",
+              "family",
+              "company"
+            ]
+          },
+          "sourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "sourceId",
+          "assetId",
+          "title"
+        ]
+      },
+      "KnowledgeDocumentReviewInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "confirmed": {
+            "const": true
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "confirmed",
+          "evidence"
+        ]
+      },
+      "KnowledgeDocumentPublishInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "confirmed": {
+            "const": true
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "confirmed"
+        ]
+      },
+      "KnowledgeDocumentReviseInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion"
+        ]
+      },
+      "KnowledgeDirectoryConfirmInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "commandId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expectedConfigurationRevision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expectedSnapshotFingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "commandId",
+          "expectedVersion",
+          "expectedConfigurationRevision",
+          "expectedSnapshotFingerprint"
+        ]
+      },
+      "KnowledgeDocumentSegment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "text": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "location": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "index",
+          "text",
+          "sha256",
+          "location"
+        ]
+      },
+      "KnowledgeDocumentRecord": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "personal",
+              "private",
+              "family",
+              "company"
+            ]
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "kind": {
+            "const": "document"
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "reviewed",
+              "published",
+              "revised"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "materialSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "textSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "segments": {
+            "type": "array",
+            "maxItems": 2000,
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeDocumentSegment"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "scope",
+          "ownerId",
+          "kind",
+          "status",
+          "title",
+          "sourceId",
+          "assetId",
+          "version",
+          "materialSha256",
+          "textSha256",
+          "segments"
+        ]
+      },
+      "KnowledgeDocumentReceipt": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "data": {
+            "$ref": "#/components/schemas/KnowledgeDocumentRecord"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "AiDevelopmentPreviewItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "tool",
+              "provider",
+              "statusline"
+            ]
+          },
+          "key": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "match",
+              "missing",
+              "different",
+              "unknown",
+              "invalid",
+              "unreadable",
+              "not-applicable",
+              "unmanaged"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "intent": {
+            "enum": [
+              "none",
+              "supplement",
+              "adjust",
+              "verify",
+              "preserve"
+            ]
+          },
+          "expected": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "observed": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "category",
+          "key",
+          "status",
+          "reason",
+          "intent",
+          "expected",
+          "observed"
+        ]
+      },
+      "AiDevelopmentPreviewObservation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source": {
+            "enum": [
+              "fixed-ai-development-worker",
+              "fixed-ssh-ai-development-telemetry"
+            ]
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "stale": {
+            "type": "boolean"
+          },
+          "binding": {
+            "enum": [
+              "machine-revision-verified",
+              "machine-revision-unverified"
+            ]
+          }
+        },
+        "required": [
+          "at",
+          "source",
+          "hash",
+          "stale",
+          "binding"
+        ]
+      },
+      "AiDevelopmentPreview": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "comparisonVersion": {
+            "const": 1
+          },
+          "mode": {
+            "enum": [
+              "supplement",
+              "reconcile"
+            ]
+          },
+          "readOnly": {
+            "const": true
+          },
+          "applySupported": {
+            "const": false
+          },
+          "machineId": {
+            "type": "string"
+          },
+          "machineRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "profile": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "revision",
+              "hash"
+            ]
+          },
+          "policyHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "basisHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "observation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AiDevelopmentPreviewObservation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "enum": [
+              "available",
+              "reference-only",
+              "unavailable"
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AiDevelopmentPreviewItem"
+            }
+          },
+          "preserved": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "credentials",
+                "current-provider",
+                "extra-providers",
+                "hooks",
+                "permissions"
+              ]
+            }
+          },
+          "notCompared": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "role-models",
+                "compression-policy",
+                "credential-values",
+                "terminal-rendering"
+              ]
+            }
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "comparisonVersion",
+          "mode",
+          "readOnly",
+          "applySupported",
+          "machineId",
+          "machineRevision",
+          "profile",
+          "policyHash",
+          "basisHash",
+          "observation",
+          "status",
+          "reason",
+          "items",
+          "preserved",
+          "notCompared"
         ]
       }
     },

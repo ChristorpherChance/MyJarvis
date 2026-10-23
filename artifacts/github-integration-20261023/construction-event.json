@@ -1,0 +1,15 @@
+{
+  "id": "JARVIS-20261023-GITHUB-LATEST-INTEGRATION-382",
+  "kind": "validation",
+  "project": "jarvis",
+  "occurredAt": "2026-10-23",
+  "title": "最新源码独立整合验证通过，准备提交并合并GitHub主线",
+  "objective": "响应用户将最新代码提交合并到GitHub，保留已发布历史与未上线候选的真实边界。",
+  "changes": ["在独立普通Git副本保留本地R57/R58与R59文档正式源码提交历史，捕获常规目录113件源码及文档增量；原主树dirty保持，不清理或覆盖。", "整合R58修复、知识入库、设备状态栏诊断、AI配置只读预览与最新建设档案，按显式35件公开证据清单补入；未把guard失败的101升级执行器从其他副本带入。"],
+  "decisions": ["GitHub主线当时为72604a6，本地历史包含待推送内容；采用保留历史合并与非强制push，不重写上游。", "目标仓库公开，源码与新增公开报告经过限定隐私/凭据核查；不递归加入artifacts、发布ZIP、原始日志、运行数据或私人配置。gh未登录，不读取凭据，使用已有Git SSH权限。"],
+  "facts": ["本事件记录提交前整合验证；推送结果待实际远端核对，不能把本地提交冒作已合并GitHub。", "不部署或重启平台、不升级服务器、不修改模型/认证/状态栏配置、不恢复工厂、不调用产品模型推理；助手及代理Token与金额未知分列，费用只记录不设消费上限。"],
+  "verification": ["类型检查、前后端stage构建、API dist构建通过，CRLF兼容空白检查与381条建设账本完整性通过。", "本次整合全API937项：926通过、0失败、11跳过；前端演示25项及80个运维断言通过。", "六组维护/节点/登记脚本46项：43通过、0失败、3项因非root环境跳过。"],
+  "pending": ["实际GitHub推送及main合并需要后续执行并远端确认。", "部分既有浏览器QA依赖邻仓Playwright，本轮未重跑浏览器或宣称干净clone浏览器环境已验；root协议前置及其他既有跳过项保持。", "400根因、真实NAS/OCR/本人验收、Claude Code升级guard与恢复未完成，平台CAS资料同步未做；代码合并不改变任何生产交付状态。"],
+  "evidence": ["artifacts/github-integration-20261023/source-snapshot-public.json", "artifacts/github-integration-20261023/evidence-allowlist-public.json", "artifacts/github-integration-20261023/validation-public.json", "artifacts/github-integration-20261023/api-tests-public.json", "artifacts/github-integration-20261023/script-tests-public.json"],
+  "state": {"implementation": "complete", "verification": "passed", "deployment": "not-applicable", "acceptance": "pending"}
+}

@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "checks": [
+    "browser save with quiet hours disabled persists paired empty times",
+    "browser enables and saves crossing-midnight quiet hours",
+    "browser disables quiet hours again and HTTP readback remains empty",
+    "mobile group and common row heights both46px"
+  ],
+  "productionAccess": false,
+  "modelCalls": 0,
+  "scope": "actual browser against disposable app and SQLite; fake Pi and blocked external origins"
+}

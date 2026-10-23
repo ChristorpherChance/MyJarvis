@@ -31,7 +31,7 @@ export class GovernanceRuntime {
       CREATE TABLE IF NOT EXISTS runtime_cli_aggregates(actor_id TEXT NOT NULL,usage_id TEXT NOT NULL,request_sha TEXT NOT NULL,created_at TEXT NOT NULL,PRIMARY KEY(actor_id,usage_id));
       CREATE INDEX IF NOT EXISTS runtime_ai_usage_day ON runtime_ai_usage(day, actor_id);
       CREATE TABLE IF NOT EXISTS runtime_ai_unreported(run_id TEXT PRIMARY KEY,actor_id TEXT NOT NULL,provider TEXT NOT NULL,model TEXT NOT NULL,day TEXT NOT NULL,reason TEXT NOT NULL,created_at TEXT NOT NULL);
-      INSERT OR IGNORE INTO runtime_ai_unreported SELECT id,actor_id,provider,model,day,'process-interrupted-before-usage',datetime('now') FROM runtime_ai_runs WHERE state='active' AND NOT EXISTS(SELECT 1 FROM runtime_ai_usage WHERE run_id=runtime_ai_runs.id);
+      INSERT OR IGNORE INTO runtime_ai_unreported SELECT id,actor_id,provider,model,day,'process-interrupted-before-usage',strftime('%Y-%m-%dT%H:%M:%fZ','now') FROM runtime_ai_runs WHERE state='active' AND NOT EXISTS(SELECT 1 FROM runtime_ai_usage WHERE run_id=runtime_ai_runs.id);
       UPDATE runtime_ai_runs SET state='interrupted', reserve_usd=0, ended_at=datetime('now') WHERE state='active';`);
     for (const table of ['runtime_ai_runs','runtime_ai_usage']) {
       if (!this.db.prepare(`PRAGMA table_info(${table})`).all().some(column => column.name === 'scenario')) this.db.exec(`ALTER TABLE ${table} ADD COLUMN scenario TEXT`);

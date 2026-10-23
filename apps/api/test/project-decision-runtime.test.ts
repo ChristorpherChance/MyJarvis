@@ -125,7 +125,7 @@ test('a proposed change leaves the previous instruction active and cannot supers
 });
 test('privacy guard rejects obvious credentials, private links and raw thought fields without partial writes',async()=>{
  const f=await fixture();try{
-  for(const value of ['Authorization: Bearer fixturesecret','password=fixture-secret','密码：fixture-secret','https://example.test/status?access_token=secret','.secrets/model-key.txt'])assert.throws(()=>f.runtime.record('project-a',envelope({...body(),decisionRationale:value})),/私有|凭据/);
+  for(const value of ['Authorization: Bearer fixturesecret','password=fixture-secret','密码：fixture-secret','https://example.test/status?access_token=secret','.secrets/model-key.txt'])assert.throws(()=>f.runtime.record('project-a',envelope({...body(),decisionRationale:value})),(error:any)=>error.code==='DECISION_PRIVATE_CONTENT');
   assert.throws(()=>f.runtime.record('project-a',envelope({...body(),rawChainOfThought:'private'})));
   assert.equal(f.runtime.list('project-a').total,0);
  }finally{await f.close();}

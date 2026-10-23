@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-21",
+  "scope": "112 ordinary-account terminal client only; no application or production service changes",
+  "incident": {
+    "lastSuccessfulInputTokens": 892642,
+    "lastSuccessfulOutputTokens": 40,
+    "subsequentHttp400Count": 4,
+    "gatewayError": "All target providers failed.",
+    "causeConfirmed": false,
+    "limitation": "The gateway did not expose the upstream validation error. Last successful usage does not measure the failed request."
+  },
+  "mitigation": {
+    "type": "Earlier client-side auto-compaction for the active terminal provider",
+    "autoCompactWindow": 850000,
+    "declaredModelWindowUnchanged": true,
+    "providerTemplateAndLiveSettingsUpdated": true,
+    "otherProvidersUnchanged": true,
+    "privateBackupCreated": true
+  },
+  "validation": {
+    "ccSwitchDatabaseValidation": "passed",
+    "liveSettingsJson": "passed",
+    "exactChangeComparisonAgainstBackup": "passed; exactly one environment entry in live settings and the active provider template",
+    "backupDirectoryMode": "0700",
+    "backupFileMode": "0600",
+    "installedClientVersion": "2.1.292",
+    "installedClientFormulaInspected": "threshold = window - min(maxOutputTokens, 20000) - 13000; precompute may begin earlier",
+    "thresholdAtOutputBudgetAtLeast20000": 817000,
+    "longContextLiveReplay": "not performed",
+    "upstreamGatewayLogs": "not inspected",
+    "productionServices": "not restarted or modified"
+  },
+  "pending": [
+    "Restart the terminal client before relying on the new process environment; resume the existing session if needed.",
+    "Obtain gateway upstream error details to distinguish context capacity, output reservation, routing, and other request validation failures.",
+    "Observe an actual long session to validate auto-compaction end to end; no million-token replay was run."
+  ],
+  "privacy": "No credentials, private configuration payloads, session identifiers, or original conversation content included."
+}

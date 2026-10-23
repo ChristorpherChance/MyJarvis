@@ -128,6 +128,65 @@ class Storage(unittest.TestCase):
         with self.assertRaisesRegex(p.Fault, 'DIRECTORY_UNSAFE'):
             self.ctx.parents(link)
 
+    def test_statusline_matching_missing_invalid_and_private_canary(self):
+        self.ctx.parents(self.ctx.share, True)
+        expected = p.status_setting(self.ctx)
+        (self.ctx.share / 'terminal-statusline.py').write_bytes((HERE / 'terminal-statusline.py').read_bytes())
+        self.ctx.settings.write_bytes(p.encode({'statusLine': expected, 'privateCanary': '/private/fixture/path'}))
+        rows = [('fixture-provider', 'Private Name', json.dumps({'statusLine': expected, 'token': 'private-canary-value'}), 1)]
+        diagnostics, configured = p.inspect_statusline(self.ctx, rows, json.dumps({'statusLine': expected}))
+        self.assertTrue(configured)
+        self.assertEqual(diagnostics['diagnosticsVersion'], 1)
+        self.assertEqual(diagnostics['layers'], {'script': 'match', 'global': 'match', 'common': 'match', 'currentProvider': 'match'})
+        self.assertEqual(diagnostics['providers'], {'total': 1, 'matched': 1, 'missing': 0, 'different': 0, 'invalid': 0, 'unknown': 0})
+        self.assertIn('STATUSLINE_PROVIDER_COUNT_MATCHED', diagnostics['reasonCodes'])
+        missing, configured = p.inspect_statusline(self.ctx, [('p', 'N', '{}', 1)], '{}')
+        self.assertFalse(configured)
+        self.assertEqual(missing['providers']['missing'], 1)
+        self.assertIn('STATUSLINE_PROVIDER_COUNT_MISSING', missing['reasonCodes'])
+        invalid, _ = p.inspect_statusline(self.ctx, [('p', 'N', '{bad-json', 1)], '{}')
+        self.assertEqual(invalid['providers']['invalid'], 1)
+        self.assertIn('STATUSLINE_PROVIDER_COUNT_INVALID', invalid['reasonCodes'])
+        self.assertEqual(invalid['layers']['currentProvider'], 'invalid')
+        public = json.dumps([diagnostics, missing, invalid])
+        self.assertNotIn('/private/fixture/path', public)
+        self.assertNotIn('private-canary-value', public)
+        self.assertNotIn('Private Name', public)
+
+    def test_statusline_zero_and_multiple_current_never_false_pass(self):
+        self.ctx.parents(self.ctx.share, True)
+        expected = p.status_setting(self.ctx)
+        (self.ctx.share / 'terminal-statusline.py').write_bytes((HERE / 'terminal-statusline.py').read_bytes())
+        self.ctx.settings.write_bytes(p.encode({'statusLine': expected}))
+        zero, configured = p.inspect_statusline(self.ctx, [], json.dumps({'statusLine': expected}))
+        self.assertFalse(configured)
+        self.assertEqual(zero['providers']['total'], 0)
+        self.assertEqual(zero['layers']['currentProvider'], 'not-applicable')
+        self.assertIn('STATUSLINE_PROVIDER_COUNT_ZERO', zero['reasonCodes'])
+        self.assertIn('STATUSLINE_CURRENT_PROVIDER_NOT_APPLICABLE', zero['reasonCodes'])
+        unknown_db, _ = p.inspect_statusline(self.ctx, [('one', 'One', '{}', 1)], None, True)
+        self.assertEqual(unknown_db['providers']['unknown'], 1)
+        self.assertNotIn('STATUSLINE_PROVIDER_COUNT_ZERO', unknown_db['reasonCodes'])
+        rows = [('one', 'One', json.dumps({'statusLine': expected}), 1),
+                ('two', 'Two', json.dumps({'statusLine': expected}), 1)]
+        multiple, configured = p.inspect_statusline(self.ctx, rows, json.dumps({'statusLine': expected}))
+        self.assertFalse(configured)
+        self.assertEqual(multiple['layers']['currentProvider'], 'unknown')
+        self.assertEqual(multiple['providers']['matched'], 2)
+        self.assertIn('STATUSLINE_PROVIDER_COUNT_MATCHED', multiple['reasonCodes'])
+
+    def test_statusline_unreadable_is_not_missing_and_diagnostics_have_fixed_codes(self):
+        self.ctx.parents(self.ctx.share, True)
+        with mock.patch.object(self.ctx, 'read', side_effect=PermissionError('private exception text')):
+            diagnostics, configured = p.inspect_statusline(self.ctx, [], None, database_error=True)
+        self.assertFalse(configured)
+        self.assertEqual(diagnostics['layers']['script'], 'unreadable')
+        self.assertEqual(diagnostics['layers']['global'], 'unreadable')
+        self.assertEqual(diagnostics['layers']['common'], 'unreadable')
+        self.assertEqual(diagnostics['layers']['currentProvider'], 'unknown')
+        self.assertTrue(set(diagnostics['reasonCodes']) <= p.STATUSLINE_REASON_CODES)
+        self.assertNotIn('private exception text', json.dumps(diagnostics))
+
 
 class Contracts(unittest.TestCase):
     def test_protocol_blocks_unsafe_fields_and_preserves_secret_stdin_only(self):

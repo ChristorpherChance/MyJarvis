@@ -7,7 +7,7 @@ import argparse,datetime,hashlib,importlib.util,json,os,re,shutil,signal,stat,sy
 from pathlib import Path,PurePosixPath
 
 PLAN_SHA256='6643767cc71ee6c867f1430d7fd5daaa70681547ad48bdec7d1999202ce6a00c'
-GUARD_SHA256='88cda2b6ff1a7cf73aedaee85d27da4b4af7db51b8a3bdf00f0b5fb752294124'
+GUARD_SHA256='0aaf023aebd21707bb5569368864e6bfb70db2231d0b05582198b92696cf9510'
 CONTROL=Path('/var/lib/jarvis-control')
 RELEASES=Path('/opt/jarvis/releases')
 CURRENT=Path('/opt/jarvis/current')

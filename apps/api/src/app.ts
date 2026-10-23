@@ -60,6 +60,7 @@ import {registerProjectSupervisorRoutes} from './runtime/project-supervisor-rout
 import {createProjectSupervisorModel} from './runtime/project-supervisor-model.js';
 import {registerExperienceSupervisorRoutes} from './runtime/experience-supervisor-routes.js';
 import {registerProjectAutonomyRoutes} from './runtime/project-autonomy-routes.js';
+import {registerServerPlanningRoutes} from './runtime/server-planning-routes.js';
 import {ProjectDecisionRuntime} from './runtime/project-decision-runtime.js';
 import {registerProjectDecisionRoutes} from './runtime/project-decision-routes.js';
 import {searchAuthorizedKnowledge,searchAuthorizedMemories} from './runtime/personal-retrieval.js';
@@ -230,7 +231,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
       if (origin.host !== host || !['http:','https:'].includes(origin.protocol)) throw new ApiError('ORIGIN_DENIED','请从贾维斯页面操作',403);
     }
     if (['/api/health','/api/auth/state','/api/auth/setup','/api/auth/login','/api/auth/logout'].includes(route)) return;
-    if(evidenceAssistantOwnAuth(req.method,req.url.split('?')[0])||runtimeOwnAuthRoute(route)||notificationOwnAuthRoute(route)||webOwnAuthRoute(route)||isExecutionProtocolPath(req.method,req.url.split('?')[0]))return;
+    if(route==='/api/runtime/server-planning/document'||evidenceAssistantOwnAuth(req.method,req.url.split('?')[0])||runtimeOwnAuthRoute(route)||notificationOwnAuthRoute(route)||webOwnAuthRoute(route)||isExecutionProtocolPath(req.method,req.url.split('?')[0]))return;
     if (!store.validateLogin(req.cookies[COOKIE] ?? '')) return reply.code(401).send(route.startsWith('/api/v1/')?{requestId:randomUUID(),code:'FORBIDDEN',message:'请先登录'}:{error:{code:'LOGIN_REQUIRED',message:'请先登录'}});
   });
   app.setErrorHandler((error, req, reply) => {
@@ -424,6 +425,7 @@ export async function createApp(options: {dataDir: string; pi?: PiService; webDi
   projectSupervisor.start();
   registerRemoteOperations(app,remoteOps);remoteOps.start();
   registerAiDevelopment(app,aiDevelopment);
+  registerServerPlanningRoutes(app,identity,workspaceRoot);
   registerCcSwitchRoutes(app,identity,v1,options.ccSwitch);
   knowledge.start();execution.start();autonomy.start();memory.start();platformRuntime.start();notifications.start();supervisionWork.start();cluster.start();applications.start();
   const webDir = options.webDir ?? resolve(workspaceRoot,'apps/web/dist');

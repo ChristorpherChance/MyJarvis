@@ -1,0 +1,14 @@
+{
+  "id": "JARVIS-20261023-GITHUB-MERGE-COMPLETED-383",
+  "kind": "change",
+  "project": "jarvis",
+  "occurredAt": "2026-10-23",
+  "title": "最新源码已推送并合并GitHub主线，远端SHA确认通过",
+  "objective": "完成用户要求的最新代码提交合并GitHub，并分别留存源码验证与真实远端结果。",
+  "changes": ["源码提交bf6cf57e6c8f9814df60566dff38fc3ffd6c99d8已推送integration/latest-20261023；以保留历史合并773942f796f362730fd02f1ab38e35b6fb523e58更新远端main。", "GitHub main原为72604a618e0ce34682a6bee73af16d720a05527e，普通非强制push成功；未创建PR，未使用未登录的gh或读取认证凭据。"],
+  "facts": ["本次合并包含R57/R58/R59源码历史、R58修复、知识入库、状态栏诊断、AI配置只读预览及公开建设证据；没有纳入未通过guard验收的CLI升级执行器。", "常规工作目录原dirty保持，本次独立副本提交不等于已清理或切换原工作目录。没有生产部署、重启、服务器升级或模型配置变更，既有未上线/未验收边界保持。"],
+  "verification": ["git ls-remote逐SHA确认main为773942f、整合分支为bf6cf57；合并树与全API937项926通过0失败11跳过的验证树相同。"],
+  "pending": ["本事件及同源档案作为随后文档提交推送，源码合并提交不重写。", "原有400根因、CLI升级维护保护及真实NAS/OCR/本人验收待办保持；平台CAS同步未做，费用/Token未知分列。"],
+  "evidence": ["artifacts/github-integration-20261023/github-merge-public.json", "artifacts/github-integration-20261023/api-tests-public.json"],
+  "state": {"implementation": "complete", "verification": "passed", "deployment": "not-applicable", "acceptance": "not-applicable"}
+}
